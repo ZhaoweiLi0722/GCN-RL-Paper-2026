@@ -4,15 +4,22 @@ from __future__ import annotations
 
 import unittest
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from evaluation.check_training_stability import summarize_training_stability
 from evaluation.run_full_benchmark import (
+    config_snapshot_path,
+    evaluation_csv_path,
+    evaluation_outputs_complete,
+    evaluation_summary_path,
     final_checkpoint_path,
     load_benchmark_plan,
     make_training_config,
     resolve_budget,
     select_algorithms,
     select_scenarios,
+    training_csv_path,
+    training_outputs_complete,
 )
 
 
@@ -51,6 +58,33 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             final_checkpoint_path(plan, "smoke", budget, "td3", scenario, seed=2),
             Path(config["checkpoint_dir"]) / "td3_seed2_episode1.pt",
         )
+
+    def test_output_completion_helpers_require_all_expected_files(self) -> None:
+        plan = load_benchmark_plan()
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["disruption_0_3"])[0]
+        with TemporaryDirectory() as tmpdir:
+            plan = dict(plan)
+            plan["output_root"] = tmpdir
+
+            self.assertFalse(training_outputs_complete(plan, "smoke", budget, "td3", scenario, 0))
+            for path in (
+                training_csv_path(plan, "smoke", "td3", scenario, 0),
+                config_snapshot_path(plan, "smoke", "td3", scenario, 0),
+                final_checkpoint_path(plan, "smoke", budget, "td3", scenario, 0),
+            ):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("ok")
+            self.assertTrue(training_outputs_complete(plan, "smoke", budget, "td3", scenario, 0))
+
+            self.assertFalse(evaluation_outputs_complete(plan, "smoke", "td3", scenario, 0))
+            for path in (
+                evaluation_csv_path(plan, "smoke", "td3", scenario, 0),
+                evaluation_summary_path(plan, "smoke", "td3", scenario, 0),
+            ):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("ok")
+            self.assertTrue(evaluation_outputs_complete(plan, "smoke", "td3", scenario, 0))
 
 
 class TrainingStabilityTests(unittest.TestCase):

@@ -184,7 +184,9 @@ The formal benchmark manifest is
 `experiments/configs/full_benchmark.json`. It defines the three disruption
 scenarios (`0.05`, `0.3`, `0.6`), full 20-clinic horizon, five random seeds,
 and 500 Monte Carlo replications per evaluation job. Use `--budget pilot` for
-stability checks before launching `--budget full`.
+stability checks before launching `--budget full`. The full benchmark runner
+skips completed training and evaluation jobs by default, so interrupted runs can
+be resumed; add `--force` only when you intentionally want to overwrite outputs.
 
 Run formal Monte Carlo evaluation for a heuristic scenario:
 

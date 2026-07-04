@@ -38,6 +38,7 @@ def main() -> None:
     parser.add_argument("--scenarios", nargs="+", default=None)
     parser.add_argument("--seeds", nargs="+", type=int, default=None)
     parser.add_argument("--primary-only", action="store_true")
+    parser.add_argument("--force", action="store_true", help="Re-run jobs even when expected outputs exist.")
     args = parser.parse_args()
 
     plan = load_benchmark_plan(args.plan)
@@ -51,9 +52,9 @@ def main() -> None:
         return
 
     if args.phase in ("train", "all"):
-        train_benchmark(plan, args.budget, budget, algorithms, scenarios, seeds)
+        train_benchmark(plan, args.budget, budget, algorithms, scenarios, seeds, force=args.force)
     if args.phase in ("evaluate", "all"):
-        evaluate_benchmark(plan, args.budget, budget, algorithms, scenarios, seeds)
+        evaluate_benchmark(plan, args.budget, budget, algorithms, scenarios, seeds, force=args.force)
 
     summary_path = benchmark_root(plan, args.budget) / "aggregate_summary.csv"
     if args.phase in ("aggregate", "all"):
@@ -124,6 +125,8 @@ def train_benchmark(
     algorithms: Iterable[str],
     scenarios: Iterable[dict[str, Any]],
     seeds: Iterable[int],
+    *,
+    force: bool = False,
 ) -> None:
     learned = set(plan["learned_config_paths"])
     for algorithm in algorithms:
@@ -133,6 +136,9 @@ def train_benchmark(
         for scenario in scenarios:
             for seed in seeds:
                 config = make_training_config(plan, budget_name, budget, algorithm, scenario, seed)
+                if not force and training_outputs_complete(plan, budget_name, budget, algorithm, scenario, seed):
+                    print(f"skip existing training {algorithm} scenario={scenario['name']} seed={seed}")
+                    continue
                 print(f"train {algorithm} scenario={scenario['name']} seed={seed}")
                 env = build_env(config, seed=seed)
                 agent = get_agent_class(algorithm)(env.observation_size, env.action_size, config)
@@ -148,10 +154,15 @@ def evaluate_benchmark(
     algorithms: Iterable[str],
     scenarios: Iterable[dict[str, Any]],
     seeds: Iterable[int],
+    *,
+    force: bool = False,
 ) -> None:
     for algorithm in algorithms:
         for scenario in scenarios:
             for seed in seeds:
+                if not force and evaluation_outputs_complete(plan, budget_name, algorithm, scenario, seed):
+                    print(f"skip existing evaluation {algorithm} scenario={scenario['name']} seed={seed}")
+                    continue
                 config = make_evaluation_config(plan, budget_name, budget, algorithm, scenario, seed)
                 env = build_env(config, seed=seed)
                 agent = get_agent_class(algorithm)(env.observation_size, env.action_size, config)
@@ -314,6 +325,34 @@ def final_checkpoint_path(
     episode = int(budget["num_episodes"])
     return checkpoint_dir_path(plan, budget_name, algorithm, scenario, seed) / (
         f"{algorithm}_seed{int(seed)}_episode{episode}.pt"
+    )
+
+
+def training_outputs_complete(
+    plan: dict[str, Any],
+    budget_name: str,
+    budget: dict[str, Any],
+    algorithm: str,
+    scenario: dict[str, Any],
+    seed: int,
+) -> bool:
+    return (
+        training_csv_path(plan, budget_name, algorithm, scenario, seed).exists()
+        and config_snapshot_path(plan, budget_name, algorithm, scenario, seed).exists()
+        and final_checkpoint_path(plan, budget_name, budget, algorithm, scenario, seed).exists()
+    )
+
+
+def evaluation_outputs_complete(
+    plan: dict[str, Any],
+    budget_name: str,
+    algorithm: str,
+    scenario: dict[str, Any],
+    seed: int,
+) -> bool:
+    return (
+        evaluation_csv_path(plan, budget_name, algorithm, scenario, seed).exists()
+        and evaluation_summary_path(plan, budget_name, algorithm, scenario, seed).exists()
     )
 
 

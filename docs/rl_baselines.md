@@ -159,6 +159,9 @@ The benchmark manifest at `experiments/configs/full_benchmark.json` contains:
   scenario, and seed
 
 Use `--budget pilot` to confirm stability before launching `--budget full`.
+The benchmark runner skips completed training and evaluation jobs by default,
+which makes long full-horizon runs resumable after interruption. Add `--force`
+only when outputs should be overwritten.
 
 For formal Monte Carlo evaluation of a heuristic:
 

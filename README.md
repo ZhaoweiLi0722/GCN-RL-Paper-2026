@@ -10,6 +10,8 @@ This repository currently contains the manuscript package under `Paper/`. The ma
 
 Any quantitative claims in the current manuscript should be treated as preliminary unless they can be traced to final, reproducible experiment outputs.
 
+Legacy code from a previous capacity-planning project has been imported under `legacy/cp_decentralized/` for reference. The current implementation should migrate reusable pieces into `src/` rather than depending directly on legacy scripts.
+
 ## Existing Files
 
 - `Paper/`: manuscript package.
@@ -20,6 +22,8 @@ Any quantitative claims in the current manuscript should be treated as prelimina
 - `Paper/.../main.pdf`: compiled manuscript PDF.
 - `Paper/.../*.bst`, `Paper/.../elsarticle.cls`: journal style files.
 - `Paper/.../*.zip`: generated manuscript archive, ignored by Git.
+- `legacy/cp_decentralized/`: previous decentralized capacity-planning code imported for reference.
+- `docs/previous_work/`: small PDF/Word reference artifacts from the previous project.
 
 ## Expected Project Structure
 
@@ -65,6 +69,25 @@ python -m compileall .
 
 On systems where `python` is not available, use `python3 -m compileall .`.
 
+In restricted local sandboxes that cannot write to the default Python cache
+directory, use:
+
+```bash
+PYTHONPYCACHEPREFIX=/private/tmp/gcn_rl_pycache python3 -m compileall .
+```
+
+Run the current environment smoke test:
+
+```bash
+python3 experiments/scripts/run_env_smoke.py
+```
+
+Run the smoke test with selected graph ablations:
+
+```bash
+python3 experiments/scripts/run_env_smoke.py --remove-capacity-edges --remove-resource-edges
+```
+
 When training or evaluation scripts are added, include a small smoke test that runs quickly on CPU with a tiny horizon, few facilities, and one seed.
 
 ## Planned Experiments
@@ -75,6 +98,33 @@ When training or evaluation scripts are added, include a small smoke test that r
 - Graph ablations that remove resource-sharing edges.
 - Multiple random seeds and Monte Carlo replications for uncertainty-aware evaluation.
 - Structured result logging with run metadata, configuration snapshots, and aggregate metrics.
+
+## RL Baselines
+
+The repository includes modular PyTorch implementations for:
+
+- flat-state DDPG / MLP-DDPG
+- TD3
+
+PPO and SAC are planned but intentionally left as placeholders until the key
+DDPG-family baselines are validated.
+
+Run smoke-scale training after installing dependencies:
+
+```bash
+python -m training.train_flat_ddpg --config configs/flat_ddpg.yaml
+python -m training.train_td3 --config configs/td3.yaml
+```
+
+Run multi-seed baseline experiments:
+
+```bash
+python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm td3 --seeds 0 1 2 3 4
+```
+
+See [docs/rl_baselines.md](docs/rl_baselines.md) for details. Results remain
+preliminary until multi-seed experiments and graph ablations are completed.
 
 ## Reproducibility Notes
 

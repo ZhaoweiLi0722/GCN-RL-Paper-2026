@@ -1,2 +1,11 @@
-# No Python package dependencies were detected during repository setup.
-# Add runtime dependencies here as source code, experiments, and tests are introduced.
+numpy
+torch
+
+# Legacy reference scripts under legacy/cp_decentralized may additionally need:
+# scipy
+# gurobipy
+# simpy
+# gym
+# torch
+# matplotlib
+# pandas

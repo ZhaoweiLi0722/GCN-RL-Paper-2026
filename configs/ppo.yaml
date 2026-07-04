@@ -1,0 +1,19 @@
+{
+  "algorithm": "ppo",
+  "status": "planned_not_implemented",
+  "seed": 0,
+  "clip_ratio": 0.2,
+  "gae_lambda": 0.95,
+  "gamma": 0.99,
+  "actor_lr": 0.0003,
+  "critic_lr": 0.001,
+  "entropy_coef": 0.0,
+  "value_loss_coef": 0.5,
+  "train_epochs": 10,
+  "minibatch_size": 64,
+  "rollout_length": 1024,
+  "env": {
+    "scenario_name": "legacy_two_facility_smoke",
+    "graph_ablation": "flat_state_no_graph"
+  }
+}

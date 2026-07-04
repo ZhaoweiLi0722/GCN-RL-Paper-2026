@@ -23,4 +23,10 @@ Before finishing any coding task, run at least:
 python -m compileall .
 ```
 
+If the local sandbox cannot write to the default Python cache directory, use:
+
+```bash
+PYTHONPYCACHEPREFIX=/private/tmp/gcn_rl_pycache python3 -m compileall .
+```
+
 If tests exist, run the relevant tests. If training or evaluation scripts are modified, run a small smoke test when feasible, using a tiny horizon, few facilities, and a minimal seed count.

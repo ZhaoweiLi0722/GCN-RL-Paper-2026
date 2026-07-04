@@ -1,0 +1,83 @@
+{
+  "name": "20_clinic_full_benchmark",
+  "description": "Manuscript-facing benchmark matrix for the 20-clinic PRM capacity-planning environment.",
+  "algorithms": [
+    "gcn_ddpg",
+    "flat_ddpg",
+    "td3",
+    "sac",
+    "ppo",
+    "myo",
+    "iso",
+    "mdl1",
+    "mdl2"
+  ],
+  "primary_algorithms": [
+    "gcn_ddpg",
+    "flat_ddpg",
+    "td3",
+    "myo",
+    "iso",
+    "mdl1",
+    "mdl2"
+  ],
+  "second_phase_algorithms": [
+    "sac",
+    "ppo"
+  ],
+  "learned_config_paths": {
+    "gcn_ddpg": "configs/gcn_ddpg_20_clinic.yaml",
+    "flat_ddpg": "configs/flat_ddpg_20_clinic.yaml",
+    "td3": "configs/td3_20_clinic.yaml",
+    "sac": "configs/sac_20_clinic.yaml",
+    "ppo": "configs/ppo_20_clinic.yaml"
+  },
+  "scenarios": [
+    {
+      "name": "disruption_0_05",
+      "env_config": "experiments/configs/20_clinic_disruption_0_05.json"
+    },
+    {
+      "name": "disruption_0_3",
+      "env_config": "experiments/configs/20_clinic_disruption_0_3.json"
+    },
+    {
+      "name": "disruption_0_6",
+      "env_config": "experiments/configs/20_clinic_disruption_0_6.json"
+    }
+  ],
+  "budgets": {
+    "smoke": {
+      "seeds": [0],
+      "num_episodes": 1,
+      "max_steps_per_episode": 3,
+      "batch_size": 2,
+      "evaluation_replications": 1,
+      "evaluation_seed": 10000
+    },
+    "pilot": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 50,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "evaluation_replications": 50,
+      "evaluation_seed": 10000
+    },
+    "full": {
+      "seeds": [0, 1, 2, 3, 4],
+      "num_episodes": 1000,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "evaluation_replications": 500,
+      "evaluation_seed": 10000
+    }
+  },
+  "output_root": "results/full_benchmark",
+  "figure_root": "figures/full_benchmark",
+  "plot_metrics": [
+    "total_cost_mean",
+    "service_level_mean",
+    "average_waiting_time_mean",
+    "transshipment_cost_mean"
+  ]
+}

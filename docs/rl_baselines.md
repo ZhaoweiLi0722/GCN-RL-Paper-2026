@@ -129,6 +129,37 @@ For a small multi-seed pilot across learned agents and heuristics:
 python -m evaluation.run_small_pilot --seeds 0 1 --episodes 1 --steps 4 --batch-size 2
 ```
 
+For the manuscript-facing benchmark matrix, inspect the plan first:
+
+```bash
+python -m evaluation.run_full_benchmark --phase dry-run --budget smoke
+```
+
+Run a smoke pass of the full train/evaluate/aggregate/plot pipeline:
+
+```bash
+python -m evaluation.run_full_benchmark --phase all --budget smoke --scenarios disruption_0_3
+```
+
+Check the resulting training logs before scaling up:
+
+```bash
+python -m evaluation.check_training_stability \
+  --inputs results/full_benchmark/smoke/training/disruption_0_3/*.csv \
+  --output results/full_benchmark/smoke/training_stability.csv
+```
+
+The benchmark manifest at `experiments/configs/full_benchmark.json` contains:
+
+- disruption scenarios: `0.05`, `0.3`, and `0.6`
+- learned baselines: GCN-DDPG, flat DDPG, TD3, SAC, PPO
+- heuristic baselines: MYO, ISO, MDL-1, MDL-2
+- budgets: `smoke`, `pilot`, and `full`
+- full evaluation: five seeds and 500 Monte Carlo replications per algorithm,
+  scenario, and seed
+
+Use `--budget pilot` to confirm stability before launching `--budget full`.
+
 For formal Monte Carlo evaluation of a heuristic:
 
 ```bash

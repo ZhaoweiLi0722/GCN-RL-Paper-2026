@@ -165,6 +165,27 @@ Run a small pilot across learned agents and heuristic baselines:
 python -m evaluation.run_small_pilot --seeds 0 1 --episodes 1 --steps 4 --batch-size 2
 ```
 
+Run the manuscript-facing benchmark plan as a dry run before launching jobs:
+
+```bash
+python -m evaluation.run_full_benchmark --phase dry-run --budget smoke
+```
+
+Then validate the full pipeline on a single smoke budget:
+
+```bash
+python -m evaluation.run_full_benchmark --phase all --budget smoke --scenarios disruption_0_3
+python -m evaluation.check_training_stability \
+  --inputs results/full_benchmark/smoke/training/disruption_0_3/*.csv \
+  --output results/full_benchmark/smoke/training_stability.csv
+```
+
+The formal benchmark manifest is
+`experiments/configs/full_benchmark.json`. It defines the three disruption
+scenarios (`0.05`, `0.3`, `0.6`), full 20-clinic horizon, five random seeds,
+and 500 Monte Carlo replications per evaluation job. Use `--budget pilot` for
+stability checks before launching `--budget full`.
+
 Run formal Monte Carlo evaluation for a heuristic scenario:
 
 ```bash

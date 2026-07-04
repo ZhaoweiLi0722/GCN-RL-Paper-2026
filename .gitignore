@@ -39,6 +39,7 @@ checkpoints/
 outputs/
 artifacts/
 figures/smoke_*.png
+figures/full_benchmark/
 
 # Model checkpoints
 *.pt

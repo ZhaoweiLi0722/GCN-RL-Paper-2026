@@ -26,6 +26,19 @@ For the manuscript-scale environment:
 python -m training.train_flat_ddpg --config configs/flat_ddpg_20_clinic.yaml
 ```
 
+### GCN-DDPG
+
+GCN-DDPG uses the same continuous-control DDPG update as the flat baseline, but
+rebuilds each replay-buffer state into graph node features before the actor and
+critic. The default 20-clinic graph contains clinic nodes plus a central
+capacity hub.
+
+Run:
+
+```bash
+python -m training.train_gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml
+```
+
 ### TD3
 
 TD3 is the closest modern DDPG-style baseline. It uses two critics, clipped
@@ -48,6 +61,7 @@ are added.
 
 ```bash
 python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm td3 --seeds 0 1 2 3 4
 ```
 
@@ -81,15 +95,14 @@ Currently available metrics include:
 - episode
 - total reward
 - total cost
+- service level
+- average waiting time
 - reagent shortage frequency
 - bioreactor shortage frequency
+- bioreactor utilization
 - transshipment count
 - transshipment cost
 - runtime for training rows
-
-Service level, average waiting time, and utilization are not yet exposed by the
-environment. Do not invent those metrics; add them to the environment before
-using them in tables.
 
 ## Interpretation
 

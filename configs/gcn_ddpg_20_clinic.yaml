@@ -1,13 +1,14 @@
 {
   "algorithm": "gcn_ddpg",
-  "status": "planned_next",
   "seed": 0,
-  "num_training_steps": 1000000,
+  "num_episodes": 3,
+  "max_steps_per_episode": 52,
   "evaluation_replications": 500,
-  "batch_size": 256,
+  "batch_size": 64,
   "gcn_hidden_sizes": [64, 32],
   "actor_hidden_sizes": [256, 128, 64],
   "critic_hidden_sizes": [256, 128, 64],
+  "include_global_context": true,
   "actor_lr": 0.0001,
   "critic_lr": 0.001,
   "gamma": 0.99,
@@ -15,11 +16,12 @@
   "replay_buffer_size": 1000000,
   "exploration_noise": {
     "theta": 0.15,
-    "initial_sigma": 0.2,
-    "decay": true
+    "sigma": 0.2
   },
+  "checkpoint_interval": 3,
   "checkpoint_dir": "checkpoints/gcn_ddpg_20_clinic",
   "result_csv_path": "results/gcn_ddpg_20_clinic_training.csv",
+  "config_snapshot_path": "results/gcn_ddpg_20_clinic_config_snapshot.json",
   "env": {
     "scenario_name": "manuscript_20_clinic_disruption_0_3",
     "supplier_disruption_rate": 0.3,

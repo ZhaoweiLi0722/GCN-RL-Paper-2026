@@ -505,7 +505,9 @@ def make_20_clinic_config(
     )
 
 
-def _as_vector(values: Sequence[float], length: int, name: str) -> np.ndarray:
+def _as_vector(values: Sequence[float] | None, length: int, name: str) -> np.ndarray:
+    if values is None:
+        return np.zeros(length, dtype=float)
     array = np.asarray(values, dtype=float)
     if array.shape == ():
         return np.full(length, float(array))

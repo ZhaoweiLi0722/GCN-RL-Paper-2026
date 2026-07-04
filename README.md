@@ -110,6 +110,7 @@ When training or evaluation scripts are added, include a small smoke test that r
 The repository includes modular PyTorch implementations for:
 
 - flat-state DDPG / MLP-DDPG
+- GCN-DDPG
 - TD3
 
 PPO and SAC are planned but intentionally left as placeholders until the key
@@ -119,17 +120,21 @@ Run smoke-scale training after installing dependencies:
 
 ```bash
 python -m training.train_flat_ddpg --config configs/flat_ddpg.yaml
+python -m training.train_gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml
 python -m training.train_td3 --config configs/td3.yaml
 ```
 
 The `*_20_clinic.yaml` configs are aligned with the manuscript setting
 (`N=20`, production lead time `T=3`, and a 52-epoch weekly horizon). The
-two-clinic configs are retained only for fast development smoke tests.
+two-clinic configs are retained only for fast development smoke tests. You can
+also use `python -m training.train_off_policy --config <config>` for any
+implemented off-policy algorithm.
 
 Run multi-seed baseline experiments:
 
 ```bash
 python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm td3 --seeds 0 1 2 3 4
 ```
 

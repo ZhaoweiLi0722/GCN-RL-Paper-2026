@@ -4,21 +4,14 @@ from __future__ import annotations
 
 import argparse
 
-from src.baselines.flat_ddpg import FlatDDPGAgent
-from src.baselines.td3 import TD3Agent
+from src.rl.agents import available_algorithms, get_agent_class
 from src.rl.config import load_config
 from src.rl.experiment import EpisodeMetrics, build_env, write_rows
 
 
-AGENTS = {
-    "flat_ddpg": FlatDDPGAgent,
-    "td3": TD3Agent,
-}
-
-
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--algorithm", choices=sorted(AGENTS), required=True)
+    parser.add_argument("--algorithm", choices=available_algorithms(), required=True)
     parser.add_argument("--config", required=True)
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--episodes", type=int, default=5)
@@ -28,7 +21,7 @@ def main() -> None:
     config = load_config(args.config)
     env = build_env(config, seed=int(config.get("seed", 0)))
     try:
-        agent = AGENTS[args.algorithm](env.observation_size, env.action_size, config)
+        agent = get_agent_class(args.algorithm)(env.observation_size, env.action_size, config)
     except RuntimeError as exc:
         raise SystemExit(str(exc)) from exc
     agent.load_actor(args.checkpoint)

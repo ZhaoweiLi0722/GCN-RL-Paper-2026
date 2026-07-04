@@ -1,0 +1,64 @@
+"""Tests for graph-state conversion used by GCN-DDPG."""
+
+from __future__ import annotations
+
+import unittest
+
+import numpy as np
+
+from src.env.capacity_planning import CapacityPlanningEnv, make_20_clinic_config
+from src.models.gcn_ddpg import build_graph_spec
+
+try:
+    import torch
+except ModuleNotFoundError:  # pragma: no cover
+    torch = None
+
+if torch is not None:
+    from src.models.gcn_ddpg import flat_state_to_node_features
+
+
+def _config_dict(graph_ablation: str = "full_graph") -> dict:
+    return {
+        "algorithm": "gcn_ddpg",
+        "gcn_hidden_sizes": [8],
+        "actor_hidden_sizes": [16],
+        "critic_hidden_sizes": [16],
+        "env": {
+            "num_facilities": 20,
+            "production_lead_time": 3,
+            "action_mode": "facility_net",
+            "include_supplier_state": True,
+            "include_central_capacity_hub": True,
+            "graph_ablation": graph_ablation,
+        },
+    }
+
+
+class GraphSpecTests(unittest.TestCase):
+    def test_builds_20_clinic_hub_graph_spec(self) -> None:
+        spec = build_graph_spec(_config_dict(), state_dim=140)
+        self.assertEqual(spec.num_facilities, 20)
+        self.assertEqual(spec.num_nodes, 21)
+        self.assertEqual(spec.node_feature_dim, 7)
+        self.assertTrue(any(20 in edge for edge in spec.edge_index))
+
+    def test_capacity_ablation_removes_hub_edges(self) -> None:
+        spec = build_graph_spec(_config_dict("no_capacity_sharing_edges"), state_dim=140)
+        self.assertFalse(any(20 in edge for edge in spec.edge_index))
+
+
+@unittest.skipIf(torch is None, "PyTorch is not installed")
+class GraphStateConversionTests(unittest.TestCase):
+    def test_flat_state_conversion_matches_environment_graph_features(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=7)
+        state = env.reset(seed=7)
+        spec = build_graph_spec(_config_dict(), state_dim=env.observation_size)
+        state_tensor = torch.as_tensor(state, dtype=torch.float32)
+        node_features = flat_state_to_node_features(state_tensor, spec).numpy()[0]
+
+        np.testing.assert_allclose(node_features, env.graph_observation()["node_features"])
+
+
+if __name__ == "__main__":
+    unittest.main()

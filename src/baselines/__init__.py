@@ -6,10 +6,14 @@ from src.baselines.heuristics import (
     MeanDemandLookahead2Policy,
     MyopicPolicy,
 )
+from src.baselines.ppo import PPOAgent
+from src.baselines.sac import SACAgent
 
 __all__ = [
     "IsolatedPolicy",
     "MeanDemandLookahead1Policy",
     "MeanDemandLookahead2Policy",
     "MyopicPolicy",
+    "PPOAgent",
+    "SACAgent",
 ]

@@ -77,11 +77,35 @@ For the manuscript-scale environment:
 python -m training.train_td3 --config configs/td3_20_clinic.yaml
 ```
 
+### SAC
+
+SAC is implemented as a flat-state, entropy-regularized off-policy baseline
+with a tanh-squashed Gaussian actor, twin critics, target critics, and optional
+automatic entropy tuning.
+
+Run:
+
+```bash
+python -m training.train_sac --config configs/sac_20_clinic.yaml
+```
+
+### PPO
+
+PPO is implemented as a flat-state on-policy baseline with a tanh-squashed
+Gaussian actor, value network, generalized advantage estimation, and the clipped
+surrogate objective.
+
+Run:
+
+```bash
+python -m training.train_ppo --config configs/ppo_20_clinic.yaml
+```
+
 ## Planned Baselines
 
-PPO and SAC have config and training placeholders, but they are not implemented
-yet. Do not report PPO or SAC results until real implementations and smoke tests
-are added.
+No additional baselines are required for the current manuscript-facing pipeline.
+SAC and PPO should still be treated as second-phase benchmarks until multi-seed
+and full-horizon stability checks are complete.
 
 ## Multi-Seed Runs
 
@@ -89,6 +113,8 @@ are added.
 python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm td3 --config configs/td3_20_clinic.yaml --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm sac --config configs/sac_20_clinic.yaml --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm ppo --config configs/ppo_20_clinic.yaml --seeds 0 1 2 3 4
 ```
 
 For a tiny implementation smoke comparison only:

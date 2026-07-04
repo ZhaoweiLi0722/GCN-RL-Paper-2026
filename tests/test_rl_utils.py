@@ -33,6 +33,20 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(config["env"]["num_facilities"], 20)
         self.assertEqual(config["env"]["action_mode"], "facility_net")
 
+    def test_sac_20_clinic_config_loads(self):
+        config = load_config("configs/sac_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "sac")
+        self.assertEqual(config["env"]["num_facilities"], 20)
+        self.assertEqual(config["env"]["action_mode"], "facility_net")
+
+    def test_ppo_20_clinic_config_loads(self):
+        config = load_config("configs/ppo_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "ppo")
+        self.assertEqual(config["env"]["num_facilities"], 20)
+        self.assertEqual(config["env"]["action_mode"], "facility_net")
+
     def test_disruption_scenario_config_loads(self):
         config = load_config("experiments/configs/20_clinic_disruption_0_6.json")
 

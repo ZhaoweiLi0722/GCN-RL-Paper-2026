@@ -19,6 +19,8 @@ DEFAULT_CONFIGS = {
     "mdl1": "experiments/configs/20_clinic_disruption_0_3.json",
     "mdl2": "experiments/configs/20_clinic_disruption_0_3.json",
     "myo": "experiments/configs/20_clinic_disruption_0_3.json",
+    "ppo": "configs/ppo_20_clinic.yaml",
+    "sac": "configs/sac_20_clinic.yaml",
     "td3": "configs/td3_20_clinic.yaml",
 }
 

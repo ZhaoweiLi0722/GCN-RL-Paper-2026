@@ -112,6 +112,8 @@ The repository includes modular PyTorch implementations for:
 - flat-state DDPG / MLP-DDPG
 - GCN-DDPG
 - TD3
+- SAC
+- PPO
 
 It also includes deterministic heuristic baselines:
 
@@ -120,8 +122,9 @@ It also includes deterministic heuristic baselines:
 - MDL-1
 - MDL-2
 
-PPO and SAC are planned but intentionally left as placeholders until the key
-DDPG-family baselines are validated.
+SAC and PPO are implemented as flat-state second-phase baselines. Treat their
+results as exploratory until smoke tests, multi-seed pilots, and full-horizon
+evaluations are completed.
 
 Run smoke-scale training after installing dependencies:
 
@@ -130,6 +133,8 @@ python -m training.train_flat_ddpg --config configs/flat_ddpg.yaml
 python -m training.train_gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml
 python -m training.train_td3 --config configs/td3.yaml
 python -m training.train_td3 --config configs/td3_20_clinic.yaml
+python -m training.train_sac --config configs/sac_20_clinic.yaml
+python -m training.train_ppo --config configs/ppo_20_clinic.yaml
 ```
 
 The `*_20_clinic.yaml` configs are aligned with the manuscript setting
@@ -144,6 +149,8 @@ Run multi-seed baseline experiments:
 python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm td3 --config configs/td3_20_clinic.yaml --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm sac --config configs/sac_20_clinic.yaml --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm ppo --config configs/ppo_20_clinic.yaml --seeds 0 1 2 3 4
 ```
 
 Run a tiny pipeline smoke comparison between 20-clinic flat DDPG and GCN-DDPG:

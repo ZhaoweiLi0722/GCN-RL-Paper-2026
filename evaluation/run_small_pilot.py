@@ -18,11 +18,13 @@ from src.rl.config import load_config
 from src.rl.experiment import build_env, train_off_policy_agent
 
 
-DEFAULT_ALGORITHMS = ("gcn_ddpg", "flat_ddpg", "td3", "myo", "iso", "mdl1", "mdl2")
+DEFAULT_ALGORITHMS = ("gcn_ddpg", "flat_ddpg", "td3", "sac", "ppo", "myo", "iso", "mdl1", "mdl2")
 DEFAULT_CONFIGS = {
     "flat_ddpg": "configs/flat_ddpg_20_clinic.yaml",
     "gcn_ddpg": "configs/gcn_ddpg_20_clinic.yaml",
     "td3": "configs/td3_20_clinic.yaml",
+    "sac": "configs/sac_20_clinic.yaml",
+    "ppo": "configs/ppo_20_clinic.yaml",
     "myo": "experiments/configs/20_clinic_disruption_0_3.json",
     "iso": "experiments/configs/20_clinic_disruption_0_3.json",
     "mdl1": "experiments/configs/20_clinic_disruption_0_3.json",
@@ -99,6 +101,10 @@ def _load_pilot_config(
     )
     config["checkpoint_dir"] = f"checkpoints/{algorithm}_pilot_seed{seed}"
     config["result_csv_path"] = f"results/{algorithm}_pilot_seed{seed}.csv"
+    if algorithm == "ppo":
+        config["rollout_length"] = max(1, steps)
+        config["minibatch_size"] = min(batch_size, steps)
+        config["train_epochs"] = min(int(config.get("train_epochs", 2)), 2)
     return config
 
 

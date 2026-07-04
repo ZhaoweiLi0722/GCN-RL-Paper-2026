@@ -25,6 +25,13 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(config["algorithm"], "flat_ddpg")
         self.assertIn("env", config)
 
+    def test_td3_20_clinic_config_loads(self):
+        config = load_config("configs/td3_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "td3")
+        self.assertEqual(config["env"]["num_facilities"], 20)
+        self.assertEqual(config["env"]["action_mode"], "facility_net")
+
     def test_smoke_config_overrides_training_scale(self):
         config = load_config("configs/flat_ddpg_20_clinic.yaml")
         smoke = _smoke_config(

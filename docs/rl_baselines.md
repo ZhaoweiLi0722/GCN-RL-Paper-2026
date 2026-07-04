@@ -51,6 +51,12 @@ Run:
 python -m training.train_td3 --config configs/td3.yaml
 ```
 
+For the manuscript-scale environment:
+
+```bash
+python -m training.train_td3 --config configs/td3_20_clinic.yaml
+```
+
 ## Planned Baselines
 
 PPO and SAC have config and training placeholders, but they are not implemented
@@ -62,7 +68,7 @@ are added.
 ```bash
 python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml --seeds 0 1 2 3 4
-python -m evaluation.run_multi_seed --algorithm td3 --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm td3 --config configs/td3_20_clinic.yaml --seeds 0 1 2 3 4
 ```
 
 For a tiny implementation smoke comparison only:

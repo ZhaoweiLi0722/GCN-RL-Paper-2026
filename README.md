@@ -122,6 +122,7 @@ Run smoke-scale training after installing dependencies:
 python -m training.train_flat_ddpg --config configs/flat_ddpg.yaml
 python -m training.train_gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml
 python -m training.train_td3 --config configs/td3.yaml
+python -m training.train_td3 --config configs/td3_20_clinic.yaml
 ```
 
 The `*_20_clinic.yaml` configs are aligned with the manuscript setting
@@ -135,7 +136,7 @@ Run multi-seed baseline experiments:
 ```bash
 python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
 python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml --seeds 0 1 2 3 4
-python -m evaluation.run_multi_seed --algorithm td3 --seeds 0 1 2 3 4
+python -m evaluation.run_multi_seed --algorithm td3 --config configs/td3_20_clinic.yaml --seeds 0 1 2 3 4
 ```
 
 Run a tiny pipeline smoke comparison between 20-clinic flat DDPG and GCN-DDPG:

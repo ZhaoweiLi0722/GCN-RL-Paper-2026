@@ -13,7 +13,7 @@ from src.rl.experiment import build_env, train_off_policy_agent, write_rows
 DEFAULT_CONFIGS = {
     "flat_ddpg": "configs/flat_ddpg.yaml",
     "gcn_ddpg": "configs/gcn_ddpg_20_clinic.yaml",
-    "td3": "configs/td3.yaml",
+    "td3": "configs/td3_20_clinic.yaml",
 }
 
 

@@ -65,6 +65,12 @@ python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_dd
 python -m evaluation.run_multi_seed --algorithm td3 --seeds 0 1 2 3 4
 ```
 
+For a tiny implementation smoke comparison only:
+
+```bash
+python -m evaluation.run_smoke_comparison --episodes 1 --steps 4 --batch-size 2
+```
+
 ## Evaluation
 
 After training a checkpoint:

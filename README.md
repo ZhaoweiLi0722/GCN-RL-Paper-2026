@@ -138,6 +138,12 @@ python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_dd
 python -m evaluation.run_multi_seed --algorithm td3 --seeds 0 1 2 3 4
 ```
 
+Run a tiny pipeline smoke comparison between 20-clinic flat DDPG and GCN-DDPG:
+
+```bash
+python -m evaluation.run_smoke_comparison --episodes 1 --steps 4 --batch-size 2
+```
+
 See [docs/rl_baselines.md](docs/rl_baselines.md) for details. Results remain
 preliminary until multi-seed experiments and graph ablations are completed.
 

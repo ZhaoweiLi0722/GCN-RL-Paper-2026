@@ -2,6 +2,7 @@ import unittest
 
 import numpy as np
 
+from evaluation.run_smoke_comparison import _smoke_config
 from src.rl.action_projection import project_action
 from src.rl.config import load_config
 from src.rl.experiment import build_env
@@ -23,6 +24,23 @@ class RLUtilsTest(unittest.TestCase):
 
         self.assertEqual(config["algorithm"], "flat_ddpg")
         self.assertIn("env", config)
+
+    def test_smoke_config_overrides_training_scale(self):
+        config = load_config("configs/flat_ddpg_20_clinic.yaml")
+        smoke = _smoke_config(
+            config,
+            algorithm="flat_ddpg",
+            seed=3,
+            episodes=1,
+            steps=4,
+            batch_size=2,
+        )
+
+        self.assertEqual(smoke["seed"], 3)
+        self.assertEqual(smoke["num_episodes"], 1)
+        self.assertEqual(smoke["max_steps_per_episode"], 4)
+        self.assertEqual(smoke["batch_size"], 2)
+        self.assertEqual(smoke["env"]["episode_horizon"], 4)
 
     def test_flat_state_no_graph_keeps_environment_action_space(self):
         config = load_config("configs/flat_ddpg.yaml")

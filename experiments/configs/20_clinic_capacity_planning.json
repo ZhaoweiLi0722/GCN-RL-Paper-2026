@@ -1,0 +1,20 @@
+{
+  "num_facilities": 20,
+  "production_lead_time": 3,
+  "episode_horizon": 52,
+  "demand_rates": 4.8076923076923075,
+  "initial_specimens": 0,
+  "initial_reagents": 100,
+  "initial_idle_bioreactors": 10,
+  "max_specimens": 100,
+  "max_reagents": 200,
+  "max_idle_bioreactors": 20,
+  "max_reagent_replenishment": 100,
+  "max_specimen_transfer": 100,
+  "max_bioreactor_transfer": 20,
+  "max_reagent_transfer": 100,
+  "action_mode": "facility_net",
+  "include_supplier_state": true,
+  "supplier_disruption_rate": 0.3,
+  "include_central_capacity_hub": true
+}

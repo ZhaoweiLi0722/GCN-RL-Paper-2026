@@ -82,6 +82,12 @@ Run the current environment smoke test:
 python3 experiments/scripts/run_env_smoke.py
 ```
 
+Run the manuscript-aligned 20-clinic environment smoke test:
+
+```bash
+python3 experiments/scripts/run_env_smoke.py --config experiments/configs/20_clinic_capacity_planning.json
+```
+
 Run the smoke test with selected graph ablations:
 
 ```bash
@@ -115,6 +121,10 @@ Run smoke-scale training after installing dependencies:
 python -m training.train_flat_ddpg --config configs/flat_ddpg.yaml
 python -m training.train_td3 --config configs/td3.yaml
 ```
+
+The `*_20_clinic.yaml` configs are aligned with the manuscript setting
+(`N=20`, production lead time `T=3`, and a 52-epoch weekly horizon). The
+two-clinic configs are retained only for fast development smoke tests.
 
 Run multi-seed baseline experiments:
 

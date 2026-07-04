@@ -20,6 +20,12 @@ Run:
 python -m training.train_flat_ddpg --config configs/flat_ddpg.yaml
 ```
 
+For the manuscript-scale environment:
+
+```bash
+python -m training.train_flat_ddpg --config configs/flat_ddpg_20_clinic.yaml
+```
+
 ### TD3
 
 TD3 is the closest modern DDPG-style baseline. It uses two critics, clipped
@@ -61,6 +67,10 @@ python -m evaluation.evaluate_policy \
 
 Training and evaluation write CSV files under `results/`, and checkpoints under
 `checkpoints/`. Both folders are ignored by Git.
+
+The two-clinic configs are development smoke tests only. Manuscript-facing
+experiments should use the 20-clinic configs and 20-clinic environment smoke
+test.
 
 Currently available metrics include:
 

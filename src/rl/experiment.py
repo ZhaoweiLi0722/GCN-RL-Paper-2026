@@ -17,7 +17,6 @@ def build_env(config: dict[str, Any], seed: int) -> CapacityPlanningEnv:
     env_config = dict(config.get("env", {}))
     ablation = env_config.pop("graph_ablation", config.get("graph_ablation", "full_graph"))
     scenario = env_config.pop("scenario_name", config.get("scenario", "default"))
-    env_config.pop("supplier_disruption_rate", None)
     env_config.pop("demand_forecast_error", None)
     typed_config = CapacityPlanningConfig(**{key: _to_tuple(value) for key, value in env_config.items()})
     typed_config = apply_graph_ablation(typed_config, ablation)
@@ -82,8 +81,11 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
                 "episode": episode,
                 "total_reward": total_reward,
                 "total_cost": metrics.total_cost,
+                "service_level": metrics.service_level,
+                "average_waiting_time": metrics.average_waiting_time,
                 "reagent_shortage_frequency": metrics.reagent_shortage_frequency,
                 "bioreactor_shortage_frequency": metrics.bioreactor_shortage_frequency,
+                "bioreactor_utilization": metrics.bioreactor_utilization,
                 "transshipment_count": metrics.transshipment_count,
                 "transshipment_cost": metrics.transshipment_cost,
                 "runtime_seconds": time.perf_counter() - start_time,
@@ -118,10 +120,18 @@ class EpisodeMetrics:
         self.bioreactor_shortage_steps = 0
         self.transshipment_count = 0
         self.transshipment_cost = 0.0
+        self.service_level = 0.0
+        self.average_waiting_time = 0.0
+        self.bioreactor_utilization = 0.0
 
     def update(self, info: dict[str, Any]) -> None:
         self.steps += 1
         self.total_cost += float(info.get("cost", 0.0))
+        self.service_level = float(info.get("service_level", self.service_level))
+        self.average_waiting_time = float(info.get("average_waiting_time", self.average_waiting_time))
+        self.bioreactor_utilization = float(
+            info.get("bioreactor_utilization", self.bioreactor_utilization)
+        )
         under_reagents = np.asarray(info.get("under_reagents", []), dtype=float)
         under_bioreactors = np.asarray(info.get("under_bioreactors", []), dtype=float)
         if under_reagents.size and np.any(under_reagents > 0):

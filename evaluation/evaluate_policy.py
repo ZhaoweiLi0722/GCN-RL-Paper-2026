@@ -56,8 +56,11 @@ def main() -> None:
                 "episode": episode,
                 "total_reward": total_reward,
                 "total_cost": metrics.total_cost,
+                "service_level": metrics.service_level,
+                "average_waiting_time": metrics.average_waiting_time,
                 "reagent_shortage_frequency": metrics.reagent_shortage_frequency,
                 "bioreactor_shortage_frequency": metrics.bioreactor_shortage_frequency,
+                "bioreactor_utilization": metrics.bioreactor_utilization,
                 "transshipment_count": metrics.transshipment_count,
                 "transshipment_cost": metrics.transshipment_cost,
             }

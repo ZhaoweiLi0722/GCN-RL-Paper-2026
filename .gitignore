@@ -1,0 +1,63 @@
+# macOS / OS metadata
+.DS_Store
+._*
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments
+.venv/
+/venv/
+/env/
+/ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs and local scratch files
+*.log
+logs/
+tmp/
+temp/
+.cache/
+
+# Experiment outputs and large generated artifacts
+results/
+runs/
+wandb/
+mlruns/
+checkpoints/
+outputs/
+artifacts/
+
+# Model checkpoints
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Generated manuscript and LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# Generated manuscript/submission archives
+Paper/**/*.zip

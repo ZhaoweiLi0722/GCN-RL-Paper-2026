@@ -6,7 +6,7 @@ from typing import Any
 
 
 def available_algorithms() -> tuple[str, ...]:
-    return ("flat_ddpg", "gcn_ddpg", "td3")
+    return ("flat_ddpg", "gcn_ddpg", "iso", "mdl1", "mdl2", "myo", "td3")
 
 
 def get_agent_class(algorithm: str) -> Any:
@@ -22,5 +22,8 @@ def get_agent_class(algorithm: str) -> Any:
         from src.baselines.td3 import TD3Agent
 
         return TD3Agent
-    raise ValueError(f"Unsupported algorithm: {algorithm}")
+    if algorithm in ("myo", "iso", "mdl1", "mdl2"):
+        from src.baselines.heuristics import get_heuristic_class
 
+        return get_heuristic_class(algorithm)
+    raise ValueError(f"Unsupported algorithm: {algorithm}")

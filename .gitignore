@@ -38,6 +38,7 @@ mlruns/
 checkpoints/
 outputs/
 artifacts/
+figures/smoke_*.png
 
 # Model checkpoints
 *.pt

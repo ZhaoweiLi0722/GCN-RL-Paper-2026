@@ -113,6 +113,13 @@ The repository includes modular PyTorch implementations for:
 - GCN-DDPG
 - TD3
 
+It also includes deterministic heuristic baselines:
+
+- MYO
+- ISO
+- MDL-1
+- MDL-2
+
 PPO and SAC are planned but intentionally left as placeholders until the key
 DDPG-family baselines are validated.
 
@@ -143,6 +150,28 @@ Run a tiny pipeline smoke comparison between 20-clinic flat DDPG and GCN-DDPG:
 
 ```bash
 python -m evaluation.run_smoke_comparison --episodes 1 --steps 4 --batch-size 2
+```
+
+Run a small pilot across learned agents and heuristic baselines:
+
+```bash
+python -m evaluation.run_small_pilot --seeds 0 1 --episodes 1 --steps 4 --batch-size 2
+```
+
+Run formal Monte Carlo evaluation for a heuristic scenario:
+
+```bash
+python -m evaluation.evaluate_formal \
+  --algorithm myo \
+  --env-config experiments/configs/20_clinic_disruption_0_3.json \
+  --replications 500
+```
+
+Aggregate and plot evaluation outputs:
+
+```bash
+python -m evaluation.aggregate_results --inputs results/formal_myo.csv --output results/aggregate_summary.csv
+python -m evaluation.plot_results --summary results/aggregate_summary.csv --metric total_cost_mean --output figures/total_cost_summary.png
 ```
 
 See [docs/rl_baselines.md](docs/rl_baselines.md) for details. Results remain

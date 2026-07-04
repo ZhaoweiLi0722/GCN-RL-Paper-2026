@@ -2,6 +2,7 @@ import unittest
 
 import numpy as np
 
+from evaluation.aggregate_results import aggregate_rows
 from evaluation.run_smoke_comparison import _smoke_config
 from src.rl.action_projection import project_action
 from src.rl.config import load_config
@@ -31,6 +32,24 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(config["algorithm"], "td3")
         self.assertEqual(config["env"]["num_facilities"], 20)
         self.assertEqual(config["env"]["action_mode"], "facility_net")
+
+    def test_disruption_scenario_config_loads(self):
+        config = load_config("experiments/configs/20_clinic_disruption_0_6.json")
+
+        self.assertEqual(config["scenario_name"], "manuscript_20_clinic_disruption_0_6")
+        self.assertEqual(config["supplier_disruption_rate"], 0.6)
+        self.assertEqual(config["num_facilities"], 20)
+
+    def test_aggregate_rows_computes_mean(self):
+        rows = [
+            {"algorithm": "myo", "scenario": "s", "graph_ablation": "full_graph", "total_cost": "10"},
+            {"algorithm": "myo", "scenario": "s", "graph_ablation": "full_graph", "total_cost": "14"},
+        ]
+
+        summary = aggregate_rows(rows, metrics=("total_cost",))
+
+        self.assertEqual(summary[0]["count"], 2)
+        self.assertEqual(summary[0]["total_cost_mean"], 12.0)
 
     def test_smoke_config_overrides_training_scale(self):
         config = load_config("configs/flat_ddpg_20_clinic.yaml")

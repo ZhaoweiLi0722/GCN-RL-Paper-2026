@@ -5,6 +5,26 @@ state encoding from the value of actor-critic reinforcement learning itself.
 
 ## Implemented Baselines
 
+### Heuristic Policies
+
+The deterministic benchmarks are implemented under `src/baselines/heuristics.py`.
+They share the same 20-clinic environment and facility-net action layout as the
+learned agents.
+
+- MYO: current-period myopic balancing with sharing enabled.
+- ISO: local replenishment only, with sharing disabled.
+- MDL-1: one-period mean-demand lookahead with sharing enabled.
+- MDL-2: two-period mean-demand lookahead with sharing enabled.
+
+Run formal Monte Carlo evaluation for a heuristic:
+
+```bash
+python -m evaluation.evaluate_formal \
+  --algorithm myo \
+  --env-config experiments/configs/20_clinic_disruption_0_3.json \
+  --replications 500
+```
+
 ### Flat-State DDPG / MLP-DDPG
 
 Flat-state DDPG is the key baseline. It keeps the same environment and action
@@ -75,6 +95,28 @@ For a tiny implementation smoke comparison only:
 
 ```bash
 python -m evaluation.run_smoke_comparison --episodes 1 --steps 4 --batch-size 2
+```
+
+For a small multi-seed pilot across learned agents and heuristics:
+
+```bash
+python -m evaluation.run_small_pilot --seeds 0 1 --episodes 1 --steps 4 --batch-size 2
+```
+
+For formal Monte Carlo evaluation of a heuristic:
+
+```bash
+python -m evaluation.evaluate_formal \
+  --algorithm myo \
+  --env-config experiments/configs/20_clinic_disruption_0_3.json \
+  --replications 500
+```
+
+Aggregate and plot raw evaluation CSVs:
+
+```bash
+python -m evaluation.aggregate_results --inputs results/formal_myo.csv --output results/aggregate_summary.csv
+python -m evaluation.plot_results --summary results/aggregate_summary.csv --metric total_cost_mean --output figures/total_cost_summary.png
 ```
 
 ## Evaluation

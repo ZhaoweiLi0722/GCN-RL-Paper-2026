@@ -56,6 +56,9 @@ def main() -> None:
 
 def load_config(path: Path) -> CapacityPlanningConfig:
     data = json.loads(path.read_text())
+    data.pop("scenario_name", None)
+    data.pop("graph_ablation", None)
+    data.pop("demand_forecast_error", None)
     normalized = {key: _json_to_tuple(value) for key, value in data.items()}
     return CapacityPlanningConfig(**normalized)
 

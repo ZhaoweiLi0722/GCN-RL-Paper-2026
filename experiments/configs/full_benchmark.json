@@ -52,6 +52,8 @@
       "num_episodes": 1,
       "max_steps_per_episode": 3,
       "batch_size": 2,
+      "checkpoint_interval": 1,
+      "progress_interval": 1,
       "evaluation_replications": 1,
       "evaluation_seed": 10000
     },
@@ -60,6 +62,8 @@
       "num_episodes": 50,
       "max_steps_per_episode": 52,
       "batch_size": 64,
+      "checkpoint_interval": 50,
+      "progress_interval": 10,
       "evaluation_replications": 50,
       "evaluation_seed": 10000
     },
@@ -68,6 +72,8 @@
       "num_episodes": 1000,
       "max_steps_per_episode": 52,
       "batch_size": 64,
+      "checkpoint_interval": 100,
+      "progress_interval": 50,
       "evaluation_replications": 500,
       "evaluation_seed": 10000
     }

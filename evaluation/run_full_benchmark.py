@@ -39,6 +39,7 @@ def main() -> None:
     parser.add_argument("--seeds", nargs="+", type=int, default=None)
     parser.add_argument("--primary-only", action="store_true")
     parser.add_argument("--force", action="store_true", help="Re-run jobs even when expected outputs exist.")
+    parser.add_argument("--max-jobs", type=int, default=None, help="Run at most this many pending jobs per phase.")
     args = parser.parse_args()
 
     plan = load_benchmark_plan(args.plan)
@@ -52,9 +53,27 @@ def main() -> None:
         return
 
     if args.phase in ("train", "all"):
-        train_benchmark(plan, args.budget, budget, algorithms, scenarios, seeds, force=args.force)
+        train_benchmark(
+            plan,
+            args.budget,
+            budget,
+            algorithms,
+            scenarios,
+            seeds,
+            force=args.force,
+            max_jobs=args.max_jobs,
+        )
     if args.phase in ("evaluate", "all"):
-        evaluate_benchmark(plan, args.budget, budget, algorithms, scenarios, seeds, force=args.force)
+        evaluate_benchmark(
+            plan,
+            args.budget,
+            budget,
+            algorithms,
+            scenarios,
+            seeds,
+            force=args.force,
+            max_jobs=args.max_jobs,
+        )
 
     summary_path = benchmark_root(plan, args.budget) / "aggregate_summary.csv"
     if args.phase in ("aggregate", "all"):
@@ -127,24 +146,30 @@ def train_benchmark(
     seeds: Iterable[int],
     *,
     force: bool = False,
+    max_jobs: int | None = None,
 ) -> None:
     learned = set(plan["learned_config_paths"])
+    jobs_run = 0
     for algorithm in algorithms:
         if algorithm not in learned:
-            print(f"skip training heuristic {algorithm}")
+            print(f"skip training heuristic {algorithm}", flush=True)
             continue
         for scenario in scenarios:
             for seed in seeds:
                 config = make_training_config(plan, budget_name, budget, algorithm, scenario, seed)
                 if not force and training_outputs_complete(plan, budget_name, budget, algorithm, scenario, seed):
-                    print(f"skip existing training {algorithm} scenario={scenario['name']} seed={seed}")
+                    print(f"skip existing training {algorithm} scenario={scenario['name']} seed={seed}", flush=True)
                     continue
-                print(f"train {algorithm} scenario={scenario['name']} seed={seed}")
+                if max_jobs is not None and jobs_run >= max_jobs:
+                    print(f"reached max training jobs: {max_jobs}", flush=True)
+                    return
+                print(f"train {algorithm} scenario={scenario['name']} seed={seed}", flush=True)
                 env = build_env(config, seed=seed)
                 agent = get_agent_class(algorithm)(env.observation_size, env.action_size, config)
                 rows = train_off_policy_agent(agent, env, config)
                 write_rows(rows, config["result_csv_path"])
                 save_config_snapshot(config, config["config_snapshot_path"])
+                jobs_run += 1
 
 
 def evaluate_benchmark(
@@ -156,13 +181,18 @@ def evaluate_benchmark(
     seeds: Iterable[int],
     *,
     force: bool = False,
+    max_jobs: int | None = None,
 ) -> None:
+    jobs_run = 0
     for algorithm in algorithms:
         for scenario in scenarios:
             for seed in seeds:
                 if not force and evaluation_outputs_complete(plan, budget_name, algorithm, scenario, seed):
-                    print(f"skip existing evaluation {algorithm} scenario={scenario['name']} seed={seed}")
+                    print(f"skip existing evaluation {algorithm} scenario={scenario['name']} seed={seed}", flush=True)
                     continue
+                if max_jobs is not None and jobs_run >= max_jobs:
+                    print(f"reached max evaluation jobs: {max_jobs}", flush=True)
+                    return
                 config = make_evaluation_config(plan, budget_name, budget, algorithm, scenario, seed)
                 env = build_env(config, seed=seed)
                 agent = get_agent_class(algorithm)(env.observation_size, env.action_size, config)
@@ -176,7 +206,7 @@ def evaluate_benchmark(
                     agent.load_actor(checkpoint)
 
                 evaluation_seed = int(budget["evaluation_seed"]) + int(seed) * LEARNED_EVALUATION_SEED_STRIDE
-                print(f"evaluate {algorithm} scenario={scenario['name']} seed={seed}")
+                print(f"evaluate {algorithm} scenario={scenario['name']} seed={seed}", flush=True)
                 rows = evaluate_agent(
                     agent,
                     env,
@@ -200,6 +230,7 @@ def evaluate_benchmark(
                     summary["training_seed"] = seed
                     summary["evaluation_seed"] = evaluation_seed
                     write_summary(summary, evaluation_summary_path(plan, budget_name, algorithm, scenario, seed))
+                jobs_run += 1
 
 
 def aggregate_benchmark(
@@ -223,7 +254,7 @@ def aggregate_benchmark(
     summary = aggregate_rows(rows)
     output_path = benchmark_root(plan, budget_name) / "aggregate_summary.csv"
     write_aggregate_rows(summary, output_path)
-    print(f"wrote {len(summary)} aggregate rows to {output_path}")
+    print(f"wrote {len(summary)} aggregate rows to {output_path}", flush=True)
     return output_path
 
 
@@ -253,7 +284,7 @@ def plot_benchmark(plan: dict[str, Any], budget_name: str, summary_path: str | P
             title=metric.replace("_", " ").title(),
             plt=plt,
         )
-        print(f"wrote figure to {output}")
+        print(f"wrote figure to {output}", flush=True)
 
 
 def make_training_config(
@@ -281,7 +312,8 @@ def make_training_config(
     config["max_steps_per_episode"] = int(budget["max_steps_per_episode"])
     if "batch_size" in config or "batch_size" in budget:
         config["batch_size"] = int(budget.get("batch_size", config.get("batch_size", 64)))
-    config["checkpoint_interval"] = int(budget["num_episodes"])
+    config["checkpoint_interval"] = int(budget.get("checkpoint_interval", budget["num_episodes"]))
+    config["progress_interval"] = int(budget.get("progress_interval", 0))
     config["checkpoint_dir"] = str(checkpoint_dir_path(plan, budget_name, algorithm, scenario, seed))
     config["result_csv_path"] = str(training_csv_path(plan, budget_name, algorithm, scenario, seed))
     config["config_snapshot_path"] = str(config_snapshot_path(plan, budget_name, algorithm, scenario, seed))
@@ -428,18 +460,18 @@ def print_dry_run(
     heuristics = [algorithm for algorithm in algorithms if algorithm in available_heuristics()]
     train_jobs = len(learned) * len(scenarios) * len(seeds)
     eval_jobs = len(algorithms) * len(scenarios) * len(seeds)
-    print(f"plan={plan.get('name', 'benchmark')} budget={budget_name}")
-    print(f"algorithms={', '.join(algorithms)}")
-    print(f"scenarios={', '.join(scenario['name'] for scenario in scenarios)}")
-    print(f"seeds={', '.join(str(seed) for seed in seeds)}")
-    print(f"learned={', '.join(learned)}")
-    print(f"heuristics={', '.join(heuristics)}")
-    print(f"train_jobs={train_jobs}")
-    print(f"evaluation_jobs={eval_jobs}")
-    print(f"episodes_per_learned_job={budget['num_episodes']}")
-    print(f"max_steps_per_episode={budget['max_steps_per_episode']}")
-    print(f"mc_replications_per_eval_job={budget['evaluation_replications']}")
-    print(f"output_root={benchmark_root(plan, budget_name)}")
+    print(f"plan={plan.get('name', 'benchmark')} budget={budget_name}", flush=True)
+    print(f"algorithms={', '.join(algorithms)}", flush=True)
+    print(f"scenarios={', '.join(scenario['name'] for scenario in scenarios)}", flush=True)
+    print(f"seeds={', '.join(str(seed) for seed in seeds)}", flush=True)
+    print(f"learned={', '.join(learned)}", flush=True)
+    print(f"heuristics={', '.join(heuristics)}", flush=True)
+    print(f"train_jobs={train_jobs}", flush=True)
+    print(f"evaluation_jobs={eval_jobs}", flush=True)
+    print(f"episodes_per_learned_job={budget['num_episodes']}", flush=True)
+    print(f"max_steps_per_episode={budget['max_steps_per_episode']}", flush=True)
+    print(f"mc_replications_per_eval_job={budget['evaluation_replications']}", flush=True)
+    print(f"output_root={benchmark_root(plan, budget_name)}", flush=True)
 
 
 if __name__ == "__main__":

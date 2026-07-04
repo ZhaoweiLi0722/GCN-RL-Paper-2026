@@ -53,6 +53,7 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
     algorithm = str(config.get("algorithm", agent.algorithm))
     checkpoint_dir = Path(config.get("checkpoint_dir", f"checkpoints/{algorithm}"))
     checkpoint_interval = int(config.get("checkpoint_interval", max(num_episodes, 1)))
+    progress_interval = int(config.get("progress_interval", 0))
     start_time = time.perf_counter()
 
     for episode in range(num_episodes):
@@ -94,6 +95,15 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
 
         if (episode + 1) % checkpoint_interval == 0:
             agent.save(checkpoint_dir / f"{algorithm}_seed{seed}_episode{episode + 1}.pt")
+
+        if progress_interval and (
+            episode == 0 or (episode + 1) % progress_interval == 0 or episode + 1 == num_episodes
+        ):
+            print(
+                f"{algorithm} seed={seed} episode={episode + 1}/{num_episodes} "
+                f"reward={total_reward:.3f} cost={metrics.total_cost:.3f}",
+                flush=True,
+            )
 
     return rows
 

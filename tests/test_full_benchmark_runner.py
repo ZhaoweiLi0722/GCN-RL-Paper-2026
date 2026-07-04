@@ -47,6 +47,8 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(gcn_config["env"]["graph_ablation"], "full_graph")
         self.assertEqual(flat_config["num_episodes"], 1)
         self.assertEqual(flat_config["max_steps_per_episode"], 3)
+        self.assertEqual(flat_config["checkpoint_interval"], 1)
+        self.assertEqual(flat_config["progress_interval"], 1)
 
     def test_final_checkpoint_path_matches_training_config(self) -> None:
         plan = load_benchmark_plan()

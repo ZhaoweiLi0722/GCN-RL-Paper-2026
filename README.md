@@ -187,6 +187,12 @@ and 500 Monte Carlo replications per evaluation job. Use `--budget pilot` for
 stability checks before launching `--budget full`. The full benchmark runner
 skips completed training and evaluation jobs by default, so interrupted runs can
 be resumed; add `--force` only when you intentionally want to overwrite outputs.
+For long local runs, use `--max-jobs` to advance a fixed number of pending jobs
+at a time:
+
+```bash
+python -m evaluation.run_full_benchmark --phase train --budget full --max-jobs 1
+```
 
 Run formal Monte Carlo evaluation for a heuristic scenario:
 

@@ -62,6 +62,19 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(config["num_facilities"], 20)
         self.assertIsInstance(config["demand_rates"], list)
 
+    def test_graph_dynamic_transfer_delay_config_builds_env(self):
+        env_config = load_config("experiments/configs/20_clinic_graph_dynamic_transfer_delay.json")
+        config = load_config("configs/gcn_ddpg_20_clinic.yaml")
+        config["env"] = env_config
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+
+        self.assertEqual(env.config.transfer_lead_time, 1)
+        self.assertTrue(env.config.include_transfer_pipeline_state)
+        self.assertEqual(env.observation_size, 200)
+        self.assertEqual(env.graph_observation()["node_features"].shape, (21, 10))
+        self.assertEqual(scaler.scales.shape, (200,))
+
     def test_fixed_observation_scaler_uses_env_capacity_metadata(self):
         config = load_config("configs/flat_ddpg_20_clinic.yaml")
         env = build_env(config, seed=0)

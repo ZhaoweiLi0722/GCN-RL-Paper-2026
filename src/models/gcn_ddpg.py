@@ -25,6 +25,7 @@ class GraphStateSpec:
     production_lead_time: int
     include_supplier_state: bool
     include_central_capacity_hub: bool
+    include_transfer_pipeline_state: bool
     features_per_facility: int
     node_feature_dim: int
     num_nodes: int
@@ -44,7 +45,10 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
     production_lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier_state = bool(env_config.get("include_supplier_state", False))
     include_hub = bool(env_config.get("include_central_capacity_hub", False))
+    include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     features_per_facility = 3 + production_lead_time + int(include_supplier_state)
+    if include_transfer_pipeline:
+        features_per_facility += 3
     expected_state_dim = num_facilities * features_per_facility
     if state_dim != expected_state_dim:
         raise ValueError(
@@ -116,7 +120,7 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         graph_edges.extend(edge_sets[edge_type])
     graph_edges = list(_dedupe_edges(graph_edges, num_nodes))
 
-    node_feature_dim = 5 + int(include_supplier_state) + int(include_hub)
+    node_feature_dim = 5 + int(include_supplier_state) + 3 * int(include_transfer_pipeline) + int(include_hub)
     normalize_node_features = bool(config.get("normalize_observations", False))
     node_feature_scale = graph_node_feature_scale(config, node_feature_dim)
     return GraphStateSpec(
@@ -124,6 +128,7 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         production_lead_time=production_lead_time,
         include_supplier_state=include_supplier_state,
         include_central_capacity_hub=include_hub,
+        include_transfer_pipeline_state=include_transfer_pipeline,
         features_per_facility=features_per_facility,
         node_feature_dim=node_feature_dim,
         num_nodes=num_nodes,
@@ -152,6 +157,9 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
     feature_parts = [demand, specimens, reagents, idle_bioreactors, total_bioreactors]
     if graph_spec.include_supplier_state:
         feature_parts.append(facility_state[:, :, 3 + lead_time : 4 + lead_time])
+    if graph_spec.include_transfer_pipeline_state:
+        pending_start = 3 + lead_time + int(graph_spec.include_supplier_state)
+        feature_parts.append(facility_state[:, :, pending_start : pending_start + 3])
     if graph_spec.include_central_capacity_hub:
         feature_parts.append(torch.zeros_like(demand))
 

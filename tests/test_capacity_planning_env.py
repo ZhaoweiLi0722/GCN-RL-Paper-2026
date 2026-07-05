@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from src.env.capacity_planning import (
+    CapacityPlanningConfig,
     CapacityPlanningEnv,
     make_20_clinic_config,
     make_legacy_two_facility_config,
@@ -94,6 +95,69 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         self.assertEqual(env.action_size, 80)
         self.assertEqual(env.graph_observation()["capacity_edges"].shape, (0, 2))
         self.assertTrue(np.all(info["capacity_transfers"] == 0.0))
+
+    def test_facility_net_transfer_lead_time_delays_arrivals(self):
+        config = CapacityPlanningConfig(
+            num_facilities=2,
+            production_lead_time=2,
+            episode_horizon=3,
+            demand_rates=(0.0, 0.0),
+            initial_specimens=(0.0, 0.0),
+            initial_reagents=(20.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0),
+            max_specimens=(50.0, 50.0),
+            max_reagents=(50.0, 50.0),
+            max_idle_bioreactors=(10.0, 10.0),
+            max_reagent_replenishment=(0.0, 0.0),
+            max_reagent_transfer=20.0,
+            action_mode="facility_net",
+            transfer_lead_time=1,
+            include_transfer_pipeline_state=True,
+            resource_edges=((0, 1),),
+        )
+        env = CapacityPlanningEnv(config, seed=12)
+        action = env.noop_action()
+        action[2] = -1.0
+        action[3] = 1.0
+
+        observation, _reward, _done, info = env.step(action)
+
+        self.assertEqual(observation.shape, (16,))
+        self.assertAlmostEqual(env.reagents[0], 0.0)
+        self.assertAlmostEqual(env.reagents[1], 0.0)
+        self.assertAlmostEqual(env.reagent_transfer_pipeline.sum(axis=0)[1], 20.0)
+        self.assertTrue(np.all(info["reagent_transfer_arrivals"] == 0.0))
+
+        _observation, _reward, _done, info = env.step(env.noop_action())
+
+        self.assertAlmostEqual(env.reagents[1], 20.0)
+        self.assertAlmostEqual(info["reagent_transfer_arrivals"][1], 20.0)
+
+    def test_demand_shock_updates_cluster_multiplier(self):
+        config = CapacityPlanningConfig(
+            num_facilities=4,
+            production_lead_time=2,
+            episode_horizon=2,
+            demand_rates=(1.0, 1.0, 1.0, 1.0),
+            initial_specimens=(0.0, 0.0, 0.0, 0.0),
+            initial_reagents=(0.0, 0.0, 0.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0, 0.0, 0.0),
+            max_specimens=(10.0, 10.0, 10.0, 10.0),
+            max_reagents=(10.0, 10.0, 10.0, 10.0),
+            max_idle_bioreactors=(5.0, 5.0, 5.0, 5.0),
+            max_reagent_replenishment=(0.0, 0.0, 0.0, 0.0),
+            action_mode="facility_net",
+            demand_shock_probability=1.0,
+            demand_shock_multiplier=3.0,
+            demand_shock_duration=2,
+            demand_shock_cluster_size=2,
+        )
+        env = CapacityPlanningEnv(config, seed=21)
+
+        env.step(env.noop_action())
+
+        self.assertEqual(int(np.count_nonzero(env.demand_rate_multiplier == 3.0)), 2)
+        self.assertEqual(int(np.count_nonzero(env.demand_shock_remaining > 0)), 2)
 
 
 if __name__ == "__main__":

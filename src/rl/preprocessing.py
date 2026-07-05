@@ -33,7 +33,10 @@ class FixedObservationScaler:
             num_facilities = _infer_num_facilities(state_dim, env_config)
         lead_time = int(env_config.get("production_lead_time", 3))
         include_supplier = bool(env_config.get("include_supplier_state", False))
+        include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
         features_per_facility = 3 + lead_time + int(include_supplier)
+        if include_transfer_pipeline:
+            features_per_facility += 3
         expected_state_dim = num_facilities * features_per_facility
         if expected_state_dim != int(state_dim):
             raise ValueError(
@@ -56,6 +59,14 @@ class FixedObservationScaler:
             row.extend([max(float(max_idle[facility]), 1.0)] * lead_time)
             if include_supplier:
                 row.append(1.0)
+            if include_transfer_pipeline:
+                row.extend(
+                    [
+                        max(float(max_specimens[facility]), 1.0),
+                        max(float(max_reagents[facility]), 1.0),
+                        max(float(max_idle[facility]), 1.0),
+                    ]
+                )
             rows.append(np.asarray(row, dtype=np.float32))
         return cls(enabled=True, scales=np.concatenate(rows), clip=clip)
 
@@ -86,6 +97,9 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
     env_config = dict(config.get("env", {}))
     lead_time = int(env_config.get("production_lead_time", 3))
     num_facilities = int(env_config.get("num_facilities", 1))
+    include_supplier = bool(env_config.get("include_supplier_state", False))
+    include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
+    include_hub = bool(env_config.get("include_central_capacity_hub", False))
     demand_rates = _as_vector(env_config.get("demand_rates", 1.0), num_facilities)
     max_specimens = _as_vector(env_config.get("max_specimens", 1.0), num_facilities)
     max_reagents = _as_vector(env_config.get("max_reagents", 1.0), num_facilities)
@@ -97,6 +111,18 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
         max(float(np.max(max_idle)), 1.0),
         max(float(np.max(max_idle)) * lead_time, 1.0),
     ]
+    if include_supplier:
+        scale.append(1.0)
+    if include_transfer_pipeline:
+        scale.extend(
+            [
+                max(float(np.max(max_specimens)), 1.0),
+                max(float(np.max(max_reagents)), 1.0),
+                max(float(np.max(max_idle)), 1.0),
+            ]
+        )
+    if include_hub:
+        scale.append(1.0)
     while len(scale) < int(node_feature_dim):
         scale.append(1.0)
     return tuple(scale[: int(node_feature_dim)])
@@ -116,7 +142,10 @@ def _as_vector(values: Sequence[float] | float | int | None, length: int) -> np.
 def _infer_num_facilities(state_dim: int, env_config: dict[str, Any]) -> int:
     lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier = bool(env_config.get("include_supplier_state", False))
+    include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     features_per_facility = 3 + lead_time + int(include_supplier)
+    if include_transfer_pipeline:
+        features_per_facility += 3
     if state_dim % features_per_facility != 0:
         raise ValueError("num_facilities is required for observation normalization")
     return state_dim // features_per_facility

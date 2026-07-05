@@ -51,6 +51,12 @@ class CapacityPlanningConfig:
     include_supplier_state: bool = False
     supplier_disruption_rate: Sequence[float] | float = 0.0
     include_central_capacity_hub: bool = False
+    transfer_lead_time: int = 0
+    include_transfer_pipeline_state: bool = False
+    demand_shock_probability: float = 0.0
+    demand_shock_multiplier: float = 1.0
+    demand_shock_duration: int = 0
+    demand_shock_cluster_size: int = 0
     information_edges: Sequence[Edge] | None = None
     specimen_edges: Sequence[Edge] | None = None
     capacity_edges: Sequence[Edge] | None = None
@@ -120,6 +126,8 @@ class CapacityPlanningEnv:
         self.features_per_facility = 3 + self.config.production_lead_time
         if self.config.include_supplier_state:
             self.features_per_facility += 1
+        if self.config.include_transfer_pipeline_state:
+            self.features_per_facility += 3
         self.observation_size = n * self.features_per_facility
         if self.config.action_mode == "facility_net":
             self.action_size = 4 * n
@@ -137,6 +145,11 @@ class CapacityPlanningEnv:
         n = self.config.num_facilities
         lead_time = self.config.production_lead_time
         self.t = 0
+        self.demand_shock_remaining = np.zeros(n, dtype=int)
+        self.demand_rate_multiplier = np.ones(n, dtype=float)
+        self.specimen_transfer_pipeline = self._empty_transfer_pipeline()
+        self.reagent_transfer_pipeline = self._empty_transfer_pipeline()
+        self.capacity_transfer_pipeline = self._empty_transfer_pipeline()
         self.demand = self.rng.poisson(self.demand_rates).astype(float)
         self.supplier_available = self._sample_supplier_available()
         self.specimens = self.initial_specimens.astype(float).copy()
@@ -155,19 +168,50 @@ class CapacityPlanningEnv:
         """Return a flat observation suitable for MLP baselines."""
 
         rows = []
+        pending_specimens, pending_reagents, pending_capacity = self._pending_transfer_arrivals()
         for i in range(self.config.num_facilities):
-            rows.append(
-                np.concatenate(
-                    (
-                        np.array([self.demand[i], self.specimens[i], self.reagents[i]]),
-                        self.bioreactors[i],
-                        np.array([self.supplier_available[i]])
-                        if self.config.include_supplier_state
-                        else np.array([], dtype=float),
+            row_parts = [
+                np.array([self.demand[i], self.specimens[i], self.reagents[i]], dtype=float),
+                self.bioreactors[i],
+            ]
+            if self.config.include_supplier_state:
+                row_parts.append(np.array([self.supplier_available[i]], dtype=float))
+            if self.config.include_transfer_pipeline_state:
+                row_parts.append(
+                    np.array(
+                        [pending_specimens[i], pending_reagents[i], pending_capacity[i]],
+                        dtype=float,
                     )
                 )
-            )
+            rows.append(np.concatenate(tuple(row_parts)))
         return np.concatenate(rows).astype(np.float32)
+
+    def _pending_transfer_arrivals(self) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        n = self.config.num_facilities
+        if self.config.transfer_lead_time <= 0:
+            zeros = np.zeros(n, dtype=float)
+            return zeros, zeros, zeros
+        return (
+            self.specimen_transfer_pipeline.sum(axis=0),
+            self.reagent_transfer_pipeline.sum(axis=0),
+            self.capacity_transfer_pipeline.sum(axis=0),
+        )
+
+    def _receive_transfer_arrivals(self) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        specimen_arrivals = self._pop_transfer_arrivals(self.specimen_transfer_pipeline)
+        reagent_arrivals = self._pop_transfer_arrivals(self.reagent_transfer_pipeline)
+        capacity_arrivals = self._pop_transfer_arrivals(self.capacity_transfer_pipeline)
+        if np.any(specimen_arrivals):
+            self.specimens = np.clip(self.specimens + specimen_arrivals, 0.0, self.max_specimens)
+        if np.any(reagent_arrivals):
+            self.reagents = np.clip(self.reagents + reagent_arrivals, 0.0, self.max_reagents)
+        if np.any(capacity_arrivals):
+            self.bioreactors[:, 0] = np.clip(
+                self.bioreactors[:, 0] + capacity_arrivals,
+                0.0,
+                self.max_idle_bioreactors,
+            )
+        return specimen_arrivals, reagent_arrivals, capacity_arrivals
 
     def graph_observation(self) -> dict[str, np.ndarray]:
         """Return node features and edge sets for future GCN policies."""
@@ -181,6 +225,8 @@ class CapacityPlanningEnv:
         ]
         if self.config.include_supplier_state:
             facility_columns.append(self.supplier_available)
+        if self.config.include_transfer_pipeline_state:
+            facility_columns.extend(self._pending_transfer_arrivals())
         if self.config.include_central_capacity_hub:
             facility_columns.append(np.zeros(self.config.num_facilities, dtype=float))
         node_features = np.column_stack(tuple(facility_columns)).astype(np.float32)
@@ -240,6 +286,7 @@ class CapacityPlanningEnv:
 
         n = self.config.num_facilities
         costs = self.config.costs
+        specimen_arrivals, reagent_arrivals, capacity_arrivals = self._receive_transfer_arrivals()
 
         supplier_available = self.supplier_available.copy()
         current_demand = self.demand.copy()
@@ -274,11 +321,35 @@ class CapacityPlanningEnv:
             next_bioreactors[:, 1:-1] = self.bioreactors[:, 2:]
         next_bioreactors[:, -1] = production
 
-        specimen_transfers = _apply_transfers(next_specimens, self.specimen_edges, specimen_requests)
-        capacity_transfers = _apply_transfers(
-            next_bioreactors[:, 0], self.capacity_edges, capacity_requests
-        )
-        reagent_transfers = _apply_transfers(next_reagents, self.resource_edges, reagent_requests)
+        if self.config.transfer_lead_time > 0:
+            specimen_transfers, specimen_future_arrivals = _apply_transfers_delayed(
+                next_specimens, self.specimen_edges, specimen_requests
+            )
+            capacity_transfers, capacity_future_arrivals = _apply_transfers_delayed(
+                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+            )
+            reagent_transfers, reagent_future_arrivals = _apply_transfers_delayed(
+                next_reagents, self.resource_edges, reagent_requests
+            )
+            self._schedule_transfer_arrivals(
+                self.specimen_transfer_pipeline, specimen_future_arrivals
+            )
+            self._schedule_transfer_arrivals(
+                self.capacity_transfer_pipeline, capacity_future_arrivals
+            )
+            self._schedule_transfer_arrivals(
+                self.reagent_transfer_pipeline, reagent_future_arrivals
+            )
+        else:
+            specimen_transfers = _apply_transfers(
+                next_specimens, self.specimen_edges, specimen_requests
+            )
+            capacity_transfers = _apply_transfers(
+                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+            )
+            reagent_transfers = _apply_transfers(
+                next_reagents, self.resource_edges, reagent_requests
+            )
 
         self.specimens = np.clip(next_specimens, 0.0, self.max_specimens)
         self.reagents = np.clip(next_reagents, 0.0, self.max_reagents)
@@ -303,7 +374,11 @@ class CapacityPlanningEnv:
             "production": production.copy(),
             "demand": current_demand.copy(),
             "supplier_available": supplier_available.copy(),
+            "demand_rate_multiplier": self.demand_rate_multiplier.copy(),
             "replenishment": replenishment.copy(),
+            "specimen_transfer_arrivals": specimen_arrivals.copy(),
+            "reagent_transfer_arrivals": reagent_arrivals.copy(),
+            "capacity_transfer_arrivals": capacity_arrivals.copy(),
             "specimen_transfers": specimen_transfers.copy(),
             "capacity_transfers": capacity_transfers.copy(),
             "reagent_transfers": reagent_transfers.copy(),
@@ -320,6 +395,7 @@ class CapacityPlanningEnv:
 
         n = self.config.num_facilities
         costs = self.config.costs
+        specimen_arrivals, reagent_arrivals, capacity_arrivals = self._receive_transfer_arrivals()
         supplier_available = self.supplier_available.copy()
         current_demand = self.demand.copy()
 
@@ -341,15 +417,35 @@ class CapacityPlanningEnv:
             next_bioreactors[:, 1:-1] = self.bioreactors[:, 2:]
         next_bioreactors[:, -1] = production
 
-        specimen_net, specimen_flows = _apply_net_transfers(
-            next_specimens, self.specimen_edges, specimen_requests
-        )
-        capacity_net, capacity_flows = _apply_net_transfers(
-            next_bioreactors[:, 0], self.capacity_edges, capacity_requests
-        )
-        reagent_net, reagent_flows = _apply_net_transfers(
-            next_reagents, self.resource_edges, reagent_transfer_requests
-        )
+        if self.config.transfer_lead_time > 0:
+            specimen_net, specimen_flows, specimen_future_arrivals = _apply_net_transfers_delayed(
+                next_specimens, self.specimen_edges, specimen_requests
+            )
+            capacity_net, capacity_flows, capacity_future_arrivals = _apply_net_transfers_delayed(
+                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+            )
+            reagent_net, reagent_flows, reagent_future_arrivals = _apply_net_transfers_delayed(
+                next_reagents, self.resource_edges, reagent_transfer_requests
+            )
+            self._schedule_transfer_arrivals(
+                self.specimen_transfer_pipeline, specimen_future_arrivals
+            )
+            self._schedule_transfer_arrivals(
+                self.capacity_transfer_pipeline, capacity_future_arrivals
+            )
+            self._schedule_transfer_arrivals(
+                self.reagent_transfer_pipeline, reagent_future_arrivals
+            )
+        else:
+            specimen_net, specimen_flows = _apply_net_transfers(
+                next_specimens, self.specimen_edges, specimen_requests
+            )
+            capacity_net, capacity_flows = _apply_net_transfers(
+                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+            )
+            reagent_net, reagent_flows = _apply_net_transfers(
+                next_reagents, self.resource_edges, reagent_transfer_requests
+            )
 
         self.specimens = np.clip(next_specimens, 0.0, self.max_specimens)
         self.reagents = np.clip(next_reagents, 0.0, self.max_reagents)
@@ -384,7 +480,11 @@ class CapacityPlanningEnv:
             "production": production.copy(),
             "demand": current_demand.copy(),
             "supplier_available": supplier_available.copy(),
+            "demand_rate_multiplier": self.demand_rate_multiplier.copy(),
             "replenishment": replenishment.copy(),
+            "specimen_transfer_arrivals": specimen_arrivals.copy(),
+            "reagent_transfer_arrivals": reagent_arrivals.copy(),
+            "capacity_transfer_arrivals": capacity_arrivals.copy(),
             "specimen_transfers": specimen_net.copy(),
             "capacity_transfers": capacity_net.copy(),
             "reagent_transfers": reagent_net.copy(),
@@ -404,6 +504,16 @@ class CapacityPlanningEnv:
             raise ValueError("production_lead_time must be at least 2")
         if self.config.episode_horizon < 1:
             raise ValueError("episode_horizon must be positive")
+        if self.config.transfer_lead_time < 0:
+            raise ValueError("transfer_lead_time must be nonnegative")
+        if not 0.0 <= self.config.demand_shock_probability <= 1.0:
+            raise ValueError("demand_shock_probability must be between 0 and 1")
+        if self.config.demand_shock_multiplier < 1.0:
+            raise ValueError("demand_shock_multiplier must be at least 1")
+        if self.config.demand_shock_duration < 0:
+            raise ValueError("demand_shock_duration must be nonnegative")
+        if self.config.demand_shock_cluster_size < 0:
+            raise ValueError("demand_shock_cluster_size must be nonnegative")
         if self.config.action_mode not in ("edge_transfer", "facility_net"):
             raise ValueError("action_mode must be 'edge_transfer' or 'facility_net'")
 
@@ -414,9 +524,61 @@ class CapacityPlanningEnv:
     def _advance_clock(self) -> bool:
         self.t += 1
         done = self.t >= self.config.episode_horizon
-        self.demand = self.rng.poisson(self.demand_rates).astype(float)
+        self._advance_demand_shocks()
+        self.demand = self.rng.poisson(self._effective_demand_rates()).astype(float)
         self.supplier_available = self._sample_supplier_available()
         return done
+
+    def _advance_demand_shocks(self) -> None:
+        if self.config.demand_shock_duration <= 0:
+            self.demand_shock_remaining[:] = 0
+            self.demand_rate_multiplier[:] = 1.0
+            return
+
+        self.demand_shock_remaining = np.maximum(self.demand_shock_remaining - 1, 0)
+        if self.rng.random() < self.config.demand_shock_probability:
+            shocked = self._sample_demand_shock_cluster()
+            self.demand_shock_remaining[shocked] = np.maximum(
+                self.demand_shock_remaining[shocked],
+                int(self.config.demand_shock_duration),
+            )
+        self.demand_rate_multiplier = np.where(
+            self.demand_shock_remaining > 0,
+            float(self.config.demand_shock_multiplier),
+            1.0,
+        )
+
+    def _sample_demand_shock_cluster(self) -> np.ndarray:
+        n = self.config.num_facilities
+        cluster_size = int(self.config.demand_shock_cluster_size) or n
+        cluster_size = min(max(cluster_size, 1), n)
+        if cluster_size == n:
+            return np.arange(n)
+        start = int(self.rng.integers(0, n))
+        return (start + np.arange(cluster_size)) % n
+
+    def _effective_demand_rates(self) -> np.ndarray:
+        return self.demand_rates * self.demand_rate_multiplier
+
+    def _empty_transfer_pipeline(self) -> np.ndarray:
+        return np.zeros(
+            (int(self.config.transfer_lead_time), self.config.num_facilities),
+            dtype=float,
+        )
+
+    def _pop_transfer_arrivals(self, pipeline: np.ndarray) -> np.ndarray:
+        if pipeline.shape[0] == 0:
+            return np.zeros(self.config.num_facilities, dtype=float)
+        arrivals = pipeline[0].copy()
+        if pipeline.shape[0] > 1:
+            pipeline[:-1] = pipeline[1:]
+        pipeline[-1] = 0.0
+        return arrivals
+
+    def _schedule_transfer_arrivals(self, pipeline: np.ndarray, arrivals: np.ndarray) -> None:
+        if pipeline.shape[0] == 0:
+            return
+        pipeline[-1] += arrivals
 
     def _capacity_graph_edges(self) -> tuple[Edge, ...]:
         if not self.config.include_central_capacity_hub:
@@ -549,6 +711,25 @@ def _apply_transfers(values: np.ndarray, edges: Sequence[Edge], requested: np.nd
     return actual
 
 
+def _apply_transfers_delayed(
+    values: np.ndarray, edges: Sequence[Edge], requested: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    actual = np.zeros(len(edges), dtype=float)
+    arrivals = np.zeros_like(values, dtype=float)
+    for idx, ((i, j), amount) in enumerate(zip(edges, requested)):
+        if amount >= 0:
+            flow = min(float(amount), float(values[i]))
+            values[i] -= flow
+            arrivals[j] += flow
+            actual[idx] = flow
+        else:
+            flow = min(float(-amount), float(values[j]))
+            values[j] -= flow
+            arrivals[i] += flow
+            actual[idx] = -flow
+    return actual, arrivals
+
+
 def _apply_net_transfers(
     values: np.ndarray, edges: Sequence[Edge], requested_net: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
@@ -590,6 +771,50 @@ def _apply_net_transfers(
             inbound_remaining[receiver] -= flow
 
     return actual_net, edge_flows
+
+
+def _apply_net_transfers_delayed(
+    values: np.ndarray, edges: Sequence[Edge], requested_net: np.ndarray
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    actual_net = np.zeros_like(values, dtype=float)
+    edge_flows = np.zeros(len(edges), dtype=float)
+    arrivals = np.zeros_like(values, dtype=float)
+    if not edges:
+        return actual_net, edge_flows, arrivals
+
+    edge_index = {edge: idx for idx, edge in enumerate(edges)}
+    adjacency: dict[int, set[int]] = {}
+    for i, j in edges:
+        adjacency.setdefault(i, set()).add(j)
+        adjacency.setdefault(j, set()).add(i)
+
+    inbound_remaining = np.maximum(requested_net, 0.0).astype(float)
+    outbound_remaining = np.maximum(-requested_net, 0.0).astype(float)
+    receivers = list(np.where(inbound_remaining > 1e-8)[0])
+    donors = list(np.where(outbound_remaining > 1e-8)[0])
+
+    for receiver in receivers:
+        for donor in donors:
+            if inbound_remaining[receiver] <= 1e-8:
+                break
+            if outbound_remaining[donor] <= 1e-8 or receiver == donor:
+                continue
+            if receiver not in adjacency.get(donor, set()):
+                continue
+            flow = min(inbound_remaining[receiver], outbound_remaining[donor], values[donor])
+            if flow <= 1e-8:
+                continue
+            values[donor] -= flow
+            arrivals[receiver] += flow
+            actual_net[donor] -= flow
+            actual_net[receiver] += flow
+            edge = (min(donor, receiver), max(donor, receiver))
+            sign = 1.0 if edge[0] == donor else -1.0
+            edge_flows[edge_index[edge]] += sign * flow
+            outbound_remaining[donor] -= flow
+            inbound_remaining[receiver] -= flow
+
+    return actual_net, edge_flows, arrivals
 
 
 def _edge_array(edges: Sequence[Edge]) -> np.ndarray:

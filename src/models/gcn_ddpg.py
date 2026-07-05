@@ -13,6 +13,7 @@ from src.models.gcn import GCNActor, GCNCritic
 from src.rl.action_projection import project_action
 from src.rl.networks import require_torch, torch
 from src.rl.noise import OUNoise
+from src.rl.preprocessing import graph_node_feature_scale, reward_scale_from_config
 from src.rl.replay_buffer import ReplayBuffer
 
 
@@ -28,6 +29,8 @@ class GraphStateSpec:
     node_feature_dim: int
     num_nodes: int
     edge_index: tuple[Edge, ...]
+    normalize_node_features: bool = False
+    node_feature_scale: tuple[float, ...] = ()
 
 
 def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
@@ -114,6 +117,8 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
     graph_edges = list(_dedupe_edges(graph_edges, num_nodes))
 
     node_feature_dim = 5 + int(include_supplier_state) + int(include_hub)
+    normalize_node_features = bool(config.get("normalize_observations", False))
+    node_feature_scale = graph_node_feature_scale(config, node_feature_dim)
     return GraphStateSpec(
         num_facilities=num_facilities,
         production_lead_time=production_lead_time,
@@ -123,6 +128,8 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         node_feature_dim=node_feature_dim,
         num_nodes=num_nodes,
         edge_index=tuple(graph_edges),
+        normalize_node_features=normalize_node_features,
+        node_feature_scale=node_feature_scale,
     )
 
 
@@ -150,7 +157,7 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
 
     node_features = torch.cat(feature_parts, dim=-1)
     if not graph_spec.include_central_capacity_hub:
-        return node_features
+        return _normalize_node_features(node_features, graph_spec)
 
     hub_features = torch.zeros(
         batch_size,
@@ -162,7 +169,8 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
     hub_features[:, 0, 3] = idle_bioreactors.sum(dim=1).squeeze(-1)
     hub_features[:, 0, 4] = total_bioreactors.sum(dim=1).squeeze(-1)
     hub_features[:, 0, -1] = 1.0
-    return torch.cat((node_features, hub_features), dim=1)
+    node_features = torch.cat((node_features, hub_features), dim=1)
+    return _normalize_node_features(node_features, graph_spec)
 
 
 class GCNDDPGAgent:
@@ -182,6 +190,7 @@ class GCNDDPGAgent:
         self.gamma = float(config.get("gamma", 0.99))
         self.tau = float(config.get("tau", 0.005))
         self.batch_size = int(config.get("batch_size", 128))
+        self.reward_scale = reward_scale_from_config(config)
         gcn_hidden_sizes = tuple(config.get("gcn_hidden_sizes", [64, 64]))
         actor_hidden_sizes = tuple(config.get("actor_hidden_sizes", config.get("hidden_sizes", [256, 128])))
         critic_hidden_sizes = tuple(config.get("critic_hidden_sizes", config.get("hidden_sizes", [256, 128])))
@@ -270,7 +279,7 @@ class GCNDDPGAgent:
         next_state: np.ndarray,
         done: bool,
     ) -> None:
-        self.replay_buffer.add(state, action, reward, next_state, done)
+        self.replay_buffer.add(state, action, float(reward) * self.reward_scale, next_state, done)
 
     def update(self) -> dict[str, float]:
         if len(self.replay_buffer) < self.batch_size:
@@ -327,6 +336,17 @@ class GCNDDPGAgent:
     def _soft_update(self, local_model, target_model) -> None:
         for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
             target_param.data.copy_(self.tau * local_param.data + (1.0 - self.tau) * target_param.data)
+
+
+def _normalize_node_features(node_features, graph_spec: GraphStateSpec):
+    if not graph_spec.normalize_node_features:
+        return node_features
+    scale = torch.as_tensor(
+        graph_spec.node_feature_scale,
+        dtype=node_features.dtype,
+        device=node_features.device,
+    )
+    return (node_features / scale).clamp(-10.0, 10.0)
 
 
 def _infer_num_facilities(state_dim: int) -> int:

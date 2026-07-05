@@ -10,6 +10,7 @@ import numpy as np
 
 from src.rl.action_projection import project_action
 from src.rl.networks import nn, require_torch, torch
+from src.rl.preprocessing import FixedObservationScaler, reward_scale_from_config
 
 
 LOG_STD_MIN = -20.0
@@ -50,6 +51,8 @@ class PPOAgent:
         self.train_epochs = int(config.get("train_epochs", 10))
         self.minibatch_size = int(config.get("minibatch_size", 64))
         self.rollout_length = int(config.get("rollout_length", 1024))
+        self.reward_scale = reward_scale_from_config(config)
+        self.observation_scaler = FixedObservationScaler.from_config(config, state_dim)
         hidden_sizes = tuple(config.get("hidden_sizes", [256, 256]))
         device_name = config.get("device", "cuda" if torch.cuda.is_available() else "cpu")
         self.device = torch.device(device_name)
@@ -70,6 +73,7 @@ class PPOAgent:
 
     def select_action(self, state: np.ndarray, explore: bool = True, env=None) -> np.ndarray:
         state_tensor = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
+        state_tensor = self.observation_scaler.normalize_tensor(state_tensor)
         self.actor.eval()
         self.critic.eval()
         with torch.no_grad():
@@ -98,7 +102,7 @@ class PPOAgent:
             PPOTransition(
                 state=np.asarray(state, dtype=np.float32),
                 action=np.asarray(action, dtype=np.float32),
-                reward=float(reward),
+                reward=float(reward) * self.reward_scale,
                 next_state=np.asarray(next_state, dtype=np.float32),
                 done=bool(done),
                 log_prob=self._last_log_prob,
@@ -121,6 +125,7 @@ class PPOAgent:
 
     def _update_from_rollout(self) -> dict[str, float]:
         states = torch.as_tensor(np.stack([item.state for item in self.rollout]), dtype=torch.float32, device=self.device)
+        states = self.observation_scaler.normalize_tensor(states)
         actions = torch.as_tensor(np.stack([item.action for item in self.rollout]), dtype=torch.float32, device=self.device)
         old_log_probs = torch.as_tensor(
             np.asarray([[item.log_prob] for item in self.rollout], dtype=np.float32),
@@ -135,6 +140,7 @@ class PPOAgent:
         if self._last_next_state is not None and not self._last_done:
             with torch.no_grad():
                 next_tensor = torch.as_tensor(self._last_next_state, dtype=torch.float32, device=self.device).unsqueeze(0)
+                next_tensor = self.observation_scaler.normalize_tensor(next_tensor)
                 last_value = float(self.critic(next_tensor).cpu().numpy()[0, 0])
 
         advantages, returns = _compute_gae(

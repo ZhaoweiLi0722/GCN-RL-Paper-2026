@@ -7,6 +7,7 @@ from evaluation.run_smoke_comparison import _smoke_config
 from src.rl.action_projection import project_action
 from src.rl.config import load_config
 from src.rl.experiment import build_env
+from src.rl.preprocessing import FixedObservationScaler
 
 
 class RLUtilsTest(unittest.TestCase):
@@ -53,6 +54,25 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(config["scenario_name"], "manuscript_20_clinic_disruption_0_6")
         self.assertEqual(config["supplier_disruption_rate"], 0.6)
         self.assertEqual(config["num_facilities"], 20)
+
+    def test_graph_stress_scenario_config_loads(self):
+        config = load_config("experiments/configs/20_clinic_graph_stress_capacity_bottleneck.json")
+
+        self.assertEqual(config["scenario_name"], "graph_stress_capacity_bottleneck")
+        self.assertEqual(config["num_facilities"], 20)
+        self.assertIsInstance(config["demand_rates"], list)
+
+    def test_fixed_observation_scaler_uses_env_capacity_metadata(self):
+        config = load_config("configs/flat_ddpg_20_clinic.yaml")
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+        state = env.reset(seed=0)
+
+        normalized = scaler.normalize_np(state)
+
+        self.assertTrue(scaler.enabled)
+        self.assertEqual(normalized.shape, state.shape)
+        self.assertLessEqual(float(np.max(np.abs(normalized))), 10.0)
 
     def test_aggregate_rows_computes_mean(self):
         rows = [

@@ -10,6 +10,7 @@ import numpy as np
 from src.rl.action_projection import project_action
 from src.rl.networks import MLPActor, MLPCritic, require_torch, torch
 from src.rl.noise import OUNoise
+from src.rl.preprocessing import FixedObservationScaler, reward_scale_from_config
 from src.rl.replay_buffer import ReplayBuffer
 
 
@@ -29,6 +30,8 @@ class FlatDDPGAgent:
         self.gamma = float(config.get("gamma", 0.99))
         self.tau = float(config.get("tau", 0.005))
         self.batch_size = int(config.get("batch_size", 128))
+        self.reward_scale = reward_scale_from_config(config)
+        self.observation_scaler = FixedObservationScaler.from_config(config, state_dim)
         hidden_sizes = tuple(config.get("hidden_sizes", [256, 256]))
         device_name = config.get("device", "cuda" if torch.cuda.is_available() else "cpu")
         self.device = torch.device(device_name)
@@ -63,6 +66,7 @@ class FlatDDPGAgent:
         self.actor.eval()
         with torch.no_grad():
             state_tensor = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
+            state_tensor = self.observation_scaler.normalize_tensor(state_tensor)
             action = self.actor(state_tensor).cpu().numpy()[0]
         self.actor.train()
         if explore:
@@ -77,7 +81,7 @@ class FlatDDPGAgent:
         next_state: np.ndarray,
         done: bool,
     ) -> None:
-        self.replay_buffer.add(state, action, reward, next_state, done)
+        self.replay_buffer.add(state, action, float(reward) * self.reward_scale, next_state, done)
 
     def update(self) -> dict[str, float]:
         if len(self.replay_buffer) < self.batch_size:
@@ -89,6 +93,8 @@ class FlatDDPGAgent:
         rewards = torch.as_tensor(batch.rewards, dtype=torch.float32, device=self.device)
         next_states = torch.as_tensor(batch.next_states, dtype=torch.float32, device=self.device)
         dones = torch.as_tensor(batch.dones, dtype=torch.float32, device=self.device)
+        states = self.observation_scaler.normalize_tensor(states)
+        next_states = self.observation_scaler.normalize_tensor(next_states)
 
         with torch.no_grad():
             next_actions = self.actor_target(next_states)

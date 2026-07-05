@@ -1,0 +1,72 @@
+{
+  "name": "20_clinic_graph_stress_benchmark",
+  "description": "Graph-stress benchmark scenarios with heterogeneous demand, capacity, and supplier disruption.",
+  "algorithms": [
+    "gcn_ddpg",
+    "flat_ddpg",
+    "td3",
+    "sac",
+    "ppo",
+    "myo",
+    "iso",
+    "mdl1",
+    "mdl2"
+  ],
+  "primary_algorithms": [
+    "gcn_ddpg",
+    "flat_ddpg",
+    "td3",
+    "ppo",
+    "myo",
+    "iso",
+    "mdl1",
+    "mdl2"
+  ],
+  "learned_config_paths": {
+    "gcn_ddpg": "configs/gcn_ddpg_20_clinic.yaml",
+    "flat_ddpg": "configs/flat_ddpg_20_clinic.yaml",
+    "td3": "configs/td3_20_clinic.yaml",
+    "sac": "configs/sac_20_clinic.yaml",
+    "ppo": "configs/ppo_20_clinic.yaml"
+  },
+  "scenarios": [
+    {
+      "name": "graph_stress_capacity_bottleneck",
+      "env_config": "experiments/configs/20_clinic_graph_stress_capacity_bottleneck.json"
+    },
+    {
+      "name": "graph_stress_supply_cluster",
+      "env_config": "experiments/configs/20_clinic_graph_stress_supply_cluster.json"
+    }
+  ],
+  "budgets": {
+    "smoke": {
+      "seeds": [0],
+      "num_episodes": 1,
+      "max_steps_per_episode": 3,
+      "batch_size": 2,
+      "checkpoint_interval": 1,
+      "progress_interval": 1,
+      "evaluation_replications": 1,
+      "evaluation_seed": 50000
+    },
+    "pilot": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 100,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 100,
+      "progress_interval": 10,
+      "evaluation_replications": 100,
+      "evaluation_seed": 50000
+    }
+  },
+  "output_root": "results/graph_stress_benchmark",
+  "figure_root": "figures/graph_stress_benchmark",
+  "plot_metrics": [
+    "total_cost_mean",
+    "service_level_mean",
+    "average_waiting_time_mean",
+    "transshipment_cost_mean"
+  ]
+}

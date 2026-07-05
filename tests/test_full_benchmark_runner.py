@@ -34,6 +34,17 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertNotIn("sac", select_algorithms(plan, None, primary_only=True))
         self.assertEqual(select_scenarios(plan, ["disruption_0_3"])[0]["name"], "disruption_0_3")
 
+    def test_graph_stress_plan_loads(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/graph_stress_benchmark.json")
+        budget = resolve_budget(plan, "pilot")
+
+        self.assertEqual(plan["name"], "20_clinic_graph_stress_benchmark")
+        self.assertEqual(budget["evaluation_replications"], 100)
+        self.assertEqual(
+            select_scenarios(plan, ["graph_stress_supply_cluster"])[0]["name"],
+            "graph_stress_supply_cluster",
+        )
+
     def test_training_config_preserves_algorithm_graph_ablation(self) -> None:
         plan = load_benchmark_plan()
         budget = resolve_budget(plan, "smoke")

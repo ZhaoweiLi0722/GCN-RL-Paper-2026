@@ -40,6 +40,7 @@ outputs/
 artifacts/
 figures/smoke_*.png
 figures/full_benchmark/
+figures/graph_stress_benchmark/
 
 # Model checkpoints
 *.pt

@@ -1,0 +1,58 @@
+{
+  "scenario_name": "graph_stress_capacity_bottleneck",
+  "supplier_disruption_rate": [
+    0.55, 0.55, 0.55, 0.55, 0.55,
+    0.10, 0.10, 0.10, 0.10, 0.10,
+    0.35, 0.35, 0.35, 0.35, 0.35,
+    0.10, 0.10, 0.10, 0.10, 0.10
+  ],
+  "demand_forecast_error": null,
+  "graph_ablation": "full_graph",
+  "num_facilities": 20,
+  "production_lead_time": 3,
+  "episode_horizon": 52,
+  "demand_rates": [
+    8.5, 8.5, 8.5, 8.5, 8.5,
+    2.8, 2.8, 2.8, 2.8, 2.8,
+    6.5, 6.5, 6.5, 6.5, 6.5,
+    3.2, 3.2, 3.2, 3.2, 3.2
+  ],
+  "initial_specimens": 0,
+  "initial_reagents": [
+    55, 55, 55, 55, 55,
+    170, 170, 170, 170, 170,
+    75, 75, 75, 75, 75,
+    150, 150, 150, 150, 150
+  ],
+  "initial_idle_bioreactors": [
+    4, 4, 4, 4, 4,
+    16, 16, 16, 16, 16,
+    6, 6, 6, 6, 6,
+    14, 14, 14, 14, 14
+  ],
+  "max_specimens": 140,
+  "max_reagents": [
+    120, 120, 120, 120, 120,
+    240, 240, 240, 240, 240,
+    140, 140, 140, 140, 140,
+    220, 220, 220, 220, 220
+  ],
+  "max_idle_bioreactors": [
+    8, 8, 8, 8, 8,
+    24, 24, 24, 24, 24,
+    10, 10, 10, 10, 10,
+    22, 22, 22, 22, 22
+  ],
+  "max_reagent_replenishment": [
+    35, 35, 35, 35, 35,
+    120, 120, 120, 120, 120,
+    45, 45, 45, 45, 45,
+    110, 110, 110, 110, 110
+  ],
+  "max_specimen_transfer": 120,
+  "max_bioreactor_transfer": 20,
+  "max_reagent_transfer": 120,
+  "action_mode": "facility_net",
+  "include_supplier_state": true,
+  "include_central_capacity_hub": true
+}

@@ -1,0 +1,48 @@
+{
+  "scenario_name": "graph_stress_supply_cluster",
+  "supplier_disruption_rate": [
+    0.70, 0.70, 0.70, 0.70, 0.70,
+    0.45, 0.45, 0.45, 0.45, 0.45,
+    0.05, 0.05, 0.05, 0.05, 0.05,
+    0.15, 0.15, 0.15, 0.15, 0.15
+  ],
+  "demand_forecast_error": null,
+  "graph_ablation": "full_graph",
+  "num_facilities": 20,
+  "production_lead_time": 3,
+  "episode_horizon": 52,
+  "demand_rates": [
+    7.5, 7.5, 7.5, 7.5, 7.5,
+    6.0, 6.0, 6.0, 6.0, 6.0,
+    3.5, 3.5, 3.5, 3.5, 3.5,
+    4.0, 4.0, 4.0, 4.0, 4.0
+  ],
+  "initial_specimens": 0,
+  "initial_reagents": [
+    45, 45, 45, 45, 45,
+    70, 70, 70, 70, 70,
+    180, 180, 180, 180, 180,
+    140, 140, 140, 140, 140
+  ],
+  "initial_idle_bioreactors": [
+    8, 8, 8, 8, 8,
+    9, 9, 9, 9, 9,
+    13, 13, 13, 13, 13,
+    12, 12, 12, 12, 12
+  ],
+  "max_specimens": 140,
+  "max_reagents": 240,
+  "max_idle_bioreactors": 22,
+  "max_reagent_replenishment": [
+    35, 35, 35, 35, 35,
+    50, 50, 50, 50, 50,
+    130, 130, 130, 130, 130,
+    100, 100, 100, 100, 100
+  ],
+  "max_specimen_transfer": 120,
+  "max_bioreactor_transfer": 20,
+  "max_reagent_transfer": 120,
+  "action_mode": "facility_net",
+  "include_supplier_state": true,
+  "include_central_capacity_hub": true
+}

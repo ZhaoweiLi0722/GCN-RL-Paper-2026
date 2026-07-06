@@ -25,6 +25,7 @@ class GraphStateSpec:
     num_facilities: int
     production_lead_time: int
     include_supplier_state: bool
+    include_demand_forecast_state: bool
     include_central_capacity_hub: bool
     include_transfer_pipeline_state: bool
     features_per_facility: int
@@ -45,9 +46,10 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         num_facilities = _infer_num_facilities(state_dim)
     production_lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier_state = bool(env_config.get("include_supplier_state", False))
+    include_forecast = bool(env_config.get("include_demand_forecast_state", False))
     include_hub = bool(env_config.get("include_central_capacity_hub", False))
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-    features_per_facility = 3 + production_lead_time + int(include_supplier_state)
+    features_per_facility = 3 + production_lead_time + int(include_supplier_state) + int(include_forecast)
     if include_transfer_pipeline:
         features_per_facility += 3
     expected_state_dim = num_facilities * features_per_facility
@@ -121,13 +123,20 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         graph_edges.extend(edge_sets[edge_type])
     graph_edges = list(_dedupe_edges(graph_edges, num_nodes))
 
-    node_feature_dim = 5 + int(include_supplier_state) + 3 * int(include_transfer_pipeline) + int(include_hub)
+    node_feature_dim = (
+        5
+        + int(include_supplier_state)
+        + int(include_forecast)
+        + 3 * int(include_transfer_pipeline)
+        + int(include_hub)
+    )
     normalize_node_features = bool(config.get("normalize_observations", False))
     node_feature_scale = graph_node_feature_scale(config, node_feature_dim)
     return GraphStateSpec(
         num_facilities=num_facilities,
         production_lead_time=production_lead_time,
         include_supplier_state=include_supplier_state,
+        include_demand_forecast_state=include_forecast,
         include_central_capacity_hub=include_hub,
         include_transfer_pipeline_state=include_transfer_pipeline,
         features_per_facility=features_per_facility,
@@ -158,8 +167,16 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
     feature_parts = [demand, specimens, reagents, idle_bioreactors, total_bioreactors]
     if graph_spec.include_supplier_state:
         feature_parts.append(facility_state[:, :, 3 + lead_time : 4 + lead_time])
+    if graph_spec.include_demand_forecast_state:
+        forecast_start = 3 + lead_time + int(graph_spec.include_supplier_state)
+        feature_parts.append(facility_state[:, :, forecast_start : forecast_start + 1])
     if graph_spec.include_transfer_pipeline_state:
-        pending_start = 3 + lead_time + int(graph_spec.include_supplier_state)
+        pending_start = (
+            3
+            + lead_time
+            + int(graph_spec.include_supplier_state)
+            + int(graph_spec.include_demand_forecast_state)
+        )
         feature_parts.append(facility_state[:, :, pending_start : pending_start + 3])
     if graph_spec.include_central_capacity_hub:
         feature_parts.append(torch.zeros_like(demand))

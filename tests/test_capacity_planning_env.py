@@ -159,6 +159,44 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         self.assertEqual(int(np.count_nonzero(env.demand_rate_multiplier == 3.0)), 2)
         self.assertEqual(int(np.count_nonzero(env.demand_shock_remaining > 0)), 2)
 
+    def test_demand_forecast_state_tracks_effective_demand_rate(self):
+        config = CapacityPlanningConfig(
+            num_facilities=4,
+            production_lead_time=2,
+            episode_horizon=2,
+            demand_rates=(1.0, 1.0, 1.0, 1.0),
+            initial_specimens=(0.0, 0.0, 0.0, 0.0),
+            initial_reagents=(0.0, 0.0, 0.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0, 0.0, 0.0),
+            max_specimens=(10.0, 10.0, 10.0, 10.0),
+            max_reagents=(10.0, 10.0, 10.0, 10.0),
+            max_idle_bioreactors=(5.0, 5.0, 5.0, 5.0),
+            max_reagent_replenishment=(0.0, 0.0, 0.0, 0.0),
+            action_mode="facility_net",
+            include_supplier_state=True,
+            include_demand_forecast_state=True,
+            demand_forecast_horizon=2,
+            demand_forecast_error=0.0,
+            demand_shock_probability=1.0,
+            demand_shock_multiplier=3.0,
+            demand_shock_duration=2,
+            demand_shock_cluster_size=2,
+        )
+        env = CapacityPlanningEnv(config, seed=22)
+
+        observation = env.reset(seed=22)
+        self.assertEqual(env.observation_size, 4 * 7)
+        self.assertEqual(observation.shape, (env.observation_size,))
+        np.testing.assert_allclose(env.demand_forecast, np.full(4, 2.0))
+
+        next_observation, _reward, _done, info = env.step(env.noop_action())
+
+        self.assertEqual(next_observation.shape, (env.observation_size,))
+        self.assertEqual(env.graph_observation()["node_features"].shape, (4, 7))
+        self.assertTrue(np.any(env.demand_forecast == 6.0))
+        self.assertTrue(np.any(env.demand_forecast == 2.0))
+        np.testing.assert_allclose(info["demand_forecast"], np.full(4, 2.0))
+
 
 if __name__ == "__main__":
     unittest.main()

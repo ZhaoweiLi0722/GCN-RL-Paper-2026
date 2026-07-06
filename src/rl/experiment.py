@@ -17,7 +17,6 @@ def build_env(config: dict[str, Any], seed: int) -> CapacityPlanningEnv:
     env_config = dict(config.get("env", {}))
     ablation = env_config.pop("graph_ablation", config.get("graph_ablation", "full_graph"))
     scenario = env_config.pop("scenario_name", config.get("scenario", "default"))
-    env_config.pop("demand_forecast_error", None)
     typed_config = CapacityPlanningConfig(**{key: _to_tuple(value) for key, value in env_config.items()})
     typed_config = apply_graph_ablation(typed_config, ablation)
     env = CapacityPlanningEnv(typed_config, seed=seed)

@@ -83,6 +83,19 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(env.graph_observation()["node_features"].shape, (21, 10))
         self.assertEqual(scaler.scales.shape, (200,))
 
+    def test_graph_dynamic_patient_forecast_config_builds_env(self):
+        env_config = load_config("experiments/configs/20_clinic_graph_dynamic_patient_forecast.json")
+        config = load_config("configs/gcn_ddpg_20_clinic.yaml")
+        config["env"] = env_config
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+
+        self.assertTrue(env.config.include_demand_forecast_state)
+        self.assertEqual(env.config.demand_forecast_horizon, 2)
+        self.assertEqual(env.observation_size, 220)
+        self.assertEqual(env.graph_observation()["node_features"].shape, (21, 11))
+        self.assertEqual(scaler.scales.shape, (220,))
+
     def test_gcn_config_enables_imitation_pretrain(self):
         config = load_config("configs/gcn_ddpg_20_clinic.yaml")
         plan = load_config("experiments/configs/graph_stress_benchmark.json")

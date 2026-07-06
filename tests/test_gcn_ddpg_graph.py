@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import unittest
 
 import numpy as np
@@ -59,6 +59,27 @@ class GraphStateConversionTests(unittest.TestCase):
         state_tensor = torch.as_tensor(state, dtype=torch.float32)
         node_features = flat_state_to_node_features(state_tensor, spec).numpy()[0]
 
+        np.testing.assert_allclose(node_features, env.graph_observation()["node_features"])
+
+    def test_flat_state_conversion_includes_demand_forecast_feature(self) -> None:
+        base_config = make_20_clinic_config(episode_horizon=2)
+        forecast_config = replace(
+            base_config,
+            include_demand_forecast_state=True,
+            demand_forecast_horizon=2,
+            demand_forecast_error=0.0,
+        )
+        env_config = asdict(forecast_config)
+        env = CapacityPlanningEnv(forecast_config, seed=31)
+        state = env.reset(seed=31)
+        config = _config_dict()
+        config["env"] = env_config
+        spec = build_graph_spec(config, state_dim=env.observation_size)
+        state_tensor = torch.as_tensor(state, dtype=torch.float32)
+        node_features = flat_state_to_node_features(state_tensor, spec).numpy()[0]
+
+        self.assertEqual(spec.features_per_facility, 8)
+        self.assertEqual(spec.node_feature_dim, 8)
         np.testing.assert_allclose(node_features, env.graph_observation()["node_features"])
 
     def test_facility_action_actor_readout_matches_facility_net_layout(self) -> None:

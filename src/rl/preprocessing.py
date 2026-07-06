@@ -33,8 +33,9 @@ class FixedObservationScaler:
             num_facilities = _infer_num_facilities(state_dim, env_config)
         lead_time = int(env_config.get("production_lead_time", 3))
         include_supplier = bool(env_config.get("include_supplier_state", False))
+        include_forecast = bool(env_config.get("include_demand_forecast_state", False))
         include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-        features_per_facility = 3 + lead_time + int(include_supplier)
+        features_per_facility = 3 + lead_time + int(include_supplier) + int(include_forecast)
         if include_transfer_pipeline:
             features_per_facility += 3
         expected_state_dim = num_facilities * features_per_facility
@@ -59,6 +60,9 @@ class FixedObservationScaler:
             row.extend([max(float(max_idle[facility]), 1.0)] * lead_time)
             if include_supplier:
                 row.append(1.0)
+            if include_forecast:
+                horizon = int(env_config.get("demand_forecast_horizon", 1))
+                row.append(max(float(demand_rates[facility]) * horizon, 1.0))
             if include_transfer_pipeline:
                 row.extend(
                     [
@@ -98,6 +102,7 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
     lead_time = int(env_config.get("production_lead_time", 3))
     num_facilities = int(env_config.get("num_facilities", 1))
     include_supplier = bool(env_config.get("include_supplier_state", False))
+    include_forecast = bool(env_config.get("include_demand_forecast_state", False))
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     include_hub = bool(env_config.get("include_central_capacity_hub", False))
     demand_rates = _as_vector(env_config.get("demand_rates", 1.0), num_facilities)
@@ -113,6 +118,9 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
     ]
     if include_supplier:
         scale.append(1.0)
+    if include_forecast:
+        horizon = int(env_config.get("demand_forecast_horizon", 1))
+        scale.append(max(float(np.mean(demand_rates)) * horizon, 1.0))
     if include_transfer_pipeline:
         scale.extend(
             [
@@ -142,8 +150,9 @@ def _as_vector(values: Sequence[float] | float | int | None, length: int) -> np.
 def _infer_num_facilities(state_dim: int, env_config: dict[str, Any]) -> int:
     lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier = bool(env_config.get("include_supplier_state", False))
+    include_forecast = bool(env_config.get("include_demand_forecast_state", False))
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-    features_per_facility = 3 + lead_time + int(include_supplier)
+    features_per_facility = 3 + lead_time + int(include_supplier) + int(include_forecast)
     if include_transfer_pipeline:
         features_per_facility += 3
     if state_dim % features_per_facility != 0:

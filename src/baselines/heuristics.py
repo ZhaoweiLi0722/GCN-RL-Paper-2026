@@ -184,8 +184,15 @@ def facility_net_action_from_state(
         raise ValueError("env_config['num_facilities'] must be positive")
     lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier = bool(env_config.get("include_supplier_state", False))
+    include_forecast = bool(env_config.get("include_demand_forecast_state", False))
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-    features_per_facility = 3 + lead_time + int(include_supplier) + 3 * int(include_transfer_pipeline)
+    features_per_facility = (
+        3
+        + lead_time
+        + int(include_supplier)
+        + int(include_forecast)
+        + 3 * int(include_transfer_pipeline)
+    )
 
     state_array = np.asarray(state, dtype=np.float32).reshape(n, features_per_facility)
     demand = state_array[:, 0]

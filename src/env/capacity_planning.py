@@ -57,6 +57,9 @@ class CapacityPlanningConfig:
     demand_shock_multiplier: float = 1.0
     demand_shock_duration: int = 0
     demand_shock_cluster_size: int = 0
+    include_demand_forecast_state: bool = False
+    demand_forecast_horizon: int = 1
+    demand_forecast_error: float | None = None
     information_edges: Sequence[Edge] | None = None
     specimen_edges: Sequence[Edge] | None = None
     capacity_edges: Sequence[Edge] | None = None
@@ -126,6 +129,8 @@ class CapacityPlanningEnv:
         self.features_per_facility = 3 + self.config.production_lead_time
         if self.config.include_supplier_state:
             self.features_per_facility += 1
+        if self.config.include_demand_forecast_state:
+            self.features_per_facility += 1
         if self.config.include_transfer_pipeline_state:
             self.features_per_facility += 3
         self.observation_size = n * self.features_per_facility
@@ -152,6 +157,7 @@ class CapacityPlanningEnv:
         self.capacity_transfer_pipeline = self._empty_transfer_pipeline()
         self.demand = self.rng.poisson(self.demand_rates).astype(float)
         self.supplier_available = self._sample_supplier_available()
+        self.demand_forecast = self._sample_demand_forecast()
         self.specimens = self.initial_specimens.astype(float).copy()
         self.reagents = self.initial_reagents.astype(float).copy()
         self.bioreactors = np.zeros((n, lead_time), dtype=float)
@@ -176,6 +182,8 @@ class CapacityPlanningEnv:
             ]
             if self.config.include_supplier_state:
                 row_parts.append(np.array([self.supplier_available[i]], dtype=float))
+            if self.config.include_demand_forecast_state:
+                row_parts.append(np.array([self.demand_forecast[i]], dtype=float))
             if self.config.include_transfer_pipeline_state:
                 row_parts.append(
                     np.array(
@@ -225,6 +233,8 @@ class CapacityPlanningEnv:
         ]
         if self.config.include_supplier_state:
             facility_columns.append(self.supplier_available)
+        if self.config.include_demand_forecast_state:
+            facility_columns.append(self.demand_forecast)
         if self.config.include_transfer_pipeline_state:
             facility_columns.extend(self._pending_transfer_arrivals())
         if self.config.include_central_capacity_hub:
@@ -290,6 +300,7 @@ class CapacityPlanningEnv:
 
         supplier_available = self.supplier_available.copy()
         current_demand = self.demand.copy()
+        current_demand_forecast = self.demand_forecast.copy()
         replenishment = (
             ((normalized[:n] + 1.0) / 2.0)
             * self.max_reagent_replenishment
@@ -373,6 +384,7 @@ class CapacityPlanningEnv:
             "cost": cost,
             "production": production.copy(),
             "demand": current_demand.copy(),
+            "demand_forecast": current_demand_forecast.copy(),
             "supplier_available": supplier_available.copy(),
             "demand_rate_multiplier": self.demand_rate_multiplier.copy(),
             "replenishment": replenishment.copy(),
@@ -398,6 +410,7 @@ class CapacityPlanningEnv:
         specimen_arrivals, reagent_arrivals, capacity_arrivals = self._receive_transfer_arrivals()
         supplier_available = self.supplier_available.copy()
         current_demand = self.demand.copy()
+        current_demand_forecast = self.demand_forecast.copy()
 
         specimen_requests = normalized[:n] * self.config.max_specimen_transfer
         reagent_transfer_requests = normalized[n : 2 * n] * self.config.max_reagent_transfer
@@ -479,6 +492,7 @@ class CapacityPlanningEnv:
             "cost": cost,
             "production": production.copy(),
             "demand": current_demand.copy(),
+            "demand_forecast": current_demand_forecast.copy(),
             "supplier_available": supplier_available.copy(),
             "demand_rate_multiplier": self.demand_rate_multiplier.copy(),
             "replenishment": replenishment.copy(),
@@ -514,6 +528,10 @@ class CapacityPlanningEnv:
             raise ValueError("demand_shock_duration must be nonnegative")
         if self.config.demand_shock_cluster_size < 0:
             raise ValueError("demand_shock_cluster_size must be nonnegative")
+        if self.config.demand_forecast_horizon < 1:
+            raise ValueError("demand_forecast_horizon must be positive")
+        if self.config.demand_forecast_error is not None and self.config.demand_forecast_error < 0.0:
+            raise ValueError("demand_forecast_error must be nonnegative or null")
         if self.config.action_mode not in ("edge_transfer", "facility_net"):
             raise ValueError("action_mode must be 'edge_transfer' or 'facility_net'")
 
@@ -527,6 +545,7 @@ class CapacityPlanningEnv:
         self._advance_demand_shocks()
         self.demand = self.rng.poisson(self._effective_demand_rates()).astype(float)
         self.supplier_available = self._sample_supplier_available()
+        self.demand_forecast = self._sample_demand_forecast()
         return done
 
     def _advance_demand_shocks(self) -> None:
@@ -559,6 +578,17 @@ class CapacityPlanningEnv:
 
     def _effective_demand_rates(self) -> np.ndarray:
         return self.demand_rates * self.demand_rate_multiplier
+
+    def _sample_demand_forecast(self) -> np.ndarray:
+        horizon = int(self.config.demand_forecast_horizon)
+        forecast = self._effective_demand_rates() * horizon
+        if not self.config.include_demand_forecast_state:
+            return forecast.astype(float)
+        error = self.config.demand_forecast_error
+        if error is None or float(error) == 0.0:
+            return forecast.astype(float)
+        noise = self.rng.normal(loc=0.0, scale=float(error), size=self.config.num_facilities)
+        return np.clip(forecast * (1.0 + noise), 0.0, None).astype(float)
 
     def _empty_transfer_pipeline(self) -> np.ndarray:
         return np.zeros(

@@ -13,14 +13,25 @@
   "critic_hidden_sizes": [256, 128, 64],
   "include_global_context": true,
   "actor_readout_mode": "facility_action",
-  "actor_lr": 0.0001,
+  "actor_lr": 0.00005,
   "critic_lr": 0.001,
   "gamma": 0.99,
   "tau": 0.005,
   "replay_buffer_size": 1000000,
   "exploration_noise": {
     "theta": 0.15,
-    "sigma": 0.2
+    "sigma": 0.08
+  },
+  "imitation_pretrain": {
+    "enabled": true,
+    "policy": "mdl2",
+    "episodes": 20,
+    "epochs": 8,
+    "batch_size": 256,
+    "seed": 90000,
+    "populate_replay_buffer": true,
+    "regularization_weight": 1.0,
+    "regularization_batch_size": 64
   },
   "checkpoint_interval": 3,
   "checkpoint_dir": "checkpoints/gcn_ddpg_20_clinic",

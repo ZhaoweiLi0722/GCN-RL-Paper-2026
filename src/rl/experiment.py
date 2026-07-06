@@ -55,6 +55,7 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
     checkpoint_interval = int(config.get("checkpoint_interval", max(num_episodes, 1)))
     progress_interval = int(config.get("progress_interval", 0))
     start_time = time.perf_counter()
+    pretrain_summary = _maybe_pretrain_agent(agent, env, config)
 
     for episode in range(num_episodes):
         state = env.reset(seed=seed + episode)
@@ -89,6 +90,8 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
                 "bioreactor_utilization": metrics.bioreactor_utilization,
                 "transshipment_count": metrics.transshipment_count,
                 "transshipment_cost": metrics.transshipment_cost,
+                "pretrain_samples": pretrain_summary.get("samples", 0),
+                "pretrain_final_loss": pretrain_summary.get("final_loss", ""),
                 "runtime_seconds": time.perf_counter() - start_time,
             }
         )
@@ -106,6 +109,23 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
             )
 
     return rows
+
+
+def _maybe_pretrain_agent(agent, env: CapacityPlanningEnv, config: dict[str, Any]) -> dict[str, Any]:
+    pretrain_config = dict(config.get("imitation_pretrain", {}))
+    if not bool(pretrain_config.get("enabled", False)):
+        return {}
+    if not hasattr(agent, "pretrain_with_heuristic"):
+        raise ValueError(f"{config.get('algorithm', agent.algorithm)} does not support imitation_pretrain")
+    summary = agent.pretrain_with_heuristic(env, pretrain_config)
+    if summary:
+        print(
+            "imitation_pretrain "
+            f"policy={summary.get('policy')} samples={summary.get('samples')} "
+            f"final_loss={summary.get('final_loss'):.6f}",
+            flush=True,
+        )
+    return summary
 
 
 def write_rows(rows: list[dict[str, Any]], path: str | Path) -> None:

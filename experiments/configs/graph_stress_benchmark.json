@@ -63,6 +63,16 @@
       "progress_interval": 10,
       "evaluation_replications": 100,
       "evaluation_seed": 50000
+    },
+    "gcn_tune": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 300,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 300,
+      "progress_interval": 25,
+      "evaluation_replications": 100,
+      "evaluation_seed": 80000
     }
   },
   "output_root": "results/graph_stress_benchmark",

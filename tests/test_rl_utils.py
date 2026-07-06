@@ -75,6 +75,17 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(env.graph_observation()["node_features"].shape, (21, 10))
         self.assertEqual(scaler.scales.shape, (200,))
 
+    def test_gcn_config_enables_imitation_pretrain(self):
+        config = load_config("configs/gcn_ddpg_20_clinic.yaml")
+        plan = load_config("experiments/configs/graph_stress_benchmark.json")
+
+        self.assertTrue(config["imitation_pretrain"]["enabled"])
+        self.assertEqual(config["imitation_pretrain"]["policy"], "mdl2")
+        self.assertGreater(config["imitation_pretrain"]["regularization_weight"], 0.0)
+        self.assertLess(config["exploration_noise"]["sigma"], 0.2)
+        self.assertLess(config["actor_lr"], 0.0001)
+        self.assertEqual(plan["budgets"]["gcn_tune"]["num_episodes"], 300)
+
     def test_fixed_observation_scaler_uses_env_capacity_metadata(self):
         config = load_config("configs/flat_ddpg_20_clinic.yaml")
         env = build_env(config, seed=0)

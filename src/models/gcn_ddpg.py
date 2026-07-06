@@ -194,11 +194,22 @@ class GCNDDPGAgent:
 
         self.state_dim = int(state_dim)
         self.action_dim = int(action_dim)
+        self.seed = seed
         self.graph_spec = build_graph_spec(config, state_dim)
         self.gamma = float(config.get("gamma", 0.99))
         self.tau = float(config.get("tau", 0.005))
         self.batch_size = int(config.get("batch_size", 128))
         self.reward_scale = reward_scale_from_config(config)
+        imitation_config = dict(config.get("imitation_pretrain", {}))
+        self.imitation_regularization_weight = float(
+            imitation_config.get("regularization_weight", 0.0)
+        )
+        self.imitation_regularization_batch_size = int(
+            imitation_config.get("regularization_batch_size", self.batch_size)
+        )
+        self.imitation_states = None
+        self.imitation_actions = None
+        self.imitation_rng = np.random.default_rng(seed + 300000)
         gcn_hidden_sizes = tuple(config.get("gcn_hidden_sizes", [64, 64]))
         actor_hidden_sizes = tuple(config.get("actor_hidden_sizes", config.get("hidden_sizes", [256, 128])))
         critic_hidden_sizes = tuple(config.get("critic_hidden_sizes", config.get("hidden_sizes", [256, 128])))
@@ -317,13 +328,109 @@ class GCNDDPGAgent:
         self.critic_optimizer.step()
 
         actor_loss = -self.critic(node_features, self.actor(node_features)).mean()
+        imitation_loss_value = None
+        if self.imitation_regularization_weight > 0.0 and self.imitation_states is not None:
+            imitation_loss = self._actor_imitation_loss()
+            actor_loss = actor_loss + self.imitation_regularization_weight * imitation_loss
+            imitation_loss_value = float(imitation_loss.item())
         self.actor_optimizer.zero_grad()
         actor_loss.backward()
         self.actor_optimizer.step()
 
         self._soft_update(self.actor, self.actor_target)
         self._soft_update(self.critic, self.critic_target)
-        return {"actor_loss": float(actor_loss.item()), "critic_loss": float(critic_loss.item())}
+        metrics = {"actor_loss": float(actor_loss.item()), "critic_loss": float(critic_loss.item())}
+        if imitation_loss_value is not None:
+            metrics["imitation_loss"] = imitation_loss_value
+        return metrics
+
+    def _actor_imitation_loss(self):
+        sample_count = int(self.imitation_states.shape[0])
+        batch_size = min(max(self.imitation_regularization_batch_size, 1), sample_count)
+        indices = self.imitation_rng.choice(sample_count, size=batch_size, replace=False)
+        index_tensor = torch.as_tensor(indices, dtype=torch.long, device=self.device)
+        node_features = flat_state_to_node_features(
+            self.imitation_states[index_tensor],
+            self.graph_spec,
+        )
+        predicted_actions = self.actor(node_features)
+        return torch.nn.functional.mse_loss(
+            predicted_actions,
+            self.imitation_actions[index_tensor],
+        )
+
+    def pretrain_with_heuristic(self, env, settings: dict[str, Any]) -> dict[str, Any]:
+        """Warm-start the actor from deterministic heuristic demonstrations."""
+
+        from src.baselines.heuristics import get_heuristic_class
+
+        policy_name = str(settings.get("policy", "mdl2"))
+        episodes = int(settings.get("episodes", 0))
+        epochs = int(settings.get("epochs", 1))
+        batch_size = int(settings.get("batch_size", self.batch_size))
+        max_steps = int(settings.get("max_steps_per_episode", env.config.episode_horizon))
+        seed = int(settings.get("seed", self.seed + 100000))
+        populate_replay = bool(settings.get("populate_replay_buffer", True))
+        if episodes <= 0 or epochs <= 0:
+            return {"policy": policy_name, "samples": 0, "final_loss": 0.0}
+
+        policy_config = dict(settings.get("policy_config", {}))
+        heuristic = get_heuristic_class(policy_name)(
+            state_dim=env.observation_size,
+            action_dim=env.action_size,
+            config=policy_config,
+        )
+        states: list[np.ndarray] = []
+        actions: list[np.ndarray] = []
+        for episode in range(episodes):
+            state = env.reset(seed=seed + episode)
+            heuristic.reset()
+            for _step in range(max_steps):
+                action = heuristic.select_action(state, explore=False, env=env)
+                next_state, reward, done, _info = env.step(action)
+                states.append(np.asarray(state, dtype=np.float32))
+                actions.append(np.asarray(action, dtype=np.float32))
+                if populate_replay:
+                    self.replay_buffer.add(
+                        state,
+                        action,
+                        float(reward) * self.reward_scale,
+                        next_state,
+                        done,
+                    )
+                state = next_state
+                if done:
+                    break
+
+        if not states:
+            return {"policy": policy_name, "samples": 0, "final_loss": 0.0}
+
+        state_tensor = torch.as_tensor(np.asarray(states), dtype=torch.float32, device=self.device)
+        action_tensor = torch.as_tensor(np.asarray(actions), dtype=torch.float32, device=self.device)
+        sample_count = int(state_tensor.shape[0])
+        batch_size = min(max(batch_size, 1), sample_count)
+        generator = torch.Generator().manual_seed(seed)
+        final_loss = 0.0
+
+        self.actor.train()
+        for _epoch in range(epochs):
+            permutation = torch.randperm(sample_count, generator=generator)
+            for start in range(0, sample_count, batch_size):
+                indices = permutation[start : start + batch_size].to(self.device)
+                node_features = flat_state_to_node_features(state_tensor[indices], self.graph_spec)
+                predicted_actions = self.actor(node_features)
+                loss = torch.nn.functional.mse_loss(predicted_actions, action_tensor[indices])
+                self.actor_optimizer.zero_grad()
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(self.actor.parameters(), max_norm=5.0)
+                self.actor_optimizer.step()
+                final_loss = float(loss.item())
+
+        self.actor_target.load_state_dict(self.actor.state_dict())
+        self.imitation_states = state_tensor.detach()
+        self.imitation_actions = action_tensor.detach()
+        self.imitation_rng = np.random.default_rng(seed + 300000)
+        return {"policy": policy_name, "samples": sample_count, "final_loss": final_loss}
 
     def save(self, path: str | Path) -> None:
         output_path = Path(path)

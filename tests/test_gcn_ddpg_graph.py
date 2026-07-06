@@ -16,7 +16,7 @@ except ModuleNotFoundError:  # pragma: no cover
 
 if torch is not None:
     from src.models.gcn import GCNActor
-    from src.models.gcn_ddpg import flat_state_to_node_features
+    from src.models.gcn_ddpg import GCNDDPGAgent, flat_state_to_node_features
 
 
 def _config_dict(graph_ablation: str = "full_graph") -> dict:
@@ -79,6 +79,46 @@ class GraphStateConversionTests(unittest.TestCase):
         self.assertEqual(tuple(actions.shape), (2, 80))
         self.assertTrue(torch.all(actions <= 1.0))
         self.assertTrue(torch.all(actions >= -1.0))
+
+    def test_gcn_agent_imitation_pretrain_collects_demonstrations(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=11)
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "reward_scale": 1e-9,
+                "normalize_observations": True,
+                "gcn_hidden_sizes": [8],
+                "actor_hidden_sizes": [16],
+                "critic_hidden_sizes": [16],
+                "actor_readout_mode": "facility_action",
+                "imitation_pretrain": {
+                    "enabled": True,
+                    "regularization_weight": 0.5,
+                    "regularization_batch_size": 2,
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+
+        summary = agent.pretrain_with_heuristic(
+            env,
+            {
+                "policy": "mdl1",
+                "episodes": 1,
+                "epochs": 1,
+                "batch_size": 2,
+                "seed": 123,
+                "populate_replay_buffer": True,
+            },
+        )
+
+        self.assertEqual(summary["policy"], "mdl1")
+        self.assertEqual(summary["samples"], 2)
+        self.assertGreaterEqual(summary["final_loss"], 0.0)
+        self.assertEqual(len(agent.replay_buffer), 2)
+        update_metrics = agent.update()
+        self.assertIn("imitation_loss", update_metrics)
 
 
 if __name__ == "__main__":

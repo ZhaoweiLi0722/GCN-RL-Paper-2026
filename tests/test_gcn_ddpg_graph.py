@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import asdict
 import unittest
 
 import numpy as np
@@ -119,6 +120,33 @@ class GraphStateConversionTests(unittest.TestCase):
         self.assertEqual(len(agent.replay_buffer), 2)
         update_metrics = agent.update()
         self.assertIn("imitation_loss", update_metrics)
+
+    def test_residual_action_zero_network_output_returns_heuristic_base(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=13)
+        state = env.reset(seed=13)
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "env": asdict(env.config),
+                "gcn_hidden_sizes": [8],
+                "actor_hidden_sizes": [16],
+                "critic_hidden_sizes": [16],
+                "actor_readout_mode": "facility_action",
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.35,
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        zero_residual = np.zeros(env.action_size, dtype=np.float32)
+
+        base_action = agent._base_action_from_state_np(state)
+        composed_action = agent._compose_action_np(state, zero_residual)
+
+        np.testing.assert_allclose(composed_action, base_action)
 
 
 if __name__ == "__main__":

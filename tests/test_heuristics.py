@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+from dataclasses import asdict
 import unittest
 
 import numpy as np
 
 from evaluation.evaluate_formal import evaluate_agent, summarize_rows
 from src.baselines.heuristics import (
+    facility_net_action_from_state,
+    heuristic_settings_for_policy,
     IsolatedPolicy,
     MeanDemandLookahead1Policy,
     MeanDemandLookahead2Policy,
@@ -34,6 +37,16 @@ class HeuristicPolicyTests(unittest.TestCase):
         action = IsolatedPolicy().select_action(self.state, env=self.env)
         n = self.env.config.num_facilities
         np.testing.assert_allclose(action[: 3 * n], np.zeros(3 * n, dtype=np.float32))
+
+    def test_state_based_helper_matches_live_policy(self) -> None:
+        live_action = MeanDemandLookahead2Policy().select_action(self.state, env=self.env)
+        state_action = facility_net_action_from_state(
+            self.state,
+            asdict(self.env.config),
+            settings=heuristic_settings_for_policy("mdl2"),
+        )
+
+        np.testing.assert_allclose(state_action, live_action)
 
     def test_formal_evaluation_summarizes_heuristic_rows(self) -> None:
         policy = MyopicPolicy()

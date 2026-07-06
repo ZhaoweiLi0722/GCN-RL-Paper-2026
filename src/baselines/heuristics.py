@@ -9,7 +9,7 @@ from typing import Any, Sequence
 import numpy as np
 
 from src.env.capacity_planning import CapacityPlanningEnv
-from src.graph.edges import Edge
+from src.graph.edges import Edge, complete_undirected_edges, ring_edges
 from src.rl.action_projection import project_action
 
 
@@ -83,56 +83,22 @@ class CapacityHeuristicPolicy:
         return None
 
     def _facility_net_action(self, env: CapacityPlanningEnv) -> np.ndarray:
-        n = env.config.num_facilities
-        production = np.minimum.reduce((env.specimens, env.bioreactors[:, 0], env.reagents))
-        next_specimens = env.specimens - production + env.demand
-        next_reagents = env.reagents - production
-        next_idle_bioreactors = env.bioreactors[:, 0] - production + env.bioreactors[:, 1]
-
-        lookahead_demand = self.settings.lookahead_periods * env.demand_rates
-        target_workload = np.maximum(next_specimens, 0.0) + lookahead_demand
-        target_workload = target_workload * self.settings.local_order_up_to_multiplier
-
-        replenishment = np.clip(
-            target_workload - next_reagents,
-            0.0,
-            env.max_reagent_replenishment,
+        return facility_net_action_from_arrays(
+            demand=env.demand,
+            specimens=env.specimens,
+            reagents=env.reagents,
+            bioreactors=env.bioreactors,
+            supplier_available=env.supplier_available,
+            demand_rates=env.demand_rates,
+            max_reagent_replenishment=env.max_reagent_replenishment,
+            max_specimen_transfer=float(env.config.max_specimen_transfer),
+            max_bioreactor_transfer=float(env.config.max_bioreactor_transfer),
+            max_reagent_transfer=float(env.config.max_reagent_transfer),
+            specimen_edges=env.specimen_edges,
+            capacity_edges=env.capacity_edges,
+            resource_edges=env.resource_edges,
+            settings=self.settings,
         )
-        replenishment = replenishment * env.supplier_available
-        estimated_reagents = next_reagents + replenishment
-
-        if self.settings.allow_sharing:
-            reagent_net = _balance_shortage_surplus(
-                shortage=np.maximum(target_workload - estimated_reagents, 0.0),
-                surplus=np.maximum(estimated_reagents - target_workload, 0.0),
-                edges=env.resource_edges,
-                max_abs=float(env.config.max_reagent_transfer),
-            )
-            capacity_net = _balance_shortage_surplus(
-                shortage=np.maximum(target_workload - next_idle_bioreactors, 0.0),
-                surplus=np.maximum(next_idle_bioreactors - target_workload, 0.0),
-                edges=env.capacity_edges,
-                max_abs=float(env.config.max_bioreactor_transfer),
-            )
-            spare_processing = np.maximum(np.minimum(estimated_reagents, next_idle_bioreactors) - next_specimens, 0.0)
-            excess_specimens = np.maximum(next_specimens - np.minimum(estimated_reagents, next_idle_bioreactors), 0.0)
-            specimen_net = _balance_shortage_surplus(
-                shortage=spare_processing,
-                surplus=excess_specimens,
-                edges=env.specimen_edges,
-                max_abs=float(env.config.max_specimen_transfer),
-            )
-        else:
-            specimen_net = np.zeros(n, dtype=float)
-            reagent_net = np.zeros(n, dtype=float)
-            capacity_net = np.zeros(n, dtype=float)
-
-        action = np.zeros(env.action_size, dtype=np.float32)
-        action[:n] = _normalize_signed(specimen_net, float(env.config.max_specimen_transfer))
-        action[n : 2 * n] = _normalize_signed(reagent_net, float(env.config.max_reagent_transfer))
-        action[2 * n : 3 * n] = _normalize_signed(capacity_net, float(env.config.max_bioreactor_transfer))
-        action[3 * n : 4 * n] = _normalize_replenishment(replenishment, env.max_reagent_replenishment)
-        return action
 
 
 class MyopicPolicy(CapacityHeuristicPolicy):
@@ -190,6 +156,149 @@ def get_heuristic_class(algorithm: str):
         raise ValueError(f"Unsupported heuristic algorithm: {algorithm}") from exc
 
 
+def heuristic_settings_for_policy(
+    algorithm: str,
+    config: dict[str, Any] | None = None,
+) -> HeuristicSettings:
+    """Return default or configured settings for a named heuristic policy."""
+
+    policy = get_heuristic_class(algorithm)(config=config or {})
+    return policy.settings
+
+
+def facility_net_action_from_state(
+    state: Sequence[float],
+    env_config: dict[str, Any],
+    *,
+    settings: HeuristicSettings,
+) -> np.ndarray:
+    """Compute a facility-net heuristic action directly from a flat state.
+
+    This mirrors :meth:`CapacityHeuristicPolicy._facility_net_action` without
+    requiring a live environment object, so learned residual policies can use a
+    heuristic anchor inside actor/target updates on replay-buffer states.
+    """
+
+    n = int(env_config.get("num_facilities", 0))
+    if n <= 0:
+        raise ValueError("env_config['num_facilities'] must be positive")
+    lead_time = int(env_config.get("production_lead_time", 3))
+    include_supplier = bool(env_config.get("include_supplier_state", False))
+    include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
+    features_per_facility = 3 + lead_time + int(include_supplier) + 3 * int(include_transfer_pipeline)
+
+    state_array = np.asarray(state, dtype=np.float32).reshape(n, features_per_facility)
+    demand = state_array[:, 0]
+    specimens = state_array[:, 1]
+    reagents = state_array[:, 2]
+    bioreactors = state_array[:, 3 : 3 + lead_time]
+    if include_supplier:
+        supplier_available = state_array[:, 3 + lead_time]
+    else:
+        supplier_available = np.ones(n, dtype=np.float32)
+
+    return facility_net_action_from_arrays(
+        demand=demand,
+        specimens=specimens,
+        reagents=reagents,
+        bioreactors=bioreactors,
+        supplier_available=supplier_available,
+        demand_rates=_config_vector(env_config.get("demand_rates", 0.0), n, "demand_rates"),
+        max_reagent_replenishment=_config_vector(
+            env_config.get("max_reagent_replenishment", 0.0),
+            n,
+            "max_reagent_replenishment",
+        ),
+        max_specimen_transfer=float(env_config.get("max_specimen_transfer", 0.0)),
+        max_bioreactor_transfer=float(env_config.get("max_bioreactor_transfer", 0.0)),
+        max_reagent_transfer=float(env_config.get("max_reagent_transfer", 0.0)),
+        specimen_edges=_resolve_facility_edges(env_config, "specimen_edges", n),
+        capacity_edges=_resolve_facility_edges(env_config, "capacity_edges", n),
+        resource_edges=_resolve_facility_edges(env_config, "resource_edges", n),
+        settings=settings,
+    )
+
+
+def facility_net_action_from_arrays(
+    *,
+    demand: np.ndarray,
+    specimens: np.ndarray,
+    reagents: np.ndarray,
+    bioreactors: np.ndarray,
+    supplier_available: np.ndarray,
+    demand_rates: np.ndarray,
+    max_reagent_replenishment: np.ndarray,
+    max_specimen_transfer: float,
+    max_bioreactor_transfer: float,
+    max_reagent_transfer: float,
+    specimen_edges: Sequence[Edge],
+    capacity_edges: Sequence[Edge],
+    resource_edges: Sequence[Edge],
+    settings: HeuristicSettings,
+) -> np.ndarray:
+    """Compute normalized ``(w, e, q, p)`` facility-net actions."""
+
+    n = int(np.asarray(demand).shape[0])
+    bioreactors = np.asarray(bioreactors, dtype=float)
+    idle_bioreactors = bioreactors[:, 0]
+    next_stage_bioreactors = bioreactors[:, 1] if bioreactors.shape[1] > 1 else np.zeros(n)
+    production = np.minimum.reduce((specimens, idle_bioreactors, reagents))
+    next_specimens = specimens - production + demand
+    next_reagents = reagents - production
+    next_idle_bioreactors = idle_bioreactors - production + next_stage_bioreactors
+
+    lookahead_demand = settings.lookahead_periods * demand_rates
+    target_workload = np.maximum(next_specimens, 0.0) + lookahead_demand
+    target_workload = target_workload * settings.local_order_up_to_multiplier
+
+    replenishment = np.clip(
+        target_workload - next_reagents,
+        0.0,
+        max_reagent_replenishment,
+    )
+    replenishment = replenishment * supplier_available
+    estimated_reagents = next_reagents + replenishment
+
+    if settings.allow_sharing:
+        reagent_net = _balance_shortage_surplus(
+            shortage=np.maximum(target_workload - estimated_reagents, 0.0),
+            surplus=np.maximum(estimated_reagents - target_workload, 0.0),
+            edges=resource_edges,
+            max_abs=max_reagent_transfer,
+        )
+        capacity_net = _balance_shortage_surplus(
+            shortage=np.maximum(target_workload - next_idle_bioreactors, 0.0),
+            surplus=np.maximum(next_idle_bioreactors - target_workload, 0.0),
+            edges=capacity_edges,
+            max_abs=max_bioreactor_transfer,
+        )
+        spare_processing = np.maximum(
+            np.minimum(estimated_reagents, next_idle_bioreactors) - next_specimens,
+            0.0,
+        )
+        excess_specimens = np.maximum(
+            next_specimens - np.minimum(estimated_reagents, next_idle_bioreactors),
+            0.0,
+        )
+        specimen_net = _balance_shortage_surplus(
+            shortage=spare_processing,
+            surplus=excess_specimens,
+            edges=specimen_edges,
+            max_abs=max_specimen_transfer,
+        )
+    else:
+        specimen_net = np.zeros(n, dtype=float)
+        reagent_net = np.zeros(n, dtype=float)
+        capacity_net = np.zeros(n, dtype=float)
+
+    action = np.zeros(4 * n, dtype=np.float32)
+    action[:n] = _normalize_signed(specimen_net, max_specimen_transfer)
+    action[n : 2 * n] = _normalize_signed(reagent_net, max_reagent_transfer)
+    action[2 * n : 3 * n] = _normalize_signed(capacity_net, max_bioreactor_transfer)
+    action[3 * n : 4 * n] = _normalize_replenishment(replenishment, max_reagent_replenishment)
+    return action
+
+
 def _balance_shortage_surplus(
     shortage: np.ndarray,
     surplus: np.ndarray,
@@ -237,6 +346,38 @@ def _adjacency(edges: Sequence[Edge]) -> dict[int, set[int]]:
     return adjacency
 
 
+def _resolve_facility_edges(
+    env_config: dict[str, Any],
+    key: str,
+    num_facilities: int,
+) -> tuple[Edge, ...]:
+    action_mode = str(env_config.get("action_mode", "edge_transfer"))
+    if action_mode == "facility_net" and key in ("specimen_edges", "resource_edges"):
+        default_edges = ring_edges(num_facilities)
+    else:
+        default_edges = complete_undirected_edges(num_facilities)
+    configured = env_config.get(key)
+    edges = default_edges if configured is None else tuple(configured)
+    normalized = []
+    for edge in edges:
+        i, j = int(edge[0]), int(edge[1])
+        if i == j:
+            continue
+        if i < 0 or j < 0 or i >= num_facilities or j >= num_facilities:
+            raise ValueError(f"{key} edge {(i, j)} is outside {num_facilities} facilities")
+        normalized.append((min(i, j), max(i, j)))
+    return tuple(dict.fromkeys(normalized))
+
+
+def _config_vector(values: Any, length: int, name: str) -> np.ndarray:
+    array = np.asarray(values, dtype=float)
+    if array.shape == ():
+        return np.full(length, float(array), dtype=float)
+    if array.shape != (length,):
+        raise ValueError(f"{name} must have length {length}; got shape {array.shape}")
+    return array.astype(float)
+
+
 def _normalize_signed(values: np.ndarray, max_abs: float) -> np.ndarray:
     if max_abs <= 0.0:
         return np.zeros_like(values, dtype=np.float32)
@@ -248,4 +389,3 @@ def _normalize_replenishment(values: np.ndarray, max_replenishment: np.ndarray) 
     positive = max_replenishment > 0
     normalized[positive] = 2.0 * np.clip(values[positive] / max_replenishment[positive], 0.0, 1.0) - 1.0
     return np.clip(normalized, -1.0, 1.0).astype(np.float32)
-

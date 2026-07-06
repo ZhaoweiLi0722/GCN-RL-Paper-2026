@@ -22,6 +22,11 @@
     "theta": 0.15,
     "sigma": 0.08
   },
+  "residual_action": {
+    "enabled": true,
+    "base_policy": "mdl2",
+    "scale": 0.35
+  },
   "imitation_pretrain": {
     "enabled": true,
     "policy": "mdl2",

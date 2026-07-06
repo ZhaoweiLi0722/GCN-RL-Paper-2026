@@ -8,6 +8,7 @@ from typing import Any, Sequence
 
 import numpy as np
 
+from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
 from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
 from src.models.gcn import GCNActor, GCNCritic
 from src.rl.action_projection import project_action
@@ -195,11 +196,25 @@ class GCNDDPGAgent:
         self.state_dim = int(state_dim)
         self.action_dim = int(action_dim)
         self.seed = seed
+        self.env_config = dict(config.get("env", {}))
         self.graph_spec = build_graph_spec(config, state_dim)
         self.gamma = float(config.get("gamma", 0.99))
         self.tau = float(config.get("tau", 0.005))
         self.batch_size = int(config.get("batch_size", 128))
         self.reward_scale = reward_scale_from_config(config)
+        residual_config = dict(config.get("residual_action", {}))
+        self.residual_action_enabled = bool(residual_config.get("enabled", False))
+        self.residual_scale = float(residual_config.get("scale", 0.25))
+        self.residual_base_policy = str(residual_config.get("base_policy", "mdl2"))
+        self.residual_base_settings = heuristic_settings_for_policy(
+            self.residual_base_policy,
+            dict(residual_config.get("base_policy_config", {})),
+        )
+        if self.residual_action_enabled:
+            if self.env_config.get("action_mode") != "facility_net":
+                raise ValueError("residual_action requires env.action_mode='facility_net'")
+            if self.action_dim != 4 * self.graph_spec.num_facilities:
+                raise ValueError("residual_action requires a facility-net action layout")
         imitation_config = dict(config.get("imitation_pretrain", {}))
         self.imitation_regularization_weight = float(
             imitation_config.get("regularization_weight", 0.0)
@@ -287,10 +302,11 @@ class GCNDDPGAgent:
         with torch.no_grad():
             state_tensor = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
             node_features = flat_state_to_node_features(state_tensor, self.graph_spec)
-            action = self.actor(node_features).cpu().numpy()[0]
+            network_action = self.actor(node_features).cpu().numpy()[0]
         self.actor.train()
         if explore:
-            action = action + self.noise.sample()
+            network_action = network_action + self.noise.sample()
+        action = self._compose_action_np(state, network_action)
         return project_action(action, env_state=env, action_space_info=self.action_dim).action
 
     def observe(
@@ -317,7 +333,8 @@ class GCNDDPGAgent:
         node_features = flat_state_to_node_features(states, self.graph_spec)
         next_node_features = flat_state_to_node_features(next_states, self.graph_spec)
         with torch.no_grad():
-            next_actions = self.actor_target(next_node_features)
+            next_network_actions = self.actor_target(next_node_features)
+            next_actions = self._compose_actions_tensor(next_states, next_network_actions)
             target_q = self.critic_target(next_node_features, next_actions)
             q_targets = rewards + self.gamma * (1.0 - dones) * target_q
 
@@ -327,7 +344,9 @@ class GCNDDPGAgent:
         critic_loss.backward()
         self.critic_optimizer.step()
 
-        actor_loss = -self.critic(node_features, self.actor(node_features)).mean()
+        network_actions = self.actor(node_features)
+        actor_actions = self._compose_actions_tensor(states, network_actions)
+        actor_loss = -self.critic(node_features, actor_actions).mean()
         imitation_loss_value = None
         if self.imitation_regularization_weight > 0.0 and self.imitation_states is not None:
             imitation_loss = self._actor_imitation_loss()
@@ -353,7 +372,10 @@ class GCNDDPGAgent:
             self.imitation_states[index_tensor],
             self.graph_spec,
         )
-        predicted_actions = self.actor(node_features)
+        predicted_actions = self._compose_actions_tensor(
+            self.imitation_states[index_tensor],
+            self.actor(node_features),
+        )
         return torch.nn.functional.mse_loss(
             predicted_actions,
             self.imitation_actions[index_tensor],
@@ -418,7 +440,10 @@ class GCNDDPGAgent:
             for start in range(0, sample_count, batch_size):
                 indices = permutation[start : start + batch_size].to(self.device)
                 node_features = flat_state_to_node_features(state_tensor[indices], self.graph_spec)
-                predicted_actions = self.actor(node_features)
+                predicted_actions = self._compose_actions_tensor(
+                    state_tensor[indices],
+                    self.actor(node_features),
+                )
                 loss = torch.nn.functional.mse_loss(predicted_actions, action_tensor[indices])
                 self.actor_optimizer.zero_grad()
                 loss.backward()
@@ -431,6 +456,37 @@ class GCNDDPGAgent:
         self.imitation_actions = action_tensor.detach()
         self.imitation_rng = np.random.default_rng(seed + 300000)
         return {"policy": policy_name, "samples": sample_count, "final_loss": final_loss}
+
+    def _compose_action_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
+        if not self.residual_action_enabled:
+            return np.asarray(network_action, dtype=np.float32)
+        base_action = self._base_action_from_state_np(state)
+        return np.clip(
+            base_action + self.residual_scale * np.asarray(network_action, dtype=np.float32),
+            -1.0,
+            1.0,
+        ).astype(np.float32)
+
+    def _compose_actions_tensor(self, states, network_actions):
+        if not self.residual_action_enabled:
+            return network_actions
+        base_actions = self._base_actions_from_states_tensor(states)
+        return torch.clamp(base_actions + self.residual_scale * network_actions, -1.0, 1.0)
+
+    def _base_action_from_state_np(self, state: np.ndarray) -> np.ndarray:
+        return facility_net_action_from_state(
+            state,
+            self.env_config,
+            settings=self.residual_base_settings,
+        )
+
+    def _base_actions_from_states_tensor(self, states):
+        states_np = states.detach().cpu().numpy()
+        base_actions = np.stack(
+            [self._base_action_from_state_np(state) for state in states_np],
+            axis=0,
+        )
+        return torch.as_tensor(base_actions, dtype=torch.float32, device=self.device)
 
     def save(self, path: str | Path) -> None:
         output_path = Path(path)

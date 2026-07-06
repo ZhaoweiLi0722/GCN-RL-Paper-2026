@@ -94,19 +94,48 @@ if torch is not None:
             gcn_hidden_sizes: Sequence[int],
             head_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
+            readout_mode: str = "global_flat",
         ):
             super().__init__()
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
+            self.readout_mode = str(readout_mode)
             self.encoder = GCNEncoder(node_feature_dim, gcn_hidden_sizes, num_nodes, edges)
-            readout_dim = self.num_facilities * self.encoder.output_dim
-            if self.include_global_context:
-                readout_dim += self.encoder.output_dim
-            self.head = _build_mlp(readout_dim, head_hidden_sizes, action_dim, output_tanh=True)
+            if self.readout_mode == "global_flat":
+                readout_dim = self.num_facilities * self.encoder.output_dim
+                if self.include_global_context:
+                    readout_dim += self.encoder.output_dim
+                self.head = _build_mlp(readout_dim, head_hidden_sizes, action_dim, output_tanh=True)
+            elif self.readout_mode == "facility_action":
+                if int(action_dim) % self.num_facilities != 0:
+                    raise ValueError(
+                        "facility_action readout requires action_dim divisible by num_facilities"
+                    )
+                self.facility_action_dim = int(action_dim) // self.num_facilities
+                facility_input_dim = self.encoder.output_dim
+                if self.include_global_context:
+                    facility_input_dim += self.encoder.output_dim
+                self.head = _build_mlp(
+                    facility_input_dim,
+                    head_hidden_sizes,
+                    self.facility_action_dim,
+                    output_tanh=True,
+                )
+            else:
+                raise ValueError(f"Unsupported GCN actor readout_mode: {self.readout_mode}")
 
         def forward(self, node_features):
             encoded = self.encoder(node_features)
             facility_encoded = encoded[:, : self.num_facilities, :]
+            if self.readout_mode == "facility_action":
+                if self.include_global_context:
+                    graph_context = encoded.mean(dim=1, keepdim=True).expand(
+                        -1, self.num_facilities, -1
+                    )
+                    facility_encoded = torch.cat((facility_encoded, graph_context), dim=-1)
+                facility_actions = self.head(facility_encoded)
+                return facility_actions.transpose(1, 2).flatten(start_dim=1)
+
             readout = facility_encoded.flatten(start_dim=1)
             if self.include_global_context:
                 graph_context = encoded.mean(dim=1)
@@ -190,4 +219,3 @@ else:
     class GCNCritic:  # pragma: no cover
         def __init__(self, *args, **kwargs):
             require_torch()
-

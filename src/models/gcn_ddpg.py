@@ -203,6 +203,7 @@ class GCNDDPGAgent:
         actor_hidden_sizes = tuple(config.get("actor_hidden_sizes", config.get("hidden_sizes", [256, 128])))
         critic_hidden_sizes = tuple(config.get("critic_hidden_sizes", config.get("hidden_sizes", [256, 128])))
         include_global_context = bool(config.get("include_global_context", True))
+        actor_readout_mode = str(config.get("actor_readout_mode", "global_flat"))
         device_name = config.get("device", "cuda" if torch.cuda.is_available() else "cpu")
         self.device = torch.device(device_name)
 
@@ -215,6 +216,7 @@ class GCNDDPGAgent:
             gcn_hidden_sizes,
             actor_hidden_sizes,
             include_global_context=include_global_context,
+            readout_mode=actor_readout_mode,
         ).to(self.device)
         self.actor_target = GCNActor(
             self.graph_spec.node_feature_dim,
@@ -225,6 +227,7 @@ class GCNDDPGAgent:
             gcn_hidden_sizes,
             actor_hidden_sizes,
             include_global_context=include_global_context,
+            readout_mode=actor_readout_mode,
         ).to(self.device)
         self.critic = GCNCritic(
             self.graph_spec.node_feature_dim,

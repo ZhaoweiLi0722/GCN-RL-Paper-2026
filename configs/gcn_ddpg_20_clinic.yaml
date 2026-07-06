@@ -12,6 +12,7 @@
   "actor_hidden_sizes": [256, 128, 64],
   "critic_hidden_sizes": [256, 128, 64],
   "include_global_context": true,
+  "actor_readout_mode": "facility_action",
   "actor_lr": 0.0001,
   "critic_lr": 0.001,
   "gamma": 0.99,

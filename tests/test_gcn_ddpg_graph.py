@@ -15,6 +15,7 @@ except ModuleNotFoundError:  # pragma: no cover
     torch = None
 
 if torch is not None:
+    from src.models.gcn import GCNActor
     from src.models.gcn_ddpg import flat_state_to_node_features
 
 
@@ -58,6 +59,26 @@ class GraphStateConversionTests(unittest.TestCase):
         node_features = flat_state_to_node_features(state_tensor, spec).numpy()[0]
 
         np.testing.assert_allclose(node_features, env.graph_observation()["node_features"])
+
+    def test_facility_action_actor_readout_matches_facility_net_layout(self) -> None:
+        actor = GCNActor(
+            node_feature_dim=7,
+            num_facilities=20,
+            num_nodes=21,
+            action_dim=80,
+            edges=((0, 1), (1, 2), (2, 20)),
+            gcn_hidden_sizes=(8,),
+            head_hidden_sizes=(16,),
+            include_global_context=True,
+            readout_mode="facility_action",
+        )
+        node_features = torch.randn(2, 21, 7)
+
+        actions = actor(node_features)
+
+        self.assertEqual(tuple(actions.shape), (2, 80))
+        self.assertTrue(torch.all(actions <= 1.0))
+        self.assertTrue(torch.all(actions >= -1.0))
 
 
 if __name__ == "__main__":

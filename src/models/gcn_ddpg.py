@@ -12,7 +12,7 @@ from src.baselines.heuristics import facility_net_action_from_state, heuristic_s
 from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
 from src.models.gcn import GCNActor, GCNCritic
 from src.rl.action_projection import project_action
-from src.rl.networks import require_torch, torch
+from src.rl.networks import require_torch, resolve_torch_device, torch
 from src.rl.noise import OUNoise
 from src.rl.preprocessing import graph_node_feature_scale, reward_scale_from_config
 from src.rl.replay_buffer import ReplayBuffer
@@ -205,6 +205,8 @@ class GCNDDPGAgent:
         residual_config = dict(config.get("residual_action", {}))
         self.residual_action_enabled = bool(residual_config.get("enabled", False))
         self.residual_scale = float(residual_config.get("scale", 0.25))
+        self.residual_scale_vector = self._make_residual_scale_vector(residual_config)
+        self.residual_l2_weight = float(residual_config.get("l2_weight", 0.0))
         self.residual_base_policy = str(residual_config.get("base_policy", "mdl2"))
         self.residual_base_settings = heuristic_settings_for_policy(
             self.residual_base_policy,
@@ -230,8 +232,7 @@ class GCNDDPGAgent:
         critic_hidden_sizes = tuple(config.get("critic_hidden_sizes", config.get("hidden_sizes", [256, 128])))
         include_global_context = bool(config.get("include_global_context", True))
         actor_readout_mode = str(config.get("actor_readout_mode", "global_flat"))
-        device_name = config.get("device", "cuda" if torch.cuda.is_available() else "cpu")
-        self.device = torch.device(device_name)
+        self.device = resolve_torch_device(config.get("device"))
 
         self.actor = GCNActor(
             self.graph_spec.node_feature_dim,
@@ -347,6 +348,11 @@ class GCNDDPGAgent:
         network_actions = self.actor(node_features)
         actor_actions = self._compose_actions_tensor(states, network_actions)
         actor_loss = -self.critic(node_features, actor_actions).mean()
+        residual_l2_loss_value = None
+        if self.residual_action_enabled and self.residual_l2_weight > 0.0:
+            residual_l2_loss = network_actions.pow(2).mean()
+            actor_loss = actor_loss + self.residual_l2_weight * residual_l2_loss
+            residual_l2_loss_value = float(residual_l2_loss.item())
         imitation_loss_value = None
         if self.imitation_regularization_weight > 0.0 and self.imitation_states is not None:
             imitation_loss = self._actor_imitation_loss()
@@ -359,6 +365,8 @@ class GCNDDPGAgent:
         self._soft_update(self.actor, self.actor_target)
         self._soft_update(self.critic, self.critic_target)
         metrics = {"actor_loss": float(actor_loss.item()), "critic_loss": float(critic_loss.item())}
+        if residual_l2_loss_value is not None:
+            metrics["residual_l2_loss"] = residual_l2_loss_value
         if imitation_loss_value is not None:
             metrics["imitation_loss"] = imitation_loss_value
         return metrics
@@ -457,12 +465,59 @@ class GCNDDPGAgent:
         self.imitation_rng = np.random.default_rng(seed + 300000)
         return {"policy": policy_name, "samples": sample_count, "final_loss": final_loss}
 
+    def fit_action_batch(
+        self,
+        states: np.ndarray,
+        actions: np.ndarray,
+        settings: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Fit the actor to an externally supplied state-action batch."""
+
+        settings = settings or {}
+        state_tensor = torch.as_tensor(np.asarray(states), dtype=torch.float32, device=self.device)
+        action_tensor = torch.as_tensor(np.asarray(actions), dtype=torch.float32, device=self.device)
+        if state_tensor.ndim != 2 or state_tensor.shape[1] != self.state_dim:
+            raise ValueError(f"Expected states shape (batch, {self.state_dim}), got {tuple(state_tensor.shape)}")
+        if action_tensor.ndim != 2 or action_tensor.shape[1] != self.action_dim:
+            raise ValueError(
+                f"Expected actions shape (batch, {self.action_dim}), got {tuple(action_tensor.shape)}"
+            )
+
+        sample_count = int(state_tensor.shape[0])
+        if sample_count == 0:
+            return {"samples": 0, "final_loss": 0.0}
+        epochs = int(settings.get("epochs", 1))
+        batch_size = min(max(int(settings.get("batch_size", self.batch_size)), 1), sample_count)
+        seed = int(settings.get("seed", self.seed + 400000))
+        generator = torch.Generator().manual_seed(seed)
+        final_loss = 0.0
+
+        self.actor.train()
+        for _epoch in range(max(epochs, 1)):
+            permutation = torch.randperm(sample_count, generator=generator)
+            for start in range(0, sample_count, batch_size):
+                indices = permutation[start : start + batch_size].to(self.device)
+                node_features = flat_state_to_node_features(state_tensor[indices], self.graph_spec)
+                predicted_actions = self._compose_actions_tensor(
+                    state_tensor[indices],
+                    self.actor(node_features),
+                )
+                loss = torch.nn.functional.mse_loss(predicted_actions, action_tensor[indices])
+                self.actor_optimizer.zero_grad()
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(self.actor.parameters(), max_norm=5.0)
+                self.actor_optimizer.step()
+                final_loss = float(loss.item())
+
+        self.actor_target.load_state_dict(self.actor.state_dict())
+        return {"samples": sample_count, "final_loss": final_loss}
+
     def _compose_action_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
         if not self.residual_action_enabled:
             return np.asarray(network_action, dtype=np.float32)
         base_action = self._base_action_from_state_np(state)
         return np.clip(
-            base_action + self.residual_scale * np.asarray(network_action, dtype=np.float32),
+            base_action + self.residual_scale_vector * np.asarray(network_action, dtype=np.float32),
             -1.0,
             1.0,
         ).astype(np.float32)
@@ -471,7 +526,12 @@ class GCNDDPGAgent:
         if not self.residual_action_enabled:
             return network_actions
         base_actions = self._base_actions_from_states_tensor(states)
-        return torch.clamp(base_actions + self.residual_scale * network_actions, -1.0, 1.0)
+        scale = torch.as_tensor(
+            self.residual_scale_vector,
+            dtype=network_actions.dtype,
+            device=network_actions.device,
+        )
+        return torch.clamp(base_actions + scale * network_actions, -1.0, 1.0)
 
     def _base_action_from_state_np(self, state: np.ndarray) -> np.ndarray:
         return facility_net_action_from_state(
@@ -487,6 +547,30 @@ class GCNDDPGAgent:
             axis=0,
         )
         return torch.as_tensor(base_actions, dtype=torch.float32, device=self.device)
+
+    def _make_residual_scale_vector(self, residual_config: dict[str, Any]) -> np.ndarray:
+        scale_vector = np.full(self.action_dim, self.residual_scale, dtype=np.float32)
+        group_scales = residual_config.get("group_scales")
+        if not group_scales:
+            return scale_vector
+        n = self.graph_spec.num_facilities
+        if self.action_dim != 4 * n:
+            raise ValueError("residual_action.group_scales requires a facility-net action layout")
+        group_slices = {
+            "specimen_transfer": slice(0, n),
+            "specimen": slice(0, n),
+            "reagent_transfer": slice(n, 2 * n),
+            "reagent": slice(n, 2 * n),
+            "capacity_transfer": slice(2 * n, 3 * n),
+            "capacity": slice(2 * n, 3 * n),
+            "replenishment": slice(3 * n, 4 * n),
+            "purchase": slice(3 * n, 4 * n),
+        }
+        for group, value in dict(group_scales).items():
+            if group not in group_slices:
+                raise ValueError(f"Unsupported residual action group scale: {group}")
+            scale_vector[group_slices[group]] = float(value)
+        return scale_vector
 
     def save(self, path: str | Path) -> None:
         output_path = Path(path)

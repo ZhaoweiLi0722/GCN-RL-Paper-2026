@@ -148,6 +148,63 @@ class GraphStateConversionTests(unittest.TestCase):
 
         np.testing.assert_allclose(composed_action, base_action)
 
+    def test_residual_action_group_scales_facility_net_segments(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=17)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.25,
+                    "group_scales": {
+                        "specimen_transfer": 0.01,
+                        "reagent_transfer": 0.02,
+                        "capacity_transfer": 0.03,
+                        "replenishment": 0.20,
+                    },
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        n = env.config.num_facilities
+
+        self.assertAlmostEqual(float(agent.residual_scale_vector[0]), 0.01)
+        self.assertAlmostEqual(float(agent.residual_scale_vector[n]), 0.02)
+        self.assertAlmostEqual(float(agent.residual_scale_vector[2 * n]), 0.03)
+        self.assertAlmostEqual(float(agent.residual_scale_vector[3 * n]), 0.20)
+
+    def test_gcn_agent_fits_external_action_batch(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=19)
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "env": asdict(env.config),
+                "gcn_hidden_sizes": [8],
+                "actor_hidden_sizes": [16],
+                "critic_hidden_sizes": [16],
+                "actor_readout_mode": "facility_action",
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.1,
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=19)
+        action = agent._base_action_from_state_np(state)
+        next_state, _reward, _done, _info = env.step(action)
+        states = np.stack([state, next_state])
+        actions = np.stack([action, agent._base_action_from_state_np(next_state)])
+
+        summary = agent.fit_action_batch(states, actions, {"epochs": 1, "batch_size": 2})
+
+        self.assertEqual(summary["samples"], 2)
+        self.assertGreaterEqual(summary["final_loss"], 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

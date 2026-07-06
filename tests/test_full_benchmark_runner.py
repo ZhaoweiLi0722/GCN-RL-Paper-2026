@@ -7,6 +7,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from evaluation.check_training_stability import summarize_training_stability
+from evaluation.run_gcn_residual_sweep import make_residual_sweep_config, residual_variant_name
 from evaluation.run_full_benchmark import (
     config_snapshot_path,
     evaluation_csv_path,
@@ -98,6 +99,45 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("ok")
             self.assertTrue(evaluation_outputs_complete(plan, "smoke", "td3", scenario, 0))
+
+    def test_residual_sweep_config_sets_anchor_and_paths(self) -> None:
+        base_config = {
+            "algorithm": "gcn_ddpg",
+            "env": {"num_facilities": 20, "graph_ablation": "full_graph"},
+            "imitation_pretrain": {"enabled": True, "policy": "mdl2"},
+        }
+        env_config = {"scenario_name": "dynamic", "supplier_disruption_rate": 0.3}
+        variant = residual_variant_name("myo", 0.2, 0.02, transfer_scale=0.04, replenishment_scale=0.2)
+
+        config = make_residual_sweep_config(
+            base_config,
+            env_config,
+            base_policy="myo",
+            scale=0.2,
+            transfer_scale=0.04,
+            replenishment_scale=0.2,
+            l2_weight=0.02,
+            seed=3,
+            episodes=5,
+            steps=7,
+            batch_size=11,
+            checkpoint_interval=2,
+            elite_epochs=4,
+            output_root=Path("results/sweep"),
+            scenario_name="dynamic",
+            variant=variant,
+            progress_interval=2,
+        )
+
+        self.assertEqual(config["residual_action"]["base_policy"], "myo")
+        self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.04)
+        self.assertEqual(config["residual_action"]["group_scales"]["replenishment"], 0.2)
+        self.assertEqual(config["imitation_pretrain"]["policy"], "myo")
+        self.assertEqual(config["max_steps_per_episode"], 7)
+        self.assertEqual(config["batch_size"], 11)
+        self.assertEqual(config["checkpoint_interval"], 2)
+        self.assertEqual(config["elite_imitation"]["epochs"], 4)
+        self.assertIn(variant, config["result_csv_path"])
 
 
 class TrainingStabilityTests(unittest.TestCase):

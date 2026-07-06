@@ -8,7 +8,7 @@ from typing import Any, Sequence
 import numpy as np
 
 from src.rl.action_projection import project_action
-from src.rl.networks import nn, require_torch, torch
+from src.rl.networks import nn, require_torch, resolve_torch_device, torch
 from src.rl.preprocessing import FixedObservationScaler, reward_scale_from_config
 from src.rl.replay_buffer import ReplayBuffer
 
@@ -37,8 +37,7 @@ class SACAgent:
         self.reward_scale = reward_scale_from_config(config)
         self.observation_scaler = FixedObservationScaler.from_config(config, state_dim)
         hidden_sizes = tuple(config.get("hidden_sizes", [256, 256]))
-        device_name = config.get("device", "cuda" if torch.cuda.is_available() else "cpu")
-        self.device = torch.device(device_name)
+        self.device = resolve_torch_device(config.get("device"))
 
         self.actor = SquashedGaussianActor(state_dim, action_dim, hidden_sizes).to(self.device)
         self.critic1 = QNetwork(state_dim, action_dim, hidden_sizes).to(self.device)

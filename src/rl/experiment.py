@@ -56,16 +56,29 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
     progress_interval = int(config.get("progress_interval", 0))
     start_time = time.perf_counter()
     pretrain_summary = _maybe_pretrain_agent(agent, env, config)
+    elite_config = dict(config.get("elite_imitation", {}))
+    elite_enabled = bool(elite_config.get("enabled", False))
+    elite_warmup_episodes = int(elite_config.get("warmup_episodes", 0))
+    elite_min_improvement = float(elite_config.get("min_improvement", 0.0))
+    elite_max_episodes = int(elite_config.get("max_episodes", 5))
+    elite_episodes: list[tuple[float, np.ndarray, np.ndarray]] = []
+    elite_best_cost = float("inf")
+    elite_update_count = 0
 
     for episode in range(num_episodes):
         state = env.reset(seed=seed + episode)
         agent.reset()
         total_reward = 0.0
         metrics = EpisodeMetrics()
+        episode_states: list[np.ndarray] = []
+        episode_actions: list[np.ndarray] = []
 
         for _step in range(max_steps):
             action = agent.select_action(state, explore=True, env=env)
             next_state, reward, done, info = env.step(action)
+            if elite_enabled:
+                episode_states.append(np.asarray(state, dtype=np.float32))
+                episode_actions.append(np.asarray(action, dtype=np.float32))
             agent.observe(state, action, reward, next_state, done)
             agent.update()
             metrics.update(info)
@@ -73,6 +86,23 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
             state = next_state
             if done:
                 break
+
+        elite_summary = _maybe_fit_elite_episode(
+            agent,
+            elite_config,
+            enabled=elite_enabled,
+            episode=episode,
+            warmup_episodes=elite_warmup_episodes,
+            min_improvement=elite_min_improvement,
+            max_episodes=elite_max_episodes,
+            elite_episodes=elite_episodes,
+            states=episode_states,
+            actions=episode_actions,
+            cost=metrics.total_cost,
+        )
+        if elite_summary:
+            elite_best_cost = float(elite_summary.get("elite_best_cost", metrics.total_cost))
+            elite_update_count += 1
 
         rows.append(
             {
@@ -92,6 +122,10 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
                 "transshipment_cost": metrics.transshipment_cost,
                 "pretrain_samples": pretrain_summary.get("samples", 0),
                 "pretrain_final_loss": pretrain_summary.get("final_loss", ""),
+                "elite_imitation_updates": elite_update_count,
+                "elite_buffer_size": elite_summary.get("elite_buffer_size", len(elite_episodes)),
+                "elite_best_cost": "" if not np.isfinite(elite_best_cost) else elite_best_cost,
+                "elite_imitation_loss": elite_summary.get("final_loss", ""),
                 "runtime_seconds": time.perf_counter() - start_time,
             }
         )
@@ -109,6 +143,56 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
             )
 
     return rows
+
+
+def _maybe_fit_elite_episode(
+    agent,
+    settings: dict[str, Any],
+    *,
+    enabled: bool,
+    episode: int,
+    warmup_episodes: int,
+    min_improvement: float,
+    max_episodes: int,
+    elite_episodes: list[tuple[float, np.ndarray, np.ndarray]],
+    states: list[np.ndarray],
+    actions: list[np.ndarray],
+    cost: float,
+) -> dict[str, Any]:
+    if not enabled or episode + 1 < warmup_episodes:
+        return {}
+    if not states or not actions:
+        return {}
+    state_array = np.asarray(states, dtype=np.float32)
+    action_array = np.asarray(actions, dtype=np.float32)
+    max_episodes = max(max_episodes, 1)
+    if len(elite_episodes) >= max_episodes:
+        worst_cost = max(item[0] for item in elite_episodes)
+        threshold = worst_cost * (1.0 - min_improvement)
+        if cost >= threshold:
+            return {}
+    elite_episodes.append((float(cost), state_array, action_array))
+    elite_episodes.sort(key=lambda item: item[0])
+    del elite_episodes[max_episodes:]
+
+    if not any(np.isclose(cost, item[0]) for item in elite_episodes):
+        return {}
+    if not hasattr(agent, "fit_action_batch"):
+        raise ValueError(f"{getattr(agent, 'algorithm', 'agent')} does not support elite_imitation")
+    elite_states = np.concatenate([item[1] for item in elite_episodes], axis=0)
+    elite_actions = np.concatenate([item[2] for item in elite_episodes], axis=0)
+    summary = agent.fit_action_batch(elite_states, elite_actions, settings)
+    summary["elite_buffer_size"] = len(elite_episodes)
+    summary["elite_best_cost"] = elite_episodes[0][0]
+    if summary:
+        print(
+            "elite_imitation "
+            f"episode={episode + 1} cost={cost:.3f} buffer={summary.get('elite_buffer_size')} "
+            f"samples={summary.get('samples')} "
+            f"final_loss={summary.get('final_loss'):.6f}",
+            flush=True,
+        )
+    return summary
 
 
 def _maybe_pretrain_agent(agent, env: CapacityPlanningEnv, config: dict[str, Any]) -> dict[str, Any]:

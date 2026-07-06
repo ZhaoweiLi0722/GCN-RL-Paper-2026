@@ -7,6 +7,7 @@ from evaluation.run_smoke_comparison import _smoke_config
 from src.rl.action_projection import project_action
 from src.rl.config import load_config
 from src.rl.experiment import build_env
+from src.rl.networks import default_torch_device, resolve_torch_device
 from src.rl.preprocessing import FixedObservationScaler
 
 
@@ -20,6 +21,13 @@ class RLUtilsTest(unittest.TestCase):
     def test_project_action_checks_shape(self):
         with self.assertRaises(ValueError):
             project_action(np.array([0.0, 0.0]), action_space_info=3)
+
+    def test_torch_device_auto_prefers_available_accelerator(self):
+        device_name = default_torch_device()
+
+        self.assertIn(device_name, {"cpu", "cuda", "mps"})
+        self.assertEqual(resolve_torch_device("auto").type, device_name)
+        self.assertEqual(resolve_torch_device("cpu").type, "cpu")
 
     def test_json_compatible_yaml_config_loads(self):
         config = load_config("configs/flat_ddpg.yaml")
@@ -85,6 +93,14 @@ class RLUtilsTest(unittest.TestCase):
         self.assertTrue(config["residual_action"]["enabled"])
         self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
         self.assertGreater(config["residual_action"]["scale"], 0.0)
+        self.assertLess(
+            config["residual_action"]["group_scales"]["specimen_transfer"],
+            config["residual_action"]["group_scales"]["replenishment"],
+        )
+        self.assertGreater(config["residual_action"]["l2_weight"], 0.0)
+        self.assertTrue(config["elite_imitation"]["enabled"])
+        self.assertGreaterEqual(config["elite_imitation"]["warmup_episodes"], 1)
+        self.assertGreaterEqual(config["elite_imitation"]["max_episodes"], 2)
         self.assertLess(config["exploration_noise"]["sigma"], 0.2)
         self.assertLess(config["actor_lr"], 0.0001)
         self.assertEqual(plan["budgets"]["gcn_tune"]["num_episodes"], 300)

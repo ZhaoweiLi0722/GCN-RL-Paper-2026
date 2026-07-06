@@ -25,7 +25,14 @@
   "residual_action": {
     "enabled": true,
     "base_policy": "mdl2",
-    "scale": 0.35
+    "scale": 0.35,
+    "group_scales": {
+      "specimen_transfer": 0.05,
+      "reagent_transfer": 0.05,
+      "capacity_transfer": 0.05,
+      "replenishment": 0.35
+    },
+    "l2_weight": 0.02
   },
   "imitation_pretrain": {
     "enabled": true,
@@ -37,6 +44,14 @@
     "populate_replay_buffer": true,
     "regularization_weight": 1.0,
     "regularization_batch_size": 64
+  },
+  "elite_imitation": {
+    "enabled": true,
+    "warmup_episodes": 5,
+    "min_improvement": 0.0,
+    "max_episodes": 5,
+    "epochs": 1,
+    "batch_size": 64
   },
   "checkpoint_interval": 3,
   "checkpoint_dir": "checkpoints/gcn_ddpg_20_clinic",

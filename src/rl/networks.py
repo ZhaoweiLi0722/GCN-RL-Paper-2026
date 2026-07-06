@@ -20,6 +20,27 @@ def require_torch() -> None:
         )
 
 
+def default_torch_device() -> str:
+    """Return the fastest available PyTorch device for this workstation."""
+
+    require_torch()
+    if torch.cuda.is_available():
+        return "cuda"
+    if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
+
+def resolve_torch_device(config_device: str | None = None):
+    """Resolve a configured device name, treating missing/``auto`` as automatic."""
+
+    require_torch()
+    device_name = str(config_device or "auto")
+    if device_name == "auto":
+        device_name = default_torch_device()
+    return torch.device(device_name)
+
+
 if torch is not None:
 
     class MLPActor(nn.Module):

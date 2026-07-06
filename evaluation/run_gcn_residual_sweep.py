@@ -34,6 +34,7 @@ def main() -> None:
     parser.add_argument("--scales", nargs="+", type=float, default=[0.2, 0.35])
     parser.add_argument("--transfer-scale", type=float, default=None)
     parser.add_argument("--replenishment-scale", type=float, default=None)
+    parser.add_argument("--center-residual-groups", nargs="*", default=[])
     parser.add_argument("--l2-weights", nargs="+", type=float, default=[0.02])
     parser.add_argument("--seeds", nargs="+", type=int, default=[0])
     parser.add_argument("--episodes", type=int, default=100)
@@ -48,6 +49,13 @@ def main() -> None:
     parser.add_argument("--offline-elite-epochs", type=int, default=8)
     parser.add_argument("--offline-elite-seed", type=int, default=70000)
     parser.add_argument("--offline-elite-advantage-filter", action="store_true")
+    parser.add_argument(
+        "--offline-elite-weighting",
+        choices=["none", "improvement", "rank"],
+        default="improvement",
+    )
+    parser.add_argument("--offline-elite-weight-power", type=float, default=1.0)
+    parser.add_argument("--offline-elite-weight-floor", type=float, default=0.10)
     parser.add_argument("--eval-replications", type=int, default=100)
     parser.add_argument("--evaluation-seed", type=int, default=50000)
     parser.add_argument("--output-root", default="results/gcn_residual_sweep")
@@ -71,6 +79,7 @@ def main() -> None:
                         base_policy,
                         scale,
                         l2_weight,
+                        center_residual_groups=tuple(args.center_residual_groups or ()),
                         transfer_scale=args.transfer_scale,
                         replenishment_scale=args.replenishment_scale,
                     )
@@ -82,6 +91,7 @@ def main() -> None:
                         transfer_scale=args.transfer_scale,
                         replenishment_scale=args.replenishment_scale,
                         l2_weight=l2_weight,
+                        center_residual_groups=tuple(args.center_residual_groups or ()),
                         seed=seed,
                         episodes=args.episodes,
                         steps=args.steps,
@@ -125,6 +135,7 @@ def main() -> None:
                                 transfer_scale=args.transfer_scale,
                                 replenishment_scale=args.replenishment_scale,
                                 l2_weight=l2_weight,
+                                center_residual_groups=tuple(args.center_residual_groups or ()),
                                 elite_epochs=args.elite_epochs,
                                 seed=seed,
                                 eval_seed=eval_seed,
@@ -164,6 +175,9 @@ def main() -> None:
                             max_steps=int(args.steps),
                             baseline_policy=base_policy,
                             advantage_filter=bool(args.offline_elite_advantage_filter),
+                            weighting=str(args.offline_elite_weighting),
+                            weight_power=float(args.offline_elite_weight_power),
+                            weight_floor=float(args.offline_elite_weight_floor),
                         )
                         offline_checkpoint_path = (
                             Path(config["checkpoint_dir"]) / f"gcn_ddpg_seed{seed}_offline_elite.pt"
@@ -185,6 +199,7 @@ def main() -> None:
                                 transfer_scale=args.transfer_scale,
                                 replenishment_scale=args.replenishment_scale,
                                 l2_weight=l2_weight,
+                                center_residual_groups=tuple(args.center_residual_groups or ()),
                                 elite_epochs=args.elite_epochs,
                                 seed=seed,
                                 eval_seed=eval_seed,
@@ -255,6 +270,7 @@ def summary_metadata(
     checkpoint_path: Path | None,
     checkpoint_episode: int | str,
     selection_stage: str,
+    center_residual_groups: tuple[str, ...] = (),
 ) -> dict[str, Any]:
     return {
         "variant": variant,
@@ -262,6 +278,7 @@ def summary_metadata(
         "residual_scale": float(scale),
         "residual_transfer_scale": "" if transfer_scale is None else float(transfer_scale),
         "residual_replenishment_scale": "" if replenishment_scale is None else float(replenishment_scale),
+        "residual_center_groups": "|".join(center_residual_groups),
         "residual_l2_weight": float(l2_weight),
         "elite_epochs": "" if elite_epochs is None else int(elite_epochs),
         "training_seed": int(seed),
@@ -292,6 +309,9 @@ def run_offline_elite_distillation(
     max_steps: int,
     baseline_policy: str,
     advantage_filter: bool,
+    weighting: str,
+    weight_power: float,
+    weight_floor: float,
 ) -> dict[str, Any]:
     all_elites: list[tuple[float, float, float, float, np.ndarray, np.ndarray]] = []
     final_fit: dict[str, Any] = {}
@@ -319,6 +339,12 @@ def run_offline_elite_distillation(
             continue
         states = np.concatenate([item[4] for item in all_elites], axis=0)
         actions = np.concatenate([item[5] for item in all_elites], axis=0)
+        weights = elite_sample_weights(
+            all_elites,
+            weighting=weighting,
+            power=weight_power,
+            floor=weight_floor,
+        )
         final_fit = agent.fit_action_batch(
             states,
             actions,
@@ -327,12 +353,16 @@ def run_offline_elite_distillation(
                 "batch_size": batch_size,
                 "seed": seed + 900000 + cycle,
             },
+            weights=weights,
         )
+        weight_mean = "" if weights is None else f"{float(weights.mean()):.3f}"
+        weight_max = "" if weights is None else f"{float(weights.max()):.3f}"
         print(
             "offline_elite "
             f"cycle={cycle + 1}/{cycles} best_cost={all_elites[0][1]:.3f} "
             f"best_improvement={all_elites[0][3]:.3f} "
             f"episodes={len(all_elites)} samples={final_fit.get('samples')} "
+            f"weight_mean={weight_mean} weight_max={weight_max} "
             f"loss={final_fit.get('final_loss'):.6f}",
             flush=True,
         )
@@ -344,10 +374,53 @@ def run_offline_elite_distillation(
         "offline_elite_samples": final_fit.get("samples", 0),
         "offline_elite_loss": final_fit.get("final_loss", ""),
         "offline_elite_advantage_filter": bool(advantage_filter),
+        "offline_elite_weighting": weighting,
+        "offline_elite_weight_power": float(weight_power),
+        "offline_elite_weight_floor": float(weight_floor),
         "offline_elite_best_rollout_cost": all_elites[0][1] if all_elites else "",
         "offline_elite_best_baseline_cost": all_elites[0][2] if all_elites else "",
         "offline_elite_best_improvement": all_elites[0][3] if all_elites else "",
     }
+
+
+def elite_sample_weights(
+    elites: list[tuple[float, float, float, float, np.ndarray, np.ndarray]],
+    *,
+    weighting: str,
+    power: float,
+    floor: float,
+) -> np.ndarray | None:
+    if weighting == "none" or not elites:
+        return None
+    if floor < 0.0:
+        raise ValueError("offline elite weight floor must be non-negative")
+    if power <= 0.0:
+        raise ValueError("offline elite weight power must be positive")
+
+    if weighting == "improvement":
+        rollout_weights = np.asarray([max(float(item[3]), 0.0) for item in elites], dtype=np.float32)
+        if float(rollout_weights.sum()) <= 0.0:
+            return None
+        rollout_weights = rollout_weights / float(rollout_weights.mean())
+    elif weighting == "rank":
+        rollout_weights = np.asarray(
+            [len(elites) - rank for rank, _item in enumerate(elites)],
+            dtype=np.float32,
+        )
+        rollout_weights = rollout_weights / float(rollout_weights.mean())
+    else:
+        raise ValueError(f"Unsupported offline elite weighting: {weighting}")
+
+    rollout_weights = np.power(rollout_weights, float(power)).astype(np.float32)
+    if floor > 0.0:
+        rollout_weights = np.maximum(rollout_weights, float(floor)).astype(np.float32)
+    rollout_weights = rollout_weights / float(rollout_weights.mean())
+    sample_weights = [
+        np.full(item[4].shape[0], rollout_weights[index], dtype=np.float32)
+        for index, item in enumerate(elites)
+    ]
+    weights = np.concatenate(sample_weights, axis=0)
+    return (weights / float(weights.mean())).astype(np.float32)
 
 
 def collect_elite_rollouts(
@@ -448,6 +521,7 @@ def make_residual_sweep_config(
     scenario_name: str,
     variant: str,
     progress_interval: int,
+    center_residual_groups: tuple[str, ...] = (),
 ) -> dict[str, Any]:
     config = dict(base_config)
     config["algorithm"] = "gcn_ddpg"
@@ -482,6 +556,8 @@ def make_residual_sweep_config(
             "capacity_transfer": transfer,
             "replenishment": replenishment,
         }
+    if center_residual_groups:
+        residual_action["center_groups"] = list(center_residual_groups)
     config["residual_action"] = residual_action
 
     imitation_pretrain = dict(config.get("imitation_pretrain", {}))
@@ -506,6 +582,7 @@ def residual_variant_name(
     base_policy: str,
     scale: float,
     l2_weight: float,
+    center_residual_groups: tuple[str, ...] = (),
     *,
     transfer_scale: float | None = None,
     replenishment_scale: float | None = None,
@@ -519,6 +596,9 @@ def residual_variant_name(
         transfer_token = f"{transfer:.3g}".replace(".", "p")
         replenishment_token = f"{replenishment:.3g}".replace(".", "p")
         variant = f"{variant}_tr{transfer_token}_rep{replenishment_token}"
+    if center_residual_groups:
+        center_token = "-".join(str(group).replace("_", "") for group in center_residual_groups)
+        variant = f"{variant}_center{center_token}"
     return variant
 
 

@@ -206,6 +206,7 @@ class GCNDDPGAgent:
         self.residual_action_enabled = bool(residual_config.get("enabled", False))
         self.residual_scale = float(residual_config.get("scale", 0.25))
         self.residual_scale_vector = self._make_residual_scale_vector(residual_config)
+        self.residual_center_slices = self._make_residual_center_slices(residual_config)
         self.residual_l2_weight = float(residual_config.get("l2_weight", 0.0))
         self.residual_base_policy = str(residual_config.get("base_policy", "mdl2"))
         self.residual_base_settings = heuristic_settings_for_policy(
@@ -350,7 +351,7 @@ class GCNDDPGAgent:
         actor_loss = -self.critic(node_features, actor_actions).mean()
         residual_l2_loss_value = None
         if self.residual_action_enabled and self.residual_l2_weight > 0.0:
-            residual_l2_loss = network_actions.pow(2).mean()
+            residual_l2_loss = self._transform_network_residuals_tensor(network_actions).pow(2).mean()
             actor_loss = actor_loss + self.residual_l2_weight * residual_l2_loss
             residual_l2_loss_value = float(residual_l2_loss.item())
         imitation_loss_value = None
@@ -380,12 +381,9 @@ class GCNDDPGAgent:
             self.imitation_states[index_tensor],
             self.graph_spec,
         )
-        predicted_actions = self._compose_actions_tensor(
+        return self._supervised_action_loss(
             self.imitation_states[index_tensor],
             self.actor(node_features),
-        )
-        return torch.nn.functional.mse_loss(
-            predicted_actions,
             self.imitation_actions[index_tensor],
         )
 
@@ -448,11 +446,11 @@ class GCNDDPGAgent:
             for start in range(0, sample_count, batch_size):
                 indices = permutation[start : start + batch_size].to(self.device)
                 node_features = flat_state_to_node_features(state_tensor[indices], self.graph_spec)
-                predicted_actions = self._compose_actions_tensor(
+                loss = self._supervised_action_loss(
                     state_tensor[indices],
                     self.actor(node_features),
+                    action_tensor[indices],
                 )
-                loss = torch.nn.functional.mse_loss(predicted_actions, action_tensor[indices])
                 self.actor_optimizer.zero_grad()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.actor.parameters(), max_norm=5.0)
@@ -470,10 +468,13 @@ class GCNDDPGAgent:
         states: np.ndarray,
         actions: np.ndarray,
         settings: dict[str, Any] | None = None,
+        weights: np.ndarray | None = None,
     ) -> dict[str, Any]:
         """Fit the actor to an externally supplied state-action batch."""
 
         settings = settings or {}
+        if weights is None:
+            weights = settings.get("weights")
         state_tensor = torch.as_tensor(np.asarray(states), dtype=torch.float32, device=self.device)
         action_tensor = torch.as_tensor(np.asarray(actions), dtype=torch.float32, device=self.device)
         if state_tensor.ndim != 2 or state_tensor.shape[1] != self.state_dim:
@@ -486,9 +487,13 @@ class GCNDDPGAgent:
         sample_count = int(state_tensor.shape[0])
         if sample_count == 0:
             return {"samples": 0, "final_loss": 0.0}
+        weight_tensor = self._fit_action_weights(weights, sample_count)
         epochs = int(settings.get("epochs", 1))
         batch_size = min(max(int(settings.get("batch_size", self.batch_size)), 1), sample_count)
         seed = int(settings.get("seed", self.seed + 400000))
+        target_mode = str(
+            settings.get("target_mode", "residual" if self.residual_action_enabled else "action")
+        )
         generator = torch.Generator().manual_seed(seed)
         final_loss = 0.0
 
@@ -498,11 +503,13 @@ class GCNDDPGAgent:
             for start in range(0, sample_count, batch_size):
                 indices = permutation[start : start + batch_size].to(self.device)
                 node_features = flat_state_to_node_features(state_tensor[indices], self.graph_spec)
-                predicted_actions = self._compose_actions_tensor(
+                loss = self._supervised_action_loss(
                     state_tensor[indices],
                     self.actor(node_features),
+                    action_tensor[indices],
+                    None if weight_tensor is None else weight_tensor[indices],
+                    target_mode=target_mode,
                 )
-                loss = torch.nn.functional.mse_loss(predicted_actions, action_tensor[indices])
                 self.actor_optimizer.zero_grad()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.actor.parameters(), max_norm=5.0)
@@ -510,14 +517,86 @@ class GCNDDPGAgent:
                 final_loss = float(loss.item())
 
         self.actor_target.load_state_dict(self.actor.state_dict())
-        return {"samples": sample_count, "final_loss": final_loss}
+        return {"samples": sample_count, "final_loss": final_loss, "target_mode": target_mode}
+
+    def _fit_action_weights(self, weights: np.ndarray | None, sample_count: int):
+        if weights is None:
+            return None
+        weight_array = np.asarray(weights, dtype=np.float32)
+        if weight_array.ndim != 1 or weight_array.shape[0] != sample_count:
+            raise ValueError(f"Expected weights shape ({sample_count},), got {tuple(weight_array.shape)}")
+        if not np.all(np.isfinite(weight_array)):
+            raise ValueError("fit_action_batch weights must be finite")
+        if np.any(weight_array < 0.0):
+            raise ValueError("fit_action_batch weights must be non-negative")
+        weight_sum = float(weight_array.sum())
+        if weight_sum <= 0.0:
+            return None
+        weight_array = weight_array / float(weight_array.mean())
+        return torch.as_tensor(weight_array, dtype=torch.float32, device=self.device)
+
+    def _supervised_action_loss(
+        self,
+        states,
+        network_actions,
+        target_actions,
+        weights=None,
+        *,
+        target_mode: str | None = None,
+    ):
+        target_mode = target_mode or ("residual" if self.residual_action_enabled else "action")
+        if target_mode == "action":
+            predicted_actions = self._compose_actions_tensor(states, network_actions)
+            return self._weighted_action_mse(predicted_actions, target_actions, weights)
+        if target_mode != "residual":
+            raise ValueError(f"Unsupported supervised action target mode: {target_mode}")
+        if not self.residual_action_enabled:
+            raise ValueError("residual target mode requires residual_action.enabled")
+        residual_targets = self._residual_targets_tensor(states, target_actions)
+        residual_mask = self._residual_loss_mask(network_actions)
+        predicted_residuals = self._transform_network_residuals_tensor(network_actions)
+        return self._weighted_action_mse(predicted_residuals, residual_targets, weights, residual_mask)
+
+    def _weighted_action_mse(self, predicted_actions, target_actions, weights, dim_mask=None):
+        squared_error = (predicted_actions - target_actions).pow(2)
+        if dim_mask is not None:
+            mask = dim_mask.to(dtype=squared_error.dtype, device=squared_error.device)
+            per_sample_loss = (squared_error * mask).sum(dim=1) / mask.sum().clamp_min(1.0)
+        else:
+            per_sample_loss = squared_error.mean(dim=1)
+        if weights is None:
+            return per_sample_loss.mean()
+        return (per_sample_loss * weights).sum() / weights.sum().clamp_min(1e-8)
+
+    def _residual_targets_tensor(self, states, target_actions):
+        base_actions = self._base_actions_from_states_tensor(states)
+        scale = torch.as_tensor(
+            self.residual_scale_vector,
+            dtype=target_actions.dtype,
+            device=target_actions.device,
+        ).unsqueeze(0)
+        active = scale.abs() > 1e-8
+        safe_scale = torch.where(active, scale, torch.ones_like(scale))
+        residual_targets = (target_actions - base_actions) / safe_scale
+        residual_targets = torch.where(active, residual_targets, torch.zeros_like(residual_targets))
+        residual_targets = torch.clamp(residual_targets, -1.0, 1.0)
+        return self._transform_network_residuals_tensor(residual_targets)
+
+    def _residual_loss_mask(self, network_actions):
+        scale = torch.as_tensor(
+            self.residual_scale_vector,
+            dtype=network_actions.dtype,
+            device=network_actions.device,
+        )
+        return (scale.abs() > 1e-8).to(dtype=network_actions.dtype).unsqueeze(0)
 
     def _compose_action_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
         if not self.residual_action_enabled:
             return np.asarray(network_action, dtype=np.float32)
         base_action = self._base_action_from_state_np(state)
+        residual_action = self._transform_network_residual_np(network_action)
         return np.clip(
-            base_action + self.residual_scale_vector * np.asarray(network_action, dtype=np.float32),
+            base_action + self.residual_scale_vector * residual_action,
             -1.0,
             1.0,
         ).astype(np.float32)
@@ -526,12 +605,30 @@ class GCNDDPGAgent:
         if not self.residual_action_enabled:
             return network_actions
         base_actions = self._base_actions_from_states_tensor(states)
+        residual_actions = self._transform_network_residuals_tensor(network_actions)
         scale = torch.as_tensor(
             self.residual_scale_vector,
             dtype=network_actions.dtype,
             device=network_actions.device,
         )
-        return torch.clamp(base_actions + scale * network_actions, -1.0, 1.0)
+        return torch.clamp(base_actions + scale * residual_actions, -1.0, 1.0)
+
+    def _transform_network_residual_np(self, network_action: np.ndarray) -> np.ndarray:
+        residual = np.asarray(network_action, dtype=np.float32).copy()
+        for group_slice in self.residual_center_slices:
+            residual[group_slice] = residual[group_slice] - float(residual[group_slice].mean())
+        return np.clip(residual, -1.0, 1.0).astype(np.float32)
+
+    def _transform_network_residuals_tensor(self, network_actions):
+        if not self.residual_center_slices:
+            return torch.clamp(network_actions, -1.0, 1.0)
+        residuals = network_actions.clone()
+        for group_slice in self.residual_center_slices:
+            residuals[:, group_slice] = residuals[:, group_slice] - residuals[:, group_slice].mean(
+                dim=1,
+                keepdim=True,
+            )
+        return torch.clamp(residuals, -1.0, 1.0)
 
     def _base_action_from_state_np(self, state: np.ndarray) -> np.ndarray:
         return facility_net_action_from_state(
@@ -556,7 +653,33 @@ class GCNDDPGAgent:
         n = self.graph_spec.num_facilities
         if self.action_dim != 4 * n:
             raise ValueError("residual_action.group_scales requires a facility-net action layout")
-        group_slices = {
+        group_slices = self._facility_net_group_slices(n)
+        for group, value in dict(group_scales).items():
+            if group not in group_slices:
+                raise ValueError(f"Unsupported residual action group scale: {group}")
+            scale_vector[group_slices[group]] = float(value)
+        return scale_vector
+
+    def _make_residual_center_slices(self, residual_config: dict[str, Any]) -> tuple[slice, ...]:
+        center_groups = residual_config.get("center_groups", ())
+        if isinstance(center_groups, str):
+            center_groups = (center_groups,)
+        center_groups = tuple(center_groups or ())
+        if not center_groups:
+            return ()
+        n = self.graph_spec.num_facilities
+        if self.action_dim != 4 * n:
+            raise ValueError("residual_action.center_groups requires a facility-net action layout")
+        group_slices = self._facility_net_group_slices(n)
+        slices = []
+        for group in center_groups:
+            if group not in group_slices:
+                raise ValueError(f"Unsupported residual action center group: {group}")
+            slices.append(group_slices[group])
+        return tuple(slices)
+
+    def _facility_net_group_slices(self, n: int) -> dict[str, slice]:
+        return {
             "specimen_transfer": slice(0, n),
             "specimen": slice(0, n),
             "reagent_transfer": slice(n, 2 * n),
@@ -566,11 +689,6 @@ class GCNDDPGAgent:
             "replenishment": slice(3 * n, 4 * n),
             "purchase": slice(3 * n, 4 * n),
         }
-        for group, value in dict(group_scales).items():
-            if group not in group_slices:
-                raise ValueError(f"Unsupported residual action group scale: {group}")
-            scale_vector[group_slices[group]] = float(value)
-        return scale_vector
 
     def save(self, path: str | Path) -> None:
         output_path = Path(path)

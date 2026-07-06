@@ -6,9 +6,12 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+import numpy as np
+
 from evaluation.check_training_stability import summarize_training_stability
 from evaluation.run_gcn_residual_sweep import (
     best_variant_summary,
+    elite_sample_weights,
     make_residual_sweep_config,
     residual_variant_name,
     summary_metadata,
@@ -112,7 +115,14 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             "imitation_pretrain": {"enabled": True, "policy": "mdl2"},
         }
         env_config = {"scenario_name": "dynamic", "supplier_disruption_rate": 0.3}
-        variant = residual_variant_name("myo", 0.2, 0.02, transfer_scale=0.04, replenishment_scale=0.2)
+        variant = residual_variant_name(
+            "myo",
+            0.2,
+            0.02,
+            center_residual_groups=("replenishment",),
+            transfer_scale=0.04,
+            replenishment_scale=0.2,
+        )
 
         config = make_residual_sweep_config(
             base_config,
@@ -132,17 +142,20 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             scenario_name="dynamic",
             variant=variant,
             progress_interval=2,
+            center_residual_groups=("replenishment",),
         )
 
         self.assertEqual(config["residual_action"]["base_policy"], "myo")
         self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.04)
         self.assertEqual(config["residual_action"]["group_scales"]["replenishment"], 0.2)
+        self.assertEqual(config["residual_action"]["center_groups"], ["replenishment"])
         self.assertEqual(config["imitation_pretrain"]["policy"], "myo")
         self.assertEqual(config["max_steps_per_episode"], 7)
         self.assertEqual(config["batch_size"], 11)
         self.assertEqual(config["checkpoint_interval"], 2)
         self.assertEqual(config["elite_imitation"]["epochs"], 4)
         self.assertIn(variant, config["result_csv_path"])
+        self.assertIn("centerreplenishment", variant)
 
     def test_residual_sweep_metadata_and_best_selector(self) -> None:
         metadata = summary_metadata(
@@ -169,6 +182,22 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(metadata["selection_stage"], "offline_elite")
         self.assertEqual(metadata["checkpoint_episode"], "offline_elite")
         self.assertEqual(best["total_cost_mean"], "3.5")
+
+    def test_offline_elite_sample_weights_follow_rollout_advantage(self) -> None:
+        elites = [
+            (0.0, 9.0, 12.0, 3.0, np.zeros((2, 3), dtype=np.float32), np.zeros((2, 1), dtype=np.float32)),
+            (1.0, 11.0, 12.0, 1.0, np.zeros((3, 3), dtype=np.float32), np.zeros((3, 1), dtype=np.float32)),
+        ]
+
+        weights = elite_sample_weights(elites, weighting="improvement", power=1.0, floor=0.0)
+
+        self.assertEqual(tuple(weights.shape), (5,))
+        self.assertGreater(float(weights[0]), float(weights[-1]))
+        self.assertAlmostEqual(float(weights.mean()), 1.0, places=6)
+        rank_weights = elite_sample_weights(elites, weighting="rank", power=1.0, floor=0.0)
+        self.assertEqual(tuple(rank_weights.shape), (5,))
+        self.assertGreater(float(rank_weights[0]), float(rank_weights[-1]))
+        self.assertIsNone(elite_sample_weights(elites, weighting="none", power=1.0, floor=0.0))
 
 
 class TrainingStabilityTests(unittest.TestCase):

@@ -175,6 +175,29 @@ class GraphStateConversionTests(unittest.TestCase):
         self.assertAlmostEqual(float(agent.residual_scale_vector[2 * n]), 0.03)
         self.assertAlmostEqual(float(agent.residual_scale_vector[3 * n]), 0.20)
 
+    def test_residual_action_centering_removes_group_mean(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=18)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.25,
+                    "center_groups": ["replenishment"],
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        n = env.config.num_facilities
+        residual = np.zeros(env.action_size, dtype=np.float32)
+        residual[3 * n : 4 * n] = np.linspace(-0.2, 0.8, n)
+
+        transformed = agent._transform_network_residual_np(residual)
+
+        self.assertAlmostEqual(float(transformed[3 * n : 4 * n].mean()), 0.0, places=6)
+
     def test_gcn_agent_fits_external_action_batch(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=19)
         config = _config_dict()
@@ -203,7 +226,52 @@ class GraphStateConversionTests(unittest.TestCase):
         summary = agent.fit_action_batch(states, actions, {"epochs": 1, "batch_size": 2})
 
         self.assertEqual(summary["samples"], 2)
+        self.assertEqual(summary["target_mode"], "residual")
         self.assertGreaterEqual(summary["final_loss"], 0.0)
+
+    def test_gcn_agent_fits_weighted_external_action_batch(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=23)
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "env": asdict(env.config),
+                "gcn_hidden_sizes": [8],
+                "actor_hidden_sizes": [16],
+                "critic_hidden_sizes": [16],
+                "actor_readout_mode": "facility_action",
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.1,
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=23)
+        action = agent._base_action_from_state_np(state)
+        next_state, _reward, _done, _info = env.step(action)
+        states = np.stack([state, next_state])
+        actions = np.stack([action, agent._base_action_from_state_np(next_state)])
+
+        summary = agent.fit_action_batch(
+            states,
+            actions,
+            {"epochs": 1, "batch_size": 2},
+            weights=np.asarray([0.25, 1.75], dtype=np.float32),
+        )
+
+        self.assertEqual(summary["samples"], 2)
+        self.assertEqual(summary["target_mode"], "residual")
+        self.assertGreaterEqual(summary["final_loss"], 0.0)
+        with self.assertRaises(ValueError):
+            agent.fit_action_batch(states, actions, {"epochs": 1}, weights=np.asarray([1.0]))
+        with self.assertRaises(ValueError):
+            agent.fit_action_batch(
+                states,
+                actions,
+                {"epochs": 1, "target_mode": "unsupported"},
+            )
 
 
 if __name__ == "__main__":

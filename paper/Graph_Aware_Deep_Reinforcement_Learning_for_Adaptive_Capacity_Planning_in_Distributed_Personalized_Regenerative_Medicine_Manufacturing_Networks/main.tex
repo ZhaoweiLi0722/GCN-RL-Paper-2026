@@ -1,0 +1,558 @@
+%% EAAI first draft converted to Elsevier elsarticle format.
+%% Target journal: Engineering Applications of Artificial Intelligence.
+\documentclass[preprint,review,12pt,nonatbib]{elsarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{lineno}
+\usepackage{xcolor}
+\usepackage{newunicodechar}
+\newunicodechar{▹}{$\triangleright$}
+\newunicodechar{ï}{\"i}
+\newunicodechar{Γ}{\Gamma}
+\newunicodechar{’}{'}
+\newunicodechar{“}{``}
+\newunicodechar{”}{''}
+\newunicodechar{–}{--}
+\newunicodechar{—}{---}
+\newunicodechar{−}{-}
+\newunicodechar{×}{\times}
+\graphicspath{{figures/}}
+
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+\journal{Engineering Applications of Artificial Intelligence}
+
+\begin{document}
+\begin{frontmatter}
+
+\title{Graph-Aware Deep Reinforcement Learning for Adaptive Capacity Planning in Distributed Personalized Regenerative Medicine Manufacturing Networks}
+
+\author[inst1]{Zhaowei Li\corref{cor1}}
+\ead{zli686@gatech.edu}
+\cortext[cor1]{Corresponding author.}
+\affiliation[inst1]{organization={H. Milton Stewart School of Industrial and Systems Engineering, Georgia Institute of Technology},
+            city={Atlanta},
+            state={GA},
+            country={USA}}
+
+\begin{abstract}
+
+Distributed make-to-order manufacturing networks require adaptive decision policies because demand, supply availability, and resource states evolve over time and across connected facilities. This study develops a graph-aware deep reinforcement learning framework for adaptive capacity planning in distributed personalized regenerative medicine manufacturing networks. The artificial intelligence contribution is the integration of graph convolutional networks with deep deterministic policy gradient learning. The graph convolutional component encodes inter-facility dependencies and transshipment relationships, while the actor--critic reinforcement learning component learns continuous capacity, inventory, and transshipment decisions through interaction with a production simulation environment. The engineering application is autologous cell therapy manufacturing, where production can begin only when a patient specimen, an idle bioreactor, and sufficient consumables are available. The experimental design further motivates a flat-state DDPG ablation to isolate the value of the graph encoder from the value of actor--critic reinforcement learning itself. The results indicate that the proposed GCN-DDPG framework achieves robust cost performance under high disruption rates and adapts effectively to inaccurate and non-stationary demand forecasts. The study contributes an intelligent, network-aware decision-support approach for distributed healthcare manufacturing and provides a generalizable modeling framework for engineering systems with sequential decisions and graph-structured dependencies.
+\end{abstract}
+
+\begin{keyword}
+Graph convolutional networks \sep Deep reinforcement learning \sep Capacity planning \sep Distributed manufacturing \sep Personalized regenerative medicine \sep Transshipment
+\end{keyword}
+
+\end{frontmatter}
+\linenumbers
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+Distributed make-to-order manufacturing networks are increasingly important in engineering systems where products are individualized, production capacity is limited, and service outcomes depend on time-sensitive operational decisions. Personalized regenerative medicine (PRM), including autologous cell therapy, is a representative example. In this setting, manufacturing cannot begin until a patient specimen, an idle bioreactor, and sufficient consumables are simultaneously available. Because products are patient-specific and cannot be produced in advance, the system faces high demand uncertainty, limited opportunities for pooling inventory, and substantial risk from disruptions in the supply of critical materials.
+
+Distributed and point-of-care manufacturing can reduce fulfillment time by locating production capacity closer to patients, but it also creates a more complex engineering decision problem. Facilities are not independent: shortages at one clinic can sometimes be mitigated through inventory transshipment, specimen reassignment, or capacity relocation from connected facilities. These interactions create spatial dependencies across the manufacturing network and require policies that coordinate decisions at the network level rather than optimizing each facility in isolation. Prior work has shown the value of simulation and analytical models for comparing centralized and point-of-care autologous cell therapy supply chains \cite{Wang2023SimulationBased} and for decentralized capacity planning under uncertainty \cite{Li2023,Tseng2023DeepRL}. However, many existing approaches rely on simplified transition models, deterministic approximations, or heuristic look-ahead rules, which can limit their adaptability when demand and supply conditions change.
+
+The artificial intelligence contribution of this study is not only the integration of graph convolutional representation learning with actor–critic reinforcement learning, but also the formulation of distributed PRM manufacturing as a graph-aware continuous operational control problem. The engineering application is adaptive capacity planning, consumable inventory replenishment, and network-level transshipment decision-making in distributed make-to-order PRM manufacturing networks. Unlike prediction-oriented supply-chain graph learning studies, this work focuses on coordinated decision-making under uncertainty, where continuous actions must be generated for capacity adjustment, replenishment, and transshipment while satisfying operational feasibility constraints.
+
+Reinforcement learning is appropriate because the problem is sequential: decisions made in one epoch affect future inventories, resource availability, waiting specimens, and service outcomes. Graph convolutional networks are appropriate because the state of the system is naturally relational: each manufacturing facility or clinic is a node, and transshipment, capacity-sharing, or coordination links determine how local decisions propagate through the network. To the best of our knowledge, limited prior work has addressed graph-aware continuous control for distributed personalized regenerative medicine manufacturing networks. Recent supply-chain graph learning studies suggest that explicit graph structure can improve learning from supply-chain networks, although much of this literature remains focused on prediction, inference, or inventory-only control rather than continuous operational control in patient-specific manufacturing systems~\cite{Chang2025AAAI, Ahn2024GSP, Kotecha2024GNNMARL}.
+
+This paper develops a graph convolutional network and a deep deterministic policy gradient framework for intelligent decision support in distributed make-to-order manufacturing. The graph convolutional component encodes facility-level states and neighboring-facility information into network-aware embeddings. The deep deterministic policy gradient component then learns continuous capacity, inventory, and transshipment actions from interactions with a production simulation environment. The resulting framework is designed to learn adaptive policies without requiring exact prior knowledge of demand distributions or supplier disruption processes.
+
+The main contributions of this study are as follows:
+\begin{itemize}
+    \item We formulate distributed PRM capacity planning as a sequential engineering decision problem involving capacity adjustment, consumable inventory replenishment, and network-level transshipment under demand and supply uncertainty.
+    \item We develop a graph-aware deep reinforcement learning framework that combines graph convolutional state embedding with deep deterministic policy gradient learning.
+    \item We show how graph-based state representations allow the decision-maker to use both local facility conditions and neighboring-facility information when learning coordinated policies.
+    \item We evaluate the proposed framework against myopic, look-ahead, and isolated-facility heuristics under supply disruption and demand forecast error scenarios.
+    \item We discuss the implications of the framework for intelligent decision support in distributed, make-to-order healthcare manufacturing networks and related engineering systems.
+\end{itemize}
+
+The remainder of this paper is organized as follows. Section~\ref{sec:problem} describes the distributed PRM capacity planning problem. Section~\ref{sec:literature} reviews related work. Section~\ref{sec:method} presents the proposed graph-aware deep reinforcement learning framework. Section~\ref{sec:experiments} describes the computational experiments and results. Section~\ref{sec:conclusion} concludes the study and identifies future research directions.
+
+\section{Distributed Network Manufacturing and Capacity Planning Problem}
+\label{sec:problem}
+\begin{table}[htbp]
+\centering
+\caption{Notation used in the distributed manufacturing and capacity planning model.}
+\label{tab:notation}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.16\textwidth} >{\raggedright\arraybackslash}X}
+\toprule
+\multicolumn{2}{c}{\textbf{Sets and parameters}} \\
+\midrule
+$\Gamma$ & Planning horizon indexed by $t$. \\
+$T$ & Manufacturing time for one PRM product, in periods, where $T<\Gamma$. \\
+$N$ & Set of manufacturing facilities indexed by $n$. \\
+$m_t^n$ & Products that begin manufacturing at facility $n$ at epoch $t$. \\
+$d_t^n$ & Demand arrivals at facility $n$ in epoch $t$. \\
+\midrule
+\multicolumn{2}{c}{\textbf{State variables}} \\
+\midrule
+$s_t^n$ & Specimens waiting for manufacturing at facility $n$ at epoch $t$. \\
+$r_t^n$ & Available reagent units at facility $n$ at epoch $t$. \\
+$\mathbf{b}_t^n$ & Bioreactor work-in-process vector $(b_t^{n,1}, b_t^{n,2}, \ldots, b_t^{n,T})$, where $b_t^{n,\tau}$ denotes the number of bioreactors at facility $n$ with $\tau$ periods remaining at epoch $t$. \\
+$P_t^n$ & Maximum reagent purchase quantity for facility $n$ for epoch $t+1$. \\
+\midrule
+\multicolumn{2}{c}{\textbf{Decision variables}} \\
+\midrule
+$w_t^n$ & Specimens added to or subtracted from facility $n$ at epoch $t$ and received or removed before epoch $t+1$. \\
+$e_t^n$ & Reagent units added to or subtracted from facility $n$ at epoch $t$ and received or removed before epoch $t+1$. \\
+$q_t^n$ & Idle bioreactors added to or subtracted from facility $n$ at epoch $t$ and received or removed before epoch $t+1$. \\
+$p_t^n$ & Reagent purchase quantity for facility $n$ for epoch $t+1$. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+In this section, we formulate the capacity planning problem for distributed manufacturing systems as a production simulation model based on a Markov decision process (MDP). Suppose the distributed manufacturing system consists of $L$ manufacturing facilities that produce one type of make-to-order PRM product. Each manufacturing facility has its own production capacity, including bioreactors and reagent inventory, and can purchase reagents from source material suppliers. During manufacturing, facilities receive patients' specimens and initiate production based on the available specimens, bioreactors, and reagents. We assume that inventory transshipment, capacity relocation, and demand sharing are allowed among facilities. Demand arrivals and supplier disruptions are modeled as stochastic processes, implying that local supply may be either insufficient or excessive relative to local demand at different decision epochs. The notation used throughout this section is summarized in Table~\ref{tab:notation}.
+
+Figure~\ref{fig:manufacturing_system} illustrates the basic structure of the distributed manufacturing problem using a two-facility example. Each facility maintains three primary operational states: the number of patient specimens waiting for manufacturing, the available reagent inventory, and the available bioreactor capacity. At each decision epoch, new patient demand and reagent replenishment arrive under uncertainty. When one facility experiences excess demand, insufficient reagents, or limited production capacity, the network may use demand sharing, reagent transshipment, or capacity relocation to rebalance resources across facilities. This structure motivates the MDP formulation, where the state captures facility-level demand, inventory, and capacity conditions, and the action determines how resources should be replenished, shared, or relocated across the network.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/Figure 1.png}
+    \caption{Illustration of a two-facility distributed manufacturing system for personalized regenerative medicine. Each manufacturing facility contains three key operational states: the specimen demand queue, the available source material inventory, and the available production capacity represented by bioreactors. Demand arrivals and reagent replenishment are subject to supply chain uncertainty. The bidirectional link between facilities represents demand sharing and capacity relocation, which allow the network to rebalance workload and resources across facilities when local demand, inventory, or capacity becomes imbalanced.}
+    \label{fig:manufacturing_system}
+\end{figure}
+
+For the $N$ facilities, $T$ epochs of manufacturing time are required to produce one of the PRM products, and the planning horizon consists of $\Gamma$ epochs where $\Gamma>T$.
+
+At epoch $t \in\{1,2, \cdots, \Gamma\}$, the production status of the $n$-th facility for $n=1, \cdots, N$ is expressed as a state vector $\mathbf{x}_{t}^{n}$, where
+
+\begin{equation}
+\mathbf{x}_{t}^{n}=\left(s_{t}^{n}, r_{t}^{n}, \mathbf{b}_{t}^{n}, P_{t}^{n}\right),
+\end{equation}
+Based on the state variables at epoch $t$, the facilities need to take action to adjust their production capacity for epoch $t+1$. We define the action $\mathbf{a}_{t}^{n}$ as a vector that consists of the amount of capacity sharing and reagent replenishment. The action is decided at the beginning of the production period $t$ and executed before the start of $t+1$.
+
+\begin{equation}
+\mathbf{a}_{t}^{n}=\left(w_{t}^{n}, e_{t}^{n}, q_{t}^{n}, p_{t}^{n}\right),
+\end{equation}
+
+The goal of capacity planning is to minimize total production cost by dynamically selecting the actions from Equation (2) for all facilities, denoted by $\mathbf{A}_{t}=\left(\mathbf{a}_{t}^{1}, \cdots, \mathbf{a}_{t}^{N}\right)$, for each epoch $t \in \Gamma$. We define $V\left( \mathbf{X}_{t}\right)$ as the total future cost of the selecting actions $\mathbf{A}_{t}$ when the states from all facilities, denoted by $\mathbf{X}_{t}=\left(\mathbf{x}_{t}^{1}, \cdots, \mathbf{x}_{t}^{N}\right)$, are observed at epoch $t \in \Gamma$. The objective function can be expressed as a dynamic programming problem:
+
+\begin{equation}
+\begin{array}{ll}
+ V\left( \mathbf{X}_{t}\right)= 
+ \min _{\mathbf{A}_{t}} & E\left[c\left(\mathbf{A}_{t} ; \mathbf{X}_{t}\right)+\gamma  V\left(\mathbf{X}_{t+1}\right)\right],
+\end{array}
+\end{equation}
+
+which is useful for finding the optimal action $\mathbf{A}_{t}$ for each state $\mathbf{X}_{t}$ at each epoch $t \in \Gamma$, where $c\left(\mathbf{A}_{t} ; \mathbf{X}_{t}\right)$ is the immediate cost at time $t$, and $\gamma \in[0,1]$ is a discount factor for balancing the impact of future costs in deciding actions. The choice of $\gamma$ depends on the user's goal; if $\gamma$ is closer to 1 (to 0 ), then it means the user cares more about long (short) term cost; if $\gamma=0$, then only the cost for current epoch is considered. Equation (3) generalizes the optimality equation for the capacity planning problem in $\mathrm{Li}(2021)$ \cite{Li2023} in that cost functions \textit{$\mathbf{c}$} and $\mathbf{V}$ and the cumulative distribution function for the expectation operator can be unknown.  In the next section we will propose a DRL approach based on the DDPG algorithm for determining the solution of Equation (3) by learning the cost functions \textit{$\mathbf{c}$} and $\mathbf{V}$ and the cumulative distribution function for the expectation operator using data-driven approaches.
+
+
+\section{Literature Review}
+\label{sec:literature}
+
+\subsection{Personalized regenerative medicine and decentralized manufacturing}
+PRM supply chains differ substantially from conventional make-to-stock manufacturing systems because products are individualized, time-sensitive, and tightly coupled with patient-specific clinical pathways. In autologous cell therapy, patient material must be collected, transported, manufactured, quality-tested, and returned for administration, and manufacturing can begin only when a specimen, consumables, and production capacity are jointly available. These characteristics make fulfillment time, service reliability, and resource utilization central operational measures. Wang et al.~\cite{Wang2023SimulationBased} used simulation to compare centralized and point-of-care autologous cell therapy supply chain strategies and evaluated cost, fulfillment time, service level, and resource utilization. Li and White~\cite{Li2023} further studied decentralized autologous cell therapy manufacturing networks and showed that transshipment and relocatable capacity can reduce the cost of resilience under supplier disruption.
+
+These studies establish that PRM network design and inter-facility coordination are first-order engineering decisions rather than implementation details. Related work on cell therapy manufacturing process control also highlights the potential of reinforcement learning in uncertain, nonlinear, and partially observed manufacturing environments~\cite{Zheng2022HybridMBRL}. Together, this literature motivates a data-driven decision-support framework that can represent both the temporal dynamics of patient-specific manufacturing and the spatial dependencies created by distributed facilities.
+
+\subsection{Reinforcement learning for supply chain and manufacturing decisions}
+Reinforcement learning has been widely studied for sequential supply chain and manufacturing decisions. Early work applied RL to inventory replenishment in multi-echelon supply chains and perishable inventory systems~\cite{GIANNOCCARO2002153,KARA2018150}. More recent studies have used deep reinforcement learning to handle high-dimensional state spaces, stochastic demand, and simulation-based decision environments. For example, Oroojlooyjadid et al.~\cite{article1} developed a deep Q-network approach for the beer game, demonstrating that DRL can learn replenishment policies in decentralized, partially observed supply chain settings. Wang et al.~\cite{article2} combined reinforcement learning with multi-agent simulation for dynamic inventory replenishment in an aerospace manufacturing supply chain.
+
+Recent supply chain RL studies have moved toward more realistic constraints and engineering settings. Bermudez et al.~\cite{Bermudez2023DCPO} proposed distributional constrained reinforcement learning for multi-period supply chain optimization with production and inventory constraints. Eisenach et al.~\cite{Eisenach2024NeuralCoordination} studied shared-resource capacity control in inventory management using a neural coordination mechanism and a reinforcement learning buying policy. Stranieri et al.~\cite{Stranieri2025PharmaDRL} benchmarked classical and deep reinforcement learning inventory policies for pharmaceutical supply chains with perishability and non-stationary demand. These studies support the use of simulation-trained RL policies for uncertain operational control, but most focus on replenishment or inventory management rather than the joint capacity, inventory, specimen transshipment, and demand-sharing decisions that arise in distributed PRM manufacturing.
+
+\subsection{Deep reinforcement learning for regenerative medicine capacity planning}
+The closest antecedent to this work is Tseng et al.~\cite{Tseng2023DeepRL}, who developed a deep reinforcement learning approach for dynamic capacity planning in decentralized regenerative medicine supply chains. Their study demonstrated that simulation-trained policies can adapt to demand and supply uncertainty without requiring exact prior knowledge of the underlying stochastic processes. This is directly aligned with the objective of using data-driven policy learning for PRM capacity planning.
+
+The present study builds on this line of work by adding an explicit graph representation layer to encode inter-facility relationships. In decentralized PRM networks, facilities are linked through possible demand sharing, reagent transshipment, and capacity relocation. Therefore, a facility's decision depends not only on its own local state but also on the states and resource conditions of connected facilities. A flat vectorized state representation can include all facility variables, but it does not explicitly exploit the graph structure that governs how information and resources propagate across the network. This motivates the integration of graph convolutional representation learning with deep deterministic policy gradient learning.
+
+\subsection{Multi-agent reinforcement learning and graph learning for networked supply chains}
+Recent multi-agent reinforcement learning studies are relevant because distributed manufacturing networks naturally involve decentralized information and coordinated actions. Mousa et al.~\cite{Mousa2023DecInvMARL} formulated decentralized inventory control as a multi-agent problem and studied centralized-training/decentralized-execution policies under local information constraints. Leluc et al.~\cite{Leluc2023MARLIM} similarly demonstrated the promise of cooperative multi-agent reinforcement learning for inventory management under stochastic demand and lead times. These studies show that decentralization is not only an application feature but also an algorithmic design dimension.
+
+In parallel, graph neural networks have emerged as a natural representation tool for supply chains and other networked operational systems. Chang et al.~\cite{Chang2025AAAI} learned production functions on supply-chain graphs using temporal graph neural networks and an inventory module, showing the value of explicit relational structure for supply-chain inference and forecasting. Ahn et al.~\cite{Ahn2024GSP} used attention-based graph neural networks for probabilistic supply and inventory prediction in enterprise supply-chain networks, while Ahn et al.~\cite{Ahn2024GPP} combined graph neural networks, offline reinforcement learning, and policy simulation for dynamic supply planning. Kotecha and del Rio Chanona~\cite{Kotecha2024GNNMARL} are particularly relevant because they combine graph neural network state representations with multi-agent reinforcement learning for supply chain inventory control. These studies collectively suggest that graph-based learning is useful for networked supply chain systems; however, most existing work remains focused on prediction, inventory-only control, or general supply-chain planning rather than continuous-action control of PRM-specific capacity, reagent, and specimen flows.
+
+\subsection{Evaluation considerations for deep reinforcement learning}
+Evaluation rigor is especially important for DRL-based engineering applications. Henderson et al.~\cite{Henderson2018DRLMatters} showed that deep reinforcement learning results can be sensitive to random seeds, hyperparameters, and implementation details. Agarwal et al.~\cite{Agarwal2021RLiable} further argued that few-run comparisons can be statistically unreliable and recommended more robust aggregate metrics and interval estimates. These findings imply that a DRL-based supply chain study should report implementation details, training budgets, out-of-sample test procedures, and variability across replications or random seeds when possible. In the present study, we therefore emphasize common simulation settings across all benchmark policies, detailed implementation parameters for the GCN-DDPG agent, and Monte Carlo evaluation under multiple disruption and demand forecast scenarios.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Positioning of this study relative to closely related literature.}
+\label{tab:lit_positioning}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{p{0.24\textwidth} p{0.27\textwidth} X}
+\toprule
+Literature stream & Representative studies & Main limitation relative to this work \\
+\midrule
+PRM and autologous cell therapy operations & Simulation and decentralized capacity planning studies~\cite{Wang2023SimulationBased,Li2023,Tseng2023DeepRL} & Establish the need for adaptive PRM capacity planning, but do not explicitly learn graph-structured inter-facility representations for continuous coordinated control. \\
+RL for supply chain and manufacturing & DRL inventory, replenishment, and constrained supply chain control~\cite{article1,article2,Bermudez2023DCPO,Stranieri2025PharmaDRL,Eisenach2024NeuralCoordination} & Demonstrate simulation-trained policies, but mainly focus on inventory or replenishment rather than coupled capacity, reagent, and specimen-flow decisions. \\
+MARL for decentralized supply chains & Decentralized inventory and cooperative inventory management~\cite{Mousa2023DecInvMARL,Leluc2023MARLIM} & Address decentralized information and coordination, but are not tailored to PRM manufacturing or patient-specific make-to-order constraints. \\
+GNNs for supply chain networks & Supply-chain graph forecasting, supply prediction, and graph-aware inventory control~\cite{Chang2025AAAI,Ahn2024GSP,Ahn2024GPP,Kotecha2024GNNMARL} & Show the value of graph structure, but are mostly predictive, inventory-focused, or not designed for PRM capacity and transshipment control. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Research gap}
+The literature indicates three important trends. First, PRM manufacturing requires adaptive capacity planning because patient-specific demand, consumable availability, and production capacity jointly determine treatment fulfillment. Second, reinforcement learning provides a data-driven approach for sequential operational decisions under uncertainty. Third, graph neural networks provide a natural representation for supply chains and distributed manufacturing networks with relational dependencies. Nevertheless, limited work has integrated graph convolutional representation learning with actor--critic reinforcement learning for distributed PRM manufacturing networks.
+
+Published PRM operations studies establish the need for distributed capacity planning under uncertainty, but they are predominantly simulation, OR, ADP, or flat-state DRL based. Recent supply chain RL studies show that simulation-trained policies can handle stochastic inventory and capacity-control problems, but they usually flatten network state or focus on replenishment rather than jointly modeling capacity relocation, consumables, and specimen transshipment. Recent GNN studies show that supply chains are natively graph structured, yet much of this work remains predictive or inventory-focused. This study addresses the gap by developing a GCN-DDPG framework that learns a graph-aware continuous-action policy for distributed PRM manufacturing under supplier disruption and demand forecast error. The framework is positioned as an intelligent engineering decision-support system rather than only a domain-specific application of DDPG.
+
+\section{Graph-Aware Deep Reinforcement Learning Framework}
+\label{sec:method}
+\textbf{Integrating DDPG with GCN for Distributed Manufacturing (DDPG-GCN):}
+
+\subsection*{Introduction to the Method}
+
+distributed manufacturing networks for Personalized Regenerative Medicine (PRM) involve complex,
+interconnected facilities whose operating states are best represented as graphs rather than flat
+vectors. Classical reinforcement learning (RL) models, which treat each facility as independent,
+struggle to capture these spatial dependencies. To address this, we integrate the Deep Deterministic
+Policy Gradient (DDPG) algorithm with a Graph Convolutional Network (GCN), enabling the agent to
+learn joint capacity and transshipment decisions while accounting for network structure.
+
+\subsection*{Rationale for the DDPG-GCN Integration}
+
+The DDPG algorithm is well suited for continuous control problems, providing a model-free,
+off-policy actor--critic mechanism for policy learning. However, DDPG alone assumes vectorized
+inputs and cannot directly leverage the relational information among facilities. Conversely, GCNs
+excel at extracting structural embeddings from graph-structured data but lack temporal learning
+capabilities. Their integration allows the model to encode spatial correlations through GCN layers
+and temporal decision dynamics through DDPG updates. 
+
+Figure~\ref{fig:graph_structure} shows the graph abstraction used in the proposed GCN-DDPG framework. Each healthcare clinic is represented as a node with facility-specific state features, including waiting specimens, reagent inventory, available bioreactor capacity, and other local operational conditions. The edges encode different forms of inter-facility dependency. Information-flow edges allow the model to share demand and operational signals among neighboring clinics; resource-sharing edges represent feasible reagent or specimen transshipment relationships; and capacity-sharing edges connect each clinic to the central capacity hub. By applying graph convolution over this structure, the model learns a network-aware representation in which each facility's decision is informed not only by its own state but also by the states of connected facilities. This graph embedding is then passed to the DDPG actor--critic networks to support coordinated capacity planning and transshipment decisions.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.78\textwidth]{figures/Figure 2.png}
+    \caption{Graph representation of a distributed personalized regenerative medicine manufacturing network with 20 healthcare clinics. Each outer node represents a clinic or manufacturing facility, and the central node represents the shared capacity pool. Blue edges indicate information flow among neighboring clinics, green edges indicate resource sharing relationships, and red radial edges indicate capacity sharing between each clinic and the central capacity hub. This graph structure is used by the graph convolutional network to encode both local facility states and neighboring network information for downstream reinforcement learning decisions.}
+    \label{fig:graph_structure}
+\end{figure}
+
+Formally, let $G_t=(V,E_t)$ represent the manufacturing network at epoch $t$, where each node
+$v_i\in V$ denotes a facility with state features $x_i^t$ and edge weights $e_{ij}^t$ indicate
+logistic or transshipment costs. The GCN encodes local and neighborhood information using a
+layer-wise propagation rule:
+\begin{equation}
+h_i^{(l+1)} = \sigma \Big(W^{(l)} \sum_{j \in \mathcal{N}(i)} \frac{1}{c_{ij}} h_j^{(l)} \Big),
+\end{equation}
+where $h_i^{(0)} = x_i^t$, $W^{(l)}$ are trainable weights, $\sigma(\cdot)$ is a ReLU activation,
+and $c_{ij}$ is a degree-based normalization factor. The resulting embedding
+$H_t = \{h_i^{(L)}\}_{i=1}^{N}$ captures the current global state of the network.
+\subsection*{Overview of the DDPG-GCN Workflow}
+
+The method initiates with a dual initialization: the DDPG's actor and critic networks and the GCN for graph state processing. Given an observed state \( X_t \), represented as raw graph data reflecting the current status of the manufacturing network, the GCN is used as a preprocessing unit. It transforms this raw graph into a condensed representation \( X'_t \), which retains the critical structural information of the original graph.
+
+Following this transformation, the DDPG algorithm gets involved. Using the graph-processed state \( X'_t \), the actor-network selects an action, which is based on the actor--critic architecture. This action could range from decisions regarding resource allocation to inventory replenishments. Once executed within the manufacturing environment, the system provides a feedback loop in the form of a reward, essentially evaluating the decision's efficacy.
+
+The DDPG then uses this feedback, in tandem with the replay buffer, to refine both the actor and critic networks, ensuring better decision-making in subsequent iterations. The GCN, on its part, continuously updates its understanding of the graph structure as the manufacturing network evolves, ensuring it remains adaptive and accurate in its representations.
+
+
+\subsection*{Initialization}
+\begin{itemize}
+\item Critic network \( Q(X_t, A_t|\theta_Q) \) initialized with weights \( \theta_Q \).
+\item Actor network \( \mu(X_t|\theta_\mu) \) initialized with weights \( \theta_\mu \).
+\item GCN initialized with weights \( \omega \) for processing graph states.
+\end{itemize}
+
+\subsection*{DDPG Component}
+The DDPG agent operates on the GCN-encoded state $H_t$ to generate an action vector 
+$A_t = \{\mathbf{a}_i^t\}_{i=1}^{N}$, where $\mathbf{a}_i^t$ specifies the capacity adjustment,
+inventory replenishment, and transshipment quantities for facility $i$. 
+The actor network $\mu(H_t|\theta_\mu)$ outputs continuous actions, while the critic network
+$Q(H_t,A_t|\theta_Q)$ estimates the expected cumulative cost. The optimization follows the standard
+DDPG updates:
+\begin{align}
+y_i &= c_i(A_i;H_i) + \gamma Q'(H_{i+1},\mu'(H_{i+1}|\theta_{\mu'})|\theta_{Q'}),\\
+L_Q &= \frac{1}{N}\sum_i (y_i - Q(H_i,A_i|\theta_Q))^2,\\
+\nabla_{\theta_\mu} J &= \frac{1}{N}\sum_i \nabla_a Q(H_i,a|\theta_Q)|_{a=\mu(H_i)} 
+\nabla_{\theta_\mu} \mu(H_i|\theta_\mu).
+\end{align}
+
+\subsection*{Reward Function}
+The reward (negative cost) encourages policies that balance cost minimization and service-level
+stability. For each epoch $t$, the immediate reward is defined as
+\begin{equation}
+r_t = -\Big( C_t^{\text{reagent}} + C_t^{\text{bio}} + C_t^{\text{trans}} \Big),
+\end{equation}
+where each term corresponds to the reagent, bioreactor, and transshipment cost components
+introduced in Eq.~(14). This formulation allows the agent to learn trade-offs between resource
+utilization and timely delivery.
+
+
+\begin{algorithm}[p]
+\footnotesize
+\caption{DDPG--GCN for Distributed PRM Capacity Planning}
+\label{alg:ddpg_gcn}
+\begin{algorithmic}[1]
+\Require Discount factor $\gamma$, soft-update rate $\tau$, actor and critic learning rates $\alpha_\mu,\alpha_Q$, exploration scale $\sigma$, minibatch size $N$.
+\State Initialize GCN encoder $g_\omega$, actor $\mu(\cdot\mid\theta_\mu)$, critic $Q(\cdot,\cdot\mid\theta_Q)$, target networks $\mu'$ and $Q'$, and replay buffer $\mathcal{R}$.
+\For{each environment step $t$}
+    \State Observe raw graph state $X_t$ and compute graph embedding $Z_t=g_\omega(X_t)$.
+    \State Select exploratory action $A_t=\mu(Z_t\mid\theta_\mu)+\epsilon_t$, where $\epsilon_t\sim\mathcal{N}(0,\sigma^2 I)$.
+    \State Project or clip $A_t$ to the feasible set and execute the resulting action $\hat{A}_t$.
+    \State Observe cost/reward $r_t$, next state $X_{t+1}$, and store $(X_t,\hat{A}_t,r_t,X_{t+1})$ in $\mathcal{R}$.
+    \If{an update is scheduled}
+        \State Sample minibatch $(X_i,A_i,r_i,X_{i+1})_{i=1}^{N}$ from $\mathcal{R}$ and compute $Z_i=g_\omega(X_i)$, $Z_{i+1}=g_\omega(X_{i+1})$.
+        \State Compute targets $y_i=r_i+\gamma Q'(Z_{i+1},\mu'(Z_{i+1}\mid\theta_{\mu'})\mid\theta_{Q'})$.
+        \State Update critic by minimizing $L_Q=N^{-1}\sum_i(y_i-Q(Z_i,A_i\mid\theta_Q))^2$.
+        \State Update actor using the deterministic policy gradient $\nabla_{\theta_\mu}J$.
+        \State Backpropagate through the GCN encoder and softly update target networks.
+    \EndIf
+\EndFor
+\State \Return trained actor $\mu(g_\omega(X)\mid\theta_\mu)$.
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Action decoding and feasibility projection.}
+Because the actor network outputs continuous actions, an additional deterministic decoding and feasibility-projection step is used before actions are executed in the simulation environment. Let $A_t^{\mathrm{raw}}=\mu(Z_t|\theta_\mu)$ denote the raw continuous action generated by the actor network from the graph embedding $Z_t$. The raw action is first scaled to the admissible range of each decision variable and then clipped to its variable-specific lower and upper bounds. Integer-valued operational quantities, including specimen reassignment, reagent transshipment, bioreactor relocation, and replenishment quantities, are then rounded to the nearest feasible integer values.
+
+The decoded action is subsequently passed through a repair operator that enforces the operational constraints of the manufacturing network. First, nonnegativity constraints are imposed so that the resulting action cannot remove more specimens, reagents, or idle bioreactors from a facility than are available at that epoch. Second, replenishment quantities are capped by the maximum purchasable reagent quantity $P_t^n$ and by supplier availability. Third, network conservation constraints are enforced for internal sharing decisions: the total number of specimens, reagents, and relocatable bioreactors sent out from facilities must equal the total amount received by connected facilities, except for external reagent purchases. Finally, transshipment and relocation actions are restricted to feasible graph edges; if no edge connects two facilities, the corresponding flow is set to zero.
+
+Equivalently, the executed action can be interpreted as the feasible action $\hat{A}_t$ obtained by projecting the decoded actor output onto the feasible action set $\mathcal{F}(X_t)$:
+[
+$\hat{A}_t = \Pi_{\mathcal{F}(X_t)}(A_t^{\mathrm{raw}}),$
+]
+where $\mathcal{F}(X_t)$ is determined by current facility states, inventory availability, capacity availability, supplier limits, and graph connectivity. This projection step improves engineering credibility by ensuring that all actions executed in the simulation correspond to implementable capacity, replenishment, and transshipment decisions.
+
+
+\vspace{0.3em}
+\noindent\textbf{GCN Encoder:} Each facility node $i$ aggregates features from its neighbors $\mathcal{N}(i)$ using layer-wise message passing:
+\[
+h_i^{(l+1)} = \sigma\!\left(W^{(l)} \sum_{j \in \mathcal{N}(i)} h_j^{(l)}\right),
+\]
+where $W^{(l)}$ are trainable weights and $\sigma(\cdot)$ is an activation function. 
+This produces graph-embedded representations used by the actor–critic networks for coordinated decision-making.
+
+\subsection*{Anticipated Outcomes and Benefits}
+
+The DDPG-GCN model offers several tangible benefits:
+
+\begin{itemize}
+    \item \textbf{Enhanced Prediction and Analysis}: By leveraging the relationships between clinics, our GCN framework can generate predictions with greater accuracy and nuanced analysis, surpassing the capabilities of models that consider clinics in isolation.
+    \item \textbf{Pattern Identification}: The GCN is adept at detecting trends and patterns that may extend across multiple clinics, thereby uncovering insights that isolated analyses could overlook.
+    \item \textbf{Efficient Graph Processing}: By harnessing the power of GCNs, the model can effectively handle states that are naturally represented as graphs, ensuring no critical information is lost in translation.
+    \item \textbf{Optimized Decision-Making}: The DDPG component ensures that the actions selected are both contextually relevant (thanks to the GCN-processed states) and optimal in terms of the overall system objectives.
+    \item \textbf{Adaptive Learning}: As the manufacturing network evolves, both the DDPG and GCN components continuously refine their parameters, ensuring the model remains adaptive and responsive to real-world changes.
+\end{itemize}
+
+In essence, the integration offers a solution that is greater than the sum of its parts, paving the way for more efficient, resilient, and optimized distributed manufacturing systems.
+
+This proposed DDPG-GCN model offers a robust approach for distributed manufacturing. By melding the strengths of GCN and DDPG, it provides a nuanced understanding of intricate manufacturing networks, ensuring efficient and optimized decision-making.
+The dynamic nature and intricate dependencies found in distributed manufacturing necessitate advanced solutions capable of understanding and optimizing such networks. The integration of DDPG and GCN, as presented in this paper, provides a promising avenue for addressing the challenges inherent in distributed manufacturing systems. With the capability to process graph-based states effectively, the DDPG-GCN model offers substantial improvements in service level, efficiency, and resilience against disruptions.
+\section{Computational Experiments}
+\label{sec:experiments}
+\label{sec:casestudies}
+
+This section presents two case studies designed to evaluate the efficacy of the proposed DDPG-GCN framework in a distributed PRM manufacturing system. The case studies aim to illustrate the framework's adaptability to varying demand forecast accuracies and its capacity for making informed decisions within a complex network of interconnected clinics. The experiments are designed to compare the learned graph-aware policy with heuristic and look-ahead policies under the same simulation environment, which helps isolate the value of adaptive policy learning under disruption and forecast error.
+\subsection{Objective}
+The objective of this study is to compare the performance of the proposed GCN-DDPG (Graph Convolutional Network - Deep Deterministic Policy Gradient) framework with traditional heuristic methods in the context of distributed manufacturing.
+
+\subsection{Methodology}
+
+\subsubsection{Benchmarking Setup}
+To evaluate both the value of reinforcement learning and the value of graph-based representation learning, we compare the proposed GCN-DDPG framework with two groups of baselines. The first group consists of traditional heuristic and look-ahead policies implemented in the same simulation environment. These baselines provide domain-relevant comparisons with existing capacity planning approaches. The second group consists of learning-based ablations designed to isolate the contribution of the GCN encoder.
+
+The heuristic baselines are:
+\begin{itemize}
+\item \textbf{MYO (Myopic):} This heuristic minimizes single-period cost without considering future demand.
+\item \textbf{MDL-1 (One-period Mean Demand Lookahead):} MDL-1 extends the planning horizon to one lookahead period using deterministic state transitions based on mean demand.
+\item \textbf{MDL-2 (Two-period Mean Demand Lookahead):} MDL-2 extends the planning horizon to two lookahead periods using deterministic state transitions based on mean demand.
+\item \textbf{ISO (Isolated Regional Facilities):} ISO assumes no resource sharing between facilities and focuses only on local replenishment decisions.
+\end{itemize}
+
+The learning-based baseline is:
+\begin{itemize}
+\item \textbf{MLP-DDPG / flat-state DDPG:} This baseline uses the same DDPG actor--critic structure and the same action space as the proposed method, but removes the GCN encoder. Instead, all facility-level states are concatenated into a flat vector and passed directly into multilayer perceptron actor and critic networks. This baseline is designed to answer whether performance improvements come from reinforcement learning alone or from explicitly encoding graph-structured inter-facility dependencies.
+\end{itemize}
+
+In addition, graph ablation experiments are planned to evaluate the role of different edge types. Specifically, we consider removing capacity-sharing edges and removing resource-sharing edges to assess whether these relational structures contribute to policy performance under disruption and demand uncertainty.
+
+\subsubsection{Performance Metrics}
+
+We evaluate each method using both cost-based and engineering-relevant performance metrics. The primary metric is the average total cost over the planning horizon, including reagent replenishment cost, bioreactor holding and shortage penalties, and transshipment or relocation costs. To strengthen the application relevance of the experiments, we also track the following secondary metrics:
+\begin{itemize}
+    \item \textbf{Service level:} the fraction of patient demand that can be started or fulfilled within the planning horizon.
+    \item \textbf{Average waiting time / fulfillment delay:} the average number of epochs that patient specimens wait before manufacturing begins.
+    \item \textbf{Reagent shortage frequency:} the frequency with which manufacturing is delayed because insufficient reagents are available.
+    \item \textbf{Bioreactor utilization:} the fraction of available bioreactor capacity used for production across facilities.
+    \item \textbf{Transshipment and relocation activity:} the total number of specimen, reagent, and bioreactor movements across the network.
+    \item \textbf{Inference time:} the computational time required for a trained policy or heuristic to generate one epoch-level decision.
+\end{itemize}
+
+These metrics are included because the objective of PRM capacity planning is not only to reduce operational cost, but also to support timely patient-specific manufacturing, effective resource utilization, and reliable system performance under demand and supply uncertainty.
+
+\subsubsection{Heuristic Implementations}
+We provide brief descriptions of the heuristic methods implemented:
+\begin{itemize}
+    \item \textbf{MYO (Myopic):} MYO focuses on minimizing costs within the current period without considering future consequences.
+    \item \textbf{MDL-1 and MDL-2:} These methods extend the planning horizon to one and two lookahead periods, respectively, using deterministic state transitions based on mean demand.
+    \item \textbf{ISO (Isolated Regional Facilities):} ISO assumes no sharing of resources between manufacturing facilities and primarily concentrates on reagent replenishment.
+\end{itemize}
+
+\subsubsection{GCN-DDPG Implementation}
+The model is implemented in \texttt{Python 3.10} using \texttt{PyTorch}. 
+The GCN encoder contains two convolutional layers with 64 and 32 hidden units, respectively, 
+followed by ReLU activations. 
+The DDPG actor and critic each consist of three fully connected layers with dimensions (256, 128, 64).
+All parameters are initialized with Xavier initialization. 
+Training uses the Adam optimizer with learning rates of $1\times10^{-4}$ for the actor and 
+$1\times10^{-3}$ for the critic. 
+The replay buffer size is $10^6$, minibatch size is 256, discount factor $\gamma=0.99$, 
+and target update rate $\tau=0.005$. 
+Exploration noise follows a decaying Ornstein–Uhlenbeck process with initial $\sigma=0.2$. 
+Each model is trained for $1.0\times10^6$ steps and evaluated on 500 Monte Carlo test runs to 
+ensure robustness. All experiments are conducted on an NVIDIA RTX 4090 GPU. 
+
+This implementation ensures reproducibility and stability while maintaining scalability across
+larger network configurations.
+\subsection{distributed manufacturing simulation}
+% Algorithm for state normalization with changed variables
+\begin{algorithm}
+\caption{State normalization}
+\begin{algorithmic}[1]
+\Require State variables: $s_t^n$, $r_t^n$, $b_t^n$, and $p_t^n$ \\
+         Maximal values of the state variables for all facilities: $M_s$, $M_r$, $M_b$, and $M_p$
+\Ensure Normalized state variables: $\hat{s}_t^n$, $\hat{r}_t^n$, $\hat{b}_t^n$, $\hat{p}_t^n$
+
+\For{$n = 1$ to $N$}
+    \State $\hat{s}_t^n = s_t^n / M_s$
+    \State $\hat{r}_t^n = r_t^n / M_r$
+    \State $\hat{b}_t^n = b_t^n / M_b$
+    \State $\hat{p}_t^n = p_t^n / M_p$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+To evaluate the proposed method, we now construct a simulation environment of a decentralized manufacturing system consisting of $N=20$ manufacturing facilities and its dedicated reagent supplier. Each PRM product requires $T=3$ epochs of manufacturing time, and the considered finite problem horizon contains $\Gamma=52$ decision epochs. For every epoch $t$, there will be $d_{t}^{n}$ new demand for facility $n$. The demand arrival process for facility $n$ follows a Poisson distribution $\text{Poisson}\left(\lambda_{n}\right)$. The supplier disruption follows independent Bernoulli processes $\text{Ber}\left(\zeta_{n}\right)$, i.e., the facility $n$ has a probability $\zeta_{n}$ to have supplier disruption and could not purchase any reagent for the epoch. This simulation can be further adjusted to reflect any real situation, e.g., supply disruption and demand uncertainty, that may be encountered. Such flexibility in using the simulation system will be demonstrated in Section 5.4 when we compare GCN-DDPG with other methods.
+
+The epoch is assumed to occur weekly, and the transshipment of specimens, bioreactors, and reagents at epoch $t$ arrive before epoch $t+1$. After the demand and source materials have arrived, the next observing state can be expressed by $\mathbf{x}_{t+1}^{n}=\left(s_{t+1}^{n}, r_{t+1}^{n}, \mathbf{b}^{n}, P_{t+1}\right)$ for facility $n=1, \ldots, N$, according to definition Equation (1). The state variables are updated by the following rules:
+
+\begin{align*}
+s_{t+1}^{n}&=s_{t}^{n}-m_{t}^{n}+d_{t}^{n}+w_{t}^{n} \\
+r_{t+1}^{n}&=r_{t}^{n}-m_{t}^{n}+e_{t}^{n}+p_{t}^{n} \\
+b_{t+1}^{n, \tau}&= \begin{cases}
+b_{t}^{n, 0}-m_{t}^{n}+b_{t}^{n, 1}+q_{t}^{n} & \text{if } \tau=0 \\
+b_{t}^{n, \tau+1} & \text{if } 1 \leq \tau \leq T-2 \\
+m_{t}^{n} & \text{if } \tau=T-1
+\end{cases}
+\end{align*}
+
+where $m_{t}^{n}=\min \left(s_{t}^{n}, b_{t}^{n, 0}, r_{t}^{n}\right)$ is the number of products that begin manufacturing at epoch $t$, $d_{t}^{n}$ is the demand arriving at facility $n$ in epoch $t$, and $P_{t+1}$ follows an exogenous Markov chain from $P_{t}$. The single-period cost in period $t$ of all facility $n$ can be written as:
+
+\begin{align*}
+\mathbf{C}\left(\mathbf{A}_{t} ; \mathbf{x}_{t}\right)&=\sum_{j=t}^{\Gamma} \sum_{n=1}^{N} \mathbf{C}^{n}\left(\mathbf{w}_{t}^{n}, \mathbf{e}_{t}^{n}, \mathbf{q}_{t}^{n}, \mathbf{p}_{t}^{n} ; \mathbf{s}_{t}^{n}\right) \\
+\mathbf{C}^{n}\left(\mathbf{w}_{t}^{n}, \mathbf{e}_{t}^{n}, \mathbf{q}_{t}^{n}, \mathbf{p}_{t}^{n} \mid \mathbf{s}_{t}^{n}\right)&=C_{\text{Reg}, t}^{n}+C_{\text{Bio}, t}^{n}+C_{\text{Tran}, t}^{n}
+\end{align*}
+
+where the meanings of $C_{\text{Reg}, t}^{n}$, $C_{\text{Bio}, t}^{n}$, and $C_{\text{Tran}, t}^{n}$ are summarized below.
+
+\begin{itemize}
+  \item $C_{\text{Reg}, t}^{n} = c_{R} p_{t}^{n} + h_{R}\left(r_{t+1}^{n}-s_{t+1}^{n}\right)^{+} + p_{R}\left(s_{t+1}^{n}-r_{t+1}^{n}\right)^{+}$ is the cost related to reagent at epoch $t$, including the reagent replenishment cost $c_{R} p_{t}^{n}$, the reagent overstock holding cost $h_{R}\left(r_{t+1}^{n}-s_{t+1}^{n}\right)^{+}$, and the reagent understock penalty $p_{R}\left(s_{t+1}^{n}-r_{t+1}^{n}\right)^{+}$;
+  \item $C_{\text{Bio}, t}^{n} = h_{B}\left(b_{t+1}^{n, 0}-s_{t+1}^{n}\right)^{+} + p_{B}\left(s_{t+1}^{n}-b_{t+1}^{n, 0}\right)^{+}$ is the cost related to bioreactor at epoch $t$, including the bioreactor overstock holding cost $h_{B}\left(b_{t+1}^{n, 0}-s_{t+1}^{n}\right)^{+}$, and the bioreactor understock penalty $p_{B}\left(s_{t+1}^{n}-b_{t+1}^{n, 0}\right)^{+}$;
+  \item $C_{\text{Tran}, t}^{n} = K_{R}\left|e_{t}^{n}\right| + K_{B}\left|q_{t}^{n}\right| + K_{S}\left|w_{t}^{n}\right|$ is the total transshipping cost at epoch $t$, including the cost of transshipping $e_{t}^{n}$ units of reagent from/to facility $n$, the cost of relocating $q_{t}^{n}$ bioreactors from/to facility $n$, and the cost of transshipping $w_{t}^{n}$ specimens from facility $i$to facility $n$.
+\end{itemize}
+
+
+\subsection{Case Study 1: Interconnected Clinic Network Analysis}
+\label{subsec:casestudy1}
+
+ In this case study, we assume the demand forecast for heuristics is accurate and compare the cost performance of GCN-DDPG with the heuristics under three levels of supply disruption rate. This case study aims to demonstrate that
+GCN-DDPG can learn effective policies under different uncertainty scenarios. Figure 3
+illustrates the average total cost of GCN-DDPG and the heuristics under 0.05, 0.3 and
+0.6 supplier disruption rates. The result of MYO is omitted in the figure due to its
+poor performance. The result shows that GCN-DDPG can achieve comparable cost performance with the heuristics when the supplier disruption rate is low, e.g., 0.05 and
+0.3. When the supplier disruption rate is high, e.g., 0.6, GCN-DDPG outperforms all
+the heuristics. The cost differences between GCN-DDPG and heuristics are calculated by
+$(Cost_{Heuristic}- Cost_{GCN-DDPG})/Cost_{Heuristic}\times 100$ and listed in Table 1.
+
+\subsubsection{Results} The results indicate that the GCN-DDPG framework can leverage network-level information to improve resource allocation and respond to demand changes more effectively.
+ \begin{figure}[ht]
+    \includegraphics[width=0.85\textwidth]{Result_1.png}
+            \caption{Average total cost summary of case study 1.}
+ \end{figure}
+ \begin{table}[h]
+\centering
+\caption{Cost performance comparison of case study I (\% increase)}
+
+\begin{tabular}{lccc}
+\hline
+Method & \multicolumn{3}{c}{Disruption Rate} \\
+\cline{2-4}
+ & 0.05 & 0.3 & 0.6 \\
+\hline
+ISO & 5.46\% & 4.80\% & 30.56\% \\
+MDL-1 & 2.17\% & 0.83\% & 10.71\% \\
+MDL-2 & -7.14\% & -3.48\% & 3.85\% \\
+GCN-DDPG & 0.00\% & 0.00\% & 0.00\% \\
+\hline
+\end{tabular}
+\label{tab:cost_comparison}
+\end{table}
+\subsubsection{Analysis:}
+The results show that GCN-DDPG performs competitively with the heuristic baselines under low and moderate disruption rates and provides clearer cost advantages under high disruption. In particular, when the supplier disruption rate is $0.6$, GCN-DDPG reduces average total cost by 30.56\% relative to ISO, 10.71\% relative to MDL-1, and 3.85\% relative to MDL-2, as reported in Table~\ref{tab:cost_comparison}. Under lower disruption rates, the cost differences are smaller, indicating that the benefit of graph-aware adaptive control becomes more visible when the network is exposed to stronger supply-side uncertainty. These results suggest that GCN-DDPG can use network-level information to support resource allocation under disruption, rather than demonstrating uniformly dominant performance across all settings. This consistent performance of GCN-DDPG underscores its potential as a scalable solution for healthcare networks, ensuring operational reliability and financial prudence even in the face of escalating disruptions.
+\subsection{Case Study 2: Adaptability to Non-Stationary Demand}
+\label{subsec:casestudy2}
+In this case study, we assume the demand forecast is less accurate for heuristic methods. Instead, we use a range of demand levels in the simulation model for training our GCN-DDPG approach, as opposed to the actual demand distribution. This case study aims to demonstrate that GCN-DDPG can learn a single policy that can adapt to different uncertainty scenarios, mimicking a real-world application.
+
+In the computer experiment, we let the heuristics generate capacity plans using a demand distribution \( \text{Poisson}(d) \) and \( d = \frac{250}{52} \). We then set the actual demand distribution as \( \text{Poisson}(d') \), where \( d' = d + \epsilon \cdot d \) and \( \epsilon \in \{-0.2, 0, 0.2, 0.3, 0.4, 0.5\} \), to generate data for testing heuristic methods. This approach tests the adaptability of our GCN-DDPG model to demand forecast errors that are \(-20\%, 0\%, 20\%, 30\%, 40\%, 50\% \). In addition to the constant error, we also consider scenarios of non-stationary errors where the demand forecast error changes over time as listed in Table \ref{table:nonstationary_error_design}.
+ The average total cost of GCN-DDPG and the heuristics under different levels of demand forecasting accuracy are summarized
+in Figure 4.
+\subsubsection{Results} The results indicate that the GCN-DDPG framework can leverage network-level information to improve resource allocation and respond to demand changes more effectively.
+ \begin{figure}[ht]
+    \includegraphics[width=0.85\textwidth]{Result-2.png}
+            \caption{Average total cost summary of case study 2.}
+ \end{figure}
+
+
+We train the GCN-DDPG model to make effective capacity planning decisions under different uncertainty scenarios. The capacity planning model for the GCN-DDPG approach utilizes a uniform parameter \( \text{Uniform}(d,2d) \) for each time step, ensuring adaptability to the varying demand patterns.
+\begin{table}[ht]
+\centering
+\caption{Summary of non-stationary demand forecast error design for Case Study II across 20 clinics.}
+\label{table:nonstationary_error_design}
+\begin{tabular}{c c}
+\hline
+Epoch & Error Rate Across Clinics \\
+\hline
+1-13 & Varies from 30\% to 60\%, alternating between clinics \\
+14-26 & Varies from 10\% to 80\%, alternating between clinics \\
+27-39 & Varies from 50\% to 100\%, alternating between clinics \\
+40-52 & Varies from 40\% to 60\%, alternating between clinics \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsubsection{Analysis}
+The results indicate that GCN-DDPG achieves lower average total cost than the heuristic baselines in the higher forecast-error scenarios, including the 40\%, 50\%, and non-stationary demand-error settings. In lower-error scenarios, its performance is closer to the look-ahead heuristics, suggesting that the advantage of adaptive learning becomes more visible when the actual demand process deviates substantially from the forecast used by deterministic baselines.
+\section{Discussion and Conclusions}
+\label{sec:conclusion}
+The two case studies conducted provide a comprehensive comparison between the cost performance of the proposed GCN-DDPG framework and four ADP-based methods under conditions where demand distributions are known a priori. The findings affirm that GCN-DDPG can generate effective actions and policies, demonstrating performance on par with ADP-based methods across various uncertainty scenarios. In the second case study, we explored scenarios where the actual demand distribution is unknown, training a single GCN-DDPG policy to address this uncertainty. The results endorse the framework's capability to learn and control capacity planning effectively under diverse demand uncertainty scenarios, thereby highlighting its applicability to real-world problems where system uncertainties are unknown.
+
+While the capacity planning problem we explored is inspired by PRM manufacturing, the flexibility of the GCN-DDPG approach suggests its potential applicability across a wide range of manufacturing applications to enhance supply chain resilience, even without a predefined system structure.
+
+
+The GCN-DDPG framework, leveraging the power of simulation and the learning capabilities of Deep Reinforcement Learning, is particularly well-suited for modeling complex systems and learning optimal control policies. This approach offers significant benefits for PRM supply chains, including the ability to make immediate decisions using a neural network-based trained policy, avoiding the need for time-consuming optimization processes typical of analytical methods. Furthermore, a well-trained GCN-DDPG policy can be adapted to different system settings, such as varying levels of demand uncertainty, without the necessity for retraining.
+
+However, challenges remain in the deployment of GCN-DDPG within PRM supply chains. Achieving acceptable performance with DRL policies may require meticulous hyperparameter tuning or extended training times. The simulation environment must accurately reflect the supply chain's state to allow for efficient retraining and maintenance of policies. Significant changes in the system may necessitate policy retraining to ensure the quality of decisions. Practitioners must develop a robust workflow for training, maintaining, and validating GCN-DDPG policies to mitigate the risk of suboptimal decision-making.
+
+\textbf{Future Work}
+This study motivates several potential research extensions. First, the simulation
+model can be improved by adding variables such as patient health condition, raw material quality, product quality, process failure rate, machine breakdown process, and operator availability. Furthermore, other PRM supply chain activities such as product
+distribution and preparation, patient treatment activities, and production scheduling processes can be added to the simulation.
+
+\section*{Data Availability}
+The data used in this study are generated from a simulation model. The simulation parameters and experimental settings are described in the manuscript. Code and additional materials are available from the corresponding author upon reasonable request.
+
+\section*{Declaration of Competing Interest}
+The author declares that there is no known competing financial interest or personal relationship that could have appeared to influence the work reported in this paper.
+
+\printbibliography
+
+\end{document}

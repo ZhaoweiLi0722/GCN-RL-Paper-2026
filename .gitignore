@@ -63,4 +63,4 @@ figures/graph_stress_benchmark/
 *.toc
 
 # Generated manuscript/submission archives
-Paper/**/*.zip
+[Pp]aper/**/*.zip

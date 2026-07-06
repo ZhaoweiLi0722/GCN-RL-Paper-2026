@@ -20,6 +20,7 @@ class HeuristicSettings:
     lookahead_periods: int = 0
     allow_sharing: bool = True
     local_order_up_to_multiplier: float = 1.0
+    use_demand_forecast: bool = False
 
 
 class CapacityHeuristicPolicy:
@@ -47,6 +48,7 @@ class CapacityHeuristicPolicy:
             lookahead_periods=int(config.get("lookahead_periods", self.default_lookahead_periods())),
             allow_sharing=bool(config.get("allow_sharing", self.default_allow_sharing())),
             local_order_up_to_multiplier=float(config.get("local_order_up_to_multiplier", 1.0)),
+            use_demand_forecast=bool(config.get("use_demand_forecast", self.default_use_demand_forecast())),
         )
 
     def default_lookahead_periods(self) -> int:
@@ -54,6 +56,9 @@ class CapacityHeuristicPolicy:
 
     def default_allow_sharing(self) -> bool:
         return True
+
+    def default_use_demand_forecast(self) -> bool:
+        return False
 
     def reset(self) -> None:
         return None
@@ -89,6 +94,7 @@ class CapacityHeuristicPolicy:
             reagents=env.reagents,
             bioreactors=env.bioreactors,
             supplier_available=env.supplier_available,
+            demand_forecast=getattr(env, "demand_forecast", None),
             demand_rates=env.demand_rates,
             max_reagent_replenishment=env.max_reagent_replenishment,
             max_specimen_transfer=float(env.config.max_specimen_transfer),
@@ -137,11 +143,21 @@ class MeanDemandLookahead2Policy(CapacityHeuristicPolicy):
         return 2
 
 
+class ForecastMyopicPolicy(CapacityHeuristicPolicy):
+    """F-MYO: current-period balancing with patient/demand forecast lookahead."""
+
+    algorithm = "fmyo"
+
+    def default_use_demand_forecast(self) -> bool:
+        return True
+
+
 HEURISTIC_POLICIES = {
     "myo": MyopicPolicy,
     "iso": IsolatedPolicy,
     "mdl1": MeanDemandLookahead1Policy,
     "mdl2": MeanDemandLookahead2Policy,
+    "fmyo": ForecastMyopicPolicy,
 }
 
 
@@ -203,6 +219,11 @@ def facility_net_action_from_state(
         supplier_available = state_array[:, 3 + lead_time]
     else:
         supplier_available = np.ones(n, dtype=np.float32)
+    if include_forecast:
+        forecast_start = 3 + lead_time + int(include_supplier)
+        demand_forecast = state_array[:, forecast_start]
+    else:
+        demand_forecast = None
 
     return facility_net_action_from_arrays(
         demand=demand,
@@ -210,6 +231,7 @@ def facility_net_action_from_state(
         reagents=reagents,
         bioreactors=bioreactors,
         supplier_available=supplier_available,
+        demand_forecast=demand_forecast,
         demand_rates=_config_vector(env_config.get("demand_rates", 0.0), n, "demand_rates"),
         max_reagent_replenishment=_config_vector(
             env_config.get("max_reagent_replenishment", 0.0),
@@ -233,6 +255,7 @@ def facility_net_action_from_arrays(
     reagents: np.ndarray,
     bioreactors: np.ndarray,
     supplier_available: np.ndarray,
+    demand_forecast: np.ndarray | None,
     demand_rates: np.ndarray,
     max_reagent_replenishment: np.ndarray,
     max_specimen_transfer: float,
@@ -254,7 +277,10 @@ def facility_net_action_from_arrays(
     next_reagents = reagents - production
     next_idle_bioreactors = idle_bioreactors - production + next_stage_bioreactors
 
-    lookahead_demand = settings.lookahead_periods * demand_rates
+    if settings.use_demand_forecast and demand_forecast is not None:
+        lookahead_demand = np.asarray(demand_forecast, dtype=float)
+    else:
+        lookahead_demand = settings.lookahead_periods * demand_rates
     target_workload = np.maximum(next_specimens, 0.0) + lookahead_demand
     target_workload = target_workload * settings.local_order_up_to_multiplier
 

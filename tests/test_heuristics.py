@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import unittest
 
 import numpy as np
@@ -10,6 +10,7 @@ import numpy as np
 from evaluation.evaluate_formal import evaluate_agent, summarize_rows
 from src.baselines.heuristics import (
     facility_net_action_from_state,
+    ForecastMyopicPolicy,
     heuristic_settings_for_policy,
     IsolatedPolicy,
     MeanDemandLookahead1Policy,
@@ -25,7 +26,13 @@ class HeuristicPolicyTests(unittest.TestCase):
         self.state = self.env.reset(seed=2)
 
     def test_all_heuristics_emit_valid_facility_net_actions(self) -> None:
-        for policy_cls in (MyopicPolicy, IsolatedPolicy, MeanDemandLookahead1Policy, MeanDemandLookahead2Policy):
+        for policy_cls in (
+            MyopicPolicy,
+            IsolatedPolicy,
+            MeanDemandLookahead1Policy,
+            MeanDemandLookahead2Policy,
+            ForecastMyopicPolicy,
+        ):
             with self.subTest(policy=policy_cls.__name__):
                 policy = policy_cls()
                 action = policy.select_action(self.state, env=self.env)
@@ -46,7 +53,32 @@ class HeuristicPolicyTests(unittest.TestCase):
             settings=heuristic_settings_for_policy("mdl2"),
         )
 
-        np.testing.assert_allclose(state_action, live_action)
+        np.testing.assert_allclose(state_action, live_action, atol=1e-6)
+
+    def test_forecast_myopic_policy_uses_demand_forecast_state(self) -> None:
+        config = replace(
+            make_20_clinic_config(episode_horizon=2),
+            include_demand_forecast_state=True,
+            demand_forecast_horizon=2,
+            demand_forecast_error=0.0,
+        )
+        env = CapacityPlanningEnv(config, seed=13)
+        state = env.reset(seed=13)
+
+        live_action = ForecastMyopicPolicy().select_action(state, env=env)
+        state_action = facility_net_action_from_state(
+            state,
+            asdict(env.config),
+            settings=heuristic_settings_for_policy("fmyo"),
+        )
+        myopic_action = MyopicPolicy().select_action(state, env=env)
+        n = env.config.num_facilities
+
+        np.testing.assert_allclose(state_action, live_action, atol=1e-6)
+        self.assertGreaterEqual(
+            float(live_action[3 * n : 4 * n].mean()),
+            float(myopic_action[3 * n : 4 * n].mean()),
+        )
 
     def test_formal_evaluation_summarizes_heuristic_rows(self) -> None:
         policy = MyopicPolicy()

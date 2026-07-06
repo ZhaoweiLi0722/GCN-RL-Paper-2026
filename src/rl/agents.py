@@ -6,7 +6,10 @@ from typing import Any
 
 
 def available_algorithms() -> tuple[str, ...]:
-    return ("flat_ddpg", "gcn_ddpg", "iso", "mdl1", "mdl2", "myo", "ppo", "sac", "td3")
+    from src.baselines.heuristics import available_heuristics
+
+    learned = ("flat_ddpg", "gcn_ddpg", "ppo", "sac", "td3")
+    return tuple(sorted((*learned, *available_heuristics())))
 
 
 def get_agent_class(algorithm: str) -> Any:
@@ -30,7 +33,9 @@ def get_agent_class(algorithm: str) -> Any:
         from src.baselines.ppo import PPOAgent
 
         return PPOAgent
-    if algorithm in ("myo", "iso", "mdl1", "mdl2"):
+    from src.baselines.heuristics import available_heuristics
+
+    if algorithm in available_heuristics():
         from src.baselines.heuristics import get_heuristic_class
 
         return get_heuristic_class(algorithm)

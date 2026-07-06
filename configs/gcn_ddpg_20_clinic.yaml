@@ -24,19 +24,19 @@
   },
   "residual_action": {
     "enabled": true,
-    "base_policy": "mdl2",
-    "scale": 0.35,
+    "base_policy": "myo",
+    "scale": 0.1,
     "group_scales": {
-      "specimen_transfer": 0.05,
-      "reagent_transfer": 0.05,
-      "capacity_transfer": 0.05,
-      "replenishment": 0.35
+      "specimen_transfer": 0.0,
+      "reagent_transfer": 0.0,
+      "capacity_transfer": 0.0,
+      "replenishment": 0.1
     },
     "l2_weight": 0.02
   },
   "imitation_pretrain": {
     "enabled": true,
-    "policy": "mdl2",
+    "policy": "myo",
     "episodes": 20,
     "epochs": 8,
     "batch_size": 256,

@@ -7,7 +7,12 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from evaluation.check_training_stability import summarize_training_stability
-from evaluation.run_gcn_residual_sweep import make_residual_sweep_config, residual_variant_name
+from evaluation.run_gcn_residual_sweep import (
+    best_variant_summary,
+    make_residual_sweep_config,
+    residual_variant_name,
+    summary_metadata,
+)
 from evaluation.run_full_benchmark import (
     config_snapshot_path,
     evaluation_csv_path,
@@ -138,6 +143,32 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(config["checkpoint_interval"], 2)
         self.assertEqual(config["elite_imitation"]["epochs"], 4)
         self.assertIn(variant, config["result_csv_path"])
+
+    def test_residual_sweep_metadata_and_best_selector(self) -> None:
+        metadata = summary_metadata(
+            variant="v",
+            base_policy="myo",
+            scale=0.2,
+            transfer_scale=0.0,
+            replenishment_scale=0.2,
+            l2_weight=0.02,
+            elite_epochs=6,
+            seed=0,
+            eval_seed=50000,
+            checkpoint_path=Path("ckpt.pt"),
+            checkpoint_episode="offline_elite",
+            selection_stage="offline_elite",
+        )
+        rows = [
+            {"variant": "v", "training_seed": 0, "total_cost_mean": "4.0"},
+            {"variant": "v", "training_seed": 0, "total_cost_mean": "3.5", **metadata},
+        ]
+
+        best = best_variant_summary(rows, "v", 0)
+
+        self.assertEqual(metadata["selection_stage"], "offline_elite")
+        self.assertEqual(metadata["checkpoint_episode"], "offline_elite")
+        self.assertEqual(best["total_cost_mean"], "3.5")
 
 
 class TrainingStabilityTests(unittest.TestCase):

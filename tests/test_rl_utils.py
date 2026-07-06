@@ -88,11 +88,14 @@ class RLUtilsTest(unittest.TestCase):
         plan = load_config("experiments/configs/graph_stress_benchmark.json")
 
         self.assertTrue(config["imitation_pretrain"]["enabled"])
-        self.assertEqual(config["imitation_pretrain"]["policy"], "mdl2")
+        self.assertEqual(config["imitation_pretrain"]["policy"], "myo")
         self.assertGreater(config["imitation_pretrain"]["regularization_weight"], 0.0)
         self.assertTrue(config["residual_action"]["enabled"])
-        self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
+        self.assertEqual(config["residual_action"]["base_policy"], "myo")
         self.assertGreater(config["residual_action"]["scale"], 0.0)
+        self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.0)
+        self.assertEqual(config["residual_action"]["group_scales"]["reagent_transfer"], 0.0)
+        self.assertEqual(config["residual_action"]["group_scales"]["capacity_transfer"], 0.0)
         self.assertLess(
             config["residual_action"]["group_scales"]["specimen_transfer"],
             config["residual_action"]["group_scales"]["replenishment"],

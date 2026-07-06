@@ -12,12 +12,14 @@ import argparse
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 from evaluation.aggregate_results import write_rows as write_summary_rows
 from evaluation.evaluate_formal import evaluate_agent, summarize_rows, write_summary
-from src.baselines.heuristics import available_heuristics
+from src.baselines.heuristics import available_heuristics, get_heuristic_class
 from src.rl.agents import get_agent_class
 from src.rl.config import load_config, save_config_snapshot
-from src.rl.experiment import build_env, train_off_policy_agent, write_rows as write_training_rows
+from src.rl.experiment import EpisodeMetrics, build_env, train_off_policy_agent, write_rows as write_training_rows
 
 
 DEFAULT_BASE_CONFIG = "configs/gcn_ddpg_20_clinic.yaml"
@@ -40,6 +42,12 @@ def main() -> None:
     parser.add_argument("--checkpoint-interval", type=int, default=None)
     parser.add_argument("--evaluate-checkpoints", action="store_true")
     parser.add_argument("--elite-epochs", type=int, default=None)
+    parser.add_argument("--offline-elite-rollouts", type=int, default=0)
+    parser.add_argument("--offline-elite-top-k", type=int, default=5)
+    parser.add_argument("--offline-elite-cycles", type=int, default=1)
+    parser.add_argument("--offline-elite-epochs", type=int, default=8)
+    parser.add_argument("--offline-elite-seed", type=int, default=70000)
+    parser.add_argument("--offline-elite-advantage-filter", action="store_true")
     parser.add_argument("--eval-replications", type=int, default=100)
     parser.add_argument("--evaluation-seed", type=int, default=50000)
     parser.add_argument("--output-root", default="results/gcn_residual_sweep")
@@ -98,50 +106,103 @@ def main() -> None:
                             Path(config["checkpoint_dir"]),
                             seed=int(seed),
                         )
+                        if not checkpoint_paths:
+                            checkpoint_paths = [None]
                     for checkpoint_path in checkpoint_paths:
-                        if checkpoint_path is not None:
-                            agent.load_actor(checkpoint_path)
-                        eval_rows = evaluate_agent(
+                        summary = evaluate_policy_candidate(
                             agent,
                             env,
-                            algorithm="gcn_ddpg",
-                            seed=eval_seed,
+                            checkpoint_path=checkpoint_path,
+                            eval_seed=eval_seed,
                             replications=int(args.eval_replications),
                             max_steps=int(args.steps),
                         )
-                        summary = summarize_rows(eval_rows)
-                        checkpoint_episode = (
-                            int(args.episodes)
-                            if checkpoint_path is None
-                            else checkpoint_episode_from_path(checkpoint_path)
-                        )
                         summary.update(
-                            {
-                                "variant": variant,
-                                "residual_base_policy": base_policy,
-                                "residual_scale": float(scale),
-                                "residual_transfer_scale": (
-                                    "" if args.transfer_scale is None else float(args.transfer_scale)
+                            summary_metadata(
+                                variant=variant,
+                                base_policy=base_policy,
+                                scale=scale,
+                                transfer_scale=args.transfer_scale,
+                                replenishment_scale=args.replenishment_scale,
+                                l2_weight=l2_weight,
+                                elite_epochs=args.elite_epochs,
+                                seed=seed,
+                                eval_seed=eval_seed,
+                                checkpoint_path=checkpoint_path,
+                                checkpoint_episode=(
+                                    int(args.episodes)
+                                    if checkpoint_path is None
+                                    else checkpoint_episode_from_path(checkpoint_path)
                                 ),
-                                "residual_replenishment_scale": (
-                                    "" if args.replenishment_scale is None else float(args.replenishment_scale)
-                                ),
-                                "residual_l2_weight": float(l2_weight),
-                                "elite_epochs": "" if args.elite_epochs is None else int(args.elite_epochs),
-                                "training_seed": int(seed),
-                                "evaluation_seed": eval_seed,
-                                "checkpoint_episode": checkpoint_episode,
-                                "checkpoint_path": "" if checkpoint_path is None else str(checkpoint_path),
-                            }
+                                selection_stage="checkpoint",
+                            )
                         )
                         summary_path = (
                             output_root
                             / scenario_name
                             / variant
-                            / f"seed{seed}_episode{checkpoint_episode}_summary.csv"
+                            / f"seed{seed}_{summary['selection_stage']}_{summary['checkpoint_episode']}_summary.csv"
                         )
                         write_summary(summary, summary_path)
                         summary_rows.append(summary)
+
+                    best_summary = best_variant_summary(summary_rows, variant, int(seed))
+                    best_checkpoint_path = str(best_summary.get("checkpoint_path", ""))
+                    if best_checkpoint_path:
+                        agent.load_actor(Path(best_checkpoint_path))
+
+                    if args.offline_elite_rollouts > 0:
+                        offline_summary = run_offline_elite_distillation(
+                            agent,
+                            env,
+                            seed=int(args.offline_elite_seed) + int(seed) * 10000,
+                            rollouts=int(args.offline_elite_rollouts),
+                            top_k=int(args.offline_elite_top_k),
+                            cycles=int(args.offline_elite_cycles),
+                            epochs=int(args.offline_elite_epochs),
+                            batch_size=int(args.batch_size),
+                            max_steps=int(args.steps),
+                            baseline_policy=base_policy,
+                            advantage_filter=bool(args.offline_elite_advantage_filter),
+                        )
+                        offline_checkpoint_path = (
+                            Path(config["checkpoint_dir"]) / f"gcn_ddpg_seed{seed}_offline_elite.pt"
+                        )
+                        agent.save(offline_checkpoint_path)
+                        summary = evaluate_policy_candidate(
+                            agent,
+                            env,
+                            checkpoint_path=None,
+                            eval_seed=eval_seed,
+                            replications=int(args.eval_replications),
+                            max_steps=int(args.steps),
+                        )
+                        summary.update(
+                            summary_metadata(
+                                variant=variant,
+                                base_policy=base_policy,
+                                scale=scale,
+                                transfer_scale=args.transfer_scale,
+                                replenishment_scale=args.replenishment_scale,
+                                l2_weight=l2_weight,
+                                elite_epochs=args.elite_epochs,
+                                seed=seed,
+                                eval_seed=eval_seed,
+                                checkpoint_path=offline_checkpoint_path,
+                                checkpoint_episode="offline_elite",
+                                selection_stage="offline_elite",
+                            )
+                        )
+                        summary.update(offline_summary)
+                        summary_path = (
+                            output_root
+                            / scenario_name
+                            / variant
+                            / f"seed{seed}_offline_elite_summary.csv"
+                        )
+                        write_summary(summary, summary_path)
+                        summary_rows.append(summary)
+
                     best_summary = min(
                         (row for row in summary_rows if row["variant"] == variant and int(row["training_seed"]) == seed),
                         key=lambda row: float(row["total_cost_mean"]),
@@ -156,6 +217,216 @@ def main() -> None:
     summary_output = Path(args.summary_output or output_root / scenario_name / "sweep_summary.csv")
     write_summary_rows(summary_rows, summary_output)
     print(f"wrote {len(summary_rows)} residual sweep rows to {summary_output}")
+
+
+def evaluate_policy_candidate(
+    agent,
+    env,
+    *,
+    checkpoint_path: Path | None,
+    eval_seed: int,
+    replications: int,
+    max_steps: int,
+) -> dict[str, Any]:
+    if checkpoint_path is not None:
+        agent.load_actor(checkpoint_path)
+    eval_rows = evaluate_agent(
+        agent,
+        env,
+        algorithm="gcn_ddpg",
+        seed=eval_seed,
+        replications=replications,
+        max_steps=max_steps,
+    )
+    return summarize_rows(eval_rows)
+
+
+def summary_metadata(
+    *,
+    variant: str,
+    base_policy: str,
+    scale: float,
+    transfer_scale: float | None,
+    replenishment_scale: float | None,
+    l2_weight: float,
+    elite_epochs: int | None,
+    seed: int,
+    eval_seed: int,
+    checkpoint_path: Path | None,
+    checkpoint_episode: int | str,
+    selection_stage: str,
+) -> dict[str, Any]:
+    return {
+        "variant": variant,
+        "residual_base_policy": base_policy,
+        "residual_scale": float(scale),
+        "residual_transfer_scale": "" if transfer_scale is None else float(transfer_scale),
+        "residual_replenishment_scale": "" if replenishment_scale is None else float(replenishment_scale),
+        "residual_l2_weight": float(l2_weight),
+        "elite_epochs": "" if elite_epochs is None else int(elite_epochs),
+        "training_seed": int(seed),
+        "evaluation_seed": int(eval_seed),
+        "checkpoint_episode": checkpoint_episode,
+        "checkpoint_path": "" if checkpoint_path is None else str(checkpoint_path),
+        "selection_stage": selection_stage,
+    }
+
+
+def best_variant_summary(rows: list[dict[str, Any]], variant: str, seed: int) -> dict[str, Any]:
+    return min(
+        (row for row in rows if row["variant"] == variant and int(row["training_seed"]) == seed),
+        key=lambda row: float(row["total_cost_mean"]),
+    )
+
+
+def run_offline_elite_distillation(
+    agent,
+    env,
+    *,
+    seed: int,
+    rollouts: int,
+    top_k: int,
+    cycles: int,
+    epochs: int,
+    batch_size: int,
+    max_steps: int,
+    baseline_policy: str,
+    advantage_filter: bool,
+) -> dict[str, Any]:
+    all_elites: list[tuple[float, float, float, float, np.ndarray, np.ndarray]] = []
+    final_fit: dict[str, Any] = {}
+    cycles = max(cycles, 1)
+    for cycle in range(cycles):
+        elites = collect_elite_rollouts(
+            agent,
+            env,
+            seed=seed + cycle * max(rollouts, 1),
+            rollouts=rollouts,
+            top_k=top_k,
+            max_steps=max_steps,
+            baseline_policy=baseline_policy,
+            advantage_filter=advantage_filter,
+        )
+        all_elites.extend(elites)
+        all_elites.sort(key=lambda item: item[0])
+        del all_elites[max(top_k, 1):]
+        if not all_elites:
+            print(
+                "offline_elite "
+                f"cycle={cycle + 1}/{cycles} no positive-advantage rollouts",
+                flush=True,
+            )
+            continue
+        states = np.concatenate([item[4] for item in all_elites], axis=0)
+        actions = np.concatenate([item[5] for item in all_elites], axis=0)
+        final_fit = agent.fit_action_batch(
+            states,
+            actions,
+            {
+                "epochs": epochs,
+                "batch_size": batch_size,
+                "seed": seed + 900000 + cycle,
+            },
+        )
+        print(
+            "offline_elite "
+            f"cycle={cycle + 1}/{cycles} best_cost={all_elites[0][1]:.3f} "
+            f"best_improvement={all_elites[0][3]:.3f} "
+            f"episodes={len(all_elites)} samples={final_fit.get('samples')} "
+            f"loss={final_fit.get('final_loss'):.6f}",
+            flush=True,
+        )
+    return {
+        "offline_elite_rollouts": int(rollouts),
+        "offline_elite_top_k": int(top_k),
+        "offline_elite_cycles": int(cycles),
+        "offline_elite_epochs": int(epochs),
+        "offline_elite_samples": final_fit.get("samples", 0),
+        "offline_elite_loss": final_fit.get("final_loss", ""),
+        "offline_elite_advantage_filter": bool(advantage_filter),
+        "offline_elite_best_rollout_cost": all_elites[0][1] if all_elites else "",
+        "offline_elite_best_baseline_cost": all_elites[0][2] if all_elites else "",
+        "offline_elite_best_improvement": all_elites[0][3] if all_elites else "",
+    }
+
+
+def collect_elite_rollouts(
+    agent,
+    env,
+    *,
+    seed: int,
+    rollouts: int,
+    top_k: int,
+    max_steps: int,
+    baseline_policy: str,
+    advantage_filter: bool,
+) -> list[tuple[float, float, float, float, np.ndarray, np.ndarray]]:
+    elites: list[tuple[float, float, float, float, np.ndarray, np.ndarray]] = []
+    baseline = get_heuristic_class(baseline_policy)(
+        state_dim=env.observation_size,
+        action_dim=env.action_size,
+        config={},
+    )
+    for rollout in range(max(rollouts, 0)):
+        rollout_seed = seed + rollout
+        baseline_cost = run_policy_episode_cost(
+            baseline,
+            env,
+            seed=rollout_seed,
+            max_steps=max_steps,
+            explore=False,
+        )
+        state = env.reset(seed=rollout_seed)
+        agent.reset()
+        metrics = EpisodeMetrics()
+        states: list[np.ndarray] = []
+        actions: list[np.ndarray] = []
+        for _step in range(max_steps):
+            action = agent.select_action(state, explore=True, env=env)
+            next_state, _reward, done, info = env.step(action)
+            states.append(np.asarray(state, dtype=np.float32))
+            actions.append(np.asarray(action, dtype=np.float32))
+            metrics.update(info)
+            state = next_state
+            if done:
+                break
+        if states:
+            improvement = baseline_cost - metrics.total_cost
+            if advantage_filter and improvement <= 0.0:
+                continue
+            score = -improvement if advantage_filter else metrics.total_cost
+            elites.append(
+                (
+                    score,
+                    metrics.total_cost,
+                    baseline_cost,
+                    improvement,
+                    np.asarray(states, dtype=np.float32),
+                    np.asarray(actions, dtype=np.float32),
+                )
+            )
+    elites.sort(key=lambda item: item[0])
+    return elites[: max(top_k, 1)]
+
+
+def run_policy_episode_cost(
+    policy,
+    env,
+    *,
+    seed: int,
+    max_steps: int,
+    explore: bool,
+) -> float:
+    state = env.reset(seed=seed)
+    policy.reset()
+    metrics = EpisodeMetrics()
+    for _step in range(max_steps):
+        action = policy.select_action(state, explore=explore, env=env)
+        state, _reward, done, info = env.step(action)
+        metrics.update(info)
+        if done:
+            break
+    return metrics.total_cost
 
 
 def make_residual_sweep_config(

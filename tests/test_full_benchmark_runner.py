@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -11,7 +12,9 @@ import numpy as np
 from evaluation.check_training_stability import summarize_training_stability
 from evaluation.run_gcn_residual_sweep import (
     best_variant_summary,
+    collect_local_search_demonstrations,
     elite_sample_weights,
+    local_search_candidate_actions,
     make_residual_sweep_config,
     residual_variant_name,
     summary_metadata,
@@ -30,6 +33,8 @@ from evaluation.run_full_benchmark import (
     training_csv_path,
     training_outputs_complete,
 )
+from src.baselines.heuristics import MyopicPolicy
+from src.env.capacity_planning import CapacityPlanningEnv, make_legacy_two_facility_config
 
 
 class FullBenchmarkRunnerTests(unittest.TestCase):
@@ -198,6 +203,38 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(tuple(rank_weights.shape), (5,))
         self.assertGreater(float(rank_weights[0]), float(rank_weights[-1]))
         self.assertIsNone(elite_sample_weights(elites, weighting="none", power=1.0, floor=0.0))
+
+    def test_local_search_candidate_actions_are_valid(self) -> None:
+        config = replace(make_legacy_two_facility_config(episode_horizon=2), action_mode="facility_net")
+        env = CapacityPlanningEnv(config, seed=5)
+        state = env.reset(seed=5)
+
+        actions = local_search_candidate_actions(state, env, MyopicPolicy(), epsilons=(0.05,))
+
+        self.assertEqual(len(actions), 5)
+        for action in actions:
+            self.assertEqual(action.shape, (env.action_size,))
+            self.assertTrue(np.all(action >= -1.0))
+            self.assertTrue(np.all(action <= 1.0))
+
+    def test_local_search_demo_collection_shapes(self) -> None:
+        config = replace(make_legacy_two_facility_config(episode_horizon=2), action_mode="facility_net")
+        env = CapacityPlanningEnv(config, seed=7)
+
+        demos = collect_local_search_demonstrations(
+            env,
+            seed=7,
+            rollouts=1,
+            lookahead=1,
+            epsilons=(0.05,),
+            max_steps=2,
+            baseline_policy="myo",
+            min_improvement=-1.0,
+        )
+
+        self.assertEqual(demos["states"].shape[1], env.observation_size)
+        self.assertEqual(demos["actions"].shape[1], env.action_size)
+        self.assertEqual(demos["weights"].shape[0], demos["states"].shape[0])
 
 
 class TrainingStabilityTests(unittest.TestCase):

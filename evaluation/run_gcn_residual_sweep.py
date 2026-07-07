@@ -9,6 +9,7 @@ be treated as pilot diagnostics, not manuscript-ready results.
 from __future__ import annotations
 
 import argparse
+import copy
 from pathlib import Path
 from typing import Any
 
@@ -56,6 +57,12 @@ def main() -> None:
     )
     parser.add_argument("--offline-elite-weight-power", type=float, default=1.0)
     parser.add_argument("--offline-elite-weight-floor", type=float, default=0.10)
+    parser.add_argument("--local-search-rollouts", type=int, default=0)
+    parser.add_argument("--local-search-seed", type=int, default=90000)
+    parser.add_argument("--local-search-lookahead", type=int, default=6)
+    parser.add_argument("--local-search-epsilons", nargs="+", type=float, default=[0.02, 0.05, 0.08])
+    parser.add_argument("--local-search-epochs", type=int, default=12)
+    parser.add_argument("--local-search-min-improvement", type=float, default=0.0)
     parser.add_argument("--eval-replications", type=int, default=100)
     parser.add_argument("--evaluation-seed", type=int, default=50000)
     parser.add_argument("--output-root", default="results/gcn_residual_sweep")
@@ -214,6 +221,59 @@ def main() -> None:
                             / scenario_name
                             / variant
                             / f"seed{seed}_offline_elite_summary.csv"
+                        )
+                        write_summary(summary, summary_path)
+                        summary_rows.append(summary)
+
+                    if args.local_search_rollouts > 0:
+                        local_summary = run_local_search_distillation(
+                            agent,
+                            env,
+                            seed=int(args.local_search_seed) + int(seed) * 10000,
+                            rollouts=int(args.local_search_rollouts),
+                            lookahead=int(args.local_search_lookahead),
+                            epsilons=tuple(float(value) for value in args.local_search_epsilons),
+                            epochs=int(args.local_search_epochs),
+                            batch_size=int(args.batch_size),
+                            max_steps=int(args.steps),
+                            baseline_policy=base_policy,
+                            min_improvement=float(args.local_search_min_improvement),
+                        )
+                        local_checkpoint_path = (
+                            Path(config["checkpoint_dir"]) / f"gcn_ddpg_seed{seed}_local_search.pt"
+                        )
+                        agent.save(local_checkpoint_path)
+                        summary = evaluate_policy_candidate(
+                            agent,
+                            env,
+                            checkpoint_path=None,
+                            eval_seed=eval_seed,
+                            replications=int(args.eval_replications),
+                            max_steps=int(args.steps),
+                        )
+                        summary.update(
+                            summary_metadata(
+                                variant=variant,
+                                base_policy=base_policy,
+                                scale=scale,
+                                transfer_scale=args.transfer_scale,
+                                replenishment_scale=args.replenishment_scale,
+                                l2_weight=l2_weight,
+                                center_residual_groups=tuple(args.center_residual_groups or ()),
+                                elite_epochs=args.elite_epochs,
+                                seed=seed,
+                                eval_seed=eval_seed,
+                                checkpoint_path=local_checkpoint_path,
+                                checkpoint_episode="local_search",
+                                selection_stage="local_search",
+                            )
+                        )
+                        summary.update(local_summary)
+                        summary_path = (
+                            output_root
+                            / scenario_name
+                            / variant
+                            / f"seed{seed}_local_search_summary.csv"
                         )
                         write_summary(summary, summary_path)
                         summary_rows.append(summary)
@@ -381,6 +441,194 @@ def run_offline_elite_distillation(
         "offline_elite_best_baseline_cost": all_elites[0][2] if all_elites else "",
         "offline_elite_best_improvement": all_elites[0][3] if all_elites else "",
     }
+
+
+def run_local_search_distillation(
+    agent,
+    env,
+    *,
+    seed: int,
+    rollouts: int,
+    lookahead: int,
+    epsilons: tuple[float, ...],
+    epochs: int,
+    batch_size: int,
+    max_steps: int,
+    baseline_policy: str,
+    min_improvement: float,
+) -> dict[str, Any]:
+    demos = collect_local_search_demonstrations(
+        env,
+        seed=seed,
+        rollouts=rollouts,
+        lookahead=lookahead,
+        epsilons=epsilons,
+        max_steps=max_steps,
+        baseline_policy=baseline_policy,
+        min_improvement=min_improvement,
+    )
+    if demos["states"].size == 0:
+        print("local_search no improved state-action demonstrations", flush=True)
+        return {
+            "local_search_rollouts": int(rollouts),
+            "local_search_samples": 0,
+            "local_search_improved_steps": 0,
+            "local_search_loss": "",
+        }
+    weights = demos["weights"]
+    final_fit = agent.fit_action_batch(
+        demos["states"],
+        demos["actions"],
+        {
+            "epochs": epochs,
+            "batch_size": batch_size,
+            "seed": seed + 1200000,
+        },
+        weights=weights,
+    )
+    print(
+        "local_search "
+        f"rollouts={rollouts} samples={demos['states'].shape[0]} "
+        f"improved_steps={demos['improved_steps']} "
+        f"mean_step_improvement={demos['mean_step_improvement']:.3f} "
+        f"loss={final_fit.get('final_loss'):.6f}",
+        flush=True,
+    )
+    return {
+        "local_search_rollouts": int(rollouts),
+        "local_search_lookahead": int(lookahead),
+        "local_search_epsilons": "|".join(f"{value:.4g}" for value in epsilons),
+        "local_search_epochs": int(epochs),
+        "local_search_samples": int(demos["states"].shape[0]),
+        "local_search_improved_steps": int(demos["improved_steps"]),
+        "local_search_mean_step_improvement": float(demos["mean_step_improvement"]),
+        "local_search_loss": final_fit.get("final_loss", ""),
+    }
+
+
+def collect_local_search_demonstrations(
+    env,
+    *,
+    seed: int,
+    rollouts: int,
+    lookahead: int,
+    epsilons: tuple[float, ...],
+    max_steps: int,
+    baseline_policy: str,
+    min_improvement: float,
+) -> dict[str, Any]:
+    baseline = get_heuristic_class(baseline_policy)(
+        state_dim=env.observation_size,
+        action_dim=env.action_size,
+        config={},
+    )
+    states: list[np.ndarray] = []
+    actions: list[np.ndarray] = []
+    weights: list[float] = []
+    improved_steps = 0
+    step_improvements: list[float] = []
+    for rollout in range(max(rollouts, 0)):
+        state = env.reset(seed=seed + rollout)
+        baseline.reset()
+        done = False
+        step = 0
+        while not done and step < max_steps:
+            candidate_actions = local_search_candidate_actions(
+                state,
+                env,
+                baseline,
+                epsilons=epsilons,
+            )
+            candidate_costs = [
+                rollout_cost_after_action(
+                    copy.deepcopy(env),
+                    baseline,
+                    action,
+                    horizon=lookahead,
+                )
+                for action in candidate_actions
+            ]
+            best_index = int(np.argmin(candidate_costs))
+            baseline_cost = float(candidate_costs[0])
+            best_cost = float(candidate_costs[best_index])
+            improvement = baseline_cost - best_cost
+            selected_action = candidate_actions[best_index]
+            if best_index != 0 and improvement > min_improvement:
+                states.append(np.asarray(state, dtype=np.float32))
+                actions.append(np.asarray(selected_action, dtype=np.float32))
+                weights.append(max(improvement, 1.0))
+                step_improvements.append(improvement)
+                improved_steps += 1
+            state, _reward, done, _info = env.step(selected_action)
+            step += 1
+
+    if not states:
+        return {
+            "states": np.empty((0, env.observation_size), dtype=np.float32),
+            "actions": np.empty((0, env.action_size), dtype=np.float32),
+            "weights": np.empty((0,), dtype=np.float32),
+            "improved_steps": 0,
+            "mean_step_improvement": 0.0,
+        }
+    return {
+        "states": np.asarray(states, dtype=np.float32),
+        "actions": np.asarray(actions, dtype=np.float32),
+        "weights": np.asarray(weights, dtype=np.float32),
+        "improved_steps": improved_steps,
+        "mean_step_improvement": float(np.mean(step_improvements)),
+    }
+
+
+def local_search_candidate_actions(
+    state: np.ndarray,
+    env,
+    baseline,
+    *,
+    epsilons: tuple[float, ...],
+) -> list[np.ndarray]:
+    baseline_action = baseline.select_action(state, explore=False, env=env)
+    actions = [baseline_action]
+    n = int(env.config.num_facilities)
+    pressure = (
+        np.asarray(env.demand, dtype=float)
+        + 0.25 * np.asarray(getattr(env, "demand_forecast", env.demand), dtype=float)
+        + np.asarray(env.specimens, dtype=float)
+        - np.asarray(env.reagents, dtype=float)
+    )
+    centered_pressure = pressure - float(pressure.mean())
+    denominator = max(float(np.max(np.abs(centered_pressure))), 1e-6)
+    pressure_pattern = centered_pressure / denominator
+    for epsilon in epsilons:
+        epsilon = float(epsilon)
+        for sign in (-1.0, 1.0):
+            uniform = baseline_action.copy()
+            uniform[3 * n : 4 * n] = np.clip(
+                uniform[3 * n : 4 * n] + sign * epsilon,
+                -1.0,
+                1.0,
+            )
+            actions.append(uniform.astype(np.float32))
+
+            pressure_action = baseline_action.copy()
+            pressure_action[3 * n : 4 * n] = np.clip(
+                pressure_action[3 * n : 4 * n] + sign * epsilon * pressure_pattern,
+                -1.0,
+                1.0,
+            )
+            actions.append(pressure_action.astype(np.float32))
+    return actions
+
+
+def rollout_cost_after_action(env, baseline, action: np.ndarray, *, horizon: int) -> float:
+    state, _reward, done, info = env.step(action)
+    total_cost = float(info["cost"])
+    steps = 1
+    while not done and steps < max(int(horizon), 1):
+        followup_action = baseline.select_action(state, explore=False, env=env)
+        state, _reward, done, info = env.step(followup_action)
+        total_cost += float(info["cost"])
+        steps += 1
+    return total_cost
 
 
 def elite_sample_weights(

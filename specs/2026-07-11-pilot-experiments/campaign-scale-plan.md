@@ -37,22 +37,37 @@ Rates measured on pilot Stage B (single CPU, ~9 s/1k steps/seed). Replay buffer
 (1M) and LRs already default-sane; **budget is the only change in Lever 1.**
 Recommended: **300k floor for the family**, **500k for the flagship confirm**.
 
-### Lever 2 — Representation (recommended, TEST-GATED)
+### Lever 2 — Representation + curriculum (VERIFIED, wired)
 The graph actor defaults to `readout_mode="global_flat"`: head input is
 `num_facilities × encoder_dim` (~1280-dim at 20 clinics), i.e. **not size-invariant
 and parameter-heavy** — a plausible co-cause of the collapse. The `facility_action`
 mode applies a **shared per-facility head** (fewer params, permutation-equivariant,
 transferable across clinic counts).
 
-Benefits: better sample efficiency at 20 clinics *and* it enables a **2→20
-curriculum warm-start** (train the size-invariant policy on 2-clinic, load it to
-seed the 20-clinic run).
+**Layout gate — PASSED.** `facility_action`'s `transpose(1,2).flatten` emits a
+type-major vector `[comp0×N, comp1×N, ...]`, which matches the env's decoding of the
+normalized action as `[w(0:N), e(N:2N), q(2N:3N), p(3N:4N)]`. Certified in
+`tests/test_gcn_facility_action.py` (layout, size-invariance, transfer) — 5 tests.
 
-**Gate before use:** `facility_action` emits actions grouped **by facility**, but the
-env decodes actions grouped **by type** (w,e,q,p blocks across facilities). Verify
-the action layout matches (add a unit test) and run a 2-clinic sanity check that
-`facility_action` ≥ `global_flat` before adopting it in the campaign. Until then,
-the campaign runs `global_flat` at the scaled budget.
+**Curriculum warm-start — VERIFIED end-to-end.** `transfer_matching_parameters`
+(in `src/models/gcn.py`) copies every shape-matching weight; the deterministic
+backbones expose `warm_start_actor` (`gcn_td3`, `gcn_ddpg`). A 2-clinic
+`facility_action` policy transfers the **full** policy into a 20-clinic agent —
+*only* the non-learnable `encoder.adjacency` buffer is skipped (rebuilt for the
+target graph) — **provided the 2-clinic env has matching per-node features**. The
+pilot's 2-clinic screen env does not (it uses `production_lead_time=2`, no hub), so
+use the matched **`experiments/configs/2_clinic_patient_condition_curriculum.json`**
+(identical per-node structure to the 20-clinic env). With it, the input layer also
+transfers. Wired in `evaluation/campaign_manifest.py`
+(`curriculum_pretrain_config`, `GRAPH_READOUT="facility_action"`).
+
+**Scope / follow-up:** `facility_action` currently covers the deterministic GCNActor
+backbones (`gcn_td3` flagship, `gcn_ddpg` ablation). `gcn_sac`/`gcn_ppo` keep
+`global_flat` until their stochastic actor classes gain the readout.
+
+**Still to confirm empirically:** correctness is proven, but that `facility_action`
+*trains better* than `global_flat` at scale needs an actual run — do a short 2-clinic
+`facility_action` vs `global_flat` comparison before committing the campaign budget.
 
 ## 3. Recommended campaign sequence
 

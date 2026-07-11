@@ -32,6 +32,19 @@ from evaluation.pilot_manifest import (
 # ---- environment ---------------------------------------------------------
 CAMPAIGN_ENV = STAGE_B_ENV  # 20-clinic patient-condition confirm env
 
+# ---- Lever 2: size-invariant readout + curriculum warm-start -------------
+# facility_action applies a shared per-facility head (fewer params, permutation-
+# equivariant, size-invariant). Verified in tests/test_gcn_facility_action.py:
+# the action layout matches the env's type-major decoding and the full policy
+# transfers 2->20. Currently supported by the deterministic GCNActor backbones
+# (gcn_td3 flagship, gcn_ddpg ablation); gcn_sac/gcn_ppo keep global_flat until
+# their actor classes gain the readout (follow-up).
+GRAPH_READOUT = "facility_action"
+DETERMINISTIC_GRAPH = ("gcn_td3", "gcn_ddpg")
+# Matched small-network env for the curriculum (identical per-node features to the
+# 20-clinic env, so the input layer also transfers).
+CURRICULUM_PRETRAIN_ENV = "experiments/configs/2_clinic_patient_condition_curriculum.json"
+
 # ---- training budget (the primary undertraining fix) ---------------------
 # 10x the 30k pilot floor. Treat 300k as the campaign floor and 500k as the
 # flagship-confirm budget; raise further if the flagship still trails mdl2.
@@ -51,15 +64,43 @@ CAMPAIGN_SEEDS = SEEDS  # 5 seeds; widen to range(10) for final tables if budget
 SECONDS_PER_1K_STEPS_PER_SEED = 9.0
 
 
-def campaign_config(algorithm: str, seed: int, *, steps: int = CAMPAIGN_TRAIN_STEPS) -> dict[str, Any]:
-    """Training config for one learned algorithm on the 20-clinic campaign env.
+def campaign_config(
+    algorithm: str,
+    seed: int,
+    *,
+    steps: int = CAMPAIGN_TRAIN_STEPS,
+    env_config_path: str = CAMPAIGN_ENV,
+    graph_readout: str = GRAPH_READOUT,
+) -> dict[str, Any]:
+    """Training config for one learned algorithm on the campaign env.
 
     Reuses the pilot's verified builder (reward scale, no obs normalization,
     shared encoder/head sizes, 1M replay buffer defaults) and only raises the
-    step budget. Heuristics need no training budget and are handled by the runner.
+    step budget. Deterministic graph backbones additionally use the size-invariant
+    ``facility_action`` readout so a curriculum policy can warm-start them.
+    Heuristics need no training budget and are handled by the runner.
     """
 
-    return build_agent_config(algorithm, CAMPAIGN_ENV, seed=seed, target_steps=steps)
+    config = build_agent_config(algorithm, env_config_path, seed=seed, target_steps=steps)
+    if algorithm in DETERMINISTIC_GRAPH:
+        config["actor_readout_mode"] = graph_readout
+    return config
+
+
+def curriculum_pretrain_config(
+    algorithm: str,
+    seed: int,
+    *,
+    steps: int = CAMPAIGN_TRAIN_STEPS // 3,
+) -> dict[str, Any]:
+    """Small-network (2-clinic, matched features) pretraining config for the 2->20
+    curriculum. Train a deterministic graph agent here, ``save`` it, then call the
+    campaign agent's ``warm_start_actor`` on the checkpoint before the 20-clinic run.
+    """
+
+    if algorithm not in DETERMINISTIC_GRAPH:
+        raise ValueError(f"curriculum warm-start supports {DETERMINISTIC_GRAPH}, not {algorithm}")
+    return campaign_config(algorithm, seed, steps=steps, env_config_path=CURRICULUM_PRETRAIN_ENV)
 
 
 def wallclock_estimate(

@@ -9,7 +9,7 @@ from typing import Any
 import numpy as np
 
 from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
-from src.models.gcn import GCNActor, GCNCritic
+from src.models.gcn import GCNActor, GCNCritic, transfer_matching_parameters
 from src.models.graph_features import (
     GraphStateSpec,
     build_graph_spec,
@@ -551,6 +551,16 @@ class GCNDDPGAgent:
     def load_actor(self, path: str | Path) -> None:
         checkpoint = torch.load(path, map_location=self.device)
         self.actor.load_state_dict(checkpoint["actor"])
+
+    def warm_start_actor(self, path: str | Path) -> dict[str, list[str]]:
+        """Curriculum warm-start from a (possibly smaller-network) checkpoint. With
+        ``actor_readout_mode='facility_action'`` the full policy transfers; otherwise
+        only the size-invariant encoder does. Returns the transferred/skipped summary."""
+
+        checkpoint = torch.load(path, map_location=self.device)
+        summary = transfer_matching_parameters(checkpoint["actor"], self.actor)
+        self.actor_target.load_state_dict(self.actor.state_dict())
+        return summary
 
     def _soft_update(self, local_model, target_model) -> None:
         for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):

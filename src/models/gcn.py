@@ -189,6 +189,35 @@ if torch is not None:
             return self.head(readout)
 
 
+    def transfer_matching_parameters(source_state_dict, target_module):
+        """Copy every source parameter/buffer whose name and shape match the target.
+
+        Enables curriculum warm-start across graph sizes. A size-invariant
+        ``facility_action`` actor trained on a small network transfers all of its
+        learnable weights---the node-independent GCN convolution weights and the
+        shared per-facility head---into a larger-network actor, because none of those
+        shapes depend on the number of facilities. Only the non-learnable
+        ``encoder.adjacency`` buffer differs in shape across graph sizes; it is skipped,
+        and the target keeps its own adjacency rebuilt for its graph. A ``global_flat``
+        actor instead transfers only the encoder, since its head width scales with the
+        number of facilities.
+
+        Returns a summary dict listing transferred and skipped keys.
+        """
+
+        target_state = target_module.state_dict()
+        filtered = {}
+        transferred, skipped = [], []
+        for key, tensor in source_state_dict.items():
+            if key in target_state and target_state[key].shape == tensor.shape:
+                filtered[key] = tensor
+                transferred.append(key)
+            else:
+                skipped.append(key)
+        target_module.load_state_dict(filtered, strict=False)
+        return {"transferred": transferred, "skipped": skipped}
+
+
     class GCNCritic(nn.Module):
         """GCN encoder followed by a state-action Q-value head."""
 

@@ -29,6 +29,17 @@ SUMMARY_METRICS = (
     "average_inference_ms",
 )
 
+# Summarized only when present in the rows (patient-condition env).
+PATIENT_METRICS = (
+    "eligibility_rate",
+    "eligibility_rate_mean",
+    "patients_lost",
+    "patients_lost_ineligible",
+    "patients_lost_expired",
+    "material_wasted",
+    "at_risk_unserved",
+)
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -113,26 +124,37 @@ def evaluate_agent(
             total_reward += float(reward)
             step += 1
 
-        rows.append(
-            {
-                "algorithm": algorithm,
-                "seed": seed,
-                "replication": replication,
-                "scenario": getattr(env, "scenario_name", "default"),
-                "graph_ablation": getattr(env, "graph_ablation", "full_graph"),
-                "steps": step,
-                "total_reward": total_reward,
-                "total_cost": metrics.total_cost,
-                "service_level": metrics.service_level,
-                "average_waiting_time": metrics.average_waiting_time,
-                "reagent_shortage_frequency": metrics.reagent_shortage_frequency,
-                "bioreactor_shortage_frequency": metrics.bioreactor_shortage_frequency,
-                "bioreactor_utilization": metrics.bioreactor_utilization,
-                "transshipment_count": metrics.transshipment_count,
-                "transshipment_cost": metrics.transshipment_cost,
-                "average_inference_ms": 1000.0 * inference_seconds / max(step, 1),
-            }
-        )
+        row = {
+            "algorithm": algorithm,
+            "seed": seed,
+            "replication": replication,
+            "scenario": getattr(env, "scenario_name", "default"),
+            "graph_ablation": getattr(env, "graph_ablation", "full_graph"),
+            "steps": step,
+            "total_reward": total_reward,
+            "total_cost": metrics.total_cost,
+            "service_level": metrics.service_level,
+            "average_waiting_time": metrics.average_waiting_time,
+            "reagent_shortage_frequency": metrics.reagent_shortage_frequency,
+            "bioreactor_shortage_frequency": metrics.bioreactor_shortage_frequency,
+            "bioreactor_utilization": metrics.bioreactor_utilization,
+            "transshipment_count": metrics.transshipment_count,
+            "transshipment_cost": metrics.transshipment_cost,
+            "average_inference_ms": 1000.0 * inference_seconds / max(step, 1),
+        }
+        if metrics.has_patient_metrics:
+            row.update(
+                {
+                    "eligibility_rate": metrics.eligibility_rate_last,
+                    "eligibility_rate_mean": metrics.eligibility_rate_mean,
+                    "patients_lost": metrics.patients_lost,
+                    "patients_lost_ineligible": metrics.patients_lost_ineligible,
+                    "patients_lost_expired": metrics.patients_lost_expired,
+                    "material_wasted": metrics.material_wasted,
+                    "at_risk_unserved": metrics.at_risk_unserved,
+                }
+            )
+        rows.append(row)
     return rows
 
 
@@ -145,7 +167,9 @@ def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "graph_ablation": rows[0]["graph_ablation"],
         "replications": len(rows),
     }
-    for metric in SUMMARY_METRICS:
+    metrics_to_summarize = list(SUMMARY_METRICS)
+    metrics_to_summarize += [m for m in PATIENT_METRICS if m in rows[0]]
+    for metric in metrics_to_summarize:
         values = np.asarray([float(row[metric]) for row in rows], dtype=float)
         summary[f"{metric}_mean"] = float(values.mean())
         summary[f"{metric}_std"] = float(values.std(ddof=1)) if values.size > 1 else 0.0

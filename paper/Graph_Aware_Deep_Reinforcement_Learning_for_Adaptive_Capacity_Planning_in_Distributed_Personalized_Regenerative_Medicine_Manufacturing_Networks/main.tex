@@ -111,18 +111,36 @@ $P_t^n$ & Maximum reagent purchase quantity for facility $n$ for epoch $t+1$. \\
 \midrule
 \multicolumn{2}{c}{\textbf{Decision variables}} \\
 \midrule
-$w_t^n$ & Specimens added to or subtracted from facility $n$ at epoch $t$ and received or removed before epoch $t+1$. \\
+$w_t^n$ & Specimens added to or subtracted from facility $n$ at epoch $t$ and received or removed before epoch $t+1$; fixed to zero under the autologous identity constraint (Section~\ref{sec:problem-identity}). \\
 $e_t^n$ & Reagent units added to or subtracted from facility $n$ at epoch $t$ and received or removed before epoch $t+1$. \\
 $q_t^n$ & Idle bioreactors added to or subtracted from facility $n$ at epoch $t$ and received or removed before epoch $t+1$. \\
 $p_t^n$ & Reagent purchase quantity for facility $n$ for epoch $t+1$. \\
+\midrule
+\multicolumn{2}{c}{\textbf{Patient-condition and perishability}} \\
+\midrule
+$H_j$ & Latent health index of patient $j$, drawn $H_j \sim \mathrm{Uniform}(0,1)$ at enrollment. \\
+$\tau_j$ & Deterioration epoch of patient $j$, drawn $\tau_j \sim \theta\,\mathrm{Weibull}(\kappa)$. \\
+$\kappa,\theta$ & Shape and scale of the Weibull deterioration-epoch distribution. \\
+$\alpha_j$ & Number of epochs patient $j$ has waited. \\
+$S_j$ & Survival index of patient $j$, $S_j \in [0,1]$; the patient is eligible while $S_j \ge \epsilon$. \\
+$\lambda_H,\lambda_F$ & Survival decay rates of an ideally healthy and a maximally frail patient, with $\lambda_H < \lambda_F$. \\
+$\rho$ & Post-deterioration acceleration factor for effective exposure time, $\rho > 1$. \\
+$\epsilon$ & Eligibility threshold on the survival index. \\
+$\delta$ & Urgency margin defining at-risk patients ($S_j < \epsilon + \delta$). \\
+$\ell_{\mathrm{mat}},\ell_{\mathrm{fin}}$ & Shelf lives, in epochs, of source material and finished product. \\
+$\boldsymbol{\sigma}_t^n$ & Condition summary of the waiting queue at facility $n$: survival-band counts and the most-urgent survival level. \\
+$\phi_t^n$ & Patients lost at facility $n$ in epoch $t$ (ineligibility plus specimen expiry). \\
+$\psi_t^n$ & Material and finished units wasted at facility $n$ in epoch $t$. \\
+$\upsilon_t^n$ & At-risk unserved patients at facility $n$ in epoch $t$. \\
+$\omega_{\mathrm{lost}},\omega_{\mathrm{exp}},\omega_{\mathrm{urg}}$ & Cost weights for patient loss, material waste, and urgency, with $\omega_{\mathrm{lost}} \gg \omega_{\mathrm{exp}} > \omega_{\mathrm{urg}}$. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 
-In this section, we formulate the capacity planning problem for distributed manufacturing systems as a production simulation model based on a Markov decision process (MDP). Suppose the distributed manufacturing system consists of $L$ manufacturing facilities that produce one type of make-to-order PRM product. Each manufacturing facility has its own production capacity, including bioreactors and reagent inventory, and can purchase reagents from source material suppliers. During manufacturing, facilities receive patients' specimens and initiate production based on the available specimens, bioreactors, and reagents. We assume that inventory transshipment, capacity relocation, and demand sharing are allowed among facilities. Demand arrivals and supplier disruptions are modeled as stochastic processes, implying that local supply may be either insufficient or excessive relative to local demand at different decision epochs. The notation used throughout this section is summarized in Table~\ref{tab:notation}.
+In this section, we formulate the capacity planning problem for distributed manufacturing systems as a production simulation model based on a Markov decision process (MDP). Suppose the distributed manufacturing system consists of $L$ manufacturing facilities that produce one type of make-to-order PRM product. Each manufacturing facility has its own production capacity, including bioreactors and reagent inventory, and can purchase reagents from source material suppliers. During manufacturing, facilities receive patients' specimens and initiate production based on the available specimens, bioreactors, and reagents. We assume that reagent transshipment and bioreactor capacity relocation are allowed among facilities, whereas patient specimens and finished products are identity-bound and cannot be pooled or reassigned across facilities (Section~\ref{sec:problem-identity}). Demand arrivals and supplier disruptions are modeled as stochastic processes, implying that local supply may be either insufficient or excessive relative to local demand at different decision epochs. The notation used throughout this section is summarized in Table~\ref{tab:notation}.
 
-Figure~\ref{fig:manufacturing_system} illustrates the basic structure of the distributed manufacturing problem using a two-facility example. Each facility maintains three primary operational states: the number of patient specimens waiting for manufacturing, the available reagent inventory, and the available bioreactor capacity. At each decision epoch, new patient demand and reagent replenishment arrive under uncertainty. When one facility experiences excess demand, insufficient reagents, or limited production capacity, the network may use demand sharing, reagent transshipment, or capacity relocation to rebalance resources across facilities. This structure motivates the MDP formulation, where the state captures facility-level demand, inventory, and capacity conditions, and the action determines how resources should be replenished, shared, or relocated across the network.
+Figure~\ref{fig:manufacturing_system} illustrates the basic structure of the distributed manufacturing problem using a two-facility example. Each facility maintains three primary operational states: the number of patient specimens waiting for manufacturing, the available reagent inventory, and the available bioreactor capacity. At each decision epoch, new patient demand and reagent replenishment arrive under uncertainty. When one facility experiences excess demand, insufficient reagents, or limited production capacity, the network may use reagent transshipment or bioreactor capacity relocation to rebalance fungible resources across facilities, while identity-bound specimens remain fixed to their enrolling facility. This structure motivates the MDP formulation, where the state captures facility-level demand, inventory, and capacity conditions, and the action determines how fungible resources should be replenished, shared, or relocated across the network.
 
 \begin{figure}[htbp]
     \centering

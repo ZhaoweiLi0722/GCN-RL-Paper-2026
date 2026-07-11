@@ -101,6 +101,36 @@ Run:
 python -m training.train_ppo --config configs/ppo_20_clinic.yaml
 ```
 
+## Canonical Algorithm Code References
+
+The baseline implementations in this repository are maintained in a unified
+PyTorch codebase so that all methods share the same environment, action space,
+logging, seeds, and evaluation runner. They should be described as our
+implementations cross-checked against canonical sources, not as directly
+vendored original code.
+
+Last checked: 2026-07-11.
+
+| Algorithm | Canonical/source implementation | How to use it in this project |
+| --- | --- | --- |
+| DDPG | No standalone DeepMind/Lillicrap author repository was identified during the source search. Use OpenAI Baselines DDPG (`https://github.com/openai/baselines/tree/master/baselines/ddpg`) and OpenAI Spinning Up DDPG (`https://spinningup.openai.com/en/latest/algorithms/ddpg.html`) as canonical implementation references. | Cross-check actor/critic targets, replay-buffer updates, target-network soft updates, and exploration noise in `src/baselines/flat_ddpg.py` and `src/models/gcn_ddpg.py`. |
+| TD3 | Author implementation by Fujimoto: `https://github.com/sfujim/TD3`. This repository includes `TD3.py`, `DDPG.py`, and `OurDDPG.py`, matching the TD3 paper's DDPG-style comparisons. | Cross-check twin critics, delayed policy updates, clipped target noise, and the legacy files under `legacy/cp_decentralized/cp_RL/TD3/`. |
+| SAC | Original author repository: `https://github.com/haarnoja/sac`. The authors point users to the newer Softlearning package at `https://github.com/rail-berkeley/softlearning`. | Cross-check tanh-squashed Gaussian policy, twin Q networks, entropy term, target Q update, and optional automatic entropy tuning in `src/baselines/sac.py`. |
+| PPO | OpenAI Baselines PPO2: `https://github.com/openai/baselines/tree/master/baselines/ppo2`, with OpenAI's PPO release page at `https://openai.com/index/openai-baselines-ppo/`. | Cross-check clipped surrogate objective, value loss, entropy bonus, GAE, rollout batching, and update epochs in `src/baselines/ppo.py`. |
+
+For the manuscript, a careful wording is:
+
+> We implemented DDPG, TD3, SAC, and PPO in a unified PyTorch evaluation
+> framework and cross-checked the update rules against canonical author or
+> OpenAI implementations. This avoids codebase-level confounding while keeping
+> all algorithms on the same PRM manufacturing environment, action semantics,
+> training budgets, and Monte Carlo evaluation protocol.
+
+Do not claim that all baselines use original authors' code. TD3, SAC, and PPO
+have clear canonical repositories, while DDPG is best supported by OpenAI
+Baselines/Spinning Up and by the DDPG variants included in the TD3 author's
+comparison code.
+
 ## Planned Baselines
 
 No additional baselines are required for the current manuscript-facing pipeline.

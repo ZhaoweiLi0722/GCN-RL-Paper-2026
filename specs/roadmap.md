@@ -27,9 +27,9 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 ## Now
 
 ### Phase 0 — Foundations & alignment  *(gate)*
-- [ ] Confirm the patient-condition direction and scope with Zhaowei (same paper, evolved)
-- [ ] **Preserve the original manuscript:** tag `manuscript-v0` (and/or a read-only copy) before any edits
-- [ ] Agree the July-2026 MVP cut vs. a slipped timeline (see timeline note)
+- [x] Confirm the patient-condition direction and scope with Zhaowei — assumed agreed 2026-07-11; to be ratified at the next meeting via `alignment-brief-2026-07-11.md`
+- [x] **Preserve the original manuscript:** tagged `manuscript-v0` before any edits (2026-07-11)
+- [ ] Agree the July-2026 MVP cut vs. a slipped timeline (see timeline note) — still open, needs a call
 - [ ] Set up the Gurobi academic license (GaTech) for the MILP heuristics; add `gurobipy` when Phase 5 starts
 - [x] Reproduce the existing benchmark at smoke budget on this machine; confirm baseline numbers log correctly (no new results claimed) — done 2026-07-10: full pipeline (15 train + 27 eval jobs) runs end-to-end, outputs git-ignored. Note: smoke-scale learned-agent costs are meaningless (untrained); GCN-DDPG's apparent parity is a heuristic warm-start artifact. Confirms plumbing only.
 - **Depends on:** nothing. **Blocks:** Phases 2, 4 (design/impl should wait on scope sign-off).

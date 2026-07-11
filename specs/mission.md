@@ -119,8 +119,11 @@ before making substantial changes, so the starting point is recoverable (see
 
 ## Open items to confirm
 
-- **Collaborator alignment (Zhaowei):** the patient-condition direction was
-  *proposed* in discussion, not finalized. Confirm scope before Phase 1 writing.
+- **Collaborator alignment (Zhaowei):** proceeding on the **assumption** he
+  agrees with this direction (problem-first framing, patient-condition + expiry,
+  algorithm plan). To be **ratified** at the next meeting via
+  `alignment-brief-2026-07-11.md`; revisit if he wants changes.
 - **July 2026 timeline vs. scope:** the full plan is unlikely to fit a July
-  submission. Agree an MVP-first cut (see `roadmap.md` timeline note) — most
-  likely defer the temporal encoder and trim the experiment matrix.
+  submission. Still needs a call — agree an MVP-first cut (see `roadmap.md`
+  timeline note): most likely defer the temporal encoder and trim the experiment
+  matrix.

@@ -50,7 +50,7 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 ### Phase 3 — Finalize experiment design  *(doc only)*
 - [ ] Define scenarios: disruption levels, forecast-error regimes, and the **new patient-condition / expiry stress regime**
 - [ ] Define the ablation matrix (flat vs graph; DDPG/TD3/SAC/PPO; static vs temporal; edge-type ablations)
-- [ ] Define metrics (cost, service level, patient eligibility/outcomes, utilization) and the **statistical protocol** (seeds, CIs, IQM, paired tests)
+- [ ] Define metrics (cost, service level, patient eligibility/outcomes, utilization) and the **statistical protocol** (seeds, CIs, IQM, paired tests). **Required:** DDPG-family results report *all* seeds + IQM — the verification harness showed flat DDPG ranging from near-optimal to full divergence across seeds (see `tech-stack.md` 2026-07-11)
 - [ ] Define the compute budget and the smoke→pilot→full staging
 - **Depends on:** Phase 2. **Blocks:** Phases 7, 9.
 
@@ -63,7 +63,7 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 - **Depends on:** Phases 2, 3.
 
 ### Phase 5 — Benchmark algorithms  *(verification gate)*
-- [ ] Build the shared **verification harness** (V2/V3): reference-task (`Pendulum-v1`) sanity + cross-library curve check (see `tech-stack.md`)
+- [x] Build the shared **verification harness** (V2/V3) — done 2026-07-11: `src/verification/` LQR task with an analytic Riccati optimum (dependency-free; chosen over `Pendulum-v1` for a precise reference). Already surfaced DDPG instability. *Still todo:* extend to GNN encoders (Phase 6) and the capacity-planning action projection
 - [ ] Confirm/port MYO, ISO, MDL-1, MDL-2 (and flat DDPG) against the new environment
 - [ ] Port MILP heuristics from prior code using the Gurobi academic license (Phase 0)
 - [ ] Run each learned baseline through the V1–V5 verification gate; start the provenance table

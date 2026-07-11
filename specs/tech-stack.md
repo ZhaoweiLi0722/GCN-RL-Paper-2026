@@ -152,6 +152,24 @@ specs/              # this plan of record
 
 ## Decision log
 
+### 2026-07-11
+
+- **Verification harness built** (`src/verification/`, `evaluation/verify_algorithms.py`):
+  an LQR task with an analytic (Riccati) optimum, scoring each real agent
+  between random (0) and optimal (1). Implements V2/V3 of the verification gate.
+- **Empirical finding — DDPG is unstable, TD3/SAC are not.** On the LQR task
+  (20k steps), flat DDPG scored 0.996 / 0.401 / −70.4 across seeds 1/0/2
+  (near-optimal to full divergence), while TD3 (0.83–0.96) and SAC (0.97–0.99)
+  were stable across seeds. This is empirical backing for demoting DDPG (and
+  GNN-DDPG) to an ablation and featuring TD3/SAC. *Consequence:* any
+  DDPG-family result in the paper **must report all seeds + IQM**, never a single
+  run — folded into the Phase 3 statistical protocol.
+- **PPO needs a larger sample budget** (on-policy): 0.56 at 4k steps — verdict
+  pending a fair-budget rerun; not yet treated as a failure.
+- *Note:* the harness validates the learning machinery on an easy task; it does
+  not yet exercise GNN encoders (Phase 6) or the capacity-planning action
+  projection. It is the foundation of the gate, not the whole gate.
+
 ### 2026-07-10
 
 - **Positioning:** claim problem speciality (perishable, identity-bound,

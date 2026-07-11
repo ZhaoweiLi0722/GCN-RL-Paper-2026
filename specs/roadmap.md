@@ -72,9 +72,11 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 - See feature spec `specs/2026-07-11-benchmark-algorithms/`. TD3/SAC/PPO patient-env sanity carried into Phase 6.
 - **Depends on:** Phase 4. **Blocks:** Phase 7 (no algorithm enters the pilot unverified).
 
-### Phase 6 — Graph method family  *(verification gate)*
-- [ ] Build GNN-TD3, GNN-SAC, GNN-PPO as *verified GNN encoder ∘ verified backbone*; keep GNN-DDPG as ablation
-- [ ] Run each through the V1–V5 gate (incl. V4 feasibility-projection ablation); extend the provenance table
+### Phase 6 — Graph method family  ✅ done 2026-07-11
+- [x] Build GNN-TD3, GNN-SAC, GNN-PPO as *verified GNN encoder ∘ verified backbone*; keep GNN-DDPG as ablation (`src/models/gcn_td3.py`, `gcn_sac.py`, `gcn_ppo.py`; shared plumbing in `graph_features.py` + graph heads in `gcn.py`)
+- [x] Verify each: encoder component tests (`tests/test_gcn_heads.py`) + patient-env sanity (`tests/test_gcn_patient_sanity.py`, each beats random ≥2x); provenance table extended
+- New agents **learn from scratch** (no residual/imitation) for a clean comparison; the graph plumbing is patient-aware (select-path ≡ replay-path proven). See feature spec `specs/2026-07-11-graph-method-family/`.
+- **Deferred to the pilot (Phase 7):** the V4 feasibility-projection ablation and multi-seed IQM curves (V5); no LQR-graph retrofit (backbones already LQR-verified in flat form).
 - **Depends on:** Phases 4, 5 (reuses the verification harness).
 
 ### Phase 7 — Pilot experiments  *(pilot gate)*
@@ -110,4 +112,6 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 
 | Phase | Shipped |
 |-------|---------|
-| — | — |
+| 4 | Patient-condition + expiry environment layer (2026-07-11) |
+| 5 | Benchmark algorithms + verification harness; uMYO (2026-07-11) |
+| 6 | Graph method family: GNN-TD3/SAC/PPO + GNN-DDPG ablation (2026-07-11) |

@@ -70,8 +70,8 @@ Reusable patterns to build on:
 | Heuristic baseline | MYO, ISO, MDL-1, MDL-2 | Implemented (`src/baselines/heuristics.py`); MILP variants in previous code | Strong/standard baselines to beat |
 | Flat DRL baseline | Flat DDPG | Implemented (`src/baselines/flat_ddpg.py`) | Isolates value of the graph |
 | Method family | GNN-DDPG | Implemented (`src/models/gcn_ddpg.py`) | **Ablation** — show it is dominated |
-| Method family | GNN-TD3, GNN-SAC | Flat versions exist; graph variants to build | **Flagship candidates** |
-| Method family | GNN-PPO | Flat PPO exists; graph variant to build | On-policy comparator (matches closest rival) |
+| Method family | GNN-TD3, GNN-SAC | Built + patient-verified (`src/models/gcn_td3.py`, `gcn_sac.py`, Phase 6) | **Flagship candidates** |
+| Method family | GNN-PPO | Built + patient-verified (`src/models/gcn_ppo.py`, Phase 6) | On-policy comparator (matches closest rival) |
 | Contribution (pilot-gated) | Condition/expiry-aware temporal encoder | Not present (no temporal machinery yet) | Build only if pilot supports |
 | Future work | GNN-MARL | Not planned | Out of scope this paper |
 
@@ -154,6 +154,20 @@ specs/              # this plan of record
 
 ### 2026-07-11
 
+- **Graph method family built (Phase 6).** GNN-TD3/SAC/PPO added as *verified GCN
+  encoder ∘ verified backbone*; GNN-DDPG retained as the ablation. Shared graph
+  plumbing (`GraphStateSpec`/`build_graph_spec`/`flat_state_to_node_features`)
+  extracted to `src/models/graph_features.py` and made **patient-aware** (the
+  select-action and replay paths now build identical node features on the
+  patient env — proven by test). New graph heads (`GCNSquashedGaussianActor`,
+  `GCNGaussianActor`, `GCNValue`) mirror the flat SAC/PPO action math exactly.
+  *Decisions:* (a) the new agents **learn from scratch** — no residual anchor /
+  imitation warm-start — so the flat-vs-graph and backbone comparisons are clean
+  (residual stays a GCN-DDPG-only variant); (b) verification = encoder component
+  tests + patient-env sanity (each beats random ≥2x), **no LQR-graph retrofit**
+  (backbones already LQR-verified in flat form); (c) hyperparameters inherit each
+  flat sibling's published defaults — **no deviations** to record. Deferred to the
+  pilot (Phase 7): V4 feasibility-projection ablation and multi-seed IQM (V5).
 - **Verification harness built** (`src/verification/`, `evaluation/verify_algorithms.py`):
   an LQR task with an analytic (Riccati) optimum, scoring each real agent
   between random (0) and optimal (1). Implements V2/V3 of the verification gate.

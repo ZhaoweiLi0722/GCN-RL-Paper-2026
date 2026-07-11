@@ -8,7 +8,16 @@ from typing import Any
 def available_algorithms() -> tuple[str, ...]:
     from src.baselines.heuristics import available_heuristics
 
-    learned = ("flat_ddpg", "gcn_ddpg", "ppo", "sac", "td3")
+    learned = (
+        "flat_ddpg",
+        "gcn_ddpg",
+        "gcn_ppo",
+        "gcn_sac",
+        "gcn_td3",
+        "ppo",
+        "sac",
+        "td3",
+    )
     return tuple(sorted((*learned, *available_heuristics())))
 
 
@@ -21,6 +30,18 @@ def get_agent_class(algorithm: str) -> Any:
         from src.models.gcn_ddpg import GCNDDPGAgent
 
         return GCNDDPGAgent
+    if algorithm == "gcn_td3":
+        from src.models.gcn_td3 import GCNTD3Agent
+
+        return GCNTD3Agent
+    if algorithm == "gcn_sac":
+        from src.models.gcn_sac import GCNSACAgent
+
+        return GCNSACAgent
+    if algorithm == "gcn_ppo":
+        from src.models.gcn_ppo import GCNPPOAgent
+
+        return GCNPPOAgent
     if algorithm == "td3":
         from src.baselines.td3 import TD3Agent
 

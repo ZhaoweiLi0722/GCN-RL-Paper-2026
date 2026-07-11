@@ -219,8 +219,17 @@ def patient_env_sanity(
     )
 
     env = make(seed)
+    # Pass the env config so graph agents (gcn_*) can build their graph spec from
+    # it; flat agents ignore the extra "env" key.
     agent = get_agent_class(algorithm)(
-        env.observation_size, env.action_size, {"seed": seed, "hidden_sizes": [64, 64], "batch_size": 128}
+        env.observation_size,
+        env.action_size,
+        {
+            "seed": seed,
+            "hidden_sizes": [64, 64],
+            "batch_size": 128,
+            "env": load_config(env_config_path),
+        },
     )
     state = env.reset(seed=seed)
     agent.reset()

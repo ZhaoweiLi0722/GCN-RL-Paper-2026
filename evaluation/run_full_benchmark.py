@@ -18,6 +18,7 @@ from evaluation.aggregate_results import (
 )
 from evaluation.evaluate_formal import evaluate_agent, summarize_rows, write_summary
 from evaluation.plot_results import _plot_grouped_bars, _read_rows as read_plot_rows
+from evaluation.run_gcn_residual_sweep import run_local_search_distillation
 from src.baselines.heuristics import available_heuristics
 from src.rl.agents import get_agent_class
 from src.rl.config import load_config, save_config_snapshot
@@ -167,8 +168,24 @@ def train_benchmark(
                 env = build_env(config, seed=seed)
                 agent = get_agent_class(algorithm)(env.observation_size, env.action_size, config)
                 rows = train_off_policy_agent(agent, env, config)
+                post_training_summary = run_post_training_steps(
+                    plan,
+                    budget_name,
+                    budget,
+                    algorithm,
+                    scenario,
+                    seed,
+                    agent,
+                    env,
+                    config,
+                )
                 write_rows(rows, config["result_csv_path"])
                 save_config_snapshot(config, config["config_snapshot_path"])
+                if post_training_summary:
+                    write_summary(
+                        post_training_summary,
+                        post_training_summary_path(plan, budget_name, algorithm, scenario, seed),
+                    )
                 jobs_run += 1
 
 
@@ -299,6 +316,7 @@ def make_training_config(
         raise ValueError(f"{algorithm} is not a learned algorithm")
 
     config = load_config(plan["learned_config_paths"][algorithm])
+    config = _deep_update(config, algorithm_config_overrides(plan, algorithm))
     scenario_env = load_config(scenario["env_config"])
     base_env = dict(config.get("env", {}))
     graph_ablation = base_env.get("graph_ablation", scenario_env.get("graph_ablation", "full_graph"))
@@ -328,6 +346,80 @@ def make_training_config(
     return config
 
 
+def run_post_training_steps(
+    plan: dict[str, Any],
+    budget_name: str,
+    budget: dict[str, Any],
+    algorithm: str,
+    scenario: dict[str, Any],
+    seed: int,
+    agent,
+    env,
+    config: dict[str, Any],
+) -> dict[str, Any]:
+    settings = local_search_settings(plan, budget, algorithm)
+    if not bool(settings.get("enabled", False)):
+        return {}
+    if not hasattr(agent, "fit_action_batch"):
+        raise ValueError(f"{algorithm} does not support local_search post-training")
+
+    baseline_policy = str(
+        settings.get(
+            "baseline_policy",
+            config.get("residual_action", {}).get("base_policy", "myo"),
+        )
+    )
+    summary = run_local_search_distillation(
+        agent,
+        env,
+        seed=int(settings.get("seed", 90000)) + int(seed) * LEARNED_EVALUATION_SEED_STRIDE,
+        rollouts=int(settings.get("rollouts", 0)),
+        lookahead=int(settings.get("lookahead", 6)),
+        epsilons=tuple(float(value) for value in settings.get("epsilons", [0.02, 0.05, 0.08])),
+        epochs=int(settings.get("epochs", 16)),
+        batch_size=int(settings.get("batch_size", config.get("batch_size", 64))),
+        max_steps=int(settings.get("max_steps", budget["max_steps_per_episode"])),
+        baseline_policy=baseline_policy,
+        min_improvement=float(settings.get("min_improvement", 0.0)),
+    )
+    checkpoint_path = local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
+    agent.save(checkpoint_path)
+    summary.update(
+        {
+            "algorithm": algorithm,
+            "scenario": scenario["name"],
+            "graph_ablation": getattr(env, "graph_ablation", config.get("env", {}).get("graph_ablation", "")),
+            "training_seed": int(seed),
+            "selection_stage": "local_search",
+            "checkpoint_path": str(checkpoint_path),
+            "local_search_baseline_policy": baseline_policy,
+        }
+    )
+    return summary
+
+
+def algorithm_config_overrides(plan: dict[str, Any], algorithm: str) -> dict[str, Any]:
+    settings = dict(plan.get("algorithm_settings", {}).get(algorithm, {}))
+    return dict(settings.get("config_overrides", {}))
+
+
+def local_search_settings(plan: dict[str, Any], budget: dict[str, Any], algorithm: str) -> dict[str, Any]:
+    settings = dict(plan.get("algorithm_settings", {}).get(algorithm, {}).get("local_search", {}))
+    budget_settings = dict(budget.get("local_search", {}).get(algorithm, {}))
+    settings.update(budget_settings)
+    return settings
+
+
+def _deep_update(base: dict[str, Any], updates: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in updates.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = _deep_update(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
 def make_evaluation_config(
     plan: dict[str, Any],
     budget_name: str,
@@ -354,9 +446,38 @@ def final_checkpoint_path(
     scenario: dict[str, Any],
     seed: int,
 ) -> Path:
+    if bool(local_search_settings(plan, budget, algorithm).get("enabled", False)):
+        return local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
     episode = int(budget["num_episodes"])
     return checkpoint_dir_path(plan, budget_name, algorithm, scenario, seed) / (
         f"{algorithm}_seed{int(seed)}_episode{episode}.pt"
+    )
+
+
+def local_search_checkpoint_path(
+    plan: dict[str, Any],
+    budget_name: str,
+    algorithm: str,
+    scenario: dict[str, Any],
+    seed: int,
+) -> Path:
+    return checkpoint_dir_path(plan, budget_name, algorithm, scenario, seed) / (
+        f"{algorithm}_seed{int(seed)}_local_search.pt"
+    )
+
+
+def post_training_summary_path(
+    plan: dict[str, Any],
+    budget_name: str,
+    algorithm: str,
+    scenario: dict[str, Any],
+    seed: int,
+) -> Path:
+    return (
+        benchmark_root(plan, budget_name)
+        / "post_training"
+        / scenario["name"]
+        / f"{algorithm}_seed{int(seed)}_local_search_summary.csv"
     )
 
 

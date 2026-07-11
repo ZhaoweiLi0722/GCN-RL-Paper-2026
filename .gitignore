@@ -29,6 +29,7 @@ logs/
 tmp/
 temp/
 .cache/
+.tools/
 
 # Experiment outputs and large generated artifacts
 results/
@@ -41,6 +42,7 @@ artifacts/
 figures/smoke_*.png
 figures/full_benchmark/
 figures/graph_stress_benchmark/
+figures/patient_forecast_benchmark/
 
 # Model checkpoints
 *.pt

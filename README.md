@@ -194,6 +194,34 @@ at a time:
 python -m evaluation.run_full_benchmark --phase train --budget full --max-jobs 1
 ```
 
+The patient-forecast benchmark manifest is
+`experiments/configs/patient_forecast_benchmark.json`. It evaluates the
+graph-dynamic patient-forecast scenario with the current residual GCN-DDPG
+policy, including MYO-anchored local-search distillation, against flat DDPG,
+TD3, SAC, PPO, and the MYO/ISO/MDL heuristic baselines. Start with a dry run
+and smoke pass:
+
+```bash
+python -m evaluation.run_full_benchmark \
+  --plan experiments/configs/patient_forecast_benchmark.json \
+  --phase dry-run \
+  --budget smoke
+
+python -m evaluation.run_full_benchmark \
+  --plan experiments/configs/patient_forecast_benchmark.json \
+  --phase all \
+  --budget smoke
+```
+
+For the 500-replication formal comparison over seeds `0, 1, 2`, use:
+
+```bash
+python -m evaluation.run_full_benchmark \
+  --plan experiments/configs/patient_forecast_benchmark.json \
+  --phase all \
+  --budget formal
+```
+
 Run formal Monte Carlo evaluation for a heuristic scenario:
 
 ```bash

@@ -20,11 +20,13 @@ from evaluation.run_gcn_residual_sweep import (
     summary_metadata,
 )
 from evaluation.run_full_benchmark import (
+    algorithm_config_overrides,
     config_snapshot_path,
     evaluation_csv_path,
     evaluation_outputs_complete,
     evaluation_summary_path,
     final_checkpoint_path,
+    local_search_checkpoint_path,
     load_benchmark_plan,
     make_training_config,
     resolve_budget,
@@ -84,6 +86,24 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(
             final_checkpoint_path(plan, "smoke", budget, "td3", scenario, seed=2),
             Path(config["checkpoint_dir"]) / "td3_seed2_episode1.pt",
+        )
+
+    def test_algorithm_overrides_and_local_search_checkpoint(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/patient_forecast_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["graph_dynamic_patient_forecast"])[0]
+        config = make_training_config(plan, "smoke", budget, "gcn_ddpg", scenario, seed=0)
+
+        overrides = algorithm_config_overrides(plan, "gcn_ddpg")
+
+        self.assertEqual(overrides["residual_action"]["base_policy"], "myo")
+        self.assertEqual(config["env"]["scenario_name"], "graph_dynamic_patient_forecast")
+        self.assertEqual(config["residual_action"]["scale"], 0.05)
+        self.assertEqual(config["residual_action"]["group_scales"]["replenishment"], 0.05)
+        self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.0)
+        self.assertEqual(
+            final_checkpoint_path(plan, "smoke", budget, "gcn_ddpg", scenario, seed=0),
+            local_search_checkpoint_path(plan, "smoke", "gcn_ddpg", scenario, seed=0),
         )
 
     def test_output_completion_helpers_require_all_expected_files(self) -> None:

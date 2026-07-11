@@ -33,20 +33,37 @@ LEARNED_DEFAULT = ("flat_ddpg", "td3", "sac", "ppo")
 PASS_THRESHOLD = 0.7
 
 
-def _agent_config(seed: int) -> dict:
-    """Minimal, env-agnostic agent config (no capacity-planning assumptions)."""
+def _agent_config(algorithm: str, seed: int) -> dict:
+    """Fair, algorithm-appropriate config (no capacity-planning assumptions).
 
+    A verification harness must give each algorithm sensible hyperparameters —
+    reusing DDPG's learning rate for PPO, for instance, would test the config not
+    the implementation. Off-policy actor-critics share one setup; PPO gets its
+    own (lower policy LR, an entropy bonus, a longer rollout). ``normalize_
+    observations`` stays off and ``reward_scale`` stays 1.0 on purpose.
+    """
+
+    base = {"seed": seed, "hidden_sizes": [64, 64], "gamma": 0.99}
+    if algorithm == "ppo":
+        return {
+            **base,
+            "actor_lr": 3e-4,          # PPO's tuned default; NOT the off-policy 1e-3
+            "critic_lr": 1e-3,
+            "gae_lambda": 0.95,
+            "clip_ratio": 0.2,
+            "entropy_coef": 0.01,      # small exploration bonus for a Gaussian policy
+            "train_epochs": 10,
+            "minibatch_size": 64,
+            "rollout_length": 2048,
+        }
     return {
-        "seed": seed,
-        "hidden_sizes": [64, 64],
+        **base,
         "batch_size": 128,
         "actor_lr": 1e-3,
         "critic_lr": 1e-3,
-        "gamma": 0.99,
         "tau": 0.005,
         "exploration_noise_std": 0.1,
         "replay_buffer_size": 100_000,
-        # normalize_observations left off and reward_scale left at 1.0 on purpose.
     }
 
 
@@ -103,7 +120,7 @@ def verify_algorithm(
     }
     try:
         agent_cls = get_agent_class(algorithm)
-        agent = agent_cls(state_dim=env.state_dim, action_dim=env.action_dim, config=_agent_config(seed))
+        agent = agent_cls(state_dim=env.state_dim, action_dim=env.action_dim, config=_agent_config(algorithm, seed))
         _train_agent(agent, env, train_steps, train_seed=seed)
         learned_cost = _rollout_cost(
             env, lambda s: agent.select_action(s, explore=False, env=env), eval_seeds

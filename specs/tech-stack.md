@@ -164,8 +164,14 @@ specs/              # this plan of record
   GNN-DDPG) to an ablation and featuring TD3/SAC. *Consequence:* any
   DDPG-family result in the paper **must report all seeds + IQM**, never a single
   run — folded into the Phase 3 statistical protocol.
-- **PPO needs a larger sample budget** (on-policy): 0.56 at 4k steps — verdict
-  pending a fair-budget rerun; not yet treated as a failure.
+- **PPO passes — after a harness fairness fix.** PPO first scored 0.45–0.56 and
+  did *not* improve with budget (4k→80k), which looked like a failure. Root
+  cause was the harness: it reused the off-policy learning rate (1e-3) for PPO
+  instead of PPO's tuned 3e-4. With an algorithm-appropriate config (3e-4 policy
+  LR, entropy bonus, longer rollout) PPO passes consistently: 0.985 / 0.987 (80k
+  seeds 0) and 0.885 (80k seed 1). *Lesson (now built into the harness):*
+  verification must give each algorithm fair, appropriate hyperparameters, or it
+  tests the config rather than the implementation.
 - *Note:* the harness validates the learning machinery on an easy task; it does
   not yet exercise GNN encoders (Phase 6) or the capacity-planning action
   projection. It is the foundation of the gate, not the whole gate.

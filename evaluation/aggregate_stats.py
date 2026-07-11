@@ -145,6 +145,51 @@ def aggregate_iqm(
     return summary_rows
 
 
+def stability_report(
+    rows: list[dict[str, Any]],
+    *,
+    metric: str = "total_cost",
+    group_by: Iterable[str] = ("algorithm",),
+    seed_key: str = "seed",
+) -> list[dict[str, Any]]:
+    """Per-group cross-seed stability for one metric: spread, CV, divergence, IQM.
+
+    Complements the point estimate: surfaces which algorithms are seed-fragile
+    (the DDPG-family concern) so they can be flagged in the pilot findings.
+    """
+
+    group_by = tuple(group_by)
+    per_seed: dict[tuple[Any, ...], dict[Any, list[float]]] = defaultdict(lambda: defaultdict(list))
+    for row in rows:
+        if metric not in row or row[metric] in ("", None):
+            continue
+        gkey = tuple(row.get(key, "") for key in group_by)
+        per_seed[gkey][row.get(seed_key, "")].append(float(row[metric]))
+
+    reports: list[dict[str, Any]] = []
+    for gkey in sorted(per_seed, key=lambda k: tuple(str(x) for x in k)):
+        seed_values = [float(np.mean(values)) for values in per_seed[gkey].values()]
+        arr = np.asarray(seed_values, dtype=float)
+        mean = float(arr.mean()) if arr.size else float("nan")
+        spread = float(arr.max() - arr.min()) if arr.size else float("nan")
+        cv = float(arr.std(ddof=0) / abs(mean)) if arr.size and mean != 0.0 else float("nan")
+        report: dict[str, Any] = {key: value for key, value in zip(group_by, gkey)}
+        report.update(
+            {
+                "metric": metric,
+                "n_seeds": int(arr.size),
+                "iqm": interquartile_mean(arr),
+                "mean": mean,
+                "spread": spread,
+                "cv": cv,
+                "divergent_seeds": json.dumps(divergent_seeds(seed_values)),
+                "per_seed": json.dumps([float(v) for v in seed_values]),
+            }
+        )
+        reports.append(report)
+    return reports
+
+
 def write_rows(rows: list[dict[str, Any]], path: str | Path) -> None:
     if not rows:
         return

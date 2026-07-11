@@ -300,27 +300,36 @@ These implications are necessary but not sufficient, because none of the reviewe
 
 \section{Graph-Aware Deep Reinforcement Learning Framework}
 \label{sec:method}
-\textbf{Integrating DDPG with GCN for Distributed Manufacturing (DDPG-GCN):}
+\subsection*{Overview: a shared graph encoder with interchangeable actor--critic backbones}
 
-\subsection*{Introduction to the Method}
+Distributed manufacturing networks for personalized regenerative medicine (PRM) comprise complex, interconnected facilities whose operating states are best represented as graphs rather than flat vectors. Classical reinforcement learning that treats each facility as independent cannot capture these spatial dependencies. We therefore adopt a two-part design shared by every method we study: a graph convolutional network (GCN) encoder that maps the networked state to permutation-equivariant, neighborhood-aware node embeddings, composed with a continuous-control actor--critic backbone that maps those embeddings to feasibility-projected capacity, reagent, and replenishment actions. Writing the controller as \emph{encoder $\circ$ backbone} lets us hold the relational representation fixed while swapping the reinforcement-learning backbone, so that any performance difference between backbones is attributable to the learning algorithm rather than to the state representation.
 
-distributed manufacturing networks for Personalized Regenerative Medicine (PRM) involve complex,
-interconnected facilities whose operating states are best represented as graphs rather than flat
-vectors. Classical reinforcement learning (RL) models, which treat each facility as independent,
-struggle to capture these spatial dependencies. To address this, we integrate the Deep Deterministic
-Policy Gradient (DDPG) algorithm with a Graph Convolutional Network (GCN), enabling the agent to
-learn joint capacity and transshipment decisions while accounting for network structure.
+\subsection*{Rationale: why a family of backbones rather than a single algorithm}
 
-\subsection*{Rationale for the DDPG-GCN Integration}
+Consistent with the design implications drawn in Section~\ref{sec:literature}, we do not commit to a single backbone. We evaluate a family of continuous-control actor--critic algorithms behind the shared GCN encoder (Table~\ref{tab:backbone_family}). Deep deterministic policy gradient (DDPG) is the classical off-policy actor--critic for continuous control; because it is prone to value overestimation and run-to-run instability, we treat the GCN--DDPG pairing as a baseline and ablation rather than as the proposed method. TD3, SAC, and PPO are the stability-oriented backbones we expect to reduce the variance that plagues DDPG: TD3 through clipped double-$Q$ learning, delayed policy updates, and target smoothing; SAC through entropy-regularized stochastic policies; and PPO through an on-policy clipped surrogate objective. All four share the encoder, the feasibility-projection layer, and the environment, so the comparison is controlled. A GCN encodes relational structure but has no temporal memory of its own; the actor--critic backbone supplies the sequential decision dynamics, and the two together encode spatial correlations and temporal trade-offs jointly.
 
-The DDPG algorithm is well suited for continuous control problems, providing a model-free,
-off-policy actor--critic mechanism for policy learning. However, DDPG alone assumes vectorized
-inputs and cannot directly leverage the relational information among facilities. Conversely, GCNs
-excel at extracting structural embeddings from graph-structured data but lack temporal learning
-capabilities. Their integration allows the model to encode spatial correlations through GCN layers
-and temporal decision dynamics through DDPG updates. 
+\begin{table}[htbp]
+\centering
+\small
+\caption{Continuous-control actor--critic backbones evaluated behind the shared GCN encoder.}
+\label{tab:backbone_family}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{p{0.10\textwidth} p{0.13\textwidth} p{0.11\textwidth} X}
+\toprule
+Backbone & Policy class & Sampling & Key mechanism and role in this study \\
+\midrule
+DDPG~\cite{Lillicrap2016DDPG} & Deterministic & Off-policy & Baseline actor--critic for continuous control; value overestimation and training instability motivate treating GCN--DDPG as an ablation rather than the proposed method. \\
+TD3~\cite{Fujimoto2018TD3} & Deterministic & Off-policy & Clipped double-$Q$ learning, delayed policy updates, and target smoothing to curb overestimation and stabilize training. \\
+SAC~\cite{Haarnoja2018SAC} & Stochastic & Off-policy & Entropy-regularized objective for more robust exploration and training stability. \\
+PPO~\cite{Schulman2017PPO} & Stochastic & On-policy & Clipped surrogate objective; an on-policy alternative to the off-policy backbones. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-Figure~\ref{fig:graph_structure} shows the graph abstraction used in the proposed GCN-DDPG framework. Each healthcare clinic is represented as a node with facility-specific state features, including waiting specimens, reagent inventory, available bioreactor capacity, and other local operational conditions. The edges encode different forms of inter-facility dependency. Information-flow edges allow the model to share demand and operational signals among neighboring clinics; resource-sharing edges represent feasible reagent or specimen transshipment relationships; and capacity-sharing edges connect each clinic to the central capacity hub. By applying graph convolution over this structure, the model learns a network-aware representation in which each facility's decision is informed not only by its own state but also by the states of connected facilities. This graph embedding is then passed to the DDPG actor--critic networks to support coordinated capacity planning and transshipment decisions.
+For concreteness we present the framework in full for the DDPG instantiation---the GCN encoder, the actor--critic updates, and the feasibility projection---and then note where each stability-oriented backbone modifies the critic target, the policy parameterization, or the update schedule; the GCN encoder and the feasibility-projection layer are identical across backbones.
+
+Figure~\ref{fig:graph_structure} shows the graph abstraction used by the proposed graph-aware framework. Each healthcare clinic is represented as a node with facility-specific state features, including waiting specimens and their condition summary, reagent inventory, available bioreactor capacity, and other local operational conditions. The edges encode different forms of inter-facility dependency. Information-flow edges let the model propagate operational and patient-condition signals among neighboring clinics; resource-sharing edges represent feasible reagent transshipment relationships; and capacity-sharing edges connect each clinic to the central capacity hub. Consistent with the autologous identity constraint, only fungible reagents and bioreactor capacity flow along edges---specimens and finished product remain node-local. By applying graph convolution over this structure, the model learns a network-aware representation in which each facility's decision is informed not only by its own state but also by the states of connected facilities. This graph embedding is then passed to the actor--critic backbone to support coordinated capacity, reagent, and replenishment decisions.
 
 \begin{figure}[htbp]
     \centering
@@ -339,9 +348,9 @@ h_i^{(l+1)} = \sigma \Big(W^{(l)} \sum_{j \in \mathcal{N}(i)} \frac{1}{c_{ij}} h
 where $h_i^{(0)} = x_i^t$, $W^{(l)}$ are trainable weights, $\sigma(\cdot)$ is a ReLU activation,
 and $c_{ij}$ is a degree-based normalization factor. The resulting embedding
 $H_t = \{h_i^{(L)}\}_{i=1}^{N}$ captures the current global state of the network.
-\subsection*{Overview of the DDPG-GCN Workflow}
+\subsection*{Overview of the graph-aware actor--critic workflow (DDPG instantiation)}
 
-The method initiates with a dual initialization: the DDPG's actor and critic networks and the GCN for graph state processing. Given an observed state \( X_t \), represented as raw graph data reflecting the current status of the manufacturing network, the GCN is used as a preprocessing unit. It transforms this raw graph into a condensed representation \( X'_t \), which retains the critical structural information of the original graph.
+The method initiates with a dual initialization: the actor and critic networks of the backbone and the GCN for graph state processing. Given an observed state \( X_t \), represented as raw graph data reflecting the current status of the manufacturing network, the GCN is used as a preprocessing unit. It transforms this raw graph into a condensed representation \( X'_t \), which retains the critical structural information of the original graph.
 
 Following this transformation, the DDPG algorithm gets involved. Using the graph-processed state \( X'_t \), the actor-network selects an action, which is based on the actor--critic architecture. This action could range from decisions regarding resource allocation to inventory replenishments. Once executed within the manufacturing environment, the system provides a feedback loop in the form of a reward, essentially evaluating the decision's efficacy.
 
@@ -369,20 +378,17 @@ L_Q &= \frac{1}{N}\sum_i (y_i - Q(H_i,A_i|\theta_Q))^2,\\
 \nabla_{\theta_\mu} \mu(H_i|\theta_\mu).
 \end{align}
 
-\subsection*{Reward Function}
-The reward (negative cost) encourages policies that balance cost minimization and service-level
-stability. For each epoch $t$, the immediate reward is defined as
+\subsection*{Reward function}
+The agents optimize the negative of the immediate cost defined in Section~\ref{sec:problem-graph-mdp}. For each epoch $t$, the reward is
 \begin{equation}
-r_t = -\Big( C_t^{\text{reagent}} + C_t^{\text{bio}} + C_t^{\text{trans}} \Big),
+r_t = -\,c(\mathbf{A}_t;\tilde{\mathbf{X}}_t),
 \end{equation}
-where each term corresponds to the reagent, bioreactor, and transshipment cost components
-introduced in Eq.~(14). This formulation allows the agent to learn trade-offs between resource
-utilization and timely delivery.
+where $c(\cdot)$ is the extended cost of Equation~\eqref{eq:cost}, comprising the operational base cost $c_{\mathrm{op}}$ (reagent purchase, holding, and shortage; bioreactor holding and shortage; and reagent and capacity transfer) together with the patient-loss, material-and-product-expiry, and urgency terms. Optimizing this reward therefore requires the agent to trade current operating cost against the future risk of patient losses and expiry, rather than resource utilization alone.
 
 
 \begin{algorithm}[p]
 \footnotesize
-\caption{DDPG--GCN for Distributed PRM Capacity Planning}
+\caption{Graph-aware actor--critic for distributed PRM capacity planning (DDPG instantiation; TD3/SAC/PPO swap the critic target, policy parameterization, or update schedule).}
 \label{alg:ddpg_gcn}
 \begin{algorithmic}[1]
 \Require Discount factor $\gamma$, soft-update rate $\tau$, actor and critic learning rates $\alpha_\mu,\alpha_Q$, exploration scale $\sigma$, minibatch size $N$.
@@ -405,41 +411,22 @@ utilization and timely delivery.
 \end{algorithm}
 
 \paragraph{Action decoding and feasibility projection.}
-Because the actor network outputs continuous actions, an additional deterministic decoding and feasibility-projection step is used before actions are executed in the simulation environment. Let $A_t^{\mathrm{raw}}=\mu(Z_t|\theta_\mu)$ denote the raw continuous action generated by the actor network from the graph embedding $Z_t$. The raw action is first scaled to the admissible range of each decision variable and then clipped to its variable-specific lower and upper bounds. Integer-valued operational quantities, including specimen reassignment, reagent transshipment, bioreactor relocation, and replenishment quantities, are then rounded to the nearest feasible integer values.
+Because the actor network outputs continuous actions, an additional deterministic decoding and feasibility-projection step is used before actions are executed in the simulation environment. Let $A_t^{\mathrm{raw}}=\mu(Z_t|\theta_\mu)$ denote the raw continuous action generated by the actor network from the graph embedding $Z_t$. The raw action is first scaled to the admissible range of each decision variable and then clipped to its variable-specific lower and upper bounds. Under the autologous identity constraint the specimen-adjustment component is fixed to zero, so the decoded decision comprises only the fungible quantities---reagent transshipment, bioreactor relocation, and replenishment---which are then rounded to the nearest feasible integer values.
 
-The decoded action is subsequently passed through a repair operator that enforces the operational constraints of the manufacturing network. First, nonnegativity constraints are imposed so that the resulting action cannot remove more specimens, reagents, or idle bioreactors from a facility than are available at that epoch. Second, replenishment quantities are capped by the maximum purchasable reagent quantity $P_t^n$ and by supplier availability. Third, network conservation constraints are enforced for internal sharing decisions: the total number of specimens, reagents, and relocatable bioreactors sent out from facilities must equal the total amount received by connected facilities, except for external reagent purchases. Finally, transshipment and relocation actions are restricted to feasible graph edges; if no edge connects two facilities, the corresponding flow is set to zero.
+The decoded action is subsequently passed through a repair operator that enforces the operational constraints of the manufacturing network. First, nonnegativity constraints are imposed so that the resulting action cannot remove more reagents or idle bioreactors from a facility than are available at that epoch. Second, replenishment quantities are capped by the maximum purchasable reagent quantity $P_t^n$ and by supplier availability. Third, network conservation constraints are enforced for the fungible sharing decisions: the total quantities of reagents and relocatable bioreactors sent out from facilities must equal the total amount received by connected facilities, except for external reagent purchases; specimens and finished product are identity-bound and are never transferred. Finally, transshipment and relocation actions are restricted to feasible graph edges; if no edge connects two facilities, the corresponding flow is set to zero.
 
 Equivalently, the executed action can be interpreted as the feasible action $\hat{A}_t$ obtained by projecting the decoded actor output onto the feasible action set $\mathcal{F}(X_t)$:
-[
-$\hat{A}_t = \Pi_{\mathcal{F}(X_t)}(A_t^{\mathrm{raw}}),$
-]
-where $\mathcal{F}(X_t)$ is determined by current facility states, inventory availability, capacity availability, supplier limits, and graph connectivity. This projection step improves engineering credibility by ensuring that all actions executed in the simulation correspond to implementable capacity, replenishment, and transshipment decisions.
+\begin{equation}
+\hat{A}_t = \Pi_{\mathcal{F}(X_t)}\!\left(A_t^{\mathrm{raw}}\right),
+\end{equation}
+where $\mathcal{F}(X_t)$ is determined by current facility states, inventory availability, capacity availability, supplier limits, the autologous identity constraint, and graph connectivity. This projection step improves engineering credibility by ensuring that all actions executed in the simulation correspond to implementable capacity, replenishment, and transshipment decisions.
 
 
-\vspace{0.3em}
-\noindent\textbf{GCN Encoder:} Each facility node $i$ aggregates features from its neighbors $\mathcal{N}(i)$ using layer-wise message passing:
-\[
-h_i^{(l+1)} = \sigma\!\left(W^{(l)} \sum_{j \in \mathcal{N}(i)} h_j^{(l)}\right),
-\]
-where $W^{(l)}$ are trainable weights and $\sigma(\cdot)$ is an activation function. 
-This produces graph-embedded representations used by the actor–critic networks for coordinated decision-making.
+Each stability-oriented backbone reuses this encoder and projection layer unchanged and alters only the reinforcement-learning update. TD3 replaces the single critic with clipped double-$Q$ targets, delays actor updates, and adds target-policy smoothing; SAC replaces the deterministic actor with an entropy-regularized stochastic policy and a soft value target; and PPO replaces off-policy replay with on-policy rollouts optimized under a clipped surrogate objective. In all cases the actor and critic operate on the GCN embedding $Z_t$ rather than on the flat state, and the executed action is the feasibility-projected $\hat{A}_t$.
 
-\subsection*{Anticipated Outcomes and Benefits}
+\subsection*{Summary}
 
-The DDPG-GCN model offers several tangible benefits:
-
-\begin{itemize}
-    \item \textbf{Enhanced Prediction and Analysis}: By leveraging the relationships between clinics, our GCN framework can generate predictions with greater accuracy and nuanced analysis, surpassing the capabilities of models that consider clinics in isolation.
-    \item \textbf{Pattern Identification}: The GCN is adept at detecting trends and patterns that may extend across multiple clinics, thereby uncovering insights that isolated analyses could overlook.
-    \item \textbf{Efficient Graph Processing}: By harnessing the power of GCNs, the model can effectively handle states that are naturally represented as graphs, ensuring no critical information is lost in translation.
-    \item \textbf{Optimized Decision-Making}: The DDPG component ensures that the actions selected are both contextually relevant (thanks to the GCN-processed states) and optimal in terms of the overall system objectives.
-    \item \textbf{Adaptive Learning}: As the manufacturing network evolves, both the DDPG and GCN components continuously refine their parameters, ensuring the model remains adaptive and responsive to real-world changes.
-\end{itemize}
-
-In essence, the integration offers a solution that is greater than the sum of its parts, paving the way for more efficient, resilient, and optimized distributed manufacturing systems.
-
-This proposed DDPG-GCN model offers a robust approach for distributed manufacturing. By melding the strengths of GCN and DDPG, it provides a nuanced understanding of intricate manufacturing networks, ensuring efficient and optimized decision-making.
-The dynamic nature and intricate dependencies found in distributed manufacturing necessitate advanced solutions capable of understanding and optimizing such networks. The integration of DDPG and GCN, as presented in this paper, provides a promising avenue for addressing the challenges inherent in distributed manufacturing systems. With the capability to process graph-based states effectively, the DDPG-GCN model offers substantial improvements in service level, efficiency, and resilience against disruptions.
+The framework is thus a single graph-aware controller with a swappable actor--critic core: a GCN encoder supplies a permutation-equivariant, network-aware state representation; a continuous-control backbone learns coordinated capacity, reagent, and replenishment policies from simulated experience; and a deterministic feasibility-projection layer guarantees that every executed action respects inventory, capacity, supplier, identity, and connectivity constraints. Holding the encoder and projection fixed while varying the backbone lets the experiments in Section~\ref{sec:experiments} separate the value of the graph representation from that of the reinforcement-learning algorithm, and compare DDPG against the more stable TD3, SAC, and PPO on equal footing.
 \section{Computational Experiments}
 \label{sec:experiments}
 \label{sec:casestudies}

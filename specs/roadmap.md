@@ -56,11 +56,13 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 
 ## Next
 
-### Phase 4 — Implement the patient-condition + expiry environment layer
-- [ ] New env module (leave `src/env/capacity_planning.py` intact); per-clinic patient queues with survival decay + deterioration shock
-- [ ] Age-bucketed, expiry-aware specimen/material inventory (reuse the bioreactor-pipeline pattern); eligibility/expiry gate and cost terms
-- [ ] New scenario configs; unit tests + a smoke run; `python -m compileall .`
-- **Depends on:** Phases 2, 3.
+### Phase 4 — Implement the patient-condition + expiry environment layer  ✅ done 2026-07-11
+- [x] New env module (base `capacity_planning.py` intact); per-clinic patient queues with survival decay + deterioration shock (`src/env/patient_condition.py`, `patient_capacity_planning.py`)
+- [x] Age-bucketed, expiry-aware material inventory (`src/env/aging_inventory.py`, bioreactor-pipeline pattern) + disabled-by-default viability hook; eligibility/expiry/urgency cost terms
+- [x] Fixed-width patient observation + graph summary (decision-aligned 4-bucket histogram, config-driven)
+- [x] Configs (20-clinic + 3 disruption variants + 2-clinic dev), `build_env` wiring, unit + integration tests, end-to-end smoke; 99 tests green
+- See feature spec `specs/2026-07-11-patient-condition-env/`. **Note:** built ahead of formal Phases 2–3 docs; the feature spec served as the design. Methodology/experiment-design write-ups (Phases 2–3) still to be authored.
+- **Deferred (as planned):** temporal encoder (Phase 8), inter-clinic patient routing + cold-chain viability dynamics (hook wired but off).
 
 ### Phase 5 — Benchmark algorithms  *(verification gate)*
 - [x] Build the shared **verification harness** (V2/V3) — done 2026-07-11: `src/verification/` LQR task with an analytic Riccati optimum (dependency-free; chosen over `Pendulum-v1` for a precise reference). Already surfaced DDPG instability. *Still todo:* extend to GNN encoders (Phase 6) and the capacity-planning action projection

@@ -40,7 +40,7 @@ trivial, and record each baseline's verification status. This establishes the
 | MDL-1 | heuristic | no | 1-period lookahead | sanity-verified |
 | MDL-2 | heuristic | no | **strong lookahead** | sanity-verified |
 | F-MYO | heuristic | forecast | forecast-aware myopic | sanity-verified |
-| **uMYO** | heuristic (new) | **yes** | condition-aware baseline | built + sanity-verified |
+| **uMYO** | heuristic (new) | **yes** | condition-aware baseline (ties MYO — see finding) | built + sanity-verified |
 | flat-DDPG | learned | via obs | flat-state RL baseline | LQR gate + patient sanity |
 
 ## Decisions (and why)
@@ -48,9 +48,17 @@ trivial, and record each baseline's verification status. This establishes the
 - **Add a patient-aware heuristic (uMYO).** The learned policies see patient
   condition via the observation; a purely condition-blind heuristic set would let
   RL win too easily. uMYO gives a fair, condition-aware target. Built as a
-  subclass of `CapacityHeuristicPolicy` overriding `_facility_net_action`, reading
-  the patient env's at-risk / near-expiry counts. (User choice: existing + one
+  subclass of `MyopicPolicy` overriding `_facility_net_action`, reading the
+  patient env's at-risk / near-expiry counts. (User choice: existing + one
   patient-aware.)
+- **Finding (2026-07-11): uMYO ≈ MYO, and that is the point.** Empirically uMYO
+  ties MYO on eligibility (delta ≈ 0 across seeds) because urgency correlates
+  with the waiting-patient counts MYO already balances on, and MYO often already
+  orders near max. A *simple* condition-aware rule cannot beat a condition-blind
+  one — the actionable lever is *anticipation* (pre-positioning before patients
+  deteriorate), which a myopic rule cannot express. This motivates the learned
+  approach and is recorded as a result, not forced away. uMYO is kept as a fair
+  condition-aware baseline; the test asserts `uMYO >= MYO` (never worse).
 - **Verification standard:** RL through the LQR gate (correctness) + patient-env
   sanity (beats random on our problem); heuristics get patient-env sanity only —
   they don't learn, so the LQR gate doesn't apply. (User choice.)

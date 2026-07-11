@@ -27,6 +27,8 @@ DEFAULT_EVAL_REPLICATIONS = 20
 
 HEURISTICS = ("myo", "iso", "mdl1", "mdl2", "fmyo", "umyo")
 GRAPH_BACKBONES = ("gcn_ddpg", "gcn_td3", "gcn_sac", "gcn_ppo")
+# GNN-DDPG is the ablation; the flagship is chosen from the stable backbones.
+FLAGSHIP_CANDIDATES = ("gcn_td3", "gcn_sac", "gcn_ppo")
 LEARNED = ("flat_ddpg",) + GRAPH_BACKBONES
 
 # Stage A screens the full roster.

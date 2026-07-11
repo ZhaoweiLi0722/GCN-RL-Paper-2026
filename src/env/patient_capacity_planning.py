@@ -55,6 +55,12 @@ class PatientEnvConfig:
     weight_urgency: float = 5_000.0
     urgency_margin: float = 0.1           # "at risk" = survival < threshold + margin
     enable_viability_hook: bool = False
+    # Decision-aligned interior survival-bucket edges for the observation summary.
+    # Default gives 4 buckets over waiting patients (all have survival >=
+    # threshold): [thr, 0.85) critical, [0.85, 0.90) watch, [0.90, 0.97) healthy,
+    # [0.97, 1.0] fresh. Config-driven so the Phase 7 pilot can sweep granularity.
+    survival_bucket_edges: tuple[float, ...] = (0.85, 0.90, 0.97)
+    expiry_warning_margin: int = 1        # "near expiry" = age >= shelf_life - margin
 
 
 class PatientConditionCapacityEnv(CapacityPlanningEnv):
@@ -63,12 +69,22 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
     def __init__(self, config: PatientEnvConfig | None = None, seed: int | None = None):
         self.env_config = config or PatientEnvConfig()
         self.patient_model = PatientConditionModel(self.env_config.patient)
-        # base __init__ calls self.reset(), which needs the two attributes above.
+        self._summary_edges = np.asarray(self.env_config.survival_bucket_edges, dtype=float)
+        if self._summary_edges.ndim != 1 or (np.diff(self._summary_edges) <= 0).any():
+            raise ValueError("survival_bucket_edges must be strictly increasing")
+        # 3 scalars (waiting count, mean survival, near-expiry count) + histogram.
+        self.summary_width = 3 + len(self._summary_edges) + 1
+        # base __init__ calls self.reset(), which needs the attributes above.
         super().__init__(self.env_config.base, seed)
         if self.config.action_mode != "facility_net":
             raise ValueError("PatientConditionCapacityEnv requires action_mode='facility_net'")
         if self.config.transfer_lead_time != 0:
             raise ValueError("PatientConditionCapacityEnv requires transfer_lead_time == 0 (MVP)")
+        # The patient summary is appended as a per-clinic block; extend the sizes.
+        self.base_observation_size = self.config.num_facilities * self.features_per_facility
+        self.observation_size = (
+            self.base_observation_size + self.config.num_facilities * self.summary_width
+        )
 
     # ------------------------------------------------------------------ reset
     def reset(self, seed: int | None = None) -> np.ndarray:
@@ -88,6 +104,56 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         self.cumulative_lost = 0.0
         self.cumulative_served = 0.0
         return self.observation()
+
+    # ------------------------------------------------------------ observation
+    def observation(self) -> np.ndarray:
+        """Base flat observation with a per-clinic patient summary appended.
+
+        The summary is added as a trailing block (not interleaved), so
+        ``normalize_observations`` — which assumes the base per-facility layout —
+        must stay off for this env (it is off in all shipped configs).
+        """
+
+        base = super().observation()
+        if not hasattr(self, "patient_queues"):  # during base __init__/reset setup
+            return base
+        summary = self._patient_summary().reshape(-1)
+        return np.concatenate([base, summary]).astype(np.float32)
+
+    def graph_observation(self) -> dict[str, np.ndarray]:
+        """Base graph observation with patient-summary columns on each clinic node."""
+
+        data = super().graph_observation()
+        if not hasattr(self, "patient_queues"):  # during base __init__/reset setup
+            return data
+        node_features = data["node_features"]
+        summary = self._patient_summary()
+        if node_features.shape[0] > summary.shape[0]:  # central capacity hub row
+            pad = np.zeros((node_features.shape[0] - summary.shape[0], summary.shape[1]))
+            summary = np.vstack([summary, pad])
+        data["node_features"] = np.hstack([node_features, summary]).astype(np.float32)
+        return data
+
+    def _patient_summary(self) -> np.ndarray:
+        """Per-clinic fixed-width summary: [count, mean_survival, near_expiry, hist...]."""
+
+        n = self.config.num_facilities
+        buckets = len(self._summary_edges) + 1
+        near_expiry_age = self.env_config.material_shelf_life - self.env_config.expiry_warning_margin
+        rows = np.zeros((n, self.summary_width), dtype=float)
+        for i, queue in enumerate(self.patient_queues):
+            if not queue:
+                continue
+            survivals = np.array([p.survival for p in queue], dtype=float)
+            ages = np.array([p.age for p in queue], dtype=float)
+            histogram = np.bincount(
+                np.digitize(survivals, self._summary_edges), minlength=buckets
+            )[:buckets].astype(float)
+            rows[i, 0] = float(len(queue))
+            rows[i, 1] = float(survivals.mean())
+            rows[i, 2] = float((ages >= near_expiry_age).sum())
+            rows[i, 3:] = histogram
+        return rows
 
     # ------------------------------------------------------------------- step
     def step(self, action):

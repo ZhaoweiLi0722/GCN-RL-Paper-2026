@@ -154,6 +154,20 @@ specs/              # this plan of record
 
 ### 2026-07-11
 
+- **Reward stays blended, weights unchanged (decided).** The patient env reward is
+  `−cost` where `cost = base_cost (operational) + patient terms`. Current
+  coefficients are operational-heavy: reagent shortage 86,504 > patient-lost
+  50,000 > reagent purchase 42,174, with expiry 40,000 and **urgency only
+  5,000**. Considered (a) a patient-only reward and (b) re-weighting so patient
+  condition dominates; **both rejected** — keep the blended objective as-is
+  because the cost/patient *tradeoff* is the engineering-application contribution
+  and a patient-only objective risks degenerate over-provisioning. *Consequence
+  to watch in the Phase 7 pilot:* under these weights, condition-awareness may not
+  be decisive (this is the likely cause of the Phase 5 uMYO≈MYO tie). If the
+  graph/condition-aware methods do **not** separate from condition-blind ones,
+  that is evidence for the temporal encoder (Phase 8) and/or a weight revisit in
+  the full campaign (Phase 9) — not a silent problem. Flagship still ranked by
+  eligibility with cost as tie-breaker (both reported).
 - **Graph method family built (Phase 6).** GNN-TD3/SAC/PPO added as *verified GCN
   encoder ∘ verified backbone*; GNN-DDPG retained as the ablation. Shared graph
   plumbing (`GraphStateSpec`/`build_graph_spec`/`flat_state_to_node_features`)

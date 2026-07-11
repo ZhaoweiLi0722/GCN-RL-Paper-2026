@@ -248,10 +248,21 @@ class EpisodeMetrics:
         self.service_level = 0.0
         self.average_waiting_time = 0.0
         self.bioreactor_utilization = 0.0
+        # Patient-condition metrics (populated only on the patient env).
+        self.has_patient_metrics = False
+        self.eligibility_rate_last = 0.0
+        self._eligibility_rate_sum = 0.0
+        self._patient_steps = 0
+        self.patients_lost = 0.0
+        self.patients_lost_ineligible = 0.0
+        self.patients_lost_expired = 0.0
+        self.material_wasted = 0.0
+        self.at_risk_unserved = 0.0
 
     def update(self, info: dict[str, Any]) -> None:
         self.steps += 1
         self.total_cost += float(info.get("cost", 0.0))
+        self._update_patient_metrics(info)
         self.service_level = float(info.get("service_level", self.service_level))
         self.average_waiting_time = float(info.get("average_waiting_time", self.average_waiting_time))
         self.bioreactor_utilization = float(
@@ -274,6 +285,26 @@ class EpisodeMetrics:
             + 500.0 * float(np.abs(capacity_transfers).sum())
             + 200.0 * float(np.abs(reagent_transfers).sum())
         )
+
+    def _update_patient_metrics(self, info: dict[str, Any]) -> None:
+        if "eligibility_rate" not in info:
+            return
+        self.has_patient_metrics = True
+        self.eligibility_rate_last = float(info.get("eligibility_rate", 0.0))
+        self._eligibility_rate_sum += self.eligibility_rate_last
+        self._patient_steps += 1
+        lost_ineligible = float(np.asarray(info.get("patients_lost_ineligible", 0.0), dtype=float).sum())
+        lost_expired = float(np.asarray(info.get("patients_lost_expired", 0.0), dtype=float).sum())
+        finished_expired = float(np.asarray(info.get("finished_expired", 0.0), dtype=float).sum())
+        self.patients_lost_ineligible += lost_ineligible
+        self.patients_lost_expired += lost_expired
+        self.patients_lost += float(np.asarray(info.get("patients_lost", 0.0), dtype=float).sum())
+        self.material_wasted += finished_expired + lost_expired
+        self.at_risk_unserved += float(np.asarray(info.get("at_risk_unserved", 0.0), dtype=float).sum())
+
+    @property
+    def eligibility_rate_mean(self) -> float:
+        return self._eligibility_rate_sum / self._patient_steps if self._patient_steps else 0.0
 
     @property
     def reagent_shortage_frequency(self) -> float:

@@ -325,3 +325,51 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
     def _viability_fn(self, age: int, transport_time: float) -> float:
         # Placeholder cold-chain curve; only used when enable_viability_hook=True.
         return float(np.exp(-0.15 * (age + transport_time)))
+
+
+_PATIENT_CONFIG_KEYS = frozenset(
+    {
+        "patient",
+        "material_shelf_life",
+        "finished_shelf_life",
+        "weight_patient_lost",
+        "weight_expiry",
+        "weight_urgency",
+        "urgency_margin",
+        "enable_viability_hook",
+        "survival_bucket_edges",
+        "expiry_warning_margin",
+    }
+)
+
+
+def _to_tuple(value):
+    if isinstance(value, list):
+        return tuple(_to_tuple(item) for item in value)
+    return value
+
+
+def patient_env_config_from_dict(env_config: dict) -> PatientEnvConfig:
+    """Build a ``PatientEnvConfig`` from a flat JSON-style env dict.
+
+    Keys in ``_PATIENT_CONFIG_KEYS`` configure the patient layer (``patient`` is
+    a nested dict for :class:`PatientConditionConfig`); all other keys configure
+    the base :class:`CapacityPlanningConfig`.
+    """
+
+    cfg = dict(env_config)
+    cfg.pop("env_type", None)
+    patient_kwargs: dict = {}
+    base_kwargs: dict = {}
+    for key, value in cfg.items():
+        if key in _PATIENT_CONFIG_KEYS:
+            patient_kwargs[key] = value
+        else:
+            base_kwargs[key] = _to_tuple(value)
+
+    patient_sub = patient_kwargs.pop("patient", None)
+    patient_cond = PatientConditionConfig(**patient_sub) if patient_sub else PatientConditionConfig()
+    if "survival_bucket_edges" in patient_kwargs:
+        patient_kwargs["survival_bucket_edges"] = tuple(patient_kwargs["survival_bucket_edges"])
+    base = CapacityPlanningConfig(**base_kwargs)
+    return PatientEnvConfig(base=base, patient=patient_cond, **patient_kwargs)

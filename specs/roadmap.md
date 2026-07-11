@@ -66,9 +66,10 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 
 ### Phase 5 — Benchmark algorithms  *(verification gate)*
 - [x] Build the shared **verification harness** (V2/V3) — done 2026-07-11: `src/verification/` LQR task with an analytic Riccati optimum (dependency-free; chosen over `Pendulum-v1` for a precise reference). Already surfaced DDPG instability. *Still todo:* extend to GNN encoders (Phase 6) and the capacity-planning action projection
-- [ ] Confirm/port MYO, ISO, MDL-1, MDL-2 (and flat DDPG) against the new environment
-- [ ] Port MILP heuristics from prior code using the Gurobi academic license (Phase 0)
-- [ ] Run each learned baseline through the V1–V5 verification gate; start the provenance table
+- [x] Confirm MYO/ISO/MDL-1/MDL-2/F-MYO + flat-DDPG on the patient env (sanity-verified); add patient-aware **uMYO** (ties MYO — recorded finding) — done 2026-07-11
+- [x] Patient-env sanity for flat-DDPG (beats random ~100x); LQR-gate results recorded in `provenance.md`
+- [ ] Port MILP heuristics from prior code using the Gurobi academic license — **deferred** (MDL-2 is the strong lookahead for now)
+- See feature spec `specs/2026-07-11-benchmark-algorithms/`. TD3/SAC/PPO patient-env sanity carried into Phase 6.
 - **Depends on:** Phase 4. **Blocks:** Phase 7 (no algorithm enters the pilot unverified).
 
 ### Phase 6 — Graph method family  *(verification gate)*

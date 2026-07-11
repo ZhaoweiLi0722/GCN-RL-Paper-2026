@@ -179,6 +179,75 @@ def run(algorithms, *, train_steps: int, eval_episodes: int, seed: int, output: 
     return results
 
 
+def patient_env_sanity(
+    algorithm: str,
+    env_config_path: str,
+    *,
+    train_steps: int = 2000,
+    eval_episodes: int = 10,
+    seed: int = 0,
+) -> dict:
+    """Does a learned agent beat random on the *patient* env (not just LQR)?
+
+    Complements the LQR gate: LQR checks the implementation is correct in general;
+    this checks the agent actually learns on our problem. Trains briefly on a
+    patient env config and compares evaluated cost to a random policy.
+    """
+
+    from src.rl.config import load_config
+    from src.rl.experiment import build_env
+
+    wrapped = {"env": load_config(env_config_path)}
+
+    def make(s: int):
+        return build_env(wrapped, seed=s)
+
+    def episode_cost(policy, s: int) -> float:
+        env = make(s)
+        state = env.reset(seed=s)
+        total = 0.0
+        done = False
+        while not done:
+            state, _reward, done, info = env.step(policy(env, state))
+            total += float(info["cost"])
+        return total
+
+    eval_seeds = range(9000, 9000 + eval_episodes)
+    rng = np.random.default_rng(seed)
+    random_cost = float(
+        np.mean([episode_cost(lambda e, s: rng.uniform(-1.0, 1.0, e.action_size), sd) for sd in eval_seeds])
+    )
+
+    env = make(seed)
+    agent = get_agent_class(algorithm)(
+        env.observation_size, env.action_size, {"seed": seed, "hidden_sizes": [64, 64], "batch_size": 128}
+    )
+    state = env.reset(seed=seed)
+    agent.reset()
+    episode = 0
+    for _ in range(train_steps):
+        action = agent.select_action(state, explore=True, env=env)
+        next_state, reward, done, _info = env.step(action)
+        agent.observe(state, action, reward, next_state, done)
+        agent.update()
+        state = next_state
+        if done:
+            episode += 1
+            state = env.reset(seed=seed + episode)
+            agent.reset()
+    learned_cost = float(
+        np.mean(
+            [episode_cost(lambda e, s: agent.select_action(s, explore=False, env=e), sd) for sd in eval_seeds]
+        )
+    )
+    return {
+        "algorithm": algorithm,
+        "random_cost": random_cost,
+        "learned_cost": learned_cost,
+        "beats_random": learned_cost < random_cost,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--algorithms", nargs="+", default=list(LEARNED_DEFAULT))

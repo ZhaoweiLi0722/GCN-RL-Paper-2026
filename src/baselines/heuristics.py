@@ -152,12 +152,47 @@ class ForecastMyopicPolicy(CapacityHeuristicPolicy):
         return True
 
 
+class UrgencyAwareMyopicPolicy(MyopicPolicy):
+    """uMYO: myopic balancing, then surge replenishment and inbound capacity
+    toward clinics with many at-risk / near-expiry patients.
+
+    Condition-aware baseline: it reacts to deteriorating patients, unlike the
+    condition-blind heuristics. On the base (non-patient) environment it degrades
+    gracefully to plain myopic behaviour.
+    """
+
+    algorithm = "umyo"
+
+    def __init__(self, state_dim=None, action_dim=None, config=None):
+        super().__init__(state_dim, action_dim, config)
+        config = config or {}
+        self.urgency_surge = float(config.get("urgency_surge", 1.0))
+
+    def _facility_net_action(self, env: CapacityPlanningEnv) -> np.ndarray:
+        action = super()._facility_net_action(env)
+        if not hasattr(env, "at_risk_counts"):
+            return action  # base env: no patient signal -> plain myopic
+        n = env.config.num_facilities
+        waiting = env.waiting_counts()
+        urgency = np.clip(
+            (env.at_risk_counts() + env.near_expiry_counts()) / np.maximum(waiting, 1.0),
+            0.0,
+            1.0,
+        )
+        surge = self.urgency_surge * urgency
+        action = action.copy()
+        action[2 * n : 3 * n] = np.clip(action[2 * n : 3 * n] + surge, -1.0, 1.0)  # inbound capacity (q)
+        action[3 * n : 4 * n] = np.clip(action[3 * n : 4 * n] + surge, -1.0, 1.0)  # replenishment (p)
+        return action
+
+
 HEURISTIC_POLICIES = {
     "myo": MyopicPolicy,
     "iso": IsolatedPolicy,
     "mdl1": MeanDemandLookahead1Policy,
     "mdl2": MeanDemandLookahead2Policy,
     "fmyo": ForecastMyopicPolicy,
+    "umyo": UrgencyAwareMyopicPolicy,
 }
 
 

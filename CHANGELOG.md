@@ -1,6 +1,11 @@
 # Changelog
 
 ## 2026-07-11
+- Phase 5 groups 3-5: RL patient sanity, provenance, roadmap
+- Phase 5 group 2: patient-aware uMYO heuristic + finding (ties MYO)
+- Phase 5 group 1: confirm existing baselines on patient env
+- Add Phase 5 feature spec: benchmark algorithms on patient env
+- Merge Phase 4: patient-condition + expiry environment layer
 - Mark Phase 4 (patient-condition env layer) complete
 - Phase 4 groups 6-7: patient env configs + build wiring + smoke
 - Phase 4 group 5: patient observation & graph summary

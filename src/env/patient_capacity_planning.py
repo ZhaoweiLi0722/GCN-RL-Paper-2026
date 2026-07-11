@@ -318,6 +318,26 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             dtype=float,
         )
 
+    # -- Public accessors for condition-aware policies -----------------------
+    def waiting_counts(self) -> np.ndarray:
+        """Per-clinic number of eligible waiting patients."""
+
+        return self._waiting_counts()
+
+    def at_risk_counts(self) -> np.ndarray:
+        """Per-clinic count of waiting patients within the urgency margin."""
+
+        return self._at_risk_unserved_counts()
+
+    def near_expiry_counts(self) -> np.ndarray:
+        """Per-clinic count of waiting patients close to material expiry."""
+
+        near_expiry_age = self.env_config.material_shelf_life - self.env_config.expiry_warning_margin
+        return np.array(
+            [float(sum(1 for p in q if p.age >= near_expiry_age)) for q in self.patient_queues],
+            dtype=float,
+        )
+
     def _eligibility_rate(self) -> float:
         resolved = self.cumulative_served + self.cumulative_lost
         return self.cumulative_served / max(resolved, 1.0)

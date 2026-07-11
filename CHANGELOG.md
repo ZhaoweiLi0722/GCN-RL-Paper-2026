@@ -1,6 +1,15 @@
 # Changelog
 
 ## 2026-07-11
+- Phase 6 done: graph method family (GNN-TD3/SAC/PPO + GNN-DDPG ablation)
+- Phase 6 G7: extend provenance, roadmap, decision log
+- Phase 6 G6: register graph agents + patient-env sanity gate
+- Phase 6 G5: GNN-SAC and GNN-PPO agents
+- Phase 6 G4: GNN-TD3 agent
+- Phase 6 G3: graph network heads for SAC/PPO
+- Phase 6 G2: patient-aware graph spec and node features
+- Phase 6 G1: extract shared graph plumbing into graph_features
+- Add Phase 6 feature spec: graph method family
 - Phase 5 groups 3-5: RL patient sanity, provenance, roadmap
 - Phase 5 group 2: patient-aware uMYO heuristic + finding (ties MYO)
 - Phase 5 group 1: confirm existing baselines on patient env

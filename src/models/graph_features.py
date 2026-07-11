@@ -46,8 +46,7 @@ def _patient_summary_width(env_config: dict[str, Any]) -> int:
 
     if env_config.get("env_type") != "patient_condition":
         return 0
-    patient_config = dict(env_config.get("patient", {}))
-    edges = patient_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
+    edges = env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
     return 3 + len(tuple(edges)) + 1
 
 

@@ -107,6 +107,12 @@ class CapacityPlanningEnv:
         self.supplier_disruption_rate = _as_vector(
             self.config.supplier_disruption_rate, n, "supplier_disruption_rate"
         )
+        # Mutable instance copy of the forecast error so the per-episode
+        # randomization hook can vary it without touching the immutable config.
+        self.demand_forecast_error = self.config.demand_forecast_error
+        # Train-time domain-randomization ranges; None => fixed (eval/nominal).
+        self._train_disruption_range: tuple[float, float] | None = None
+        self._train_forecast_error_range: tuple[float, float] | None = None
 
         default_edges = complete_undirected_edges(n)
         if self.config.action_mode == "facility_net":
@@ -155,6 +161,7 @@ class CapacityPlanningEnv:
         self.specimen_transfer_pipeline = self._empty_transfer_pipeline()
         self.reagent_transfer_pipeline = self._empty_transfer_pipeline()
         self.capacity_transfer_pipeline = self._empty_transfer_pipeline()
+        self._maybe_randomize_regime()
         self.demand = self.rng.poisson(self.demand_rates).astype(float)
         self.supplier_available = self._sample_supplier_available()
         self.demand_forecast = self._sample_demand_forecast()
@@ -169,6 +176,42 @@ class CapacityPlanningEnv:
         self.reagent_shortage_steps = 0
         self.bioreactor_shortage_steps = 0
         return self.observation()
+
+    def enable_train_randomization(
+        self,
+        disruption_range: tuple[float, float] | None = None,
+        forecast_error_range: tuple[float, float] | None = None,
+    ) -> None:
+        """Opt into train-time per-episode domain randomization.
+
+        When set, each :meth:`reset` resamples the stressed parameter uniformly
+        from the given ``[lo, hi]`` range *before* demand/supplier/forecast are
+        drawn, so training sees a distribution of regimes. Eval envs leave this
+        unset and keep the fixed config values, enabling clean train-on-range /
+        test-OOD splits. Passing ``None`` (the default) disables that lever.
+        """
+
+        def _check(name: str, rng: tuple[float, float] | None) -> tuple[float, float] | None:
+            if rng is None:
+                return None
+            lo, hi = float(rng[0]), float(rng[1])
+            if lo < 0.0 or hi < lo:
+                raise ValueError(f"{name} must satisfy 0 <= lo <= hi, got {rng}")
+            return (lo, hi)
+
+        self._train_disruption_range = _check("disruption_range", disruption_range)
+        self._train_forecast_error_range = _check("forecast_error_range", forecast_error_range)
+
+    def _maybe_randomize_regime(self) -> None:
+        """Resample stressed parameters from their train-time ranges, if enabled."""
+        n = self.config.num_facilities
+        if self._train_disruption_range is not None:
+            lo, hi = self._train_disruption_range
+            rate = float(self.rng.uniform(lo, hi))
+            self.supplier_disruption_rate = np.full(n, rate, dtype=float)
+        if self._train_forecast_error_range is not None:
+            lo, hi = self._train_forecast_error_range
+            self.demand_forecast_error = float(self.rng.uniform(lo, hi))
 
     def observation(self) -> np.ndarray:
         """Return a flat observation suitable for MLP baselines."""
@@ -584,7 +627,7 @@ class CapacityPlanningEnv:
         forecast = self._effective_demand_rates() * horizon
         if not self.config.include_demand_forecast_state:
             return forecast.astype(float)
-        error = self.config.demand_forecast_error
+        error = self.demand_forecast_error
         if error is None or float(error) == 0.0:
             return forecast.astype(float)
         noise = self.rng.normal(loc=0.0, scale=float(error), size=self.config.num_facilities)

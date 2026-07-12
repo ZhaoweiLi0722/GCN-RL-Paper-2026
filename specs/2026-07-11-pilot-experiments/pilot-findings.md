@@ -81,6 +81,26 @@ campaign spend.
 - **Lever 2 (representation + curriculum):** `facility_action` readout + 2->20
   warm-start, verified in `tests/test_gcn_facility_action.py` and wired for the
   deterministic backbones. See `campaign-scale-plan.md`.
-- **Readout comparison (running):** `evaluation/readout_comparison.py` compares
-  `facility_action` vs `global_flat` on `gcn_td3` at 20-clinic / 80k steps, with
-  `mdl2` as reference. Result appended here on completion.
+## Readout comparison — facility_action vs global_flat (20-clinic, 80k steps)
+
+`evaluation/readout_comparison.py`, `gcn_td3`, 2 seeds, 20 eval replications,
+`mdl2` as reference (`results/readout_comparison/`).
+
+| Variant | eligibility (mean) | total_cost (mean) | patients lost |
+|---------|:------------------:|:-----------------:|:-------------:|
+| mdl2 (heuristic) | 0.822 | 9.85e8 | 1163 |
+| **gcn_td3 `facility_action`** | **0.691** | **1.40e9** | 2016 |
+| gcn_td3 `global_flat` | 0.297 | 3.20e9 | 3843 |
+
+**Lever 2 confirmed as a real lever, not just steps.** At the *same* 80k budget,
+`facility_action` delivers ~2.3x the eligibility (0.69 vs 0.30) and ~half the cost
+(1.40e9 vs 3.20e9) of `global_flat`. Note `global_flat` at 80k is no better than the
+30k pilot (~0.30), so the parameter-heavy ~1280-d actor head was a genuine co-cause
+of the collapse — more steps alone do not fix it. `facility_action` narrows the gap
+to `mdl2` sharply (from 0.39-vs-0.82 at 30k to 0.69-vs-0.82), though it does not yet
+close it at 80k.
+
+**Decision:** make `facility_action` the default graph readout for the campaign
+(already wired in `campaign_manifest.py`). The remaining gap to `mdl2` is what the
+300k budget + 2->20 curriculum warm-start are meant to close; that is the campaign's
+job to confirm.

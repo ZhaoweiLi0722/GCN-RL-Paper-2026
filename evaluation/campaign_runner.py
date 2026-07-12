@@ -15,6 +15,7 @@ Run:  caffeinate -i env PYTHONPATH=. python -m evaluation.campaign_runner
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any
 
@@ -31,7 +32,11 @@ from src.rl.experiment import build_env, train_off_policy_agent
 LEARNED = ("gcn_td3", "flat_ddpg", "gcn_ddpg")
 REFERENCE_HEURISTICS = ("mdl2", "mdl1", "iso", "myo")
 SEEDS = CAMPAIGN_SEEDS
-STEPS = CAMPAIGN_TRAIN_STEPS
+# Per-seed budget. Overridable via CAMPAIGN_STEPS for robustness in environments that
+# kill long background runs (each seed only banks its CSV once it fully completes, so a
+# shorter budget survives sleep/kill cycles better). 300k is the manifest floor; 150k is
+# still ~2x the 80k at which facility_action already reached ~0.69 eligibility.
+STEPS = int(os.environ.get("CAMPAIGN_STEPS", CAMPAIGN_TRAIN_STEPS))
 EVAL_REPLICATIONS = 20
 OUT_DIR = Path("results/campaign")
 METRICS = (

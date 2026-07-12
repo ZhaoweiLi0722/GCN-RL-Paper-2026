@@ -100,9 +100,9 @@ fair baselines (include `umyo`/`fmyo`, true demand/forecast — no strawman), **
 - [x] Nominal 20-clinic campaign (disruption 0.3): heuristics win; graph ≫ flat. (`campaign-results.md`)
 - [~] **A — Disruption severity:** A1 per-regime sweep (0.05/0.3/0.6) running; A2 single-policy robustness (train on [0,0.4], test OOD 0.5/0.6).
 - [ ] **B — Patient-condition stress:** condition-aware DRL vs `umyo`/`fmyo` under hardened deterioration (real claim: beat `umyo`).
-- [ ] **C — Forecast error, redeemed (flagship):** shared forecast signal both sides consume; train on errors ≤ e, test OOD > e + non-stationary shocks; fair baseline `fmyo`.
+- [~] **C — Forecast error, redeemed (flagship):** runner + config built and smoke-validated (`evaluation/forecast_robustness.py`); trains on error U[0,0.4], tests OOD 0.6/0.8, fair `fmyo` baseline. **Launches after A/B.**
 - [ ] **D — Non-stationarity:** clustered `demand_shock`; train moderate, test severe (OOD).
-- [ ] Enabling: a per-episode randomization hook (resample disruption / forecast error each reset) for the train-on-range → test-OOD splits.
+- [x] Enabling: per-episode randomization hook (`enable_train_randomization`, resample disruption / forecast error each reset) for the train-on-range → test-OOD splits (2026-07-12).
 - [ ] Aggregate; generate figures/tables from logged outputs only.
 - See feature spec `specs/2026-07-12-robustness-experiments/`.
 - **Depends on:** Phase 7.

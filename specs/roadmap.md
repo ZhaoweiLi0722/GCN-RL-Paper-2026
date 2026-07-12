@@ -34,12 +34,12 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 - [x] Reproduce the existing benchmark at smoke budget on this machine; confirm baseline numbers log correctly (no new results claimed) — done 2026-07-10: full pipeline (15 train + 27 eval jobs) runs end-to-end, outputs git-ignored. Note: smoke-scale learned-agent costs are meaningless (untrained); GCN-DDPG's apparent parity is a heuristic warm-start artifact. Confirms plumbing only.
 - **Depends on:** nothing. **Blocks:** Phases 2, 4 (design/impl should wait on scope sign-off).
 
-### Phase 1 — Introduction & Literature Review rewrite  *(can run in parallel with code)*
-- [ ] Draft the gap and research questions from `research-context.md` (problem-first framing)
-- [ ] Rebuild the literature review as an argument with the three-layer stack, ending in design implications
-- [ ] Replace placeholder/decorative citations; fix the broken equation references noted in the draft
-- [ ] Position explicitly against the closest prior work (perishability + patient-condition + identity axes)
-- **Depends on:** Phase 0 sign-off. **Deliverable:** revised Intro + Lit Review sections (draft).
+### Phase 1 — Introduction & Literature Review rewrite  ✅ done 2026-07-11  *(merged, PR #1)*
+- [x] Problem-first Intro (perishable / identity-bound / patient-condition-driven), five RQs, honest "no algorithmic-novelty" concession
+- [x] Literature Review rebuilt as an argument (three-layer stack → design implications); positioning table vs closest prior work
+- [x] Citations replaced (all 29 keys resolve); broken `Eq. (14)` + malformed projection equation fixed in the method pass
+- [x] Also delivered here: Section 2 constrained-graph-MDP formulation, family-framed Method (§4) + backbone table, regenerated Figure 1, abstract de-DDPG'd, second author added
+- **Follow-up (not this phase):** §5–§6 (Experiments/Discussion) still hold the old single-method numbers — updated in Phase 10 from campaign outputs.
 
 ### Phase 2 — Finalize methodology plan  *(doc only)*
 - [ ] Write the problem formulation extended with patient-condition states and product/material expiry (constrained graph MDP)
@@ -79,22 +79,33 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 - **Deferred to the pilot (Phase 7):** the V4 feasibility-projection ablation and multi-seed IQM curves (V5); no LQR-graph retrofit (backbones already LQR-verified in flat form).
 - **Depends on:** Phases 4, 5 (reuses the verification harness).
 
-### Phase 7 — Pilot experiments  *(pilot gate)*
-- [ ] Small-scale multi-seed pilot across baselines + graph family on the new regime
-- [ ] **Decide the flagship backbone** and **whether to build the temporal encoder** (record the decision in `tech-stack.md`)
-- [ ] Check training stability and feasibility-projection load
-- **Depends on:** Phases 5, 6. **Blocks:** Phases 8, 9.
+### Phase 7 — Pilot experiments  ✅ done 2026-07-12  *(pilot gate)*
+- [x] Two-stage lean pilot (2-clinic screen → 20-clinic confirm) across baselines + graph family; IQM/CI reporting; projection-load + stability metrics. See `pilot-findings.md`.
+- [x] Follow-on scaled + facility_action campaign (undertraining fix): graph ≫ flat (RQ1 clean win); `gcn_ddpg` > `gcn_td3` at scale (flagship reconsidered); heuristics still win at nominal (RQ5 honest negative). See `campaign-scale-plan.md`, `campaign-results.md`.
+- [x] **Decisions:** flagship = `gcn_ddpg` (provisional; `gcn_td3` high-variance); **temporal encoder DEFERRED** (condition-awareness not decisive at nominal; the 20-clinic gap was undertraining, not condition-blindness).
+- **Depends on:** Phases 5, 6. **Blocks:** Phase 9.
 
-### Phase 8 — Temporal/condition-aware encoder  *(conditional on Phase 7)*
-- [ ] Only if the pilot supports it: implement the temporal encoder + threading through the agent/replay loop; tests
-- **Depends on:** Phase 7 decision.
+### Phase 8 — Temporal/condition-aware encoder  *(DEFERRED per Phase 7)*
+- [ ] Deferred to a revision. Pilot showed eligibility non-discriminating at nominal and the flagship gap was undertraining; priority shifted to the robustness/stress campaign (Phase 9), which must establish *when* learned control wins before a temporal encoder is justified.
+- **Depends on:** Phase 9 outcome (revisit if condition-severity regimes reward temporal memory).
 
 ## Later
 
-### Phase 9 — Full experiment campaign
-- [ ] Run the full multi-seed × scenario × Monte Carlo matrix per the staged budget; skip/resume supported
-- [ ] Aggregate results, generate figures/tables from logged outputs only
-- **Depends on:** Phases 7 (+8 if taken).
+### Phase 9 — Robustness / stress campaign  *("when does DRL win", referee-proof)*
+The nominal campaign is done and shows fairly-configured heuristics winning — a strong,
+non-crippled baseline. Phase 9 finds the regimes where graph-DRL wins, under three
+**design invariants** (see `2026-07-11-pilot-experiments/robust-experiment-design.md`):
+fair baselines (include `umyo`/`fmyo`, true demand/forecast — no strawman), **true OOD**
+(train on a range, test outside it), and IQM/CI rigor.
+- [x] Nominal 20-clinic campaign (disruption 0.3): heuristics win; graph ≫ flat. (`campaign-results.md`)
+- [~] **A — Disruption severity:** A1 per-regime sweep (0.05/0.3/0.6) running; A2 single-policy robustness (train on [0,0.4], test OOD 0.5/0.6).
+- [ ] **B — Patient-condition stress:** condition-aware DRL vs `umyo`/`fmyo` under hardened deterioration (real claim: beat `umyo`).
+- [ ] **C — Forecast error, redeemed (flagship):** shared forecast signal both sides consume; train on errors ≤ e, test OOD > e + non-stationary shocks; fair baseline `fmyo`.
+- [ ] **D — Non-stationarity:** clustered `demand_shock`; train moderate, test severe (OOD).
+- [ ] Enabling: a per-episode randomization hook (resample disruption / forecast error each reset) for the train-on-range → test-OOD splits.
+- [ ] Aggregate; generate figures/tables from logged outputs only.
+- See feature spec `specs/2026-07-12-robustness-experiments/`.
+- **Depends on:** Phase 7.
 
 ### Phase 10 — Write Experiment + Results + Discussion
 - [ ] Write from logged outputs; report uncertainty; address each reviewer objection with a result
@@ -112,6 +123,8 @@ prioritize a defensible minimal result; if it can slip, we widen scope.
 
 | Phase | Shipped |
 |-------|---------|
+| 1 | Introduction + Literature Review rewrite; Section 2 constrained-graph-MDP formulation; regenerated Figure 1 (merged to main, PR #1, 2026-07-11) |
 | 4 | Patient-condition + expiry environment layer (2026-07-11) |
 | 5 | Benchmark algorithms + verification harness; uMYO (2026-07-11) |
 | 6 | Graph method family: GNN-TD3/SAC/PPO + GNN-DDPG ablation (2026-07-11) |
+| 7 | Pilot + scaled/facility_action campaign; flagship + temporal-encoder decisions (2026-07-12) |

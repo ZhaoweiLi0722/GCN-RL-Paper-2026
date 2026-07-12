@@ -31,7 +31,11 @@ from src.rl.experiment import build_env, train_off_policy_agent
 
 ENV = "experiments/configs/20_clinic_patient_condition_stress.json"
 LEARNED = ("gcn_ddpg", "flat_ddpg")
-HEUR = ("mdl2", "iso", "mdl1", "myo")
+# Include the FAIR condition/forecast-aware baselines (umyo surges toward at-risk
+# clinics; fmyo uses the demand forecast) alongside the condition-blind ones. The
+# real, non-strawman claim is DRL vs umyo: does learning the condition response beat
+# a hand-crafted urgency rule? Beating only the condition-blind heuristics is weak.
+HEUR = ("umyo", "fmyo", "mdl2", "iso", "mdl1", "myo")
 SEEDS = (0, 1, 2)
 STEPS = int(os.environ.get("CAMPAIGN_STEPS", 150_000))
 EVAL_REPLICATIONS = 20

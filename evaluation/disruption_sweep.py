@@ -30,7 +30,9 @@ RATES = [
     ("0.6", "experiments/configs/20_clinic_patient_condition_disruption_0_6.json"),
 ]
 LEARNED = ("gcn_ddpg", "flat_ddpg")
-HEUR = ("mdl2", "iso", "mdl1", "myo")
+# umyo/fmyo are the fair (condition/forecast-aware) baselines required by invariant I1;
+# they are no-training evals, filled in as a resumable top-up after the first A run.
+HEUR = ("umyo", "fmyo", "mdl2", "iso", "mdl1", "myo")
 SEEDS = (0, 1, 2)
 STEPS = int(os.environ.get("CAMPAIGN_STEPS", 150_000))
 EVAL_REPLICATIONS = 20

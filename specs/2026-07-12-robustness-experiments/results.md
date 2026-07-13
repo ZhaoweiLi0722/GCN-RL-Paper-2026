@@ -139,3 +139,50 @@ backbone — `gcn_td3` (facility_action) — at 300k/500k**; TD3's twin-Q, delay
 target smoothing directly target the instability we just observed. If a stable backbone
 improves or holds with budget, the graph story has a path; if it also fails to beat the
 heuristics, the negative is robust and backbone-independent.
+
+## Stage 0b — stable-backbone probe (gcn_td3 500k, nominal env) ✅ 2026-07-13
+
+Verdict: **TD3 is meaningfully better-behaved than DDPG with budget, but still does not beat
+the heuristics.** The honest negative holds and is now backbone-robust; DDPG-vs-TD3 is itself
+a clean RQ2 result.
+
+Per-seed, gcn_td3 500k vs its 150k anchor and gcn_ddpg 500k:
+
+| backbone / budget | seed costs / eligs | median cost | median elig | held/collapsed |
+|-------------------|--------------------|-------------|-------------|----------------|
+| gcn_td3 150k (5 seeds) | elig .60/.81/.73/.72/.76 | 2.045e9 | 0.731 | 4/5 held |
+| **gcn_td3 500k** | s0 1.324e9/.823 · s1 1.676e9/.565 · s2 2.163e9/.748 | 1.676e9 | 0.748 | 2/3 held |
+| gcn_ddpg 500k | s0 1.313e9/.799 · s1 1.528e9/.629 · s2 2.141e9/.652 | 1.528e9 | 0.652 | 1/3 held |
+| best heuristic mdl2 | — | 9.84e8 | 0.823 | — |
+
+**Findings:**
+1. **Budget helps TD3, hurts DDPG.** gcn_td3 median cost improves 150k→500k (2.045e9 →
+   1.676e9, elig .731 → .748); gcn_ddpg *degrades* over the same budget increase. The
+   "more budget makes it worse" effect was DDPG-specific — validates DDPG-as-ablation (RQ2).
+2. **Still high-variance.** gcn_td3 500k is 2/3 held vs DDPG's 1/3, but one seed still
+   collapsed (elig .565) and eligibility std (0.108) is not lower than DDPG's. TD3 is
+   *better*, not *reliable*.
+3. **Best seed matches the heuristic on the clinical metric.** gcn_td3 seed0 reaches elig
+   **0.823 = mdl2's eligibility**, the first learned policy to do so — but at ~35% higher
+   cost (1.324e9 vs 9.84e8). The capacity is there on patient eligibility; the cost gap and
+   the seed variance are what remain.
+4. **No learned backbone beats tuned heuristics on cost** at 500k. Median gcn_td3 loses to
+   mdl2 by ~70% on cost. RQ5 negative holds and is now backbone-robust (DDPG *and* TD3).
+
+## Bottom line for the paper (after A/B/C + 2 budget probes)
+
+The evidence converges, honestly and referee-proof:
+- **RQ1 — graph ≫ flat:** robust, large (~2×) across every regime and budget. The encoder is
+  the contribution.
+- **RQ2 — backbone matters:** TD3 improves with budget where DDPG destabilizes; DDPG is
+  correctly an ablation, not the method.
+- **RQ5 — learned vs heuristics:** honest negative. Tuned look-ahead heuristics beat learned
+  control on cost across all regimes, both backbones, and up to 500k; the best stable-backbone
+  seed matches heuristic *eligibility* but not cost. Learned control here is not yet
+  cost-competitive and remains seed-unreliable.
+
+Recommendation: **stop the compute chase and write the honest paper.** Three robustness
+experiments and two budget probes all point the same way; the July target favors a defensible
+negative on a strong, non-crippled baseline plus the reusable benchmark, over an expensive and
+speculative hunt for a win (1M steps / SAC / heavy seed averaging) that the trend does not
+promise. Frame patient-eligibility parity (seed0) as the encouraging edge and future-work hook.

@@ -99,6 +99,18 @@ CAMPAIGN_STEPS=150000 python -m evaluation.forecast_robustness
 Override the training budget for any campaign / robustness runner with the
 `CAMPAIGN_STEPS` environment variable.
 
+The patient-forecast benchmark manifest is
+`experiments/configs/patient_forecast_benchmark.json`, which evaluates the
+graph-dynamic patient-forecast scenario (residual GCN-DDPG with MYO-anchored
+local-search distillation) against flat DDPG, TD3, SAC, PPO, and the MYO/ISO/MDL
+heuristics. Dry-run and smoke it, then run the 500-replication formal comparison:
+
+```bash
+python -m evaluation.run_full_benchmark --plan experiments/configs/patient_forecast_benchmark.json --phase dry-run --budget smoke
+python -m evaluation.run_full_benchmark --plan experiments/configs/patient_forecast_benchmark.json --phase all --budget smoke
+python -m evaluation.run_full_benchmark --plan experiments/configs/patient_forecast_benchmark.json --phase all --budget formal
+```
+
 ## Reproducibility notes
 
 - Keep experiment parameters in `experiments/configs/*.json`, not hard-coded.

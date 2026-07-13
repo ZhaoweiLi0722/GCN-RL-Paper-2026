@@ -71,7 +71,44 @@ that heuristics use only naively. If C is also negative, the honest paper story 
 budget" — which would make a **budget escalation** (300k–500k, the flagship tier) the next
 lever before any DRL-wins claim.
 
-## Experiment C — forecast error, redeemed (flagship) — ⏳ queued after B
+## Experiment C — forecast error, redeemed (flagship) ✅ 2026-07-12
 
-Train error ~ U[0,0.4]; test {0,0.2,0.4} in-dist, {0.6,0.8} OOD; fair `fmyo` baseline
-(forecast ON here, so `fmyo` is live). Pending.
+One `gcn_ddpg` (facility_action) policy per seed trained with `demand_forecast_error ~
+U[0,0.4]`; evaluated at {0,0.2,0.4} in-dist and {0.6,0.8} OOD. Forecast state ON, fixed
+non-stationary shocks (p=0.10, ×2.0). 5 seeds. Fair forecast-aware `fmyo` baseline live.
+
+Cost (IQM), best heuristic vs learned, per error:
+
+| error | regime | best heuristic (cost) | gcn_ddpg (cost) | gap | flat_ddpg |
+|-------|--------|----------------------|-----------------|-----|-----------|
+| 0.0 | in-dist | mdl2 1.18e9 (elig .785) | 2.057e9 (.624) | **1.74×** | 3.48e9 (.291) |
+| 0.2 | in-dist | mdl2 1.182e9 | 2.023e9 | 1.71× | 3.47e9 |
+| 0.4 | in-dist | fmyo 1.178e9 | 2.022e9 | 1.72× | 3.48e9 |
+| 0.6 | **OOD** | fmyo 1.171e9 | 2.003e9 | 1.71× | 3.47e9 |
+| 0.8 | **OOD** | fmyo 1.168e9 | 2.03e9 | 1.74× | 3.48e9 |
+
+**Findings (honest negative — the flagship claim fails):**
+1. **No win, in-dist or OOD.** `gcn_ddpg` loses to the heuristics by ~1.7× on cost and
+   ~0.15 on eligibility at *every* error level, including OOD 0.6/0.8. There is no crossover.
+2. **No graceful-degradation advantage.** Both `fmyo` (1.194e9→1.168e9) and `gcn_ddpg`
+   (2.057e9→2.03e9) are essentially flat across the error sweep. Forecast drift barely moves
+   either, so the hoped-for "DRL degrades more gracefully than the forecast-aware heuristic"
+   does not materialize. `fmyo` is marginally the best heuristic at high error, as expected.
+3. **This env is harder** (non-stationary shocks + train-time forecast-error randomization),
+   and `gcn_ddpg` is *worse* here (elig .62, cost 2.0e9) than at nominal/A/B (.71–.75,
+   1.38e9) — consistent with a 150k policy stretched thin by domain randomization on a
+   harder env. Graph ≫ flat still holds (2.0e9 vs 3.48e9).
+
+## ⚠️ Strategic read after A + B + C — three honest negatives
+
+All three robustness experiments are negative: supply disruption, patient-condition stress,
+and forecast drift each leave tuned heuristics ahead of graph-DRL, at 150k steps / 3–5 seeds.
+The gap is *widest* in C (~1.7×), where the env is hardest. `gcn_ddpg` never wins any tested
+regime. Graph ≫ flat is the one robust positive (RQ1).
+
+This is the trigger condition in `budget-escalation-plan.md`. The next step is **Stage 0**:
+a cheap ~4.4 h learning-curve probe (`evaluation/budget_curve.py`, gcn_ddpg 500k on the
+nominal env) to decide **undertraining vs a real capability gap** before committing to any
+500k re-campaign. If 500k closes the gap substantially, escalate C first; if it plateaus,
+the honest paper is "graph ≫ flat, but tuned heuristics beat learned control across all
+tested regimes and budgets" — a defensible negative on a strong, non-crippled baseline.

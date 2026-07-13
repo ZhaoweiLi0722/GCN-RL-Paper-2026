@@ -35,10 +35,12 @@ CELLS = [
     ("gcn_ddpg", 300_000),
     ("flat_ddpg", 500_000),
 ]
-# Optional single-point override for the fastest first look.
+# Optional single-point override for the fastest first look:
+#   BUDGET_ALGO=gcn_td3 BUDGET_STEPS=500000  -> that one (algo, budget), 3 seeds.
 _env_steps = os.environ.get("BUDGET_STEPS")
+_env_algo = os.environ.get("BUDGET_ALGO", "gcn_ddpg")
 if _env_steps:
-    CELLS = [("gcn_ddpg", int(_env_steps))]
+    CELLS = [(_env_algo, int(_env_steps))]
 
 SEEDS = (0, 1, 2)
 EVAL_REPLICATIONS = 20

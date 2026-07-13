@@ -96,6 +96,32 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         self.assertEqual(env.graph_observation()["capacity_edges"].shape, (0, 2))
         self.assertTrue(np.all(info["capacity_transfers"] == 0.0))
 
+    def test_geographic_coordinates_drive_default_facility_edges(self):
+        coordinates = ((0.0, 0.0), (0.0, 1.0), (20.0, 20.0), (20.0, 21.0))
+        config = CapacityPlanningConfig(
+            num_facilities=4,
+            production_lead_time=2,
+            episode_horizon=1,
+            demand_rates=(0.0, 0.0, 0.0, 0.0),
+            initial_specimens=(0.0, 0.0, 0.0, 0.0),
+            initial_reagents=(0.0, 0.0, 0.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0, 0.0, 0.0),
+            max_specimens=(10.0, 10.0, 10.0, 10.0),
+            max_reagents=(10.0, 10.0, 10.0, 10.0),
+            max_idle_bioreactors=(5.0, 5.0, 5.0, 5.0),
+            max_reagent_replenishment=(0.0, 0.0, 0.0, 0.0),
+            action_mode="facility_net",
+            clinic_coordinates=coordinates,
+            geographic_neighbor_k=1,
+        )
+        env = CapacityPlanningEnv(config, seed=12)
+        graph = env.graph_observation()
+
+        self.assertEqual(env.information_edges, ((0, 1), (2, 3)))
+        self.assertEqual(env.specimen_edges, ((0, 1), (2, 3)))
+        self.assertEqual(env.resource_edges, ((0, 1), (2, 3)))
+        self.assertEqual(graph["clinic_coordinates"].shape, (4, 2))
+
     def test_facility_net_transfer_lead_time_delays_arrivals(self):
         config = CapacityPlanningConfig(
             num_facilities=2,

@@ -222,6 +222,13 @@ python -m evaluation.run_full_benchmark \
   --budget formal
 ```
 
+The patient-forecast manifest also includes a geography-aware scenario,
+`graph_dynamic_patient_forecast_geo`, based on the 20 POC locations from the
+B&B Paper 2026 Appendix A. The location metadata is stored in
+`data/bb_20_clinic_locations.json`, and the corresponding scenario config is
+`experiments/configs/20_clinic_graph_dynamic_patient_forecast_geo.json`.
+See [docs/geographic_network.md](docs/geographic_network.md) for details.
+
 Run formal Monte Carlo evaluation for a heuristic scenario:
 
 ```bash

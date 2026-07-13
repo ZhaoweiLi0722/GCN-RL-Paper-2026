@@ -198,6 +198,13 @@ Use `--max-jobs` for controlled local execution, for example:
 python -m evaluation.run_full_benchmark --phase train --budget full --max-jobs 1
 ```
 
+The patient-forecast benchmark also includes the optional
+`graph_dynamic_patient_forecast_geo` scenario. It uses the 20 treatment-center
+locations from the B&B Paper 2026 Appendix A to construct geographic
+k-nearest-neighbor information, specimen-sharing, and reagent-sharing edges.
+See `docs/geographic_network.md` before using the geo scenario for manuscript
+claims.
+
 For formal Monte Carlo evaluation of a heuristic:
 
 ```bash

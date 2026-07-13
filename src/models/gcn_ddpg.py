@@ -10,6 +10,7 @@ import numpy as np
 
 from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
 from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
+from src.graph.geography import geographic_knn_edges, normalize_coordinates
 from src.models.gcn import GCNActor, GCNCritic
 from src.rl.action_projection import project_action
 from src.rl.networks import require_torch, resolve_torch_device, torch
@@ -59,10 +60,22 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         )
 
     default_dense_edges = complete_undirected_edges(num_facilities)
+    clinic_coordinates = normalize_coordinates(
+        env_config.get("clinic_coordinates"),
+        num_facilities,
+    )
+    geographic_edges = (
+        geographic_knn_edges(
+            clinic_coordinates,
+            k=int(env_config.get("geographic_neighbor_k", 3)),
+        )
+        if clinic_coordinates
+        else ()
+    )
     action_mode = str(env_config.get("action_mode", "edge_transfer"))
     if action_mode == "facility_net":
-        default_specimen_edges = ring_edges(num_facilities)
-        default_resource_edges = ring_edges(num_facilities)
+        default_specimen_edges = geographic_edges or ring_edges(num_facilities)
+        default_resource_edges = geographic_edges or ring_edges(num_facilities)
         default_capacity_edges = default_dense_edges
     else:
         default_specimen_edges = default_dense_edges
@@ -71,7 +84,7 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
 
     information_edges = _configured_edges(
         env_config.get("information_edges"),
-        k_nearest_ring_edges(num_facilities, k=2),
+        geographic_edges or k_nearest_ring_edges(num_facilities, k=2),
         num_facilities,
     )
     specimen_edges = _configured_edges(

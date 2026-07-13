@@ -49,6 +49,28 @@ class GraphSpecTests(unittest.TestCase):
         spec = build_graph_spec(_config_dict("no_capacity_sharing_edges"), state_dim=140)
         self.assertFalse(any(20 in edge for edge in spec.edge_index))
 
+    def test_geographic_coordinates_drive_default_graph_edges(self) -> None:
+        config = {
+            "algorithm": "gcn_ddpg",
+            "gcn_edge_types": ["information_edges"],
+            "env": {
+                "num_facilities": 4,
+                "production_lead_time": 3,
+                "action_mode": "facility_net",
+                "clinic_coordinates": [
+                    [0.0, 0.0],
+                    [0.0, 1.0],
+                    [20.0, 20.0],
+                    [20.0, 21.0],
+                ],
+                "geographic_neighbor_k": 1,
+            },
+        }
+
+        spec = build_graph_spec(config, state_dim=24)
+
+        self.assertEqual(spec.edge_index, ((0, 1), (2, 3)))
+
 
 @unittest.skipIf(torch is None, "PyTorch is not installed")
 class GraphStateConversionTests(unittest.TestCase):

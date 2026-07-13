@@ -13,6 +13,11 @@ from typing import Sequence
 import numpy as np
 
 from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
+from src.graph.geography import (
+    geographic_distance_matrix,
+    geographic_knn_edges,
+    normalize_coordinates,
+)
 
 
 @dataclass(frozen=True)
@@ -60,6 +65,8 @@ class CapacityPlanningConfig:
     include_demand_forecast_state: bool = False
     demand_forecast_horizon: int = 1
     demand_forecast_error: float | None = None
+    clinic_coordinates: Sequence[Sequence[float]] | None = None
+    geographic_neighbor_k: int = 3
     information_edges: Sequence[Edge] | None = None
     specimen_edges: Sequence[Edge] | None = None
     capacity_edges: Sequence[Edge] | None = None
@@ -107,17 +114,31 @@ class CapacityPlanningEnv:
         self.supplier_disruption_rate = _as_vector(
             self.config.supplier_disruption_rate, n, "supplier_disruption_rate"
         )
+        self.clinic_coordinates = normalize_coordinates(self.config.clinic_coordinates, n)
+        self.clinic_distance_matrix = (
+            np.asarray(geographic_distance_matrix(self.clinic_coordinates), dtype=float)
+            if self.clinic_coordinates
+            else None
+        )
 
         default_edges = complete_undirected_edges(n)
+        geographic_edges = (
+            geographic_knn_edges(
+                self.clinic_coordinates,
+                k=int(self.config.geographic_neighbor_k),
+            )
+            if self.clinic_coordinates
+            else ()
+        )
         if self.config.action_mode == "facility_net":
-            default_specimen_edges = ring_edges(n)
-            default_resource_edges = ring_edges(n)
+            default_specimen_edges = geographic_edges or ring_edges(n)
+            default_resource_edges = geographic_edges or ring_edges(n)
             default_capacity_edges = complete_undirected_edges(n)
         else:
             default_specimen_edges = default_edges
             default_resource_edges = default_edges
             default_capacity_edges = default_edges
-        default_information_edges = k_nearest_ring_edges(n, k=2)
+        default_information_edges = geographic_edges or k_nearest_ring_edges(n, k=2)
         self.specimen_edges = _normalize_edges(self.config.specimen_edges, default_specimen_edges, n)
         self.capacity_edges = _normalize_edges(self.config.capacity_edges, default_capacity_edges, n)
         self.resource_edges = _normalize_edges(self.config.resource_edges, default_resource_edges, n)
@@ -247,13 +268,16 @@ class CapacityPlanningEnv:
             hub_features[0, 4] = float(self.bioreactors.sum())
             hub_features[0, -1] = 1.0
             node_features = np.vstack((node_features, hub_features))
-        return {
+        graph = {
             "node_features": node_features,
             "information_edges": _edge_array(self.information_edges),
             "specimen_edges": _edge_array(self.specimen_edges),
             "capacity_edges": _edge_array(capacity_graph_edges),
             "resource_edges": _edge_array(self.resource_edges),
         }
+        if self.clinic_coordinates:
+            graph["clinic_coordinates"] = np.asarray(self.clinic_coordinates, dtype=np.float32)
+        return graph
 
     def noop_action(self) -> np.ndarray:
         """Return an action with no replenishment and no transfers."""
@@ -532,6 +556,10 @@ class CapacityPlanningEnv:
             raise ValueError("demand_forecast_horizon must be positive")
         if self.config.demand_forecast_error is not None and self.config.demand_forecast_error < 0.0:
             raise ValueError("demand_forecast_error must be nonnegative or null")
+        if self.config.geographic_neighbor_k < 1:
+            raise ValueError("geographic_neighbor_k must be positive")
+        if self.config.clinic_coordinates is not None:
+            normalize_coordinates(self.config.clinic_coordinates, self.config.num_facilities)
         if self.config.action_mode not in ("edge_transfer", "facility_net"):
             raise ValueError("action_mode must be 'edge_transfer' or 'facility_net'")
 
@@ -574,6 +602,8 @@ class CapacityPlanningEnv:
         if cluster_size == n:
             return np.arange(n)
         start = int(self.rng.integers(0, n))
+        if self.clinic_distance_matrix is not None:
+            return np.argsort(self.clinic_distance_matrix[start], kind="stable")[:cluster_size]
         return (start + np.arange(cluster_size)) % n
 
     def _effective_demand_rates(self) -> np.ndarray:

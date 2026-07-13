@@ -2,9 +2,9 @@
 
 This directory is the **plan of record** for our paper on graph-aware deep
 reinforcement learning for capacity planning in perishable, patient-specific
-cell-therapy manufacturing networks. It follows the spec-driven development
-(SDD) workflow already set up in this repo (`.claude/skills/feature-spec`,
-`.claude/skills/changelog`).
+cell-therapy manufacturing networks. It follows a spec-driven development (SDD)
+workflow: each roadmap phase is planned as a dated feature spec before
+implementation.
 
 ## Why this structure
 

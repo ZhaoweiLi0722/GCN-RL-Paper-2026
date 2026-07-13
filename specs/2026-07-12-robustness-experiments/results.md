@@ -106,9 +106,36 @@ and forecast drift each leave tuned heuristics ahead of graph-DRL, at 150k steps
 The gap is *widest* in C (~1.7×), where the env is hardest. `gcn_ddpg` never wins any tested
 regime. Graph ≫ flat is the one robust positive (RQ1).
 
-This is the trigger condition in `budget-escalation-plan.md`. The next step is **Stage 0**:
-a cheap ~4.4 h learning-curve probe (`evaluation/budget_curve.py`, gcn_ddpg 500k on the
-nominal env) to decide **undertraining vs a real capability gap** before committing to any
-500k re-campaign. If 500k closes the gap substantially, escalate C first; if it plateaus,
-the honest paper is "graph ≫ flat, but tuned heuristics beat learned control across all
-tested regimes and budgets" — a defensible negative on a strong, non-crippled baseline.
+This is the trigger condition in `budget-escalation-plan.md`. Stage 0 (below) ran the
+learning-curve probe to decide undertraining vs a real capability gap.
+
+## Stage 0 — budget probe (gcn_ddpg 500k, nominal env) ✅ 2026-07-13
+
+Verdict: **DDPG instability, not a capability ceiling.** More budget did not uniformly
+help — it exploded the seed variance.
+
+| gcn_ddpg | cost (IQM) | elig | gap vs best heuristic (mdl2 9.84e8) |
+|----------|-----------|------|-------------------------------------|
+| 150k | 1.239e9 | 0.773 | 26% |
+| 500k | 1.661e9 | 0.693 | 69% |
+
+Per-seed at 500k tells the real story:
+
+| seed | 500k cost | 500k elig | 150k (all seeds) |
+|------|-----------|-----------|------------------|
+| 0 | **1.313e9** | **0.799** | tight: cost 1.18–1.31e9, |
+| 1 | 1.528e9 | 0.629 | elig 0.74–0.83 across |
+| 2 | 2.141e9 | 0.652 | all 5 seeds |
+
+At 150k every seed is consistent. At 500k seed0 held at its **best-ever** (elig 0.799,
+heuristic-adjacent) while seeds 1–2 collapsed. This is the textbook DDPG failure mode
+(Q-overestimation → policy divergence under extended training), and it is exactly why the
+manuscript frames **DDPG as an ablation and advocates the stable backbones (TD3/SAC/PPO)**.
+
+**Implication.** Concluding "DRL cannot win, write the negative" from this would be a
+methodological error, because the probe used the *unstable ablation*, not the proposed
+method. The capacity is visibly present (seed0). The decisive next probe is a **stable
+backbone — `gcn_td3` (facility_action) — at 300k/500k**; TD3's twin-Q, delayed updates, and
+target smoothing directly target the instability we just observed. If a stable backbone
+improves or holds with budget, the graph story has a path; if it also fails to beat the
+heuristics, the negative is robust and backbone-independent.

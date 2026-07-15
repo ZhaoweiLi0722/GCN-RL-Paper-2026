@@ -83,6 +83,10 @@
     {
       "name": "graph_dynamic_patient_forecast",
       "env_config": "experiments/configs/20_clinic_graph_dynamic_patient_forecast.json"
+    },
+    {
+      "name": "graph_dynamic_patient_forecast_geo",
+      "env_config": "experiments/configs/20_clinic_graph_dynamic_patient_forecast_geo.json"
     }
   ],
   "budgets": {

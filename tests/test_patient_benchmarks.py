@@ -6,12 +6,16 @@ import unittest
 
 import numpy as np
 
-from src.baselines.heuristics import get_heuristic_class
+from src.baselines.heuristics import (
+    facility_net_action_from_state,
+    get_heuristic_class,
+    heuristic_settings_for_policy,
+)
 from src.rl.config import load_config
 from src.rl.experiment import build_env
 
 DEV_CONFIG = "experiments/configs/2_clinic_patient_condition.json"
-HEURISTICS = ("myo", "iso", "mdl1", "mdl2", "fmyo")
+HEURISTICS = ("myo", "iso", "mdl1", "mdl2", "fmyo", "pmyo")
 
 
 def _env(seed: int = 0):
@@ -36,6 +40,21 @@ class ExistingHeuristicSanityTests(unittest.TestCase):
         for name in HEURISTICS:
             agent = get_heuristic_class(name)(env.observation_size, env.action_size, {})
             action = agent.select_action(state, explore=False, env=env)
+            self.assertEqual(action.shape, (env.action_size,))
+            self.assertTrue(np.all(action >= -1.0) and np.all(action <= 1.0))
+
+    def test_facility_net_action_from_state_accepts_patient_summary(self) -> None:
+        env_config = load_config(DEV_CONFIG)
+        env = build_env({"env": env_config}, seed=0)
+        state = env.reset(seed=0)
+
+        for policy_name in ("mdl2", "pmyo"):
+            action = facility_net_action_from_state(
+                state,
+                env_config,
+                settings=heuristic_settings_for_policy(policy_name),
+            )
+
             self.assertEqual(action.shape, (env.action_size,))
             self.assertTrue(np.all(action >= -1.0) and np.all(action <= 1.0))
 

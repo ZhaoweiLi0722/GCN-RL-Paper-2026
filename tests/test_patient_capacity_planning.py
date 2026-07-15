@@ -67,6 +67,7 @@ class PatientEnvBasicsTests(unittest.TestCase):
         _, reward, _, info = env.step(env.noop_action())
         self.assertIsInstance(reward, float)
         self.assertEqual(info["waiting_patients"].shape, (20,))
+        self.assertEqual(info["risk_type_counts"].shape[0], 20)
 
     def test_rejects_non_facility_net_action_mode(self) -> None:
         with self.assertRaises(ValueError):
@@ -126,6 +127,23 @@ class PatientEnvDynamicsTests(unittest.TestCase):
             _, ra, _, _ = env_a.step(act_a)
             _, rb, _, _ = env_b.step(act_b)
             self.assertEqual(ra, rb)
+
+    def test_patient_risk_counts_match_waiting_queue(self) -> None:
+        from src.env.patient_condition import PatientConditionConfig
+
+        env = _env(
+            patient=PatientConditionConfig(
+                risk_type_probabilities=(0.0, 1.0),
+                risk_decay_multipliers=(1.0, 1.5),
+            )
+        )
+        env.reset(seed=4)
+        _obs, _reward, _done, info = env.step(env.noop_action())
+
+        risk_counts = info["risk_type_counts"]
+        self.assertEqual(risk_counts.shape, (2, 2))
+        np.testing.assert_allclose(risk_counts[:, 0], np.zeros(2))
+        np.testing.assert_allclose(risk_counts.sum(axis=1), info["waiting_patients"])
 
 
 if __name__ == "__main__":

@@ -43,6 +43,7 @@ figures/smoke_*.png
 figures/full_benchmark/
 figures/graph_stress_benchmark/
 figures/patient_forecast_benchmark/
+figures/residual_policy_benchmark/
 
 # Model checkpoints
 *.pt

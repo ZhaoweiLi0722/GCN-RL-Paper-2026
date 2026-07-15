@@ -10,8 +10,17 @@ def available_algorithms() -> tuple[str, ...]:
 
     learned = (
         "flat_ddpg",
+        "flat_residual_iso",
+        "flat_residual_mdl2",
+        "flat_residual_myo",
+        "flat_residual_pmyo",
         "gcn_ddpg",
+        "gcn_pure_ddpg",
         "gcn_ppo",
+        "gcn_residual_iso",
+        "gcn_residual_mdl2",
+        "gcn_residual_myo",
+        "gcn_residual_pmyo",
         "gcn_sac",
         "gcn_td3",
         "ppo",
@@ -22,11 +31,27 @@ def available_algorithms() -> tuple[str, ...]:
 
 
 def get_agent_class(algorithm: str) -> Any:
-    if algorithm == "flat_ddpg":
+    if algorithm in {
+        "flat_ddpg",
+        "flat_residual_iso",
+        "flat_residual_mdl2",
+        "flat_residual_myo",
+        "flat_residual_pmyo",
+    }:
         from src.baselines.flat_ddpg import FlatDDPGAgent
 
         return FlatDDPGAgent
     if algorithm == "gcn_ddpg":
+        from src.models.gcn_ddpg import GCNDDPGAgent
+
+        return GCNDDPGAgent
+    if algorithm in {
+        "gcn_pure_ddpg",
+        "gcn_residual_iso",
+        "gcn_residual_mdl2",
+        "gcn_residual_myo",
+        "gcn_residual_pmyo",
+    }:
         from src.models.gcn_ddpg import GCNDDPGAgent
 
         return GCNDDPGAgent

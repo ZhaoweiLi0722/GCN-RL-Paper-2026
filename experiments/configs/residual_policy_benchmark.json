@@ -1,0 +1,535 @@
+{
+  "name": "20_clinic_residual_policy_benchmark",
+  "description": "First-stage benchmark for graph-aware residual policies. Learned residual arms compose a strong heuristic base action with a bounded GCN correction instead of relearning the whole capacity policy from scratch.",
+  "algorithms": [
+    "flat_residual_mdl2",
+    "flat_residual_iso",
+    "flat_residual_myo",
+    "flat_residual_pmyo",
+    "gcn_residual_mdl2",
+    "gcn_residual_iso",
+    "gcn_residual_myo",
+    "gcn_residual_pmyo",
+    "gcn_pure_ddpg",
+    "gcn_td3",
+    "mdl2",
+    "iso",
+    "myo",
+    "umyo",
+    "pmyo"
+  ],
+  "primary_algorithms": [
+    "flat_residual_mdl2",
+    "flat_residual_iso",
+    "flat_residual_myo",
+    "flat_residual_pmyo",
+    "gcn_residual_mdl2",
+    "gcn_residual_iso",
+    "gcn_residual_myo",
+    "gcn_residual_pmyo",
+    "gcn_pure_ddpg",
+    "gcn_td3",
+    "mdl2",
+    "iso",
+    "myo",
+    "umyo",
+    "pmyo"
+  ],
+  "learned_config_paths": {
+    "flat_residual_mdl2": "configs/flat_residual_20_clinic.yaml",
+    "flat_residual_iso": "configs/flat_residual_20_clinic.yaml",
+    "flat_residual_myo": "configs/flat_residual_20_clinic.yaml",
+    "flat_residual_pmyo": "configs/flat_residual_20_clinic.yaml",
+    "gcn_residual_mdl2": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_residual_iso": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_residual_myo": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_residual_pmyo": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_pure_ddpg": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_td3": "configs/gcn_td3_20_clinic.yaml"
+  },
+  "algorithm_settings": {
+    "flat_residual_mdl2": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "mdl2",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.02,
+            "capacity_transfer": 0.02,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "mdl2"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "mdl2",
+        "seed": 93000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "flat_residual_iso": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "iso",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.03,
+            "capacity_transfer": 0.03,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "iso"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "iso",
+        "seed": 94000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "flat_residual_myo": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "myo",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.02,
+            "capacity_transfer": 0.02,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "myo"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "myo",
+        "seed": 95000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "flat_residual_pmyo": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "pmyo",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.02,
+            "capacity_transfer": 0.02,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "pmyo"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "pmyo",
+        "seed": 96000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "gcn_residual_mdl2": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "mdl2",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.02,
+            "capacity_transfer": 0.02,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "mdl2"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "mdl2",
+        "seed": 90000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "gcn_residual_iso": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "iso",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.03,
+            "capacity_transfer": 0.03,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "iso"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "iso",
+        "seed": 91000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "gcn_residual_myo": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "myo",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.02,
+            "capacity_transfer": 0.02,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "myo"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "myo",
+        "seed": 92000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "gcn_residual_pmyo": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "pmyo",
+          "scale": 0.05,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 0.02,
+            "capacity_transfer": 0.02,
+            "replenishment": 0.05
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer",
+            "replenishment"
+          ],
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "pmyo"
+        }
+      },
+      "local_search": {
+        "enabled": true,
+        "baseline_policy": "pmyo",
+        "seed": 97000,
+        "rollouts": 20,
+        "lookahead": 6,
+        "epsilons": [0.01, 0.02, 0.05],
+        "epochs": 12,
+        "min_improvement": 0.0
+      }
+    },
+    "gcn_pure_ddpg": {
+      "config_overrides": {
+        "residual_action": {
+          "enabled": false
+        },
+        "imitation_pretrain": {
+          "enabled": false,
+          "regularization_weight": 0.0
+        },
+        "elite_imitation": {
+          "enabled": false
+        },
+        "exploration_noise": {
+          "theta": 0.15,
+          "sigma": 0.08
+        }
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "name": "graph_dynamic_transfer_delay",
+      "env_config": "experiments/configs/20_clinic_graph_dynamic_transfer_delay.json"
+    },
+    {
+      "name": "graph_dynamic_patient_forecast",
+      "env_config": "experiments/configs/20_clinic_graph_dynamic_patient_forecast.json"
+    },
+    {
+      "name": "graph_dynamic_patient_forecast_geo",
+      "env_config": "experiments/configs/20_clinic_graph_dynamic_patient_forecast_geo.json"
+    },
+    {
+      "name": "patient_condition_stress",
+      "env_config": "experiments/configs/20_clinic_patient_condition_stress.json"
+    }
+  ],
+  "budgets": {
+    "smoke": {
+      "seeds": [0],
+      "num_episodes": 1,
+      "max_steps_per_episode": 3,
+      "batch_size": 2,
+      "checkpoint_interval": 1,
+      "progress_interval": 1,
+      "evaluation_replications": 1,
+      "evaluation_seed": 10000,
+      "local_search": {
+        "flat_residual_mdl2": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        },
+        "flat_residual_iso": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        },
+        "flat_residual_myo": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        },
+        "flat_residual_pmyo": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_mdl2": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_iso": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_myo": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_pmyo": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epsilons": [0.02],
+          "epochs": 1,
+          "min_improvement": -1.0
+        }
+      }
+    },
+    "mini_pilot": {
+      "seeds": [0, 1],
+      "num_episodes": 10,
+      "max_steps_per_episode": 12,
+      "batch_size": 16,
+      "checkpoint_interval": 10,
+      "progress_interval": 5,
+      "evaluation_replications": 5,
+      "evaluation_seed": 45000,
+      "local_search": {
+        "flat_residual_mdl2": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        },
+        "flat_residual_iso": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        },
+        "flat_residual_myo": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        },
+        "flat_residual_pmyo": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_mdl2": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_iso": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_myo": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_pmyo": {
+          "rollouts": 2,
+          "lookahead": 2,
+          "epsilons": [0.02, 0.05],
+          "epochs": 2,
+          "min_improvement": -1.0
+        }
+      }
+    },
+    "pilot": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 300,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 100,
+      "progress_interval": 25,
+      "evaluation_replications": 100,
+      "evaluation_seed": 50000
+    },
+    "full": {
+      "seeds": [0, 1, 2, 3, 4],
+      "num_episodes": 1000,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 100,
+      "progress_interval": 50,
+      "evaluation_replications": 500,
+      "evaluation_seed": 10000
+    }
+  },
+  "output_root": "results/residual_policy_benchmark",
+  "figure_root": "figures/residual_policy_benchmark",
+  "plot_metrics": [
+    "total_cost_mean",
+    "service_level_mean",
+    "average_waiting_time_mean",
+    "transshipment_cost_mean",
+    "eligibility_rate_mean_mean"
+  ]
+}

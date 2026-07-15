@@ -4,7 +4,13 @@ from __future__ import annotations
 
 import unittest
 
-from src.baselines.heuristics import get_heuristic_class
+import numpy as np
+
+from src.baselines.heuristics import (
+    facility_net_action_from_state,
+    get_heuristic_class,
+    heuristic_settings_for_policy,
+)
 from src.env.capacity_planning import CapacityPlanningEnv
 from src.env.patient_capacity_planning import PatientConditionCapacityEnv
 from src.rl.config import load_config
@@ -71,6 +77,50 @@ class SmokeRunTests(unittest.TestCase):
             if done:
                 break
         self.assertEqual(state.shape, (env.observation_size,))
+
+    def test_flat_residual_ddpg_runs_on_patient_observation(self) -> None:
+        try:
+            from src.rl.networks import torch
+        except Exception:  # pragma: no cover
+            self.skipTest("torch not available")
+        if torch is None:  # pragma: no cover
+            self.skipTest("torch not available")
+        from src.baselines.flat_ddpg import FlatDDPGAgent
+
+        config = {
+            "seed": 0,
+            "hidden_sizes": [32, 32],
+            "batch_size": 2,
+            "normalize_observations": True,
+            "residual_action": {
+                "enabled": True,
+                "base_policy": "mdl2",
+                "zero_init_actor": True,
+                "scale": 0.05,
+                "group_scales": {
+                    "specimen_transfer": 0.0,
+                    "reagent_transfer": 0.02,
+                    "capacity_transfer": 0.02,
+                    "replenishment": 0.05,
+                },
+            },
+            "env": load_config(DEV_CONFIG),
+        }
+        env = build_env(config, seed=0)
+        agent = FlatDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=0)
+
+        action = agent.select_action(state, explore=False, env=env)
+        base_action = facility_net_action_from_state(
+            state,
+            config["env"],
+            settings=heuristic_settings_for_policy("mdl2"),
+        )
+
+        self.assertEqual(action.shape, (env.action_size,))
+        self.assertTrue((action >= -1.0).all())
+        self.assertTrue((action <= 1.0).all())
+        np.testing.assert_allclose(action, base_action, atol=1e-6)
 
 
 if __name__ == "__main__":

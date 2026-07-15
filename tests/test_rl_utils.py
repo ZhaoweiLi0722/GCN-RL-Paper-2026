@@ -5,6 +5,7 @@ import numpy as np
 from evaluation.aggregate_results import aggregate_rows
 from evaluation.run_smoke_comparison import _smoke_config
 from src.rl.action_projection import project_action
+from src.rl.agents import available_algorithms, get_agent_class
 from src.rl.config import load_config
 from src.rl.experiment import build_env
 from src.rl.networks import default_torch_device, resolve_torch_device
@@ -41,6 +42,55 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(config["algorithm"], "td3")
         self.assertEqual(config["env"]["num_facilities"], 20)
         self.assertEqual(config["env"]["action_mode"], "facility_net")
+
+    def test_gcn_td3_20_clinic_config_loads(self):
+        config = load_config("configs/gcn_td3_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "gcn_td3")
+        self.assertEqual(config["env"]["graph_ablation"], "full_graph")
+        self.assertEqual(config["env"]["num_facilities"], 20)
+        self.assertEqual(config["actor_readout_mode"], "facility_action")
+
+    def test_gcn_residual_config_loads(self):
+        config = load_config("configs/gcn_residual_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "gcn_residual_mdl2")
+        self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
+        self.assertTrue(config["residual_action"]["zero_init_actor"])
+        self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.0)
+        self.assertGreater(config["residual_action"]["group_scales"]["replenishment"], 0.0)
+        self.assertIn("replenishment", config["residual_action"]["center_groups"])
+
+    def test_flat_residual_config_loads(self):
+        config = load_config("configs/flat_residual_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "flat_residual_mdl2")
+        self.assertEqual(config["env"]["graph_ablation"], "flat_state_no_graph")
+        self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
+        self.assertTrue(config["residual_action"]["zero_init_actor"])
+        self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.0)
+        self.assertGreater(config["imitation_pretrain"]["regularization_weight"], 0.0)
+
+    def test_residual_algorithm_aliases_use_gcn_ddpg_agent(self):
+        algorithms = available_algorithms()
+
+        self.assertIn("gcn_residual_mdl2", algorithms)
+        self.assertIn("gcn_pure_ddpg", algorithms)
+        self.assertIn("gcn_residual_pmyo", algorithms)
+        self.assertIs(get_agent_class("gcn_residual_mdl2"), get_agent_class("gcn_ddpg"))
+        self.assertIs(get_agent_class("gcn_pure_ddpg"), get_agent_class("gcn_ddpg"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo"), get_agent_class("gcn_ddpg"))
+
+    def test_flat_residual_algorithm_aliases_use_flat_ddpg_agent(self):
+        algorithms = available_algorithms()
+
+        self.assertIn("flat_residual_mdl2", algorithms)
+        self.assertIn("flat_residual_iso", algorithms)
+        self.assertIn("flat_residual_myo", algorithms)
+        self.assertIn("flat_residual_pmyo", algorithms)
+        self.assertIs(get_agent_class("flat_residual_mdl2"), get_agent_class("flat_ddpg"))
+        self.assertIs(get_agent_class("flat_residual_iso"), get_agent_class("flat_ddpg"))
+        self.assertIs(get_agent_class("flat_residual_pmyo"), get_agent_class("flat_ddpg"))
 
     def test_sac_20_clinic_config_loads(self):
         config = load_config("configs/sac_20_clinic.yaml")
@@ -96,6 +146,26 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(env.graph_observation()["node_features"].shape, (21, 11))
         self.assertEqual(scaler.scales.shape, (220,))
 
+    def test_geographic_patient_forecast_config_builds_env(self):
+        env_config = load_config(
+            "experiments/configs/20_clinic_graph_dynamic_patient_forecast_geo.json"
+        )
+        config = load_config("configs/gcn_ddpg_20_clinic.yaml")
+        config["env"] = env_config
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+        graph = env.graph_observation()
+
+        self.assertEqual(env.scenario_name, "graph_dynamic_patient_forecast_geo")
+        self.assertEqual(len(env.clinic_coordinates), 20)
+        self.assertEqual(env.config.transfer_lead_time, 3)
+        self.assertEqual(env.transfer_delay_thresholds, (500.0, 1500.0))
+        self.assertGreater(env.config.geographic_transfer_cost_scale, 0.0)
+        self.assertGreater(len(env.information_edges), 20)
+        self.assertEqual(graph["clinic_coordinates"].shape, (20, 2))
+        self.assertEqual(graph["clinic_distance_matrix"].shape, (20, 20))
+        self.assertEqual(scaler.scales.shape, (220,))
+
     def test_gcn_config_enables_imitation_pretrain(self):
         config = load_config("configs/gcn_ddpg_20_clinic.yaml")
         plan = load_config("experiments/configs/graph_stress_benchmark.json")
@@ -132,6 +202,19 @@ class RLUtilsTest(unittest.TestCase):
         self.assertTrue(scaler.enabled)
         self.assertEqual(normalized.shape, state.shape)
         self.assertLessEqual(float(np.max(np.abs(normalized))), 10.0)
+
+    def test_fixed_observation_scaler_handles_patient_summary(self):
+        config = load_config("configs/flat_residual_20_clinic.yaml")
+        config["env"] = load_config("experiments/configs/20_clinic_patient_condition_stress.json")
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+        state = env.reset(seed=0)
+
+        normalized = scaler.normalize_np(state)
+
+        self.assertTrue(scaler.enabled)
+        self.assertEqual(scaler.scales.shape, (env.observation_size,))
+        self.assertEqual(normalized.shape, state.shape)
 
     def test_aggregate_rows_computes_mean(self):
         rows = [

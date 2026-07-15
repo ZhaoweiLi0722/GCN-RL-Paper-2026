@@ -1,0 +1,94 @@
+{
+  "scenario_name": "graph_dynamic_patient_forecast_geo",
+  "supplier_disruption_rate": [
+    0.45, 0.45, 0.45, 0.45, 0.45,
+    0.12, 0.12, 0.12, 0.12, 0.12,
+    0.35, 0.35, 0.35, 0.35, 0.35,
+    0.12, 0.12, 0.12, 0.12, 0.12
+  ],
+  "demand_forecast_error": 0.0,
+  "include_demand_forecast_state": true,
+  "demand_forecast_horizon": 2,
+  "graph_ablation": "full_graph",
+  "num_facilities": 20,
+  "production_lead_time": 3,
+  "episode_horizon": 52,
+  "demand_rates": [
+    7.5, 7.5, 7.5, 7.5, 7.5,
+    3.2, 3.2, 3.2, 3.2, 3.2,
+    6.0, 6.0, 6.0, 6.0, 6.0,
+    3.5, 3.5, 3.5, 3.5, 3.5
+  ],
+  "initial_specimens": 0,
+  "initial_reagents": [
+    60, 60, 60, 60, 60,
+    170, 170, 170, 170, 170,
+    80, 80, 80, 80, 80,
+    150, 150, 150, 150, 150
+  ],
+  "initial_idle_bioreactors": [
+    5, 5, 5, 5, 5,
+    16, 16, 16, 16, 16,
+    7, 7, 7, 7, 7,
+    14, 14, 14, 14, 14
+  ],
+  "max_specimens": 160,
+  "max_reagents": [
+    130, 130, 130, 130, 130,
+    240, 240, 240, 240, 240,
+    150, 150, 150, 150, 150,
+    220, 220, 220, 220, 220
+  ],
+  "max_idle_bioreactors": [
+    9, 9, 9, 9, 9,
+    24, 24, 24, 24, 24,
+    11, 11, 11, 11, 11,
+    22, 22, 22, 22, 22
+  ],
+  "max_reagent_replenishment": [
+    40, 40, 40, 40, 40,
+    115, 115, 115, 115, 115,
+    50, 50, 50, 50, 50,
+    105, 105, 105, 105, 105
+  ],
+  "max_specimen_transfer": 120,
+  "max_bioreactor_transfer": 18,
+  "max_reagent_transfer": 110,
+  "action_mode": "facility_net",
+  "include_supplier_state": true,
+  "include_central_capacity_hub": true,
+  "transfer_lead_time": 3,
+  "include_transfer_pipeline_state": true,
+  "transfer_lead_time_distance_thresholds": [500.0, 1500.0],
+  "geographic_transfer_cost_scale": 0.25,
+  "regional_supplier_disruption_probability": 0.08,
+  "regional_supplier_disruption_duration": 2,
+  "regional_supplier_disruption_cluster_size": 4,
+  "demand_shock_probability": 0.12,
+  "demand_shock_multiplier": 2.4,
+  "demand_shock_duration": 4,
+  "demand_shock_cluster_size": 4,
+  "geographic_neighbor_k": 3,
+  "clinic_coordinates": [
+    [47.6263, -122.3308],
+    [45.4993, -122.6867],
+    [37.4336, -122.1750],
+    [34.0485, -118.2577],
+    [32.7530, -117.1650],
+    [33.6584, -111.9565],
+    [39.7477, -104.9670],
+    [32.7899, -96.7794],
+    [44.0227, -92.4669],
+    [38.6368, -90.2630],
+    [38.2986, -85.5768],
+    [42.4461, -87.8329],
+    [42.3632, -71.0689],
+    [40.7644, -73.9566],
+    [40.2645, -76.6740],
+    [38.9121, -77.0753],
+    [35.2121, -80.8392],
+    [33.7926, -84.3219],
+    [30.2641, -81.4393],
+    [25.6863, -80.3407]
+  ]
+}

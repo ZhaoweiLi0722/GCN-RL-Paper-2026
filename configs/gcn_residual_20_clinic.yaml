@@ -1,0 +1,130 @@
+{
+  "algorithm": "gcn_residual_mdl2",
+  "seed": 0,
+  "num_episodes": 3,
+  "max_steps_per_episode": 52,
+  "evaluation_replications": 500,
+  "batch_size": 64,
+  "normalize_observations": true,
+  "observation_clip": 10.0,
+  "reward_scale": 1e-9,
+  "gcn_hidden_sizes": [64, 32],
+  "actor_hidden_sizes": [256, 128, 64],
+  "critic_hidden_sizes": [256, 128, 64],
+  "include_global_context": true,
+  "actor_readout_mode": "facility_action",
+  "actor_lr": 0.00005,
+  "critic_lr": 0.001,
+  "gamma": 0.99,
+  "tau": 0.005,
+  "replay_buffer_size": 1000000,
+  "exploration_noise": {
+    "theta": 0.15,
+    "sigma": 0.06
+  },
+  "residual_action": {
+    "enabled": true,
+    "base_policy": "mdl2",
+    "zero_init_actor": true,
+    "scale": 0.05,
+    "group_scales": {
+      "specimen_transfer": 0.0,
+      "reagent_transfer": 0.02,
+      "capacity_transfer": 0.02,
+      "replenishment": 0.05
+    },
+    "center_groups": [
+      "reagent_transfer",
+      "capacity_transfer",
+      "replenishment"
+    ],
+    "l2_weight": 0.02
+  },
+  "imitation_pretrain": {
+    "enabled": true,
+    "policy": "mdl2",
+    "episodes": 20,
+    "epochs": 8,
+    "batch_size": 256,
+    "seed": 90000,
+    "populate_replay_buffer": true,
+    "regularization_weight": 1.0,
+    "regularization_batch_size": 64
+  },
+  "elite_imitation": {
+    "enabled": true,
+    "warmup_episodes": 10,
+    "min_improvement": 0.0,
+    "max_episodes": 5,
+    "epochs": 4,
+    "batch_size": 64
+  },
+  "checkpoint_interval": 3,
+  "checkpoint_dir": "checkpoints/gcn_residual_20_clinic",
+  "result_csv_path": "results/gcn_residual_20_clinic_training.csv",
+  "config_snapshot_path": "results/gcn_residual_20_clinic_config_snapshot.json",
+  "env": {
+    "scenario_name": "graph_dynamic_transfer_delay",
+    "supplier_disruption_rate": [
+      0.45, 0.45, 0.45, 0.45, 0.45,
+      0.12, 0.12, 0.12, 0.12, 0.12,
+      0.35, 0.35, 0.35, 0.35, 0.35,
+      0.12, 0.12, 0.12, 0.12, 0.12
+    ],
+    "demand_forecast_error": null,
+    "graph_ablation": "full_graph",
+    "num_facilities": 20,
+    "production_lead_time": 3,
+    "episode_horizon": 52,
+    "demand_rates": [
+      7.5, 7.5, 7.5, 7.5, 7.5,
+      3.2, 3.2, 3.2, 3.2, 3.2,
+      6.0, 6.0, 6.0, 6.0, 6.0,
+      3.5, 3.5, 3.5, 3.5, 3.5
+    ],
+    "initial_specimens": 0,
+    "initial_reagents": [
+      60, 60, 60, 60, 60,
+      170, 170, 170, 170, 170,
+      80, 80, 80, 80, 80,
+      150, 150, 150, 150, 150
+    ],
+    "initial_idle_bioreactors": [
+      5, 5, 5, 5, 5,
+      16, 16, 16, 16, 16,
+      7, 7, 7, 7, 7,
+      14, 14, 14, 14, 14
+    ],
+    "max_specimens": 160,
+    "max_reagents": [
+      130, 130, 130, 130, 130,
+      240, 240, 240, 240, 240,
+      150, 150, 150, 150, 150,
+      220, 220, 220, 220, 220
+    ],
+    "max_idle_bioreactors": [
+      9, 9, 9, 9, 9,
+      24, 24, 24, 24, 24,
+      11, 11, 11, 11, 11,
+      22, 22, 22, 22, 22
+    ],
+    "max_reagent_replenishment": [
+      40, 40, 40, 40, 40,
+      115, 115, 115, 115, 115,
+      50, 50, 50, 50, 50,
+      105, 105, 105, 105, 105
+    ],
+    "max_specimen_transfer": 120,
+    "max_bioreactor_transfer": 18,
+    "max_reagent_transfer": 110,
+    "action_mode": "facility_net",
+    "include_supplier_state": true,
+    "include_central_capacity_hub": true,
+    "transfer_lead_time": 1,
+    "include_transfer_pipeline_state": true,
+    "demand_shock_probability": 0.12,
+    "demand_shock_multiplier": 2.4,
+    "demand_shock_duration": 4,
+    "demand_shock_cluster_size": 4
+  }
+}

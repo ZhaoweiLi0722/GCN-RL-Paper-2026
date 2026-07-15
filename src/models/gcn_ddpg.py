@@ -120,6 +120,8 @@ class GCNDDPGAgent:
             critic_hidden_sizes,
             include_global_context=include_global_context,
         ).to(self.device)
+        if self.residual_action_enabled and bool(residual_config.get("zero_init_actor", False)):
+            self._zero_initialize_actor_output(self.actor)
         self.actor_target.load_state_dict(self.actor.state_dict())
         self.critic_target.load_state_dict(self.critic.state_dict())
 
@@ -532,6 +534,18 @@ class GCNDDPGAgent:
             "replenishment": slice(3 * n, 4 * n),
             "purchase": slice(3 * n, 4 * n),
         }
+
+    def _zero_initialize_actor_output(self, actor) -> None:
+        """Make a residual actor start as the heuristic anchor (zero correction)."""
+
+        last_linear = None
+        for module in actor.modules():
+            if isinstance(module, torch.nn.Linear):
+                last_linear = module
+        if last_linear is None:
+            raise ValueError("Could not locate actor output layer for zero initialization")
+        torch.nn.init.zeros_(last_linear.weight)
+        torch.nn.init.zeros_(last_linear.bias)
 
     def save(self, path: str | Path) -> None:
         output_path = Path(path)

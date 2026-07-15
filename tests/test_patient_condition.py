@@ -50,6 +50,42 @@ class PatientConditionModelTests(unittest.TestCase):
         post_shock_drop = drop(8)  # age 8 -> 9, after the shock
         self.assertGreater(post_shock_drop, pre_shock_drop)
 
+    def test_risk_type_multiplier_accelerates_survival_loss(self) -> None:
+        model = PatientConditionModel(
+            PatientConditionConfig(
+                risk_type_probabilities=(0.0, 1.0),
+                risk_decay_multipliers=(1.0, 2.0),
+            )
+        )
+        rng = np.random.default_rng(11)
+
+        patient = model.enroll(rng, epoch=0)
+        low_risk = model.survival_at(
+            8,
+            patient.health_index,
+            patient.deterioration_epoch,
+            risk_multiplier=1.0,
+        )
+        high_risk = model.survival_at(
+            8,
+            patient.health_index,
+            patient.deterioration_epoch,
+            risk_multiplier=2.0,
+        )
+
+        self.assertEqual(patient.risk_type, 1)
+        self.assertEqual(patient.risk_multiplier, 2.0)
+        self.assertLess(high_risk, low_risk)
+
+    def test_waiting_time_decay_penalty_reduces_long_wait_survival(self) -> None:
+        baseline = PatientConditionModel(PatientConditionConfig(waiting_time_decay_rate=0.0))
+        waited = PatientConditionModel(PatientConditionConfig(waiting_time_decay_rate=0.02))
+
+        baseline_survival = baseline.survival_at(10, 0.5, 99.0)
+        waited_survival = waited.survival_at(10, 0.5, 99.0)
+
+        self.assertLess(waited_survival, baseline_survival)
+
     def test_eligibility_flips_below_threshold(self) -> None:
         # A frail patient (low health index) should eventually become ineligible.
         model = PatientConditionModel(PatientConditionConfig(eligibility_threshold=0.75))
@@ -79,6 +115,15 @@ class PatientConditionModelTests(unittest.TestCase):
             )
         with self.assertRaises(ValueError):
             PatientConditionModel(PatientConditionConfig(eligibility_threshold=1.5))
+        with self.assertRaises(ValueError):
+            PatientConditionModel(
+                PatientConditionConfig(
+                    risk_type_probabilities=(0.5, 0.5),
+                    risk_decay_multipliers=(1.0,),
+                )
+            )
+        with self.assertRaises(ValueError):
+            PatientConditionModel(PatientConditionConfig(waiting_time_decay_rate=-0.1))
 
 
 if __name__ == "__main__":

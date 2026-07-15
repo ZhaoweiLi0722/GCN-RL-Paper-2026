@@ -1,5 +1,6 @@
 {
   "env_type": "patient_condition",
+  "scenario_name": "patient_condition_stress",
   "num_facilities": 20,
   "production_lead_time": 3,
   "episode_horizon": 52,
@@ -18,6 +19,8 @@
   "include_supplier_state": true,
   "supplier_disruption_rate": 0.3,
   "include_central_capacity_hub": true,
+  "transfer_lead_time": 0,
+  "include_transfer_pipeline_state": false,
   "material_shelf_life": 6,
   "finished_shelf_life": 2,
   "weight_patient_lost": 50000,
@@ -33,6 +36,10 @@
     "weibull_shape": 1.5,
     "weibull_scale": 4.0,
     "post_shock_multiplier": 3.0,
-    "eligibility_threshold": 0.80
+    "eligibility_threshold": 0.80,
+    "risk_type_probabilities": [0.45, 0.35, 0.20],
+    "risk_decay_multipliers": [0.8, 1.0, 1.35],
+    "waiting_time_decay_rate": 0.01,
+    "waiting_time_decay_power": 1.0
   }
 }

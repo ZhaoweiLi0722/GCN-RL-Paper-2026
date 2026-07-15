@@ -61,6 +61,27 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             "graph_stress_supply_cluster",
         )
 
+    def test_residual_policy_plan_loads(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "pilot")
+        mini_pilot = resolve_budget(plan, "mini_pilot")
+
+        self.assertEqual(plan["name"], "20_clinic_residual_policy_benchmark")
+        self.assertEqual(budget["num_episodes"], 300)
+        self.assertEqual(mini_pilot["num_episodes"], 10)
+        self.assertIn("flat_residual_mdl2", select_algorithms(plan, None, primary_only=True))
+        self.assertIn("flat_residual_pmyo", select_algorithms(plan, None, primary_only=True))
+        self.assertIn("gcn_residual_mdl2", select_algorithms(plan, None, primary_only=True))
+        self.assertIn("pmyo", select_algorithms(plan, None, primary_only=True))
+        self.assertEqual(
+            select_scenarios(plan, ["graph_dynamic_transfer_delay"])[0]["name"],
+            "graph_dynamic_transfer_delay",
+        )
+        self.assertEqual(
+            select_scenarios(plan, ["patient_condition_stress"])[0]["name"],
+            "patient_condition_stress",
+        )
+
     def test_training_config_preserves_algorithm_graph_ablation(self) -> None:
         plan = load_benchmark_plan()
         budget = resolve_budget(plan, "smoke")
@@ -105,6 +126,74 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             final_checkpoint_path(plan, "smoke", budget, "gcn_ddpg", scenario, seed=0),
             local_search_checkpoint_path(plan, "smoke", "gcn_ddpg", scenario, seed=0),
         )
+
+    def test_residual_policy_plan_overrides_anchor_and_checkpoint(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["graph_dynamic_transfer_delay"])[0]
+        config = make_training_config(plan, "smoke", budget, "gcn_residual_mdl2", scenario, seed=0)
+
+        self.assertEqual(config["algorithm"], "gcn_residual_mdl2")
+        self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
+        self.assertEqual(config["imitation_pretrain"]["policy"], "mdl2")
+        self.assertEqual(config["residual_action"]["group_scales"]["reagent_transfer"], 0.02)
+        self.assertEqual(config["env"]["scenario_name"], "graph_dynamic_transfer_delay")
+        self.assertEqual(
+            final_checkpoint_path(plan, "smoke", budget, "gcn_residual_mdl2", scenario, seed=0),
+            local_search_checkpoint_path(
+                plan,
+                "smoke",
+                "gcn_residual_mdl2",
+                scenario,
+                seed=0,
+            ),
+        )
+
+    def test_flat_residual_policy_plan_uses_flat_graph_ablation(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["patient_condition_stress"])[0]
+        config = make_training_config(plan, "smoke", budget, "flat_residual_mdl2", scenario, seed=0)
+
+        self.assertEqual(config["algorithm"], "flat_residual_mdl2")
+        self.assertEqual(config["env"]["env_type"], "patient_condition")
+        self.assertEqual(config["env"]["graph_ablation"], "flat_state_no_graph")
+        self.assertEqual(config["env"]["transfer_lead_time"], 0)
+        self.assertFalse(config["env"]["include_transfer_pipeline_state"])
+        self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
+        self.assertEqual(
+            final_checkpoint_path(plan, "smoke", budget, "flat_residual_mdl2", scenario, seed=0),
+            local_search_checkpoint_path(
+                plan,
+                "smoke",
+                "flat_residual_mdl2",
+                scenario,
+                seed=0,
+            ),
+        )
+
+    def test_patient_priority_residual_plan_sets_patient_aware_anchor(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["patient_condition_stress"])[0]
+        flat_config = make_training_config(plan, "smoke", budget, "flat_residual_pmyo", scenario, seed=0)
+        gcn_config = make_training_config(plan, "smoke", budget, "gcn_residual_pmyo", scenario, seed=0)
+
+        self.assertEqual(flat_config["residual_action"]["base_policy"], "pmyo")
+        self.assertEqual(flat_config["imitation_pretrain"]["policy"], "pmyo")
+        self.assertEqual(gcn_config["residual_action"]["base_policy"], "pmyo")
+        self.assertEqual(gcn_config["imitation_pretrain"]["policy"], "pmyo")
+        self.assertEqual(flat_config["env"]["env_type"], "patient_condition")
+
+    def test_pure_gcn_ddpg_plan_disables_residual_and_imitation(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["graph_dynamic_transfer_delay"])[0]
+        config = make_training_config(plan, "smoke", budget, "gcn_pure_ddpg", scenario, seed=0)
+
+        self.assertFalse(config["residual_action"]["enabled"])
+        self.assertFalse(config["imitation_pretrain"]["enabled"])
+        self.assertFalse(config["elite_imitation"]["enabled"])
 
     def test_output_completion_helpers_require_all_expected_files(self) -> None:
         plan = load_benchmark_plan()

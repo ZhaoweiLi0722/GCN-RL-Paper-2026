@@ -10,6 +10,7 @@ import numpy as np
 
 from src.env.capacity_planning import CapacityPlanningEnv
 from src.graph.edges import Edge, complete_undirected_edges, ring_edges
+from src.graph.geography import geographic_knn_edges, normalize_coordinates
 from src.rl.action_projection import project_action
 
 
@@ -21,6 +22,9 @@ class HeuristicSettings:
     allow_sharing: bool = True
     local_order_up_to_multiplier: float = 1.0
     use_demand_forecast: bool = False
+    use_patient_priority: bool = False
+    patient_priority_weight: float = 0.5
+    near_expiry_weight: float = 1.0
 
 
 class CapacityHeuristicPolicy:
@@ -104,6 +108,7 @@ class CapacityHeuristicPolicy:
             capacity_edges=env.capacity_edges,
             resource_edges=env.resource_edges,
             settings=self.settings,
+            patient_priority=patient_priority_from_env(env, self.settings),
         )
 
 
@@ -186,6 +191,30 @@ class UrgencyAwareMyopicPolicy(MyopicPolicy):
         return action
 
 
+class PatientPriorityMyopicPolicy(CapacityHeuristicPolicy):
+    """P-MYO: myopic balancing with a bounded patient-risk workload uplift.
+
+    The priority signal is converted into additional target workload before
+    the usual sharing/replenishment calculation, so the policy reacts to
+    critical and near-expiry patients without blindly over-ordering everywhere.
+    """
+
+    algorithm = "pmyo"
+
+    def __init__(self, state_dim: int | None = None, action_dim: int | None = None, config: dict[str, Any] | None = None):
+        super().__init__(state_dim, action_dim, config)
+        config = config or {}
+        self.settings = HeuristicSettings(
+            lookahead_periods=int(config.get("lookahead_periods", self.default_lookahead_periods())),
+            allow_sharing=bool(config.get("allow_sharing", self.default_allow_sharing())),
+            local_order_up_to_multiplier=float(config.get("local_order_up_to_multiplier", 1.0)),
+            use_demand_forecast=bool(config.get("use_demand_forecast", self.default_use_demand_forecast())),
+            use_patient_priority=True,
+            patient_priority_weight=float(config.get("patient_priority_weight", 0.5)),
+            near_expiry_weight=float(config.get("near_expiry_weight", 1.0)),
+        )
+
+
 HEURISTIC_POLICIES = {
     "myo": MyopicPolicy,
     "iso": IsolatedPolicy,
@@ -193,6 +222,7 @@ HEURISTIC_POLICIES = {
     "mdl2": MeanDemandLookahead2Policy,
     "fmyo": ForecastMyopicPolicy,
     "umyo": UrgencyAwareMyopicPolicy,
+    "pmyo": PatientPriorityMyopicPolicy,
 }
 
 
@@ -245,7 +275,14 @@ def facility_net_action_from_state(
         + 3 * int(include_transfer_pipeline)
     )
 
-    state_array = np.asarray(state, dtype=np.float32).reshape(n, features_per_facility)
+    base_width = n * features_per_facility
+    state_vector = np.asarray(state, dtype=np.float32)
+    if state_vector.size < base_width:
+        raise ValueError(
+            f"facility_net_action_from_state expected at least {base_width} state values, "
+            f"got {state_vector.size}"
+        )
+    state_array = state_vector[:base_width].reshape(n, features_per_facility)
     demand = state_array[:, 0]
     specimens = state_array[:, 1]
     reagents = state_array[:, 2]
@@ -259,6 +296,7 @@ def facility_net_action_from_state(
         demand_forecast = state_array[:, forecast_start]
     else:
         demand_forecast = None
+    patient_priority = patient_priority_from_state(state_vector, env_config, settings)
 
     return facility_net_action_from_arrays(
         demand=demand,
@@ -280,6 +318,7 @@ def facility_net_action_from_state(
         capacity_edges=_resolve_facility_edges(env_config, "capacity_edges", n),
         resource_edges=_resolve_facility_edges(env_config, "resource_edges", n),
         settings=settings,
+        patient_priority=patient_priority,
     )
 
 
@@ -300,6 +339,7 @@ def facility_net_action_from_arrays(
     capacity_edges: Sequence[Edge],
     resource_edges: Sequence[Edge],
     settings: HeuristicSettings,
+    patient_priority: np.ndarray | None = None,
 ) -> np.ndarray:
     """Compute normalized ``(w, e, q, p)`` facility-net actions."""
 
@@ -318,6 +358,11 @@ def facility_net_action_from_arrays(
         lookahead_demand = settings.lookahead_periods * demand_rates
     target_workload = np.maximum(next_specimens, 0.0) + lookahead_demand
     target_workload = target_workload * settings.local_order_up_to_multiplier
+    if settings.use_patient_priority and patient_priority is not None:
+        priority = np.asarray(patient_priority, dtype=float)
+        if priority.shape != (n,):
+            raise ValueError(f"patient_priority must have length {n}; got shape {priority.shape}")
+        target_workload = target_workload + settings.patient_priority_weight * np.maximum(priority, 0.0)
 
     replenishment = np.clip(
         target_workload - next_reagents,
@@ -420,8 +465,17 @@ def _resolve_facility_edges(
     num_facilities: int,
 ) -> tuple[Edge, ...]:
     action_mode = str(env_config.get("action_mode", "edge_transfer"))
+    clinic_coordinates = normalize_coordinates(env_config.get("clinic_coordinates"), num_facilities)
+    geographic_edges = (
+        geographic_knn_edges(
+            clinic_coordinates,
+            k=int(env_config.get("geographic_neighbor_k", 3)),
+        )
+        if clinic_coordinates
+        else ()
+    )
     if action_mode == "facility_net" and key in ("specimen_edges", "resource_edges"):
-        default_edges = ring_edges(num_facilities)
+        default_edges = geographic_edges or ring_edges(num_facilities)
     else:
         default_edges = complete_undirected_edges(num_facilities)
     configured = env_config.get(key)
@@ -435,6 +489,59 @@ def _resolve_facility_edges(
             raise ValueError(f"{key} edge {(i, j)} is outside {num_facilities} facilities")
         normalized.append((min(i, j), max(i, j)))
     return tuple(dict.fromkeys(normalized))
+
+
+def patient_priority_from_env(
+    env: CapacityPlanningEnv,
+    settings: HeuristicSettings,
+) -> np.ndarray | None:
+    """Return a bounded priority workload signal for patient-condition envs."""
+
+    if not settings.use_patient_priority or not hasattr(env, "at_risk_counts"):
+        return None
+    at_risk = np.asarray(env.at_risk_counts(), dtype=float)
+    near_expiry = np.asarray(env.near_expiry_counts(), dtype=float)
+    waiting = np.maximum(np.asarray(env.waiting_counts(), dtype=float), 1.0)
+    priority = at_risk + settings.near_expiry_weight * near_expiry
+    return np.clip(priority, 0.0, waiting)
+
+
+def patient_priority_from_state(
+    state: Sequence[float],
+    env_config: dict[str, Any],
+    settings: HeuristicSettings,
+) -> np.ndarray | None:
+    """Read the patient summary tail and build the same priority signal for replay states."""
+
+    if not settings.use_patient_priority or env_config.get("env_type") != "patient_condition":
+        return None
+    n = int(env_config.get("num_facilities", 0))
+    if n <= 0:
+        return None
+    lead_time = int(env_config.get("production_lead_time", 3))
+    include_supplier = bool(env_config.get("include_supplier_state", False))
+    include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+    include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
+    features_per_facility = (
+        3
+        + lead_time
+        + int(include_supplier)
+        + int(include_forecast)
+        + 3 * int(include_transfer_pipeline)
+    )
+    summary_edges = tuple(env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
+    summary_width = 3 + len(summary_edges) + 1
+    base_width = n * features_per_facility
+    state_vector = np.asarray(state, dtype=np.float32)
+    expected_width = base_width + n * summary_width
+    if state_vector.size < expected_width:
+        return None
+    summary = state_vector[base_width:expected_width].reshape(n, summary_width)
+    waiting = np.maximum(summary[:, 0], 1.0)
+    near_expiry = summary[:, 2]
+    critical_survival = summary[:, 3] if summary_width > 3 else np.zeros(n, dtype=float)
+    priority = critical_survival + settings.near_expiry_weight * near_expiry
+    return np.clip(priority, 0.0, waiting)
 
 
 def _config_vector(values: Any, length: int, name: str) -> np.ndarray:

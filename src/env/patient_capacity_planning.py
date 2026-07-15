@@ -256,6 +256,7 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             "material_wasted": material_wasted.copy(),
             "finished_expired": finished_expired.copy(),
             "at_risk_unserved": at_risk_unserved.copy(),
+            "risk_type_counts": self.risk_type_counts().copy(),
             "waiting_patients": self.specimens.copy(),
             "eligibility_rate": self._eligibility_rate(),
         }
@@ -337,6 +338,16 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             [float(sum(1 for p in q if p.age >= near_expiry_age)) for q in self.patient_queues],
             dtype=float,
         )
+
+    def risk_type_counts(self) -> np.ndarray:
+        """Per-clinic waiting-patient counts by risk type."""
+
+        risk_types = len(self.patient_model.risk_decay_multipliers)
+        counts = np.zeros((self.config.num_facilities, risk_types), dtype=float)
+        for i, queue in enumerate(self.patient_queues):
+            for patient in queue:
+                counts[i, int(patient.risk_type)] += 1.0
+        return counts
 
     def _eligibility_rate(self) -> float:
         resolved = self.cumulative_served + self.cumulative_lost

@@ -96,6 +96,33 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         self.assertEqual(env.graph_observation()["capacity_edges"].shape, (0, 2))
         self.assertTrue(np.all(info["capacity_transfers"] == 0.0))
 
+    def test_geographic_coordinates_drive_default_facility_edges(self):
+        coordinates = ((0.0, 0.0), (0.0, 1.0), (20.0, 20.0), (20.0, 21.0))
+        config = CapacityPlanningConfig(
+            num_facilities=4,
+            production_lead_time=2,
+            episode_horizon=1,
+            demand_rates=(0.0, 0.0, 0.0, 0.0),
+            initial_specimens=(0.0, 0.0, 0.0, 0.0),
+            initial_reagents=(0.0, 0.0, 0.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0, 0.0, 0.0),
+            max_specimens=(10.0, 10.0, 10.0, 10.0),
+            max_reagents=(10.0, 10.0, 10.0, 10.0),
+            max_idle_bioreactors=(5.0, 5.0, 5.0, 5.0),
+            max_reagent_replenishment=(0.0, 0.0, 0.0, 0.0),
+            action_mode="facility_net",
+            clinic_coordinates=coordinates,
+            geographic_neighbor_k=1,
+        )
+        env = CapacityPlanningEnv(config, seed=12)
+        graph = env.graph_observation()
+
+        self.assertEqual(env.information_edges, ((0, 1), (2, 3)))
+        self.assertEqual(env.specimen_edges, ((0, 1), (2, 3)))
+        self.assertEqual(env.resource_edges, ((0, 1), (2, 3)))
+        self.assertEqual(graph["clinic_coordinates"].shape, (4, 2))
+        self.assertEqual(graph["clinic_distance_matrix"].shape, (4, 4))
+
     def test_facility_net_transfer_lead_time_delays_arrivals(self):
         config = CapacityPlanningConfig(
             num_facilities=2,
@@ -132,6 +159,105 @@ class CapacityPlanningEnvTest(unittest.TestCase):
 
         self.assertAlmostEqual(env.reagents[1], 20.0)
         self.assertAlmostEqual(info["reagent_transfer_arrivals"][1], 20.0)
+
+    def test_geographic_transfer_delay_uses_distance_thresholds(self):
+        config = CapacityPlanningConfig(
+            num_facilities=2,
+            production_lead_time=2,
+            episode_horizon=4,
+            demand_rates=(0.0, 0.0),
+            initial_specimens=(0.0, 0.0),
+            initial_reagents=(20.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0),
+            max_specimens=(50.0, 50.0),
+            max_reagents=(50.0, 50.0),
+            max_idle_bioreactors=(10.0, 10.0),
+            max_reagent_replenishment=(0.0, 0.0),
+            max_reagent_transfer=20.0,
+            action_mode="facility_net",
+            transfer_lead_time=3,
+            include_transfer_pipeline_state=True,
+            clinic_coordinates=((0.0, 0.0), (0.0, 10.0)),
+            geographic_neighbor_k=1,
+            transfer_lead_time_distance_thresholds=(100.0, 500.0),
+        )
+        env = CapacityPlanningEnv(config, seed=12)
+        action = env.noop_action()
+        action[2] = -1.0
+        action[3] = 1.0
+
+        _observation, _reward, _done, info = env.step(action)
+
+        self.assertTrue(np.all(info["reagent_transfer_arrivals"] == 0.0))
+        self.assertAlmostEqual(env.reagent_transfer_pipeline[2, 1], 20.0)
+
+        env.step(env.noop_action())
+        self.assertAlmostEqual(env.reagents[1], 0.0)
+        env.step(env.noop_action())
+        self.assertAlmostEqual(env.reagents[1], 0.0)
+        _observation, _reward, _done, info = env.step(env.noop_action())
+        self.assertAlmostEqual(info["reagent_transfer_arrivals"][1], 20.0)
+        self.assertAlmostEqual(env.reagents[1], 20.0)
+
+    def test_geographic_transfer_cost_increases_with_distance(self):
+        base_config = dict(
+            num_facilities=2,
+            production_lead_time=2,
+            episode_horizon=1,
+            demand_rates=(0.0, 0.0),
+            initial_specimens=(0.0, 0.0),
+            initial_reagents=(20.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0),
+            max_specimens=(50.0, 50.0),
+            max_reagents=(50.0, 50.0),
+            max_idle_bioreactors=(10.0, 10.0),
+            max_reagent_replenishment=(0.0, 0.0),
+            max_reagent_transfer=20.0,
+            action_mode="facility_net",
+            clinic_coordinates=((0.0, 0.0), (0.0, 10.0)),
+            geographic_neighbor_k=1,
+        )
+        plain = CapacityPlanningEnv(CapacityPlanningConfig(**base_config), seed=12)
+        geo = CapacityPlanningEnv(
+            CapacityPlanningConfig(**base_config, geographic_transfer_cost_scale=1.0),
+            seed=12,
+        )
+        action = plain.noop_action()
+        action[2] = -1.0
+        action[3] = 1.0
+
+        _observation, _reward, _done, plain_info = plain.step(action)
+        _observation, _reward, _done, geo_info = geo.step(action)
+
+        self.assertGreater(float(geo_info["cost"]), float(plain_info["cost"]))
+
+    def test_regional_supplier_disruption_uses_geographic_cluster(self):
+        config = CapacityPlanningConfig(
+            num_facilities=4,
+            production_lead_time=2,
+            episode_horizon=1,
+            demand_rates=(0.0, 0.0, 0.0, 0.0),
+            initial_specimens=(0.0, 0.0, 0.0, 0.0),
+            initial_reagents=(0.0, 0.0, 0.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0, 0.0, 0.0),
+            max_specimens=(10.0, 10.0, 10.0, 10.0),
+            max_reagents=(10.0, 10.0, 10.0, 10.0),
+            max_idle_bioreactors=(5.0, 5.0, 5.0, 5.0),
+            max_reagent_replenishment=(10.0, 10.0, 10.0, 10.0),
+            action_mode="facility_net",
+            include_supplier_state=True,
+            supplier_disruption_rate=0.0,
+            clinic_coordinates=((0.0, 0.0), (0.0, 1.0), (20.0, 20.0), (20.0, 21.0)),
+            geographic_neighbor_k=1,
+            regional_supplier_disruption_probability=1.0,
+            regional_supplier_disruption_duration=2,
+            regional_supplier_disruption_cluster_size=2,
+        )
+        env = CapacityPlanningEnv(config, seed=4)
+        unavailable = np.where(env.supplier_available == 0.0)[0]
+
+        self.assertEqual(unavailable.size, 2)
+        self.assertIn(tuple(unavailable), {tuple((0, 1)), tuple((2, 3))})
 
     def test_demand_shock_updates_cluster_multiplier(self):
         config = CapacityPlanningConfig(

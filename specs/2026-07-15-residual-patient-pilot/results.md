@@ -200,28 +200,41 @@ geography, patient-risk settings, and graph defaults are shared.
 
 Targeted 100-episode checkpoint status:
 
-- completed: `gcn_residual_mdl2`, seeds `0, 1`
-- scenarios: `graph_dynamic_patient_forecast_geo`, `patient_condition_stress`
-- both scenarios selected the `mdl2` anchor during fallback validation
+- completed learned arms: `gcn_residual_mdl2`, `gcn_residual_pmyo`,
+  `flat_residual_mdl2`, `flat_residual_pmyo`
+- completed scenarios: `graph_dynamic_patient_forecast_geo`,
+  `patient_condition_stress`
+- completed seeds: `0, 1`
+- fallback decisions: all completed residual arms selected their heuristic
+  anchor under the 0.5% validation-improvement rule
 
-Fair re-evaluation summary for completed arms:
+Fair re-evaluation summary for the completed targeted matrix:
 
 | Scenario | Algorithm | Mean total cost | Service level | Avg. wait | Patients lost |
 | --- | --- | ---: | ---: | ---: | ---: |
 | geography | `mdl2` | 3.474B | 0.5570 | 10.1349 | n/a |
+| geography | `flat_residual_mdl2` | 3.474B | 0.5570 | 10.1349 | n/a |
 | geography | `gcn_residual_mdl2` | 3.474B | 0.5570 | 10.1349 | n/a |
 | geography | `iso` | 3.791B | 0.4896 | 10.5019 | n/a |
-| geography | `pmyo` | 3.839B | 0.5348 | 11.4195 | n/a |
+| geography | `gcn_residual_pmyo` | 3.839B | 0.5348 | 11.4195 | n/a |
+| geography | `pmyo` / `myo` | 3.839B | 0.5348 | 11.4195 | n/a |
+| geography | `flat_residual_pmyo` | 3.839B | 0.5348 | 11.4195 | n/a |
 | patient stress | `mdl2` | 840.28M | 0.6025 | 2.8079 | 1884.99 |
+| patient stress | `flat_residual_mdl2` | 840.28M | 0.6025 | 2.8079 | 1884.99 |
 | patient stress | `gcn_residual_mdl2` | 840.28M | 0.6025 | 2.8079 | 1884.99 |
+| patient stress | `gcn_residual_pmyo` | 844.58M | 0.5788 | 2.8144 | 2013.83 |
 | patient stress | `pmyo` | 844.58M | 0.5788 | 2.8144 | 2013.83 |
+| patient stress | `flat_residual_pmyo` | 844.58M | 0.5788 | 2.8144 | 2013.83 |
 | patient stress | `iso` | 847.91M | 0.6029 | 2.8066 | 1883.98 |
+| patient stress | `myo` | 850.79M | 0.5784 | 2.8141 | 2016.87 |
 
 Current interpretation: anchor fallback has achieved the conservative target
-of making the learned residual arm no worse than its heuristic anchor. The
-remaining research question is whether residual learning can beat the anchor
-without relying on fallback; that requires the rest of the targeted 100-episode
-matrix plus tighter residual/trust-region tuning.
+of making learned residual arms no worse than their heuristic anchors. However,
+the 100-episode targeted matrix did not yet show a learned residual correction
+that clears the 0.5% validation margin. Graph and flat residuals both reduce to
+their anchors under conservative selection, so the current evidence supports
+"safe heuristic-competitive learned control" rather than "learned control
+outperforms tuned heuristics."
 
 After evaluating `gcn_residual_pmyo`, we tightened the fallback decision rule:
 pilot-scale budgets now require at least a 0.5% validation improvement before

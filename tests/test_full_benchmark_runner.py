@@ -21,6 +21,7 @@ from evaluation.run_gcn_residual_sweep import (
 )
 from evaluation.run_full_benchmark import (
     algorithm_config_overrides,
+    anchor_fallback_settings,
     config_snapshot_path,
     evaluation_csv_path,
     evaluation_outputs_complete,
@@ -31,6 +32,7 @@ from evaluation.run_full_benchmark import (
     make_training_config,
     resolve_budget,
     select_algorithms,
+    select_anchor_fallback_policy,
     select_scenarios,
     training_csv_path,
     training_outputs_complete,
@@ -65,10 +67,13 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
         budget = resolve_budget(plan, "pilot")
         mini_pilot = resolve_budget(plan, "mini_pilot")
+        targeted_100 = resolve_budget(plan, "targeted_100")
 
         self.assertEqual(plan["name"], "20_clinic_residual_policy_benchmark")
         self.assertEqual(budget["num_episodes"], 300)
         self.assertEqual(mini_pilot["num_episodes"], 10)
+        self.assertEqual(targeted_100["num_episodes"], 100)
+        self.assertEqual(targeted_100["anchor_fallback"]["validation_replications"], 10)
         self.assertIn("flat_residual_mdl2", select_algorithms(plan, None, primary_only=True))
         self.assertIn("flat_residual_pmyo", select_algorithms(plan, None, primary_only=True))
         self.assertIn("gcn_residual_mdl2", select_algorithms(plan, None, primary_only=True))
@@ -184,6 +189,29 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(gcn_config["residual_action"]["base_policy"], "pmyo")
         self.assertEqual(gcn_config["imitation_pretrain"]["policy"], "pmyo")
         self.assertEqual(flat_config["env"]["env_type"], "patient_condition")
+
+    def test_anchor_fallback_settings_and_decision_rule(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["patient_condition_stress"])[0]
+        config = make_training_config(plan, "smoke", budget, "gcn_residual_pmyo", scenario, seed=0)
+
+        settings = anchor_fallback_settings(config, budget)
+
+        self.assertTrue(settings["enabled"])
+        self.assertEqual(settings["validation_replications"], 1)
+        self.assertEqual(
+            select_anchor_fallback_policy(95.0, 100.0, min_improvement=0.0),
+            "learned",
+        )
+        self.assertEqual(
+            select_anchor_fallback_policy(100.0, 100.0, min_improvement=0.05),
+            "anchor",
+        )
+        self.assertEqual(
+            select_anchor_fallback_policy(float("nan"), 100.0, min_improvement=0.0),
+            "anchor",
+        )
 
     def test_pure_gcn_ddpg_plan_disables_residual_and_imitation(self) -> None:
         plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")

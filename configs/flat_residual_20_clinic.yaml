@@ -54,6 +54,12 @@
     "epochs": 4,
     "batch_size": 64
   },
+  "anchor_fallback": {
+    "enabled": true,
+    "validation_replications": 5,
+    "validation_seed_offset": 250000,
+    "min_improvement": 0.0
+  },
   "checkpoint_interval": 3,
   "checkpoint_dir": "checkpoints/flat_residual_20_clinic",
   "result_csv_path": "results/flat_residual_20_clinic_training.csv",

@@ -375,6 +375,9 @@
       "progress_interval": 1,
       "evaluation_replications": 1,
       "evaluation_seed": 10000,
+      "anchor_fallback": {
+        "validation_replications": 1
+      },
       "local_search": {
         "flat_residual_mdl2": {
           "rollouts": 1,
@@ -443,6 +446,9 @@
       "progress_interval": 5,
       "evaluation_replications": 5,
       "evaluation_seed": 45000,
+      "anchor_fallback": {
+        "validation_replications": 3
+      },
       "local_search": {
         "flat_residual_mdl2": {
           "rollouts": 2,
@@ -502,6 +508,49 @@
         }
       }
     },
+    "targeted_100": {
+      "seeds": [0, 1],
+      "num_episodes": 100,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 50,
+      "progress_interval": 25,
+      "evaluation_replications": 50,
+      "evaluation_seed": 70000,
+      "anchor_fallback": {
+        "validation_replications": 10
+      },
+      "local_search": {
+        "flat_residual_mdl2": {
+          "rollouts": 5,
+          "lookahead": 4,
+          "epsilons": [0.02, 0.05],
+          "epochs": 4,
+          "min_improvement": -1.0
+        },
+        "flat_residual_pmyo": {
+          "rollouts": 5,
+          "lookahead": 4,
+          "epsilons": [0.02, 0.05],
+          "epochs": 4,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_mdl2": {
+          "rollouts": 5,
+          "lookahead": 4,
+          "epsilons": [0.02, 0.05],
+          "epochs": 4,
+          "min_improvement": -1.0
+        },
+        "gcn_residual_pmyo": {
+          "rollouts": 5,
+          "lookahead": 4,
+          "epsilons": [0.02, 0.05],
+          "epochs": 4,
+          "min_improvement": -1.0
+        }
+      }
+    },
     "pilot": {
       "seeds": [0, 1, 2],
       "num_episodes": 300,
@@ -510,7 +559,10 @@
       "checkpoint_interval": 100,
       "progress_interval": 25,
       "evaluation_replications": 100,
-      "evaluation_seed": 50000
+      "evaluation_seed": 50000,
+      "anchor_fallback": {
+        "validation_replications": 20
+      }
     },
     "full": {
       "seeds": [0, 1, 2, 3, 4],
@@ -520,7 +572,10 @@
       "checkpoint_interval": 100,
       "progress_interval": 50,
       "evaluation_replications": 500,
-      "evaluation_seed": 10000
+      "evaluation_seed": 10000,
+      "anchor_fallback": {
+        "validation_replications": 50
+      }
     }
   },
   "output_root": "results/residual_policy_benchmark",

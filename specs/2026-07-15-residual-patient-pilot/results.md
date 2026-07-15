@@ -153,11 +153,43 @@ The next publishable path should not be "generic RL beats heuristics everywhere.
 2. Graph residual policies can match or slightly improve strong heuristics in geography-aware network scenarios.
 3. Patient-risk scenarios need a stronger learned correction/training formulation, not just another patient-aware heuristic anchor.
 
+## Anchor Fallback Update
+
+After the mini pilot, the benchmark runner was extended with conservative anchor
+fallback. For learned residual policies, evaluation now:
+
+1. evaluates the learned residual checkpoint on a held-out validation seed stream;
+2. evaluates its heuristic anchor on the same validation stream;
+3. deploys the learned residual only if its validation cost is no worse than the anchor;
+4. otherwise deploys the anchor while preserving the learned algorithm label and writing fallback metadata to the raw rows.
+
+Smoke command:
+
+```bash
+.venv/bin/python -m evaluation.run_full_benchmark \
+  --plan experiments/configs/residual_policy_benchmark.json \
+  --budget smoke \
+  --phase all \
+  --force \
+  --algorithms gcn_residual_pmyo pmyo \
+  --scenarios patient_condition_stress
+```
+
+Smoke decision:
+
+- `gcn_residual_pmyo` validation learned cost: 5.8641M
+- `pmyo` anchor validation cost: 5.8640M
+- selected policy: `anchor`
+
+This confirms the safe-improvement behavior: if the learned residual does not
+clear the anchor on validation, the evaluation falls back to the heuristic
+instead of deploying a worse residual policy.
+
 ## Next Experiment Changes
 
 Highest-priority changes before any longer run:
 
-1. Add a residual trust region / anchor fallback: evaluate both anchor and learned residual during validation and deploy the residual only when it improves the anchor.
+1. Use the new `targeted_100` budget to run a decisive residual-vs-anchor pilot with anchor fallback enabled.
 2. Keep `pmyo` as the fair condition-aware heuristic; de-emphasize the older `umyo` surge policy unless it is retuned.
 3. Run a targeted 100-episode pilot on:
    - `graph_dynamic_patient_forecast_geo`

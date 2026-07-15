@@ -11,6 +11,8 @@ import os
 from pathlib import Path
 from typing import Any, Iterable
 
+import numpy as np
+
 from evaluation.aggregate_results import (
     aggregate_rows,
     read_rows as read_aggregate_inputs,
@@ -223,6 +225,14 @@ def evaluate_benchmark(
                     agent.load_actor(checkpoint)
 
                 evaluation_seed = int(budget["evaluation_seed"]) + int(seed) * LEARNED_EVALUATION_SEED_STRIDE
+                agent, fallback_metadata = maybe_apply_anchor_fallback(
+                    config,
+                    budget,
+                    algorithm,
+                    seed,
+                    evaluation_seed,
+                    agent,
+                )
                 print(f"evaluate {algorithm} scenario={scenario['name']} seed={seed}", flush=True)
                 rows = evaluate_agent(
                     agent,
@@ -237,6 +247,7 @@ def evaluate_benchmark(
                     row["budget"] = budget_name
                     row["training_seed"] = seed
                     row["evaluation_seed"] = evaluation_seed
+                    row.update(fallback_metadata)
                 output_path = evaluation_csv_path(plan, budget_name, algorithm, scenario, seed)
                 write_rows(rows, output_path)
 
@@ -246,6 +257,7 @@ def evaluate_benchmark(
                     summary["budget"] = budget_name
                     summary["training_seed"] = seed
                     summary["evaluation_seed"] = evaluation_seed
+                    summary.update(fallback_metadata)
                     write_summary(summary, evaluation_summary_path(plan, budget_name, algorithm, scenario, seed))
                 jobs_run += 1
 
@@ -408,6 +420,134 @@ def local_search_settings(plan: dict[str, Any], budget: dict[str, Any], algorith
     budget_settings = dict(budget.get("local_search", {}).get(algorithm, {}))
     settings.update(budget_settings)
     return settings
+
+
+def maybe_apply_anchor_fallback(
+    config: dict[str, Any],
+    budget: dict[str, Any],
+    algorithm: str,
+    seed: int,
+    evaluation_seed: int,
+    learned_agent,
+) -> tuple[Any, dict[str, Any]]:
+    """Select the learned residual policy only when it beats its heuristic anchor.
+
+    The validation split is disjoint from the formal evaluation seed stream. The
+    returned metadata is written to every evaluation row so manuscript-facing
+    summaries can distinguish a genuine learned residual deployment from a
+    conservative fallback to the anchor.
+    """
+
+    settings = anchor_fallback_settings(config, budget)
+    if not bool(settings.get("enabled", False)):
+        return learned_agent, {"anchor_fallback_enabled": False}
+    if algorithm in available_heuristics():
+        return learned_agent, {"anchor_fallback_enabled": False}
+
+    residual_config = dict(config.get("residual_action", {}))
+    if not bool(residual_config.get("enabled", False)):
+        return learned_agent, {"anchor_fallback_enabled": False}
+    anchor_policy = str(settings.get("anchor_policy", residual_config.get("base_policy", "")))
+    if anchor_policy not in available_heuristics():
+        raise ValueError(f"anchor_fallback requires a heuristic anchor policy, got {anchor_policy!r}")
+
+    validation_replications = int(settings.get("validation_replications", 0))
+    if validation_replications <= 0:
+        return learned_agent, {
+            "anchor_fallback_enabled": True,
+            "anchor_fallback_selected_policy": "learned",
+            "anchor_fallback_anchor_policy": anchor_policy,
+            "anchor_fallback_validation_replications": 0,
+        }
+
+    validation_seed = (
+        int(evaluation_seed)
+        + int(settings.get("validation_seed_offset", 250000))
+        + int(seed) * int(settings.get("validation_seed_stride", 1000))
+    )
+    max_steps = int(config.get("max_steps_per_episode", budget["max_steps_per_episode"]))
+
+    learned_env = build_env(config, seed=validation_seed)
+    learned_rows = evaluate_agent(
+        learned_agent,
+        learned_env,
+        algorithm=algorithm,
+        seed=validation_seed,
+        replications=validation_replications,
+        max_steps=max_steps,
+    )
+    learned_summary = summarize_rows(learned_rows)
+
+    anchor_config = dict(config)
+    anchor_config["algorithm"] = anchor_policy
+    anchor_policy_config = dict(
+        settings.get(
+            "anchor_policy_config",
+            residual_config.get("base_policy_config", {}),
+        )
+    )
+    anchor_env = build_env(anchor_config, seed=validation_seed)
+    anchor_agent = get_agent_class(anchor_policy)(
+        anchor_env.observation_size,
+        anchor_env.action_size,
+        anchor_policy_config,
+    )
+    anchor_rows = evaluate_agent(
+        anchor_agent,
+        anchor_env,
+        algorithm=anchor_policy,
+        seed=validation_seed,
+        replications=validation_replications,
+        max_steps=max_steps,
+    )
+    anchor_summary = summarize_rows(anchor_rows)
+
+    decision = select_anchor_fallback_policy(
+        float(learned_summary["total_cost_mean"]),
+        float(anchor_summary["total_cost_mean"]),
+        min_improvement=float(settings.get("min_improvement", 0.0)),
+    )
+    selected_agent = learned_agent if decision == "learned" else anchor_agent
+    metadata = {
+        "anchor_fallback_enabled": True,
+        "anchor_fallback_selected_policy": decision,
+        "anchor_fallback_anchor_policy": anchor_policy,
+        "anchor_fallback_validation_seed": validation_seed,
+        "anchor_fallback_validation_replications": validation_replications,
+        "anchor_fallback_validation_learned_cost_mean": learned_summary["total_cost_mean"],
+        "anchor_fallback_validation_anchor_cost_mean": anchor_summary["total_cost_mean"],
+        "anchor_fallback_min_improvement": float(settings.get("min_improvement", 0.0)),
+    }
+    print(
+        "anchor_fallback "
+        f"algorithm={algorithm} selected={decision} anchor={anchor_policy} "
+        f"learned_cost={float(learned_summary['total_cost_mean']):.3f} "
+        f"anchor_cost={float(anchor_summary['total_cost_mean']):.3f}",
+        flush=True,
+    )
+    return selected_agent, metadata
+
+
+def anchor_fallback_settings(config: dict[str, Any], budget: dict[str, Any]) -> dict[str, Any]:
+    settings = dict(config.get("anchor_fallback", {}))
+    settings.update(dict(budget.get("anchor_fallback", {})))
+    return settings
+
+
+def select_anchor_fallback_policy(
+    learned_cost: float,
+    anchor_cost: float,
+    *,
+    min_improvement: float = 0.0,
+) -> str:
+    """Return ``learned`` only if it clears the anchor-cost threshold."""
+
+    if not np.isfinite(learned_cost):
+        return "anchor"
+    if not np.isfinite(anchor_cost):
+        return "learned"
+    threshold = float(anchor_cost) * (1.0 - float(min_improvement))
+    return "learned" if float(learned_cost) <= threshold else "anchor"
 
 
 def _deep_update(base: dict[str, Any], updates: dict[str, Any]) -> dict[str, Any]:

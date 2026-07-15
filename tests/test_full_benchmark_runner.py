@@ -29,6 +29,8 @@ from evaluation.run_full_benchmark import (
     final_checkpoint_path,
     local_search_checkpoint_path,
     load_benchmark_plan,
+    make_evaluation_config,
+    make_scenario_env_config,
     make_training_config,
     resolve_budget,
     select_algorithms,
@@ -153,6 +155,28 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
                 seed=0,
             ),
         )
+
+    def test_heuristic_evaluation_uses_reference_env_defaults(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "targeted_100")
+        scenario = select_scenarios(plan, ["patient_condition_stress"])[0]
+
+        gcn_config = make_evaluation_config(
+            plan,
+            "targeted_100",
+            budget,
+            "gcn_residual_mdl2",
+            scenario,
+            seed=0,
+        )
+        mdl2_config = make_evaluation_config(plan, "targeted_100", budget, "mdl2", scenario, seed=0)
+        env_config = make_scenario_env_config(plan, "mdl2", scenario)
+
+        self.assertEqual(plan["heuristic_env_reference_algorithm"], "gcn_residual_mdl2")
+        self.assertEqual(mdl2_config["env"], env_config)
+        self.assertEqual(mdl2_config["env"], gcn_config["env"])
+        self.assertEqual(mdl2_config["env"]["demand_shock_probability"], 0.12)
+        self.assertEqual(mdl2_config["env"]["demand_shock_multiplier"], 2.4)
 
     def test_flat_residual_policy_plan_uses_flat_graph_ablation(self) -> None:
         plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")

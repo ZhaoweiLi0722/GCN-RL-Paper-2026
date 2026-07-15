@@ -329,12 +329,7 @@ def make_training_config(
 
     config = load_config(plan["learned_config_paths"][algorithm])
     config = _deep_update(config, algorithm_config_overrides(plan, algorithm))
-    scenario_env = load_config(scenario["env_config"])
-    base_env = dict(config.get("env", {}))
-    graph_ablation = base_env.get("graph_ablation", scenario_env.get("graph_ablation", "full_graph"))
-    env = dict(base_env)
-    env.update(scenario_env)
-    env["graph_ablation"] = graph_ablation
+    env = make_scenario_env_config(plan, algorithm, scenario)
 
     config["algorithm"] = algorithm
     config["seed"] = int(seed)
@@ -574,8 +569,42 @@ def make_evaluation_config(
         "algorithm": algorithm,
         "seed": int(seed),
         "max_steps_per_episode": int(budget["max_steps_per_episode"]),
-        "env": load_config(scenario["env_config"]),
+        "env": make_scenario_env_config(plan, algorithm, scenario),
     }
+
+
+def make_scenario_env_config(
+    plan: dict[str, Any],
+    algorithm: str,
+    scenario: dict[str, Any],
+) -> dict[str, Any]:
+    """Merge benchmark-wide environment defaults with a scenario override.
+
+    Learned configs often carry common 20-clinic dynamics that scenario files
+    only partially override. Heuristics must see the same merged environment,
+    otherwise the benchmark compares learned policies against baselines running
+    on an easier scenario definition.
+    """
+
+    reference_algorithm = algorithm
+    if algorithm not in plan["learned_config_paths"]:
+        reference_algorithm = str(plan.get("heuristic_env_reference_algorithm", ""))
+        if not reference_algorithm:
+            reference_algorithm = next(iter(plan["learned_config_paths"]))
+    if reference_algorithm not in plan["learned_config_paths"]:
+        raise ValueError(
+            "heuristic_env_reference_algorithm must name a learned config, "
+            f"got {reference_algorithm!r}"
+        )
+
+    reference_config = load_config(plan["learned_config_paths"][reference_algorithm])
+    scenario_env = load_config(scenario["env_config"])
+    base_env = dict(reference_config.get("env", {}))
+    graph_ablation = base_env.get("graph_ablation", scenario_env.get("graph_ablation", "full_graph"))
+    env = dict(base_env)
+    env.update(scenario_env)
+    env["graph_ablation"] = graph_ablation
+    return env
 
 
 def final_checkpoint_path(

@@ -185,6 +185,44 @@ This confirms the safe-improvement behavior: if the learned residual does not
 clear the anchor on validation, the evaluation falls back to the heuristic
 instead of deploying a worse residual policy.
 
+### Fair Evaluation Fix
+
+During the first `targeted_100` evaluation pass, we found that learned policies
+and heuristic baselines were not always using the same merged environment
+definition. Learned configs merged benchmark-wide 20-clinic defaults with the
+scenario file, while heuristic configs used only the scenario file. This could
+make heuristic baselines easier than the learned-policy evaluation stream.
+
+The runner now builds all evaluation environments through the same
+scenario-merge helper. In `residual_policy_benchmark.json`, heuristic baselines
+use `gcn_residual_mdl2` as the reference environment, so demand shocks,
+geography, patient-risk settings, and graph defaults are shared.
+
+Targeted 100-episode checkpoint status:
+
+- completed: `gcn_residual_mdl2`, seeds `0, 1`
+- scenarios: `graph_dynamic_patient_forecast_geo`, `patient_condition_stress`
+- both scenarios selected the `mdl2` anchor during fallback validation
+
+Fair re-evaluation summary for completed arms:
+
+| Scenario | Algorithm | Mean total cost | Service level | Avg. wait | Patients lost |
+| --- | --- | ---: | ---: | ---: | ---: |
+| geography | `mdl2` | 3.474B | 0.5570 | 10.1349 | n/a |
+| geography | `gcn_residual_mdl2` | 3.474B | 0.5570 | 10.1349 | n/a |
+| geography | `iso` | 3.791B | 0.4896 | 10.5019 | n/a |
+| geography | `pmyo` | 3.839B | 0.5348 | 11.4195 | n/a |
+| patient stress | `mdl2` | 840.28M | 0.6025 | 2.8079 | 1884.99 |
+| patient stress | `gcn_residual_mdl2` | 840.28M | 0.6025 | 2.8079 | 1884.99 |
+| patient stress | `pmyo` | 844.58M | 0.5788 | 2.8144 | 2013.83 |
+| patient stress | `iso` | 847.91M | 0.6029 | 2.8066 | 1883.98 |
+
+Current interpretation: anchor fallback has achieved the conservative target
+of making the learned residual arm no worse than its heuristic anchor. The
+remaining research question is whether residual learning can beat the anchor
+without relying on fallback; that requires the rest of the targeted 100-episode
+matrix plus tighter residual/trust-region tuning.
+
 ## Next Experiment Changes
 
 Highest-priority changes before any longer run:

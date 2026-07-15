@@ -47,6 +47,7 @@
     "gcn_pure_ddpg": "configs/gcn_residual_20_clinic.yaml",
     "gcn_td3": "configs/gcn_td3_20_clinic.yaml"
   },
+  "heuristic_env_reference_algorithm": "gcn_residual_mdl2",
   "algorithm_settings": {
     "flat_residual_mdl2": {
       "config_overrides": {

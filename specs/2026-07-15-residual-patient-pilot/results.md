@@ -223,6 +223,12 @@ remaining research question is whether residual learning can beat the anchor
 without relying on fallback; that requires the rest of the targeted 100-episode
 matrix plus tighter residual/trust-region tuning.
 
+After evaluating `gcn_residual_pmyo`, we tightened the fallback decision rule:
+pilot-scale budgets now require at least a 0.5% validation improvement before
+deploying the learned residual. A seed with only a small validation edge did not
+generalize on the 50-replication formal stream, so this margin is a practical
+trust-region guardrail rather than a cosmetic threshold.
+
 ## Next Experiment Changes
 
 Highest-priority changes before any longer run:

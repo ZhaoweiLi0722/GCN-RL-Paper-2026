@@ -76,6 +76,7 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(mini_pilot["num_episodes"], 10)
         self.assertEqual(targeted_100["num_episodes"], 100)
         self.assertEqual(targeted_100["anchor_fallback"]["validation_replications"], 10)
+        self.assertEqual(targeted_100["anchor_fallback"]["min_improvement"], 0.005)
         self.assertIn("flat_residual_mdl2", select_algorithms(plan, None, primary_only=True))
         self.assertIn("flat_residual_pmyo", select_algorithms(plan, None, primary_only=True))
         self.assertIn("gcn_residual_mdl2", select_algorithms(plan, None, primary_only=True))

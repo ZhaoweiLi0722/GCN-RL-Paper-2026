@@ -448,7 +448,8 @@
       "evaluation_replications": 5,
       "evaluation_seed": 45000,
       "anchor_fallback": {
-        "validation_replications": 3
+        "validation_replications": 3,
+        "min_improvement": 0.005
       },
       "local_search": {
         "flat_residual_mdl2": {
@@ -519,7 +520,8 @@
       "evaluation_replications": 50,
       "evaluation_seed": 70000,
       "anchor_fallback": {
-        "validation_replications": 10
+        "validation_replications": 10,
+        "min_improvement": 0.005
       },
       "local_search": {
         "flat_residual_mdl2": {
@@ -562,7 +564,8 @@
       "evaluation_replications": 100,
       "evaluation_seed": 50000,
       "anchor_fallback": {
-        "validation_replications": 20
+        "validation_replications": 20,
+        "min_improvement": 0.005
       }
     },
     "full": {
@@ -575,7 +578,8 @@
       "evaluation_replications": 500,
       "evaluation_seed": 10000,
       "anchor_fallback": {
-        "validation_replications": 50
+        "validation_replications": 50,
+        "min_improvement": 0.005
       }
     }
   },

@@ -456,6 +456,8 @@ def run_local_search_distillation(
     max_steps: int,
     baseline_policy: str,
     min_improvement: float,
+    anchor_keep_probability: float = 0.0,
+    anchor_keep_weight: float = 1.0,
 ) -> dict[str, Any]:
     demos = collect_local_search_demonstrations(
         env,
@@ -466,13 +468,16 @@ def run_local_search_distillation(
         max_steps=max_steps,
         baseline_policy=baseline_policy,
         min_improvement=min_improvement,
+        anchor_keep_probability=anchor_keep_probability,
+        anchor_keep_weight=anchor_keep_weight,
     )
     if demos["states"].size == 0:
-        print("local_search no improved state-action demonstrations", flush=True)
+        print("local_search no state-action demonstrations", flush=True)
         return {
             "local_search_rollouts": int(rollouts),
             "local_search_samples": 0,
             "local_search_improved_steps": 0,
+            "local_search_anchor_keep_steps": 0,
             "local_search_loss": "",
         }
     weights = demos["weights"]
@@ -490,6 +495,7 @@ def run_local_search_distillation(
         "local_search "
         f"rollouts={rollouts} samples={demos['states'].shape[0]} "
         f"improved_steps={demos['improved_steps']} "
+        f"anchor_keep_steps={demos['anchor_keep_steps']} "
         f"mean_step_improvement={demos['mean_step_improvement']:.3f} "
         f"loss={final_fit.get('final_loss'):.6f}",
         flush=True,
@@ -501,6 +507,9 @@ def run_local_search_distillation(
         "local_search_epochs": int(epochs),
         "local_search_samples": int(demos["states"].shape[0]),
         "local_search_improved_steps": int(demos["improved_steps"]),
+        "local_search_anchor_keep_steps": int(demos["anchor_keep_steps"]),
+        "local_search_anchor_keep_probability": float(anchor_keep_probability),
+        "local_search_anchor_keep_weight": float(anchor_keep_weight),
         "local_search_mean_step_improvement": float(demos["mean_step_improvement"]),
         "local_search_loss": final_fit.get("final_loss", ""),
     }
@@ -516,6 +525,8 @@ def collect_local_search_demonstrations(
     max_steps: int,
     baseline_policy: str,
     min_improvement: float,
+    anchor_keep_probability: float = 0.0,
+    anchor_keep_weight: float = 1.0,
 ) -> dict[str, Any]:
     baseline = get_heuristic_class(baseline_policy)(
         state_dim=env.observation_size,
@@ -526,7 +537,11 @@ def collect_local_search_demonstrations(
     actions: list[np.ndarray] = []
     weights: list[float] = []
     improved_steps = 0
+    anchor_keep_steps = 0
     step_improvements: list[float] = []
+    rng = np.random.default_rng(seed + 770000)
+    anchor_keep_probability = float(np.clip(anchor_keep_probability, 0.0, 1.0))
+    anchor_keep_weight = max(float(anchor_keep_weight), 0.0)
     for rollout in range(max(rollouts, 0)):
         state = env.reset(seed=seed + rollout)
         baseline.reset()
@@ -559,6 +574,11 @@ def collect_local_search_demonstrations(
                 weights.append(max(improvement, 1.0))
                 step_improvements.append(improvement)
                 improved_steps += 1
+            if anchor_keep_probability > 0.0 and rng.random() < anchor_keep_probability:
+                states.append(np.asarray(state, dtype=np.float32))
+                actions.append(np.asarray(candidate_actions[0], dtype=np.float32))
+                weights.append(max(anchor_keep_weight, 1.0))
+                anchor_keep_steps += 1
             state, _reward, done, _info = env.step(selected_action)
             step += 1
 
@@ -568,6 +588,7 @@ def collect_local_search_demonstrations(
             "actions": np.empty((0, env.action_size), dtype=np.float32),
             "weights": np.empty((0,), dtype=np.float32),
             "improved_steps": 0,
+            "anchor_keep_steps": 0,
             "mean_step_improvement": 0.0,
         }
     return {
@@ -575,7 +596,8 @@ def collect_local_search_demonstrations(
         "actions": np.asarray(actions, dtype=np.float32),
         "weights": np.asarray(weights, dtype=np.float32),
         "improved_steps": improved_steps,
-        "mean_step_improvement": float(np.mean(step_improvements)),
+        "anchor_keep_steps": anchor_keep_steps,
+        "mean_step_improvement": float(np.mean(step_improvements)) if step_improvements else 0.0,
     }
 
 

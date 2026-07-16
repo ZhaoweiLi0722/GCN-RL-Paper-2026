@@ -27,6 +27,8 @@ from evaluation.run_full_benchmark import (
     evaluation_outputs_complete,
     evaluation_summary_path,
     final_checkpoint_path,
+    checkpoint_label,
+    learned_checkpoint_candidates,
     local_search_checkpoint_path,
     load_benchmark_plan,
     make_evaluation_config,
@@ -77,6 +79,7 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(targeted_100["num_episodes"], 100)
         self.assertEqual(targeted_100["anchor_fallback"]["validation_replications"], 10)
         self.assertEqual(targeted_100["anchor_fallback"]["min_improvement"], 0.005)
+        self.assertTrue(targeted_100["checkpoint_selection"]["enabled"])
         self.assertEqual(targeted_100["local_search"]["gcn_residual_mdl2"]["min_improvement"], 0.0)
         self.assertIn("flat_residual_mdl2", select_algorithms(plan, None, primary_only=True))
         self.assertIn("flat_residual_pmyo", select_algorithms(plan, None, primary_only=True))
@@ -118,6 +121,31 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             Path(config["checkpoint_dir"]) / "td3_seed2_episode1.pt",
         )
 
+    def test_learned_checkpoint_candidates_include_episode_and_local_search(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            plan = {"output_root": tmpdir}
+            scenario = {"name": "s"}
+            checkpoint_dir = Path(tmpdir) / "b" / "checkpoints" / "s" / "algo_seed0"
+            checkpoint_dir.mkdir(parents=True)
+            episode100 = checkpoint_dir / "algo_seed0_episode100.pt"
+            episode50 = checkpoint_dir / "algo_seed0_episode50.pt"
+            local_search = checkpoint_dir / "algo_seed0_local_search.pt"
+            for path in (episode100, episode50, local_search):
+                path.touch()
+
+            candidates = learned_checkpoint_candidates(
+                plan,
+                "b",
+                "algo",
+                scenario,
+                0,
+                local_search,
+            )
+
+            self.assertEqual(candidates, (episode50, episode100, local_search))
+            self.assertEqual(checkpoint_label(episode50), "episode50")
+            self.assertEqual(checkpoint_label(local_search), "local_search")
+
     def test_algorithm_overrides_and_local_search_checkpoint(self) -> None:
         plan = load_benchmark_plan("experiments/configs/patient_forecast_benchmark.json")
         budget = resolve_budget(plan, "smoke")
@@ -145,7 +173,7 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(config["algorithm"], "gcn_residual_mdl2")
         self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
         self.assertEqual(config["imitation_pretrain"]["policy"], "mdl2")
-        self.assertEqual(config["residual_action"]["group_scales"]["reagent_transfer"], 0.02)
+        self.assertEqual(config["residual_action"]["group_scales"]["reagent_transfer"], 0.05)
         self.assertEqual(config["env"]["scenario_name"], "graph_dynamic_transfer_delay")
         self.assertEqual(
             final_checkpoint_path(plan, "smoke", budget, "gcn_residual_mdl2", scenario, seed=0),
@@ -400,6 +428,28 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(demos["states"].shape[1], env.observation_size)
         self.assertEqual(demos["actions"].shape[1], env.action_size)
         self.assertEqual(demos["weights"].shape[0], demos["states"].shape[0])
+
+    def test_local_search_demo_collection_keeps_anchor_references(self) -> None:
+        config = replace(make_legacy_two_facility_config(episode_horizon=2), action_mode="facility_net")
+        env = CapacityPlanningEnv(config, seed=8)
+
+        demos = collect_local_search_demonstrations(
+            env,
+            seed=8,
+            rollouts=1,
+            lookahead=1,
+            epsilons=(),
+            max_steps=2,
+            baseline_policy="myo",
+            min_improvement=0.0,
+            anchor_keep_probability=1.0,
+            anchor_keep_weight=7.0,
+        )
+
+        self.assertEqual(demos["improved_steps"], 0)
+        self.assertEqual(demos["anchor_keep_steps"], 2)
+        self.assertEqual(demos["states"].shape[0], 2)
+        np.testing.assert_allclose(demos["weights"], np.full(2, 7.0, dtype=np.float32))
 
 
 class TrainingStabilityTests(unittest.TestCase):

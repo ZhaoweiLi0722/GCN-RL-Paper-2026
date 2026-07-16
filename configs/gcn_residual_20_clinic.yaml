@@ -30,9 +30,17 @@
     "scale": 0.05,
     "group_scales": {
       "specimen_transfer": 0.0,
-      "reagent_transfer": 0.02,
-      "capacity_transfer": 0.02,
+      "reagent_transfer": 0.05,
+      "capacity_transfer": 0.05,
       "replenishment": 0.05
+    },
+    "pressure_projection": {
+      "enabled": true,
+      "groups": [
+        "reagent_transfer",
+        "capacity_transfer",
+        "replenishment"
+      ]
     },
     "center_groups": [
       "reagent_transfer",

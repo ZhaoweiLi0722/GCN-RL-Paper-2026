@@ -215,6 +215,7 @@ def evaluate_benchmark(
                 config = make_evaluation_config(plan, budget_name, budget, algorithm, scenario, seed)
                 env = build_env(config, seed=seed)
                 agent = get_agent_class(algorithm)(env.observation_size, env.action_size, config)
+                selection_metadata: dict[str, Any] = {"checkpoint_selection_enabled": False}
                 if algorithm not in available_heuristics():
                     checkpoint = final_checkpoint_path(plan, budget_name, budget, algorithm, scenario, seed)
                     if not checkpoint.exists():
@@ -222,6 +223,18 @@ def evaluate_benchmark(
                             f"Missing checkpoint for {algorithm} scenario={scenario['name']} seed={seed}: "
                             f"{checkpoint}"
                         )
+                    evaluation_seed = int(budget["evaluation_seed"]) + int(seed) * LEARNED_EVALUATION_SEED_STRIDE
+                    checkpoint, selection_metadata = select_validation_checkpoint(
+                        plan,
+                        budget_name,
+                        budget,
+                        algorithm,
+                        scenario,
+                        seed,
+                        config,
+                        checkpoint,
+                        evaluation_seed,
+                    )
                     agent.load_actor(checkpoint)
 
                 evaluation_seed = int(budget["evaluation_seed"]) + int(seed) * LEARNED_EVALUATION_SEED_STRIDE
@@ -247,6 +260,7 @@ def evaluate_benchmark(
                     row["budget"] = budget_name
                     row["training_seed"] = seed
                     row["evaluation_seed"] = evaluation_seed
+                    row.update(selection_metadata)
                     row.update(fallback_metadata)
                 output_path = evaluation_csv_path(plan, budget_name, algorithm, scenario, seed)
                 write_rows(rows, output_path)
@@ -257,6 +271,7 @@ def evaluate_benchmark(
                     summary["budget"] = budget_name
                     summary["training_seed"] = seed
                     summary["evaluation_seed"] = evaluation_seed
+                    summary.update(selection_metadata)
                     summary.update(fallback_metadata)
                     write_summary(summary, evaluation_summary_path(plan, budget_name, algorithm, scenario, seed))
                 jobs_run += 1
@@ -388,6 +403,8 @@ def run_post_training_steps(
         max_steps=int(settings.get("max_steps", budget["max_steps_per_episode"])),
         baseline_policy=baseline_policy,
         min_improvement=float(settings.get("min_improvement", 0.0)),
+        anchor_keep_probability=float(settings.get("anchor_keep_probability", 0.0)),
+        anchor_keep_weight=float(settings.get("anchor_keep_weight", 1.0)),
     )
     checkpoint_path = local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
     agent.save(checkpoint_path)
@@ -415,6 +432,132 @@ def local_search_settings(plan: dict[str, Any], budget: dict[str, Any], algorith
     budget_settings = dict(budget.get("local_search", {}).get(algorithm, {}))
     settings.update(budget_settings)
     return settings
+
+
+def checkpoint_selection_settings(config: dict[str, Any], budget: dict[str, Any]) -> dict[str, Any]:
+    settings = dict(config.get("checkpoint_selection", {}))
+    settings.update(dict(budget.get("checkpoint_selection", {})))
+    return settings
+
+
+def select_validation_checkpoint(
+    plan: dict[str, Any],
+    budget_name: str,
+    budget: dict[str, Any],
+    algorithm: str,
+    scenario: dict[str, Any],
+    seed: int,
+    config: dict[str, Any],
+    default_checkpoint: Path,
+    evaluation_seed: int,
+) -> tuple[Path, dict[str, Any]]:
+    settings = checkpoint_selection_settings(config, budget)
+    if not bool(settings.get("enabled", False)):
+        return default_checkpoint, {"checkpoint_selection_enabled": False}
+
+    candidates = learned_checkpoint_candidates(
+        plan,
+        budget_name,
+        algorithm,
+        scenario,
+        seed,
+        default_checkpoint,
+    )
+    if len(candidates) <= 1:
+        return default_checkpoint, {
+            "checkpoint_selection_enabled": True,
+            "checkpoint_selection_selected_path": str(default_checkpoint),
+            "checkpoint_selection_selected_label": checkpoint_label(default_checkpoint),
+            "checkpoint_selection_candidate_count": len(candidates),
+        }
+
+    validation_replications = int(
+        settings.get(
+            "validation_replications",
+            anchor_fallback_settings(config, budget).get("validation_replications", 5),
+        )
+    )
+    validation_seed = (
+        int(evaluation_seed)
+        + int(settings.get("validation_seed_offset", 200000))
+        + int(seed) * int(settings.get("validation_seed_stride", 1000))
+    )
+    max_steps = int(config.get("max_steps_per_episode", budget["max_steps_per_episode"]))
+    scored: list[tuple[float, Path]] = []
+    for path in candidates:
+        validation_env = build_env(config, seed=validation_seed)
+        validation_agent = get_agent_class(algorithm)(
+            validation_env.observation_size,
+            validation_env.action_size,
+            config,
+        )
+        validation_agent.load_actor(path)
+        rows = evaluate_agent(
+            validation_agent,
+            validation_env,
+            algorithm=algorithm,
+            seed=validation_seed,
+            replications=validation_replications,
+            max_steps=max_steps,
+        )
+        summary = summarize_rows(rows)
+        cost = float(summary.get("total_cost_mean", float("inf")))
+        scored.append((cost, path))
+
+    selected_cost, selected_path = min(scored, key=lambda item: item[0])
+    print(
+        "checkpoint_selection "
+        f"algorithm={algorithm} selected={checkpoint_label(selected_path)} "
+        f"cost={selected_cost:.3f} candidates={len(candidates)}",
+        flush=True,
+    )
+    return selected_path, {
+        "checkpoint_selection_enabled": True,
+        "checkpoint_selection_selected_path": str(selected_path),
+        "checkpoint_selection_selected_label": checkpoint_label(selected_path),
+        "checkpoint_selection_validation_cost": selected_cost,
+        "checkpoint_selection_candidate_count": len(candidates),
+        "checkpoint_selection_validation_replications": validation_replications,
+        "checkpoint_selection_validation_seed": validation_seed,
+    }
+
+
+def learned_checkpoint_candidates(
+    plan: dict[str, Any],
+    budget_name: str,
+    algorithm: str,
+    scenario: dict[str, Any],
+    seed: int,
+    default_checkpoint: Path,
+) -> tuple[Path, ...]:
+    checkpoint_dir = checkpoint_dir_path(plan, budget_name, algorithm, scenario, seed)
+    pattern = f"{algorithm}_seed{int(seed)}_episode*.pt"
+    candidates = sorted(checkpoint_dir.glob(pattern), key=checkpoint_sort_key)
+    local_search_path = local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
+    if local_search_path.exists():
+        candidates.append(local_search_path)
+    if default_checkpoint.exists() and default_checkpoint not in candidates:
+        candidates.append(default_checkpoint)
+    return tuple(dict.fromkeys(candidates))
+
+
+def checkpoint_sort_key(path: Path) -> tuple[int, str]:
+    stem = path.stem
+    if "_episode" in stem:
+        try:
+            return (int(stem.rsplit("_episode", 1)[1]), stem)
+        except ValueError:
+            return (10**9, stem)
+    return (10**9, stem)
+
+
+def checkpoint_label(path: Path) -> str:
+    stem = path.stem
+    if "_episode" in stem:
+        return f"episode{stem.rsplit('_episode', 1)[1]}"
+    if stem.endswith("_local_search"):
+        return "local_search"
+    return stem
 
 
 def maybe_apply_anchor_fallback(

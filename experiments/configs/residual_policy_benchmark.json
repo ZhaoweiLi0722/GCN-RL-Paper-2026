@@ -197,8 +197,8 @@
           "scale": 0.05,
           "group_scales": {
             "specimen_transfer": 0.0,
-            "reagent_transfer": 0.02,
-            "capacity_transfer": 0.02,
+            "reagent_transfer": 0.05,
+            "capacity_transfer": 0.05,
             "replenishment": 0.05
           },
           "center_groups": [
@@ -232,8 +232,8 @@
           "scale": 0.05,
           "group_scales": {
             "specimen_transfer": 0.0,
-            "reagent_transfer": 0.03,
-            "capacity_transfer": 0.03,
+            "reagent_transfer": 0.05,
+            "capacity_transfer": 0.05,
             "replenishment": 0.05
           },
           "center_groups": [
@@ -267,8 +267,8 @@
           "scale": 0.05,
           "group_scales": {
             "specimen_transfer": 0.0,
-            "reagent_transfer": 0.02,
-            "capacity_transfer": 0.02,
+            "reagent_transfer": 0.05,
+            "capacity_transfer": 0.05,
             "replenishment": 0.05
           },
           "center_groups": [
@@ -302,8 +302,8 @@
           "scale": 0.05,
           "group_scales": {
             "specimen_transfer": 0.0,
-            "reagent_transfer": 0.02,
-            "capacity_transfer": 0.02,
+            "reagent_transfer": 0.05,
+            "capacity_transfer": 0.05,
             "replenishment": 0.05
           },
           "center_groups": [
@@ -523,34 +523,46 @@
         "validation_replications": 10,
         "min_improvement": 0.005
       },
+      "checkpoint_selection": {
+        "enabled": true,
+        "validation_replications": 10
+      },
       "local_search": {
         "flat_residual_mdl2": {
           "rollouts": 5,
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
-          "epochs": 4,
-          "min_improvement": 0.0
+          "epochs": 12,
+          "min_improvement": 0.0,
+          "anchor_keep_probability": 0.5,
+          "anchor_keep_weight": 100000.0
         },
         "flat_residual_pmyo": {
           "rollouts": 5,
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
-          "epochs": 4,
-          "min_improvement": 0.0
+          "epochs": 12,
+          "min_improvement": 0.0,
+          "anchor_keep_probability": 0.5,
+          "anchor_keep_weight": 100000.0
         },
         "gcn_residual_mdl2": {
           "rollouts": 5,
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
-          "epochs": 4,
-          "min_improvement": 0.0
+          "epochs": 12,
+          "min_improvement": 0.0,
+          "anchor_keep_probability": 0.5,
+          "anchor_keep_weight": 100000.0
         },
         "gcn_residual_pmyo": {
           "rollouts": 5,
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
-          "epochs": 4,
-          "min_improvement": 0.0
+          "epochs": 12,
+          "min_improvement": 0.0,
+          "anchor_keep_probability": 0.5,
+          "anchor_keep_weight": 100000.0
         }
       }
     },

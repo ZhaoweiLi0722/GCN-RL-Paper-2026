@@ -266,6 +266,41 @@ class GraphStateConversionTests(unittest.TestCase):
 
         self.assertAlmostEqual(float(transformed[3 * n : 4 * n].mean()), 0.0, places=6)
 
+    def test_pressure_projection_aligns_residual_with_state_pattern(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=31)
+        state = env.reset(seed=31)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.25,
+                    "center_groups": ["reagent_transfer"],
+                    "pressure_projection": {
+                        "enabled": True,
+                        "groups": ["reagent_transfer"],
+                    },
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        n = env.config.num_facilities
+        state_tensor = torch.as_tensor(state, dtype=torch.float32).unsqueeze(0)
+        network_action = torch.zeros((1, env.action_size), dtype=torch.float32)
+        network_action[0, n : 2 * n] = torch.linspace(-1.0, 1.0, n)
+
+        residual = agent._policy_residuals_tensor(state_tensor, network_action).detach().numpy()[0]
+        pattern = agent._residual_pressure_patterns_tensor(state_tensor)["resource"][0]
+        current = network_action[:, n : 2 * n]
+        denominator = pattern.pow(2).sum().clamp_min(1e-6)
+        coefficient = float((current[0] * pattern).sum() / denominator)
+        expected = (coefficient * pattern).numpy()
+
+        np.testing.assert_allclose(residual[n : 2 * n], expected, atol=1e-6)
+        np.testing.assert_allclose(residual[2 * n : 3 * n], np.zeros(n), atol=1e-6)
+
     def test_gcn_agent_fits_external_action_batch(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=19)
         config = _config_dict()

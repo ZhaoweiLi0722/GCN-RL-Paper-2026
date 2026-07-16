@@ -310,11 +310,84 @@ Result: the path completed end-to-end. The learned residual was still rejected
 by anchor fallback in smoke, but the feature-layout change is now verified
 inside the actual benchmark runner.
 
+Forced targeted rerun with anchor-action node features,
+`gcn_residual_mdl2`, `patient_condition_stress`, seed 0:
+
+- post-training local search again found 236 improved steps
+- mean step improvement remained about 152.2k
+- validation still selected the anchor:
+  learned residual cost 912.34M vs. MDL-2 anchor cost 906.04M
+
+Interpretation: the input representation alone did not solve the gap. The
+teacher can find useful local corrections, but the student is still too likely
+to over-apply those corrections outside the states where they are safe.
+
+The next distillation change adds anchor-reference samples: local search still
+keeps strictly improving actions, but it also samples a controlled fraction of
+the heuristic anchor actions from the same visited state distribution. This
+turns post-training into a conservative residual fit, teaching both "where to
+correct" and "where to leave MDL-2 alone."
+
+Anchor-reference targeted rerun, `gcn_residual_mdl2`,
+`patient_condition_stress`, seed 0:
+
+- local-search samples increased from 236 to 374
+- anchor-reference steps: 138
+- post-training fit loss improved from about 0.101 to 0.094
+- validation still selected the anchor:
+  learned residual cost 911.58M vs. MDL-2 anchor cost 906.04M
+
+This helped fit quality slightly but did not close the validation gap. The next
+structural change is pressure-projected residual actions: reagent transfer,
+capacity transfer, and replenishment residuals are projected onto state-derived
+shortage/surplus pressure patterns. This reduces the action head's freedom to
+emit arbitrary per-clinic corrections and should make learned graph corrections
+more consistent with the network-balancing teacher.
+
+Pressure-projected targeted rerun, `gcn_residual_mdl2`,
+`patient_condition_stress`, seed 0:
+
+- elite-imitation losses dropped by roughly an order of magnitude during
+  training, indicating that the projected correction class is much easier to fit
+- validation improved modestly but still selected the anchor:
+  learned residual cost 910.84M vs. MDL-2 anchor cost 906.04M
+
+One remaining mismatch is correction magnitude. The local-search teacher tests
+transfer perturbations as large as 0.05, but the learned transfer residual scale
+was previously capped at 0.02. The next run aligns GCN reagent-transfer and
+capacity-transfer residual scales with the teacher at 0.05, while keeping the
+pressure projection active as a trust-region guardrail.
+
+Scale-aligned targeted rerun, `gcn_residual_mdl2`,
+`patient_condition_stress`, seed 0:
+
+- post-training fit loss improved from about 0.094 to 0.046
+- validation still selected the anchor:
+  learned residual cost 911.21M vs. MDL-2 anchor cost 906.04M
+- checkpoint diagnosis showed early stopping matters:
+  episode 50 validation cost 909.23M, episode 100 validation cost 910.65M,
+  post-local-search validation cost 911.21M
+
+The next runner change enables validation-based learned-checkpoint selection
+before anchor fallback. This prevents later training or local-search
+distillation from overwriting the best learned residual checkpoint.
+
+Checkpoint-selection rerun on the same trained artifacts:
+
+- selected learned checkpoint: episode 50
+- checkpoint-selection validation cost: 842.52M on the checkpoint-selection split
+- anchor-fallback validation still selected MDL-2:
+  selected learned checkpoint cost 909.23M vs. MDL-2 anchor cost 906.04M
+
+This is the best patient-stress learned result so far for this seed. It reduces
+the learned-vs-anchor validation gap to about 0.35%, but it does not yet justify
+deploying the learned residual over MDL-2 in this scenario.
+
 ## Next Experiment Changes
 
 Highest-priority changes before any longer run:
 
-1. Rerun `gcn_residual_mdl2` with anchor-action node features on `patient_condition_stress` and `graph_dynamic_patient_forecast_geo`.
+1. Run the same checkpoint-selection flow on `graph_dynamic_patient_forecast_geo` and seed 1 to determine whether the remaining gap is scenario- or seed-specific.
 2. Keep `pmyo` as the fair condition-aware heuristic; de-emphasize the older `umyo` surge policy unless it is retuned.
 3. Run a targeted 100-episode pilot on:
    - `graph_dynamic_patient_forecast_geo`

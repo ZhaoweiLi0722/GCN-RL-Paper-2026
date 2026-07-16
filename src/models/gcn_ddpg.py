@@ -50,6 +50,9 @@ class GCNDDPGAgent:
         self.residual_scale = float(residual_config.get("scale", 0.25))
         self.residual_scale_vector = self._make_residual_scale_vector(residual_config)
         self.residual_center_slices = self._make_residual_center_slices(residual_config)
+        self.residual_pressure_projection_groups = self._make_pressure_projection_groups(
+            residual_config
+        )
         self.residual_l2_weight = float(residual_config.get("l2_weight", 0.0))
         self.residual_base_policy = str(residual_config.get("base_policy", "mdl2"))
         self.residual_base_settings = heuristic_settings_for_policy(
@@ -196,7 +199,7 @@ class GCNDDPGAgent:
         actor_loss = -self.critic(node_features, actor_actions).mean()
         residual_l2_loss_value = None
         if self.residual_action_enabled and self.residual_l2_weight > 0.0:
-            residual_l2_loss = self._transform_network_residuals_tensor(network_actions).pow(2).mean()
+            residual_l2_loss = self._policy_residuals_tensor(states, network_actions).pow(2).mean()
             actor_loss = actor_loss + self.residual_l2_weight * residual_l2_loss
             residual_l2_loss_value = float(residual_l2_loss.item())
         imitation_loss_value = None
@@ -439,7 +442,7 @@ class GCNDDPGAgent:
         if not self.residual_action_enabled:
             return np.asarray(network_action, dtype=np.float32)
         base_action = self._base_action_from_state_np(state)
-        residual_action = self._transform_network_residual_np(network_action)
+        residual_action = self._policy_residual_np(state, network_action)
         return np.clip(
             base_action + self.residual_scale_vector * residual_action,
             -1.0,
@@ -450,13 +453,36 @@ class GCNDDPGAgent:
         if not self.residual_action_enabled:
             return network_actions
         base_actions = self._base_actions_from_states_tensor(states)
-        residual_actions = self._transform_network_residuals_tensor(network_actions)
+        residual_actions = self._policy_residuals_tensor(states, network_actions)
         scale = torch.as_tensor(
             self.residual_scale_vector,
             dtype=network_actions.dtype,
             device=network_actions.device,
         )
         return torch.clamp(base_actions + scale * residual_actions, -1.0, 1.0)
+
+    def _policy_residual_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
+        if not self.residual_pressure_projection_groups:
+            return self._transform_network_residual_np(network_action)
+        with torch.no_grad():
+            state_tensor = torch.as_tensor(
+                state,
+                dtype=torch.float32,
+                device=self.device,
+            ).unsqueeze(0)
+            action_tensor = torch.as_tensor(
+                network_action,
+                dtype=torch.float32,
+                device=self.device,
+            ).unsqueeze(0)
+            residual = self._policy_residuals_tensor(state_tensor, action_tensor)
+        return residual.cpu().numpy()[0].astype(np.float32)
+
+    def _policy_residuals_tensor(self, states, network_actions):
+        residuals = self._transform_network_residuals_tensor(network_actions)
+        if not self.residual_pressure_projection_groups:
+            return residuals
+        return self._project_residuals_to_pressure_patterns(states, residuals)
 
     def _transform_network_residual_np(self, network_action: np.ndarray) -> np.ndarray:
         residual = np.asarray(network_action, dtype=np.float32).copy()
@@ -474,6 +500,86 @@ class GCNDDPGAgent:
                 keepdim=True,
             )
         return torch.clamp(residuals, -1.0, 1.0)
+
+    def _project_residuals_to_pressure_patterns(self, states, residuals):
+        patterns = self._residual_pressure_patterns_tensor(states)
+        projected = residuals.clone()
+        n = self.graph_spec.num_facilities
+        group_patterns = {
+            "reagent_transfer": patterns["resource"],
+            "reagent": patterns["resource"],
+            "capacity_transfer": patterns["capacity"],
+            "capacity": patterns["capacity"],
+            "replenishment": patterns["resource"],
+            "purchase": patterns["resource"],
+        }
+        group_slices = self._facility_net_group_slices(n)
+        for group in self.residual_pressure_projection_groups:
+            pattern = group_patterns.get(group)
+            group_slice = group_slices.get(group)
+            if pattern is None or group_slice is None:
+                continue
+            current = projected[:, group_slice]
+            denominator = pattern.pow(2).sum(dim=1, keepdim=True).clamp_min(1e-6)
+            coefficient = (current * pattern).sum(dim=1, keepdim=True) / denominator
+            projected[:, group_slice] = coefficient * pattern
+        return torch.clamp(projected, -1.0, 1.0)
+
+    def _residual_pressure_patterns_tensor(self, states):
+        n = self.graph_spec.num_facilities
+        lead_time = int(self.env_config.get("production_lead_time", 3))
+        include_supplier = int(bool(self.env_config.get("include_supplier_state", False)))
+        include_forecast = int(bool(self.env_config.get("include_demand_forecast_state", False)))
+        include_transfer_pipeline = int(
+            bool(self.env_config.get("include_transfer_pipeline_state", False))
+        )
+        features_per_facility = 3 + lead_time + include_supplier + include_forecast
+        features_per_facility += 3 * include_transfer_pipeline
+        facility_state = states[:, : n * features_per_facility].reshape(
+            states.shape[0],
+            n,
+            features_per_facility,
+        )
+        demand = facility_state[:, :, 0]
+        specimens = facility_state[:, :, 1]
+        reagents = facility_state[:, :, 2]
+        idle_bioreactors = facility_state[:, :, 3]
+        if include_forecast:
+            forecast_col = 3 + lead_time + include_supplier
+            forecast = facility_state[:, :, forecast_col]
+        else:
+            forecast = demand
+        risk = self._patient_risk_signal_tensor(states, features_per_facility)
+        resource_pressure = demand + 0.25 * forecast + specimens - reagents + 0.5 * risk
+        capacity_pressure = demand + 0.25 * forecast + specimens - idle_bioreactors + 0.5 * risk
+        return {
+            "resource": self._centered_unit_pattern_tensor(resource_pressure),
+            "capacity": self._centered_unit_pattern_tensor(capacity_pressure),
+        }
+
+    def _patient_risk_signal_tensor(self, states, features_per_facility: int):
+        if self.env_config.get("env_type") != "patient_condition":
+            return torch.zeros(
+                (states.shape[0], self.graph_spec.num_facilities),
+                dtype=states.dtype,
+                device=states.device,
+            )
+        n = self.graph_spec.num_facilities
+        summary_edges = tuple(self.env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
+        summary_width = 3 + len(summary_edges) + 1
+        base_width = n * int(features_per_facility)
+        expected_width = base_width + n * summary_width
+        if states.shape[1] < expected_width:
+            return torch.zeros((states.shape[0], n), dtype=states.dtype, device=states.device)
+        summary = states[:, base_width:expected_width].reshape(states.shape[0], n, summary_width)
+        near_expiry = summary[:, :, 2]
+        critical_survival = summary[:, :, 3] if summary_width > 3 else torch.zeros_like(near_expiry)
+        return near_expiry + critical_survival
+
+    def _centered_unit_pattern_tensor(self, values):
+        centered = values - values.mean(dim=1, keepdim=True)
+        denominator = centered.abs().amax(dim=1, keepdim=True).clamp_min(1e-6)
+        return centered / denominator
 
     def _base_action_from_state_np(self, state: np.ndarray) -> np.ndarray:
         return facility_net_action_from_state(
@@ -522,6 +628,30 @@ class GCNDDPGAgent:
                 raise ValueError(f"Unsupported residual action center group: {group}")
             slices.append(group_slices[group])
         return tuple(slices)
+
+    def _make_pressure_projection_groups(self, residual_config: dict[str, Any]) -> tuple[str, ...]:
+        if not bool(residual_config.get("enabled", False)):
+            return ()
+        projection = residual_config.get("pressure_projection", {})
+        if isinstance(projection, bool):
+            enabled = projection
+            groups = ("reagent_transfer", "capacity_transfer", "replenishment")
+        else:
+            projection = dict(projection or {})
+            enabled = bool(projection.get("enabled", False))
+            groups = projection.get(
+                "groups",
+                ("reagent_transfer", "capacity_transfer", "replenishment"),
+            )
+        if not enabled:
+            return ()
+        if isinstance(groups, str):
+            groups = (groups,)
+        supported = set(self._facility_net_group_slices(self.graph_spec.num_facilities))
+        unknown = [str(group) for group in tuple(groups or ()) if str(group) not in supported]
+        if unknown:
+            raise ValueError(f"Unsupported pressure_projection groups: {unknown}")
+        return tuple(str(group) for group in tuple(groups or ()))
 
     def _facility_net_group_slices(self, n: int) -> dict[str, slice]:
         return {

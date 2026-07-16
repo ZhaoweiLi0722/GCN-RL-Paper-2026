@@ -77,6 +77,7 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(targeted_100["num_episodes"], 100)
         self.assertEqual(targeted_100["anchor_fallback"]["validation_replications"], 10)
         self.assertEqual(targeted_100["anchor_fallback"]["min_improvement"], 0.005)
+        self.assertEqual(targeted_100["local_search"]["gcn_residual_mdl2"]["min_improvement"], 0.0)
         self.assertIn("flat_residual_mdl2", select_algorithms(plan, None, primary_only=True))
         self.assertIn("flat_residual_pmyo", select_algorithms(plan, None, primary_only=True))
         self.assertIn("gcn_residual_mdl2", select_algorithms(plan, None, primary_only=True))
@@ -373,7 +374,9 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
 
         actions = local_search_candidate_actions(state, env, MyopicPolicy(), epsilons=(0.05,))
 
-        self.assertEqual(len(actions), 5)
+        self.assertGreaterEqual(len(actions), 11)
+        self.assertTrue(any(np.any(action[env.config.num_facilities : 2 * env.config.num_facilities]) for action in actions))
+        self.assertTrue(any(np.any(action[2 * env.config.num_facilities : 3 * env.config.num_facilities]) for action in actions))
         for action in actions:
             self.assertEqual(action.shape, (env.action_size,))
             self.assertTrue(np.all(action >= -1.0))

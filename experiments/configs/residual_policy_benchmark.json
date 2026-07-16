@@ -457,56 +457,56 @@
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "flat_residual_iso": {
           "rollouts": 2,
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "flat_residual_myo": {
           "rollouts": 2,
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "flat_residual_pmyo": {
           "rollouts": 2,
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "gcn_residual_mdl2": {
           "rollouts": 2,
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "gcn_residual_iso": {
           "rollouts": 2,
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "gcn_residual_myo": {
           "rollouts": 2,
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "gcn_residual_pmyo": {
           "rollouts": 2,
           "lookahead": 2,
           "epsilons": [0.02, 0.05],
           "epochs": 2,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         }
       }
     },
@@ -529,28 +529,28 @@
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
           "epochs": 4,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "flat_residual_pmyo": {
           "rollouts": 5,
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
           "epochs": 4,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "gcn_residual_mdl2": {
           "rollouts": 5,
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
           "epochs": 4,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         },
         "gcn_residual_pmyo": {
           "rollouts": 5,
           "lookahead": 4,
           "epsilons": [0.02, 0.05],
           "epochs": 4,
-          "min_improvement": -1.0
+          "min_improvement": 0.0
         }
       }
     },

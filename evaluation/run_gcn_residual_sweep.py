@@ -589,15 +589,32 @@ def local_search_candidate_actions(
     baseline_action = baseline.select_action(state, explore=False, env=env)
     actions = [baseline_action]
     n = int(env.config.num_facilities)
-    pressure = (
+    resource_pressure = (
         np.asarray(env.demand, dtype=float)
         + 0.25 * np.asarray(getattr(env, "demand_forecast", env.demand), dtype=float)
         + np.asarray(env.specimens, dtype=float)
         - np.asarray(env.reagents, dtype=float)
     )
-    centered_pressure = pressure - float(pressure.mean())
-    denominator = max(float(np.max(np.abs(centered_pressure))), 1e-6)
-    pressure_pattern = centered_pressure / denominator
+    if hasattr(env, "at_risk_counts"):
+        resource_pressure = (
+            resource_pressure
+            + 0.5 * _env_vector(env, "at_risk_counts", n)
+            + 0.5 * _env_vector(env, "near_expiry_counts", n)
+        )
+    capacity_pressure = (
+        np.asarray(env.demand, dtype=float)
+        + 0.25 * np.asarray(getattr(env, "demand_forecast", env.demand), dtype=float)
+        + np.asarray(env.specimens, dtype=float)
+        - np.asarray(env.bioreactors[:, 0], dtype=float)
+    )
+    if hasattr(env, "at_risk_counts"):
+        capacity_pressure = (
+            capacity_pressure
+            + 0.5 * _env_vector(env, "at_risk_counts", n)
+            + 0.5 * _env_vector(env, "near_expiry_counts", n)
+        )
+    resource_pattern = _centered_unit_pattern(resource_pressure)
+    capacity_pattern = _centered_unit_pattern(capacity_pressure)
     for epsilon in epsilons:
         epsilon = float(epsilon)
         for sign in (-1.0, 1.0):
@@ -611,12 +628,59 @@ def local_search_candidate_actions(
 
             pressure_action = baseline_action.copy()
             pressure_action[3 * n : 4 * n] = np.clip(
-                pressure_action[3 * n : 4 * n] + sign * epsilon * pressure_pattern,
+                pressure_action[3 * n : 4 * n] + sign * epsilon * resource_pattern,
                 -1.0,
                 1.0,
             )
             actions.append(pressure_action.astype(np.float32))
+
+            reagent_transfer = baseline_action.copy()
+            reagent_transfer[n : 2 * n] = np.clip(
+                reagent_transfer[n : 2 * n] + sign * epsilon * resource_pattern,
+                -1.0,
+                1.0,
+            )
+            actions.append(reagent_transfer.astype(np.float32))
+
+            capacity_transfer = baseline_action.copy()
+            capacity_transfer[2 * n : 3 * n] = np.clip(
+                capacity_transfer[2 * n : 3 * n] + sign * epsilon * capacity_pattern,
+                -1.0,
+                1.0,
+            )
+            actions.append(capacity_transfer.astype(np.float32))
+
+            combined_transfer = baseline_action.copy()
+            combined_transfer[n : 2 * n] = np.clip(
+                combined_transfer[n : 2 * n] + sign * epsilon * resource_pattern,
+                -1.0,
+                1.0,
+            )
+            combined_transfer[2 * n : 3 * n] = np.clip(
+                combined_transfer[2 * n : 3 * n] + sign * epsilon * capacity_pattern,
+                -1.0,
+                1.0,
+            )
+            actions.append(combined_transfer.astype(np.float32))
     return actions
+
+
+def _centered_unit_pattern(values: np.ndarray) -> np.ndarray:
+    centered = np.asarray(values, dtype=float) - float(np.mean(values))
+    denominator = max(float(np.max(np.abs(centered))), 1e-6)
+    return centered / denominator
+
+
+def _env_vector(env, name: str, length: int) -> np.ndarray:
+    value = getattr(env, name, None)
+    if value is None:
+        return np.zeros(int(length), dtype=float)
+    if callable(value):
+        value = value()
+    vector = np.asarray(value, dtype=float)
+    if vector.shape != (int(length),):
+        raise ValueError(f"Expected env.{name} shape {(int(length),)}, got {vector.shape}")
+    return vector
 
 
 def rollout_cost_after_action(env, baseline, action: np.ndarray, *, horizon: int) -> float:

@@ -242,6 +242,39 @@ deploying the learned residual. A seed with only a small validation edge did not
 generalize on the 50-replication formal stream, so this margin is a practical
 trust-region guardrail rather than a cosmetic threshold.
 
+## Graph Residual Performance Diagnosis
+
+The first targeted matrix did not show a graph advantage because the local
+search teacher mostly perturbed replenishment decisions. Those corrections are
+node-local and can be represented about as well by a flat residual model as by a
+GCN. In other words, the learned policy was not being given many graph-structured
+transfer corrections to imitate.
+
+To give the graph policy a better target, the local-search candidate generator
+now includes graph-aware reagent-transfer and capacity-transfer net-flow
+patterns. The pressure signal combines demand, forecast, waiting workload,
+reagent/capacity scarcity, and patient-risk counts when available. Mini-pilot
+and targeted-pilot local search now keep only strictly improving demonstrations
+(`min_improvement = 0.0`), while smoke remains permissive so the path can be
+tested quickly.
+
+Smoke validation:
+
+```bash
+.venv/bin/python -m evaluation.run_full_benchmark \
+  --plan experiments/configs/residual_policy_benchmark.json \
+  --budget smoke \
+  --phase all \
+  --force \
+  --algorithms gcn_residual_mdl2 mdl2 \
+  --scenarios patient_condition_stress
+```
+
+Result: the new graph-aware local search path completed end-to-end and found
+2 improved demonstrations in the 3-step smoke setting. The next meaningful test
+is a forced `targeted_100` rerun for `gcn_residual_mdl2` on
+`patient_condition_stress`, followed by the same arm on the geography scenario.
+
 ## Next Experiment Changes
 
 Highest-priority changes before any longer run:

@@ -275,11 +275,46 @@ Result: the new graph-aware local search path completed end-to-end and found
 is a forced `targeted_100` rerun for `gcn_residual_mdl2` on
 `patient_condition_stress`, followed by the same arm on the geography scenario.
 
+Forced targeted rerun, `gcn_residual_mdl2`, `patient_condition_stress`, seed 0:
+
+- local-search demonstrations increased from 170 to 236 improved steps
+- mean step improvement increased from about 112.7k to 152.2k
+- validation still selected the anchor:
+  learned residual cost 910.74M vs. MDL-2 anchor cost 906.04M
+
+This means the remaining performance bottleneck is not only finding better
+one-step/short-horizon corrections; it is making the actor generalize those
+corrections robustly across the validation stream.
+
+The next model-side change adds the heuristic anchor action directly to each
+facility node feature for residual GCN policies. Each node now receives its
+anchor `(w,e,q,p)` action values, so the graph actor can learn "how to alter
+the MDL-2 decision" rather than infer the anchor decision only from inventory,
+demand, and patient-risk state. This is enabled only for residual graph policies
+with `include_base_action_features=true`; pure GCN policies keep the original
+feature layout.
+
+Anchor-action feature smoke validation:
+
+```bash
+.venv/bin/python -m evaluation.run_full_benchmark \
+  --plan experiments/configs/residual_policy_benchmark.json \
+  --budget smoke \
+  --phase all \
+  --force \
+  --algorithms gcn_residual_mdl2 mdl2 \
+  --scenarios patient_condition_stress
+```
+
+Result: the path completed end-to-end. The learned residual was still rejected
+by anchor fallback in smoke, but the feature-layout change is now verified
+inside the actual benchmark runner.
+
 ## Next Experiment Changes
 
 Highest-priority changes before any longer run:
 
-1. Use the new `targeted_100` budget to run a decisive residual-vs-anchor pilot with anchor fallback enabled.
+1. Rerun `gcn_residual_mdl2` with anchor-action node features on `patient_condition_stress` and `graph_dynamic_patient_forecast_geo`.
 2. Keep `pmyo` as the fair condition-aware heuristic; de-emphasize the older `umyo` surge policy unless it is retuned.
 3. Run a targeted 100-episode pilot on:
    - `graph_dynamic_patient_forecast_geo`

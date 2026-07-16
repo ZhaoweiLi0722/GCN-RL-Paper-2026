@@ -25,6 +25,7 @@
   "residual_action": {
     "enabled": true,
     "base_policy": "mdl2",
+    "include_base_action_features": true,
     "zero_init_actor": true,
     "scale": 0.05,
     "group_scales": {

@@ -13,6 +13,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Sequence
 
+import numpy as np
+
 from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
 from src.graph.geography import geographic_knn_edges, normalize_coordinates
 from src.rl.networks import require_torch, torch
@@ -36,6 +38,10 @@ class GraphStateSpec:
     normalize_node_features: bool = False
     node_feature_scale: tuple[float, ...] = ()
     patient_summary_width: int = 0
+    include_base_action_features: bool = False
+    base_action_policy: str = ""
+    base_action_policy_config: dict[str, Any] | None = None
+    env_config: dict[str, Any] | None = None
 
 
 def _patient_summary_width(env_config: dict[str, Any]) -> int:
@@ -151,11 +157,18 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         graph_edges.extend(edge_sets[edge_type])
     graph_edges = list(_dedupe_edges(graph_edges, num_nodes))
 
+    residual_config = dict(config.get("residual_action", {}))
+    include_base_action_features = bool(
+        residual_config.get("enabled", False)
+        and residual_config.get("include_base_action_features", False)
+    )
+    base_action_width = 4 * int(include_base_action_features)
     node_feature_dim = (
         5
         + int(include_supplier_state)
         + int(include_forecast)
         + 3 * int(include_transfer_pipeline)
+        + base_action_width
         + int(include_hub)
         + summary_width
     )
@@ -175,6 +188,10 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         normalize_node_features=normalize_node_features,
         node_feature_scale=node_feature_scale,
         patient_summary_width=summary_width,
+        include_base_action_features=include_base_action_features,
+        base_action_policy=str(residual_config.get("base_policy", "")),
+        base_action_policy_config=dict(residual_config.get("base_policy_config", {})),
+        env_config=env_config,
     )
 
 
@@ -222,6 +239,8 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
             + int(graph_spec.include_demand_forecast_state)
         )
         feature_parts.append(facility_state[:, :, pending_start : pending_start + 3])
+    if graph_spec.include_base_action_features:
+        feature_parts.append(_base_action_node_features(state, graph_spec))
     if graph_spec.include_central_capacity_hub:
         feature_parts.append(torch.zeros_like(demand))
     if summary_state is not None:
@@ -245,6 +264,30 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
     hub_features[:, 0, hub_flag_col] = 1.0
     node_features = torch.cat((node_features, hub_features), dim=1)
     return _normalize_node_features(node_features, graph_spec)
+
+
+def _base_action_node_features(state, graph_spec: GraphStateSpec):
+    from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
+
+    if not graph_spec.base_action_policy:
+        raise ValueError("base action features require residual_action.base_policy")
+    if graph_spec.env_config is None:
+        raise ValueError("base action features require env_config in GraphStateSpec")
+    settings = heuristic_settings_for_policy(
+        graph_spec.base_action_policy,
+        graph_spec.base_action_policy_config or {},
+    )
+    n = graph_spec.num_facilities
+    state_np = state.detach().cpu().numpy()
+    base_actions = np.stack(
+        [
+            facility_net_action_from_state(row, graph_spec.env_config, settings=settings)
+            for row in state_np
+        ],
+        axis=0,
+    )
+    node_features = base_actions.reshape(base_actions.shape[0], 4, n).transpose(0, 2, 1)
+    return torch.as_tensor(node_features, dtype=state.dtype, device=state.device)
 
 
 def _normalize_node_features(node_features, graph_spec: GraphStateSpec):

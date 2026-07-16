@@ -104,6 +104,31 @@ class GraphStateConversionTests(unittest.TestCase):
         self.assertEqual(spec.node_feature_dim, 8)
         np.testing.assert_allclose(node_features, env.graph_observation()["node_features"])
 
+    def test_residual_graph_features_include_base_action(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=37)
+        state = env.reset(seed=37)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "include_base_action_features": True,
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        state_tensor = torch.as_tensor(state, dtype=torch.float32)
+
+        node_features = flat_state_to_node_features(state_tensor, agent.graph_spec).numpy()[0]
+        base_action = agent._base_action_from_state_np(state).reshape(4, env.config.num_facilities).T
+
+        self.assertEqual(agent.graph_spec.node_feature_dim, 11)
+        np.testing.assert_allclose(node_features[: env.config.num_facilities, 6:10], base_action)
+        np.testing.assert_allclose(node_features[env.config.num_facilities, 6:10], np.zeros(4))
+        self.assertEqual(float(node_features[env.config.num_facilities, 10]), 1.0)
+
     def test_facility_action_actor_readout_matches_facility_net_layout(self) -> None:
         actor = GCNActor(
             node_feature_dim=7,

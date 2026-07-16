@@ -383,11 +383,34 @@ This is the best patient-stress learned result so far for this seed. It reduces
 the learned-vs-anchor validation gap to about 0.35%, but it does not yet justify
 deploying the learned residual over MDL-2 in this scenario.
 
+Geography scenario rerun, `gcn_residual_mdl2`,
+`graph_dynamic_patient_forecast_geo`, seed 0:
+
+- local search found 245 improved steps
+- mean step improvement: 201.97k
+- post-training fit loss: 0.062
+- checkpoint selection chose the local-search checkpoint
+- anchor-fallback validation: learned 3.578B vs. MDL-2 3.584B
+- because the validation improvement was about 0.17%, below the 0.5% safety
+  margin, fallback conservatively selected MDL-2
+
+Learned-only formal evaluation on the 50-replication targeted stream:
+
+- GCN residual learned-only total cost: 3.495B
+- MDL-2 total cost on the same stream: 3.504B
+- learned-only improvement: about 0.26%
+- learned-only average waiting time: 10.10 vs. MDL-2 10.14
+
+This is the first clear positive graph-residual signal: in the geography/network
+scenario, the learned graph correction is slightly better than MDL-2 on both
+validation and formal streams, but the improvement is still smaller than the
+current conservative 0.5% deployment margin.
+
 ## Next Experiment Changes
 
 Highest-priority changes before any longer run:
 
-1. Run the same checkpoint-selection flow on `graph_dynamic_patient_forecast_geo` and seed 1 to determine whether the remaining gap is scenario- or seed-specific.
+1. Run the same checkpoint-selection flow on seed 1 for both `patient_condition_stress` and `graph_dynamic_patient_forecast_geo` to determine whether the graph-residual advantage is stable.
 2. Keep `pmyo` as the fair condition-aware heuristic; de-emphasize the older `umyo` surge policy unless it is retuned.
 3. Run a targeted 100-episode pilot on:
    - `graph_dynamic_patient_forecast_geo`

@@ -429,3 +429,41 @@ Highest-priority changes before any longer run:
    - `iso`
 
 SAC/PPO should stay outside the next decisive pilot until the residual/control formulation is stronger; otherwise they will mostly measure training instability rather than the value of graph-aware control.
+
+## Seed 1 Follow-Up
+
+Current targeted logs contain 100 training episodes per learned job. Across the
+saved `targeted_100` matrix this is 16 learned jobs, or 1600 logged episodes.
+Because several forced reruns overwrite the same CSVs, the actual compute spent
+on `gcn_residual_mdl2` is higher than the logged artifact count.
+
+Fresh seed 1 reruns with the current graph-residual formulation:
+
+`patient_condition_stress`, seed 1:
+
+- local search found 237 improved steps
+- anchor-reference steps: 124
+- mean step improvement: 168.47k
+- post-training fit loss: 0.058
+- checkpoint selection chose episode 100
+- anchor fallback selected MDL-2:
+  learned validation cost 834.56M vs. MDL-2 828.63M
+- formal 50-rep stream therefore matches MDL-2 through fallback:
+  828.48M total cost
+
+`graph_dynamic_patient_forecast_geo`, seed 1:
+
+- local search found 241 improved steps
+- anchor-reference steps: 124
+- mean step improvement: 192.78k
+- post-training fit loss: 0.061
+- checkpoint selection chose episode 50
+- anchor fallback selected the learned policy:
+  learned validation cost 3.385B vs. MDL-2 3.405B
+- formal 50-rep stream:
+  GCN residual 3.423B vs. MDL-2 3.444B, about 0.60% lower total cost
+
+The geography/network result is now positive on both seed 0 and seed 1. Seed 0
+was positive learned-only but below the conservative 0.5% deployment margin;
+seed 1 clears that margin and deploys the learned residual. The patient-stress
+scenario remains heuristic-dominant under the current reward/action design.

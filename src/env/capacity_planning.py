@@ -16,6 +16,7 @@ from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edge
 from src.graph.geography import (
     geographic_distance_matrix,
     geographic_knn_edges,
+    geographic_transfer_time_matrix,
     normalize_coordinates,
 )
 
@@ -68,6 +69,9 @@ class CapacityPlanningConfig:
     clinic_coordinates: Sequence[Sequence[float]] | None = None
     geographic_neighbor_k: int = 3
     geographic_transfer_cost_scale: float = 0.0
+    geographic_transfer_speed_mph: float = 500.0
+    geographic_transfer_fixed_hours: float = 0.5
+    geographic_transfer_time_cost_scale: float = 0.0
     transfer_lead_time_distance_thresholds: Sequence[float] | None = None
     regional_supplier_disruption_probability: float = 0.0
     regional_supplier_disruption_duration: int = 0
@@ -122,6 +126,18 @@ class CapacityPlanningEnv:
         self.clinic_coordinates = normalize_coordinates(self.config.clinic_coordinates, n)
         self.clinic_distance_matrix = (
             np.asarray(geographic_distance_matrix(self.clinic_coordinates), dtype=float)
+            if self.clinic_coordinates
+            else None
+        )
+        self.clinic_transfer_time_hours_matrix = (
+            np.asarray(
+                geographic_transfer_time_matrix(
+                    self.clinic_coordinates,
+                    speed_mph=self.config.geographic_transfer_speed_mph,
+                    fixed_handling_hours=self.config.geographic_transfer_fixed_hours,
+                ),
+                dtype=float,
+            )
             if self.clinic_coordinates
             else None
         )
@@ -332,6 +348,10 @@ class CapacityPlanningEnv:
             graph["clinic_coordinates"] = np.asarray(self.clinic_coordinates, dtype=np.float32)
         if self.clinic_distance_matrix is not None:
             graph["clinic_distance_matrix"] = self.clinic_distance_matrix.astype(np.float32)
+        if self.clinic_transfer_time_hours_matrix is not None:
+            graph["clinic_transfer_time_hours_matrix"] = (
+                self.clinic_transfer_time_hours_matrix.astype(np.float32)
+            )
         return graph
 
     def noop_action(self) -> np.ndarray:
@@ -656,6 +676,12 @@ class CapacityPlanningEnv:
             normalize_coordinates(self.config.clinic_coordinates, self.config.num_facilities)
         if self.config.geographic_transfer_cost_scale < 0.0:
             raise ValueError("geographic_transfer_cost_scale must be nonnegative")
+        if self.config.geographic_transfer_speed_mph <= 0.0:
+            raise ValueError("geographic_transfer_speed_mph must be positive")
+        if self.config.geographic_transfer_fixed_hours < 0.0:
+            raise ValueError("geographic_transfer_fixed_hours must be nonnegative")
+        if self.config.geographic_transfer_time_cost_scale < 0.0:
+            raise ValueError("geographic_transfer_time_cost_scale must be nonnegative")
         if self.config.transfer_lead_time_distance_thresholds is not None:
             thresholds = [float(value) for value in self.config.transfer_lead_time_distance_thresholds]
             if any(value < 0.0 for value in thresholds):
@@ -816,14 +842,27 @@ class CapacityPlanningEnv:
         i, j = edge
         return float(self.clinic_distance_matrix[int(i), int(j)])
 
+    def _edge_transfer_time_hours(self, edge: Edge) -> float:
+        if self.clinic_transfer_time_hours_matrix is None:
+            return 0.0
+        i, j = edge
+        return float(self.clinic_transfer_time_hours_matrix[int(i), int(j)])
+
     def _edge_transfer_cost(self, base_cost: float, edges: Sequence[Edge], edge_flows: np.ndarray) -> float:
         edge_flows = np.asarray(edge_flows, dtype=float)
-        if self.clinic_distance_matrix is None or self.config.geographic_transfer_cost_scale == 0.0:
+        if (
+            self.clinic_distance_matrix is None
+            and self.clinic_transfer_time_hours_matrix is None
+        ):
             return float(base_cost) * float(np.abs(edge_flows).sum())
         total = 0.0
         for edge, flow in zip(edges, edge_flows):
-            multiplier = 1.0 + float(self.config.geographic_transfer_cost_scale) * (
-                self._edge_distance(edge) / 1000.0
+            multiplier = (
+                1.0
+                + float(self.config.geographic_transfer_cost_scale)
+                * (self._edge_distance(edge) / 1000.0)
+                + float(self.config.geographic_transfer_time_cost_scale)
+                * self._edge_transfer_time_hours(edge)
             )
             total += float(base_cost) * multiplier * abs(float(flow))
         return total
@@ -836,14 +875,21 @@ class CapacityPlanningEnv:
         net_flows: np.ndarray,
     ) -> float:
         base_total = float(base_cost) * float(np.abs(net_flows).sum())
-        if self.clinic_distance_matrix is None or self.config.geographic_transfer_cost_scale == 0.0:
+        if (
+            self.clinic_distance_matrix is None
+            and self.clinic_transfer_time_hours_matrix is None
+        ):
             return base_total
         distance_surcharge = 0.0
         for edge, flow in zip(edges, np.asarray(edge_flows, dtype=float)):
             distance_surcharge += (
                 float(base_cost)
-                * float(self.config.geographic_transfer_cost_scale)
-                * (self._edge_distance(edge) / 1000.0)
+                * (
+                    float(self.config.geographic_transfer_cost_scale)
+                    * (self._edge_distance(edge) / 1000.0)
+                    + float(self.config.geographic_transfer_time_cost_scale)
+                    * self._edge_transfer_time_hours(edge)
+                )
                 * abs(float(flow))
             )
         return base_total + distance_surcharge

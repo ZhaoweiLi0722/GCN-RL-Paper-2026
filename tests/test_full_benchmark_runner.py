@@ -259,6 +259,7 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(config["env"]["graph_ablation"], "full_graph")
         self.assertEqual(len(config["env"]["clinic_coordinates"]), 20)
         self.assertGreater(config["env"]["geographic_transfer_cost_scale"], 0.0)
+        self.assertGreater(config["env"]["geographic_transfer_time_cost_scale"], 0.0)
         self.assertGreater(config["env"]["regional_supplier_disruption_probability"], 0.0)
         self.assertEqual(config["env"]["transfer_lead_time"], 0)
         self.assertFalse(config["env"]["include_transfer_pipeline_state"])

@@ -91,6 +91,7 @@ class GCNDDPGAgent:
             actor_hidden_sizes,
             include_global_context=include_global_context,
             readout_mode=actor_readout_mode,
+            edge_weights=self.graph_spec.edge_weights,
         ).to(self.device)
         self.actor_target = GCNActor(
             self.graph_spec.node_feature_dim,
@@ -102,6 +103,7 @@ class GCNDDPGAgent:
             actor_hidden_sizes,
             include_global_context=include_global_context,
             readout_mode=actor_readout_mode,
+            edge_weights=self.graph_spec.edge_weights,
         ).to(self.device)
         self.critic = GCNCritic(
             self.graph_spec.node_feature_dim,
@@ -112,6 +114,7 @@ class GCNDDPGAgent:
             gcn_hidden_sizes,
             critic_hidden_sizes,
             include_global_context=include_global_context,
+            edge_weights=self.graph_spec.edge_weights,
         ).to(self.device)
         self.critic_target = GCNCritic(
             self.graph_spec.node_feature_dim,
@@ -122,6 +125,7 @@ class GCNDDPGAgent:
             gcn_hidden_sizes,
             critic_hidden_sizes,
             include_global_context=include_global_context,
+            edge_weights=self.graph_spec.edge_weights,
         ).to(self.device)
         if self.residual_action_enabled and bool(residual_config.get("zero_init_actor", False)):
             self._zero_initialize_actor_output(self.actor)

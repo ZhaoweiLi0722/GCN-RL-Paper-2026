@@ -182,12 +182,14 @@ class RLUtilsTest(unittest.TestCase):
         self.assertFalse(env.config.include_transfer_pipeline_state)
         self.assertEqual(len(env.clinic_coordinates), 20)
         self.assertGreater(env.config.geographic_transfer_cost_scale, 0.0)
+        self.assertGreater(env.config.geographic_transfer_time_cost_scale, 0.0)
         self.assertGreater(env.config.regional_supplier_disruption_probability, 0.0)
         self.assertTrue(env.config.include_demand_forecast_state)
         self.assertEqual(env.observation_size, 300)
         self.assertEqual(graph["node_features"].shape, (21, 15))
         self.assertEqual(graph["clinic_coordinates"].shape, (20, 2))
         self.assertEqual(graph["clinic_distance_matrix"].shape, (20, 20))
+        self.assertEqual(graph["clinic_transfer_time_hours_matrix"].shape, (20, 20))
         self.assertEqual(scaler.scales.shape, (300,))
 
     def test_gcn_config_enables_imitation_pretrain(self):

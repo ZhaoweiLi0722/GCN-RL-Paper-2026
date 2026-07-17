@@ -55,6 +55,7 @@ class GCNSACAgent:
                 gcn_hidden_sizes,
                 head_hidden_sizes,
                 include_global_context=include_global_context,
+                edge_weights=self.graph_spec.edge_weights,
             ).to(self.device)
 
         self.actor = GCNSquashedGaussianActor(
@@ -66,6 +67,7 @@ class GCNSACAgent:
             gcn_hidden_sizes,
             head_hidden_sizes,
             include_global_context=include_global_context,
+            edge_weights=self.graph_spec.edge_weights,
         ).to(self.device)
         self.critic1 = make_critic()
         self.critic2 = make_critic()

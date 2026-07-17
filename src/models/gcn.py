@@ -23,21 +23,25 @@ def build_normalized_adjacency(
     num_nodes: int,
     edges: Sequence[Edge],
     *,
+    edge_weights: Sequence[float] | None = None,
     device=None,
 ):
     """Return symmetric normalized adjacency with self-loops."""
 
     require_torch()
+    weights = [1.0] * len(edges) if edge_weights is None else [float(value) for value in edge_weights]
+    if len(weights) != len(edges):
+        raise ValueError("edge_weights must have the same length as edges")
     adjacency = torch.eye(num_nodes, dtype=torch.float32, device=device)
-    for i, j in edges:
+    for (i, j), weight in zip(edges, weights):
         source = int(i)
         target = int(j)
         if source == target:
             continue
         if source < 0 or target < 0 or source >= num_nodes or target >= num_nodes:
             raise ValueError(f"Edge {(source, target)} is outside the {num_nodes}-node graph")
-        adjacency[source, target] = 1.0
-        adjacency[target, source] = 1.0
+        adjacency[source, target] = max(float(weight), 0.0)
+        adjacency[target, source] = max(float(weight), 0.0)
 
     degree = adjacency.sum(dim=1).clamp_min(1.0)
     degree_inv_sqrt = torch.pow(degree, -0.5)
@@ -67,11 +71,15 @@ if torch is not None:
             hidden_sizes: Sequence[int],
             num_nodes: int,
             edges: Sequence[Edge],
+            edge_weights: Sequence[float] | None = None,
         ):
             super().__init__()
             if not hidden_sizes:
                 raise ValueError("hidden_sizes must contain at least one GCN layer")
-            self.register_buffer("adjacency", build_normalized_adjacency(num_nodes, edges))
+            self.register_buffer(
+                "adjacency",
+                build_normalized_adjacency(num_nodes, edges, edge_weights=edge_weights),
+            )
             layers = []
             previous_dim = int(node_feature_dim)
             for hidden_dim in hidden_sizes:
@@ -116,11 +124,18 @@ if torch is not None:
             edges: Sequence[Edge],
             gcn_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
+            edge_weights: Sequence[float] | None = None,
         ):
             super().__init__()
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
-            self.encoder = GCNEncoder(node_feature_dim, gcn_hidden_sizes, num_nodes, edges)
+            self.encoder = GCNEncoder(
+                node_feature_dim,
+                gcn_hidden_sizes,
+                num_nodes,
+                edges,
+                edge_weights=edge_weights,
+            )
             self.output_dim = graph_readout_dim(
                 self.num_facilities, self.encoder.output_dim, self.include_global_context
             )
@@ -144,12 +159,19 @@ if torch is not None:
             head_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
             readout_mode: str = "global_flat",
+            edge_weights: Sequence[float] | None = None,
         ):
             super().__init__()
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
             self.readout_mode = str(readout_mode)
-            self.encoder = GCNEncoder(node_feature_dim, gcn_hidden_sizes, num_nodes, edges)
+            self.encoder = GCNEncoder(
+                node_feature_dim,
+                gcn_hidden_sizes,
+                num_nodes,
+                edges,
+                edge_weights=edge_weights,
+            )
             if self.readout_mode == "global_flat":
                 readout_dim = self.num_facilities * self.encoder.output_dim
                 if self.include_global_context:
@@ -231,11 +253,18 @@ if torch is not None:
             gcn_hidden_sizes: Sequence[int],
             head_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
+            edge_weights: Sequence[float] | None = None,
         ):
             super().__init__()
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
-            self.encoder = GCNEncoder(node_feature_dim, gcn_hidden_sizes, num_nodes, edges)
+            self.encoder = GCNEncoder(
+                node_feature_dim,
+                gcn_hidden_sizes,
+                num_nodes,
+                edges,
+                edge_weights=edge_weights,
+            )
             readout_dim = self.num_facilities * self.encoder.output_dim
             if self.include_global_context:
                 readout_dim += self.encoder.output_dim
@@ -265,11 +294,13 @@ if torch is not None:
             gcn_hidden_sizes: Sequence[int],
             head_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
+            edge_weights: Sequence[float] | None = None,
         ):
             super().__init__()
             self.extractor = GraphFeatureExtractor(
                 node_feature_dim, num_facilities, num_nodes, edges, gcn_hidden_sizes,
                 include_global_context=include_global_context,
+                edge_weights=edge_weights,
             )
             self.backbone = _build_hidden_mlp(self.extractor.output_dim, head_hidden_sizes, "relu")
             last_dim = int(head_hidden_sizes[-1]) if head_hidden_sizes else self.extractor.output_dim
@@ -310,11 +341,13 @@ if torch is not None:
             gcn_hidden_sizes: Sequence[int],
             head_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
+            edge_weights: Sequence[float] | None = None,
         ):
             super().__init__()
             self.extractor = GraphFeatureExtractor(
                 node_feature_dim, num_facilities, num_nodes, edges, gcn_hidden_sizes,
                 include_global_context=include_global_context,
+                edge_weights=edge_weights,
             )
             self.backbone = _build_hidden_mlp(self.extractor.output_dim, head_hidden_sizes, "tanh")
             last_dim = int(head_hidden_sizes[-1]) if head_hidden_sizes else self.extractor.output_dim
@@ -369,11 +402,13 @@ if torch is not None:
             gcn_hidden_sizes: Sequence[int],
             head_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
+            edge_weights: Sequence[float] | None = None,
         ):
             super().__init__()
             self.extractor = GraphFeatureExtractor(
                 node_feature_dim, num_facilities, num_nodes, edges, gcn_hidden_sizes,
                 include_global_context=include_global_context,
+                edge_weights=edge_weights,
             )
             self.head = _build_mlp(
                 self.extractor.output_dim, head_hidden_sizes, 1, output_tanh=False

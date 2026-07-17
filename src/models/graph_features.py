@@ -16,7 +16,11 @@ from typing import Any, Sequence
 import numpy as np
 
 from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
-from src.graph.geography import geographic_knn_edges, normalize_coordinates
+from src.graph.geography import (
+    geographic_knn_edges,
+    geographic_transfer_time_matrix,
+    normalize_coordinates,
+)
 from src.rl.networks import require_torch, torch
 from src.rl.preprocessing import graph_node_feature_scale
 
@@ -35,6 +39,7 @@ class GraphStateSpec:
     node_feature_dim: int
     num_nodes: int
     edge_index: tuple[Edge, ...]
+    edge_weights: tuple[float, ...] = ()
     normalize_node_features: bool = False
     node_feature_scale: tuple[float, ...] = ()
     patient_summary_width: int = 0
@@ -156,6 +161,7 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
             raise ValueError(f"Unsupported GCN edge type: {edge_type}")
         graph_edges.extend(edge_sets[edge_type])
     graph_edges = list(_dedupe_edges(graph_edges, num_nodes))
+    edge_weights = _geographic_edge_weights(env_config, graph_edges, num_facilities)
 
     residual_config = dict(config.get("residual_action", {}))
     include_base_action_features = bool(
@@ -185,6 +191,7 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         node_feature_dim=node_feature_dim,
         num_nodes=num_nodes,
         edge_index=tuple(graph_edges),
+        edge_weights=edge_weights,
         normalize_node_features=normalize_node_features,
         node_feature_scale=node_feature_scale,
         patient_summary_width=summary_width,
@@ -330,3 +337,36 @@ def _dedupe_edges(edges: Sequence[Sequence[int]], num_nodes: int) -> tuple[Edge,
             raise ValueError(f"Edge {(i, j)} is outside the {num_nodes}-node graph")
         normalized.append((min(i, j), max(i, j)))
     return tuple(dict.fromkeys(normalized))
+
+
+def _geographic_edge_weights(
+    env_config: dict[str, Any],
+    edges: Sequence[Edge],
+    num_facilities: int,
+) -> tuple[float, ...]:
+    coordinates = normalize_coordinates(env_config.get("clinic_coordinates"), num_facilities)
+    time_cost_scale = float(env_config.get("geographic_transfer_time_cost_scale", 0.0))
+    if not coordinates or time_cost_scale <= 0.0:
+        return tuple(1.0 for _ in edges)
+
+    speed = float(env_config.get("geographic_transfer_speed_mph", 500.0))
+    fixed_hours = float(env_config.get("geographic_transfer_fixed_hours", 0.5))
+    time_scale = float(env_config.get("geographic_edge_weight_time_scale_hours", 4.0))
+    if time_scale <= 0.0:
+        raise ValueError("geographic_edge_weight_time_scale_hours must be positive")
+    transfer_times = np.asarray(
+        geographic_transfer_time_matrix(
+            coordinates,
+            speed_mph=speed,
+            fixed_handling_hours=fixed_hours,
+        ),
+        dtype=float,
+    )
+    weights: list[float] = []
+    for i, j in edges:
+        if int(i) >= num_facilities or int(j) >= num_facilities:
+            weights.append(1.0)
+            continue
+        hours = float(transfer_times[int(i), int(j)])
+        weights.append(max(float(np.exp(-hours / time_scale)), 0.05))
+    return tuple(weights)

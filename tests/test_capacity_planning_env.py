@@ -122,6 +122,8 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         self.assertEqual(env.resource_edges, ((0, 1), (2, 3)))
         self.assertEqual(graph["clinic_coordinates"].shape, (4, 2))
         self.assertEqual(graph["clinic_distance_matrix"].shape, (4, 4))
+        self.assertEqual(graph["clinic_transfer_time_hours_matrix"].shape, (4, 4))
+        self.assertGreater(float(graph["clinic_transfer_time_hours_matrix"][0, 1]), 0.0)
 
     def test_facility_net_transfer_lead_time_delays_arrivals(self):
         config = CapacityPlanningConfig(
@@ -230,6 +232,40 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         _observation, _reward, _done, geo_info = geo.step(action)
 
         self.assertGreater(float(geo_info["cost"]), float(plain_info["cost"]))
+
+    def test_geographic_transfer_time_cost_increases_with_hours(self):
+        base_config = dict(
+            num_facilities=2,
+            production_lead_time=2,
+            episode_horizon=1,
+            demand_rates=(0.0, 0.0),
+            initial_specimens=(0.0, 0.0),
+            initial_reagents=(20.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0),
+            max_specimens=(50.0, 50.0),
+            max_reagents=(50.0, 50.0),
+            max_idle_bioreactors=(10.0, 10.0),
+            max_reagent_replenishment=(0.0, 0.0),
+            max_reagent_transfer=20.0,
+            action_mode="facility_net",
+            clinic_coordinates=((34.0485, -118.2577), (32.7530, -117.1650)),
+            geographic_neighbor_k=1,
+            geographic_transfer_cost_scale=0.0,
+        )
+        plain = CapacityPlanningEnv(CapacityPlanningConfig(**base_config), seed=12)
+        timed = CapacityPlanningEnv(
+            CapacityPlanningConfig(**base_config, geographic_transfer_time_cost_scale=0.2),
+            seed=12,
+        )
+        action = plain.noop_action()
+        action[2] = -1.0
+        action[3] = 1.0
+
+        _observation, _reward, _done, plain_info = plain.step(action)
+        _observation, _reward, _done, timed_info = timed.step(action)
+
+        self.assertEqual(timed.config.transfer_lead_time, 0)
+        self.assertGreater(float(timed_info["cost"]), float(plain_info["cost"]))
 
     def test_regional_supplier_disruption_uses_geographic_cluster(self):
         config = CapacityPlanningConfig(

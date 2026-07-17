@@ -63,6 +63,7 @@ class GCNTD3Agent:
                 head_hidden_sizes,
                 include_global_context=include_global_context,
                 readout_mode=readout_mode,
+                edge_weights=self.graph_spec.edge_weights,
             ).to(self.device)
 
         def make_critic():
@@ -75,6 +76,7 @@ class GCNTD3Agent:
                 gcn_hidden_sizes,
                 head_hidden_sizes,
                 include_global_context=include_global_context,
+                edge_weights=self.graph_spec.edge_weights,
             ).to(self.device)
 
         self.actor = make_actor()

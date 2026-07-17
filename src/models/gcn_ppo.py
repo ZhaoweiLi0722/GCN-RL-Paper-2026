@@ -61,6 +61,7 @@ class GCNPPOAgent:
             gcn_hidden_sizes,
             head_hidden_sizes,
             include_global_context=include_global_context,
+            edge_weights=self.graph_spec.edge_weights,
         ).to(self.device)
         self.critic = GCNValue(
             self.graph_spec.node_feature_dim,
@@ -70,6 +71,7 @@ class GCNPPOAgent:
             gcn_hidden_sizes,
             head_hidden_sizes,
             include_global_context=include_global_context,
+            edge_weights=self.graph_spec.edge_weights,
         ).to(self.device)
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=float(config.get("actor_lr", 3e-4)))
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=float(config.get("critic_lr", 1e-3)))

@@ -64,12 +64,15 @@ class GraphSpecTests(unittest.TestCase):
                     [20.0, 21.0],
                 ],
                 "geographic_neighbor_k": 1,
+                "geographic_transfer_time_cost_scale": 0.05,
             },
         }
 
         spec = build_graph_spec(config, state_dim=24)
 
         self.assertEqual(spec.edge_index, ((0, 1), (2, 3)))
+        self.assertEqual(len(spec.edge_weights), len(spec.edge_index))
+        self.assertTrue(all(0.0 < weight < 1.0 for weight in spec.edge_weights))
 
 
 @unittest.skipIf(torch is None, "PyTorch is not installed")

@@ -93,6 +93,10 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             select_scenarios(plan, ["patient_condition_stress"])[0]["name"],
             "patient_condition_stress",
         )
+        self.assertEqual(
+            select_scenarios(plan, ["patient_condition_geo"])[0]["name"],
+            "patient_condition_geo",
+        )
 
     def test_training_config_preserves_algorithm_graph_ablation(self) -> None:
         plan = load_benchmark_plan()
@@ -243,6 +247,21 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(gcn_config["residual_action"]["base_policy"], "pmyo")
         self.assertEqual(gcn_config["imitation_pretrain"]["policy"], "pmyo")
         self.assertEqual(flat_config["env"]["env_type"], "patient_condition")
+
+    def test_patient_condition_geo_plan_combines_patient_and_geography(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["patient_condition_geo"])[0]
+        config = make_training_config(plan, "smoke", budget, "gcn_residual_mdl2", scenario, seed=0)
+
+        self.assertEqual(config["env"]["env_type"], "patient_condition")
+        self.assertEqual(config["env"]["scenario_name"], "patient_condition_geo")
+        self.assertEqual(config["env"]["graph_ablation"], "full_graph")
+        self.assertEqual(len(config["env"]["clinic_coordinates"]), 20)
+        self.assertGreater(config["env"]["geographic_transfer_cost_scale"], 0.0)
+        self.assertGreater(config["env"]["regional_supplier_disruption_probability"], 0.0)
+        self.assertEqual(config["env"]["transfer_lead_time"], 0)
+        self.assertFalse(config["env"]["include_transfer_pipeline_state"])
 
     def test_anchor_fallback_settings_and_decision_rule(self) -> None:
         plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")

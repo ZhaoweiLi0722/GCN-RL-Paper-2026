@@ -258,6 +258,59 @@ and targeted-pilot local search now keep only strictly improving demonstrations
 (`min_improvement = 0.0`), while smoke remains permissive so the path can be
 tested quickly.
 
+## Joint Patient-Condition + Geography Scenario
+
+The earlier benchmark split the paper's main setting across two scenarios:
+
+- `graph_dynamic_patient_forecast_geo`: geography, regional disruption,
+  heterogeneous 20-clinic demand/resources, and transfer delays, but no
+  patient-condition deterioration layer.
+- `patient_condition_stress`: patient deterioration, expiry, and urgency
+  penalties, but no geographic clinic network.
+
+This is useful diagnostically, but it is not the final manuscript scenario. The
+paper argument is about graph-aware control under both patient condition and
+geographic network structure. To align the benchmark with that argument, the
+plan now includes:
+
+- `experiments/configs/20_clinic_patient_condition_geo.json`
+- scenario name: `patient_condition_geo`
+
+This first joint scenario combines the 20 clinic coordinates, geographic KNN
+information graph, geographic transfer cost scale, regional supplier disruption,
+demand shocks, demand forecast state, heterogeneous clinic demand/resource
+profiles, and the patient-condition deterioration / expiry / urgency layer.
+
+Current modeling caveat: `PatientConditionCapacityEnv` still requires
+`transfer_lead_time == 0`, because inter-clinic patient/specimen routing with
+delayed cold-chain viability is deferred in the current MVP. Therefore this
+first joint scenario includes geography in graph structure, regional disruption,
+and transfer costs, but not distance-based delayed transfer pipelines.
+
+Smoke validation command:
+
+```bash
+PYTHONPYCACHEPREFIX=/private/tmp/gcn_rl_pycache .venv/bin/python \
+  -m evaluation.run_full_benchmark \
+  --plan experiments/configs/residual_policy_benchmark.json \
+  --budget smoke \
+  --phase all \
+  --force \
+  --algorithms gcn_residual_mdl2 mdl2 \
+  --scenarios patient_condition_geo
+```
+
+Smoke result:
+
+- local-search generated 3 improving residual demonstrations;
+- anchor fallback selected `mdl2` after 1-episode training;
+- `gcn_residual_mdl2` and `mdl2` matched at 10.32M total cost under fallback;
+- the runner wrote the combined-scenario row to
+  `results/residual_policy_benchmark/smoke/aggregate_summary.csv`.
+
+Next experimental step: run a targeted pilot on `patient_condition_geo` before
+making any new manuscript claim about the proposed graph residual method.
+
 Smoke validation:
 
 ```bash

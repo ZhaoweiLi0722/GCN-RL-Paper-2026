@@ -166,6 +166,30 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(graph["clinic_distance_matrix"].shape, (20, 20))
         self.assertEqual(scaler.scales.shape, (220,))
 
+    def test_patient_condition_geography_config_builds_env(self):
+        from src.env.patient_capacity_planning import PatientConditionCapacityEnv
+
+        env_config = load_config("experiments/configs/20_clinic_patient_condition_geo.json")
+        config = load_config("configs/gcn_residual_20_clinic.yaml")
+        config["env"] = env_config
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+        graph = env.graph_observation()
+
+        self.assertIsInstance(env, PatientConditionCapacityEnv)
+        self.assertEqual(env.scenario_name, "patient_condition_geo")
+        self.assertEqual(env.config.transfer_lead_time, 0)
+        self.assertFalse(env.config.include_transfer_pipeline_state)
+        self.assertEqual(len(env.clinic_coordinates), 20)
+        self.assertGreater(env.config.geographic_transfer_cost_scale, 0.0)
+        self.assertGreater(env.config.regional_supplier_disruption_probability, 0.0)
+        self.assertTrue(env.config.include_demand_forecast_state)
+        self.assertEqual(env.observation_size, 300)
+        self.assertEqual(graph["node_features"].shape, (21, 15))
+        self.assertEqual(graph["clinic_coordinates"].shape, (20, 2))
+        self.assertEqual(graph["clinic_distance_matrix"].shape, (20, 20))
+        self.assertEqual(scaler.scales.shape, (300,))
+
     def test_gcn_config_enables_imitation_pretrain(self):
         config = load_config("configs/gcn_ddpg_20_clinic.yaml")
         plan = load_config("experiments/configs/graph_stress_benchmark.json")

@@ -362,6 +362,10 @@
       "env_config": "experiments/configs/20_clinic_graph_dynamic_patient_forecast_geo.json"
     },
     {
+      "name": "patient_condition_geo",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo.json"
+    },
+    {
       "name": "patient_condition_stress",
       "env_config": "experiments/configs/20_clinic_patient_condition_stress.json"
     }

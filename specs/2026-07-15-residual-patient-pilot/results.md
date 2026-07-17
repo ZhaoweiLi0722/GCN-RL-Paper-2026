@@ -311,6 +311,105 @@ Smoke result:
 Next experimental step: run a targeted pilot on `patient_condition_geo` before
 making any new manuscript claim about the proposed graph residual method.
 
+### Targeted 100-Episode Joint-Scenario Result
+
+Command:
+
+```bash
+PYTHONPYCACHEPREFIX=/private/tmp/gcn_rl_pycache .venv/bin/python \
+  -m evaluation.run_full_benchmark \
+  --plan experiments/configs/residual_policy_benchmark.json \
+  --budget targeted_100 \
+  --phase all \
+  --force \
+  --algorithms gcn_residual_mdl2 flat_residual_mdl2 \
+    gcn_residual_pmyo flat_residual_pmyo mdl2 pmyo myo iso \
+  --scenarios patient_condition_geo
+```
+
+Budget:
+
+- learned training: 100 episodes x 2 seeds
+- evaluation: 50 replications x 2 seeds
+- aggregate count per algorithm: 100
+
+Aggregate formal evaluation, lower total cost is better:
+
+| Algorithm | Mean total cost | Service level | Avg. wait | Eligibility | Patients lost |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `iso` | 910.54M | 0.4810 | 2.737 | 0.5764 | 2739.4 |
+| `pmyo` | 957.96M | 0.5337 | 2.923 | 0.6577 | 2386.4 |
+| `gcn_residual_pmyo` | 957.96M | 0.5337 | 2.923 | 0.6577 | 2386.4 |
+| `flat_residual_pmyo` | 957.96M | 0.5337 | 2.923 | 0.6577 | 2386.4 |
+| `mdl2` | 963.94M | 0.4710 | 2.949 | 0.5774 | 2766.8 |
+| `gcn_residual_mdl2` | 963.94M | 0.4710 | 2.949 | 0.5774 | 2766.8 |
+| `flat_residual_mdl2` | 963.94M | 0.4710 | 2.949 | 0.5774 | 2766.8 |
+| `myo` | 971.70M | 0.5298 | 2.930 | 0.6562 | 2408.3 |
+
+Interpretation:
+
+- The conservative fallback made learned residual arms match their anchors in
+  formal evaluation.
+- `iso` is best by total cost, but it is worse on patient-facing outcomes than
+  `pmyo`/`myo`: lower service level, lower eligibility, and more patients lost.
+  This means the joint scenario is exposing a cost-vs-patient-benefit tradeoff,
+  not a single universally best policy.
+- `pmyo` is the strongest patient-facing heuristic in this targeted run, while
+  `iso` is the strongest pure cost heuristic.
+
+Validation/fallback diagnostics:
+
+| Algorithm/seed | Selected | Anchor | Learned validation gap vs anchor |
+| --- | --- | --- | ---: |
+| `gcn_residual_mdl2` seed 0 | anchor | `mdl2` | -0.237% |
+| `gcn_residual_mdl2` seed 1 | anchor | `mdl2` | -0.377% |
+| `flat_residual_mdl2` seed 0 | anchor | `mdl2` | -0.148% |
+| `flat_residual_mdl2` seed 1 | anchor | `mdl2` | -0.230% |
+| `gcn_residual_pmyo` seed 0 | anchor | `pmyo` | +2.147% |
+| `gcn_residual_pmyo` seed 1 | anchor | `pmyo` | +2.527% |
+| `flat_residual_pmyo` seed 0 | anchor | `pmyo` | +1.595% |
+| `flat_residual_pmyo` seed 1 | anchor | `pmyo` | +2.826% |
+
+Negative means the learned residual beat its anchor on validation. The MDL-2
+residuals show a small learned improvement, but not enough to clear the 0.5%
+safety margin. The pMYO residuals are worse than their anchor on validation,
+despite occasionally finding low-cost elite trajectories during training.
+
+Local-search diagnostics:
+
+| Algorithm | Improved steps | Mean step improvement | Local-search fit loss |
+| --- | ---: | ---: | ---: |
+| `gcn_residual_mdl2` | 258-259 | 158.0k-160.0k | 0.064-0.065 |
+| `flat_residual_mdl2` | 257-259 | 159.5k-173.1k | 0.122-0.127 |
+| `gcn_residual_pmyo` | 230-245 | 151.1k-163.1k | 0.081-0.089 |
+| `flat_residual_pmyo` | 234-238 | 169.5k-171.9k | 0.134-0.145 |
+
+Interpretation:
+
+- There is real local improvement space around both `mdl2` and `pmyo`; the
+  heuristic anchors are not locally unbeatable.
+- GCN residuals fit the local-search corrections much better than flat
+  residuals for both anchors.
+- This is the current best evidence for the graph component: graph structure
+  improves representation of correction demonstrations, even though conservative
+  deployment still falls back to the anchor in formal evaluation.
+- pMYO can produce very strong elite trajectories around the 780M-790M range,
+  but the learned residual policy is unstable and does not generalize on the
+  validation stream.
+
+Next modeling decision:
+
+1. Keep `gcn_residual_mdl2` as the safest proposed method for now.
+2. Treat `pmyo` as a patient-facing heuristic baseline and possible teacher,
+   not as the primary deployment anchor.
+3. Add a multi-objective or patient-weight sensitivity table, because `iso`
+   minimizes total cost while `pmyo` improves patient-facing metrics.
+4. To make graph advantage larger, extend the joint scenario beyond the current
+   MVP by supporting patient-condition geography with delayed transfer /
+   cold-chain viability. The current joint config includes geographic graph,
+   transfer costs, and regional disruption, but still uses
+   `transfer_lead_time == 0`.
+
 Smoke validation:
 
 ```bash

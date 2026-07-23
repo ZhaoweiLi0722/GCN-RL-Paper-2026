@@ -1,6 +1,6 @@
 {
   "env_type": "patient_condition",
-  "scenario_name": "patient_condition_geo",
+  "scenario_name": "patient_condition_geo_demand_drift",
   "supplier_disruption_rate": [
     0.45, 0.45, 0.45, 0.45, 0.45,
     0.12, 0.12, 0.12, 0.12, 0.12,
@@ -14,11 +14,17 @@
   "num_facilities": 20,
   "production_lead_time": 3,
   "episode_horizon": 52,
-  "demand_rates": [
+  "demand_rate_estimates": [
     7.5, 7.5, 7.5, 7.5, 7.5,
     3.2, 3.2, 3.2, 3.2, 3.2,
     6.0, 6.0, 6.0, 6.0, 6.0,
     3.5, 3.5, 3.5, 3.5, 3.5
+  ],
+  "demand_rates": [
+    10.5, 10.5, 10.5, 10.5, 10.5,
+    3.52, 3.52, 3.52, 3.52, 3.52,
+    7.5, 7.5, 7.5, 7.5, 7.5,
+    3.15, 3.15, 3.15, 3.15, 3.15
   ],
   "initial_specimens": 0,
   "initial_reagents": [

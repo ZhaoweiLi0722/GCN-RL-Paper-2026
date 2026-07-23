@@ -20,7 +20,7 @@ from evaluation.aggregate_results import (
 )
 from evaluation.evaluate_formal import evaluate_agent, summarize_rows, write_summary
 from evaluation.plot_results import _plot_grouped_bars, _read_rows as read_plot_rows
-from evaluation.run_gcn_residual_sweep import run_local_search_distillation
+from evaluation.run_gcn_residual_sweep import local_search_metric_score, run_local_search_distillation
 from src.baselines.heuristics import available_heuristics
 from src.rl.agents import get_agent_class
 from src.rl.config import load_config, save_config_snapshot
@@ -169,7 +169,33 @@ def train_benchmark(
                 print(f"train {algorithm} scenario={scenario['name']} seed={seed}", flush=True)
                 env = build_env(config, seed=seed)
                 agent = get_agent_class(algorithm)(env.observation_size, env.action_size, config)
-                rows = train_off_policy_agent(agent, env, config)
+                advantage_settings = advantage_distillation_settings(
+                    config,
+                    budget,
+                    algorithm,
+                )
+
+                def post_imitation_pretrain(current_agent, current_env):
+                    return run_advantage_distillation_pretrain(
+                        advantage_settings,
+                        algorithm=algorithm,
+                        seed=seed,
+                        agent=current_agent,
+                        env=current_env,
+                        config=config,
+                        budget=budget,
+                    )
+
+                rows = train_off_policy_agent(
+                    agent,
+                    env,
+                    config,
+                    post_imitation_pretrain=(
+                        post_imitation_pretrain
+                        if bool(advantage_settings.get("enabled", False))
+                        else None
+                    ),
+                )
                 post_training_summary = run_post_training_steps(
                     plan,
                     budget_name,
@@ -391,6 +417,10 @@ def run_post_training_steps(
             config.get("residual_action", {}).get("base_policy", "myo"),
         )
     )
+    min_service_level_delta = settings.get(
+        "min_service_level_delta",
+        anchor_fallback_settings(config, budget).get("min_service_level_delta"),
+    )
     summary = run_local_search_distillation(
         agent,
         env,
@@ -405,6 +435,20 @@ def run_post_training_steps(
         min_improvement=float(settings.get("min_improvement", 0.0)),
         anchor_keep_probability=float(settings.get("anchor_keep_probability", 0.0)),
         anchor_keep_weight=float(settings.get("anchor_keep_weight", 1.0)),
+        anchor_keep_on_improved=bool(settings.get("anchor_keep_on_improved", True)),
+        balance_label_weights=bool(settings.get("balance_label_weights", False)),
+        retain_for_regularization=bool(settings.get("retain_for_regularization", False)),
+        min_service_level_delta=(
+            float(min_service_level_delta)
+            if min_service_level_delta is not None
+            else None
+        ),
+        service_level_weight=float(settings.get("service_level_weight", 0.0)),
+        eligibility_rate_weight=float(settings.get("eligibility_rate_weight", 0.0)),
+        at_risk_unserved_weight=float(settings.get("at_risk_unserved_weight", 0.0)),
+        patients_lost_weight=float(settings.get("patients_lost_weight", 0.0)),
+        candidate_groups=local_search_candidate_groups(settings),
+        candidate_signs=local_search_candidate_signs(settings),
     )
     checkpoint_path = local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
     agent.save(checkpoint_path)
@@ -422,9 +466,108 @@ def run_post_training_steps(
     return summary
 
 
+def advantage_distillation_settings(
+    config: dict[str, Any],
+    budget: dict[str, Any],
+    algorithm: str,
+) -> dict[str, Any]:
+    settings = dict(config.get("advantage_distillation_pretrain", {}))
+    budget_settings = dict(
+        budget.get("advantage_distillation_pretrain", {}).get(algorithm, {})
+    )
+    return _deep_update(settings, budget_settings)
+
+
+def run_advantage_distillation_pretrain(
+    settings: dict[str, Any],
+    *,
+    algorithm: str,
+    seed: int,
+    agent,
+    env,
+    config: dict[str, Any],
+    budget: dict[str, Any],
+) -> dict[str, Any]:
+    if not bool(settings.get("enabled", False)):
+        return {}
+    if not hasattr(agent, "fit_action_batch"):
+        raise ValueError(f"{algorithm} does not support advantage distillation")
+
+    baseline_policy = str(
+        settings.get(
+            "baseline_policy",
+            config.get("residual_action", {}).get("base_policy", "mdl2"),
+        )
+    )
+    summary = run_local_search_distillation(
+        agent,
+        env,
+        seed=int(settings.get("seed", 98000))
+        + int(seed) * LEARNED_EVALUATION_SEED_STRIDE,
+        rollouts=int(settings.get("rollouts", 0)),
+        lookahead=int(settings.get("lookahead", 6)),
+        epsilons=tuple(float(value) for value in settings.get("epsilons", [0.005, 0.01])),
+        epochs=int(settings.get("epochs", 16)),
+        batch_size=int(settings.get("batch_size", config.get("batch_size", 64))),
+        max_steps=int(settings.get("max_steps", budget["max_steps_per_episode"])),
+        baseline_policy=baseline_policy,
+        min_improvement=float(settings.get("min_improvement", 0.0)),
+        anchor_keep_probability=float(settings.get("anchor_keep_probability", 1.0)),
+        anchor_keep_weight=float(settings.get("anchor_keep_weight", 1.0)),
+        anchor_keep_on_improved=bool(settings.get("anchor_keep_on_improved", False)),
+        balance_label_weights=bool(settings.get("balance_label_weights", True)),
+        retain_for_regularization=bool(settings.get("retain_for_regularization", True)),
+        min_service_level_delta=(
+            float(settings["min_service_level_delta"])
+            if settings.get("min_service_level_delta") is not None
+            else None
+        ),
+        service_level_weight=float(settings.get("service_level_weight", 0.0)),
+        eligibility_rate_weight=float(settings.get("eligibility_rate_weight", 0.0)),
+        at_risk_unserved_weight=float(settings.get("at_risk_unserved_weight", 0.0)),
+        patients_lost_weight=float(settings.get("patients_lost_weight", 0.0)),
+        candidate_groups=local_search_candidate_groups(settings),
+        candidate_signs=local_search_candidate_signs(settings),
+    )
+    renamed = {
+        key.replace("local_search_", "advantage_distillation_", 1): value
+        for key, value in summary.items()
+    }
+    print(
+        "advantage_distillation "
+        f"algorithm={algorithm} samples={renamed.get('advantage_distillation_samples', 0)} "
+        f"improved_steps={renamed.get('advantage_distillation_improved_steps', 0)} "
+        f"anchor_steps={renamed.get('advantage_distillation_anchor_keep_steps', 0)} "
+        f"improved_weight_fraction="
+        f"{renamed.get('advantage_distillation_improved_weight_fraction', 0):.3f}",
+        flush=True,
+    )
+    return renamed
+
+
 def algorithm_config_overrides(plan: dict[str, Any], algorithm: str) -> dict[str, Any]:
+    return _resolved_algorithm_config_overrides(plan, algorithm, seen=())
+
+
+def _resolved_algorithm_config_overrides(
+    plan: dict[str, Any],
+    algorithm: str,
+    *,
+    seen: tuple[str, ...],
+) -> dict[str, Any]:
+    if algorithm in seen:
+        chain = " -> ".join((*seen, algorithm))
+        raise ValueError(f"Cyclic algorithm inheritance: {chain}")
     settings = dict(plan.get("algorithm_settings", {}).get(algorithm, {}))
-    return dict(settings.get("config_overrides", {}))
+    parent = settings.get("inherits")
+    overrides: dict[str, Any] = {}
+    if parent:
+        overrides = _resolved_algorithm_config_overrides(
+            plan,
+            str(parent),
+            seen=(*seen, algorithm),
+        )
+    return _deep_update(overrides, dict(settings.get("config_overrides", {})))
 
 
 def local_search_settings(plan: dict[str, Any], budget: dict[str, Any], algorithm: str) -> dict[str, Any]:
@@ -432,6 +575,26 @@ def local_search_settings(plan: dict[str, Any], budget: dict[str, Any], algorith
     budget_settings = dict(budget.get("local_search", {}).get(algorithm, {}))
     settings.update(budget_settings)
     return settings
+
+
+def local_search_candidate_groups(settings: dict[str, Any]) -> tuple[str, ...] | None:
+    raw = settings.get("candidate_groups")
+    if raw is None or raw == "":
+        return None
+    if isinstance(raw, str):
+        raw = raw.replace("|", ",").split(",")
+    groups = tuple(str(group).strip() for group in raw if str(group).strip())
+    return groups or None
+
+
+def local_search_candidate_signs(settings: dict[str, Any]) -> tuple[float, ...] | None:
+    raw = settings.get("candidate_signs")
+    if raw is None or raw == "":
+        return None
+    if isinstance(raw, str):
+        raw = raw.replace("|", ",").split(",")
+    signs = tuple(float(sign) for sign in raw)
+    return signs or None
 
 
 def checkpoint_selection_settings(config: dict[str, Any], budget: dict[str, Any]) -> dict[str, Any]:
@@ -483,7 +646,13 @@ def select_validation_checkpoint(
         + int(seed) * int(settings.get("validation_seed_stride", 1000))
     )
     max_steps = int(config.get("max_steps_per_episode", budget["max_steps_per_episode"]))
-    scored: list[tuple[float, Path]] = []
+    score_weights = {
+        "service_level": float(settings.get("service_level_weight", 0.0)),
+        "eligibility_rate": float(settings.get("eligibility_rate_weight", 0.0)),
+        "at_risk_unserved": float(settings.get("at_risk_unserved_weight", 0.0)),
+        "patients_lost": float(settings.get("patients_lost_weight", 0.0)),
+    }
+    scored: list[tuple[float, dict[str, float], Path]] = []
     for path in candidates:
         validation_env = build_env(config, seed=validation_seed)
         validation_agent = get_agent_class(algorithm)(
@@ -501,14 +670,21 @@ def select_validation_checkpoint(
             max_steps=max_steps,
         )
         summary = summarize_rows(rows)
-        cost = float(summary.get("total_cost_mean", float("inf")))
-        scored.append((cost, path))
+        metrics = checkpoint_score_metrics(summary)
+        score = local_search_metric_score(metrics, score_weights)
+        scored.append((score, metrics, path))
 
-    selected_cost, selected_path = min(scored, key=lambda item: item[0])
+    selected_score, selected_metrics, selected_path = min(
+        scored,
+        key=lambda item: item[0],
+    )
+    selected_cost = selected_metrics["total_cost"]
+    selected_service_level = selected_metrics["service_level"]
     print(
         "checkpoint_selection "
         f"algorithm={algorithm} selected={checkpoint_label(selected_path)} "
-        f"cost={selected_cost:.3f} candidates={len(candidates)}",
+        f"cost={selected_cost:.3f} service={selected_service_level:.6f} "
+        f"score={selected_score:.3f} candidates={len(candidates)}",
         flush=True,
     )
     return selected_path, {
@@ -516,9 +692,35 @@ def select_validation_checkpoint(
         "checkpoint_selection_selected_path": str(selected_path),
         "checkpoint_selection_selected_label": checkpoint_label(selected_path),
         "checkpoint_selection_validation_cost": selected_cost,
+        "checkpoint_selection_validation_service_level": selected_service_level,
+        "checkpoint_selection_validation_eligibility_rate": selected_metrics["eligibility_rate"],
+        "checkpoint_selection_validation_at_risk_unserved": selected_metrics["at_risk_unserved"],
+        "checkpoint_selection_validation_patients_lost": selected_metrics["patients_lost"],
+        "checkpoint_selection_validation_score": selected_score,
+        "checkpoint_selection_service_level_weight": score_weights["service_level"],
+        "checkpoint_selection_eligibility_rate_weight": score_weights["eligibility_rate"],
+        "checkpoint_selection_at_risk_unserved_weight": score_weights["at_risk_unserved"],
+        "checkpoint_selection_patients_lost_weight": score_weights["patients_lost"],
         "checkpoint_selection_candidate_count": len(candidates),
         "checkpoint_selection_validation_replications": validation_replications,
         "checkpoint_selection_validation_seed": validation_seed,
+    }
+
+
+def checkpoint_score_metrics(summary: dict[str, Any]) -> dict[str, float]:
+    """Normalize evaluation summary fields into the local-search score schema."""
+
+    return {
+        "total_cost": float(summary.get("total_cost_mean", float("inf"))),
+        "service_level": float(summary.get("service_level_mean", 0.0)),
+        "eligibility_rate": float(
+            summary.get(
+                "eligibility_rate_mean_mean",
+                summary.get("eligibility_rate_mean", 0.0),
+            )
+        ),
+        "at_risk_unserved": float(summary.get("at_risk_unserved_mean", 0.0)),
+        "patients_lost": float(summary.get("patients_lost_mean", 0.0)),
     }
 
 
@@ -605,17 +807,6 @@ def maybe_apply_anchor_fallback(
     )
     max_steps = int(config.get("max_steps_per_episode", budget["max_steps_per_episode"]))
 
-    learned_env = build_env(config, seed=validation_seed)
-    learned_rows = evaluate_agent(
-        learned_agent,
-        learned_env,
-        algorithm=algorithm,
-        seed=validation_seed,
-        replications=validation_replications,
-        max_steps=max_steps,
-    )
-    learned_summary = summarize_rows(learned_rows)
-
     anchor_config = dict(config)
     anchor_config["algorithm"] = anchor_policy
     anchor_policy_config = dict(
@@ -640,25 +831,86 @@ def maybe_apply_anchor_fallback(
     )
     anchor_summary = summarize_rows(anchor_rows)
 
-    decision = select_anchor_fallback_policy(
-        float(learned_summary["total_cost_mean"]),
-        float(anchor_summary["total_cost_mean"]),
-        min_improvement=float(settings.get("min_improvement", 0.0)),
+    original_residual_scale = copy_residual_scale_vector(learned_agent)
+    scale_candidates = residual_deployment_scale_candidates(
+        settings,
+        has_residual_scale=original_residual_scale is not None,
     )
+    learned_candidates: list[dict[str, Any]] = []
+    try:
+        for residual_scale in scale_candidates:
+            if original_residual_scale is not None:
+                set_residual_scale_vector(learned_agent, original_residual_scale * residual_scale)
+            learned_env = build_env(config, seed=validation_seed)
+            learned_rows = evaluate_agent(
+                learned_agent,
+                learned_env,
+                algorithm=algorithm,
+                seed=validation_seed,
+                replications=validation_replications,
+                max_steps=max_steps,
+            )
+            learned_candidates.append(
+                {
+                    "residual_scale": float(residual_scale),
+                    "summary": summarize_rows(learned_rows),
+                }
+            )
+    finally:
+        if original_residual_scale is not None:
+            set_residual_scale_vector(learned_agent, original_residual_scale)
+
+    learned_candidate, decision = select_residual_deployment_candidate(
+        learned_candidates,
+        anchor_summary,
+        settings,
+    )
+    selected_residual_scale = float(learned_candidate["residual_scale"])
+    deployed_residual_scale = selected_residual_scale if decision == "learned" else 0.0
+    learned_summary = learned_candidate["summary"]
+    if decision == "learned" and original_residual_scale is not None:
+        set_residual_scale_vector(learned_agent, original_residual_scale * selected_residual_scale)
     selected_agent = learned_agent if decision == "learned" else anchor_agent
     metadata = {
         "anchor_fallback_enabled": True,
         "anchor_fallback_selected_policy": decision,
         "anchor_fallback_anchor_policy": anchor_policy,
+        "anchor_fallback_selected_residual_scale": deployed_residual_scale,
+        "anchor_fallback_validation_selected_candidate_residual_scale": selected_residual_scale,
+        "anchor_fallback_residual_scale_candidates": "|".join(
+            f"{scale:g}" for scale in scale_candidates
+        ),
+        "anchor_fallback_residual_scale_candidate_count": len(scale_candidates),
         "anchor_fallback_validation_seed": validation_seed,
         "anchor_fallback_validation_replications": validation_replications,
         "anchor_fallback_validation_learned_cost_mean": learned_summary["total_cost_mean"],
         "anchor_fallback_validation_anchor_cost_mean": anchor_summary["total_cost_mean"],
+        "anchor_fallback_validation_learned_service_level_mean": learned_summary.get(
+            "service_level_mean",
+            "",
+        ),
+        "anchor_fallback_validation_anchor_service_level_mean": anchor_summary.get(
+            "service_level_mean",
+            "",
+        ),
         "anchor_fallback_min_improvement": float(settings.get("min_improvement", 0.0)),
+        "anchor_fallback_min_service_level_delta": settings.get(
+            "min_service_level_delta",
+            "",
+        ),
     }
+    metadata.update(
+        anchor_fallback_candidate_diagnostics(
+            learned_candidates,
+            anchor_summary,
+            settings,
+        )
+    )
     print(
         "anchor_fallback "
         f"algorithm={algorithm} selected={decision} anchor={anchor_policy} "
+        f"residual_scale={deployed_residual_scale:g} "
+        f"candidate_scale={selected_residual_scale:g} "
         f"learned_cost={float(learned_summary['total_cost_mean']):.3f} "
         f"anchor_cost={float(anchor_summary['total_cost_mean']):.3f}",
         flush=True,
@@ -672,20 +924,241 @@ def anchor_fallback_settings(config: dict[str, Any], budget: dict[str, Any]) -> 
     return settings
 
 
+def residual_deployment_scale_candidates(
+    settings: dict[str, Any],
+    *,
+    has_residual_scale: bool,
+) -> tuple[float, ...]:
+    if not has_residual_scale:
+        return (1.0,)
+    raw = settings.get(
+        "deployment_scale_candidates",
+        settings.get("residual_scale_candidates", (1.0,)),
+    )
+    if isinstance(raw, str):
+        raw = raw.replace("|", ",").split(",")
+    try:
+        candidates = [float(value) for value in raw]
+    except TypeError:
+        candidates = [float(raw)]
+    cleaned: list[float] = []
+    for value in candidates:
+        if not np.isfinite(value):
+            continue
+        clipped = max(float(value), 0.0)
+        if clipped not in cleaned:
+            cleaned.append(clipped)
+    return tuple(cleaned or [1.0])
+
+
+def select_residual_deployment_candidate(
+    candidates: list[dict[str, Any]],
+    anchor_summary: dict[str, Any],
+    settings: dict[str, Any],
+) -> tuple[dict[str, Any], str]:
+    if not candidates:
+        raise ValueError("At least one residual deployment candidate is required")
+    min_service_level_delta = (
+        float(settings["min_service_level_delta"])
+        if "min_service_level_delta" in settings
+        else None
+    )
+    feasible = []
+    for candidate in candidates:
+        summary = candidate["summary"]
+        decision = select_anchor_fallback_policy(
+            float(summary["total_cost_mean"]),
+            float(anchor_summary["total_cost_mean"]),
+            min_improvement=float(settings.get("min_improvement", 0.0)),
+            learned_service_level=float(summary.get("service_level_mean", "nan")),
+            anchor_service_level=float(anchor_summary.get("service_level_mean", "nan")),
+            min_service_level_delta=min_service_level_delta,
+        )
+        if decision == "learned" and float(candidate["residual_scale"]) > 1e-12:
+            feasible.append(candidate)
+    if feasible:
+        return min(feasible, key=lambda item: float(item["summary"]["total_cost_mean"])), "learned"
+    return min(candidates, key=lambda item: float(item["summary"]["total_cost_mean"])), "anchor"
+
+
+def anchor_fallback_candidate_diagnostics(
+    candidates: list[dict[str, Any]],
+    anchor_summary: dict[str, Any],
+    settings: dict[str, Any],
+) -> dict[str, Any]:
+    anchor_cost = float(anchor_summary.get("total_cost_mean", float("nan")))
+    anchor_service = float(anchor_summary.get("service_level_mean", float("nan")))
+    min_service_level_delta = (
+        float(settings["min_service_level_delta"])
+        if "min_service_level_delta" in settings
+        else None
+    )
+    diagnostics: list[dict[str, Any]] = []
+    for candidate in candidates:
+        scale = float(candidate["residual_scale"])
+        summary = candidate["summary"]
+        candidate_cost = float(summary.get("total_cost_mean", float("nan")))
+        candidate_service = float(summary.get("service_level_mean", float("nan")))
+        gate_decision = select_anchor_fallback_policy(
+            candidate_cost,
+            anchor_cost,
+            min_improvement=float(settings.get("min_improvement", 0.0)),
+            learned_service_level=candidate_service,
+            anchor_service_level=anchor_service,
+            min_service_level_delta=min_service_level_delta,
+        )
+        diagnostics.append(
+            {
+                "scale": scale,
+                "decision": "anchor_equivalent" if scale <= 1e-12 else gate_decision,
+                "cost": candidate_cost,
+                "service": candidate_service,
+                "eligibility": summary_float(
+                    summary,
+                    "eligibility_rate_mean_mean",
+                    "eligibility_rate_mean",
+                ),
+                "patients_lost": summary_float(summary, "patients_lost_mean"),
+                "at_risk_unserved": summary_float(summary, "at_risk_unserved_mean"),
+                "cost_gap_pct": percentage_gap(candidate_cost, anchor_cost),
+                "service_gap": candidate_service - anchor_service,
+            }
+        )
+    best_nonzero = min(
+        (row for row in diagnostics if float(row["scale"]) > 1e-12),
+        key=lambda row: float(row["cost"]),
+        default=None,
+    )
+    metadata = {
+        "anchor_fallback_validation_candidate_scales": pipe_join(
+            row["scale"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_decisions": pipe_join(
+            row["decision"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_cost_means": pipe_join(
+            row["cost"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_service_level_means": pipe_join(
+            row["service"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_eligibility_rate_means": pipe_join(
+            row["eligibility"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_patients_lost_means": pipe_join(
+            row["patients_lost"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_at_risk_unserved_means": pipe_join(
+            row["at_risk_unserved"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_cost_gap_pct": pipe_join(
+            row["cost_gap_pct"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_service_gap": pipe_join(
+            row["service_gap"] for row in diagnostics
+        ),
+    }
+    if best_nonzero is None:
+        metadata.update(
+            {
+                "anchor_fallback_validation_best_nonzero_scale": "",
+                "anchor_fallback_validation_best_nonzero_decision": "",
+                "anchor_fallback_validation_best_nonzero_cost_mean": "",
+                "anchor_fallback_validation_best_nonzero_service_level_mean": "",
+                "anchor_fallback_validation_best_nonzero_cost_gap_pct": "",
+                "anchor_fallback_validation_best_nonzero_service_gap": "",
+            }
+        )
+    else:
+        metadata.update(
+            {
+                "anchor_fallback_validation_best_nonzero_scale": best_nonzero["scale"],
+                "anchor_fallback_validation_best_nonzero_decision": best_nonzero["decision"],
+                "anchor_fallback_validation_best_nonzero_cost_mean": best_nonzero["cost"],
+                "anchor_fallback_validation_best_nonzero_service_level_mean": best_nonzero[
+                    "service"
+                ],
+                "anchor_fallback_validation_best_nonzero_cost_gap_pct": best_nonzero[
+                    "cost_gap_pct"
+                ],
+                "anchor_fallback_validation_best_nonzero_service_gap": best_nonzero[
+                    "service_gap"
+                ],
+            }
+        )
+    return metadata
+
+
+def summary_float(summary: dict[str, Any], *keys: str) -> float:
+    for key in keys:
+        if key in summary and summary[key] != "":
+            return float(summary[key])
+    return float("nan")
+
+
+def percentage_gap(value: float, reference: float) -> float:
+    if not np.isfinite(value) or not np.isfinite(reference) or abs(reference) <= 1e-12:
+        return float("nan")
+    return 100.0 * (float(value) - float(reference)) / abs(float(reference))
+
+
+def pipe_join(values: Iterable[Any]) -> str:
+    return "|".join(format_metadata_value(value) for value in values)
+
+
+def format_metadata_value(value: Any) -> str:
+    if isinstance(value, str):
+        return value
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+    if not np.isfinite(numeric):
+        return ""
+    return f"{numeric:.12g}"
+
+
+def copy_residual_scale_vector(agent) -> np.ndarray | None:
+    scale_vector = getattr(agent, "residual_scale_vector", None)
+    if scale_vector is None:
+        return None
+    return np.asarray(scale_vector, dtype=np.float32).copy()
+
+
+def set_residual_scale_vector(agent, scale_vector: np.ndarray) -> None:
+    agent.residual_scale_vector = np.asarray(scale_vector, dtype=np.float32).copy()
+
+
 def select_anchor_fallback_policy(
     learned_cost: float,
     anchor_cost: float,
     *,
     min_improvement: float = 0.0,
+    learned_service_level: float | None = None,
+    anchor_service_level: float | None = None,
+    min_service_level_delta: float | None = None,
 ) -> str:
-    """Return ``learned`` only if it clears the anchor-cost threshold."""
+    """Return ``learned`` only if it clears cost and patient-facing safeguards."""
 
     if not np.isfinite(learned_cost):
         return "anchor"
     if not np.isfinite(anchor_cost):
         return "learned"
     threshold = float(anchor_cost) * (1.0 - float(min_improvement))
-    return "learned" if float(learned_cost) <= threshold else "anchor"
+    if float(learned_cost) > threshold:
+        return "anchor"
+    if min_service_level_delta is not None:
+        learned_service = float(
+            learned_service_level if learned_service_level is not None else float("nan")
+        )
+        anchor_service = float(
+            anchor_service_level if anchor_service_level is not None else float("nan")
+        )
+        if np.isfinite(learned_service) and np.isfinite(anchor_service):
+            service_threshold = anchor_service + float(min_service_level_delta)
+            if learned_service < service_threshold:
+                return "anchor"
+    return "learned"
 
 
 def _deep_update(base: dict[str, Any], updates: dict[str, Any]) -> dict[str, Any]:
@@ -708,12 +1181,13 @@ def make_evaluation_config(
 ) -> dict[str, Any]:
     if algorithm in plan["learned_config_paths"]:
         return make_training_config(plan, budget_name, budget, algorithm, scenario, seed)
-    return {
+    config = {
         "algorithm": algorithm,
         "seed": int(seed),
         "max_steps_per_episode": int(budget["max_steps_per_episode"]),
         "env": make_scenario_env_config(plan, algorithm, scenario),
     }
+    return _deep_update(config, algorithm_config_overrides(plan, algorithm))
 
 
 def make_scenario_env_config(

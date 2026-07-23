@@ -128,6 +128,41 @@ class PatientEnvDynamicsTests(unittest.TestCase):
             _, rb, _, _ = env_b.step(act_b)
             self.assertEqual(ra, rb)
 
+    def test_reagent_transfer_can_arrive_through_delay_pipeline(self) -> None:
+        env = _env(
+            base=_small_base(
+                episode_horizon=3,
+                demand_rates=(0.0, 0.0),
+                initial_reagents=(20.0, 0.0),
+                initial_idle_bioreactors=(0.0, 0.0),
+                max_reagent_replenishment=(0.0, 0.0),
+                max_reagent_transfer=20.0,
+                transfer_lead_time=1,
+                include_transfer_pipeline_state=True,
+                resource_edges=((0, 1),),
+            )
+        )
+        env.reset(seed=8)
+        action = env.noop_action()
+        n = env.config.num_facilities
+        action[n] = -1.0
+        action[n + 1] = 1.0
+
+        obs, _reward, _done, info = env.step(action)
+
+        self.assertEqual(obs.shape, (env.observation_size,))
+        self.assertAlmostEqual(env.reagents[0], 0.0)
+        self.assertAlmostEqual(env.reagents[1], 0.0)
+        self.assertAlmostEqual(env.reagent_transfer_pipeline.sum(axis=0)[1], 20.0)
+        self.assertTrue(np.all(info["reagent_transfer_arrivals"] == 0.0))
+        self.assertAlmostEqual(info["reagent_transfers"][0], -20.0)
+        self.assertAlmostEqual(info["reagent_transfers"][1], 20.0)
+
+        _obs, _reward, _done, info = env.step(env.noop_action())
+
+        self.assertAlmostEqual(env.reagents[1], 20.0)
+        self.assertAlmostEqual(info["reagent_transfer_arrivals"][1], 20.0)
+
     def test_patient_risk_counts_match_waiting_queue(self) -> None:
         from src.env.patient_condition import PatientConditionConfig
 

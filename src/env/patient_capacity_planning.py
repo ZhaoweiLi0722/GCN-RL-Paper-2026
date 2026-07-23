@@ -12,13 +12,14 @@ Two loss channels are added on top of the base cost:
   product expires before delivery (`aging_inventory`), plus an urgency penalty on
   at-risk patients left unserved.
 
-Modeling notes (MVP):
+Modeling notes:
 - Specimens are **identity-bound** (autologous): one patient's material cannot be
   pooled for another, so the base specimen-transfer action is intentionally
   ignored here. Only reagents and bioreactor capacity are shareable across
-  clinics. Inter-clinic patient routing (with the cold-chain viability hook) is
-  deferred.
-- Requires ``action_mode == "facility_net"`` and ``transfer_lead_time == 0``.
+  clinics. Reagent and capacity transfers may arrive through the base delayed
+  transfer pipeline when ``transfer_lead_time > 0``.
+- Inter-clinic patient routing (with the cold-chain viability hook) is deferred.
+- Requires ``action_mode == "facility_net"``.
 - The base env (`capacity_planning.py`) is not modified.
 """
 
@@ -33,6 +34,7 @@ from src.env.capacity_planning import (
     CapacityPlanningConfig,
     CapacityPlanningEnv,
     _apply_net_transfers,
+    _apply_net_transfers_delayed,
     make_20_clinic_config,
 )
 from src.env.patient_condition import (
@@ -78,8 +80,6 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         super().__init__(self.env_config.base, seed)
         if self.config.action_mode != "facility_net":
             raise ValueError("PatientConditionCapacityEnv requires action_mode='facility_net'")
-        if self.config.transfer_lead_time != 0:
-            raise ValueError("PatientConditionCapacityEnv requires transfer_lead_time == 0 (MVP)")
         # The patient summary is appended as a per-clinic block; extend the sizes.
         self.base_observation_size = self.config.num_facilities * self.features_per_facility
         self.observation_size = (
@@ -164,6 +164,7 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             raise ValueError(f"Expected action shape {(self.action_size,)}, got {action_array.shape}")
         normalized = np.clip(action_array, -1.0, 1.0)
 
+        specimen_arrivals, reagent_arrivals, capacity_arrivals = self._receive_transfer_arrivals()
         supplier_available = self.supplier_available.copy()
         reagent_transfer_requests = normalized[n : 2 * n] * self.config.max_reagent_transfer
         capacity_requests = normalized[2 * n : 3 * n] * self.config.max_bioreactor_transfer
@@ -194,8 +195,36 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             next_bioreactors[:, 1:-1] = self.bioreactors[:, 2:]
         next_bioreactors[:, -1] = production
 
-        reagent_net, _ = _apply_net_transfers(next_reagents, self.resource_edges, reagent_transfer_requests)
-        capacity_net, _ = _apply_net_transfers(next_bioreactors[:, 0], self.capacity_edges, capacity_requests)
+        specimen_net = np.zeros(n, dtype=float)
+        specimen_flows = np.zeros(len(self.specimen_edges), dtype=float)
+        if self.config.transfer_lead_time > 0:
+            reagent_net, reagent_flows, reagent_future_arrivals = _apply_net_transfers_delayed(
+                next_reagents, self.resource_edges, reagent_transfer_requests
+            )
+            capacity_net, capacity_flows, capacity_future_arrivals = _apply_net_transfers_delayed(
+                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+            )
+            if self._uses_geographic_transfer_delays():
+                self._schedule_edge_transfer_arrivals(
+                    self.reagent_transfer_pipeline, self.resource_edges, reagent_flows
+                )
+                self._schedule_edge_transfer_arrivals(
+                    self.capacity_transfer_pipeline, self.capacity_edges, capacity_flows
+                )
+            else:
+                self._schedule_transfer_arrivals(
+                    self.reagent_transfer_pipeline, reagent_future_arrivals
+                )
+                self._schedule_transfer_arrivals(
+                    self.capacity_transfer_pipeline, capacity_future_arrivals
+                )
+        else:
+            reagent_net, reagent_flows = _apply_net_transfers(
+                next_reagents, self.resource_edges, reagent_transfer_requests
+            )
+            capacity_net, capacity_flows = _apply_net_transfers(
+                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+            )
 
         self.reagents = np.clip(next_reagents, 0.0, self.max_reagents)
         next_bioreactors[:, 0] = np.clip(next_bioreactors[:, 0], 0.0, self.max_idle_bioreactors)
@@ -218,6 +247,18 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         patients_lost = lost_ineligible + lost_expired
         material_wasted = lost_expired + finished_expired
         at_risk_unserved = self._at_risk_unserved_counts()
+        reagent_transfer_cost = self._facility_net_transfer_cost(
+            costs.reagent_transfer,
+            self.resource_edges,
+            reagent_flows,
+            reagent_net,
+        )
+        capacity_transfer_cost = self._facility_net_transfer_cost(
+            costs.bioreactor_transfer,
+            self.capacity_edges,
+            capacity_flows,
+            capacity_net,
+        )
 
         base_cost = (
             costs.reagent_purchase * float(replenishment.sum())
@@ -225,8 +266,8 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             + costs.reagent_shortage * float(under_reagents.sum())
             + costs.bioreactor_holding * float(idle_bioreactor_counts.sum())
             + costs.bioreactor_shortage * float(under_bioreactors.sum())
-            + costs.reagent_transfer * float(np.abs(reagent_net).sum())
-            + costs.bioreactor_transfer * float(np.abs(capacity_net).sum())
+            + reagent_transfer_cost
+            + capacity_transfer_cost
         )
         cost = (
             base_cost
@@ -259,6 +300,15 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             "risk_type_counts": self.risk_type_counts().copy(),
             "waiting_patients": self.specimens.copy(),
             "eligibility_rate": self._eligibility_rate(),
+            "under_reagents": under_reagents.copy(),
+            "under_bioreactors": under_bioreactors.copy(),
+            "specimen_transfer_arrivals": specimen_arrivals.copy(),
+            "reagent_transfer_arrivals": reagent_arrivals.copy(),
+            "capacity_transfer_arrivals": capacity_arrivals.copy(),
+            "specimen_transfers": specimen_net.copy(),
+            "capacity_transfers": capacity_net.copy(),
+            "reagent_transfers": reagent_net.copy(),
+            "transshipment_cost": reagent_transfer_cost + capacity_transfer_cost,
         }
         info.update(self._performance_info())
         return self.observation(), -cost, done, info

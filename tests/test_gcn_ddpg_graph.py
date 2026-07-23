@@ -16,6 +16,7 @@ except ModuleNotFoundError:  # pragma: no cover
     torch = None
 
 if torch is not None:
+    from src.baselines.flat_ddpg import FlatDDPGAgent
     from src.models.gcn import GCNActor
     from src.models.gcn_ddpg import GCNDDPGAgent, flat_state_to_node_features
 
@@ -192,6 +193,61 @@ class GraphStateConversionTests(unittest.TestCase):
         update_metrics = agent.update()
         self.assertIn("imitation_loss", update_metrics)
 
+    def test_residual_ddpg_update_reports_anchor_and_patient_proxy_metrics(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=3), seed=12)
+        config = _config_dict()
+        config.update(
+            {
+                "algorithm": "gcn_residual_mdl2_replenish_ddpg",
+                "batch_size": 2,
+                "reward_scale": 1e-9,
+                "env": asdict(env.config),
+                "actor_readout_mode": "facility_action",
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.02,
+                    "group_scales": {
+                        "specimen_transfer": 0.0,
+                        "reagent_transfer": 0.0,
+                        "capacity_transfer": 0.0,
+                        "replenishment": 0.02,
+                    },
+                    "positive_only_groups": ["replenishment"],
+                    "l2_weight": 0.08,
+                },
+                "anchor_advantage_actor_loss": {
+                    "enabled": True,
+                    "negative_penalty_weight": 0.5,
+                },
+                "patient_service_proxy_actor_loss": {
+                    "enabled": True,
+                    "group": "replenishment",
+                    "weight": 0.02,
+                    "cost_weight": 0.01,
+                    "low_pressure_weight": 0.01,
+                    "positive_only": True,
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=12)
+        for _step in range(2):
+            action = agent.select_action(state, explore=False, env=env)
+            next_state, reward, done, _info = env.step(action)
+            agent.observe(state, action, reward, next_state, done)
+            state = next_state
+
+        metrics = agent.update()
+
+        self.assertIn("actor_anchor_advantage_mean", metrics)
+        self.assertIn("actor_anchor_advantage_positive_fraction", metrics)
+        self.assertIn("actor_anchor_negative_advantage_penalty", metrics)
+        self.assertIn("actor_patient_service_proxy_alignment", metrics)
+        self.assertIn("actor_patient_service_proxy_low_pressure_penalty", metrics)
+        self.assertIn("actor_patient_service_proxy_cost_penalty", metrics)
+        self.assertIn("residual_l2_loss", metrics)
+
     def test_residual_action_zero_network_output_returns_heuristic_base(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=13)
         state = env.reset(seed=13)
@@ -268,6 +324,70 @@ class GraphStateConversionTests(unittest.TestCase):
         transformed = agent._transform_network_residual_np(residual)
 
         self.assertAlmostEqual(float(transformed[3 * n : 4 * n].mean()), 0.0, places=6)
+
+    def test_residual_positive_only_group_clamps_replenishment_for_graph_and_flat(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=21)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.25,
+                    "positive_only_groups": ["replenishment"],
+                },
+            }
+        )
+        n = env.config.num_facilities
+        residual = np.zeros(env.action_size, dtype=np.float32)
+        residual[0:n] = np.linspace(-0.7, 0.7, n)
+        residual[3 * n : 4 * n] = np.linspace(-0.8, 0.8, n)
+
+        gcn_agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        flat_agent = FlatDDPGAgent(env.observation_size, env.action_size, config)
+
+        for agent in (gcn_agent, flat_agent):
+            transformed = agent._transform_network_residual_np(residual)
+            np.testing.assert_allclose(transformed[0:n], residual[0:n])
+            self.assertTrue(np.all(transformed[3 * n : 4 * n] >= 0.0))
+            np.testing.assert_allclose(
+                transformed[3 * n : 4 * n],
+                np.maximum(residual[3 * n : 4 * n], 0.0),
+            )
+
+    def test_state_gate_limits_replenishment_residual_to_pressure_facilities(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=22)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "pmyo",
+                    "scale": 0.25,
+                    "positive_only_groups": ["replenishment"],
+                    "state_gate": {
+                        "enabled": True,
+                        "groups": ["replenishment"],
+                        "threshold": 0.0,
+                    },
+                },
+            }
+        )
+        n = env.config.num_facilities
+        state = np.zeros(env.observation_size, dtype=np.float32)
+        network_action = np.zeros(env.action_size, dtype=np.float32)
+        network_action[3 * n : 4 * n] = 1.0
+        state[0] = 2.0
+
+        gcn_agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        flat_agent = FlatDDPGAgent(env.observation_size, env.action_size, config)
+
+        for agent in (gcn_agent, flat_agent):
+            residual = agent._policy_residual_np(state, network_action)
+            self.assertGreater(float(residual[3 * n]), 0.0)
+            np.testing.assert_allclose(residual[3 * n + 1 : 4 * n], np.zeros(n - 1))
 
     def test_pressure_projection_aligns_residual_with_state_pattern(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=31)
@@ -363,13 +483,20 @@ class GraphStateConversionTests(unittest.TestCase):
         summary = agent.fit_action_batch(
             states,
             actions,
-            {"epochs": 1, "batch_size": 2},
+            {
+                "epochs": 1,
+                "batch_size": 2,
+                "retain_for_regularization": True,
+            },
             weights=np.asarray([0.25, 1.75], dtype=np.float32),
         )
 
         self.assertEqual(summary["samples"], 2)
         self.assertEqual(summary["target_mode"], "residual")
         self.assertGreaterEqual(summary["final_loss"], 0.0)
+        self.assertEqual(tuple(agent.imitation_states.shape), (2, env.observation_size))
+        self.assertEqual(tuple(agent.imitation_weights.shape), (2,))
+        self.assertTrue(torch.isfinite(agent._actor_imitation_loss()))
         with self.assertRaises(ValueError):
             agent.fit_action_batch(states, actions, {"epochs": 1}, weights=np.asarray([1.0]))
         with self.assertRaises(ValueError):

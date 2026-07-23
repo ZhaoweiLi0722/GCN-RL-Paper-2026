@@ -122,6 +122,72 @@ class SmokeRunTests(unittest.TestCase):
         self.assertTrue((action <= 1.0).all())
         np.testing.assert_allclose(action, base_action, atol=1e-6)
 
+    def test_flat_residual_ddpg_retains_weighted_afd_labels(self) -> None:
+        try:
+            from src.rl.networks import torch
+        except Exception:  # pragma: no cover
+            self.skipTest("torch not available")
+        if torch is None:  # pragma: no cover
+            self.skipTest("torch not available")
+        from src.baselines.flat_ddpg import FlatDDPGAgent
+
+        config = {
+            "seed": 0,
+            "hidden_sizes": [32, 32],
+            "batch_size": 2,
+            "normalize_observations": True,
+            "imitation_pretrain": {
+                "regularization_weight": 1.0,
+                "regularization_batch_size": 2,
+            },
+            "residual_action": {
+                "enabled": True,
+                "base_policy": "mdl2",
+                "include_base_action_features": True,
+                "zero_init_actor": True,
+                "scale": 0.02,
+                "group_scales": {
+                    "specimen_transfer": 0.0,
+                    "reagent_transfer": 0.0,
+                    "capacity_transfer": 0.0,
+                    "replenishment": 0.02,
+                },
+                "positive_only_groups": ["replenishment"],
+            },
+            "env": load_config(DEV_CONFIG),
+        }
+        env = build_env(config, seed=0)
+        agent = FlatDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=0)
+        base_action = facility_net_action_from_state(
+            state,
+            config["env"],
+            settings=heuristic_settings_for_policy("mdl2"),
+        )
+        next_state, _reward, _done, _info = env.step(base_action)
+        next_base_action = facility_net_action_from_state(
+            next_state,
+            config["env"],
+            settings=heuristic_settings_for_policy("mdl2"),
+        )
+
+        summary = agent.fit_action_batch(
+            np.stack((state, next_state)),
+            np.stack((base_action, next_base_action)),
+            {
+                "epochs": 1,
+                "batch_size": 2,
+                "retain_for_regularization": True,
+            },
+            weights=np.asarray([0.25, 1.75], dtype=np.float32),
+        )
+
+        self.assertEqual(summary["samples"], 2)
+        self.assertEqual(agent.actor.net[0].in_features, env.observation_size + env.action_size)
+        self.assertEqual(tuple(agent.imitation_states.shape), (2, env.observation_size))
+        self.assertEqual(tuple(agent.imitation_weights.shape), (2,))
+        self.assertTrue(torch.isfinite(agent._actor_imitation_loss()))
+
 
 if __name__ == "__main__":
     unittest.main()

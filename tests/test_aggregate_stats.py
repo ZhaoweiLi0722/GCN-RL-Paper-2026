@@ -9,6 +9,7 @@ from evaluation.aggregate_stats import (
     bootstrap_ci,
     divergent_seeds,
     interquartile_mean,
+    paired_two_level_summary,
 )
 
 
@@ -62,6 +63,48 @@ class AggregateIqmTests(unittest.TestCase):
         self.assertEqual(row["eligibility_rate_n_seeds"], 2)
         self.assertIn("eligibility_rate_iqm", row)
         self.assertIn("eligibility_rate_per_seed", row)
+
+
+class PairedTwoLevelTests(unittest.TestCase):
+    def test_pairs_replications_and_bootstraps_training_seeds(self) -> None:
+        candidate = []
+        baseline = []
+        for training_seed, differences in ((0, (-2.0, -1.0)), (1, (0.0, 1.0))):
+            for replication, difference in enumerate(differences):
+                common = {
+                    "training_seed": training_seed,
+                    "evaluation_seed": 100 + replication,
+                    "replication": replication,
+                }
+                candidate.append({**common, "total_cost": 10.0 + difference})
+                baseline.append({**common, "total_cost": 10.0})
+
+        summary = paired_two_level_summary(
+            candidate,
+            baseline,
+            resamples=500,
+            seed=7,
+        )
+
+        self.assertEqual(summary["n_training_seeds"], 2)
+        self.assertEqual(summary["n_pairs"], 4)
+        self.assertEqual(summary["wins"], 2)
+        self.assertEqual(summary["ties"], 1)
+        self.assertAlmostEqual(summary["mean_difference"], -0.5)
+        self.assertAlmostEqual(summary["mean_gap_pct"], -5.0)
+        self.assertEqual(summary["per_seed_mean_difference"], {"0": -1.5, "1": 0.5})
+        self.assertLessEqual(summary["ci_low"], summary["mean_difference"])
+        self.assertGreaterEqual(summary["ci_high"], summary["mean_difference"])
+
+    def test_rejects_unpaired_rows(self) -> None:
+        candidate = [
+            {"training_seed": 0, "evaluation_seed": 1, "replication": 0, "total_cost": 9.0}
+        ]
+        baseline = [
+            {"training_seed": 0, "evaluation_seed": 2, "replication": 0, "total_cost": 10.0}
+        ]
+        with self.assertRaises(ValueError):
+            paired_two_level_summary(candidate, baseline)
 
 
 if __name__ == "__main__":

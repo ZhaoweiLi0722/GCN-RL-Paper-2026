@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import time
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -56,7 +57,13 @@ def apply_graph_ablation(config: CapacityPlanningConfig, ablation: str) -> Capac
     raise ValueError(f"Unsupported graph_ablation setting: {ablation}")
 
 
-def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, Any]) -> list[dict[str, Any]]:
+def train_off_policy_agent(
+    agent,
+    env: CapacityPlanningEnv,
+    config: dict[str, Any],
+    *,
+    post_imitation_pretrain: Callable[[Any, CapacityPlanningEnv], dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     seed = int(config.get("seed", 0))
     num_episodes = int(config.get("num_episodes", 1))
@@ -65,8 +72,17 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
     checkpoint_dir = Path(config.get("checkpoint_dir", f"checkpoints/{algorithm}"))
     checkpoint_interval = int(config.get("checkpoint_interval", max(num_episodes, 1)))
     progress_interval = int(config.get("progress_interval", 0))
+    update_frequency = max(int(config.get("update_frequency", 1)), 1)
+    updates_per_update = max(int(config.get("updates_per_update", 1)), 1)
+    train_randomization_summary = _maybe_enable_train_randomization(env, config)
+    global_step = 0
     start_time = time.perf_counter()
     pretrain_summary = _maybe_pretrain_agent(agent, env, config)
+    advantage_distillation_summary = (
+        dict(post_imitation_pretrain(agent, env) or {})
+        if post_imitation_pretrain is not None
+        else {}
+    )
     elite_config = dict(config.get("elite_imitation", {}))
     elite_enabled = bool(elite_config.get("enabled", False))
     elite_warmup_episodes = int(elite_config.get("warmup_episodes", 0))
@@ -91,7 +107,10 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
                 episode_states.append(np.asarray(state, dtype=np.float32))
                 episode_actions.append(np.asarray(action, dtype=np.float32))
             agent.observe(state, action, reward, next_state, done)
-            agent.update()
+            global_step += 1
+            if global_step % update_frequency == 0:
+                for _update in range(updates_per_update):
+                    agent.update()
             metrics.update(info)
             total_reward += float(reward)
             state = next_state
@@ -131,12 +150,63 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
                 "bioreactor_utilization": metrics.bioreactor_utilization,
                 "transshipment_count": metrics.transshipment_count,
                 "transshipment_cost": metrics.transshipment_cost,
+                "pretrain_policy": pretrain_summary.get("policy", ""),
                 "pretrain_samples": pretrain_summary.get("samples", 0),
                 "pretrain_final_loss": pretrain_summary.get("final_loss", ""),
+                "pretrain_train_accuracy": pretrain_summary.get("train_accuracy", ""),
+                "pretrain_changed_fraction": pretrain_summary.get("changed_fraction", ""),
+                "pretrain_anchor_label_fraction": pretrain_summary.get("anchor_label_fraction", ""),
+                "pretrain_non_anchor_prediction_fraction": pretrain_summary.get(
+                    "non_anchor_prediction_fraction",
+                    "",
+                ),
+                "pretrain_candidate_count": pretrain_summary.get("candidate_count", ""),
+                "advantage_distillation_samples": advantage_distillation_summary.get(
+                    "advantage_distillation_samples",
+                    0,
+                ),
+                "advantage_distillation_improved_steps": advantage_distillation_summary.get(
+                    "advantage_distillation_improved_steps",
+                    0,
+                ),
+                "advantage_distillation_anchor_keep_steps": advantage_distillation_summary.get(
+                    "advantage_distillation_anchor_keep_steps",
+                    0,
+                ),
+                "advantage_distillation_mean_step_improvement": (
+                    advantage_distillation_summary.get(
+                        "advantage_distillation_mean_step_improvement",
+                        "",
+                    )
+                ),
+                "advantage_distillation_improved_weight_fraction": (
+                    advantage_distillation_summary.get(
+                        "advantage_distillation_improved_weight_fraction",
+                        "",
+                    )
+                ),
+                "advantage_distillation_loss": advantage_distillation_summary.get(
+                    "advantage_distillation_loss",
+                    "",
+                ),
                 "elite_imitation_updates": elite_update_count,
                 "elite_buffer_size": elite_summary.get("elite_buffer_size", len(elite_episodes)),
                 "elite_best_cost": "" if not np.isfinite(elite_best_cost) else elite_best_cost,
                 "elite_imitation_loss": elite_summary.get("final_loss", ""),
+                "update_frequency": update_frequency,
+                "updates_per_update": updates_per_update,
+                "train_randomization_disruption_range": train_randomization_summary.get(
+                    "disruption_range",
+                    "",
+                ),
+                "train_randomization_forecast_error_range": train_randomization_summary.get(
+                    "forecast_error_range",
+                    "",
+                ),
+                "train_randomization_demand_rate_multiplier_range": train_randomization_summary.get(
+                    "demand_rate_multiplier_range",
+                    "",
+                ),
                 "runtime_seconds": time.perf_counter() - start_time,
             }
         )
@@ -154,6 +224,58 @@ def train_off_policy_agent(agent, env: CapacityPlanningEnv, config: dict[str, An
             )
 
     return rows
+
+
+def _maybe_enable_train_randomization(
+    env: CapacityPlanningEnv,
+    config: dict[str, Any],
+) -> dict[str, str]:
+    settings = dict(config.get("train_randomization", {}))
+    if not bool(settings.get("enabled", False)):
+        return {}
+
+    disruption_range = _range_tuple(settings.get("disruption_range"))
+    forecast_error_range = _range_tuple(settings.get("forecast_error_range"))
+    demand_rate_multiplier_range = _range_tuple(settings.get("demand_rate_multiplier_range"))
+    env.enable_train_randomization(
+        disruption_range=disruption_range,
+        forecast_error_range=forecast_error_range,
+        demand_rate_multiplier_range=demand_rate_multiplier_range,
+    )
+    summary = {
+        "disruption_range": _format_range(disruption_range),
+        "forecast_error_range": _format_range(forecast_error_range),
+        "demand_rate_multiplier_range": _format_range(demand_rate_multiplier_range),
+    }
+    print(
+        "train_randomization "
+        f"disruption={summary['disruption_range'] or 'fixed'} "
+        f"forecast_error={summary['forecast_error_range'] or 'fixed'} "
+        f"demand_rate_multiplier={summary['demand_rate_multiplier_range'] or 'fixed'}",
+        flush=True,
+    )
+    return summary
+
+
+def _range_tuple(value: Any) -> tuple[float, float] | None:
+    if value is None or value == "":
+        return None
+    if isinstance(value, str):
+        parts = [part.strip() for part in value.replace("|", ",").split(",") if part.strip()]
+        if len(parts) != 2:
+            raise ValueError(f"Range string must contain two values, got {value!r}")
+        return (float(parts[0]), float(parts[1]))
+    try:
+        lo, hi = value
+    except TypeError as exc:
+        raise ValueError(f"Range must contain two values, got {value!r}") from exc
+    return (float(lo), float(hi))
+
+
+def _format_range(value: tuple[float, float] | None) -> str:
+    if value is None:
+        return ""
+    return f"{float(value[0]):g}|{float(value[1]):g}"
 
 
 def _maybe_fit_elite_episode(
@@ -214,10 +336,17 @@ def _maybe_pretrain_agent(agent, env: CapacityPlanningEnv, config: dict[str, Any
         raise ValueError(f"{config.get('algorithm', agent.algorithm)} does not support imitation_pretrain")
     summary = agent.pretrain_with_heuristic(env, pretrain_config)
     if summary:
+        diagnostics = ""
+        if "train_accuracy" in summary:
+            diagnostics = (
+                f" train_accuracy={float(summary.get('train_accuracy', 0.0)):.3f}"
+                f" changed_fraction={float(summary.get('changed_fraction', 0.0)):.3f}"
+            )
         print(
             "imitation_pretrain "
             f"policy={summary.get('policy')} samples={summary.get('samples')} "
-            f"final_loss={summary.get('final_loss'):.6f}",
+            f"final_loss={summary.get('final_loss'):.6f}"
+            f"{diagnostics}",
             flush=True,
         )
     return summary
@@ -280,11 +409,14 @@ class EpisodeMetrics:
         reagent_transfers = np.asarray(info.get("reagent_transfers", []), dtype=float)
         transfer_values = np.concatenate((specimen_transfers, capacity_transfers, reagent_transfers))
         self.transshipment_count += int(np.count_nonzero(np.abs(transfer_values) > 1e-8))
-        self.transshipment_cost += (
-            600.0 * float(np.abs(specimen_transfers).sum())
-            + 500.0 * float(np.abs(capacity_transfers).sum())
-            + 200.0 * float(np.abs(reagent_transfers).sum())
-        )
+        if "transshipment_cost" in info:
+            self.transshipment_cost += float(info["transshipment_cost"])
+        else:
+            self.transshipment_cost += (
+                600.0 * float(np.abs(specimen_transfers).sum())
+                + 500.0 * float(np.abs(capacity_transfers).sum())
+                + 200.0 * float(np.abs(reagent_transfers).sum())
+            )
 
     def _update_patient_metrics(self, info: dict[str, Any]) -> None:
         if "eligibility_rate" not in info:

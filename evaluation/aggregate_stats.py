@@ -99,6 +99,98 @@ def summarize_across_seeds(seed_values: Sequence[float], *, seed: int = 0) -> di
     }
 
 
+def paired_two_level_summary(
+    candidate_rows: Sequence[dict[str, Any]],
+    baseline_rows: Sequence[dict[str, Any]],
+    *,
+    metric: str = "total_cost",
+    training_seed_key: str = "training_seed",
+    pairing_keys: Sequence[str] = ("training_seed", "evaluation_seed", "replication"),
+    alpha: float = 0.05,
+    resamples: int = 20000,
+    seed: int = 0,
+) -> dict[str, Any]:
+    """Paired comparison with a training-seed/replication hierarchical bootstrap."""
+
+    def keyed(rows: Sequence[dict[str, Any]]) -> dict[tuple[Any, ...], dict[str, Any]]:
+        result: dict[tuple[Any, ...], dict[str, Any]] = {}
+        for row in rows:
+            key = tuple(row.get(name, "") for name in pairing_keys)
+            if key in result:
+                raise ValueError(f"duplicate paired evaluation key: {key}")
+            result[key] = row
+        return result
+
+    candidate_by_key = keyed(candidate_rows)
+    baseline_by_key = keyed(baseline_rows)
+    if candidate_by_key.keys() != baseline_by_key.keys():
+        missing_candidate = sorted(baseline_by_key.keys() - candidate_by_key.keys())
+        missing_baseline = sorted(candidate_by_key.keys() - baseline_by_key.keys())
+        raise ValueError(
+            "paired evaluation keys differ: "
+            f"missing_candidate={missing_candidate[:3]} "
+            f"missing_baseline={missing_baseline[:3]}"
+        )
+    if not candidate_by_key:
+        raise ValueError("paired comparison requires at least one evaluation row")
+
+    differences_by_seed: dict[Any, list[float]] = defaultdict(list)
+    candidate_values: list[float] = []
+    baseline_values: list[float] = []
+    wins = 0
+    ties = 0
+    for key in sorted(candidate_by_key, key=lambda value: tuple(str(item) for item in value)):
+        candidate_row = candidate_by_key[key]
+        baseline_row = baseline_by_key[key]
+        candidate_value = float(candidate_row[metric])
+        baseline_value = float(baseline_row[metric])
+        difference = candidate_value - baseline_value
+        training_seed = candidate_row.get(training_seed_key, "")
+        differences_by_seed[training_seed].append(difference)
+        candidate_values.append(candidate_value)
+        baseline_values.append(baseline_value)
+        wins += int(difference < 0.0)
+        ties += int(difference == 0.0)
+
+    training_seeds = sorted(differences_by_seed, key=str)
+    rng = np.random.default_rng(seed)
+    bootstrap_means = np.empty(resamples, dtype=float)
+    for sample_index in range(resamples):
+        sampled_seed_indices = rng.integers(0, len(training_seeds), len(training_seeds))
+        sampled_differences: list[float] = []
+        for seed_index in sampled_seed_indices:
+            values = np.asarray(differences_by_seed[training_seeds[int(seed_index)]], dtype=float)
+            sampled_differences.extend(values[rng.integers(0, values.size, values.size)])
+        bootstrap_means[sample_index] = float(np.mean(sampled_differences))
+
+    mean_candidate = float(np.mean(candidate_values))
+    mean_baseline = float(np.mean(baseline_values))
+    mean_difference = mean_candidate - mean_baseline
+    ci_low, ci_high = np.percentile(
+        bootstrap_means,
+        [100.0 * alpha / 2.0, 100.0 * (1.0 - alpha / 2.0)],
+    )
+    return {
+        "metric": metric,
+        "candidate_mean": mean_candidate,
+        "baseline_mean": mean_baseline,
+        "mean_difference": mean_difference,
+        "mean_gap_pct": (
+            100.0 * mean_difference / mean_baseline if mean_baseline != 0.0 else float("nan")
+        ),
+        "ci_low": float(ci_low),
+        "ci_high": float(ci_high),
+        "n_training_seeds": len(training_seeds),
+        "n_pairs": len(candidate_values),
+        "wins": wins,
+        "ties": ties,
+        "per_seed_mean_difference": {
+            str(training_seed): float(np.mean(differences_by_seed[training_seed]))
+            for training_seed in training_seeds
+        },
+    }
+
+
 def aggregate_iqm(
     rows: list[dict[str, Any]],
     *,

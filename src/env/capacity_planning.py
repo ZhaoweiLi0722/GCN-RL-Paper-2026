@@ -43,6 +43,7 @@ class CapacityPlanningConfig:
     production_lead_time: int = 5
     episode_horizon: int = 104
     demand_rates: Sequence[float] = (250.0 / 52.0, 250.0 / 52.0)
+    demand_rate_estimates: Sequence[float] | None = None
     initial_specimens: Sequence[float] = (0.0, 0.0)
     initial_reagents: Sequence[float] = (100.0, 100.0)
     initial_idle_bioreactors: Sequence[float] = (10.0, 10.0)
@@ -107,6 +108,12 @@ class CapacityPlanningEnv:
 
         n = self.config.num_facilities
         self.demand_rates = _as_vector(self.config.demand_rates, n, "demand_rates")
+        self.base_demand_rates = self.demand_rates.astype(float).copy()
+        self.demand_rate_estimates = (
+            self.base_demand_rates.copy()
+            if self.config.demand_rate_estimates is None
+            else _as_vector(self.config.demand_rate_estimates, n, "demand_rate_estimates")
+        )
         self.initial_specimens = _as_vector(self.config.initial_specimens, n, "initial_specimens")
         self.initial_reagents = _as_vector(self.config.initial_reagents, n, "initial_reagents")
         self.initial_idle_bioreactors = _as_vector(
@@ -123,6 +130,7 @@ class CapacityPlanningEnv:
         self.supplier_disruption_rate = _as_vector(
             self.config.supplier_disruption_rate, n, "supplier_disruption_rate"
         )
+        self.base_supplier_disruption_rate = self.supplier_disruption_rate.astype(float).copy()
         self.clinic_coordinates = normalize_coordinates(self.config.clinic_coordinates, n)
         self.clinic_distance_matrix = (
             np.asarray(geographic_distance_matrix(self.clinic_coordinates), dtype=float)
@@ -150,6 +158,7 @@ class CapacityPlanningEnv:
         # Train-time domain-randomization ranges; None => fixed (eval/nominal).
         self._train_disruption_range: tuple[float, float] | None = None
         self._train_forecast_error_range: tuple[float, float] | None = None
+        self._train_demand_rate_multiplier_range: tuple[float, float] | None = None
 
         default_edges = complete_undirected_edges(n)
         geographic_edges = (
@@ -228,6 +237,7 @@ class CapacityPlanningEnv:
         self,
         disruption_range: tuple[float, float] | None = None,
         forecast_error_range: tuple[float, float] | None = None,
+        demand_rate_multiplier_range: tuple[float, float] | None = None,
     ) -> None:
         """Opt into train-time per-episode domain randomization.
 
@@ -235,7 +245,11 @@ class CapacityPlanningEnv:
         from the given ``[lo, hi]`` range *before* demand/supplier/forecast are
         drawn, so training sees a distribution of regimes. Eval envs leave this
         unset and keep the fixed config values, enabling clean train-on-range /
-        test-OOD splits. Passing ``None`` (the default) disables that lever.
+        test-OOD splits. ``demand_rate_multiplier_range`` randomizes the true
+        Poisson demand rates while leaving ``demand_rate_estimates`` fixed, which
+        mirrors the old DRL-CaP case where heuristics plan from a priori demand
+        estimates but the simulator draws from a shifted ground-truth demand
+        distribution. Passing ``None`` (the default) disables that lever.
         """
 
         def _check(name: str, rng: tuple[float, float] | None) -> tuple[float, float] | None:
@@ -248,10 +262,17 @@ class CapacityPlanningEnv:
 
         self._train_disruption_range = _check("disruption_range", disruption_range)
         self._train_forecast_error_range = _check("forecast_error_range", forecast_error_range)
+        self._train_demand_rate_multiplier_range = _check(
+            "demand_rate_multiplier_range",
+            demand_rate_multiplier_range,
+        )
 
     def _maybe_randomize_regime(self) -> None:
         """Resample stressed parameters from their train-time ranges, if enabled."""
         n = self.config.num_facilities
+        self.demand_rates = self.base_demand_rates.astype(float).copy()
+        self.supplier_disruption_rate = self.base_supplier_disruption_rate.astype(float).copy()
+        self.demand_forecast_error = self.config.demand_forecast_error
         if self._train_disruption_range is not None:
             lo, hi = self._train_disruption_range
             rate = float(self.rng.uniform(lo, hi))
@@ -259,6 +280,10 @@ class CapacityPlanningEnv:
         if self._train_forecast_error_range is not None:
             lo, hi = self._train_forecast_error_range
             self.demand_forecast_error = float(self.rng.uniform(lo, hi))
+        if self._train_demand_rate_multiplier_range is not None:
+            lo, hi = self._train_demand_rate_multiplier_range
+            multiplier = float(self.rng.uniform(lo, hi))
+            self.demand_rates = self.base_demand_rates * multiplier
 
     def observation(self) -> np.ndarray:
         """Return a flat observation suitable for MLP baselines."""

@@ -12,15 +12,30 @@ def available_algorithms() -> tuple[str, ...]:
         "flat_ddpg",
         "flat_residual_iso",
         "flat_residual_mdl2",
+        "flat_residual_mdl2_replenish_ddpg_afd",
         "flat_residual_myo",
         "flat_residual_pmyo",
         "gcn_ddpg",
         "gcn_pure_ddpg",
         "gcn_ppo",
+        "gcn_mdl2_shield_selector",
+        "gcn_pmyo_shield_selector",
         "gcn_residual_iso",
         "gcn_residual_mdl2",
+        "gcn_residual_mdl2_replenish_ddpg",
+        "gcn_residual_mdl2_replenish_ddpg_afd",
         "gcn_residual_myo",
         "gcn_residual_pmyo",
+        "gcn_residual_mdl2_replenish_td3",
+        "gcn_residual_mdl2_td3",
+        "gcn_residual_mdl2_shield_td3",
+        "gcn_residual_pmyo_risk_pressure_td3",
+        "gcn_residual_pmyo_risk_replenish_td3",
+        "gcn_residual_pmyo_rebalance_td3",
+        "gcn_residual_pmyo_shield_td3",
+        "gcn_residual_pmyo_td3",
+        "gcn_residual_pmyo_transfer_td3_bc",
+        "gcn_residual_pmyo_transfer_td3",
         "gcn_sac",
         "gcn_td3",
         "ppo",
@@ -35,6 +50,7 @@ def get_agent_class(algorithm: str) -> Any:
         "flat_ddpg",
         "flat_residual_iso",
         "flat_residual_mdl2",
+        "flat_residual_mdl2_replenish_ddpg_afd",
         "flat_residual_myo",
         "flat_residual_pmyo",
     }:
@@ -49,13 +65,27 @@ def get_agent_class(algorithm: str) -> Any:
         "gcn_pure_ddpg",
         "gcn_residual_iso",
         "gcn_residual_mdl2",
+        "gcn_residual_mdl2_replenish_ddpg",
+        "gcn_residual_mdl2_replenish_ddpg_afd",
         "gcn_residual_myo",
         "gcn_residual_pmyo",
     }:
         from src.models.gcn_ddpg import GCNDDPGAgent
 
         return GCNDDPGAgent
-    if algorithm == "gcn_td3":
+    if algorithm in {
+        "gcn_td3",
+        "gcn_residual_mdl2_replenish_td3",
+        "gcn_residual_mdl2_td3",
+        "gcn_residual_mdl2_shield_td3",
+        "gcn_residual_pmyo_risk_pressure_td3",
+        "gcn_residual_pmyo_risk_replenish_td3",
+        "gcn_residual_pmyo_shield_td3",
+        "gcn_residual_pmyo_td3",
+        "gcn_residual_pmyo_rebalance_td3",
+        "gcn_residual_pmyo_transfer_td3_bc",
+        "gcn_residual_pmyo_transfer_td3",
+    }:
         from src.models.gcn_td3 import GCNTD3Agent
 
         return GCNTD3Agent
@@ -67,6 +97,10 @@ def get_agent_class(algorithm: str) -> Any:
         from src.models.gcn_ppo import GCNPPOAgent
 
         return GCNPPOAgent
+    if algorithm in {"gcn_mdl2_shield_selector", "gcn_pmyo_shield_selector"}:
+        from src.models.gcn_shield_selector import GCNShieldSelectorAgent
+
+        return GCNShieldSelectorAgent
     if algorithm == "td3":
         from src.baselines.td3 import TD3Agent
 

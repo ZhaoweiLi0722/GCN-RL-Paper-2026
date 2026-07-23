@@ -48,7 +48,7 @@
 
 \begin{abstract}
 
-Autologous cell therapy and other personalized regenerative medicine (PRM) products are manufactured on demand across distributed clinical networks, where each product is \emph{perishable}, \emph{identity-bound} to a single patient and non-fungible, and needed only while that patient remains clinically eligible. These characteristics couple capacity, inventory, and patient outcomes into one networked decision. We formulate distributed PRM capacity planning as a constrained graph Markov decision process that treats these properties as first-class, and release a reusable simulation testbed realizing it, with patient-condition dynamics, expiry-aware inventory, and resource sharing restricted to fungible reagents and idle bioreactor capacity. To solve it, we integrate a graph convolutional state encoder with continuous-control actor--critic reinforcement learning, and evaluate a family of graph-aware deep reinforcement learning algorithms against a flat-state ablation that isolates the encoder's contribution from that of reinforcement learning itself. Evaluated across supply-disruption, forecast-error, and patient-condition stress regimes with a multi-seed interquartile-mean protocol that reports patient eligibility and waiting alongside operating cost, the graph encoder consistently improves coordinated policies over flat-state control, while tuned look-ahead heuristics remain strong baselines under well-specified conditions. The study contributes a network-aware decision-support framework for time-critical, make-to-order healthcare manufacturing and a reusable benchmark for engineering systems with graph-structured dependencies.
+Autologous cell therapy and other personalized regenerative medicine (PRM) products are manufactured on demand across distributed clinical networks, where each product is \emph{perishable}, \emph{identity-bound} to a single patient and non-fungible, and needed only while that patient remains clinically eligible. These characteristics couple capacity, inventory, and patient outcomes into one networked decision. We formulate distributed PRM capacity planning as a constrained graph Markov decision process that treats these properties as first-class, and release a reusable simulation testbed realizing it, with patient-condition dynamics, expiry-aware inventory, and resource sharing restricted to fungible reagents and idle bioreactor capacity. To solve it, we combine a graph convolutional state encoder with an advantage-filtered residual GCN--DDPG controller that learns bounded corrections to a transparent two-period look-ahead policy. In a 20-clinic demand-prior-drift experiment with five training seeds and 500 paired Monte Carlo replications, the learned controller reduced mean cost by 0.01636\% relative to its MDL-2 anchor; the paired two-level 95\% bootstrap interval for the cost difference was $[-332{,}641,-91{,}367]$. Service, eligibility, waiting, and patient-loss metrics improved in the same comparison. A matched flat residual DDPG ablation also outperformed MDL-2. The GCN point estimate was lower than the flat ablation by 0.00314\%, but its graph-specific confidence interval $[-89{,}702,14{,}025]$ included zero. The results therefore establish the value of residual reinforcement learning under demand-prior misspecification while treating the additional graph-representation benefit as a promising but not yet statistically confirmed effect. The study contributes a network-aware decision-support framework for time-critical, make-to-order healthcare manufacturing and a reusable benchmark for engineering systems with graph-structured dependencies.
 \end{abstract}
 
 \begin{keyword}
@@ -72,14 +72,14 @@ What that literature does not model is the PRM problem itself. Prior graph-and-R
 
 We organize the study around five research questions. \textbf{(RQ1)} Does a graph representation of the clinic network improve coordinated capacity, reagent, and replenishment policies over flat-state control, and under which supply-disruption and forecast-error conditions is any improvement largest? \textbf{(RQ2)} Which actor--critic backbone (DDPG, TD3, SAC, or PPO) is best suited to this constrained continuous-control problem, and is DDPG alone adequate? \textbf{(RQ3)} Does explicitly modeling patient condition and product expiry change the optimal policy and expose failures of condition-blind planners? \textbf{(RQ4)} Does a condition- and expiry-aware temporal encoder, which retains memory of deterioration trajectories, improve on a static graph encoder? \textbf{(RQ5)} Do learned policies outperform strong look-ahead heuristics, not only weak myopic rules, under supply disruption, demand forecast error, and patient-condition stress?
 
-To study these questions we develop, first, a simulation of a multi-site autologous cell-therapy network in which patient health conditions and product and material expiry are first-class drivers of demand and feasibility, and second, a graph-aware actor--critic controller that coordinates capacity, reagent, and replenishment decisions across the network. The graph component encodes each facility's operational and patient-condition state together with information from connected facilities into network-aware embeddings, and the actor--critic component learns continuous, feasibility-projected control actions from interaction with the simulation. We evaluate a family of graph-aware backbones rather than a single algorithm, and we adopt a statistically disciplined evaluation protocol (multiple random seeds, interquartile-mean performance, and confidence intervals), because single-seed, mean-only reporting can make deep reinforcement learning results appear stronger and more stable than they are~\cite{Henderson2018DRLMatters, Agarwal2021RLiable}. Consistent with the clinical stakes of the problem, we report patient-service outcomes such as eligibility and waiting alongside operating cost, since a lower average cost can mask clinically unacceptable delay.
+To study these questions we develop, first, a simulation of a multi-site autologous cell-therapy network in which patient health conditions and product and material expiry are first-class drivers of demand and feasibility, and second, an advantage-filtered residual GCN--DDPG controller that coordinates capacity, reagent, and replenishment decisions across the network. The graph component encodes each facility's operational and patient-condition state together with information from connected facilities into network-aware embeddings. A deterministic policy-gradient actor then learns a bounded, state-dependent correction to a transparent look-ahead anchor policy, and a feasibility projection converts the corrected action into implementable controls. Advantage-filtered distillation retains a nonzero correction target only when common-random-number look-ahead predicts an improvement over the anchor; checkpoint and residual-scale calibration provide a deployment safeguard. DDPG is the canonical proposed instantiation and provides continuity with prior PRM capacity-planning work; graph-aware TD3, SAC, and PPO variants serve as controlled stability and backbone comparisons. We adopt a statistically disciplined evaluation protocol (multiple random seeds, paired Monte Carlo outcomes, and two-level confidence intervals), because single-seed, mean-only reporting can make deep reinforcement learning results appear stronger and more stable than they are~\cite{Henderson2018DRLMatters, Agarwal2021RLiable}. Consistent with the clinical stakes of the problem, we report patient-service outcomes such as eligibility and waiting alongside operating cost, since a lower average cost can mask clinically unacceptable delay.
 
 The main contributions of this study are as follows.
 \begin{itemize}
     \item We formulate distributed capacity planning for \emph{perishable, identity-bound, patient-condition-driven} PRM manufacturing as a constrained networked sequential decision problem, in which patient deterioration and product and material expiry are explicit determinants of demand, feasibility, and cost.
     \item We develop a simulation environment realizing this formulation for a multi-clinic autologous cell-therapy network (with patient-condition dynamics, expiry-aware inventory, and resource sharing under the autologous identity constraint) that is reusable as a benchmark testbed.
-    \item We apply and compare a family of graph-aware actor--critic controllers (DDPG, TD3, SAC, and PPO), treating the learning algorithms as established tools rather than as claimed contributions, and we assess a pilot-gated condition- and expiry-aware temporal encoder motivated by the problem's deterioration dynamics.
-    \item We benchmark the learned policies against strong look-ahead and isolated-facility heuristics and against flat-state reinforcement learning, under supply disruption, demand forecast error, and a patient-condition stress regime, using a multi-seed protocol with interquartile-mean reporting and confidence intervals.
+    \item We propose an advantage-filtered residual GCN--DDPG controller that learns bounded corrections to a transparent look-ahead anchor under demand and disruption uncertainty, with persistent teacher regularization and independently calibrated deployment safeguards.
+    \item We establish a paired multi-seed evaluation protocol for comparisons with strong look-ahead and isolated-facility heuristics, flat-state reinforcement learning, and graph-aware TD3, SAC, and PPO variants, and report the first five-seed demand-prior-drift result with a two-level bootstrap confidence interval.
     \item We draw design implications for intelligent decision support in distributed, patient-specific healthcare manufacturing and related time-critical, make-to-order engineering systems.
 \end{itemize}
 
@@ -296,7 +296,7 @@ GNNs for supply chain networks & Supply-chain graph forecasting, supply predicti
 \end{table}
 
 \subsection{Research gap and design implications}
-Read together, these literatures imply four design choices for a distributed PRM capacity-planning controller. First, because the decisions are sequential and real-valued, the controller should use continuous-control actor--critic reinforcement learning rather than value-based or discretized methods. Second, because a facility's value depends on its network position and resources propagate along inter-facility links, its state should be encoded with a graph rather than a flat vector. Third, because DDPG is prone to instability, the study should compare backbones (TD3, SAC, and PPO alongside DDPG) and treat DDPG as an ablation. Fourth, because reinforcement learning results are sensitive to seeds and implementation details, evaluation should report multi-seed interquartile means with confidence intervals and, given the clinical stakes, patient-service outcomes such as eligibility and waiting.
+Read together, these literatures imply four design choices for a distributed PRM capacity-planning controller. First, because the decisions are sequential and real-valued, the controller should use continuous-control actor--critic reinforcement learning rather than value-based or discretized methods. Second, because a facility's value depends on its network position and resources propagate along inter-facility links, its state should be encoded with a graph rather than a flat vector. Third, DDPG provides a natural canonical formulation and continuity with earlier PRM capacity-planning work, but its known instability requires controlled comparisons with TD3, SAC, and PPO rather than an untested assumption that DDPG is always best. Fourth, because reinforcement learning results are sensitive to seeds and implementation details, evaluation should report multi-seed interquartile means with confidence intervals and, given the clinical stakes, patient-service outcomes such as eligibility and waiting.
 
 None of these streams, however, addresses the problem that defines our setting. PRM operations research motivates adaptive, networked capacity planning but does not learn relational policies. Supply-chain graph-and-reinforcement-learning research supplies the relational-control machinery but treats demand as fungible and abstract, targeting forecasting or inventory-only control. Cell-therapy reinforcement learning operates on a single bioprocess rather than a clinic network. As a result, no prior work models the three defining properties of PRM capacity planning (a perishable product with a hard viability deadline, an identity-bound product that cannot be pooled or substituted across patients, and demand driven by patient deterioration while waiting) within a single graph-aware continuous-control formulation. Our contribution closes this gap. We cast the problem as a constrained graph MDP, build a reusable simulation testbed that realizes it, and study a family of graph-aware actor--critic controllers, pairing a GCN state encoder with DDPG, TD3, SAC, and PPO, against strong flat-state and heuristic baselines.
 
@@ -306,9 +306,9 @@ None of these streams, however, addresses the problem that defines our setting. 
 
 Distributed manufacturing networks for personalized regenerative medicine (PRM) comprise complex, interconnected facilities whose operating states are best represented as graphs rather than flat vectors. Classical reinforcement learning that treats each facility as independent cannot capture these spatial dependencies. We therefore adopt a two-part design shared by every method we study. A graph convolutional network (GCN) encoder maps the networked state to permutation-equivariant, neighborhood-aware node embeddings, composed with a continuous-control actor--critic backbone that maps those embeddings to feasibility-projected capacity, reagent, and replenishment actions. Writing the controller as \emph{encoder $\circ$ backbone} lets us hold the relational representation fixed while swapping the reinforcement-learning backbone, so that any performance difference between backbones is attributable to the learning algorithm rather than to the state representation.
 
-\subsection*{Rationale: why a family of backbones rather than a single algorithm}
+\subsection*{Primary residual GCN--DDPG controller and backbone variants}
 
-Consistent with the design implications drawn in Section~\ref{sec:literature}, we do not commit to a single backbone. We evaluate a family of continuous-control actor--critic algorithms behind the shared GCN encoder (Table~\ref{tab:backbone_family}). Deep deterministic policy gradient (DDPG) is the classical off-policy actor--critic for continuous control; because it is prone to value overestimation and run-to-run instability, we treat the GCN--DDPG pairing as a baseline and ablation rather than as the proposed method. TD3, SAC, and PPO are the stability-oriented backbones we expect to reduce the variance that plagues DDPG: TD3 through clipped double-$Q$ learning, delayed policy updates, and target smoothing; SAC through entropy-regularized stochastic policies; and PPO through an on-policy clipped surrogate objective. All four share the encoder, the feasibility-projection layer, and the environment, so the comparison is controlled. A GCN encodes relational structure but has no temporal memory of its own; the actor--critic backbone supplies the sequential decision dynamics, and the two together encode spatial correlations and temporal trade-offs jointly.
+The primary proposed controller is residual GCN--DDPG. It combines the relational inductive bias of a GCN with the deterministic continuous-control mechanism used in earlier PRM capacity-planning research, while reducing the burden of relearning a complete operational policy from scratch. The actor learns only a bounded correction to a transparent look-ahead anchor. We also evaluate TD3, SAC, and PPO behind the same GCN encoder (Table~\ref{tab:backbone_family}) as controlled backbone variants: TD3 through clipped double-$Q$ learning, delayed policy updates, and target smoothing; SAC through entropy-regularized stochastic policies; and PPO through an on-policy clipped surrogate objective. All four share the graph representation, feasibility-projection layer, environment, and evaluation protocol, so backbone comparisons do not erase GCN--DDPG's role as the canonical proposed instantiation. A GCN encodes relational structure but has no temporal memory of its own; the actor--critic component supplies the sequential decision dynamics, and the two together encode spatial correlations and temporal trade-offs jointly.
 
 \begin{table}[htbp]
 \centering
@@ -321,15 +321,15 @@ Consistent with the design implications drawn in Section~\ref{sec:literature}, w
 \toprule
 Backbone & Policy class & Sampling & Key mechanism and role in this study \\
 \midrule
-DDPG~\cite{Lillicrap2016DDPG} & Deterministic & Off-policy & Baseline actor--critic for continuous control; value overestimation and training instability motivate treating GCN--DDPG as an ablation rather than the proposed method. \\
-TD3~\cite{Fujimoto2018TD3} & Deterministic & Off-policy & Clipped double-$Q$ learning, delayed policy updates, and target smoothing to curb overestimation and stabilize training. \\
+DDPG~\cite{Lillicrap2016DDPG} & Deterministic & Off-policy & Canonical backbone of the proposed residual GCN--DDPG controller; retains continuity with prior PRM capacity-planning work. \\
+TD3~\cite{Fujimoto2018TD3} & Deterministic & Off-policy & Stability-enhanced variant using clipped double-$Q$ learning, delayed policy updates, and target smoothing. \\
 SAC~\cite{Haarnoja2018SAC} & Stochastic & Off-policy & Entropy-regularized objective for more robust exploration and training stability. \\
 PPO~\cite{Schulman2017PPO} & Stochastic & On-policy & Clipped surrogate objective; an on-policy alternative to the off-policy backbones. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-For concreteness we present the framework in full for the DDPG instantiation (the GCN encoder, the actor--critic updates, and the feasibility projection) and then note where each stability-oriented backbone modifies the critic target, the policy parameterization, or the update schedule; the GCN encoder and the feasibility-projection layer are identical across backbones.
+We therefore present the proposed residual GCN--DDPG controller in full (the anchor-plus-residual action, GCN encoder, actor--critic updates, and feasibility projection) and then note where each stability-oriented variant modifies the critic target, policy parameterization, or update schedule; the graph encoder and feasibility-projection layer are identical across backbones.
 
 Figure~\ref{fig:graph_structure} shows the graph abstraction used by the proposed graph-aware framework. Each healthcare clinic is represented as a node with facility-specific state features, including waiting specimens and their condition summary, reagent inventory, available bioreactor capacity, and other local operational conditions. The edges encode different forms of inter-facility dependency. Information-flow edges let the model propagate operational and patient-condition signals among neighboring clinics; resource-sharing edges represent feasible reagent transshipment relationships; and capacity-sharing edges connect each clinic to the central capacity hub. Consistent with the autologous identity constraint, only fungible reagents and bioreactor capacity flow along edges, while specimens and finished product remain node-local. By applying graph convolution over this structure, the model learns a network-aware representation in which each facility's decision is informed not only by its own state but also by the states of connected facilities. This graph embedding is then passed to the actor--critic backbone to support coordinated capacity, reagent, and replenishment decisions.
 
@@ -367,10 +367,16 @@ The DDPG then uses this feedback, in tandem with the replay buffer, to refine bo
 \end{itemize}
 
 \subsection*{DDPG Component}
-The DDPG agent operates on the GCN-encoded state $H_t$ to generate an action vector 
-$A_t = \{\mathbf{a}_i^t\}_{i=1}^{N}$, where $\mathbf{a}_i^t$ specifies the capacity adjustment,
-inventory replenishment, and transshipment quantities for facility $i$. 
-The actor network $\mu(H_t|\theta_\mu)$ outputs continuous actions, while the critic network
+The DDPG agent operates on the GCN-encoded state $H_t$ to generate a bounded residual action
+$\Delta A_t=\mu(H_t|\theta_\mu)$. Let $A_t^{\mathrm{anc}}$ denote the action produced by the
+transparent look-ahead anchor and let $\rho$ be a vector of decision-group-specific trust-region
+scales. The raw proposed action is
+\begin{equation}
+A_t^{\mathrm{raw}}=A_t^{\mathrm{anc}}+\rho\odot\Delta A_t.
+\end{equation}
+This residual parameterization preserves the anchor's basic inventory logic while allowing the GCN
+policy to adapt replenishment and, where enabled, fungible resource-sharing decisions to network-wide
+patient pressure, geographic connectivity, disruptions, and demand-prior drift. The critic network
 $Q(H_t,A_t|\theta_Q)$ estimates the expected cumulative cost. The optimization follows the standard
 DDPG updates:
 \begin{align}
@@ -379,6 +385,30 @@ L_Q &= \frac{1}{N}\sum_i (y_i - Q(H_i,A_i|\theta_Q))^2,\\
 \nabla_{\theta_\mu} J &= \frac{1}{N}\sum_i \nabla_a Q(H_i,a|\theta_Q)|_{a=\mu(H_i)} 
 \nabla_{\theta_\mu} \mu(H_i|\theta_\mu).
 \end{align}
+
+\subsection*{Advantage-filtered residual initialization and deployment}
+The useful residual corrections are sparse because the MDL-2 anchor is already
+competitive in many states. We therefore initialize the residual actor through
+advantage-filtered distillation (AFD). At a sampled state, a small set of
+replenishment-only residual candidates is compared with the zero-residual
+MDL-2 action over a finite look-ahead horizon. Candidate and anchor rollouts use
+common random numbers so that their score difference is not dominated by
+different demand, deterioration, or disruption realizations. A nonzero target
+is retained only when it improves the configured operating-cost and
+patient-outcome score; otherwise the target is the zero residual. To keep the
+sparse improvement labels from being overwhelmed, improving and zero-residual
+examples receive equal total weight. The weighted AFD data remain in the actor
+loss during DDPG fine-tuning rather than being used only as a one-time warm
+start.
+
+Deployment uses two independent validation stages. First, checkpoints saved
+during training are compared on common validation scenarios. Second, the
+selected checkpoint is evaluated over a fixed set of residual trust-region
+scales, including zero. The nonzero residual is deployed only when it improves
+validation cost without reducing service; otherwise the controller falls back
+to MDL-2. This mechanism keeps the deployed controller within the residual
+GCN--DDPG family while preventing a poorly generalized correction from
+overriding the operational anchor.
 
 \subsection*{Reward function}
 The agents optimize the negative of the immediate cost defined in Section~\ref{sec:problem-graph-mdp}. For each epoch $t$, the reward is
@@ -393,27 +423,29 @@ where $c(\cdot)$ is the extended cost of Equation~\eqref{eq:cost}, comprising th
 \caption{Graph-aware actor--critic for distributed PRM capacity planning (DDPG instantiation; TD3/SAC/PPO swap the critic target, policy parameterization, or update schedule).}
 \label{alg:ddpg_gcn}
 \begin{algorithmic}[1]
-\Require Discount factor $\gamma$, soft-update rate $\tau$, actor and critic learning rates $\alpha_\mu,\alpha_Q$, exploration scale $\sigma$, minibatch size $N$.
+\Require Anchor policy $\pi_{\mathrm{anc}}$, residual candidates $\mathcal{D}$, look-ahead horizon $L$, discount factor $\gamma$, soft-update rate $\tau$, actor and critic learning rates $\alpha_\mu,\alpha_Q$, exploration scale $\sigma$, minibatch size $N$.
 \State Initialize GCN encoder $g_\omega$, actor $\mu(\cdot\mid\theta_\mu)$, critic $Q(\cdot,\cdot\mid\theta_Q)$, target networks $\mu'$ and $Q'$, and replay buffer $\mathcal{R}$.
+\State Build weighted AFD data by comparing $\pi_{\mathrm{anc}}(X)+\delta$, $\delta\in\mathcal{D}$, with $\pi_{\mathrm{anc}}(X)$ under common-random-number $L$-step rollouts; use target $\delta^*$ only when it improves the score and zero otherwise.
+\State Fit the residual actor to the weighted AFD targets and retain this loss as an actor regularizer.
 \For{each environment step $t$}
     \State Observe raw graph state $X_t$ and compute graph embedding $Z_t=g_\omega(X_t)$.
-    \State Select exploratory action $A_t=\mu(Z_t\mid\theta_\mu)+\epsilon_t$, where $\epsilon_t\sim\mathcal{N}(0,\sigma^2 I)$.
+    \State Select exploratory residual action $A_t=\pi_{\mathrm{anc}}(X_t)+\rho\odot\mu(Z_t\mid\theta_\mu)+\epsilon_t$, where $\epsilon_t\sim\mathcal{N}(0,\sigma^2 I)$.
     \State Project or clip $A_t$ to the feasible set and execute the resulting action $\hat{A}_t$.
     \State Observe cost/reward $r_t$, next state $X_{t+1}$, and store $(X_t,\hat{A}_t,r_t,X_{t+1})$ in $\mathcal{R}$.
     \If{an update is scheduled}
         \State Sample minibatch $(X_i,A_i,r_i,X_{i+1})_{i=1}^{N}$ from $\mathcal{R}$ and compute $Z_i=g_\omega(X_i)$, $Z_{i+1}=g_\omega(X_{i+1})$.
         \State Compute targets $y_i=r_i+\gamma Q'(Z_{i+1},\mu'(Z_{i+1}\mid\theta_{\mu'})\mid\theta_{Q'})$.
         \State Update critic by minimizing $L_Q=N^{-1}\sum_i(y_i-Q(Z_i,A_i\mid\theta_Q))^2$.
-        \State Update actor using the deterministic policy gradient $\nabla_{\theta_\mu}J$.
+        \State Update actor using the deterministic policy gradient plus the weighted AFD regularizer.
         \State Backpropagate through the GCN encoder and softly update target networks.
     \EndIf
 \EndFor
-\State \Return trained actor $\mu(g_\omega(X)\mid\theta_\mu)$.
+\State Select checkpoint and residual scale on independent validation scenarios; return the calibrated residual policy or the MDL-2 fallback.
 \end{algorithmic}
 \end{algorithm}
 
 \paragraph{Action decoding and feasibility projection.}
-Because the actor network outputs continuous actions, an additional deterministic decoding and feasibility-projection step is used before actions are executed in the simulation environment. Let $A_t^{\mathrm{raw}}=\mu(Z_t|\theta_\mu)$ denote the raw continuous action generated by the actor network from the graph embedding $Z_t$. The raw action is first scaled to the admissible range of each decision variable and then clipped to its variable-specific lower and upper bounds. Under the autologous identity constraint the specimen-adjustment component is fixed to zero, so the decoded decision comprises only the fungible quantities (reagent transshipment, bioreactor relocation, and replenishment), which are then rounded to the nearest feasible integer values.
+Because the actor network outputs continuous residuals, an additional deterministic decoding and feasibility-projection step is used before actions are executed in the simulation environment. The raw anchor-plus-residual action $A_t^{\mathrm{raw}}$ is first scaled to the admissible range of each decision variable and then clipped to its variable-specific lower and upper bounds. Under the autologous identity constraint the specimen-adjustment component is fixed to zero, so the decoded decision comprises only the fungible quantities (reagent transshipment, bioreactor relocation, and replenishment), which are then rounded to the nearest feasible integer values.
 
 The decoded action is subsequently passed through a repair operator that enforces the operational constraints of the manufacturing network. First, nonnegativity constraints are imposed so that the resulting action cannot remove more reagents or idle bioreactors from a facility than are available at that epoch. Second, replenishment quantities are capped by the maximum purchasable reagent quantity $P_t^n$ and by supplier availability. Third, network conservation constraints are enforced for the fungible sharing decisions, so that the total quantities of reagents and relocatable bioreactors sent out from facilities must equal the total amount received by connected facilities, except for external reagent purchases; specimens and finished product are identity-bound and are never transferred. Finally, transshipment and relocation actions are restricted to feasible graph edges; if no edge connects two facilities, the corresponding flow is set to zero.
 
@@ -428,19 +460,19 @@ Each stability-oriented backbone reuses this encoder and projection layer unchan
 
 \subsection*{Summary}
 
-The framework is thus a single graph-aware controller with a swappable actor--critic core, in which a GCN encoder supplies a permutation-equivariant, network-aware state representation; a continuous-control backbone learns coordinated capacity, reagent, and replenishment policies from simulated experience; and a deterministic feasibility-projection layer guarantees that every executed action respects inventory, capacity, supplier, identity, and connectivity constraints. Holding the encoder and projection fixed while varying the backbone lets the experiments in Section~\ref{sec:experiments} separate the value of the graph representation from that of the reinforcement-learning algorithm, and compare DDPG against the more stable TD3, SAC, and PPO on equal footing.
+The proposed method is therefore a residual GCN--DDPG controller: a GCN encoder supplies a permutation-equivariant, network-aware state representation; a deterministic actor learns bounded corrections to a transparent look-ahead anchor; and a feasibility-projection layer guarantees that every executed action respects inventory, capacity, supplier, identity, and connectivity constraints. Holding the residual parameterization, encoder, and projection fixed while varying the backbone lets the experiments in Section~\ref{sec:experiments} compare the canonical DDPG implementation with TD3, SAC, and PPO on equal footing, without redefining those variants as separate proposed methods.
 \section{Computational Experiments}
 \label{sec:experiments}
 \label{sec:casestudies}
 
-This section presents two case studies designed to evaluate the efficacy of the proposed DDPG-GCN framework in a distributed PRM manufacturing system. The case studies aim to illustrate the framework's adaptability to varying demand forecast accuracies and its capacity for making informed decisions within a complex network of interconnected clinics. The experiments are designed to compare the learned graph-aware policy with heuristic and look-ahead policies under the same simulation environment, which helps isolate the value of adaptive policy learning under disruption and forecast error.
+This section presents two case studies designed to evaluate the efficacy of the proposed residual GCN--DDPG framework in a distributed PRM manufacturing system. The case studies aim to illustrate the framework's adaptability to varying demand forecast accuracies and its capacity for making informed decisions within a complex network of interconnected clinics. The experiments compare the learned graph-aware correction policy with its heuristic anchor, other heuristic and look-ahead policies, flat-state residual DDPG, and graph-aware backbone variants under the same simulation environment.
 \subsection{Objective}
-The objective of this study is to compare the performance of the proposed GCN-DDPG (Graph Convolutional Network - Deep Deterministic Policy Gradient) framework with traditional heuristic methods in the context of distributed manufacturing.
+The objective of this study is to compare the proposed residual GCN--DDPG framework with traditional heuristic methods, its MDL-2 anchor, flat-state residual DDPG, and stability-oriented graph-aware actor--critic variants in distributed manufacturing.
 
 \subsection{Methodology}
 
 \subsubsection{Benchmarking Setup}
-To evaluate both the value of reinforcement learning and the value of graph-based representation learning, we compare the proposed GCN-DDPG framework with two groups of baselines. The first group consists of traditional heuristic and look-ahead policies implemented in the same simulation environment. These baselines provide domain-relevant comparisons with existing capacity planning approaches. The second group consists of learning-based ablations designed to isolate the contribution of the GCN encoder.
+To evaluate both the value of reinforcement learning and the value of graph-based representation learning, we compare the proposed residual GCN--DDPG framework with two groups of baselines. The first group consists of traditional heuristic and look-ahead policies implemented in the same simulation environment. These baselines include the anchor itself and therefore test whether the learned residual adds value rather than merely inheriting a strong heuristic. The second group consists of learning-based ablations and backbone variants designed to isolate the contribution of the GCN encoder and the DDPG update.
 
 The heuristic baselines are:
 \begin{itemize}
@@ -452,7 +484,7 @@ The heuristic baselines are:
 
 The learning-based baseline is:
 \begin{itemize}
-\item \textbf{MLP-DDPG / flat-state DDPG:} This baseline uses the same DDPG actor--critic structure and the same action space as the proposed method, but removes the GCN encoder. Instead, all facility-level states are concatenated into a flat vector and passed directly into multilayer perceptron actor and critic networks. This baseline is designed to answer whether performance improvements come from reinforcement learning alone or from explicitly encoding graph-structured inter-facility dependencies.
+\item \textbf{MLP residual DDPG / flat-state residual DDPG:} This baseline uses the same MDL-2 anchor, residual action space, DDPG actor--critic structure, training budget, and feasibility projection as the proposed method, but removes the GCN encoder. Instead, all facility-level states are concatenated into a flat vector and passed directly into multilayer perceptron actor and critic networks. This baseline is designed to answer whether performance improvements come from reinforcement learning alone or from explicitly encoding graph-structured inter-facility dependencies.
 \end{itemize}
 
 In addition, graph ablation experiments are planned to evaluate the role of different edge types. Specifically, we consider removing capacity-sharing edges and removing resource-sharing edges to assess whether these relational structures contribute to policy performance under disruption and demand uncertainty.
@@ -545,90 +577,117 @@ where the meanings of $C_{\text{Reg}, t}^{n}$, $C_{\text{Bio}, t}^{n}$, and $C_{
 
 \subsection{Case Study 1: Interconnected Clinic Network Analysis}
 \label{subsec:casestudy1}
+This case study holds the demand prior equal to the arrival distribution and
+varies the supplier disruption rate over $0.05$, $0.30$, and $0.60$. Its purpose
+is to measure the value of graph-aware coordination when the deterministic
+heuristics are not disadvantaged by demand misspecification. The final matched
+multi-seed campaign for these three regimes is still pending; consequently, we
+do not report numerical disruption-effect claims in the present draft. This
+case study will use the same five training seeds, paired Monte Carlo evaluation,
+checkpoint selection, and two-level bootstrap protocol as Case Study~2.
 
- In this case study, we assume the demand forecast for heuristics is accurate and compare the cost performance of GCN-DDPG with the heuristics under three levels of supply disruption rate. This case study aims to demonstrate that
-GCN-DDPG can learn effective policies under different uncertainty scenarios. Figure 3
-illustrates the average total cost of GCN-DDPG and the heuristics under 0.05, 0.3 and
-0.6 supplier disruption rates. The result of MYO is omitted in the figure due to its
-poor performance. The result shows that GCN-DDPG can achieve comparable cost performance with the heuristics when the supplier disruption rate is low, e.g., 0.05 and
-0.3. When the supplier disruption rate is high, e.g., 0.6, GCN-DDPG outperforms all
-the heuristics. The cost differences between GCN-DDPG and heuristics are calculated by
-$(Cost_{Heuristic}- Cost_{GCN-DDPG})/Cost_{Heuristic}\times 100$ and listed in Table 1.
-
-\subsubsection{Results} The results indicate that the GCN-DDPG framework can leverage network-level information to improve resource allocation and respond to demand changes more effectively.
- \begin{figure}[ht]
-    \includegraphics[width=0.85\textwidth]{Result_1.png}
-            \caption{Average total cost summary of case study 1.}
- \end{figure}
- \begin{table}[h]
-\centering
-\caption{Cost performance comparison of case study I (\% increase)}
-
-\begin{tabular}{lccc}
-\hline
-Method & \multicolumn{3}{c}{Disruption Rate} \\
-\cline{2-4}
- & 0.05 & 0.3 & 0.6 \\
-\hline
-ISO & 5.46\% & 4.80\% & 30.56\% \\
-MDL-1 & 2.17\% & 0.83\% & 10.71\% \\
-MDL-2 & -7.14\% & -3.48\% & 3.85\% \\
-GCN-DDPG & 0.00\% & 0.00\% & 0.00\% \\
-\hline
-\end{tabular}
-\label{tab:cost_comparison}
-\end{table}
-\subsubsection{Analysis:}
-The results show that GCN-DDPG performs competitively with the heuristic baselines under low and moderate disruption rates and provides clearer cost advantages under high disruption. In particular, when the supplier disruption rate is $0.6$, GCN-DDPG reduces average total cost by 30.56\% relative to ISO, 10.71\% relative to MDL-1, and 3.85\% relative to MDL-2, as reported in Table~\ref{tab:cost_comparison}. Under lower disruption rates, the cost differences are smaller, indicating that the benefit of graph-aware adaptive control becomes more visible when the network is exposed to stronger supply-side uncertainty. These results suggest that GCN-DDPG can use network-level information to support resource allocation under disruption, rather than demonstrating uniformly dominant performance across all settings. This consistent performance of GCN-DDPG underscores its potential as a scalable solution for healthcare networks, ensuring operational reliability and financial prudence even in the face of escalating disruptions.
 \subsection{Case Study 2: Adaptability to Non-Stationary Demand}
 \label{subsec:casestudy2}
-In this case study, we assume the demand forecast is less accurate for heuristic methods. Instead, we use a range of demand levels in the simulation model for training our GCN-DDPG approach, as opposed to the actual demand distribution. This case study aims to demonstrate that GCN-DDPG can learn a single policy that can adapt to different uncertainty scenarios, mimicking a real-world application.
+This case study evaluates the main robustness hypothesis under patient-condition
+and geographic network dynamics. The 20 clinics are partitioned into four
+five-clinic demand groups. MDL-2 plans with Poisson prior rates
+$[7.5,3.2,6.0,3.5]$, whereas the simulator generates arrivals using true rates
+$[10.5,3.52,7.5,3.15]$. The environment also includes patient deterioration,
+expiry, clustered demand shocks, regional supplier disruptions, and
+distance-dependent transfer lead times. During training, demand rates are
+randomized between $0.8$ and $1.5$ of the scenario rates and forecast error
+between $0$ and $0.35$; evaluation is fixed to the scenario above.
 
-In the computer experiment, we let the heuristics generate capacity plans using a demand distribution \( \text{Poisson}(d) \) and \( d = \frac{250}{52} \). We then set the actual demand distribution as \( \text{Poisson}(d') \), where \( d' = d + \epsilon \cdot d \) and \( \epsilon \in \{-0.2, 0, 0.2, 0.3, 0.4, 0.5\} \), to generate data for testing heuristic methods. This approach tests the adaptability of our GCN-DDPG model to demand forecast errors that are \(-20\%, 0\%, 20\%, 30\%, 40\%, 50\% \). In addition to the constant error, we also consider scenarios of non-stationary errors where the demand forecast error changes over time as listed in Table \ref{table:nonstationary_error_design}.
- The average total cost of GCN-DDPG and the heuristics under different levels of demand forecasting accuracy are summarized
-in Figure 4.
-\subsubsection{Results} The results indicate that the GCN-DDPG framework can leverage network-level information to improve resource allocation and respond to demand changes more effectively.
- \begin{figure}[ht]
-    \includegraphics[width=0.85\textwidth]{Result-2.png}
-            \caption{Average total cost summary of case study 2.}
- \end{figure}
+The proposed advantage-filtered residual GCN--DDPG controller and a matched
+flat-state residual DDPG ablation were trained for 300 episodes with five
+independent training seeds. They shared the MDL-2 anchor, residual action
+parameterization, advantage-filtered labels, persistent teacher
+regularization, domain randomization, auxiliary actor losses, and deployment
+calibration; the representation was the intended difference. Checkpoints were
+saved every 50 episodes. Checkpoint selection used 20 validation replications,
+residual scale calibration used 50 validation replications, and formal
+evaluation used 100 paired Monte Carlo replications per training seed.
+Candidate and MDL-2 outcomes were paired by training seed, evaluation seed, and
+replication. The confidence interval resampled training seeds and then
+replications within each selected seed.
 
-
-We train the GCN-DDPG model to make effective capacity planning decisions under different uncertainty scenarios. The capacity planning model for the GCN-DDPG approach utilizes a uniform parameter \( \text{Uniform}(d,2d) \) for each time step, ensuring adaptability to the varying demand patterns.
 \begin{table}[ht]
 \centering
-\caption{Summary of non-stationary demand forecast error design for Case Study II across 20 clinics.}
-\label{table:nonstationary_error_design}
-\begin{tabular}{c c}
+\caption{Five-seed demand-prior-drift evaluation (500 paired replications). Lower cost, waiting time, patient loss, and at-risk unserved are better; higher service and eligibility are better.}
+\label{tab:demand_drift_results}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrr}
 \hline
-Epoch & Error Rate Across Clinics \\
+Method & Cost (B) & Service & Eligibility & Wait & Lost & At risk \\
 \hline
-1-13 & Varies from 30\% to 60\%, alternating between clinics \\
-14-26 & Varies from 10\% to 80\%, alternating between clinics \\
-27-39 & Varies from 50\% to 100\%, alternating between clinics \\
-40-52 & Varies from 40\% to 60\%, alternating between clinics \\
+MDL-2 & 1.268257 & 0.429982 & 0.530313 & 3.052625 & 3665.59 & 5206.41 \\
+AFD residual flat DDPG & 1.268089 & 0.430320 & 0.530523 & 3.052012 & 3663.28 & 5203.86 \\
+AFD residual GCN--DDPG & 1.268049 & 0.430321 & 0.530524 & 3.052012 & 3663.27 & 5203.86 \\
 \hline
 \end{tabular}
+}
 \end{table}
 
+All five training seeds deployed the learned residual at scale 3.0, selecting
+checkpoints at episodes 300, 50, 50, 50, and 150. Their independent mean cost
+differences relative to MDL-2 were all negative. Across the 500 paired
+replications, the proposed method reduced mean cost by $207{,}485.49$, or
+$0.01636\%$. The paired two-level 95\% bootstrap interval for the cost
+difference was $[-332{,}641.11,-91{,}367.07]$, and the learned controller had
+lower cost in 323 of 500 paired replications. It also improved mean service by
+0.000340 and eligibility by 0.000211, while reducing waiting time by 0.000612,
+patient loss by 2.32, and at-risk unserved patients by 2.55.
 
-\subsubsection{Analysis}
-The results indicate that GCN-DDPG achieves lower average total cost than the heuristic baselines in the higher forecast-error scenarios, including the 40\%, 50\%, and non-stationary demand-error settings. In lower-error scenarios, its performance is closer to the look-ahead heuristics, suggesting that the advantage of adaptive learning becomes more visible when the actual demand process deviates substantially from the forecast used by deterministic baselines.
+The matched flat residual DDPG policy also improved on MDL-2, reducing mean
+cost by $167{,}609.55$ or $0.01322\%$. Its paired two-level interval was
+$[-286{,}899.37,-46{,}230.03]$. Directly comparing the two learned policies,
+GCN--DDPG reduced mean cost by a further $39{,}875.94$, or $0.00314\%$, and won
+285 of 500 paired replications. The corresponding interval,
+$[-89{,}701.54,14{,}024.91]$, included zero. The residual-learning improvement
+over the misspecified anchor is therefore statistically stable but small in
+operational magnitude. The graph encoder has the best point estimate, but this
+five-seed campaign does not yet establish a statistically significant
+graph-specific advantage.
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
-The two case studies conducted provide a comprehensive comparison between the cost performance of the proposed GCN-DDPG framework and four ADP-based methods under conditions where demand distributions are known a priori. The findings affirm that GCN-DDPG can generate effective actions and policies, demonstrating performance on par with ADP-based methods across various uncertainty scenarios. In the second case study, we explored scenarios where the actual demand distribution is unknown, training a single GCN-DDPG policy to address this uncertainty. The results endorse the framework's capability to learn and control capacity planning effectively under diverse demand uncertainty scenarios, thereby highlighting its applicability to real-world problems where system uncertainties are unknown.
+This study develops a patient-condition and geography-aware simulation of a
+20-clinic PRM network and a residual GCN--DDPG controller that learns around a
+strong MDL-2 anchor. Advantage-filtered distillation identifies sparse
+state-dependent corrections, while checkpoint selection, residual-scale
+calibration, and fallback prevent an unsupported correction from being
+deployed. This structure preserves the interpretability of the anchor while
+allowing the graph actor to respond to patient pressure, transfer pipelines,
+regional disruptions, and demand-prior drift.
 
-While the capacity planning problem we explored is inspired by PRM manufacturing, the flexibility of the GCN-DDPG approach suggests its potential applicability across a wide range of manufacturing applications to enhance supply chain resilience, even without a predefined system structure.
+The completed five-seed demand-drift experiment provides the present paper's
+main positive evidence. All five GCN seeds deployed learned corrections, every
+per-seed mean cost difference favored GCN--DDPG over MDL-2, and the paired
+two-level confidence interval excluded zero. Patient-facing metrics moved in
+the same direction. The matched flat residual policy also outperformed MDL-2,
+while the direct GCN--flat interval crossed zero. The contribution should
+therefore be interpreted as a statistically stable but operationally modest
+advantage-filtered residual RL correction to an already strong heuristic,
+together with a positive but not yet conclusive graph-representation signal,
+not as broad dominance of either reinforcement learning or GCN encoding.
 
-
-The GCN-DDPG framework, leveraging the power of simulation and the learning capabilities of Deep Reinforcement Learning, is particularly well-suited for modeling complex systems and learning optimal control policies. This approach offers significant benefits for PRM supply chains, including the ability to make immediate decisions using a neural network-based trained policy, avoiding the need for time-consuming optimization processes typical of analytical methods. Furthermore, a well-trained GCN-DDPG policy can be adapted to different system settings, such as varying levels of demand uncertainty, without the necessity for retraining.
-
-However, challenges remain in the deployment of GCN-DDPG within PRM supply chains. Achieving acceptable performance with DRL policies may require meticulous hyperparameter tuning or extended training times. The simulation environment must accurately reflect the supply chain's state to allow for efficient retraining and maintenance of policies. Significant changes in the system may necessitate policy retraining to ensure the quality of decisions. Practitioners must develop a robust workflow for training, maintaining, and validating GCN-DDPG policies to mitigate the risk of suboptimal decision-making.
+Several limitations remain. The matched five-seed disruption-rate campaign and
+the full backbone comparisons have not yet been completed at the same training
+budget. The completed matched flat-state comparison was underpowered for a
+graph-specific conclusion at the observed effect size. Checkpoint selection was essential:
+three of five deployed policies came from episode 50, showing that additional
+training is not monotonically beneficial. The calibrated policy also requires
+more inference time than MDL-2, although inference remains on the order of
+milliseconds. External clinical data will be needed to validate patient-risk,
+demand, disruption, and transfer-time assumptions before operational use.
 
 \textbf{Future Work}
-This study motivates several potential research extensions. First, the simulation
-model can be improved by adding variables such as patient health condition, raw material quality, product quality, process failure rate, machine breakdown process, and operator availability. Furthermore, other PRM supply chain activities such as product
-distribution and preparation, patient treatment activities, and production scheduling processes can be added to the simulation.
+This study motivates several extensions. Patient condition can be represented
+with longitudinal clinical covariates rather than the current eligibility and
+survival-risk summary. Raw-material quality, product quality, process failures,
+machine breakdowns, and operator availability can be added to the simulator.
+Future experiments should also test temporal demand drift, unseen clinic
+networks, and transfer disruptions, and should integrate production scheduling,
+product preparation and distribution, and treatment operations.
 
 \section*{Data Availability}
 The data used in this study are generated from a simulation model. The simulation parameters and experimental settings are described in the manuscript. Code and additional materials are available from the corresponding author upon reasonable request.

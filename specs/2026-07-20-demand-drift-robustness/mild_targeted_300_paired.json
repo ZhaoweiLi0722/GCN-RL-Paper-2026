@@ -1,0 +1,18 @@
+{
+  "baseline_mean": 1266547679.4906268,
+  "candidate_mean": 1266418106.0354314,
+  "ci_high": -24526.534038770536,
+  "ci_low": -238744.5892636567,
+  "mean_difference": -129573.45519542694,
+  "mean_gap_pct": -0.010230444324649356,
+  "metric": "total_cost",
+  "n_pairs": 300,
+  "n_training_seeds": 3,
+  "per_seed_mean_difference": {
+    "0": -86944.5099746728,
+    "1": -146821.09513337136,
+    "2": -154954.76047869204
+  },
+  "ties": 0,
+  "wins": 183
+}

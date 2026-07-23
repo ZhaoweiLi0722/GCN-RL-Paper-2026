@@ -37,15 +37,28 @@ class FlatDDPGAgent:
         self.observation_scaler = FixedObservationScaler.from_config(config, state_dim)
         residual_config = dict(config.get("residual_action", {}))
         self.residual_action_enabled = bool(residual_config.get("enabled", False))
+        self.include_base_action_features = bool(
+            residual_config.get("include_base_action_features", False)
+        )
         self.residual_scale = float(residual_config.get("scale", 0.25))
         self.residual_scale_vector = self._make_residual_scale_vector(residual_config)
         self.residual_center_slices = self._make_residual_center_slices(residual_config)
+        self.residual_positive_slices = self._make_residual_positive_slices(residual_config)
+        self.residual_pressure_projection_groups = (
+            self._make_pressure_projection_groups(residual_config)
+        )
+        self.residual_state_gate_config = dict(residual_config.get("state_gate", {}))
+        self.residual_state_gate_groups = self._make_residual_state_gate_groups(residual_config)
         self.residual_l2_weight = float(residual_config.get("l2_weight", 0.0))
         self.residual_base_policy = str(residual_config.get("base_policy", "mdl2"))
         self.residual_base_settings = heuristic_settings_for_policy(
             self.residual_base_policy,
             dict(residual_config.get("base_policy_config", {})),
         )
+        if self.include_base_action_features and not self.residual_action_enabled:
+            raise ValueError(
+                "residual_action.include_base_action_features requires residual_action.enabled"
+            )
         if self.residual_action_enabled:
             if self.env_config.get("action_mode") != "facility_net":
                 raise ValueError("residual_action requires env.action_mode='facility_net'")
@@ -61,12 +74,43 @@ class FlatDDPGAgent:
         )
         self.imitation_states = None
         self.imitation_actions = None
+        self.imitation_weights = None
         self.imitation_rng = np.random.default_rng(seed + 300000)
+        advantage_config = dict(config.get("anchor_advantage_actor_loss", {}))
+        self.anchor_advantage_actor_loss_enabled = bool(
+            advantage_config.get("enabled", False)
+        )
+        self.anchor_advantage_margin = float(advantage_config.get("margin", 0.0))
+        self.anchor_advantage_temperature = max(
+            float(advantage_config.get("temperature", 0.05)),
+            1e-6,
+        )
+        self.anchor_advantage_negative_penalty_weight = float(
+            advantage_config.get("negative_penalty_weight", 0.0)
+        )
+        patient_proxy_config = dict(config.get("patient_service_proxy_actor_loss", {}))
+        self.patient_service_proxy_actor_loss_enabled = bool(
+            patient_proxy_config.get("enabled", False)
+        )
+        self.patient_service_proxy_weight = float(patient_proxy_config.get("weight", 0.0))
+        self.patient_service_proxy_cost_weight = float(
+            patient_proxy_config.get("cost_weight", 0.0)
+        )
+        self.patient_service_proxy_low_pressure_weight = float(
+            patient_proxy_config.get("low_pressure_weight", 0.0)
+        )
+        self.patient_service_proxy_group = str(
+            patient_proxy_config.get("group", "replenishment")
+        )
+        self.patient_service_proxy_positive_only = bool(
+            patient_proxy_config.get("positive_only", True)
+        )
         hidden_sizes = tuple(config.get("hidden_sizes", [256, 256]))
         self.device = resolve_torch_device(config.get("device"))
 
-        self.actor = MLPActor(state_dim, action_dim, hidden_sizes).to(self.device)
-        self.actor_target = MLPActor(state_dim, action_dim, hidden_sizes).to(self.device)
+        actor_input_dim = state_dim + action_dim if self.include_base_action_features else state_dim
+        self.actor = MLPActor(actor_input_dim, action_dim, hidden_sizes).to(self.device)
+        self.actor_target = MLPActor(actor_input_dim, action_dim, hidden_sizes).to(self.device)
         self.critic = MLPCritic(state_dim, action_dim, hidden_sizes).to(self.device)
         self.critic_target = MLPCritic(state_dim, action_dim, hidden_sizes).to(self.device)
         if self.residual_action_enabled and bool(residual_config.get("zero_init_actor", False)):
@@ -97,8 +141,8 @@ class FlatDDPGAgent:
         self.actor.eval()
         with torch.no_grad():
             state_tensor = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
-            state_tensor = self.observation_scaler.normalize_tensor(state_tensor)
-            action = self.actor(state_tensor).cpu().numpy()[0]
+            actor_inputs = self._actor_input_tensor(state_tensor)
+            action = self.actor(actor_inputs).cpu().numpy()[0]
         self.actor.train()
         if explore:
             action = action + self.noise.sample()
@@ -127,9 +171,14 @@ class FlatDDPGAgent:
         dones = torch.as_tensor(batch.dones, dtype=torch.float32, device=self.device)
         states = self.observation_scaler.normalize_tensor(raw_states)
         next_states = self.observation_scaler.normalize_tensor(raw_next_states)
+        actor_inputs = self._actor_input_tensor(raw_states, normalized_states=states)
+        next_actor_inputs = self._actor_input_tensor(
+            raw_next_states,
+            normalized_states=next_states,
+        )
 
         with torch.no_grad():
-            next_network_actions = self.actor_target(next_states)
+            next_network_actions = self.actor_target(next_actor_inputs)
             next_actions = self._compose_actions_tensor(raw_next_states, next_network_actions)
             target_q = self.critic_target(next_states, next_actions)
             q_targets = rewards + self.gamma * (1.0 - dones) * target_q
@@ -140,14 +189,34 @@ class FlatDDPGAgent:
         critic_loss.backward()
         self.critic_optimizer.step()
 
-        network_actions = self.actor(states)
+        network_actions = self.actor(actor_inputs)
         actor_actions = self._compose_actions_tensor(raw_states, network_actions)
-        actor_loss = -self.critic(states, actor_actions).mean()
+        actor_loss, advantage_metrics = self._actor_objective(
+            states,
+            raw_states,
+            actor_actions,
+        )
         residual_l2_loss_value = None
         if self.residual_action_enabled and self.residual_l2_weight > 0.0:
-            residual_l2_loss = self._transform_network_residuals_tensor(network_actions).pow(2).mean()
+            policy_residuals = self._policy_residuals_tensor(raw_states, network_actions)
+            residual_l2_loss = policy_residuals.pow(2).mean()
             actor_loss = actor_loss + self.residual_l2_weight * residual_l2_loss
             residual_l2_loss_value = float(residual_l2_loss.item())
+        elif self.patient_service_proxy_actor_loss_enabled:
+            policy_residuals = self._policy_residuals_tensor(raw_states, network_actions)
+        else:
+            policy_residuals = None
+        proxy_metrics = {}
+        if (
+            self.patient_service_proxy_actor_loss_enabled
+            and self.residual_action_enabled
+            and policy_residuals is not None
+        ):
+            proxy_loss, proxy_metrics = self._patient_service_proxy_actor_loss(
+                raw_states,
+                policy_residuals,
+            )
+            actor_loss = actor_loss + proxy_loss
         imitation_loss_value = None
         if self.imitation_regularization_weight > 0.0 and self.imitation_states is not None:
             imitation_loss = self._actor_imitation_loss()
@@ -161,11 +230,115 @@ class FlatDDPGAgent:
         self._soft_update(self.critic, self.critic_target)
 
         metrics = {"actor_loss": float(actor_loss.item()), "critic_loss": float(critic_loss.item())}
+        metrics.update(advantage_metrics)
+        metrics.update(proxy_metrics)
         if residual_l2_loss_value is not None:
             metrics["residual_l2_loss"] = residual_l2_loss_value
         if imitation_loss_value is not None:
             metrics["imitation_loss"] = imitation_loss_value
         return metrics
+
+    def _actor_input_tensor(self, raw_states, *, normalized_states=None):
+        normalized_states = (
+            self.observation_scaler.normalize_tensor(raw_states)
+            if normalized_states is None
+            else normalized_states
+        )
+        if not self.include_base_action_features:
+            return normalized_states
+        base_actions = self._base_actions_from_states_tensor(raw_states)
+        return torch.cat((normalized_states, base_actions), dim=1)
+
+    def _actor_objective(self, states, raw_states, actor_actions):
+        if not self.anchor_advantage_actor_loss_enabled or not self.residual_action_enabled:
+            return -self.critic(states, actor_actions).mean(), {}
+
+        actor_q = self.critic(states, actor_actions)
+        with torch.no_grad():
+            anchor_actions = self._base_actions_from_states_tensor(raw_states)
+            anchor_q = self.critic(states, anchor_actions)
+        advantage = actor_q - anchor_q
+        shifted = (advantage - self.anchor_advantage_margin) / self.anchor_advantage_temperature
+        actor_loss = -(
+            self.anchor_advantage_temperature * torch.nn.functional.softplus(shifted)
+        ).mean()
+
+        negative_advantage_penalty = torch.zeros(
+            (),
+            dtype=advantage.dtype,
+            device=advantage.device,
+        )
+        if self.anchor_advantage_negative_penalty_weight > 0.0:
+            negative_shifted = (
+                self.anchor_advantage_margin - advantage
+            ) / self.anchor_advantage_temperature
+            negative_advantage_penalty = (
+                self.anchor_advantage_temperature
+                * torch.nn.functional.softplus(negative_shifted)
+            ).mean()
+            actor_loss = actor_loss + (
+                self.anchor_advantage_negative_penalty_weight
+                * negative_advantage_penalty
+            )
+
+        return actor_loss, {
+            "actor_anchor_advantage_mean": float(advantage.mean().item()),
+            "actor_anchor_advantage_positive_fraction": float(
+                (advantage > 0.0).to(dtype=torch.float32).mean().item()
+            ),
+            "actor_anchor_negative_advantage_penalty": float(
+                negative_advantage_penalty.item()
+            ),
+        }
+
+    def _patient_service_proxy_actor_loss(self, states, residuals):
+        n = int(self.env_config.get("num_facilities", 0))
+        group_slices = self._facility_net_group_slices(n)
+        group_slice = group_slices.get(self.patient_service_proxy_group)
+        if group_slice is None:
+            raise ValueError(
+                "Unsupported patient_service_proxy_actor_loss group: "
+                f"{self.patient_service_proxy_group}"
+            )
+        group_residual = residuals[:, group_slice]
+        if self.patient_service_proxy_positive_only:
+            group_residual = group_residual.clamp_min(0.0)
+        pressure = self._resource_pressure_tensor(states)
+        positive_pressure = pressure.clamp_min(0.0)
+        denominator = positive_pressure.amax(dim=1, keepdim=True).clamp_min(1e-6)
+        pressure_pattern = positive_pressure / denominator
+        alignment = (group_residual * pressure_pattern).mean()
+        loss = -self.patient_service_proxy_weight * alignment
+
+        low_pressure_penalty = torch.zeros(
+            (),
+            dtype=residuals.dtype,
+            device=residuals.device,
+        )
+        if self.patient_service_proxy_low_pressure_weight > 0.0:
+            low_pressure = 1.0 - pressure_pattern
+            low_pressure_penalty = (group_residual.pow(2) * low_pressure).mean()
+            loss = loss + (
+                self.patient_service_proxy_low_pressure_weight
+                * low_pressure_penalty
+            )
+
+        cost_penalty = torch.zeros(
+            (),
+            dtype=residuals.dtype,
+            device=residuals.device,
+        )
+        if self.patient_service_proxy_cost_weight > 0.0:
+            cost_penalty = group_residual.clamp_min(0.0).mean()
+            loss = loss + self.patient_service_proxy_cost_weight * cost_penalty
+
+        return loss, {
+            "actor_patient_service_proxy_alignment": float(alignment.item()),
+            "actor_patient_service_proxy_low_pressure_penalty": float(
+                low_pressure_penalty.item()
+            ),
+            "actor_patient_service_proxy_cost_penalty": float(cost_penalty.item()),
+        }
 
     def _actor_imitation_loss(self):
         sample_count = int(self.imitation_states.shape[0])
@@ -173,11 +346,17 @@ class FlatDDPGAgent:
         indices = self.imitation_rng.choice(sample_count, size=batch_size, replace=False)
         index_tensor = torch.as_tensor(indices, dtype=torch.long, device=self.device)
         raw_states = self.imitation_states[index_tensor]
-        states = self.observation_scaler.normalize_tensor(raw_states)
+        actor_inputs = self._actor_input_tensor(raw_states)
+        batch_weights = (
+            None
+            if self.imitation_weights is None
+            else self.imitation_weights[index_tensor]
+        )
         return self._supervised_action_loss(
             raw_states,
-            self.actor(states),
+            self.actor(actor_inputs),
             self.imitation_actions[index_tensor],
+            batch_weights,
         )
 
     def pretrain_with_heuristic(self, env, settings: dict[str, Any]) -> dict[str, Any]:
@@ -237,6 +416,7 @@ class FlatDDPGAgent:
         )
         self.imitation_states = state_tensor.detach()
         self.imitation_actions = action_tensor.detach()
+        self.imitation_weights = None
         self.imitation_rng = np.random.default_rng(seed + 300000)
         return {"policy": policy_name, **summary}
 
@@ -263,7 +443,7 @@ class FlatDDPGAgent:
         if state_tensor.shape[0] == 0:
             return {"samples": 0, "final_loss": 0.0}
         weight_tensor = self._fit_action_weights(weights, int(state_tensor.shape[0]))
-        return self._fit_action_tensors(
+        summary = self._fit_action_tensors(
             state_tensor,
             action_tensor,
             epochs=int(settings.get("epochs", 1)),
@@ -274,6 +454,16 @@ class FlatDDPGAgent:
             ),
             weights=weight_tensor,
         )
+        if bool(settings.get("retain_for_regularization", False)):
+            self.imitation_states = state_tensor.detach()
+            self.imitation_actions = action_tensor.detach()
+            self.imitation_weights = (
+                None if weight_tensor is None else weight_tensor.detach()
+            )
+            self.imitation_rng = np.random.default_rng(
+                int(settings.get("seed", self.seed + 400000)) + 300000
+            )
+        return summary
 
     def _fit_action_tensors(
         self,
@@ -296,10 +486,10 @@ class FlatDDPGAgent:
             for start in range(0, sample_count, batch_size):
                 indices = permutation[start : start + batch_size].to(self.device)
                 raw_states = state_tensor[indices]
-                states = self.observation_scaler.normalize_tensor(raw_states)
+                actor_inputs = self._actor_input_tensor(raw_states)
                 loss = self._supervised_action_loss(
                     raw_states,
-                    self.actor(states),
+                    self.actor(actor_inputs),
                     action_tensor[indices],
                     None if weights is None else weights[indices],
                     target_mode=target_mode,
@@ -345,15 +535,16 @@ class FlatDDPGAgent:
         if not self.residual_action_enabled:
             raise ValueError("residual target mode requires residual_action.enabled")
         residual_targets = self._residual_targets_tensor(states, target_actions)
-        residual_mask = self._residual_loss_mask(network_actions)
-        predicted_residuals = self._transform_network_residuals_tensor(network_actions)
+        residual_mask = self._residual_loss_mask(network_actions, states)
+        predicted_residuals = self._policy_residuals_tensor(states, network_actions)
         return self._weighted_action_mse(predicted_residuals, residual_targets, weights, residual_mask)
 
     def _weighted_action_mse(self, predicted_actions, target_actions, weights, dim_mask=None):
         squared_error = (predicted_actions - target_actions).pow(2)
         if dim_mask is not None:
             mask = dim_mask.to(dtype=squared_error.dtype, device=squared_error.device)
-            per_sample_loss = (squared_error * mask).sum(dim=1) / mask.sum().clamp_min(1.0)
+            denominator = mask.sum(dim=1).clamp_min(1.0) if mask.ndim == 2 else mask.sum().clamp_min(1.0)
+            per_sample_loss = (squared_error * mask).sum(dim=1) / denominator
         else:
             per_sample_loss = squared_error.mean(dim=1)
         if weights is None:
@@ -372,21 +563,26 @@ class FlatDDPGAgent:
         residual_targets = (target_actions - base_actions) / safe_scale
         residual_targets = torch.where(active, residual_targets, torch.zeros_like(residual_targets))
         residual_targets = torch.clamp(residual_targets, -1.0, 1.0)
-        return self._transform_network_residuals_tensor(residual_targets)
+        residual_targets = self._transform_network_residuals_tensor(residual_targets)
+        return self._apply_state_gate_residuals_tensor(states, residual_targets)
 
-    def _residual_loss_mask(self, network_actions):
+    def _residual_loss_mask(self, network_actions, states=None):
         scale = torch.as_tensor(
             self.residual_scale_vector,
             dtype=network_actions.dtype,
             device=network_actions.device,
         )
-        return (scale.abs() > 1e-8).to(dtype=network_actions.dtype).unsqueeze(0)
+        mask = (scale.abs() > 1e-8).to(dtype=network_actions.dtype).unsqueeze(0)
+        if states is not None and self.residual_state_gate_groups:
+            mask = mask.expand(network_actions.shape[0], -1)
+            mask = mask * self._state_gate_action_mask_tensor(states, dtype=network_actions.dtype)
+        return mask
 
     def _compose_action_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
         if not self.residual_action_enabled:
             return np.asarray(network_action, dtype=np.float32)
         base_action = self._base_action_from_state_np(state)
-        residual_action = self._transform_network_residual_np(network_action)
+        residual_action = self._policy_residual_np(state, network_action)
         return np.clip(
             base_action + self.residual_scale_vector * residual_action,
             -1.0,
@@ -397,7 +593,7 @@ class FlatDDPGAgent:
         if not self.residual_action_enabled:
             return network_actions
         base_actions = self._base_actions_from_states_tensor(states)
-        residual_actions = self._transform_network_residuals_tensor(network_actions)
+        residual_actions = self._policy_residuals_tensor(states, network_actions)
         scale = torch.as_tensor(
             self.residual_scale_vector,
             dtype=network_actions.dtype,
@@ -405,22 +601,195 @@ class FlatDDPGAgent:
         )
         return torch.clamp(base_actions + scale * residual_actions, -1.0, 1.0)
 
+    def _policy_residual_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
+        if (
+            not self.residual_pressure_projection_groups
+            and not self.residual_state_gate_groups
+        ):
+            return self._transform_network_residual_np(network_action)
+        with torch.no_grad():
+            state_tensor = torch.as_tensor(
+                state,
+                dtype=torch.float32,
+                device=self.device,
+            ).unsqueeze(0)
+            action_tensor = torch.as_tensor(
+                network_action,
+                dtype=torch.float32,
+                device=self.device,
+            ).unsqueeze(0)
+            residual = self._policy_residuals_tensor(state_tensor, action_tensor)
+        return residual.cpu().numpy()[0].astype(np.float32)
+
+    def _policy_residuals_tensor(self, states, network_actions):
+        residuals = self._transform_network_residuals_tensor(network_actions)
+        if self.residual_pressure_projection_groups:
+            residuals = self._project_residuals_to_pressure_patterns(states, residuals)
+            residuals = self._apply_positive_residual_slices_tensor(residuals)
+        residuals = self._apply_state_gate_residuals_tensor(states, residuals)
+        return torch.clamp(residuals, -1.0, 1.0)
+
     def _transform_network_residual_np(self, network_action: np.ndarray) -> np.ndarray:
         residual = np.asarray(network_action, dtype=np.float32).copy()
         for group_slice in self.residual_center_slices:
             residual[group_slice] = residual[group_slice] - float(residual[group_slice].mean())
+        for group_slice in self.residual_positive_slices:
+            residual[group_slice] = np.maximum(residual[group_slice], 0.0)
         return np.clip(residual, -1.0, 1.0).astype(np.float32)
 
     def _transform_network_residuals_tensor(self, network_actions):
-        if not self.residual_center_slices:
-            return torch.clamp(network_actions, -1.0, 1.0)
-        residuals = network_actions.clone()
+        residuals = network_actions
         for group_slice in self.residual_center_slices:
-            residuals[:, group_slice] = residuals[:, group_slice] - residuals[:, group_slice].mean(
-                dim=1,
-                keepdim=True,
+            centered = residuals[:, group_slice] - residuals[:, group_slice].mean(
+                dim=1, keepdim=True
             )
+            residuals = self._replace_action_slice_tensor(residuals, group_slice, centered)
+        residuals = self._apply_positive_residual_slices_tensor(residuals)
         return torch.clamp(residuals, -1.0, 1.0)
+
+    def _apply_positive_residual_slices_tensor(self, residuals):
+        if not self.residual_positive_slices:
+            return residuals
+        positive = residuals
+        for group_slice in self.residual_positive_slices:
+            positive = self._replace_action_slice_tensor(
+                positive,
+                group_slice,
+                positive[:, group_slice].clamp_min(0.0),
+            )
+        return positive
+
+    def _project_residuals_to_pressure_patterns(self, states, residuals):
+        patterns = self._residual_pressure_patterns_tensor(states)
+        group_patterns = {
+            "reagent_transfer": patterns["resource"],
+            "reagent": patterns["resource"],
+            "capacity_transfer": patterns["capacity"],
+            "capacity": patterns["capacity"],
+            "replenishment": patterns["resource"],
+            "purchase": patterns["resource"],
+        }
+        group_slices = self._facility_net_group_slices(
+            int(self.env_config.get("num_facilities", 0))
+        )
+        projected = residuals
+        for group in self.residual_pressure_projection_groups:
+            pattern = group_patterns.get(group)
+            group_slice = group_slices.get(group)
+            if pattern is None or group_slice is None:
+                continue
+            current = projected[:, group_slice]
+            denominator = pattern.pow(2).sum(dim=1, keepdim=True).clamp_min(1e-6)
+            coefficient = (current * pattern).sum(dim=1, keepdim=True) / denominator
+            projected = self._replace_action_slice_tensor(
+                projected,
+                group_slice,
+                coefficient * pattern,
+            )
+        return torch.clamp(projected, -1.0, 1.0)
+
+    def _apply_state_gate_residuals_tensor(self, states, residuals):
+        if not self.residual_state_gate_groups:
+            return residuals
+        return residuals * self._state_gate_action_mask_tensor(states, dtype=residuals.dtype)
+
+    def _state_gate_action_mask_tensor(self, states, *, dtype):
+        n = int(self.env_config.get("num_facilities", 0))
+        group_slices = self._facility_net_group_slices(n)
+        pressure = self._resource_pressure_tensor(states)
+        threshold = float(self.residual_state_gate_config.get("threshold", 0.0))
+        gate = (pressure > threshold).to(dtype=dtype)
+        mask = torch.ones((states.shape[0], self.action_dim), dtype=dtype, device=states.device)
+        for group in self.residual_state_gate_groups:
+            group_slice = group_slices[group]
+            mask = self._replace_action_slice_tensor(mask, group_slice, gate)
+        return mask
+
+    def _resource_pressure_tensor(self, states):
+        return self._resource_pressure_terms_tensor(states)["resource_pressure"]
+
+    def _residual_pressure_patterns_tensor(self, states):
+        pressure_terms = self._resource_pressure_terms_tensor(states)
+        return {
+            "resource": self._centered_unit_pattern_tensor(
+                pressure_terms["resource_pressure"]
+            ),
+            "capacity": self._centered_unit_pattern_tensor(
+                pressure_terms["capacity_pressure"]
+            ),
+        }
+
+    def _resource_pressure_terms_tensor(self, states):
+        n = int(self.env_config.get("num_facilities", 0))
+        lead_time = int(self.env_config.get("production_lead_time", 3))
+        include_supplier = int(bool(self.env_config.get("include_supplier_state", False)))
+        include_forecast = int(bool(self.env_config.get("include_demand_forecast_state", False)))
+        include_transfer_pipeline = int(
+            bool(self.env_config.get("include_transfer_pipeline_state", False))
+        )
+        features_per_facility = 3 + lead_time + include_supplier + include_forecast
+        features_per_facility += 3 * include_transfer_pipeline
+        facility_state = states[:, : n * features_per_facility].reshape(
+            states.shape[0],
+            n,
+            features_per_facility,
+        )
+        demand = facility_state[:, :, 0]
+        specimens = facility_state[:, :, 1]
+        reagents = facility_state[:, :, 2]
+        idle_bioreactors = facility_state[:, :, 3]
+        if include_forecast:
+            forecast_col = 3 + lead_time + include_supplier
+            forecast = facility_state[:, :, forecast_col]
+        else:
+            forecast = demand
+        risk = self._patient_risk_signal_tensor(states, features_per_facility)
+        return {
+            "resource_pressure": (
+                demand + 0.25 * forecast + specimens - reagents + 0.5 * risk
+            ),
+            "capacity_pressure": (
+                demand
+                + 0.25 * forecast
+                + specimens
+                - idle_bioreactors
+                + 0.5 * risk
+            ),
+        }
+
+    def _patient_risk_signal_tensor(self, states, features_per_facility: int):
+        if self.env_config.get("env_type") != "patient_condition":
+            n = int(self.env_config.get("num_facilities", 0))
+            return torch.zeros((states.shape[0], n), dtype=states.dtype, device=states.device)
+        n = int(self.env_config.get("num_facilities", 0))
+        summary_edges = tuple(self.env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
+        summary_width = 3 + len(summary_edges) + 1
+        base_width = n * int(features_per_facility)
+        expected_width = base_width + n * summary_width
+        if states.shape[1] < expected_width:
+            return torch.zeros((states.shape[0], n), dtype=states.dtype, device=states.device)
+        summary = states[:, base_width:expected_width].reshape(states.shape[0], n, summary_width)
+        near_expiry = summary[:, :, 2]
+        critical_survival = summary[:, :, 3] if summary_width > 3 else torch.zeros_like(near_expiry)
+        return near_expiry + critical_survival
+
+    def _replace_action_slice_tensor(self, actions, group_slice: slice, replacement):
+        start = 0 if group_slice.start is None else int(group_slice.start)
+        stop = actions.shape[1] if group_slice.stop is None else int(group_slice.stop)
+        if group_slice.step not in (None, 1):
+            raise ValueError("Residual action tensor slices must be contiguous")
+        pieces = []
+        if start > 0:
+            pieces.append(actions[:, :start])
+        pieces.append(replacement)
+        if stop < actions.shape[1]:
+            pieces.append(actions[:, stop:])
+        return torch.cat(pieces, dim=1)
+
+    def _centered_unit_pattern_tensor(self, values):
+        centered = values - values.mean(dim=1, keepdim=True)
+        denominator = centered.abs().amax(dim=1, keepdim=True).clamp_min(1e-6)
+        return centered / denominator
 
     def _base_action_from_state_np(self, state: np.ndarray) -> np.ndarray:
         return facility_net_action_from_state(
@@ -469,6 +838,77 @@ class FlatDDPGAgent:
                 raise ValueError(f"Unsupported residual action center group: {group}")
             slices.append(group_slices[group])
         return tuple(slices)
+
+    def _make_residual_positive_slices(self, residual_config: dict[str, Any]) -> tuple[slice, ...]:
+        positive_groups = residual_config.get("positive_only_groups", ())
+        if isinstance(positive_groups, str):
+            positive_groups = (positive_groups,)
+        positive_groups = tuple(positive_groups or ())
+        if not positive_groups:
+            return ()
+        n = int(self.env_config.get("num_facilities", 0))
+        if self.action_dim != 4 * n:
+            raise ValueError("residual_action.positive_only_groups requires a facility-net action layout")
+        group_slices = self._facility_net_group_slices(n)
+        slices = []
+        for group in positive_groups:
+            if group not in group_slices:
+                raise ValueError(f"Unsupported residual action positive-only group: {group}")
+            slices.append(group_slices[group])
+        return tuple(slices)
+
+    def _make_residual_state_gate_groups(self, residual_config: dict[str, Any]) -> tuple[str, ...]:
+        gate_config = dict(residual_config.get("state_gate", {}))
+        if not bool(gate_config.get("enabled", False)):
+            return ()
+        groups = gate_config.get("groups", ())
+        if isinstance(groups, str):
+            groups = (groups,)
+        groups = tuple(groups or ())
+        if not groups:
+            return ()
+        n = int(self.env_config.get("num_facilities", 0))
+        if self.action_dim != 4 * n:
+            raise ValueError("residual_action.state_gate.groups requires a facility-net action layout")
+        group_slices = self._facility_net_group_slices(n)
+        normalized = []
+        for group in groups:
+            if group not in group_slices:
+                raise ValueError(f"Unsupported residual action state-gated group: {group}")
+            normalized.append(group)
+        return tuple(normalized)
+
+    def _make_pressure_projection_groups(
+        self,
+        residual_config: dict[str, Any],
+    ) -> tuple[str, ...]:
+        if not bool(residual_config.get("enabled", False)):
+            return ()
+        projection = residual_config.get("pressure_projection", {})
+        if isinstance(projection, bool):
+            enabled = projection
+            groups = ("reagent_transfer", "capacity_transfer", "replenishment")
+        else:
+            projection = dict(projection or {})
+            enabled = bool(projection.get("enabled", False))
+            groups = projection.get(
+                "groups",
+                ("reagent_transfer", "capacity_transfer", "replenishment"),
+            )
+        if not enabled:
+            return ()
+        if isinstance(groups, str):
+            groups = (groups,)
+        supported = set(
+            self._facility_net_group_slices(
+                int(self.env_config.get("num_facilities", 0))
+            )
+        )
+        normalized = tuple(str(group) for group in tuple(groups or ()))
+        unknown = [group for group in normalized if group not in supported]
+        if unknown:
+            raise ValueError(f"Unsupported pressure_projection groups: {unknown}")
+        return normalized
 
     def _facility_net_group_slices(self, n: int) -> dict[str, slice]:
         return {

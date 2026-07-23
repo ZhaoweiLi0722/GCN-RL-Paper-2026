@@ -1,24 +1,30 @@
 {
   "env_type": "patient_condition",
-  "scenario_name": "patient_condition_geo",
+  "scenario_name": "patient_condition_geo_demand_drift_severe",
   "supplier_disruption_rate": [
     0.45, 0.45, 0.45, 0.45, 0.45,
     0.12, 0.12, 0.12, 0.12, 0.12,
     0.35, 0.35, 0.35, 0.35, 0.35,
     0.12, 0.12, 0.12, 0.12, 0.12
   ],
-  "demand_forecast_error": 0.0,
+  "demand_forecast_error": 0.2,
   "include_demand_forecast_state": true,
   "demand_forecast_horizon": 2,
   "graph_ablation": "full_graph",
   "num_facilities": 20,
   "production_lead_time": 3,
   "episode_horizon": 52,
-  "demand_rates": [
+  "demand_rate_estimates": [
     7.5, 7.5, 7.5, 7.5, 7.5,
     3.2, 3.2, 3.2, 3.2, 3.2,
     6.0, 6.0, 6.0, 6.0, 6.0,
     3.5, 3.5, 3.5, 3.5, 3.5
+  ],
+  "demand_rates": [
+    13.5, 13.5, 13.5, 13.5, 13.5,
+    4.8, 4.8, 4.8, 4.8, 4.8,
+    10.2, 10.2, 10.2, 10.2, 10.2,
+    5.25, 5.25, 5.25, 5.25, 5.25
   ],
   "initial_specimens": 0,
   "initial_reagents": [

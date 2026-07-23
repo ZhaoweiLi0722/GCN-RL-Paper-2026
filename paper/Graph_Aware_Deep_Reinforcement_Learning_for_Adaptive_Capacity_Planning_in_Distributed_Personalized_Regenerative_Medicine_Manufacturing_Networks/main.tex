@@ -258,6 +258,45 @@ Reinforcement learning has been widely studied for sequential supply chain and m
 
 Recent supply chain RL studies have moved toward more realistic constraints and engineering settings. Bermudez et al.~\cite{Bermudez2023DCPO} proposed distributional constrained reinforcement learning for multi-period supply chain optimization with production and inventory constraints. Eisenach et al.~\cite{Eisenach2024NeuralCoordination} studied shared-resource capacity control in inventory management using a neural coordination mechanism and a reinforcement learning buying policy. Stranieri et al.~\cite{Stranieri2025PharmaDRL} benchmarked classical and deep reinforcement learning inventory policies for pharmaceutical supply chains with perishability and non-stationary demand. These studies support the use of simulation-trained RL policies for uncertain operational control, but most focus on replenishment or inventory management rather than the joint capacity, reagent, and replenishment decisions (under a perishable, identity-bound demand process) that arise in distributed PRM manufacturing.
 
+\subsection{Structure-informed, residual, and baseline-relative reinforcement learning}
+Inventory-control evidence does not support treating generic end-to-end DRL as
+automatically superior to established operating rules. Gijsbrechts et
+al.~\cite{Gijsbrechts2022InventoryDRL} found that carefully tuned DRL can match
+state-of-the-art policies across lost-sales, dual-sourcing, and multi-echelon
+problems, while the invited roadmap of Boute et
+al.~\cite{Boute2022InventoryRoadmap} argues that learning methods should exploit
+the structural policy knowledge accumulated in inventory research. De Moor et
+al.~\cite{DeMoor2022RewardShaping} made this principle operational by using
+strong perishable-inventory heuristics as teacher policies for reward shaping,
+improving training speed, stability, and, in suitable instances, performance
+relative to the teacher. Hybrid decomposition offers another route: Stranieri
+et al.~\cite{Stranieri2024HybridInventory} assigned production decisions to DRL
+and shipping decisions to stochastic programming, obtaining more reliable
+performance than pure DRL. Non-stationary-demand experiments further show the
+value of conditioning policies on forecast information rather than assuming a
+fixed arrival law~\cite{Dehaybe2024NonstationaryInventory}.
+
+Residual reinforcement learning provides the most direct methodological
+foundation for our controller. The residual formulation decomposes the
+executed action into a competent base-controller action and a learned
+correction, reducing the part of the control law that must be discovered from
+experience~\cite{Johannink2019ResidualRL}. Staessens et
+al.~\cite{Staessens2022ConstrainedResidual} showed in an industrial-control
+setting that bounding the correction relative to a conventional controller can
+preserve its stabilizing role while adapting to uncertain operating
+conditions. Baseline-relative policy-improvement methods likewise motivate
+accepting a learned update only when there is credible evidence of improvement
+over the incumbent policy~\cite{Metelli2021SafePolicyIteration}. In stochastic
+inventory control, Deep Controlled Learning combines approximate policy
+iteration with common random numbers and statistically efficient candidate
+selection to overcome the difficulty generic DRL has in beating strong
+heuristics~\cite{Temizoz2025DeepControlledLearning}. These ideas motivate our
+MDL-2 anchor, bounded graph residual, common-random-number advantage filtering,
+and held-out deployment calibration. Our validation fallback is an empirical
+deployment safeguard, however, and should not be interpreted as inheriting the
+formal monotonic-improvement or closed-loop stability guarantees proved under
+the assumptions of those methods.
+
 \subsection{Deep reinforcement learning for regenerative medicine capacity planning}
 The closest antecedent to this work is Tseng et al.~\cite{Tseng2023DeepRL}, who developed a deep reinforcement learning approach for dynamic capacity planning in decentralized regenerative medicine supply chains. Their study demonstrated that simulation-trained policies can adapt to demand and supply uncertainty without requiring exact prior knowledge of the underlying stochastic processes. This is directly aligned with the objective of using data-driven policy learning for PRM capacity planning.
 
@@ -278,25 +317,26 @@ Evaluation rigor is especially important for DRL-based engineering applications.
 
 \begin{table}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Positioning of this study relative to closely related literature.}
 \label{tab:lit_positioning}
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{p{0.24\textwidth} p{0.27\textwidth} X}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabularx}{\textwidth}{p{0.20\textwidth} p{0.25\textwidth} X}
 \toprule
 Literature stream & Representative studies & Main limitation relative to this work \\
 \midrule
-PRM and autologous cell therapy operations & Simulation and decentralized capacity planning studies~\cite{Wang2023SimulationBased,Li2023,Tseng2023DeepRL} & Establish the need for adaptive PRM capacity planning, but do not learn graph-structured inter-facility representations for continuous coordinated control, nor model product perishability, patient-condition-driven demand, or the autologous identity constraint. \\
-RL for supply chain and manufacturing & DRL inventory, replenishment, and constrained supply chain control~\cite{Oroojlooyjadid2022BeerGame,Bermudez2023DCPO,Stranieri2025PharmaDRL,Eisenach2024NeuralCoordination} & Demonstrate simulation-trained policies, but mainly focus on inventory or replenishment rather than the coupled capacity, reagent, and specimen-flow decisions of patient-specific manufacturing. \\
-MARL for decentralized supply chains & Decentralized inventory and cooperative inventory management~\cite{Mousa2023DecInvMARL,Leluc2023MARLIM} & Address decentralized information and coordination, but are not tailored to PRM manufacturing or patient-specific make-to-order constraints. \\
-GNNs for supply chain networks & Supply-chain graph forecasting, supply prediction, and graph-aware inventory control~\cite{Chang2025AAAI,Ahn2024GSP,Ahn2024GPP,Kotecha2024GNNMARL} & Show the value of graph structure, but are mostly predictive, inventory-focused, or not designed for PRM capacity and transshipment control. \\
+PRM operations & Simulation and decentralized planning~\cite{Wang2023SimulationBased,Li2023,Tseng2023DeepRL} & No learned graph policy combining patient condition, perishability, identity, and coordinated continuous control. \\
+Supply-chain RL & Inventory and constrained control~\cite{Oroojlooyjadid2022BeerGame,Bermudez2023DCPO,Stranieri2025PharmaDRL,Eisenach2024NeuralCoordination} & Primarily inventory or replenishment, not coupled PRM capacity and fungible-resource sharing. \\
+Decentralized MARL & Cooperative inventory control~\cite{Mousa2023DecInvMARL,Leluc2023MARLIM} & Not tailored to identity-bound, patient-specific make-to-order manufacturing. \\
+Supply-chain GNNs & Graph forecasting and graph-aware planning~\cite{Chang2025AAAI,Ahn2024GSP,Ahn2024GPP,Kotecha2024GNNMARL} & Mostly predictive or inventory-focused rather than continuous PRM network control. \\
+Structured residual RL & Heuristic-guided and baseline-relative learning~\cite{DeMoor2022RewardShaping,Staessens2022ConstrainedResidual,Metelli2021SafePolicyIteration,Temizoz2025DeepControlledLearning} & No graph-structured PRM application with patient-condition risk and identity constraints. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \subsection{Research gap and design implications}
-Read together, these literatures imply four design choices for a distributed PRM capacity-planning controller. First, because the decisions are sequential and real-valued, the controller should use continuous-control actor--critic reinforcement learning rather than value-based or discretized methods. Second, because a facility's value depends on its network position and resources propagate along inter-facility links, its state should be encoded with a graph rather than a flat vector. Third, DDPG provides a natural canonical formulation and continuity with earlier PRM capacity-planning work, but its known instability requires controlled comparisons with TD3, SAC, and PPO rather than an untested assumption that DDPG is always best. Fourth, because reinforcement learning results are sensitive to seeds and implementation details, evaluation should report multi-seed interquartile means with confidence intervals and, given the clinical stakes, patient-service outcomes such as eligibility and waiting.
+Read together, these literatures imply five design choices for a distributed PRM capacity-planning controller. First, because the decisions are sequential and real-valued, the controller should use continuous-control actor--critic reinforcement learning rather than value-based or discretized methods. Second, because a facility's value depends on its network position and resources propagate along inter-facility links, its state should be encoded with a graph rather than a flat vector. Third, because strong operational rules already solve much of the nominal problem, the learned policy should target bounded, evidence-supported corrections to a transparent anchor rather than relearn the complete policy from scratch. Fourth, DDPG provides a natural canonical formulation and continuity with earlier PRM capacity-planning work, but its known instability requires controlled comparisons with TD3 and secondary SAC/PPO variants rather than an untested assumption that DDPG is always best. Fifth, because reinforcement learning results are sensitive to seeds and implementation details, evaluation should report multi-seed interquartile means with confidence intervals and, given the clinical stakes, patient-service outcomes such as eligibility and waiting.
 
 None of these streams, however, addresses the problem that defines our setting. PRM operations research motivates adaptive, networked capacity planning but does not learn relational policies. Supply-chain graph-and-reinforcement-learning research supplies the relational-control machinery but treats demand as fungible and abstract, targeting forecasting or inventory-only control. Cell-therapy reinforcement learning operates on a single bioprocess rather than a clinic network. As a result, no prior work models the three defining properties of PRM capacity planning (a perishable product with a hard viability deadline, an identity-bound product that cannot be pooled or substituted across patients, and demand driven by patient deterioration while waiting) within a single graph-aware continuous-control formulation. Our contribution closes this gap. We cast the problem as a constrained graph MDP, build a reusable simulation testbed that realizes it, and study a family of graph-aware actor--critic controllers, pairing a GCN state encoder with DDPG, TD3, SAC, and PPO, against strong flat-state and heuristic baselines.
 
@@ -308,7 +348,7 @@ Distributed manufacturing networks for personalized regenerative medicine (PRM) 
 
 \subsection*{Primary residual GCN--DDPG controller and backbone variants}
 
-The primary proposed controller is residual GCN--DDPG. It combines the relational inductive bias of a GCN with the deterministic continuous-control mechanism used in earlier PRM capacity-planning research, while reducing the burden of relearning a complete operational policy from scratch. The actor learns only a bounded correction to a transparent look-ahead anchor. We also evaluate TD3, SAC, and PPO behind the same GCN encoder (Table~\ref{tab:backbone_family}) as controlled backbone variants: TD3 through clipped double-$Q$ learning, delayed policy updates, and target smoothing; SAC through entropy-regularized stochastic policies; and PPO through an on-policy clipped surrogate objective. All four share the graph representation, feasibility-projection layer, environment, and evaluation protocol, so backbone comparisons do not erase GCN--DDPG's role as the canonical proposed instantiation. A GCN encodes relational structure but has no temporal memory of its own; the actor--critic component supplies the sequential decision dynamics, and the two together encode spatial correlations and temporal trade-offs jointly.
+The primary proposed controller is residual GCN--DDPG. It combines the relational inductive bias of a GCN with the deterministic continuous-control mechanism used in earlier PRM capacity-planning research, while reducing the burden of relearning a complete operational policy from scratch. Following residual and constrained-residual control~\cite{Johannink2019ResidualRL,Staessens2022ConstrainedResidual}, the actor learns only a bounded correction to a transparent look-ahead anchor. We also evaluate TD3, SAC, and PPO behind the same GCN encoder (Table~\ref{tab:backbone_family}) as controlled backbone variants: TD3 through clipped double-$Q$ learning, delayed policy updates, and target smoothing; SAC through entropy-regularized stochastic policies; and PPO through an on-policy clipped surrogate objective. All four share the graph representation, feasibility-projection layer, environment, and evaluation protocol, so backbone comparisons do not erase GCN--DDPG's role as the canonical proposed instantiation. A GCN encodes relational structure but has no temporal memory of its own; the actor--critic component supplies the sequential decision dynamics, and the two together encode spatial correlations and temporal trade-offs jointly.
 
 \begin{table}[htbp]
 \centering
@@ -460,7 +500,7 @@ Each stability-oriented backbone reuses this encoder and projection layer unchan
 
 \subsection*{Summary}
 
-The proposed method is therefore a residual GCN--DDPG controller: a GCN encoder supplies a permutation-equivariant, network-aware state representation; a deterministic actor learns bounded corrections to a transparent look-ahead anchor; and a feasibility-projection layer guarantees that every executed action respects inventory, capacity, supplier, identity, and connectivity constraints. Holding the residual parameterization, encoder, and projection fixed while varying the backbone lets the experiments in Section~\ref{sec:experiments} compare the canonical DDPG implementation with TD3, SAC, and PPO on equal footing, without redefining those variants as separate proposed methods.
+The proposed method is therefore a residual GCN--DDPG controller: a GCN encoder supplies a permutation-equivariant, network-aware state representation; a deterministic actor learns bounded corrections to a transparent look-ahead anchor; and a feasibility-projection layer guarantees that every executed action respects inventory, capacity, supplier, identity, and connectivity constraints. The final comparison first holds the anchor, residual action space, advantage-filtered teacher, encoder, projection, training budget, and evaluation seeds fixed while replacing DDPG with TD3. Residual SAC and PPO are secondary family extensions because their stochastic residual distributions and likelihood calculations require additional matched implementation work. These variants test backbone robustness without redefining them as separate proposed methods.
 \section{Computational Experiments}
 \label{sec:experiments}
 \label{sec:casestudies}
@@ -472,7 +512,17 @@ The objective of this study is to compare the proposed residual GCN--DDPG framew
 \subsection{Methodology}
 
 \subsubsection{Benchmarking Setup}
-To evaluate both the value of reinforcement learning and the value of graph-based representation learning, we compare the proposed residual GCN--DDPG framework with two groups of baselines. The first group consists of traditional heuristic and look-ahead policies implemented in the same simulation environment. These baselines include the anchor itself and therefore test whether the learned residual adds value rather than merely inheriting a strong heuristic. The second group consists of learning-based ablations and backbone variants designed to isolate the contribution of the GCN encoder and the DDPG update.
+The final benchmark is organized as a hierarchy of matched comparisons rather
+than a single undifferentiated algorithm ranking (Table~\ref{tab:final_benchmark}).
+The first comparison tests whether reinforcement learning improves the MDL-2
+anchor. The second isolates the graph representation by replacing the GCN with
+a flat MLP while keeping the entire residual-learning recipe fixed. The third
+tests whether the result is specific to DDPG by repeating the residual
+comparison with TD3. Online rollout shields and the supervised GCN shield
+selector are reported separately because the former uses additional simulation
+at decision time and the latter is not an RL policy. Pure end-to-end RL and the
+stochastic SAC/PPO family are reported as secondary comparators rather than
+being allowed to substitute for these mandatory tests.
 
 The heuristic baselines are:
 \begin{itemize}
@@ -480,14 +530,52 @@ The heuristic baselines are:
 \item \textbf{MDL-1 (One-period Mean Demand Lookahead):} MDL-1 extends the planning horizon to one lookahead period using deterministic state transitions based on mean demand.
 \item \textbf{MDL-2 (Two-period Mean Demand Lookahead):} MDL-2 extends the planning horizon to two lookahead periods using deterministic state transitions based on mean demand.
 \item \textbf{ISO (Isolated Regional Facilities):} ISO assumes no resource sharing between facilities and focuses only on local replenishment decisions.
+\item \textbf{F-MYO (Forecast Myopic):} F-MYO augments current-period network balancing with the demand forecast available at the decision epoch.
+\item \textbf{uMYO and pMYO (Patient-aware myopic policies):} uMYO adds urgency-based replenishment and capacity surges, while pMYO uses a bounded patient-risk workload uplift. These controls prevent the proposed method from being compared only with condition-blind heuristics.
 \end{itemize}
 
-The learning-based baseline is:
+The learning-based comparisons are:
 \begin{itemize}
 \item \textbf{MLP residual DDPG / flat-state residual DDPG:} This baseline uses the same MDL-2 anchor, residual action space, DDPG actor--critic structure, training budget, and feasibility projection as the proposed method, but removes the GCN encoder. Instead, all facility-level states are concatenated into a flat vector and passed directly into multilayer perceptron actor and critic networks. This baseline is designed to answer whether performance improvements come from reinforcement learning alone or from explicitly encoding graph-structured inter-facility dependencies.
+\item \textbf{Residual GCN--TD3 and matched flat residual TD3:} These policies keep the anchor, advantage-filtered supervision, action constraints, training data, and evaluation streams fixed while replacing the DDPG update with TD3. They test whether twin critics, delayed actor updates, and target smoothing improve stability.
+\item \textbf{Pure GCN and flat actor--critic policies:} From-scratch DDPG and TD3 quantify the benefit of anchoring; SAC and PPO provide secondary off-policy stochastic and on-policy comparisons. Residual SAC/PPO are included only after their residual-space probability calculations and matched flat variants pass the same validation protocol.
 \end{itemize}
 
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Final comparison hierarchy for the proposed controller.}
+\label{tab:final_benchmark}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabularx}{\textwidth}{p{0.17\textwidth} p{0.37\textwidth} X}
+\toprule
+Comparison layer & Required policies & Question answered \\
+\midrule
+Anchor improvement & AFD residual GCN--DDPG versus MDL-2 & Does the learned correction improve the strong policy from which it starts? \\
+Strong heuristics & ISO, MYO, F-MYO, uMYO, pMYO, MDL-1, and MDL-2 & Is the controller competitive with sharing, forecast-aware, patient-aware, and look-ahead rules? \\
+Representation ablation & AFD residual GCN--DDPG versus matched flat residual DDPG & Is any gain attributable to graph representation rather than residual learning alone? \\
+Backbone robustness & Residual GCN--DDPG versus residual GCN--TD3, each with a matched flat counterpart & Does the result persist when the deterministic actor--critic backbone changes? \\
+Anchor ablation & Residual versus pure GCN/flat DDPG and TD3 & Does the heuristic anchor improve sample efficiency, stability, and final performance? \\
+Deployment reference & MDL-2/pMYO rollout shields and supervised GCN shield selector & How does policy quality trade off against online simulation cost, and can RL outperform non-RL distillation? \\
+Secondary family & GCN/flat SAC and PPO; residual forms after matched implementation & Is the conclusion robust to stochastic off-policy and on-policy learning? \\
+Graph mechanism & Full graph, no/shuffled edges, and geographic-edge ablations & Does the policy use topology rather than merely additional parameters? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 In addition, graph ablation experiments are planned to evaluate the role of different edge types. Specifically, we consider removing capacity-sharing edges and removing resource-sharing edges to assess whether these relational structures contribute to policy performance under disruption and demand uncertainty.
+
+All methods receive the same decision-time observations and are evaluated on
+identical paired random-number streams. In demand-prior-drift experiments,
+heuristics receive the same misspecified demand prior available to the
+controller and no method receives the realized future demand rates. Learned
+policies use the same training-scenario distribution, environment-interaction
+budget, checkpoint-selection budget, and held-out evaluation seeds within each
+matched comparison. Online decision time and the number of simulator rollouts
+are reported separately for rollout-based methods. This prevents a performance
+difference from being created by unequal forecasts, simulator access,
+evaluation noise, or hidden online computation.
 
 \subsubsection{Performance Metrics}
 

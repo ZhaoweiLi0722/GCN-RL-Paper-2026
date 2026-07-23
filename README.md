@@ -26,6 +26,16 @@ Environment configs are JSON under `experiments/configs/` (e.g.
 curriculum config are variants). Build an env from a config with
 `build_env(config)` in `src/rl/experiment.py`.
 
+### Geographic network
+
+The geography-aware scenarios use the 20 point-of-care locations in
+`data/bb_20_clinic_locations.json`. Address-based coordinates define the clinic
+graph, distance-related transfer cost and delay, continuous transfer time, and
+regional demand/disruption clusters. See `docs/geographic_network.md` for the
+location provenance and modeling assumptions. The joint patient-condition,
+geography, and demand-prior-drift scenario is
+`experiments/configs/20_clinic_patient_condition_geo_demand_drift.json`.
+
 ### Learning algorithms
 
 | File | What it is |
@@ -65,6 +75,11 @@ local. The committed, written-up findings — the ones to read — are:
 - `specs/2026-07-11-pilot-experiments/pilot-findings.md` — pilot outcomes.
 - `specs/2026-07-11-pilot-experiments/campaign-results.md` — nominal campaign (graph beats flat by a wide margin; heuristics win at nominal).
 - `specs/2026-07-12-robustness-experiments/results.md` — robustness experiments A/B/C, in-distribution vs OOD, honest-negative analysis, and the budget-escalation trigger.
+- `specs/2026-07-17-patient-condition-geo-residual/results.md` — joint
+  patient-condition/geography residual-policy development.
+- `specs/2026-07-20-demand-drift-robustness/results.md` — advantage-filtered
+  residual GCN-DDPG, five-seed paired evaluation, and the matched flat-state
+  ablation.
 
 ### Plan of record — `specs/`
 

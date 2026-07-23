@@ -1,6 +1,6 @@
 {
   "name": "20_clinic_patient_forecast_benchmark",
-  "description": "Apples-to-apples benchmark for the graph-dynamic patient-forecast scenario. The GCN-DDPG arm uses the current residual MYO-anchor plus local-search distillation policy.",
+  "description": "Apples-to-apples benchmark for graph-dynamic patient-forecast scenarios. The geo scenario uses the 20 POC locations from the B&B Paper 2026 Appendix A. The GCN-DDPG arm uses the current residual MYO-anchor plus local-search distillation policy.",
   "algorithms": [
     "gcn_ddpg",
     "flat_ddpg",

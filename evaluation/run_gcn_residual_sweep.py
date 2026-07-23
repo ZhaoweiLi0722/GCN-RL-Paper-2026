@@ -456,6 +456,18 @@ def run_local_search_distillation(
     max_steps: int,
     baseline_policy: str,
     min_improvement: float,
+    anchor_keep_probability: float = 0.0,
+    anchor_keep_weight: float = 1.0,
+    anchor_keep_on_improved: bool = True,
+    balance_label_weights: bool = False,
+    retain_for_regularization: bool = False,
+    min_service_level_delta: float | None = None,
+    service_level_weight: float = 0.0,
+    eligibility_rate_weight: float = 0.0,
+    at_risk_unserved_weight: float = 0.0,
+    patients_lost_weight: float = 0.0,
+    candidate_groups: tuple[str, ...] | None = None,
+    candidate_signs: tuple[float, ...] | None = None,
 ) -> dict[str, Any]:
     demos = collect_local_search_demonstrations(
         env,
@@ -466,13 +478,42 @@ def run_local_search_distillation(
         max_steps=max_steps,
         baseline_policy=baseline_policy,
         min_improvement=min_improvement,
+        anchor_keep_probability=anchor_keep_probability,
+        anchor_keep_weight=anchor_keep_weight,
+        anchor_keep_on_improved=anchor_keep_on_improved,
+        balance_label_weights=balance_label_weights,
+        min_service_level_delta=min_service_level_delta,
+        service_level_weight=service_level_weight,
+        eligibility_rate_weight=eligibility_rate_weight,
+        at_risk_unserved_weight=at_risk_unserved_weight,
+        patients_lost_weight=patients_lost_weight,
+        candidate_groups=candidate_groups,
+        candidate_signs=candidate_signs,
     )
     if demos["states"].size == 0:
-        print("local_search no improved state-action demonstrations", flush=True)
+        print("local_search no state-action demonstrations", flush=True)
         return {
             "local_search_rollouts": int(rollouts),
             "local_search_samples": 0,
             "local_search_improved_steps": 0,
+            "local_search_anchor_keep_steps": 0,
+            "local_search_anchor_keep_on_improved": bool(anchor_keep_on_improved),
+            "local_search_balance_label_weights": bool(balance_label_weights),
+            "local_search_retain_for_regularization": bool(
+                retain_for_regularization
+            ),
+            "local_search_min_service_level_delta": (
+                "" if min_service_level_delta is None else float(min_service_level_delta)
+            ),
+            "local_search_service_level_weight": float(service_level_weight),
+            "local_search_eligibility_rate_weight": float(eligibility_rate_weight),
+            "local_search_at_risk_unserved_weight": float(at_risk_unserved_weight),
+            "local_search_patients_lost_weight": float(patients_lost_weight),
+            "local_search_candidate_groups": "|".join(candidate_groups or ()),
+            "local_search_candidate_signs": "|".join(
+                f"{float(sign):g}" for sign in tuple(candidate_signs or ())
+            ),
+            "local_search_service_rejected_steps": int(demos["service_rejected_steps"]),
             "local_search_loss": "",
         }
     weights = demos["weights"]
@@ -483,6 +524,7 @@ def run_local_search_distillation(
             "epochs": epochs,
             "batch_size": batch_size,
             "seed": seed + 1200000,
+            "retain_for_regularization": bool(retain_for_regularization),
         },
         weights=weights,
     )
@@ -490,6 +532,7 @@ def run_local_search_distillation(
         "local_search "
         f"rollouts={rollouts} samples={demos['states'].shape[0]} "
         f"improved_steps={demos['improved_steps']} "
+        f"anchor_keep_steps={demos['anchor_keep_steps']} "
         f"mean_step_improvement={demos['mean_step_improvement']:.3f} "
         f"loss={final_fit.get('final_loss'):.6f}",
         flush=True,
@@ -501,6 +544,27 @@ def run_local_search_distillation(
         "local_search_epochs": int(epochs),
         "local_search_samples": int(demos["states"].shape[0]),
         "local_search_improved_steps": int(demos["improved_steps"]),
+        "local_search_anchor_keep_steps": int(demos["anchor_keep_steps"]),
+        "local_search_anchor_keep_probability": float(anchor_keep_probability),
+        "local_search_anchor_keep_weight": float(anchor_keep_weight),
+        "local_search_anchor_keep_on_improved": bool(anchor_keep_on_improved),
+        "local_search_balance_label_weights": bool(balance_label_weights),
+        "local_search_retain_for_regularization": bool(retain_for_regularization),
+        "local_search_improved_weight_fraction": float(
+            demos["improved_weight_fraction"]
+        ),
+        "local_search_min_service_level_delta": (
+            "" if min_service_level_delta is None else float(min_service_level_delta)
+        ),
+        "local_search_service_level_weight": float(service_level_weight),
+        "local_search_eligibility_rate_weight": float(eligibility_rate_weight),
+        "local_search_at_risk_unserved_weight": float(at_risk_unserved_weight),
+        "local_search_patients_lost_weight": float(patients_lost_weight),
+        "local_search_candidate_groups": "|".join(candidate_groups or ()),
+        "local_search_candidate_signs": "|".join(
+            f"{float(sign):g}" for sign in tuple(candidate_signs or ())
+        ),
+        "local_search_service_rejected_steps": int(demos["service_rejected_steps"]),
         "local_search_mean_step_improvement": float(demos["mean_step_improvement"]),
         "local_search_loss": final_fit.get("final_loss", ""),
     }
@@ -516,6 +580,17 @@ def collect_local_search_demonstrations(
     max_steps: int,
     baseline_policy: str,
     min_improvement: float,
+    anchor_keep_probability: float = 0.0,
+    anchor_keep_weight: float = 1.0,
+    anchor_keep_on_improved: bool = True,
+    balance_label_weights: bool = False,
+    min_service_level_delta: float | None = None,
+    service_level_weight: float = 0.0,
+    eligibility_rate_weight: float = 0.0,
+    at_risk_unserved_weight: float = 0.0,
+    patients_lost_weight: float = 0.0,
+    candidate_groups: tuple[str, ...] | None = None,
+    candidate_signs: tuple[float, ...] | None = None,
 ) -> dict[str, Any]:
     baseline = get_heuristic_class(baseline_policy)(
         state_dim=env.observation_size,
@@ -525,8 +600,20 @@ def collect_local_search_demonstrations(
     states: list[np.ndarray] = []
     actions: list[np.ndarray] = []
     weights: list[float] = []
+    improved_labels: list[bool] = []
     improved_steps = 0
+    anchor_keep_steps = 0
+    service_rejected_steps = 0
     step_improvements: list[float] = []
+    rng = np.random.default_rng(seed + 770000)
+    anchor_keep_probability = float(np.clip(anchor_keep_probability, 0.0, 1.0))
+    anchor_keep_weight = max(float(anchor_keep_weight), 0.0)
+    score_weights = {
+        "service_level": float(service_level_weight),
+        "eligibility_rate": float(eligibility_rate_weight),
+        "at_risk_unserved": float(at_risk_unserved_weight),
+        "patients_lost": float(patients_lost_weight),
+    }
     for rollout in range(max(rollouts, 0)):
         state = env.reset(seed=seed + rollout)
         baseline.reset()
@@ -538,9 +625,11 @@ def collect_local_search_demonstrations(
                 env,
                 baseline,
                 epsilons=epsilons,
+                candidate_groups=candidate_groups,
+                candidate_signs=candidate_signs,
             )
-            candidate_costs = [
-                rollout_cost_after_action(
+            candidate_metrics = [
+                rollout_metrics_after_action(
                     copy.deepcopy(env),
                     baseline,
                     action,
@@ -548,17 +637,53 @@ def collect_local_search_demonstrations(
                 )
                 for action in candidate_actions
             ]
-            best_index = int(np.argmin(candidate_costs))
+            candidate_costs = [float(metrics["total_cost"]) for metrics in candidate_metrics]
+            candidate_scores = [
+                local_search_metric_score(metrics, score_weights)
+                for metrics in candidate_metrics
+            ]
+            score_best_index = int(np.argmin(candidate_scores))
+            best_index = score_best_index
+            if min_service_level_delta is not None:
+                baseline_service = float(candidate_metrics[0].get("service_level", float("nan")))
+                if np.isfinite(baseline_service):
+                    service_threshold = baseline_service + float(min_service_level_delta)
+                    feasible_indices = [
+                        index
+                        for index, metrics in enumerate(candidate_metrics)
+                        if float(metrics.get("service_level", float("nan"))) >= service_threshold
+                    ]
+                    if feasible_indices:
+                        best_index = min(feasible_indices, key=lambda index: candidate_scores[index])
+                    else:
+                        best_index = 0
+                    if score_best_index != best_index and score_best_index != 0:
+                        service_rejected_steps += 1
             baseline_cost = float(candidate_costs[0])
             best_cost = float(candidate_costs[best_index])
-            improvement = baseline_cost - best_cost
+            baseline_score = float(candidate_scores[0])
+            best_score = float(candidate_scores[best_index])
+            improvement = baseline_score - best_score
             selected_action = candidate_actions[best_index]
-            if best_index != 0 and improvement > min_improvement:
+            improved = best_index != 0 and improvement > min_improvement
+            if improved:
                 states.append(np.asarray(state, dtype=np.float32))
                 actions.append(np.asarray(selected_action, dtype=np.float32))
                 weights.append(max(improvement, 1.0))
+                improved_labels.append(True)
                 step_improvements.append(improvement)
                 improved_steps += 1
+            keep_anchor = anchor_keep_on_improved or not improved
+            if (
+                keep_anchor
+                and anchor_keep_probability > 0.0
+                and rng.random() < anchor_keep_probability
+            ):
+                states.append(np.asarray(state, dtype=np.float32))
+                actions.append(np.asarray(candidate_actions[0], dtype=np.float32))
+                weights.append(max(anchor_keep_weight, 1.0))
+                improved_labels.append(False)
+                anchor_keep_steps += 1
             state, _reward, done, _info = env.step(selected_action)
             step += 1
 
@@ -568,14 +693,34 @@ def collect_local_search_demonstrations(
             "actions": np.empty((0, env.action_size), dtype=np.float32),
             "weights": np.empty((0,), dtype=np.float32),
             "improved_steps": 0,
+            "anchor_keep_steps": 0,
+            "service_rejected_steps": service_rejected_steps,
             "mean_step_improvement": 0.0,
+            "improved_weight_fraction": 0.0,
         }
+    weight_array = np.asarray(weights, dtype=np.float32)
+    improved_mask = np.asarray(improved_labels, dtype=bool)
+    if balance_label_weights and np.any(improved_mask) and np.any(~improved_mask):
+        improved_total = float(weight_array[improved_mask].sum())
+        anchor_total = float(weight_array[~improved_mask].sum())
+        if improved_total > 0.0 and anchor_total > 0.0:
+            weight_array[improved_mask] *= 0.5 / improved_total
+            weight_array[~improved_mask] *= 0.5 / anchor_total
+            weight_array *= float(weight_array.size) / float(weight_array.sum())
+    weight_total = float(weight_array.sum())
     return {
         "states": np.asarray(states, dtype=np.float32),
         "actions": np.asarray(actions, dtype=np.float32),
-        "weights": np.asarray(weights, dtype=np.float32),
+        "weights": weight_array,
         "improved_steps": improved_steps,
-        "mean_step_improvement": float(np.mean(step_improvements)),
+        "anchor_keep_steps": anchor_keep_steps,
+        "service_rejected_steps": service_rejected_steps,
+        "mean_step_improvement": float(np.mean(step_improvements)) if step_improvements else 0.0,
+        "improved_weight_fraction": (
+            float(weight_array[improved_mask].sum()) / weight_total
+            if weight_total > 0.0
+            else 0.0
+        ),
     }
 
 
@@ -585,50 +730,232 @@ def local_search_candidate_actions(
     baseline,
     *,
     epsilons: tuple[float, ...],
+    candidate_groups: tuple[str, ...] | None = None,
+    candidate_signs: tuple[float, ...] | None = None,
 ) -> list[np.ndarray]:
     baseline_action = baseline.select_action(state, explore=False, env=env)
     actions = [baseline_action]
+    groups = set(
+        candidate_groups
+        or (
+            "replenishment",
+            "reagent_transfer",
+            "capacity_transfer",
+            "combined_transfer",
+        )
+    )
+    signs = tuple(float(sign) for sign in (candidate_signs or (-1.0, 1.0)))
+    if not signs:
+        signs = (-1.0, 1.0)
     n = int(env.config.num_facilities)
-    pressure = (
+    _pending_specimens, pending_reagents, pending_capacity = _pending_transfer_vectors(env, n)
+    resource_pressure = (
         np.asarray(env.demand, dtype=float)
         + 0.25 * np.asarray(getattr(env, "demand_forecast", env.demand), dtype=float)
         + np.asarray(env.specimens, dtype=float)
         - np.asarray(env.reagents, dtype=float)
+        - pending_reagents
     )
-    centered_pressure = pressure - float(pressure.mean())
-    denominator = max(float(np.max(np.abs(centered_pressure))), 1e-6)
-    pressure_pattern = centered_pressure / denominator
+    if hasattr(env, "at_risk_counts"):
+        resource_pressure = (
+            resource_pressure
+            + 0.5 * _env_vector(env, "at_risk_counts", n)
+            + 0.5 * _env_vector(env, "near_expiry_counts", n)
+        )
+    capacity_pressure = (
+        np.asarray(env.demand, dtype=float)
+        + 0.25 * np.asarray(getattr(env, "demand_forecast", env.demand), dtype=float)
+        + np.asarray(env.specimens, dtype=float)
+        - np.asarray(env.bioreactors[:, 0], dtype=float)
+        - pending_capacity
+    )
+    if hasattr(env, "at_risk_counts"):
+        capacity_pressure = (
+            capacity_pressure
+            + 0.5 * _env_vector(env, "at_risk_counts", n)
+            + 0.5 * _env_vector(env, "near_expiry_counts", n)
+        )
+    patient_risk_pressure = (
+        _env_vector(env, "at_risk_counts", n)
+        + _env_vector(env, "near_expiry_counts", n)
+    )
+    resource_pattern = _centered_unit_pattern(resource_pressure)
+    capacity_pattern = _centered_unit_pattern(capacity_pressure)
+    patient_risk_pattern = _positive_unit_pattern(patient_risk_pressure)
+    patient_risk_resource_pattern = _positive_unit_pattern(
+        np.maximum(patient_risk_pressure, 0.0)
+        * (1.0 + np.maximum(resource_pressure, 0.0))
+    )
     for epsilon in epsilons:
         epsilon = float(epsilon)
-        for sign in (-1.0, 1.0):
-            uniform = baseline_action.copy()
-            uniform[3 * n : 4 * n] = np.clip(
-                uniform[3 * n : 4 * n] + sign * epsilon,
-                -1.0,
-                1.0,
-            )
-            actions.append(uniform.astype(np.float32))
+        for sign in signs:
+            if "replenishment" in groups or "replenishment_uniform" in groups:
+                uniform = baseline_action.copy()
+                uniform[3 * n : 4 * n] = np.clip(
+                    uniform[3 * n : 4 * n] + sign * epsilon,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(uniform.astype(np.float32))
 
-            pressure_action = baseline_action.copy()
-            pressure_action[3 * n : 4 * n] = np.clip(
-                pressure_action[3 * n : 4 * n] + sign * epsilon * pressure_pattern,
-                -1.0,
-                1.0,
-            )
-            actions.append(pressure_action.astype(np.float32))
+            if "replenishment" in groups or "replenishment_pressure" in groups:
+                pressure_action = baseline_action.copy()
+                pressure_action[3 * n : 4 * n] = np.clip(
+                    pressure_action[3 * n : 4 * n] + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(pressure_action.astype(np.float32))
+
+            if "replenishment_positive_pressure" in groups:
+                pressure_action = baseline_action.copy()
+                positive_resource_pattern = np.maximum(resource_pattern, 0.0)
+                pressure_action[3 * n : 4 * n] = np.clip(
+                    pressure_action[3 * n : 4 * n]
+                    + max(sign, 0.0) * epsilon * positive_resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(pressure_action.astype(np.float32))
+
+            if "replenishment_patient_risk" in groups:
+                risk_action = baseline_action.copy()
+                risk_action[3 * n : 4 * n] = np.clip(
+                    risk_action[3 * n : 4 * n]
+                    + max(sign, 0.0) * epsilon * patient_risk_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(risk_action.astype(np.float32))
+
+            if "replenishment_patient_risk_pressure" in groups:
+                risk_pressure_action = baseline_action.copy()
+                risk_pressure_action[3 * n : 4 * n] = np.clip(
+                    risk_pressure_action[3 * n : 4 * n]
+                    + max(sign, 0.0) * epsilon * patient_risk_resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(risk_pressure_action.astype(np.float32))
+
+            if "reagent_transfer" in groups:
+                reagent_transfer = baseline_action.copy()
+                reagent_transfer[n : 2 * n] = np.clip(
+                    reagent_transfer[n : 2 * n] + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(reagent_transfer.astype(np.float32))
+
+            if "capacity_transfer" in groups:
+                capacity_transfer = baseline_action.copy()
+                capacity_transfer[2 * n : 3 * n] = np.clip(
+                    capacity_transfer[2 * n : 3 * n] + sign * epsilon * capacity_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(capacity_transfer.astype(np.float32))
+
+            if "combined_transfer" in groups:
+                combined_transfer = baseline_action.copy()
+                combined_transfer[n : 2 * n] = np.clip(
+                    combined_transfer[n : 2 * n] + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                combined_transfer[2 * n : 3 * n] = np.clip(
+                    combined_transfer[2 * n : 3 * n] + sign * epsilon * capacity_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(combined_transfer.astype(np.float32))
     return actions
 
 
+def _centered_unit_pattern(values: np.ndarray) -> np.ndarray:
+    centered = np.asarray(values, dtype=float) - float(np.mean(values))
+    denominator = max(float(np.max(np.abs(centered))), 1e-6)
+    return centered / denominator
+
+
+def _positive_unit_pattern(values: np.ndarray) -> np.ndarray:
+    positive = np.maximum(np.asarray(values, dtype=float), 0.0)
+    denominator = max(float(np.max(positive)), 1e-6)
+    return positive / denominator
+
+
+def _env_vector(env, name: str, length: int) -> np.ndarray:
+    value = getattr(env, name, None)
+    if value is None:
+        return np.zeros(int(length), dtype=float)
+    if callable(value):
+        value = value()
+    vector = np.asarray(value, dtype=float)
+    if vector.shape != (int(length),):
+        raise ValueError(f"Expected env.{name} shape {(int(length),)}, got {vector.shape}")
+    return vector
+
+
+def _pending_transfer_vectors(env, length: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    pending = getattr(env, "_pending_transfer_arrivals", None)
+    if callable(pending):
+        vectors = pending()
+        if len(vectors) == 3:
+            return tuple(np.asarray(vector, dtype=float) for vector in vectors)  # type: ignore[return-value]
+    zeros = np.zeros(int(length), dtype=float)
+    return (
+        _pipeline_pending_vector(env, "specimen_transfer_pipeline", length, zeros),
+        _pipeline_pending_vector(env, "reagent_transfer_pipeline", length, zeros),
+        _pipeline_pending_vector(env, "capacity_transfer_pipeline", length, zeros),
+    )
+
+
+def _pipeline_pending_vector(env, name: str, length: int, default: np.ndarray) -> np.ndarray:
+    pipeline = getattr(env, name, None)
+    if pipeline is None:
+        return default.copy()
+    array = np.asarray(pipeline, dtype=float)
+    if array.ndim != 2 or array.shape[1] != int(length):
+        return default.copy()
+    return array.sum(axis=0)
+
+
 def rollout_cost_after_action(env, baseline, action: np.ndarray, *, horizon: int) -> float:
+    return float(rollout_metrics_after_action(env, baseline, action, horizon=horizon)["total_cost"])
+
+
+def local_search_metric_score(metrics: dict[str, float], weights: dict[str, float]) -> float:
+    """Cost-style score where lower is better and patient metrics can be valued."""
+
+    return (
+        float(metrics["total_cost"])
+        - float(weights.get("service_level", 0.0)) * float(metrics.get("service_level", 0.0))
+        - float(weights.get("eligibility_rate", 0.0)) * float(metrics.get("eligibility_rate", 0.0))
+        + float(weights.get("at_risk_unserved", 0.0))
+        * float(metrics.get("at_risk_unserved", 0.0))
+        + float(weights.get("patients_lost", 0.0)) * float(metrics.get("patients_lost", 0.0))
+    )
+
+
+def rollout_metrics_after_action(env, baseline, action: np.ndarray, *, horizon: int) -> dict[str, float]:
     state, _reward, done, info = env.step(action)
-    total_cost = float(info["cost"])
+    metrics = EpisodeMetrics()
+    metrics.update(info)
     steps = 1
     while not done and steps < max(int(horizon), 1):
         followup_action = baseline.select_action(state, explore=False, env=env)
         state, _reward, done, info = env.step(followup_action)
-        total_cost += float(info["cost"])
+        metrics.update(info)
         steps += 1
-    return total_cost
+    return {
+        "total_cost": float(metrics.total_cost),
+        "service_level": float(metrics.service_level),
+        "eligibility_rate": float(metrics.eligibility_rate_mean)
+        if getattr(metrics, "has_patient_metrics", False)
+        else float("nan"),
+        "at_risk_unserved": float(metrics.at_risk_unserved),
+        "patients_lost": float(metrics.patients_lost),
+    }
 
 
 def elite_sample_weights(

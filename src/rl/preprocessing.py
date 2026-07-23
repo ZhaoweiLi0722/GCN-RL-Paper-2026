@@ -35,10 +35,11 @@ class FixedObservationScaler:
         include_supplier = bool(env_config.get("include_supplier_state", False))
         include_forecast = bool(env_config.get("include_demand_forecast_state", False))
         include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
+        patient_summary_width = _patient_summary_width(env_config)
         features_per_facility = 3 + lead_time + int(include_supplier) + int(include_forecast)
         if include_transfer_pipeline:
             features_per_facility += 3
-        expected_state_dim = num_facilities * features_per_facility
+        expected_state_dim = num_facilities * (features_per_facility + patient_summary_width)
         if expected_state_dim != int(state_dim):
             raise ValueError(
                 "normalize_observations expected state_dim="
@@ -71,6 +72,8 @@ class FixedObservationScaler:
                         max(float(max_idle[facility]), 1.0),
                     ]
                 )
+            if patient_summary_width:
+                row.extend(_patient_summary_scale(float(max_specimens[facility]), patient_summary_width))
             rows.append(np.asarray(row, dtype=np.float32))
         return cls(enabled=True, scales=np.concatenate(rows), clip=clip)
 
@@ -131,9 +134,25 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
         )
     if include_hub:
         scale.append(1.0)
+    patient_summary_width = _patient_summary_width(env_config)
+    if patient_summary_width:
+        scale.extend(_patient_summary_scale(float(np.max(max_specimens)), patient_summary_width))
     while len(scale) < int(node_feature_dim):
         scale.append(1.0)
     return tuple(scale[: int(node_feature_dim)])
+
+
+def _patient_summary_width(env_config: dict[str, Any]) -> int:
+    if env_config.get("env_type") != "patient_condition":
+        return 0
+    edges = env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
+    return 3 + len(tuple(edges)) + 1
+
+
+def _patient_summary_scale(max_specimens: float, summary_width: int) -> list[float]:
+    count_scale = max(max_specimens, 1.0)
+    # Layout: waiting count, mean survival, near-expiry count, then survival buckets.
+    return [count_scale, 1.0, count_scale] + [count_scale] * max(int(summary_width) - 3, 0)
 
 
 def _as_vector(values: Sequence[float] | float | int | None, length: int) -> np.ndarray:

@@ -20,6 +20,20 @@ class ProjectedAction:
 
     action: np.ndarray
     clipped: bool
+    repair_magnitude: float = 0.0
+
+
+def projection_repair_magnitude(raw_action: Sequence[float]) -> float:
+    """L2 norm of the feasibility repair (‖clip(a) − a‖); 0 if already in bounds.
+
+    A per-step measure of how hard the policy pushes outside the normalized action
+    box — the projection *load*. Always non-negative; used for the Phase 7
+    projection-load report (the on/off ablation is deferred to Phase 9).
+    """
+
+    action = np.asarray(raw_action, dtype=np.float32).reshape(-1)
+    projected = np.clip(action, -1.0, 1.0)
+    return float(np.linalg.norm(projected - action))
 
 
 def project_action(
@@ -43,7 +57,11 @@ def project_action(
         raise ValueError(f"Expected action shape {(expected_size,)}, got {action.shape}")
 
     projected = np.clip(action, -1.0, 1.0)
-    return ProjectedAction(action=projected.astype(np.float32), clipped=not np.allclose(action, projected))
+    return ProjectedAction(
+        action=projected.astype(np.float32),
+        clipped=not np.allclose(action, projected),
+        repair_magnitude=float(np.linalg.norm(projected - action)),
+    )
 
 
 def _infer_action_size(env_state: Any | None, action_space_info: Any | None) -> int | None:

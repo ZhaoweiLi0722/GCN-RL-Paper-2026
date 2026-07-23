@@ -16,6 +16,7 @@ from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edge
 from src.graph.geography import (
     geographic_distance_matrix,
     geographic_knn_edges,
+    geographic_transfer_time_matrix,
     normalize_coordinates,
 )
 
@@ -42,6 +43,7 @@ class CapacityPlanningConfig:
     production_lead_time: int = 5
     episode_horizon: int = 104
     demand_rates: Sequence[float] = (250.0 / 52.0, 250.0 / 52.0)
+    demand_rate_estimates: Sequence[float] | None = None
     initial_specimens: Sequence[float] = (0.0, 0.0)
     initial_reagents: Sequence[float] = (100.0, 100.0)
     initial_idle_bioreactors: Sequence[float] = (10.0, 10.0)
@@ -67,6 +69,14 @@ class CapacityPlanningConfig:
     demand_forecast_error: float | None = None
     clinic_coordinates: Sequence[Sequence[float]] | None = None
     geographic_neighbor_k: int = 3
+    geographic_transfer_cost_scale: float = 0.0
+    geographic_transfer_speed_mph: float = 500.0
+    geographic_transfer_fixed_hours: float = 0.5
+    geographic_transfer_time_cost_scale: float = 0.0
+    transfer_lead_time_distance_thresholds: Sequence[float] | None = None
+    regional_supplier_disruption_probability: float = 0.0
+    regional_supplier_disruption_duration: int = 0
+    regional_supplier_disruption_cluster_size: int = 0
     information_edges: Sequence[Edge] | None = None
     specimen_edges: Sequence[Edge] | None = None
     capacity_edges: Sequence[Edge] | None = None
@@ -98,6 +108,12 @@ class CapacityPlanningEnv:
 
         n = self.config.num_facilities
         self.demand_rates = _as_vector(self.config.demand_rates, n, "demand_rates")
+        self.base_demand_rates = self.demand_rates.astype(float).copy()
+        self.demand_rate_estimates = (
+            self.base_demand_rates.copy()
+            if self.config.demand_rate_estimates is None
+            else _as_vector(self.config.demand_rate_estimates, n, "demand_rate_estimates")
+        )
         self.initial_specimens = _as_vector(self.config.initial_specimens, n, "initial_specimens")
         self.initial_reagents = _as_vector(self.config.initial_reagents, n, "initial_reagents")
         self.initial_idle_bioreactors = _as_vector(
@@ -114,12 +130,35 @@ class CapacityPlanningEnv:
         self.supplier_disruption_rate = _as_vector(
             self.config.supplier_disruption_rate, n, "supplier_disruption_rate"
         )
+        self.base_supplier_disruption_rate = self.supplier_disruption_rate.astype(float).copy()
         self.clinic_coordinates = normalize_coordinates(self.config.clinic_coordinates, n)
         self.clinic_distance_matrix = (
             np.asarray(geographic_distance_matrix(self.clinic_coordinates), dtype=float)
             if self.clinic_coordinates
             else None
         )
+        self.clinic_transfer_time_hours_matrix = (
+            np.asarray(
+                geographic_transfer_time_matrix(
+                    self.clinic_coordinates,
+                    speed_mph=self.config.geographic_transfer_speed_mph,
+                    fixed_handling_hours=self.config.geographic_transfer_fixed_hours,
+                ),
+                dtype=float,
+            )
+            if self.clinic_coordinates
+            else None
+        )
+        self.transfer_delay_thresholds = tuple(
+            float(value) for value in (self.config.transfer_lead_time_distance_thresholds or ())
+        )
+        # Mutable instance copy of the forecast error so the per-episode
+        # randomization hook can vary it without touching the immutable config.
+        self.demand_forecast_error = self.config.demand_forecast_error
+        # Train-time domain-randomization ranges; None => fixed (eval/nominal).
+        self._train_disruption_range: tuple[float, float] | None = None
+        self._train_forecast_error_range: tuple[float, float] | None = None
+        self._train_demand_rate_multiplier_range: tuple[float, float] | None = None
 
         default_edges = complete_undirected_edges(n)
         geographic_edges = (
@@ -172,11 +211,14 @@ class CapacityPlanningEnv:
         lead_time = self.config.production_lead_time
         self.t = 0
         self.demand_shock_remaining = np.zeros(n, dtype=int)
+        self.regional_supplier_disruption_remaining = np.zeros(n, dtype=int)
         self.demand_rate_multiplier = np.ones(n, dtype=float)
         self.specimen_transfer_pipeline = self._empty_transfer_pipeline()
         self.reagent_transfer_pipeline = self._empty_transfer_pipeline()
         self.capacity_transfer_pipeline = self._empty_transfer_pipeline()
+        self._maybe_randomize_regime()
         self.demand = self.rng.poisson(self.demand_rates).astype(float)
+        self._advance_regional_supplier_disruptions()
         self.supplier_available = self._sample_supplier_available()
         self.demand_forecast = self._sample_demand_forecast()
         self.specimens = self.initial_specimens.astype(float).copy()
@@ -190,6 +232,58 @@ class CapacityPlanningEnv:
         self.reagent_shortage_steps = 0
         self.bioreactor_shortage_steps = 0
         return self.observation()
+
+    def enable_train_randomization(
+        self,
+        disruption_range: tuple[float, float] | None = None,
+        forecast_error_range: tuple[float, float] | None = None,
+        demand_rate_multiplier_range: tuple[float, float] | None = None,
+    ) -> None:
+        """Opt into train-time per-episode domain randomization.
+
+        When set, each :meth:`reset` resamples the stressed parameter uniformly
+        from the given ``[lo, hi]`` range *before* demand/supplier/forecast are
+        drawn, so training sees a distribution of regimes. Eval envs leave this
+        unset and keep the fixed config values, enabling clean train-on-range /
+        test-OOD splits. ``demand_rate_multiplier_range`` randomizes the true
+        Poisson demand rates while leaving ``demand_rate_estimates`` fixed, which
+        mirrors the old DRL-CaP case where heuristics plan from a priori demand
+        estimates but the simulator draws from a shifted ground-truth demand
+        distribution. Passing ``None`` (the default) disables that lever.
+        """
+
+        def _check(name: str, rng: tuple[float, float] | None) -> tuple[float, float] | None:
+            if rng is None:
+                return None
+            lo, hi = float(rng[0]), float(rng[1])
+            if lo < 0.0 or hi < lo:
+                raise ValueError(f"{name} must satisfy 0 <= lo <= hi, got {rng}")
+            return (lo, hi)
+
+        self._train_disruption_range = _check("disruption_range", disruption_range)
+        self._train_forecast_error_range = _check("forecast_error_range", forecast_error_range)
+        self._train_demand_rate_multiplier_range = _check(
+            "demand_rate_multiplier_range",
+            demand_rate_multiplier_range,
+        )
+
+    def _maybe_randomize_regime(self) -> None:
+        """Resample stressed parameters from their train-time ranges, if enabled."""
+        n = self.config.num_facilities
+        self.demand_rates = self.base_demand_rates.astype(float).copy()
+        self.supplier_disruption_rate = self.base_supplier_disruption_rate.astype(float).copy()
+        self.demand_forecast_error = self.config.demand_forecast_error
+        if self._train_disruption_range is not None:
+            lo, hi = self._train_disruption_range
+            rate = float(self.rng.uniform(lo, hi))
+            self.supplier_disruption_rate = np.full(n, rate, dtype=float)
+        if self._train_forecast_error_range is not None:
+            lo, hi = self._train_forecast_error_range
+            self.demand_forecast_error = float(self.rng.uniform(lo, hi))
+        if self._train_demand_rate_multiplier_range is not None:
+            lo, hi = self._train_demand_rate_multiplier_range
+            multiplier = float(self.rng.uniform(lo, hi))
+            self.demand_rates = self.base_demand_rates * multiplier
 
     def observation(self) -> np.ndarray:
         """Return a flat observation suitable for MLP baselines."""
@@ -277,6 +371,12 @@ class CapacityPlanningEnv:
         }
         if self.clinic_coordinates:
             graph["clinic_coordinates"] = np.asarray(self.clinic_coordinates, dtype=np.float32)
+        if self.clinic_distance_matrix is not None:
+            graph["clinic_distance_matrix"] = self.clinic_distance_matrix.astype(np.float32)
+        if self.clinic_transfer_time_hours_matrix is not None:
+            graph["clinic_transfer_time_hours_matrix"] = (
+                self.clinic_transfer_time_hours_matrix.astype(np.float32)
+            )
         return graph
 
     def noop_action(self) -> np.ndarray:
@@ -366,15 +466,26 @@ class CapacityPlanningEnv:
             reagent_transfers, reagent_future_arrivals = _apply_transfers_delayed(
                 next_reagents, self.resource_edges, reagent_requests
             )
-            self._schedule_transfer_arrivals(
-                self.specimen_transfer_pipeline, specimen_future_arrivals
-            )
-            self._schedule_transfer_arrivals(
-                self.capacity_transfer_pipeline, capacity_future_arrivals
-            )
-            self._schedule_transfer_arrivals(
-                self.reagent_transfer_pipeline, reagent_future_arrivals
-            )
+            if self._uses_geographic_transfer_delays():
+                self._schedule_edge_transfer_arrivals(
+                    self.specimen_transfer_pipeline, self.specimen_edges, specimen_transfers
+                )
+                self._schedule_edge_transfer_arrivals(
+                    self.capacity_transfer_pipeline, self.capacity_edges, capacity_transfers
+                )
+                self._schedule_edge_transfer_arrivals(
+                    self.reagent_transfer_pipeline, self.resource_edges, reagent_transfers
+                )
+            else:
+                self._schedule_transfer_arrivals(
+                    self.specimen_transfer_pipeline, specimen_future_arrivals
+                )
+                self._schedule_transfer_arrivals(
+                    self.capacity_transfer_pipeline, capacity_future_arrivals
+                )
+                self._schedule_transfer_arrivals(
+                    self.reagent_transfer_pipeline, reagent_future_arrivals
+                )
         else:
             specimen_transfers = _apply_transfers(
                 next_specimens, self.specimen_edges, specimen_requests
@@ -399,9 +510,9 @@ class CapacityPlanningEnv:
             + costs.reagent_shortage * float(under_reagents.sum())
             + costs.bioreactor_holding * float(idle_bioreactor_counts.sum())
             + costs.bioreactor_shortage * float(under_bioreactors.sum())
-            + costs.specimen_transfer * float(np.abs(specimen_transfers).sum())
-            + costs.bioreactor_transfer * float(np.abs(capacity_transfers).sum())
-            + costs.reagent_transfer * float(np.abs(reagent_transfers).sum())
+            + self._edge_transfer_cost(costs.specimen_transfer, self.specimen_edges, specimen_transfers)
+            + self._edge_transfer_cost(costs.bioreactor_transfer, self.capacity_edges, capacity_transfers)
+            + self._edge_transfer_cost(costs.reagent_transfer, self.resource_edges, reagent_transfers)
         )
 
         info: dict[str, np.ndarray | float] = {
@@ -411,6 +522,7 @@ class CapacityPlanningEnv:
             "demand_forecast": current_demand_forecast.copy(),
             "supplier_available": supplier_available.copy(),
             "demand_rate_multiplier": self.demand_rate_multiplier.copy(),
+            "regional_supplier_disruption_remaining": self.regional_supplier_disruption_remaining.copy(),
             "replenishment": replenishment.copy(),
             "specimen_transfer_arrivals": specimen_arrivals.copy(),
             "reagent_transfer_arrivals": reagent_arrivals.copy(),
@@ -464,15 +576,26 @@ class CapacityPlanningEnv:
             reagent_net, reagent_flows, reagent_future_arrivals = _apply_net_transfers_delayed(
                 next_reagents, self.resource_edges, reagent_transfer_requests
             )
-            self._schedule_transfer_arrivals(
-                self.specimen_transfer_pipeline, specimen_future_arrivals
-            )
-            self._schedule_transfer_arrivals(
-                self.capacity_transfer_pipeline, capacity_future_arrivals
-            )
-            self._schedule_transfer_arrivals(
-                self.reagent_transfer_pipeline, reagent_future_arrivals
-            )
+            if self._uses_geographic_transfer_delays():
+                self._schedule_edge_transfer_arrivals(
+                    self.specimen_transfer_pipeline, self.specimen_edges, specimen_flows
+                )
+                self._schedule_edge_transfer_arrivals(
+                    self.capacity_transfer_pipeline, self.capacity_edges, capacity_flows
+                )
+                self._schedule_edge_transfer_arrivals(
+                    self.reagent_transfer_pipeline, self.resource_edges, reagent_flows
+                )
+            else:
+                self._schedule_transfer_arrivals(
+                    self.specimen_transfer_pipeline, specimen_future_arrivals
+                )
+                self._schedule_transfer_arrivals(
+                    self.capacity_transfer_pipeline, capacity_future_arrivals
+                )
+                self._schedule_transfer_arrivals(
+                    self.reagent_transfer_pipeline, reagent_future_arrivals
+                )
         else:
             specimen_net, specimen_flows = _apply_net_transfers(
                 next_specimens, self.specimen_edges, specimen_requests
@@ -500,9 +623,24 @@ class CapacityPlanningEnv:
             + costs.reagent_shortage * float(under_reagents.sum())
             + costs.bioreactor_holding * float(idle_bioreactor_counts.sum())
             + costs.bioreactor_shortage * float(under_bioreactors.sum())
-            + costs.specimen_transfer * float(np.abs(specimen_net).sum())
-            + costs.bioreactor_transfer * float(np.abs(capacity_net).sum())
-            + costs.reagent_transfer * float(np.abs(reagent_net).sum())
+            + self._facility_net_transfer_cost(
+                costs.specimen_transfer,
+                self.specimen_edges,
+                specimen_flows,
+                specimen_net,
+            )
+            + self._facility_net_transfer_cost(
+                costs.bioreactor_transfer,
+                self.capacity_edges,
+                capacity_flows,
+                capacity_net,
+            )
+            + self._facility_net_transfer_cost(
+                costs.reagent_transfer,
+                self.resource_edges,
+                reagent_flows,
+                reagent_net,
+            )
         )
 
         self._update_running_metrics(current_demand, production, self.specimens, self.bioreactors)
@@ -519,6 +657,7 @@ class CapacityPlanningEnv:
             "demand_forecast": current_demand_forecast.copy(),
             "supplier_available": supplier_available.copy(),
             "demand_rate_multiplier": self.demand_rate_multiplier.copy(),
+            "regional_supplier_disruption_remaining": self.regional_supplier_disruption_remaining.copy(),
             "replenishment": replenishment.copy(),
             "specimen_transfer_arrivals": specimen_arrivals.copy(),
             "reagent_transfer_arrivals": reagent_arrivals.copy(),
@@ -560,11 +699,33 @@ class CapacityPlanningEnv:
             raise ValueError("geographic_neighbor_k must be positive")
         if self.config.clinic_coordinates is not None:
             normalize_coordinates(self.config.clinic_coordinates, self.config.num_facilities)
+        if self.config.geographic_transfer_cost_scale < 0.0:
+            raise ValueError("geographic_transfer_cost_scale must be nonnegative")
+        if self.config.geographic_transfer_speed_mph <= 0.0:
+            raise ValueError("geographic_transfer_speed_mph must be positive")
+        if self.config.geographic_transfer_fixed_hours < 0.0:
+            raise ValueError("geographic_transfer_fixed_hours must be nonnegative")
+        if self.config.geographic_transfer_time_cost_scale < 0.0:
+            raise ValueError("geographic_transfer_time_cost_scale must be nonnegative")
+        if self.config.transfer_lead_time_distance_thresholds is not None:
+            thresholds = [float(value) for value in self.config.transfer_lead_time_distance_thresholds]
+            if any(value < 0.0 for value in thresholds):
+                raise ValueError("transfer_lead_time_distance_thresholds must be nonnegative")
+            if any(right <= left for left, right in zip(thresholds, thresholds[1:])):
+                raise ValueError("transfer_lead_time_distance_thresholds must be strictly increasing")
+        if not 0.0 <= self.config.regional_supplier_disruption_probability <= 1.0:
+            raise ValueError("regional_supplier_disruption_probability must be between 0 and 1")
+        if self.config.regional_supplier_disruption_duration < 0:
+            raise ValueError("regional_supplier_disruption_duration must be nonnegative")
+        if self.config.regional_supplier_disruption_cluster_size < 0:
+            raise ValueError("regional_supplier_disruption_cluster_size must be nonnegative")
         if self.config.action_mode not in ("edge_transfer", "facility_net"):
             raise ValueError("action_mode must be 'edge_transfer' or 'facility_net'")
 
     def _sample_supplier_available(self) -> np.ndarray:
         available = self.rng.random(self.config.num_facilities) >= self.supplier_disruption_rate
+        if np.any(self.regional_supplier_disruption_remaining > 0):
+            available = np.logical_and(available, self.regional_supplier_disruption_remaining <= 0)
         return available.astype(float)
 
     def _advance_clock(self) -> bool:
@@ -572,6 +733,7 @@ class CapacityPlanningEnv:
         done = self.t >= self.config.episode_horizon
         self._advance_demand_shocks()
         self.demand = self.rng.poisson(self._effective_demand_rates()).astype(float)
+        self._advance_regional_supplier_disruptions()
         self.supplier_available = self._sample_supplier_available()
         self.demand_forecast = self._sample_demand_forecast()
         return done
@@ -606,6 +768,33 @@ class CapacityPlanningEnv:
             return np.argsort(self.clinic_distance_matrix[start], kind="stable")[:cluster_size]
         return (start + np.arange(cluster_size)) % n
 
+    def _advance_regional_supplier_disruptions(self) -> None:
+        if self.config.regional_supplier_disruption_duration <= 0:
+            self.regional_supplier_disruption_remaining[:] = 0
+            return
+
+        self.regional_supplier_disruption_remaining = np.maximum(
+            self.regional_supplier_disruption_remaining - 1,
+            0,
+        )
+        if self.rng.random() < self.config.regional_supplier_disruption_probability:
+            disrupted = self._sample_supplier_disruption_cluster()
+            self.regional_supplier_disruption_remaining[disrupted] = np.maximum(
+                self.regional_supplier_disruption_remaining[disrupted],
+                int(self.config.regional_supplier_disruption_duration),
+            )
+
+    def _sample_supplier_disruption_cluster(self) -> np.ndarray:
+        n = self.config.num_facilities
+        cluster_size = int(self.config.regional_supplier_disruption_cluster_size) or n
+        cluster_size = min(max(cluster_size, 1), n)
+        if cluster_size == n:
+            return np.arange(n)
+        start = int(self.rng.integers(0, n))
+        if self.clinic_distance_matrix is not None:
+            return np.argsort(self.clinic_distance_matrix[start], kind="stable")[:cluster_size]
+        return (start + np.arange(cluster_size)) % n
+
     def _effective_demand_rates(self) -> np.ndarray:
         return self.demand_rates * self.demand_rate_multiplier
 
@@ -614,7 +803,7 @@ class CapacityPlanningEnv:
         forecast = self._effective_demand_rates() * horizon
         if not self.config.include_demand_forecast_state:
             return forecast.astype(float)
-        error = self.config.demand_forecast_error
+        error = self.demand_forecast_error
         if error is None or float(error) == 0.0:
             return forecast.astype(float)
         noise = self.rng.normal(loc=0.0, scale=float(error), size=self.config.num_facilities)
@@ -639,6 +828,96 @@ class CapacityPlanningEnv:
         if pipeline.shape[0] == 0:
             return
         pipeline[-1] += arrivals
+
+    def _schedule_edge_transfer_arrivals(
+        self,
+        pipeline: np.ndarray,
+        edges: Sequence[Edge],
+        edge_flows: np.ndarray,
+    ) -> None:
+        if pipeline.shape[0] == 0:
+            return
+        for (i, j), flow in zip(edges, edge_flows):
+            amount = float(flow)
+            if abs(amount) <= 1e-8:
+                continue
+            destination = j if amount > 0.0 else i
+            delay = self._transfer_delay_for_edge((i, j))
+            pipeline[delay - 1, destination] += abs(amount)
+
+    def _uses_geographic_transfer_delays(self) -> bool:
+        return (
+            self.config.transfer_lead_time > 0
+            and self.clinic_distance_matrix is not None
+            and bool(self.transfer_delay_thresholds)
+        )
+
+    def _transfer_delay_for_edge(self, edge: Edge) -> int:
+        if self.config.transfer_lead_time <= 0:
+            return 0
+        if self.clinic_distance_matrix is None or not self.transfer_delay_thresholds:
+            return int(self.config.transfer_lead_time)
+        distance = self._edge_distance(edge)
+        delay = 1 + sum(distance > threshold for threshold in self.transfer_delay_thresholds)
+        return min(max(int(delay), 1), int(self.config.transfer_lead_time))
+
+    def _edge_distance(self, edge: Edge) -> float:
+        if self.clinic_distance_matrix is None:
+            return 0.0
+        i, j = edge
+        return float(self.clinic_distance_matrix[int(i), int(j)])
+
+    def _edge_transfer_time_hours(self, edge: Edge) -> float:
+        if self.clinic_transfer_time_hours_matrix is None:
+            return 0.0
+        i, j = edge
+        return float(self.clinic_transfer_time_hours_matrix[int(i), int(j)])
+
+    def _edge_transfer_cost(self, base_cost: float, edges: Sequence[Edge], edge_flows: np.ndarray) -> float:
+        edge_flows = np.asarray(edge_flows, dtype=float)
+        if (
+            self.clinic_distance_matrix is None
+            and self.clinic_transfer_time_hours_matrix is None
+        ):
+            return float(base_cost) * float(np.abs(edge_flows).sum())
+        total = 0.0
+        for edge, flow in zip(edges, edge_flows):
+            multiplier = (
+                1.0
+                + float(self.config.geographic_transfer_cost_scale)
+                * (self._edge_distance(edge) / 1000.0)
+                + float(self.config.geographic_transfer_time_cost_scale)
+                * self._edge_transfer_time_hours(edge)
+            )
+            total += float(base_cost) * multiplier * abs(float(flow))
+        return total
+
+    def _facility_net_transfer_cost(
+        self,
+        base_cost: float,
+        edges: Sequence[Edge],
+        edge_flows: np.ndarray,
+        net_flows: np.ndarray,
+    ) -> float:
+        base_total = float(base_cost) * float(np.abs(net_flows).sum())
+        if (
+            self.clinic_distance_matrix is None
+            and self.clinic_transfer_time_hours_matrix is None
+        ):
+            return base_total
+        distance_surcharge = 0.0
+        for edge, flow in zip(edges, np.asarray(edge_flows, dtype=float)):
+            distance_surcharge += (
+                float(base_cost)
+                * (
+                    float(self.config.geographic_transfer_cost_scale)
+                    * (self._edge_distance(edge) / 1000.0)
+                    + float(self.config.geographic_transfer_time_cost_scale)
+                    * self._edge_transfer_time_hours(edge)
+                )
+                * abs(float(flow))
+            )
+        return base_total + distance_surcharge
 
     def _capacity_graph_edges(self) -> tuple[Edge, ...]:
         if not self.config.include_central_capacity_hub:

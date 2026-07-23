@@ -1,256 +1,135 @@
 # Graph-Aware Deep Reinforcement Learning for Adaptive Capacity Planning
 
-Research codebase for graph-aware capacity planning in distributed personalized regenerative medicine (PRM) manufacturing networks.
+Research codebase for graph-aware capacity planning in distributed personalized
+regenerative medicine (PRM) manufacturing networks. The problem is modeled as a
+constrained graph MDP in which the product is perishable, identity-bound to a
+single patient, and demanded only while that patient remains clinically eligible.
+The manuscript lives under `paper/`.
 
-The project is intended to support GCN-DDPG policies, flat-state DDPG / MLP-DDPG baselines, graph ablations, multiple random seeds, Monte Carlo replications, and organized experiment configuration and result logging.
+## Where things are
 
-## Current Status
+Everything implemented is under `src/`, `evaluation/`, and `experiments/configs/`.
+Written-up results are under `specs/` (raw output CSVs are git-ignored — see below).
 
-This repository currently contains the manuscript package under `Paper/`. The manuscript source includes LaTeX files, BibTeX references, Elsevier style files, a compiled PDF, and manuscript figures. I did not find Python source code, notebooks, experiment configs, datasets, checkpoints, or raw experiment output folders during initial repository setup.
+### Simulation environment — `src/env/`
 
-Any quantitative claims in the current manuscript should be treated as preliminary unless they can be traced to final, reproducible experiment outputs.
+| File | What it is |
+|------|-----------|
+| `capacity_planning.py` | Base distributed capacity-planning MDP: facilities, reagent inventory, bioreactor capacity, transshipment/relocation, Poisson demand, Bernoulli supplier disruption, demand shocks, optional in-state demand forecast, and the per-episode train-time domain-randomization hook (`enable_train_randomization`). |
+| `patient_capacity_planning.py` | The patient-condition environment used in the paper. Extends the base env with per-clinic patient queues, survival-index deterioration, eligibility loss, and the condition summary in the state/graph. |
+| `patient_condition.py` | Patient survival / deterioration dynamics (health index, Weibull deterioration epoch, accelerated decline). |
+| `aging_inventory.py` | Age-bucketed, expiry-aware material/product inventory. |
 
-Legacy code from a previous capacity-planning project has been imported under `legacy/cp_decentralized/` for reference. The current implementation should migrate reusable pieces into `src/` rather than depending directly on legacy scripts.
+Environment configs are JSON under `experiments/configs/` (e.g.
+`20_clinic_patient_condition.json` is the nominal 20-clinic setting;
+`*_disruption_*`, `*_forecast.json`, `*_stress.json`, and the 2-clinic
+curriculum config are variants). Build an env from a config with
+`build_env(config)` in `src/rl/experiment.py`.
 
-## Existing Files
+### Geographic network
 
-- `Paper/`: manuscript package.
-- `Paper/.../main.tex`: primary LaTeX manuscript source.
-- `Paper/.../title_page.tex`: LaTeX title page.
-- `Paper/.../references.bib`: bibliography.
-- `Paper/.../figures/`: manuscript figures.
-- `Paper/.../main.pdf`: compiled manuscript PDF.
-- `Paper/.../*.bst`, `Paper/.../elsarticle.cls`: journal style files.
-- `Paper/.../*.zip`: generated manuscript archive, ignored by Git.
-- `legacy/cp_decentralized/`: previous decentralized capacity-planning code imported for reference.
-- `docs/previous_work/`: small PDF/Word reference artifacts from the previous project.
+The geography-aware scenarios use the 20 point-of-care locations in
+`data/bb_20_clinic_locations.json`. Address-based coordinates define the clinic
+graph, distance-related transfer cost and delay, continuous transfer time, and
+regional demand/disruption clusters. See `docs/geographic_network.md` for the
+location provenance and modeling assumptions. The joint patient-condition,
+geography, and demand-prior-drift scenario is
+`experiments/configs/20_clinic_patient_condition_geo_demand_drift.json`.
 
-## Expected Project Structure
+### Learning algorithms
 
-The repository skeleton reserves space for modular research code:
+| File | What it is |
+|------|-----------|
+| `src/models/gcn.py`, `graph_features.py` | Shared GCN state encoder, size-invariant `facility_action` readout, graph-feature reconstruction (patient- and forecast-aware). |
+| `src/models/gcn_ddpg.py`, `gcn_td3.py`, `gcn_sac.py`, `gcn_ppo.py` | Graph-aware actor–critic backbones (GCN encoder then backbone). GCN-DDPG is the ablation; TD3/SAC/PPO are the family. |
+| `src/baselines/flat_ddpg.py`, `td3.py`, `sac.py`, `ppo.py` | Flat-state (non-graph) RL, to isolate the value of the graph encoder. |
+| `src/rl/agents.py` | Agent registry. `get_agent_class(name)` returns any of the above by key (`gcn_ddpg`, `flat_ddpg`, `td3`, ...). |
+| `src/rl/experiment.py` | `build_env`, `build_agent_config`, `train_off_policy_agent`, shared training plumbing. |
 
-```text
-src/
-  env/          # PRM manufacturing simulation environments and MDP dynamics
-  graph/        # graph construction, edge ablations, graph utilities
-  models/       # GCN-DDPG actor/critic and shared model components
-  baselines/    # flat-state DDPG / MLP-DDPG and non-graph baselines
-  utils/        # logging, seeding, metrics, shared helpers
-experiments/
-  configs/      # experiment, seed, and Monte Carlo configuration files
-  scripts/      # train/evaluate/sweep entry points
-tests/          # unit and smoke tests
-figures/        # generated publication figures that are not already in Paper/
-docs/           # notes, design docs, and reproducibility documentation
-```
+### Heuristic baselines — `src/baselines/heuristics.py`
 
-Existing manuscript files were left in place to avoid breaking paths or LaTeX figure references.
+`myo` (myopic), `iso` (isolated-facility), `mdl1` / `mdl2` (look-ahead), plus the
+fair information-aware baselines `umyo` (urgency/condition-aware) and `fmyo`
+(forecast-aware). All use the true demand rates and the same forecast signal the
+learned agents see.
 
-## Installation
+### Experiment runners — `evaluation/`
 
-Create and activate a Python environment:
+| Runner | Experiment |
+|--------|-----------|
+| `campaign_runner.py` | Nominal 20-clinic campaign (graph vs flat vs heuristics). |
+| `disruption_sweep.py` | Experiment A — supply-disruption severity. |
+| `condition_stress.py` | Experiment B — patient-condition stress. |
+| `forecast_robustness.py` | Experiment C — forecast-error robustness (train-on-range, test-OOD). |
+| `budget_curve.py` | Budget / learning-curve diagnostic (undertraining vs real gap). |
+| `evaluate_formal.py`, `aggregate_stats.py` | Monte Carlo evaluation and IQM / bootstrap-CI aggregation. |
+| `run_patient_pilot.py` | Two-stage lean pilot. |
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
+### Results and findings
 
-No Python runtime dependencies were detected during setup because no Python source files are present yet. Add dependencies to `requirements.txt` as implementation files are introduced.
+Raw per-run CSVs are written to `results/` (e.g. `results/campaign/`,
+`results/disruption_sweep/`, `results/condition_stress/`,
+`results/forecast_robustness/`). **`results/` is git-ignored**, so those CSVs stay
+local. The committed, written-up findings — the ones to read — are:
 
-## Smoke Test
+- `specs/2026-07-11-pilot-experiments/pilot-findings.md` — pilot outcomes.
+- `specs/2026-07-11-pilot-experiments/campaign-results.md` — nominal campaign (graph beats flat by a wide margin; heuristics win at nominal).
+- `specs/2026-07-12-robustness-experiments/results.md` — robustness experiments A/B/C, in-distribution vs OOD, honest-negative analysis, and the budget-escalation trigger.
+- `specs/2026-07-17-patient-condition-geo-residual/results.md` — joint
+  patient-condition/geography residual-policy development.
+- `specs/2026-07-20-demand-drift-robustness/results.md` — advantage-filtered
+  residual GCN-DDPG, five-seed paired evaluation, and the matched flat-state
+  ablation.
 
-For the current repository state, run:
+### Plan of record — `specs/`
 
-```bash
-python -m compileall .
-```
+`specs/mission.md`, `tech-stack.md`, and `roadmap.md` hold the research argument,
+architecture decisions, and sequenced phase plan. Each dated
+`specs/YYYY-MM-DD-<phase>/` folder is a feature spec (`requirements.md`,
+`plan.md`, `validation.md`) for one phase.
 
-On systems where `python` is not available, use `python3 -m compileall .`.
-
-In restricted local sandboxes that cannot write to the default Python cache
-directory, use:
-
-```bash
-PYTHONPYCACHEPREFIX=/private/tmp/gcn_rl_pycache python3 -m compileall .
-```
-
-Run the current environment smoke test:
-
-```bash
-python3 experiments/scripts/run_env_smoke.py
-```
-
-Run the manuscript-aligned 20-clinic environment smoke test:
-
-```bash
-python3 experiments/scripts/run_env_smoke.py --config experiments/configs/20_clinic_capacity_planning.json
-```
-
-Run the smoke test with selected graph ablations:
-
-```bash
-python3 experiments/scripts/run_env_smoke.py --remove-capacity-edges --remove-resource-edges
-```
-
-When training or evaluation scripts are added, include a small smoke test that runs quickly on CPU with a tiny horizon, few facilities, and one seed.
-
-## Planned Experiments
-
-- GCN-DDPG for continuous capacity, inventory, and transshipment decisions.
-- Flat-state DDPG / MLP-DDPG baseline to isolate the value of graph representation learning.
-- Graph ablations that remove capacity-sharing edges.
-- Graph ablations that remove resource-sharing edges.
-- Multiple random seeds and Monte Carlo replications for uncertainty-aware evaluation.
-- Structured result logging with run metadata, configuration snapshots, and aggregate metrics.
-
-## RL Baselines
-
-The repository includes modular PyTorch implementations for:
-
-- flat-state DDPG / MLP-DDPG
-- GCN-DDPG
-- TD3
-- SAC
-- PPO
-
-It also includes deterministic heuristic baselines:
-
-- MYO
-- ISO
-- MDL-1
-- MDL-2
-
-SAC and PPO are implemented as flat-state second-phase baselines. Treat their
-results as exploratory until smoke tests, multi-seed pilots, and full-horizon
-evaluations are completed.
-
-Run smoke-scale training after installing dependencies:
+## Setup
 
 ```bash
-python -m training.train_flat_ddpg --config configs/flat_ddpg.yaml
-python -m training.train_gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml
-python -m training.train_td3 --config configs/td3.yaml
-python -m training.train_td3 --config configs/td3_20_clinic.yaml
-python -m training.train_sac --config configs/sac_20_clinic.yaml
-python -m training.train_ppo --config configs/ppo_20_clinic.yaml
+conda activate gcn-rl          # project environment
+export PYTHONPATH=$(pwd)        # runners import src / evaluation from repo root
 ```
 
-The `*_20_clinic.yaml` configs are aligned with the manuscript setting
-(`N=20`, production lead time `T=3`, and a 52-epoch weekly horizon). The
-two-clinic configs are retained only for fast development smoke tests. You can
-also use `python -m training.train_off_policy --config <config>` for any
-implemented off-policy algorithm.
+## Running
 
-Run multi-seed baseline experiments:
+Tests (no pytest; use unittest):
 
 ```bash
-python -m evaluation.run_multi_seed --algorithm flat_ddpg --seeds 0 1 2 3 4
-python -m evaluation.run_multi_seed --algorithm gcn_ddpg --config configs/gcn_ddpg_20_clinic.yaml --seeds 0 1 2 3 4
-python -m evaluation.run_multi_seed --algorithm td3 --config configs/td3_20_clinic.yaml --seeds 0 1 2 3 4
-python -m evaluation.run_multi_seed --algorithm sac --config configs/sac_20_clinic.yaml --seeds 0 1 2 3 4
-python -m evaluation.run_multi_seed --algorithm ppo --config configs/ppo_20_clinic.yaml --seeds 0 1 2 3 4
+python -m unittest discover -s tests
 ```
 
-Run a tiny pipeline smoke comparison between 20-clinic flat DDPG and GCN-DDPG:
+A quick pilot, and the robustness runners (long; wrap in `caffeinate -i` on macOS,
+all resumable per-CSV):
 
 ```bash
-python -m evaluation.run_smoke_comparison --episodes 1 --steps 4 --batch-size 2
+python -m evaluation.run_patient_pilot
+CAMPAIGN_STEPS=150000 python -m evaluation.forecast_robustness
 ```
 
-Run a small pilot across learned agents and heuristic baselines:
-
-```bash
-python -m evaluation.run_small_pilot --seeds 0 1 --episodes 1 --steps 4 --batch-size 2
-```
-
-Run the manuscript-facing benchmark plan as a dry run before launching jobs:
-
-```bash
-python -m evaluation.run_full_benchmark --phase dry-run --budget smoke
-```
-
-Then validate the full pipeline on a single smoke budget:
-
-```bash
-python -m evaluation.run_full_benchmark --phase all --budget smoke --scenarios disruption_0_3
-python -m evaluation.check_training_stability \
-  --inputs results/full_benchmark/smoke/training/disruption_0_3/*.csv \
-  --output results/full_benchmark/smoke/training_stability.csv
-```
-
-The formal benchmark manifest is
-`experiments/configs/full_benchmark.json`. It defines the three disruption
-scenarios (`0.05`, `0.3`, `0.6`), full 20-clinic horizon, five random seeds,
-and 500 Monte Carlo replications per evaluation job. Use `--budget pilot` for
-stability checks before launching `--budget full`. The full benchmark runner
-skips completed training and evaluation jobs by default, so interrupted runs can
-be resumed; add `--force` only when you intentionally want to overwrite outputs.
-For long local runs, use `--max-jobs` to advance a fixed number of pending jobs
-at a time:
-
-```bash
-python -m evaluation.run_full_benchmark --phase train --budget full --max-jobs 1
-```
+Override the training budget for any campaign / robustness runner with the
+`CAMPAIGN_STEPS` environment variable.
 
 The patient-forecast benchmark manifest is
-`experiments/configs/patient_forecast_benchmark.json`. It evaluates the
-graph-dynamic patient-forecast scenario with the current residual GCN-DDPG
-policy, including MYO-anchored local-search distillation, against flat DDPG,
-TD3, SAC, PPO, and the MYO/ISO/MDL heuristic baselines. Start with a dry run
-and smoke pass:
+`experiments/configs/patient_forecast_benchmark.json`, which evaluates the
+graph-dynamic patient-forecast scenario (residual GCN-DDPG with MYO-anchored
+local-search distillation) against flat DDPG, TD3, SAC, PPO, and the MYO/ISO/MDL
+heuristics. Dry-run and smoke it, then run the 500-replication formal comparison:
 
 ```bash
-python -m evaluation.run_full_benchmark \
-  --plan experiments/configs/patient_forecast_benchmark.json \
-  --phase dry-run \
-  --budget smoke
-
-python -m evaluation.run_full_benchmark \
-  --plan experiments/configs/patient_forecast_benchmark.json \
-  --phase all \
-  --budget smoke
+python -m evaluation.run_full_benchmark --plan experiments/configs/patient_forecast_benchmark.json --phase dry-run --budget smoke
+python -m evaluation.run_full_benchmark --plan experiments/configs/patient_forecast_benchmark.json --phase all --budget smoke
+python -m evaluation.run_full_benchmark --plan experiments/configs/patient_forecast_benchmark.json --phase all --budget formal
 ```
 
-For the 500-replication formal comparison over seeds `0, 1, 2`, use:
+## Reproducibility notes
 
-```bash
-python -m evaluation.run_full_benchmark \
-  --plan experiments/configs/patient_forecast_benchmark.json \
-  --phase all \
-  --budget formal
-```
-
-The patient-forecast manifest also includes a geography-aware scenario,
-`graph_dynamic_patient_forecast_geo`, based on the 20 POC locations from the
-B&B Paper 2026 Appendix A. The location metadata is stored in
-`data/bb_20_clinic_locations.json`, and the corresponding scenario config is
-`experiments/configs/20_clinic_graph_dynamic_patient_forecast_geo.json`.
-See [docs/geographic_network.md](docs/geographic_network.md) for details.
-
-Run formal Monte Carlo evaluation for a heuristic scenario:
-
-```bash
-python -m evaluation.evaluate_formal \
-  --algorithm myo \
-  --env-config experiments/configs/20_clinic_disruption_0_3.json \
-  --replications 500
-```
-
-Aggregate and plot evaluation outputs:
-
-```bash
-python -m evaluation.aggregate_results --inputs results/formal_myo.csv --output results/aggregate_summary.csv
-python -m evaluation.plot_results --summary results/aggregate_summary.csv --metric total_cost_mean --output figures/total_cost_summary.png
-```
-
-See [docs/rl_baselines.md](docs/rl_baselines.md) for details. Results remain
-preliminary until multi-seed experiments and graph ablations are completed.
-
-## Reproducibility Notes
-
-- Keep experiment parameters in config files rather than hard-coded in model definitions.
-- Store raw large outputs in ignored folders such as `results/`, `runs/`, `wandb/`, or `checkpoints/`.
-- Commit small, stable example configs and tests.
-- Do not fabricate or hand-enter experimental results; result tables and figures should be generated from logged experiment outputs.
+- Keep experiment parameters in `experiments/configs/*.json`, not hard-coded.
+- Large outputs (`results/`, `runs/`, `checkpoints/`) are git-ignored; commit the
+  written-up summaries in `specs/` instead.
+- Every reported number must trace to a logged run — no projected numbers as if
+  measured.

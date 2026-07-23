@@ -1,0 +1,372 @@
+"""Shared graph-observation plumbing for the GCN method family.
+
+`GraphStateSpec` + `build_graph_spec` + `flat_state_to_node_features` are used by
+every graph agent (GCN-DDPG/TD3/SAC/PPO) to (a) derive fixed graph metadata from
+an experiment config and (b) reconstruct per-node GCN features from the flat
+replay-buffer states. Extracted from ``gcn_ddpg.py`` so the newer agents can
+depend on the plumbing without pulling in the DDPG agent's residual/heuristic
+machinery. ``gcn_ddpg.py`` re-exports these names for backward compatibility.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any, Sequence
+
+import numpy as np
+
+from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
+from src.graph.geography import (
+    geographic_knn_edges,
+    geographic_transfer_time_matrix,
+    normalize_coordinates,
+)
+from src.rl.networks import require_torch, torch
+from src.rl.preprocessing import graph_node_feature_scale
+
+
+@dataclass(frozen=True)
+class GraphStateSpec:
+    """Shape and edge metadata needed to rebuild graph observations."""
+
+    num_facilities: int
+    production_lead_time: int
+    include_supplier_state: bool
+    include_demand_forecast_state: bool
+    include_central_capacity_hub: bool
+    include_transfer_pipeline_state: bool
+    features_per_facility: int
+    node_feature_dim: int
+    num_nodes: int
+    edge_index: tuple[Edge, ...]
+    edge_weights: tuple[float, ...] = ()
+    normalize_node_features: bool = False
+    node_feature_scale: tuple[float, ...] = ()
+    patient_summary_width: int = 0
+    include_base_action_features: bool = False
+    base_action_policy: str = ""
+    base_action_policy_config: dict[str, Any] | None = None
+    env_config: dict[str, Any] | None = None
+
+
+def _patient_summary_width(env_config: dict[str, Any]) -> int:
+    """Per-clinic patient-summary width, matching PatientConditionCapacityEnv.
+
+    Layout is ``[count, mean_survival, near_expiry, histogram...]`` where the
+    histogram has ``len(edges) + 1`` buckets, i.e. ``3 + len(edges) + 1``.
+    """
+
+    if env_config.get("env_type") != "patient_condition":
+        return 0
+    edges = env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
+    return 3 + len(tuple(edges)) + 1
+
+
+def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
+    """Build fixed graph metadata from an experiment config."""
+
+    env_config = dict(config.get("env", {}))
+    if "num_facilities" in env_config:
+        num_facilities = int(env_config["num_facilities"])
+    else:
+        num_facilities = _infer_num_facilities(state_dim)
+    production_lead_time = int(env_config.get("production_lead_time", 3))
+    include_supplier_state = bool(env_config.get("include_supplier_state", False))
+    include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+    include_hub = bool(env_config.get("include_central_capacity_hub", False))
+    include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
+    features_per_facility = 3 + production_lead_time + int(include_supplier_state) + int(include_forecast)
+    if include_transfer_pipeline:
+        features_per_facility += 3
+    summary_width = _patient_summary_width(env_config)
+    expected_state_dim = num_facilities * (features_per_facility + summary_width)
+    if state_dim != expected_state_dim:
+        raise ValueError(
+            f"GCN agent expected state_dim={expected_state_dim} from config, got {state_dim}"
+        )
+
+    default_dense_edges = complete_undirected_edges(num_facilities)
+    clinic_coordinates = normalize_coordinates(
+        env_config.get("clinic_coordinates"),
+        num_facilities,
+    )
+    geographic_edges = (
+        geographic_knn_edges(
+            clinic_coordinates,
+            k=int(env_config.get("geographic_neighbor_k", 3)),
+        )
+        if clinic_coordinates
+        else ()
+    )
+    action_mode = str(env_config.get("action_mode", "edge_transfer"))
+    if action_mode == "facility_net":
+        default_specimen_edges = geographic_edges or ring_edges(num_facilities)
+        default_resource_edges = geographic_edges or ring_edges(num_facilities)
+        default_capacity_edges = default_dense_edges
+    else:
+        default_specimen_edges = default_dense_edges
+        default_resource_edges = default_dense_edges
+        default_capacity_edges = default_dense_edges
+
+    information_edges = _configured_edges(
+        env_config.get("information_edges"),
+        geographic_edges or k_nearest_ring_edges(num_facilities, k=2),
+        num_facilities,
+    )
+    specimen_edges = _configured_edges(
+        env_config.get("specimen_edges"), default_specimen_edges, num_facilities
+    )
+    capacity_edges = _configured_edges(
+        env_config.get("capacity_edges"), default_capacity_edges, num_facilities
+    )
+    resource_edges = _configured_edges(
+        env_config.get("resource_edges"), default_resource_edges, num_facilities
+    )
+
+    ablation = env_config.get("graph_ablation", config.get("graph_ablation", "full_graph"))
+    if ablation == "no_capacity_sharing_edges":
+        capacity_edges = ()
+    elif ablation == "no_resource_sharing_edges":
+        resource_edges = ()
+    elif ablation == "no_interfacility_edges":
+        specimen_edges = ()
+        capacity_edges = ()
+        resource_edges = ()
+    elif ablation == "flat_state_no_graph":
+        information_edges = ()
+        specimen_edges = ()
+        capacity_edges = ()
+        resource_edges = ()
+
+    num_nodes = num_facilities + int(include_hub)
+    capacity_graph_edges = capacity_edges
+    if include_hub:
+        capacity_graph_edges = tuple((i, num_facilities) for i in range(num_facilities)) if capacity_edges else ()
+
+    edge_sets = {
+        "information_edges": information_edges,
+        "specimen_edges": specimen_edges,
+        "capacity_edges": capacity_graph_edges,
+        "resource_edges": resource_edges,
+    }
+    selected_edge_types = tuple(
+        config.get(
+            "gcn_edge_types",
+            ("information_edges", "specimen_edges", "capacity_edges", "resource_edges"),
+        )
+    )
+    graph_edges: list[Edge] = []
+    for edge_type in selected_edge_types:
+        if edge_type not in edge_sets:
+            raise ValueError(f"Unsupported GCN edge type: {edge_type}")
+        graph_edges.extend(edge_sets[edge_type])
+    graph_edges = list(_dedupe_edges(graph_edges, num_nodes))
+    edge_weights = _geographic_edge_weights(env_config, graph_edges, num_facilities)
+
+    residual_config = dict(config.get("residual_action", {}))
+    include_base_action_features = bool(
+        residual_config.get("enabled", False)
+        and residual_config.get("include_base_action_features", False)
+    )
+    base_action_width = 4 * int(include_base_action_features)
+    node_feature_dim = (
+        5
+        + int(include_supplier_state)
+        + int(include_forecast)
+        + 3 * int(include_transfer_pipeline)
+        + base_action_width
+        + int(include_hub)
+        + summary_width
+    )
+    normalize_node_features = bool(config.get("normalize_observations", False))
+    node_feature_scale = graph_node_feature_scale(config, node_feature_dim)
+    return GraphStateSpec(
+        num_facilities=num_facilities,
+        production_lead_time=production_lead_time,
+        include_supplier_state=include_supplier_state,
+        include_demand_forecast_state=include_forecast,
+        include_central_capacity_hub=include_hub,
+        include_transfer_pipeline_state=include_transfer_pipeline,
+        features_per_facility=features_per_facility,
+        node_feature_dim=node_feature_dim,
+        num_nodes=num_nodes,
+        edge_index=tuple(graph_edges),
+        edge_weights=edge_weights,
+        normalize_node_features=normalize_node_features,
+        node_feature_scale=node_feature_scale,
+        patient_summary_width=summary_width,
+        include_base_action_features=include_base_action_features,
+        base_action_policy=str(residual_config.get("base_policy", "")),
+        base_action_policy_config=dict(residual_config.get("base_policy_config", {})),
+        env_config=env_config,
+    )
+
+
+def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
+    """Convert replay-buffer flat states into GCN node features.
+
+    For the patient env the flat state is ``[base | per-clinic summary]``; the
+    summary block is reshaped and hstacked onto the clinic nodes (hub row
+    zero-padded), reproducing ``PatientConditionCapacityEnv.graph_observation``.
+    """
+
+    require_torch()
+    if state.dim() == 1:
+        state = state.unsqueeze(0)
+    batch_size = state.shape[0]
+    n = graph_spec.num_facilities
+    lead_time = graph_spec.production_lead_time
+    summary_width = graph_spec.patient_summary_width
+
+    base_width = n * graph_spec.features_per_facility
+    if summary_width > 0:
+        base_state = state[:, :base_width]
+        summary_state = state[:, base_width:].reshape(batch_size, n, summary_width)
+    else:
+        base_state = state
+        summary_state = None
+    facility_state = base_state.reshape(batch_size, n, graph_spec.features_per_facility)
+
+    demand = facility_state[:, :, 0:1]
+    specimens = facility_state[:, :, 1:2]
+    reagents = facility_state[:, :, 2:3]
+    idle_bioreactors = facility_state[:, :, 3:4]
+    total_bioreactors = facility_state[:, :, 3 : 3 + lead_time].sum(dim=-1, keepdim=True)
+    feature_parts = [demand, specimens, reagents, idle_bioreactors, total_bioreactors]
+    if graph_spec.include_supplier_state:
+        feature_parts.append(facility_state[:, :, 3 + lead_time : 4 + lead_time])
+    if graph_spec.include_demand_forecast_state:
+        forecast_start = 3 + lead_time + int(graph_spec.include_supplier_state)
+        feature_parts.append(facility_state[:, :, forecast_start : forecast_start + 1])
+    if graph_spec.include_transfer_pipeline_state:
+        pending_start = (
+            3
+            + lead_time
+            + int(graph_spec.include_supplier_state)
+            + int(graph_spec.include_demand_forecast_state)
+        )
+        feature_parts.append(facility_state[:, :, pending_start : pending_start + 3])
+    if graph_spec.include_base_action_features:
+        feature_parts.append(_base_action_node_features(state, graph_spec))
+    if graph_spec.include_central_capacity_hub:
+        feature_parts.append(torch.zeros_like(demand))
+    if summary_state is not None:
+        feature_parts.append(summary_state)
+
+    node_features = torch.cat(feature_parts, dim=-1)
+    if not graph_spec.include_central_capacity_hub:
+        return _normalize_node_features(node_features, graph_spec)
+
+    hub_features = torch.zeros(
+        batch_size,
+        1,
+        graph_spec.node_feature_dim,
+        dtype=node_features.dtype,
+        device=node_features.device,
+    )
+    # Hub aggregates capacity; columns 3/4 are idle/total bioreactors, last flags the hub.
+    hub_features[:, 0, 3] = idle_bioreactors.sum(dim=1).squeeze(-1)
+    hub_features[:, 0, 4] = total_bioreactors.sum(dim=1).squeeze(-1)
+    hub_flag_col = graph_spec.node_feature_dim - 1 - summary_width
+    hub_features[:, 0, hub_flag_col] = 1.0
+    node_features = torch.cat((node_features, hub_features), dim=1)
+    return _normalize_node_features(node_features, graph_spec)
+
+
+def _base_action_node_features(state, graph_spec: GraphStateSpec):
+    from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
+
+    if not graph_spec.base_action_policy:
+        raise ValueError("base action features require residual_action.base_policy")
+    if graph_spec.env_config is None:
+        raise ValueError("base action features require env_config in GraphStateSpec")
+    settings = heuristic_settings_for_policy(
+        graph_spec.base_action_policy,
+        graph_spec.base_action_policy_config or {},
+    )
+    n = graph_spec.num_facilities
+    state_np = state.detach().cpu().numpy()
+    base_actions = np.stack(
+        [
+            facility_net_action_from_state(row, graph_spec.env_config, settings=settings)
+            for row in state_np
+        ],
+        axis=0,
+    )
+    node_features = base_actions.reshape(base_actions.shape[0], 4, n).transpose(0, 2, 1)
+    return torch.as_tensor(node_features, dtype=state.dtype, device=state.device)
+
+
+def _normalize_node_features(node_features, graph_spec: GraphStateSpec):
+    if not graph_spec.normalize_node_features:
+        return node_features
+    scale = torch.as_tensor(
+        graph_spec.node_feature_scale,
+        dtype=node_features.dtype,
+        device=node_features.device,
+    )
+    return (node_features / scale).clamp(-10.0, 10.0)
+
+
+def _infer_num_facilities(state_dim: int) -> int:
+    if state_dim % 6 == 0:
+        return state_dim // 6
+    if state_dim % 8 == 0:
+        return state_dim // 8
+    raise ValueError("num_facilities must be provided in config['env'] for GCN agents")
+
+
+def _configured_edges(
+    configured_edges: Sequence[Sequence[int]] | None,
+    default_edges: tuple[Edge, ...],
+    num_nodes: int,
+) -> tuple[Edge, ...]:
+    edges = default_edges if configured_edges is None else tuple(configured_edges)
+    return _dedupe_edges(edges, num_nodes)
+
+
+def _dedupe_edges(edges: Sequence[Sequence[int]], num_nodes: int) -> tuple[Edge, ...]:
+    normalized = []
+    for edge in edges:
+        if len(edge) != 2:
+            raise ValueError(f"Edge must have two endpoints, got {edge}")
+        i, j = int(edge[0]), int(edge[1])
+        if i == j:
+            continue
+        if i < 0 or j < 0 or i >= num_nodes or j >= num_nodes:
+            raise ValueError(f"Edge {(i, j)} is outside the {num_nodes}-node graph")
+        normalized.append((min(i, j), max(i, j)))
+    return tuple(dict.fromkeys(normalized))
+
+
+def _geographic_edge_weights(
+    env_config: dict[str, Any],
+    edges: Sequence[Edge],
+    num_facilities: int,
+) -> tuple[float, ...]:
+    coordinates = normalize_coordinates(env_config.get("clinic_coordinates"), num_facilities)
+    time_cost_scale = float(env_config.get("geographic_transfer_time_cost_scale", 0.0))
+    if not coordinates or time_cost_scale <= 0.0:
+        return tuple(1.0 for _ in edges)
+
+    speed = float(env_config.get("geographic_transfer_speed_mph", 500.0))
+    fixed_hours = float(env_config.get("geographic_transfer_fixed_hours", 0.5))
+    time_scale = float(env_config.get("geographic_edge_weight_time_scale_hours", 4.0))
+    if time_scale <= 0.0:
+        raise ValueError("geographic_edge_weight_time_scale_hours must be positive")
+    transfer_times = np.asarray(
+        geographic_transfer_time_matrix(
+            coordinates,
+            speed_mph=speed,
+            fixed_handling_hours=fixed_hours,
+        ),
+        dtype=float,
+    )
+    weights: list[float] = []
+    for i, j in edges:
+        if int(i) >= num_facilities or int(j) >= num_facilities:
+            weights.append(1.0)
+            continue
+        hours = float(transfer_times[int(i), int(j)])
+        weights.append(max(float(np.exp(-hours / time_scale)), 0.05))
+    return tuple(weights)

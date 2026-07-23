@@ -2,9 +2,10 @@ import unittest
 
 import numpy as np
 
-from evaluation.aggregate_results import aggregate_rows
+from evaluation.aggregate_results import DEFAULT_METRICS, aggregate_rows
 from evaluation.run_smoke_comparison import _smoke_config
 from src.rl.action_projection import project_action
+from src.rl.agents import available_algorithms, get_agent_class
 from src.rl.config import load_config
 from src.rl.experiment import build_env
 from src.rl.networks import default_torch_device, resolve_torch_device
@@ -41,6 +42,94 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(config["algorithm"], "td3")
         self.assertEqual(config["env"]["num_facilities"], 20)
         self.assertEqual(config["env"]["action_mode"], "facility_net")
+
+    def test_gcn_td3_20_clinic_config_loads(self):
+        config = load_config("configs/gcn_td3_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "gcn_td3")
+        self.assertEqual(config["env"]["graph_ablation"], "full_graph")
+        self.assertEqual(config["env"]["num_facilities"], 20)
+        self.assertEqual(config["actor_readout_mode"], "facility_action")
+
+    def test_gcn_residual_config_loads(self):
+        config = load_config("configs/gcn_residual_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "gcn_residual_mdl2")
+        self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
+        self.assertTrue(config["residual_action"]["zero_init_actor"])
+        self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.0)
+        self.assertGreater(config["residual_action"]["group_scales"]["replenishment"], 0.0)
+        self.assertIn("replenishment", config["residual_action"]["center_groups"])
+
+    def test_flat_residual_config_loads(self):
+        config = load_config("configs/flat_residual_20_clinic.yaml")
+
+        self.assertEqual(config["algorithm"], "flat_residual_mdl2")
+        self.assertEqual(config["env"]["graph_ablation"], "flat_state_no_graph")
+        self.assertEqual(config["residual_action"]["base_policy"], "mdl2")
+        self.assertTrue(config["residual_action"]["zero_init_actor"])
+        self.assertEqual(config["residual_action"]["group_scales"]["specimen_transfer"], 0.0)
+        self.assertGreater(config["imitation_pretrain"]["regularization_weight"], 0.0)
+
+    def test_residual_algorithm_aliases_use_gcn_ddpg_agent(self):
+        algorithms = available_algorithms()
+
+        self.assertIn("gcn_residual_mdl2", algorithms)
+        self.assertIn("gcn_residual_mdl2_replenish_ddpg", algorithms)
+        self.assertIn("gcn_residual_mdl2_replenish_ddpg_afd", algorithms)
+        self.assertIn("gcn_pure_ddpg", algorithms)
+        self.assertIn("gcn_residual_pmyo", algorithms)
+        self.assertIn("gcn_mdl2_shield_selector", algorithms)
+        self.assertIn("gcn_pmyo_shield_selector", algorithms)
+        self.assertIn("gcn_residual_mdl2_replenish_td3", algorithms)
+        self.assertIn("gcn_residual_mdl2_td3", algorithms)
+        self.assertIn("gcn_residual_mdl2_shield_td3", algorithms)
+        self.assertIn("gcn_residual_pmyo_risk_pressure_td3", algorithms)
+        self.assertIn("gcn_residual_pmyo_risk_replenish_td3", algorithms)
+        self.assertIn("gcn_residual_pmyo_td3", algorithms)
+        self.assertIn("gcn_residual_pmyo_rebalance_td3", algorithms)
+        self.assertIn("gcn_residual_pmyo_shield_td3", algorithms)
+        self.assertIn("gcn_residual_pmyo_transfer_td3_bc", algorithms)
+        self.assertIn("gcn_residual_pmyo_transfer_td3", algorithms)
+        self.assertIs(get_agent_class("gcn_residual_mdl2"), get_agent_class("gcn_ddpg"))
+        self.assertIs(
+            get_agent_class("gcn_residual_mdl2_replenish_ddpg"),
+            get_agent_class("gcn_ddpg"),
+        )
+        self.assertIs(
+            get_agent_class("gcn_residual_mdl2_replenish_ddpg_afd"),
+            get_agent_class("gcn_ddpg"),
+        )
+        self.assertIs(get_agent_class("gcn_pure_ddpg"), get_agent_class("gcn_ddpg"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo"), get_agent_class("gcn_ddpg"))
+        self.assertEqual(get_agent_class("gcn_mdl2_shield_selector").__name__, "GCNShieldSelectorAgent")
+        self.assertEqual(get_agent_class("gcn_pmyo_shield_selector").__name__, "GCNShieldSelectorAgent")
+        self.assertIs(get_agent_class("gcn_residual_mdl2_replenish_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_mdl2_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_mdl2_shield_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo_risk_pressure_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo_risk_replenish_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo_rebalance_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo_shield_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo_transfer_td3_bc"), get_agent_class("gcn_td3"))
+        self.assertIs(get_agent_class("gcn_residual_pmyo_transfer_td3"), get_agent_class("gcn_td3"))
+
+    def test_flat_residual_algorithm_aliases_use_flat_ddpg_agent(self):
+        algorithms = available_algorithms()
+
+        self.assertIn("flat_residual_mdl2", algorithms)
+        self.assertIn("flat_residual_mdl2_replenish_ddpg_afd", algorithms)
+        self.assertIn("flat_residual_iso", algorithms)
+        self.assertIn("flat_residual_myo", algorithms)
+        self.assertIn("flat_residual_pmyo", algorithms)
+        self.assertIs(get_agent_class("flat_residual_mdl2"), get_agent_class("flat_ddpg"))
+        self.assertIs(
+            get_agent_class("flat_residual_mdl2_replenish_ddpg_afd"),
+            get_agent_class("flat_ddpg"),
+        )
+        self.assertIs(get_agent_class("flat_residual_iso"), get_agent_class("flat_ddpg"))
+        self.assertIs(get_agent_class("flat_residual_pmyo"), get_agent_class("flat_ddpg"))
 
     def test_sac_20_clinic_config_loads(self):
         config = load_config("configs/sac_20_clinic.yaml")
@@ -108,9 +197,40 @@ class RLUtilsTest(unittest.TestCase):
 
         self.assertEqual(env.scenario_name, "graph_dynamic_patient_forecast_geo")
         self.assertEqual(len(env.clinic_coordinates), 20)
+        self.assertEqual(env.config.transfer_lead_time, 3)
+        self.assertEqual(env.transfer_delay_thresholds, (500.0, 1500.0))
+        self.assertGreater(env.config.geographic_transfer_cost_scale, 0.0)
         self.assertGreater(len(env.information_edges), 20)
         self.assertEqual(graph["clinic_coordinates"].shape, (20, 2))
+        self.assertEqual(graph["clinic_distance_matrix"].shape, (20, 20))
         self.assertEqual(scaler.scales.shape, (220,))
+
+    def test_patient_condition_geography_config_builds_env(self):
+        from src.env.patient_capacity_planning import PatientConditionCapacityEnv
+
+        env_config = load_config("experiments/configs/20_clinic_patient_condition_geo.json")
+        config = load_config("configs/gcn_residual_20_clinic.yaml")
+        config["env"] = env_config
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+        graph = env.graph_observation()
+
+        self.assertIsInstance(env, PatientConditionCapacityEnv)
+        self.assertEqual(env.scenario_name, "patient_condition_geo")
+        self.assertEqual(env.config.transfer_lead_time, 3)
+        self.assertTrue(env.config.include_transfer_pipeline_state)
+        self.assertEqual(env.transfer_delay_thresholds, (500.0, 1500.0))
+        self.assertEqual(len(env.clinic_coordinates), 20)
+        self.assertGreater(env.config.geographic_transfer_cost_scale, 0.0)
+        self.assertGreater(env.config.geographic_transfer_time_cost_scale, 0.0)
+        self.assertGreater(env.config.regional_supplier_disruption_probability, 0.0)
+        self.assertTrue(env.config.include_demand_forecast_state)
+        self.assertEqual(env.observation_size, 360)
+        self.assertEqual(graph["node_features"].shape, (21, 18))
+        self.assertEqual(graph["clinic_coordinates"].shape, (20, 2))
+        self.assertEqual(graph["clinic_distance_matrix"].shape, (20, 20))
+        self.assertEqual(graph["clinic_transfer_time_hours_matrix"].shape, (20, 20))
+        self.assertEqual(scaler.scales.shape, (360,))
 
     def test_gcn_config_enables_imitation_pretrain(self):
         config = load_config("configs/gcn_ddpg_20_clinic.yaml")
@@ -149,6 +269,19 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(normalized.shape, state.shape)
         self.assertLessEqual(float(np.max(np.abs(normalized))), 10.0)
 
+    def test_fixed_observation_scaler_handles_patient_summary(self):
+        config = load_config("configs/flat_residual_20_clinic.yaml")
+        config["env"] = load_config("experiments/configs/20_clinic_patient_condition_stress.json")
+        env = build_env(config, seed=0)
+        scaler = FixedObservationScaler.from_config(config, env.observation_size)
+        state = env.reset(seed=0)
+
+        normalized = scaler.normalize_np(state)
+
+        self.assertTrue(scaler.enabled)
+        self.assertEqual(scaler.scales.shape, (env.observation_size,))
+        self.assertEqual(normalized.shape, state.shape)
+
     def test_aggregate_rows_computes_mean(self):
         rows = [
             {"algorithm": "myo", "scenario": "s", "graph_ablation": "full_graph", "total_cost": "10"},
@@ -159,6 +292,11 @@ class RLUtilsTest(unittest.TestCase):
 
         self.assertEqual(summary[0]["count"], 2)
         self.assertEqual(summary[0]["total_cost_mean"], 12.0)
+
+    def test_default_aggregate_metrics_include_patient_condition_fields(self):
+        self.assertIn("eligibility_rate_mean", DEFAULT_METRICS)
+        self.assertIn("patients_lost", DEFAULT_METRICS)
+        self.assertIn("at_risk_unserved", DEFAULT_METRICS)
 
     def test_smoke_config_overrides_training_scale(self):
         config = load_config("configs/flat_ddpg_20_clinic.yaml")

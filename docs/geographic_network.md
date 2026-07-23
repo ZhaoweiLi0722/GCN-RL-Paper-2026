@@ -66,6 +66,26 @@ the shock center is sampled randomly, and the affected cluster is selected from
 the nearest clinics in great-circle distance. Without `clinic_coordinates`, the
 existing ring-contiguous shock logic is unchanged.
 
+The geography-aware config also lets geography affect operational dynamics:
+
+- `geographic_transfer_cost_scale` makes inter-clinic transfer cost increase
+  with great-circle distance.
+- `geographic_transfer_speed_mph` and `geographic_transfer_fixed_hours` convert
+  inter-clinic distance into a continuous transfer-time matrix in hours. This is
+  exposed as `clinic_transfer_time_hours_matrix` in graph observations and can
+  add a time-based transport surcharge through
+  `geographic_transfer_time_cost_scale`.
+- `transfer_lead_time_distance_thresholds` maps longer transfers into later
+  arrival buckets within the existing transfer pipeline.
+- `regional_supplier_disruption_probability`,
+  `regional_supplier_disruption_duration`, and
+  `regional_supplier_disruption_cluster_size` create correlated supplier shocks
+  across nearby clinics.
+
+All three levers are opt-in. Existing non-geographic configs keep the previous
+ring/dense graph behavior, fixed transfer lead time, and independent supplier
+availability.
+
 ## Running The Geo Scenario
 
 Dry-run the patient forecast benchmark with only the geography-aware scenario:
@@ -90,3 +110,18 @@ python -m evaluation.run_full_benchmark \
 
 Use this scenario as a robustness/extension experiment until the geography
 assumptions are finalized in the manuscript.
+
+## Transfer Time Interpretation
+
+The main patient-condition geography scenario uses weekly decision epochs, but
+the B&B/Wiley transportation data are measured in hours. For that reason,
+`experiments/configs/20_clinic_patient_condition_geo.json` keeps
+`transfer_lead_time` at `0`: sub-week transport does not become a full one-week
+pipeline delay. Instead, geography enters through graph edges, distance-based
+transfer costs, regional clusters, and the continuous
+`clinic_transfer_time_hours_matrix`.
+
+The older integer `transfer_lead_time` settings should be interpreted as
+discrete-time sensitivity experiments or as a replication of the prior
+two-facility weekly-transshipment abstraction, not as the main realistic
+20-clinic geography assumption.

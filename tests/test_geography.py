@@ -4,6 +4,7 @@ from src.graph.geography import (
     BB_20_CLINIC_COORDINATES,
     BB_20_CLINIC_LOCATIONS,
     geographic_knn_edges,
+    geographic_transfer_time_matrix,
     haversine_miles,
     normalize_coordinates,
 )
@@ -27,6 +28,22 @@ class GeographyTest(unittest.TestCase):
 
         self.assertGreater(distance, 100.0)
         self.assertLess(distance, 130.0)
+
+    def test_transfer_time_matrix_is_continuous_hours(self):
+        los_angeles = (34.0485, -118.2577)
+        san_diego = (32.7530, -117.1650)
+
+        matrix = geographic_transfer_time_matrix(
+            (los_angeles, san_diego),
+            speed_mph=500.0,
+            fixed_handling_hours=0.5,
+        )
+
+        self.assertEqual(matrix[0][0], 0.0)
+        self.assertEqual(matrix[1][1], 0.0)
+        self.assertGreater(matrix[0][1], 0.5)
+        self.assertLess(matrix[0][1], 1.0)
+        self.assertEqual(matrix[0][1], matrix[1][0])
 
     def test_geographic_knn_edges_uses_nearest_coordinates(self):
         coordinates = ((0.0, 0.0), (0.0, 1.0), (20.0, 20.0), (20.0, 21.0))

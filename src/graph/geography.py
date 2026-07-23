@@ -381,6 +381,35 @@ def geographic_distance_matrix(coordinates: Sequence[Any]) -> tuple[tuple[float,
     return tuple(rows)
 
 
+def geographic_transfer_time_matrix(
+    coordinates: Sequence[Any],
+    speed_mph: float = 500.0,
+    fixed_handling_hours: float = 0.5,
+) -> tuple[tuple[float, ...], ...]:
+    """Estimate continuous transfer time in hours from great-circle distance.
+
+    This is intentionally separate from ``transfer_lead_time`` in the simulator:
+    the latter is an integer number of decision epochs, while this helper gives
+    sub-epoch cold-chain/transport time for geography-aware costs and reporting.
+    """
+
+    speed = float(speed_mph)
+    handling = float(fixed_handling_hours)
+    if speed <= 0.0:
+        raise ValueError("speed_mph must be positive")
+    if handling < 0.0:
+        raise ValueError("fixed_handling_hours must be nonnegative")
+
+    distances = geographic_distance_matrix(coordinates)
+    rows: list[tuple[float, ...]] = []
+    for i, row in enumerate(distances):
+        times = []
+        for j, distance in enumerate(row):
+            times.append(0.0 if i == j else handling + float(distance) / speed)
+        rows.append(tuple(times))
+    return tuple(rows)
+
+
 def geographic_knn_edges(coordinates: Sequence[Any], k: int = 3) -> tuple[Edge, ...]:
     """Return a symmetric k-nearest-neighbor graph from coordinates."""
 

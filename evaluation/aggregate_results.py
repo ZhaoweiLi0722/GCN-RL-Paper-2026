@@ -23,6 +23,13 @@ DEFAULT_METRICS = (
     "transshipment_count",
     "transshipment_cost",
     "average_inference_ms",
+    "eligibility_rate",
+    "eligibility_rate_mean",
+    "patients_lost",
+    "patients_lost_ineligible",
+    "patients_lost_expired",
+    "material_wasted",
+    "at_risk_unserved",
 )
 
 
@@ -97,4 +104,3 @@ def write_rows(rows: list[dict[str, Any]], path: str | Path) -> None:
 
 if __name__ == "__main__":
     main()
-

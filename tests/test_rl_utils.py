@@ -82,6 +82,7 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIn("gcn_mdl2_shield_selector", algorithms)
         self.assertIn("gcn_pmyo_shield_selector", algorithms)
         self.assertIn("gcn_residual_mdl2_replenish_td3", algorithms)
+        self.assertIn("gcn_residual_mdl2_replenish_td3_afd", algorithms)
         self.assertIn("gcn_residual_mdl2_td3", algorithms)
         self.assertIn("gcn_residual_mdl2_shield_td3", algorithms)
         self.assertIn("gcn_residual_pmyo_risk_pressure_td3", algorithms)
@@ -105,6 +106,10 @@ class RLUtilsTest(unittest.TestCase):
         self.assertEqual(get_agent_class("gcn_mdl2_shield_selector").__name__, "GCNShieldSelectorAgent")
         self.assertEqual(get_agent_class("gcn_pmyo_shield_selector").__name__, "GCNShieldSelectorAgent")
         self.assertIs(get_agent_class("gcn_residual_mdl2_replenish_td3"), get_agent_class("gcn_td3"))
+        self.assertIs(
+            get_agent_class("gcn_residual_mdl2_replenish_td3_afd"),
+            get_agent_class("gcn_td3"),
+        )
         self.assertIs(get_agent_class("gcn_residual_mdl2_td3"), get_agent_class("gcn_td3"))
         self.assertIs(get_agent_class("gcn_residual_mdl2_shield_td3"), get_agent_class("gcn_td3"))
         self.assertIs(get_agent_class("gcn_residual_pmyo_risk_pressure_td3"), get_agent_class("gcn_td3"))

@@ -14,6 +14,7 @@
     "gcn_residual_myo",
     "gcn_residual_pmyo",
     "gcn_residual_mdl2_replenish_td3",
+    "gcn_residual_mdl2_replenish_td3_afd",
     "gcn_residual_mdl2_td3",
     "gcn_residual_mdl2_shield_td3",
     "gcn_residual_pmyo_risk_pressure_td3",
@@ -27,6 +28,12 @@
     "gcn_residual_pmyo_transfer_td3",
     "gcn_pure_ddpg",
     "gcn_td3",
+    "gcn_sac",
+    "gcn_ppo",
+    "flat_ddpg",
+    "td3",
+    "sac",
+    "ppo",
     "mdl2",
     "iso",
     "myo",
@@ -48,6 +55,7 @@
     "gcn_residual_myo",
     "gcn_residual_pmyo",
     "gcn_residual_mdl2_replenish_td3",
+    "gcn_residual_mdl2_replenish_td3_afd",
     "gcn_residual_mdl2_td3",
     "gcn_residual_mdl2_shield_td3",
     "gcn_residual_pmyo_risk_pressure_td3",
@@ -82,6 +90,7 @@
     "gcn_residual_myo": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_pmyo": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_mdl2_replenish_td3": "configs/gcn_td3_20_clinic.yaml",
+    "gcn_residual_mdl2_replenish_td3_afd": "configs/gcn_td3_20_clinic.yaml",
     "gcn_residual_mdl2_td3": "configs/gcn_td3_20_clinic.yaml",
     "gcn_residual_mdl2_shield_td3": "configs/gcn_td3_20_clinic.yaml",
     "gcn_residual_pmyo_risk_pressure_td3": "configs/gcn_td3_20_clinic.yaml",
@@ -94,7 +103,13 @@
     "gcn_residual_pmyo_transfer_td3_bc": "configs/gcn_td3_20_clinic.yaml",
     "gcn_residual_pmyo_transfer_td3": "configs/gcn_td3_20_clinic.yaml",
     "gcn_pure_ddpg": "configs/gcn_residual_20_clinic.yaml",
-    "gcn_td3": "configs/gcn_td3_20_clinic.yaml"
+    "gcn_td3": "configs/gcn_td3_20_clinic.yaml",
+    "gcn_sac": "configs/sac_20_clinic.yaml",
+    "gcn_ppo": "configs/ppo_20_clinic.yaml",
+    "flat_ddpg": "configs/flat_ddpg_20_clinic.yaml",
+    "td3": "configs/td3_20_clinic.yaml",
+    "sac": "configs/sac_20_clinic.yaml",
+    "ppo": "configs/ppo_20_clinic.yaml"
   },
   "heuristic_env_reference_algorithm": "gcn_residual_mdl2",
   "algorithm_settings": {
@@ -617,6 +632,46 @@
         "noise_clip": 0.02,
         "update_frequency": 4,
         "updates_per_update": 1
+      },
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "gcn_residual_mdl2_replenish_td3_afd": {
+      "inherits": "gcn_residual_mdl2_replenish_td3",
+      "config_overrides": {
+        "imitation_pretrain": {
+          "regularization_weight": 1.0
+        },
+        "elite_imitation": {
+          "enabled": false
+        },
+        "advantage_distillation_pretrain": {
+          "enabled": true,
+          "baseline_policy": "mdl2",
+          "seed": 98900,
+          "rollouts": 8,
+          "lookahead": 6,
+          "epsilons": [0.005, 0.01, 0.02, 0.05],
+          "epochs": 40,
+          "batch_size": 256,
+          "min_improvement": 0.0,
+          "min_service_level_delta": 0.0,
+          "anchor_keep_probability": 1.0,
+          "anchor_keep_weight": 1.0,
+          "anchor_keep_on_improved": false,
+          "balance_label_weights": true,
+          "retain_for_regularization": true,
+          "service_level_weight": 50000000.0,
+          "eligibility_rate_weight": 50000000.0,
+          "at_risk_unserved_weight": 25000.0,
+          "patients_lost_weight": 250000.0,
+          "candidate_groups": [
+            "replenishment_patient_risk_pressure",
+            "replenishment_positive_pressure"
+          ],
+          "candidate_signs": [1.0]
+        }
       },
       "local_search": {
         "enabled": false
@@ -1477,6 +1532,13 @@
           "epochs": 1,
           "batch_size": 16,
           "max_steps": 2
+        },
+        "gcn_residual_mdl2_replenish_td3_afd": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epochs": 1,
+          "batch_size": 16,
+          "max_steps": 2
         }
       },
       "local_search": {
@@ -1604,6 +1666,13 @@
       },
       "advantage_distillation_pretrain": {
         "gcn_residual_mdl2_replenish_ddpg_afd": {
+          "rollouts": 2,
+          "lookahead": 6,
+          "epochs": 4,
+          "batch_size": 64,
+          "max_steps": 12
+        },
+        "gcn_residual_mdl2_replenish_td3_afd": {
           "rollouts": 2,
           "lookahead": 6,
           "epochs": 4,

@@ -385,7 +385,7 @@ def make_training_config(
     config["config_snapshot_path"] = str(config_snapshot_path(plan, budget_name, algorithm, scenario, seed))
     config["env"] = env
 
-    if algorithm == "ppo":
+    if algorithm in {"ppo", "gcn_ppo"}:
         config["rollout_length"] = max(1, int(budget["max_steps_per_episode"]))
         config["minibatch_size"] = min(
             int(config.get("minibatch_size", budget.get("batch_size", 64))),

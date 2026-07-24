@@ -27,6 +27,7 @@ def available_algorithms() -> tuple[str, ...]:
         "gcn_residual_myo",
         "gcn_residual_pmyo",
         "gcn_residual_mdl2_replenish_td3",
+        "gcn_residual_mdl2_replenish_td3_afd",
         "gcn_residual_mdl2_td3",
         "gcn_residual_mdl2_shield_td3",
         "gcn_residual_pmyo_risk_pressure_td3",
@@ -76,6 +77,7 @@ def get_agent_class(algorithm: str) -> Any:
     if algorithm in {
         "gcn_td3",
         "gcn_residual_mdl2_replenish_td3",
+        "gcn_residual_mdl2_replenish_td3_afd",
         "gcn_residual_mdl2_td3",
         "gcn_residual_mdl2_shield_td3",
         "gcn_residual_pmyo_risk_pressure_td3",

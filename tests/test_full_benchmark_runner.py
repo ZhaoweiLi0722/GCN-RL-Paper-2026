@@ -194,6 +194,10 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             select_algorithms(plan, None, primary_only=True),
         )
         self.assertIn("gcn_residual_mdl2_replenish_td3", select_algorithms(plan, None, primary_only=True))
+        self.assertIn(
+            "gcn_residual_mdl2_replenish_td3_afd",
+            select_algorithms(plan, None, primary_only=True),
+        )
         self.assertIn("gcn_residual_mdl2_td3", select_algorithms(plan, None, primary_only=True))
         self.assertIn("gcn_residual_mdl2_shield_td3", select_algorithms(plan, None, primary_only=True))
         self.assertIn("gcn_residual_pmyo_td3", select_algorithms(plan, None, primary_only=True))
@@ -263,6 +267,16 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             final_checkpoint_path(plan, "smoke", budget, "td3", scenario, seed=2),
             Path(config["checkpoint_dir"]) / "td3_seed2_episode1.pt",
         )
+
+    def test_gcn_ppo_uses_the_budget_rollout_length(self) -> None:
+        plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
+        budget = resolve_budget(plan, "smoke")
+        scenario = select_scenarios(plan, ["patient_condition_geo_demand_drift"])[0]
+
+        config = make_training_config(plan, "smoke", budget, "gcn_ppo", scenario, seed=0)
+
+        self.assertEqual(config["rollout_length"], budget["max_steps_per_episode"])
+        self.assertLessEqual(config["minibatch_size"], config["rollout_length"])
 
     def test_learned_checkpoint_candidates_include_episode_and_local_search(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -446,6 +460,14 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             scenario,
             seed=0,
         )
+        mdl2_replenish_td3_afd_config = make_training_config(
+            plan,
+            "smoke",
+            budget,
+            "gcn_residual_mdl2_replenish_td3_afd",
+            scenario,
+            seed=0,
+        )
         mdl2_td3_config = make_training_config(
             plan,
             "smoke",
@@ -600,6 +622,17 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             1.0,
         )
         self.assertEqual(mdl2_replenish_td3_config["algorithm"], "gcn_residual_mdl2_replenish_td3")
+        self.assertEqual(
+            mdl2_replenish_td3_afd_config["algorithm"],
+            "gcn_residual_mdl2_replenish_td3_afd",
+        )
+        self.assertTrue(
+            mdl2_replenish_td3_afd_config["advantage_distillation_pretrain"]["enabled"]
+        )
+        self.assertEqual(
+            mdl2_replenish_td3_afd_config["advantage_distillation_pretrain"],
+            mdl2_replenish_ddpg_afd_config["advantage_distillation_pretrain"],
+        )
         self.assertEqual(mdl2_replenish_td3_config["residual_action"]["base_policy"], "mdl2")
         self.assertEqual(mdl2_replenish_td3_config["imitation_pretrain"]["policy"], "mdl2_shield")
         self.assertEqual(

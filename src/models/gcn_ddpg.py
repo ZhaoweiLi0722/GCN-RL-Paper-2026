@@ -9,13 +9,18 @@ from typing import Any
 import numpy as np
 
 from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
-from src.models.gcn import GCNActor, GCNCritic, transfer_matching_parameters
+from src.models.gcn import (
+    GCNActor,
+    GCNCorrectionGate,
+    GCNCritic,
+    transfer_matching_parameters,
+)
 from src.models.graph_features import (
     GraphStateSpec,
     build_graph_spec,
     flat_state_to_node_features,
 )
-from src.rl.action_projection import project_action
+from src.rl.action_projection import project_action, project_tensor_to_pattern_basis
 from src.rl.networks import require_torch, resolve_torch_device, torch
 from src.rl.noise import OUNoise
 from src.rl.preprocessing import reward_scale_from_config
@@ -57,7 +62,95 @@ class GCNDDPGAgent:
         self.residual_pressure_projection_groups = self._make_pressure_projection_groups(
             residual_config
         )
+        pressure_projection_config = dict(
+            residual_config.get("pressure_projection", {})
+        )
+        self.residual_replenishment_uniform_basis = bool(
+            pressure_projection_config.get("replenishment_uniform_basis", False)
+        )
         self.residual_l2_weight = float(residual_config.get("l2_weight", 0.0))
+        correction_gate_config = dict(residual_config.get("correction_gate", {}))
+        self.correction_gate_enabled = bool(
+            self.residual_action_enabled
+            and correction_gate_config.get("enabled", False)
+        )
+        self.correction_gate_threshold = float(
+            correction_gate_config.get("threshold", 0.5)
+        )
+        self.correction_gate_mode = str(
+            correction_gate_config.get("mode", "classification")
+        )
+        if self.correction_gate_mode not in ("classification", "advantage"):
+            raise ValueError(
+                "residual_action.correction_gate.mode must be "
+                "'classification' or 'advantage'"
+            )
+        if (
+            self.correction_gate_mode == "classification"
+            and not 0.0 <= self.correction_gate_threshold <= 1.0
+        ):
+            raise ValueError(
+                "classification correction-gate threshold must lie in [0, 1]"
+            )
+        self.correction_gate_advantage_scale = max(
+            float(correction_gate_config.get("advantage_scale", 1_000_000.0)),
+            1e-8,
+        )
+        self.correction_gate_advantage_clip = max(
+            float(correction_gate_config.get("advantage_clip", 5.0)),
+            1e-6,
+        )
+        self.correction_gate_target_delta = max(
+            float(correction_gate_config.get("target_delta", 1e-5)),
+            0.0,
+        )
+        self.correction_gate_loss_weight = max(
+            float(correction_gate_config.get("loss_weight", 1.0)),
+            0.0,
+        )
+        self.correction_gate_groups = tuple(
+            str(group)
+            for group in correction_gate_config.get("groups", ())
+        )
+        valid_gate_groups = self._facility_net_group_slices(
+            self.graph_spec.num_facilities
+        )
+        unknown_gate_groups = tuple(
+            group
+            for group in self.correction_gate_groups
+            if group not in valid_gate_groups
+        )
+        if unknown_gate_groups:
+            raise ValueError(
+                "Unsupported correction-gate groups: "
+                + ", ".join(unknown_gate_groups)
+            )
+        self.correction_gate_output_dim = max(
+            len(self.correction_gate_groups),
+            1,
+        )
+        raw_group_thresholds = dict(
+            correction_gate_config.get("group_thresholds", {})
+        )
+        self.correction_gate_group_thresholds = tuple(
+            float(
+                raw_group_thresholds.get(
+                    group,
+                    self.correction_gate_threshold,
+                )
+            )
+            for group in self.correction_gate_groups
+        )
+        if (
+            self.correction_gate_mode == "classification"
+            and any(
+                threshold < 0.0 or threshold > 1.0
+                for threshold in self.correction_gate_group_thresholds
+            )
+        ):
+            raise ValueError(
+                "classification correction-gate group thresholds must lie in [0, 1]"
+            )
         self.residual_base_policy = str(residual_config.get("base_policy", "mdl2"))
         self.residual_base_settings = heuristic_settings_for_policy(
             self.residual_base_policy,
@@ -125,6 +218,10 @@ class GCNDDPGAgent:
             include_global_context=include_global_context,
             readout_mode=actor_readout_mode,
             edge_weights=self.graph_spec.edge_weights,
+            resource_edges=self.graph_spec.resource_edge_index,
+            capacity_edges=self.graph_spec.capacity_edge_index,
+            resource_edge_features=self.graph_spec.resource_edge_features,
+            capacity_edge_features=self.graph_spec.capacity_edge_features,
         ).to(self.device)
         self.actor_target = GCNActor(
             self.graph_spec.node_feature_dim,
@@ -137,6 +234,10 @@ class GCNDDPGAgent:
             include_global_context=include_global_context,
             readout_mode=actor_readout_mode,
             edge_weights=self.graph_spec.edge_weights,
+            resource_edges=self.graph_spec.resource_edge_index,
+            capacity_edges=self.graph_spec.capacity_edge_index,
+            resource_edge_features=self.graph_spec.resource_edge_features,
+            capacity_edge_features=self.graph_spec.capacity_edge_features,
         ).to(self.device)
         self.critic = GCNCritic(
             self.graph_spec.node_feature_dim,
@@ -167,6 +268,25 @@ class GCNDDPGAgent:
 
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=float(config.get("actor_lr", 1e-4)))
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=float(config.get("critic_lr", 1e-3)))
+        if self.correction_gate_enabled:
+            self.correction_gate = GCNCorrectionGate(
+                self.graph_spec.node_feature_dim,
+                self.graph_spec.num_facilities,
+                self.graph_spec.num_nodes,
+                self.graph_spec.edge_index,
+                gcn_hidden_sizes,
+                tuple(correction_gate_config.get("hidden_sizes", (64, 32))),
+                include_global_context=include_global_context,
+                edge_weights=self.graph_spec.edge_weights,
+                output_dim=self.correction_gate_output_dim,
+            ).to(self.device)
+            self.correction_gate_optimizer = torch.optim.Adam(
+                self.correction_gate.parameters(),
+                lr=float(correction_gate_config.get("lr", 3e-4)),
+            )
+        else:
+            self.correction_gate = None
+            self.correction_gate_optimizer = None
         self.replay_buffer = ReplayBuffer(
             state_dim=state_dim,
             action_dim=action_dim,
@@ -193,7 +313,13 @@ class GCNDDPGAgent:
         self.actor.train()
         if explore:
             network_action = network_action + self.noise.sample()
-        action = self._compose_action_np(state, network_action)
+        # The correction gate is a deployment safety layer. Exploration must
+        # reach the environment so the residual actor and critic can learn.
+        action = self._compose_action_np(
+            state,
+            network_action,
+            apply_correction_gate=not explore,
+        )
         return project_action(action, env_state=env, action_space_info=self.action_dim).action
 
     def observe(
@@ -221,7 +347,11 @@ class GCNDDPGAgent:
         next_node_features = flat_state_to_node_features(next_states, self.graph_spec)
         with torch.no_grad():
             next_network_actions = self.actor_target(next_node_features)
-            next_actions = self._compose_actions_tensor(next_states, next_network_actions)
+            next_actions = self._compose_actions_tensor(
+                next_states,
+                next_network_actions,
+                apply_correction_gate=False,
+            )
             target_q = self.critic_target(next_node_features, next_actions)
             q_targets = rewards + self.gamma * (1.0 - dones) * target_q
 
@@ -232,7 +362,11 @@ class GCNDDPGAgent:
         self.critic_optimizer.step()
 
         network_actions = self.actor(node_features)
-        actor_actions = self._compose_actions_tensor(states, network_actions)
+        actor_actions = self._compose_actions_tensor(
+            states,
+            network_actions,
+            apply_correction_gate=False,
+        )
         actor_loss, advantage_metrics = self._actor_objective(
             node_features,
             states,
@@ -240,12 +374,20 @@ class GCNDDPGAgent:
         )
         residual_l2_loss_value = None
         if self.residual_action_enabled and self.residual_l2_weight > 0.0:
-            policy_residuals = self._policy_residuals_tensor(states, network_actions)
+            policy_residuals = self._policy_residuals_tensor(
+                states,
+                network_actions,
+                apply_correction_gate=False,
+            )
             residual_l2_loss = policy_residuals.pow(2).mean()
             actor_loss = actor_loss + self.residual_l2_weight * residual_l2_loss
             residual_l2_loss_value = float(residual_l2_loss.item())
         elif self.patient_service_proxy_actor_loss_enabled:
-            policy_residuals = self._policy_residuals_tensor(states, network_actions)
+            policy_residuals = self._policy_residuals_tensor(
+                states,
+                network_actions,
+                apply_correction_gate=False,
+            )
         else:
             policy_residuals = None
         proxy_metrics = {}
@@ -503,6 +645,7 @@ class GCNDDPGAgent:
             node_feature_tensor = flat_state_to_node_features(state_tensor, self.graph_spec).detach()
             residual_target_tensor = None
             residual_mask_tensor = None
+            correction_gate_labels = None
             if target_mode == "residual":
                 if not self.residual_action_enabled:
                     raise ValueError("residual target mode requires residual_action.enabled")
@@ -514,10 +657,24 @@ class GCNDDPGAgent:
                     action_tensor,
                     state_tensor,
                 ).detach()
+                if (
+                    self.correction_gate_enabled
+                    and self.correction_gate_mode == "classification"
+                ):
+                    gate_mask = residual_mask_tensor
+                    if gate_mask.shape[0] == 1:
+                        gate_mask = gate_mask.expand(sample_count, -1)
+                    correction_gate_labels = self._correction_gate_labels_tensor(
+                        residual_target_tensor,
+                        gate_mask,
+                    )
         generator = torch.Generator().manual_seed(seed)
         final_loss = 0.0
+        final_gate_loss = 0.0
 
         self.actor.train()
+        if self.correction_gate is not None:
+            self.correction_gate.train()
         for _epoch in range(max(epochs, 1)):
             permutation = torch.randperm(sample_count, generator=generator)
             for start in range(0, sample_count, batch_size):
@@ -529,6 +686,7 @@ class GCNDDPGAgent:
                     predicted_residuals = self._policy_residuals_tensor(
                         state_tensor[indices],
                         network_actions,
+                        apply_correction_gate=False,
                     )
                     residual_mask = (
                         residual_mask_tensor
@@ -554,6 +712,29 @@ class GCNDDPGAgent:
                 torch.nn.utils.clip_grad_norm_(self.actor.parameters(), max_norm=5.0)
                 self.actor_optimizer.step()
                 final_loss = float(loss.item())
+                if correction_gate_labels is not None:
+                    gate_logits = self.correction_gate(node_features)
+                    gate_per_sample = torch.nn.functional.binary_cross_entropy_with_logits(
+                        gate_logits,
+                        correction_gate_labels[indices],
+                        reduction="none",
+                    )
+                    if gate_per_sample.ndim > 1:
+                        gate_per_sample = gate_per_sample.mean(dim=1)
+                    if batch_weights is None:
+                        gate_loss = gate_per_sample.mean()
+                    else:
+                        gate_loss = (
+                            gate_per_sample * batch_weights
+                        ).sum() / batch_weights.sum().clamp_min(1e-8)
+                    self.correction_gate_optimizer.zero_grad()
+                    (self.correction_gate_loss_weight * gate_loss).backward()
+                    torch.nn.utils.clip_grad_norm_(
+                        self.correction_gate.parameters(),
+                        max_norm=5.0,
+                    )
+                    self.correction_gate_optimizer.step()
+                    final_gate_loss = float(gate_loss.item())
 
         self.actor_target.load_state_dict(self.actor.state_dict())
         if bool(settings.get("retain_for_regularization", False)):
@@ -564,7 +745,334 @@ class GCNDDPGAgent:
                 None if weight_tensor is None else weight_tensor.detach()
             )
             self.imitation_rng = np.random.default_rng(seed + 300000)
-        return {"samples": sample_count, "final_loss": final_loss, "target_mode": target_mode}
+        summary = {
+            "samples": sample_count,
+            "final_loss": final_loss,
+            "target_mode": target_mode,
+        }
+        if correction_gate_labels is not None:
+            self.correction_gate.eval()
+            with torch.no_grad():
+                gate_probabilities = torch.sigmoid(
+                    self.correction_gate(node_feature_tensor)
+                )
+                gate_predictions = (
+                    gate_probabilities
+                    >= self._correction_gate_threshold_tensor(
+                        gate_probabilities,
+                    )
+                ).to(dtype=torch.float32)
+                positives = correction_gate_labels > 0.5
+                predicted_positives = gate_predictions > 0.5
+                true_positives = positives & predicted_positives
+                summary.update(
+                    {
+                        "correction_gate_loss": final_gate_loss,
+                        "correction_gate_threshold": self.correction_gate_threshold,
+                        "correction_gate_accuracy": float(
+                            (gate_predictions == correction_gate_labels)
+                            .to(dtype=torch.float32)
+                            .mean()
+                            .item()
+                        ),
+                        "correction_gate_recall": float(
+                            true_positives.sum().item()
+                            / max(int(positives.sum().item()), 1)
+                        ),
+                        "correction_gate_precision": float(
+                            true_positives.sum().item()
+                            / max(int(predicted_positives.sum().item()), 1)
+                        ),
+                        "correction_gate_label_rate": float(
+                            positives.to(dtype=torch.float32).mean().item()
+                        ),
+                        "correction_gate_prediction_fraction": float(
+                            predicted_positives.to(dtype=torch.float32).mean().item()
+                        ),
+                        "correction_gate_groups": "|".join(
+                            self.correction_gate_groups
+                        ),
+                        "correction_gate_group_label_rates": self._pipe_group_rates(
+                            positives,
+                        ),
+                        "correction_gate_group_prediction_rates": self._pipe_group_rates(
+                            predicted_positives,
+                        ),
+                    }
+                )
+        return summary
+
+    def _correction_gate_labels_tensor(self, residual_targets, residual_mask):
+        magnitudes = residual_targets.abs() * residual_mask
+        if not self.correction_gate_groups:
+            return (
+                magnitudes.amax(dim=1)
+                > self.correction_gate_target_delta
+            ).to(dtype=torch.float32)
+        group_slices = self._facility_net_group_slices(
+            self.graph_spec.num_facilities
+        )
+        return torch.stack(
+            [
+                (
+                    magnitudes[:, group_slices[group]].amax(dim=1)
+                    > self.correction_gate_target_delta
+                ).to(dtype=torch.float32)
+                for group in self.correction_gate_groups
+            ],
+            dim=1,
+        )
+
+    def _pipe_group_rates(self, values) -> str:
+        if values.ndim == 1:
+            return f"{float(values.to(dtype=torch.float32).mean().item()):.8g}"
+        return "|".join(
+            f"{float(values[:, index].to(dtype=torch.float32).mean().item()):.8g}"
+            for index in range(values.shape[1])
+        )
+
+    def select_ungated_residual_action(
+        self,
+        state: np.ndarray,
+        *,
+        env=None,
+        residual_scale: float = 1.0,
+    ) -> np.ndarray:
+        """Return the actor correction without the learned accept/reject gate."""
+
+        self.actor.eval()
+        with torch.no_grad():
+            state_tensor = torch.as_tensor(
+                state,
+                dtype=torch.float32,
+                device=self.device,
+            ).unsqueeze(0)
+            node_features = flat_state_to_node_features(
+                state_tensor,
+                self.graph_spec,
+            )
+            network_action = self.actor(node_features)
+            residual = self._policy_residuals_tensor(
+                state_tensor,
+                network_action,
+                apply_correction_gate=False,
+            )
+            base_action = self._base_actions_from_states_tensor(state_tensor)
+            scale = torch.as_tensor(
+                self.residual_scale_vector,
+                dtype=torch.float32,
+                device=self.device,
+            ).unsqueeze(0)
+            action = torch.clamp(
+                base_action + float(residual_scale) * scale * residual,
+                -1.0,
+                1.0,
+            )
+        return project_action(
+            action.cpu().numpy()[0],
+            env_state=env,
+            action_space_info=self.action_dim,
+        ).action
+
+    def fit_correction_gate_batch(
+        self,
+        states: np.ndarray,
+        labels: np.ndarray,
+        settings: dict[str, Any] | None = None,
+        weights: np.ndarray | None = None,
+    ) -> dict[str, Any]:
+        """Fit the state-level gate to actor-specific CRN advantage labels."""
+
+        if self.correction_gate is None or self.correction_gate_optimizer is None:
+            raise ValueError("correction_gate must be enabled before fitting")
+        settings = settings or {}
+        state_array = np.asarray(states, dtype=np.float32)
+        sample_count = int(state_array.shape[0])
+        label_array = self._coerce_correction_gate_array(
+            labels,
+            sample_count,
+            name="labels",
+            dtype=np.float32,
+        )
+        if state_array.ndim != 2 or state_array.shape[1] != self.state_dim:
+            raise ValueError(
+                f"Expected states shape (batch, {self.state_dim}), "
+                f"got {state_array.shape}"
+            )
+        if not np.all(np.isfinite(label_array)) or np.any(
+            (label_array != 0.0) & (label_array != 1.0)
+        ):
+            raise ValueError("Correction gate labels must be binary and finite")
+        if sample_count == 0:
+            return {"samples": 0, "final_loss": 0.0}
+        state_tensor = torch.as_tensor(
+            state_array,
+            dtype=torch.float32,
+            device=self.device,
+        )
+        label_tensor = torch.as_tensor(
+            label_array,
+            dtype=torch.float32,
+            device=self.device,
+        )
+        mode = str(settings.get("mode", self.correction_gate_mode))
+        if mode not in ("classification", "advantage"):
+            raise ValueError("Correction gate fit mode must be classification or advantage")
+        self.correction_gate_mode = mode
+        target_tensor = label_tensor
+        if mode == "advantage":
+            if settings.get("advantages") is None:
+                raise ValueError("Advantage gate fitting requires advantages")
+            advantage_array = self._coerce_correction_gate_array(
+                settings["advantages"],
+                sample_count,
+                name="advantages",
+                dtype=np.float32,
+            )
+            if not np.all(np.isfinite(advantage_array)):
+                raise ValueError("Gate advantages must be finite and align with states")
+            scaled_targets = np.clip(
+                advantage_array / self.correction_gate_advantage_scale,
+                -self.correction_gate_advantage_clip,
+                self.correction_gate_advantage_clip,
+            )
+            feasible = self._coerce_correction_gate_array(
+                settings.get("feasible", np.ones(sample_count, dtype=bool)),
+                sample_count,
+                name="feasibility",
+                dtype=bool,
+            )
+            scaled_targets[~feasible] = np.minimum(
+                scaled_targets[~feasible],
+                -abs(self.correction_gate_threshold),
+            )
+            target_tensor = torch.as_tensor(
+                scaled_targets,
+                dtype=torch.float32,
+                device=self.device,
+            )
+        node_features = flat_state_to_node_features(
+            state_tensor,
+            self.graph_spec,
+        ).detach()
+        weight_tensor = self._fit_action_weights(weights, sample_count)
+        epochs = max(int(settings.get("epochs", 1)), 1)
+        batch_size = min(
+            max(int(settings.get("batch_size", self.batch_size)), 1),
+            sample_count,
+        )
+        generator = torch.Generator().manual_seed(
+            int(settings.get("seed", self.seed + 450000))
+        )
+        final_loss = 0.0
+        self.correction_gate.train()
+        for _epoch in range(epochs):
+            permutation = torch.randperm(sample_count, generator=generator)
+            for start in range(0, sample_count, batch_size):
+                indices = permutation[start : start + batch_size].to(self.device)
+                logits = self.correction_gate(node_features[indices])
+                if mode == "classification":
+                    per_sample = (
+                        torch.nn.functional.binary_cross_entropy_with_logits(
+                            logits,
+                            label_tensor[indices],
+                            reduction="none",
+                        )
+                    )
+                else:
+                    per_sample = torch.nn.functional.smooth_l1_loss(
+                        logits,
+                        target_tensor[indices],
+                        reduction="none",
+                    )
+                if per_sample.ndim > 1:
+                    per_sample = per_sample.mean(dim=1)
+                batch_weights = (
+                    None if weight_tensor is None else weight_tensor[indices]
+                )
+                loss = (
+                    per_sample.mean()
+                    if batch_weights is None
+                    else (per_sample * batch_weights).sum()
+                    / batch_weights.sum().clamp_min(1e-8)
+                )
+                self.correction_gate_optimizer.zero_grad()
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(
+                    self.correction_gate.parameters(),
+                    max_norm=5.0,
+                )
+                self.correction_gate_optimizer.step()
+                final_loss = float(loss.item())
+        self.correction_gate.eval()
+        with torch.no_grad():
+            raw_scores = self.correction_gate(node_features)
+            probabilities = (
+                torch.sigmoid(raw_scores)
+                if mode == "classification"
+                else raw_scores
+            )
+            predictions = (
+                probabilities
+                >= self._correction_gate_threshold_tensor(probabilities)
+            ).to(dtype=torch.float32)
+            positives = label_tensor > 0.5
+            predicted_positives = predictions > 0.5
+            true_positives = positives & predicted_positives
+        return {
+            "samples": sample_count,
+            "final_loss": final_loss,
+            "mode": mode,
+            "threshold": self.correction_gate_threshold,
+            "label_rate": float(positives.to(dtype=torch.float32).mean().item()),
+            "prediction_rate": float(
+                predicted_positives.to(dtype=torch.float32).mean().item()
+            ),
+            "accuracy": float(
+                (predictions == label_tensor).to(dtype=torch.float32).mean().item()
+            ),
+            "precision": float(
+                true_positives.sum().item()
+                / max(int(predicted_positives.sum().item()), 1)
+            ),
+            "recall": float(
+                true_positives.sum().item() / max(int(positives.sum().item()), 1)
+            ),
+            "groups": "|".join(self.correction_gate_groups),
+            "group_label_rates": self._pipe_group_rates(positives),
+            "group_prediction_rates": self._pipe_group_rates(
+                predicted_positives
+            ),
+        }
+
+    def _coerce_correction_gate_array(
+        self,
+        values,
+        sample_count: int,
+        *,
+        name: str,
+        dtype,
+    ) -> np.ndarray:
+        array = np.asarray(values, dtype=dtype)
+        if self.correction_gate_output_dim == 1:
+            array = array.reshape(-1)
+            if array.shape != (sample_count,):
+                raise ValueError(
+                    f"Correction gate {name} must align with states"
+                )
+            return array
+        if array.shape == (sample_count,):
+            return np.repeat(
+                array[:, None],
+                self.correction_gate_output_dim,
+                axis=1,
+            )
+        expected = (sample_count, self.correction_gate_output_dim)
+        if array.shape != expected:
+            raise ValueError(
+                f"Correction gate {name} must have shape {expected}"
+            )
+        return array
 
     def _fit_action_weights(self, weights: np.ndarray | None, sample_count: int):
         if weights is None:
@@ -601,7 +1109,11 @@ class GCNDDPGAgent:
             raise ValueError("residual target mode requires residual_action.enabled")
         residual_targets = self._residual_targets_tensor(states, target_actions)
         residual_mask = self._residual_loss_mask(network_actions, states)
-        predicted_residuals = self._policy_residuals_tensor(states, network_actions)
+        predicted_residuals = self._policy_residuals_tensor(
+            states,
+            network_actions,
+            apply_correction_gate=False,
+        )
         return self._weighted_action_mse(predicted_residuals, residual_targets, weights, residual_mask)
 
     def _weighted_action_mse(self, predicted_actions, target_actions, weights, dim_mask=None):
@@ -643,22 +1155,42 @@ class GCNDDPGAgent:
             mask = mask * self._state_gate_action_mask_tensor(states, dtype=network_actions.dtype)
         return mask
 
-    def _compose_action_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
+    def _compose_action_np(
+        self,
+        state: np.ndarray,
+        network_action: np.ndarray,
+        *,
+        apply_correction_gate: bool = True,
+    ) -> np.ndarray:
         if not self.residual_action_enabled:
             return np.asarray(network_action, dtype=np.float32)
         base_action = self._base_action_from_state_np(state)
-        residual_action = self._policy_residual_np(state, network_action)
+        residual_action = self._policy_residual_np(
+            state,
+            network_action,
+            apply_correction_gate=apply_correction_gate,
+        )
         return np.clip(
             base_action + self.residual_scale_vector * residual_action,
             -1.0,
             1.0,
         ).astype(np.float32)
 
-    def _compose_actions_tensor(self, states, network_actions):
+    def _compose_actions_tensor(
+        self,
+        states,
+        network_actions,
+        *,
+        apply_correction_gate: bool = True,
+    ):
         if not self.residual_action_enabled:
             return network_actions
         base_actions = self._base_actions_from_states_tensor(states)
-        residual_actions = self._policy_residuals_tensor(states, network_actions)
+        residual_actions = self._policy_residuals_tensor(
+            states,
+            network_actions,
+            apply_correction_gate=apply_correction_gate,
+        )
         scale = torch.as_tensor(
             self.residual_scale_vector,
             dtype=network_actions.dtype,
@@ -666,8 +1198,18 @@ class GCNDDPGAgent:
         )
         return torch.clamp(base_actions + scale * residual_actions, -1.0, 1.0)
 
-    def _policy_residual_np(self, state: np.ndarray, network_action: np.ndarray) -> np.ndarray:
-        if not self.residual_pressure_projection_groups and not self.residual_state_gate_groups:
+    def _policy_residual_np(
+        self,
+        state: np.ndarray,
+        network_action: np.ndarray,
+        *,
+        apply_correction_gate: bool = True,
+    ) -> np.ndarray:
+        if (
+            not self.residual_pressure_projection_groups
+            and not self.residual_state_gate_groups
+            and (self.correction_gate is None or not apply_correction_gate)
+        ):
             return self._transform_network_residual_np(network_action)
         with torch.no_grad():
             state_tensor = torch.as_tensor(
@@ -680,16 +1222,86 @@ class GCNDDPGAgent:
                 dtype=torch.float32,
                 device=self.device,
             ).unsqueeze(0)
-            residual = self._policy_residuals_tensor(state_tensor, action_tensor)
+            residual = self._policy_residuals_tensor(
+                state_tensor,
+                action_tensor,
+                apply_correction_gate=apply_correction_gate,
+                hard_correction_gate=True,
+            )
         return residual.cpu().numpy()[0].astype(np.float32)
 
-    def _policy_residuals_tensor(self, states, network_actions):
+    def _policy_residuals_tensor(
+        self,
+        states,
+        network_actions,
+        *,
+        apply_correction_gate: bool = True,
+        hard_correction_gate: bool = True,
+    ):
         residuals = self._transform_network_residuals_tensor(network_actions)
         if self.residual_pressure_projection_groups:
             residuals = self._project_residuals_to_pressure_patterns(states, residuals)
             residuals = self._apply_positive_residual_slices_tensor(residuals)
         residuals = self._apply_state_gate_residuals_tensor(states, residuals)
+        if apply_correction_gate and self.correction_gate is not None:
+            gate_scores = self.correction_gate(
+                flat_state_to_node_features(states, self.graph_spec)
+            ).detach()
+            gate_probabilities = (
+                torch.sigmoid(gate_scores)
+                if self.correction_gate_mode == "classification"
+                else gate_scores
+            )
+            if hard_correction_gate:
+                gate_probabilities = (
+                    gate_probabilities
+                    >= self._correction_gate_threshold_tensor(
+                        gate_probabilities,
+                    )
+                ).to(dtype=residuals.dtype)
+            elif self.correction_gate_mode == "advantage":
+                gate_probabilities = torch.sigmoid(
+                    gate_probabilities - self.correction_gate_threshold
+                )
+            if gate_probabilities.ndim == 1:
+                residuals = residuals * gate_probabilities.unsqueeze(1)
+            else:
+                residuals = self._apply_group_gate_probabilities(
+                    residuals,
+                    gate_probabilities,
+                )
         return torch.clamp(residuals, -1.0, 1.0)
+
+    def _correction_gate_threshold_tensor(self, gate_values):
+        if gate_values.ndim == 1 or not self.correction_gate_group_thresholds:
+            return torch.as_tensor(
+                self.correction_gate_threshold,
+                dtype=gate_values.dtype,
+                device=gate_values.device,
+            )
+        return torch.as_tensor(
+            self.correction_gate_group_thresholds,
+            dtype=gate_values.dtype,
+            device=gate_values.device,
+        ).reshape(1, -1)
+
+    def _apply_group_gate_probabilities(self, residuals, probabilities):
+        if probabilities.shape[1] != len(self.correction_gate_groups):
+            raise ValueError(
+                "Correction-gate outputs do not match configured action groups"
+            )
+        gated = residuals
+        group_slices = self._facility_net_group_slices(
+            self.graph_spec.num_facilities
+        )
+        for index, group in enumerate(self.correction_gate_groups):
+            group_slice = group_slices[group]
+            gated = self._replace_action_slice_tensor(
+                gated,
+                group_slice,
+                gated[:, group_slice] * probabilities[:, index : index + 1],
+            )
+        return gated
 
     def _transform_network_residual_np(self, network_action: np.ndarray) -> np.ndarray:
         residual = np.asarray(network_action, dtype=np.float32).copy()
@@ -740,12 +1352,17 @@ class GCNDDPGAgent:
             if pattern is None or group_slice is None:
                 continue
             current = projected[:, group_slice]
-            denominator = pattern.pow(2).sum(dim=1, keepdim=True).clamp_min(1e-6)
-            coefficient = (current * pattern).sum(dim=1, keepdim=True) / denominator
             projected = self._replace_action_slice_tensor(
                 projected,
                 group_slice,
-                coefficient * pattern,
+                project_tensor_to_pattern_basis(
+                    current,
+                    pattern,
+                    include_uniform=(
+                        self.residual_replenishment_uniform_basis
+                        and group in ("replenishment", "purchase")
+                    ),
+                ),
             )
         return torch.clamp(projected, -1.0, 1.0)
 
@@ -796,11 +1413,15 @@ class GCNDDPGAgent:
         lead_time = int(self.env_config.get("production_lead_time", 3))
         include_supplier = int(bool(self.env_config.get("include_supplier_state", False)))
         include_forecast = int(bool(self.env_config.get("include_demand_forecast_state", False)))
+        include_history = int(
+            bool(self.env_config.get("include_demand_history_state", False))
+        )
         include_transfer_pipeline = int(
             bool(self.env_config.get("include_transfer_pipeline_state", False))
         )
         features_per_facility = 3 + lead_time + include_supplier + include_forecast
         features_per_facility += 3 * include_transfer_pipeline
+        features_per_facility += 3 * include_history
         facility_state = states[:, : n * features_per_facility].reshape(
             states.shape[0],
             n,
@@ -815,9 +1436,29 @@ class GCNDDPGAgent:
             forecast = facility_state[:, :, forecast_col]
         else:
             forecast = demand
+        pending_reagents = torch.zeros_like(demand)
+        pending_capacity = torch.zeros_like(demand)
+        if include_transfer_pipeline:
+            pending_start = 3 + lead_time + include_supplier + include_forecast
+            pending_reagents = facility_state[:, :, pending_start + 1]
+            pending_capacity = facility_state[:, :, pending_start + 2]
         risk = self._patient_risk_signal_tensor(states, features_per_facility)
-        resource_pressure = demand + 0.25 * forecast + specimens - reagents + 0.5 * risk
-        capacity_pressure = demand + 0.25 * forecast + specimens - idle_bioreactors + 0.5 * risk
+        resource_pressure = (
+            demand
+            + 0.25 * forecast
+            + specimens
+            - reagents
+            - pending_reagents
+            + 0.5 * risk
+        )
+        capacity_pressure = (
+            demand
+            + 0.25 * forecast
+            + specimens
+            - idle_bioreactors
+            - pending_capacity
+            + 0.5 * risk
+        )
         return {
             "resource_pressure": resource_pressure,
             "capacity_pressure": capacity_pressure,
@@ -832,15 +1473,27 @@ class GCNDDPGAgent:
             )
         n = self.graph_spec.num_facilities
         summary_edges = tuple(self.env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
-        summary_width = 3 + len(summary_edges) + 1
+        summary_width = 6 + len(summary_edges) + 1
         base_width = n * int(features_per_facility)
         expected_width = base_width + n * summary_width
         if states.shape[1] < expected_width:
             return torch.zeros((states.shape[0], n), dtype=states.dtype, device=states.device)
         summary = states[:, base_width:expected_width].reshape(states.shape[0], n, summary_width)
         near_expiry = summary[:, :, 2]
-        critical_survival = summary[:, :, 3] if summary_width > 3 else torch.zeros_like(near_expiry)
-        return near_expiry + critical_survival
+        patient_config = dict(self.env_config.get("patient", {}))
+        risk_threshold = float(patient_config.get("eligibility_threshold", 0.80)) + float(
+            self.env_config.get("urgency_margin", 0.10)
+        )
+        at_risk_buckets = sum(
+            float(edge) <= risk_threshold + 1e-8 for edge in summary_edges
+        )
+        waiting_histogram = summary[:, :, 6:]
+        waiting_at_risk = (
+            waiting_histogram[:, :, :at_risk_buckets].sum(dim=2)
+            if at_risk_buckets > 0
+            else torch.zeros_like(near_expiry)
+        )
+        return near_expiry + waiting_at_risk
 
     def _centered_unit_pattern_tensor(self, values):
         centered = values - values.mean(dim=1, keepdim=True)
@@ -973,6 +1626,9 @@ class GCNDDPGAgent:
     def _zero_initialize_actor_output(self, actor) -> None:
         """Make a residual actor start as the heuristic anchor (zero correction)."""
 
+        if hasattr(actor, "zero_initialize_output_heads"):
+            actor.zero_initialize_output_heads()
+            return
         last_linear = None
         for module in actor.modules():
             if isinstance(module, torch.nn.Linear):
@@ -993,6 +1649,16 @@ class GCNDDPGAgent:
                 "graph_spec": asdict(self.graph_spec),
                 "actor": self.actor.state_dict(),
                 "critic": self.critic.state_dict(),
+                "correction_gate": (
+                    None
+                    if self.correction_gate is None
+                    else self.correction_gate.state_dict()
+                ),
+                "correction_gate_mode": self.correction_gate_mode,
+                "correction_gate_threshold": self.correction_gate_threshold,
+                "correction_gate_group_thresholds": (
+                    self.correction_gate_group_thresholds
+                ),
             },
             output_path,
         )
@@ -1000,6 +1666,37 @@ class GCNDDPGAgent:
     def load_actor(self, path: str | Path) -> None:
         checkpoint = torch.load(path, map_location=self.device)
         self.actor.load_state_dict(checkpoint["actor"])
+        if (
+            self.correction_gate is not None
+            and checkpoint.get("correction_gate") is not None
+        ):
+            self.correction_gate.load_state_dict(checkpoint["correction_gate"])
+            self.correction_gate.eval()
+            self.correction_gate_mode = str(
+                checkpoint.get(
+                    "correction_gate_mode",
+                    self.correction_gate_mode,
+                )
+            )
+            self.correction_gate_threshold = float(
+                checkpoint.get(
+                    "correction_gate_threshold",
+                    self.correction_gate_threshold,
+                )
+            )
+            saved_group_thresholds = checkpoint.get(
+                "correction_gate_group_thresholds"
+            )
+            if saved_group_thresholds is not None:
+                saved_group_thresholds = tuple(
+                    float(value) for value in saved_group_thresholds
+                )
+                if len(saved_group_thresholds) == len(
+                    self.correction_gate_groups
+                ):
+                    self.correction_gate_group_thresholds = (
+                        saved_group_thresholds
+                    )
 
     def warm_start_actor(self, path: str | Path) -> dict[str, list[str]]:
         """Curriculum warm-start from a (possibly smaller-network) checkpoint. With
@@ -1008,6 +1705,24 @@ class GCNDDPGAgent:
 
         checkpoint = torch.load(path, map_location=self.device)
         summary = transfer_matching_parameters(checkpoint["actor"], self.actor)
+        if (
+            self.correction_gate is not None
+            and checkpoint.get("correction_gate") is not None
+        ):
+            gate_summary = transfer_matching_parameters(
+                checkpoint["correction_gate"],
+                self.correction_gate,
+            )
+            summary = {
+                "transferred": [
+                    *summary["transferred"],
+                    *(f"correction_gate.{key}" for key in gate_summary["transferred"]),
+                ],
+                "skipped": [
+                    *summary["skipped"],
+                    *(f"correction_gate.{key}" for key in gate_summary["skipped"]),
+                ],
+            }
         self.actor_target.load_state_dict(self.actor.state_dict())
         return summary
 

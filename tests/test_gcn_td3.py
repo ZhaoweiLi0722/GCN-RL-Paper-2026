@@ -176,6 +176,68 @@ class GCNTD3PatientTests(unittest.TestCase):
         np.testing.assert_allclose(residual[n : 2 * n], expected, atol=1e-6)
         np.testing.assert_allclose(residual[2 * n : 3 * n], np.zeros(n), atol=1e-6)
 
+    def test_patient_pressure_uses_waiting_risk_not_manufacturing_risk(self) -> None:
+        from src.rl.networks import torch
+
+        config = _residual_agent_config(seed=16)
+        agent = self.agent_cls(self.env.observation_size, self.env.action_size, config)
+        state = np.zeros(self.env.observation_size, dtype=np.float32)
+        n = self.env.config.num_facilities
+        summary_edges = tuple(config["env"]["survival_bucket_edges"])
+        summary_width = 6 + len(summary_edges) + 1
+        base_width = n * self.env.features_per_facility
+        summary = state[base_width:].reshape(n, summary_width)
+        summary[0, 2] = 2.0
+        summary[0, 5] = 99.0
+        summary[0, 6:] = np.asarray([1.0, 3.0, 5.0, 7.0])
+
+        risk = agent._patient_risk_signal_tensor(
+            torch.as_tensor(state, dtype=torch.float32).unsqueeze(0),
+            self.env.features_per_facility,
+        )
+
+        self.assertEqual(float(risk[0, 0]), 3.0)
+        self.assertEqual(float(risk[0, 1]), 0.0)
+
+    def test_pressure_patterns_account_for_pending_transfer_arrivals(self) -> None:
+        from src.rl.networks import torch
+
+        env_config = load_config(DEV_CONFIG)
+        env_config["include_transfer_pipeline_state"] = True
+        env_config["transfer_lead_time"] = 2
+        baseline_env = build_env({"env": env_config}, seed=8)
+        pipeline_env = build_env({"env": env_config}, seed=8)
+        for env in (baseline_env, pipeline_env):
+            env.reset(seed=8)
+            env.demand = np.array([5.0, 20.0])
+            env.demand_forecast = np.array([5.0, 20.0])
+            env.specimens = np.array([5.0, 20.0])
+            env.reagents = np.array([25.0, 0.0])
+        pipeline_env.reagent_transfer_pipeline[:, 1] = 60.0
+        agent_config = _residual_agent_config(seed=8)
+        agent_config["env"] = env_config
+        agent = self.agent_cls(
+            baseline_env.observation_size,
+            baseline_env.action_size,
+            agent_config,
+        )
+
+        baseline_pattern = agent._residual_pressure_patterns_tensor(
+            torch.as_tensor(
+                baseline_env.observation(),
+                dtype=torch.float32,
+            ).unsqueeze(0)
+        )["resource"][0]
+        pipeline_pattern = agent._residual_pressure_patterns_tensor(
+            torch.as_tensor(
+                pipeline_env.observation(),
+                dtype=torch.float32,
+            ).unsqueeze(0)
+        )["resource"][0]
+
+        self.assertGreater(float(baseline_pattern[1]), float(baseline_pattern[0]))
+        self.assertLess(float(pipeline_pattern[1]), float(pipeline_pattern[0]))
+
     def test_residual_td3_supports_supervised_fit(self) -> None:
         config = _residual_agent_config()
         config["batch_size"] = 2

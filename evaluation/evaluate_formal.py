@@ -13,7 +13,7 @@ import numpy as np
 from src.baselines.heuristics import available_heuristics
 from src.rl.agents import available_algorithms, get_agent_class
 from src.rl.config import load_config
-from src.rl.experiment import EpisodeMetrics, build_env, write_rows
+from src.rl.experiment import COST_COMPONENT_METRICS, EpisodeMetrics, build_env, write_rows
 
 
 SUMMARY_METRICS = (
@@ -35,9 +35,18 @@ PATIENT_METRICS = (
     "eligibility_rate_mean",
     "patients_lost",
     "patients_lost_ineligible",
+    "patients_lost_waiting_ineligible",
+    "patients_lost_manufacturing",
     "patients_lost_expired",
+    "patients_started",
+    "patients_completed",
+    "therapies_discarded",
     "material_wasted",
     "at_risk_unserved",
+    "completion_service_level",
+    "patient_ineligibility_during_manufacturing_rate",
+    "manufacturing_loss_rate",
+    "average_turnaround_time",
 )
 
 
@@ -149,11 +158,26 @@ def evaluate_agent(
                     "eligibility_rate_mean": metrics.eligibility_rate_mean,
                     "patients_lost": metrics.patients_lost,
                     "patients_lost_ineligible": metrics.patients_lost_ineligible,
+                    "patients_lost_waiting_ineligible": (
+                        metrics.patients_lost_waiting_ineligible
+                    ),
+                    "patients_lost_manufacturing": metrics.patients_lost_manufacturing,
                     "patients_lost_expired": metrics.patients_lost_expired,
+                    "patients_started": metrics.patients_started,
+                    "patients_completed": metrics.patients_completed,
+                    "therapies_discarded": metrics.therapies_discarded,
                     "material_wasted": metrics.material_wasted,
                     "at_risk_unserved": metrics.at_risk_unserved,
+                    "completion_service_level": metrics.completion_service_level_last,
+                    "patient_ineligibility_during_manufacturing_rate": (
+                        metrics.patient_ineligibility_during_manufacturing_rate_last
+                    ),
+                    "manufacturing_loss_rate": metrics.manufacturing_loss_rate_last,
+                    "average_turnaround_time": metrics.average_turnaround_time_last,
                 }
             )
+        if metrics.has_cost_breakdown:
+            row.update(metrics.cost_components)
         rows.append(row)
     return rows
 
@@ -169,6 +193,7 @@ def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
     metrics_to_summarize = list(SUMMARY_METRICS)
     metrics_to_summarize += [m for m in PATIENT_METRICS if m in rows[0]]
+    metrics_to_summarize += [m for m in COST_COMPONENT_METRICS if m in rows[0]]
     for metric in metrics_to_summarize:
         values = np.asarray([float(row[metric]) for row in rows], dtype=float)
         summary[f"{metric}_mean"] = float(values.mean())
@@ -192,4 +217,3 @@ def write_summary(summary: dict[str, Any], path: str | Path) -> None:
 
 if __name__ == "__main__":
     main()
-

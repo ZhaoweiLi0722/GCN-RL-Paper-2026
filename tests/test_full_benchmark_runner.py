@@ -13,13 +13,19 @@ import numpy as np
 
 from evaluation.check_training_stability import summarize_training_stability
 from evaluation.run_gcn_residual_sweep import (
+    balance_demonstration_label_weights,
     best_variant_summary,
+    calibrate_dense_option_advantage_weights,
+    calibrate_demonstration_advantage_weights,
     collect_local_search_demonstrations,
     elite_sample_weights,
     local_search_candidate_actions,
     local_search_metric_score,
+    load_local_search_demonstrations,
     make_residual_sweep_config,
+    populate_agent_replay_from_demonstrations,
     residual_variant_name,
+    save_local_search_demonstrations,
     summary_metadata,
 )
 from evaluation.run_full_benchmark import (
@@ -33,6 +39,7 @@ from evaluation.run_full_benchmark import (
     evaluation_summary_path,
     final_checkpoint_path,
     checkpoint_label,
+    checkpoint_candidate_guardrail_decision,
     learned_checkpoint_candidates,
     local_search_checkpoint_path,
     local_search_candidate_groups,
@@ -57,6 +64,218 @@ from src.rl.experiment import build_env
 
 
 class FullBenchmarkRunnerTests(unittest.TestCase):
+    def test_teacher_advantage_weights_are_bounded_without_erasing_anchors(self) -> None:
+        demos = {
+            "weights": np.asarray([1.0, 500000.0, 5000000.0], dtype=np.float32),
+        }
+
+        calibrated = calibrate_demonstration_advantage_weights(
+            demos,
+            advantage_scale=500000.0,
+            weight_cap=10.0,
+        )
+
+        np.testing.assert_allclose(
+            calibrated["weights"],
+            np.asarray([1.0, 2.0, 10.0], dtype=np.float32),
+        )
+        self.assertAlmostEqual(
+            calibrated["improved_weight_fraction"],
+            12.0 / 13.0,
+        )
+
+    def test_cached_teacher_weights_can_balance_corrections_and_anchors(self) -> None:
+        demos = {
+            "weights": np.asarray([1.0, 1.0, 2.0, 10.0], dtype=np.float32),
+            "improved_mask": np.asarray([False, False, True, True]),
+        }
+
+        balanced = balance_demonstration_label_weights(demos)
+
+        self.assertAlmostEqual(float(balanced["weights"][:2].sum()), 2.0)
+        self.assertAlmostEqual(float(balanced["weights"][2:].sum()), 2.0)
+        self.assertEqual(balanced["improved_weight_fraction"], 0.5)
+
+    def test_dense_option_advantages_preserve_high_value_ranking(self) -> None:
+        demos = {
+            "weights": np.ones(4, dtype=np.float32),
+            "improved_mask": np.asarray([False, True, True, True]),
+            "option_advantages": np.asarray(
+                [
+                    [0.0, -1.0],
+                    [0.0, 500_000.0],
+                    [0.0, 5_000_000.0],
+                    [0.0, 50_000_000.0],
+                ],
+                dtype=np.float32,
+            ),
+            "option_feasible": np.ones((4, 2), dtype=bool),
+        }
+
+        calibrated = calibrate_dense_option_advantage_weights(
+            demos,
+            advantage_scale=500_000.0,
+            weight_cap=50.0,
+        )
+
+        np.testing.assert_allclose(
+            calibrated["weights"],
+            np.asarray([1.0, 2.0, 11.0, 50.0], dtype=np.float32),
+        )
+
+    def test_local_search_demonstration_cache_round_trip(self) -> None:
+        demos = {
+            "states": np.asarray([[1.0, 2.0], [3.0, 4.0]], dtype=np.float32),
+            "actions": np.asarray([[0.1], [0.2]], dtype=np.float32),
+            "weights": np.asarray([1.0, 2.0], dtype=np.float32),
+            "improved_mask": np.asarray([False, True]),
+            "transition_states": np.asarray([[1.0, 2.0]], dtype=np.float32),
+            "transition_actions": np.asarray([[0.1]], dtype=np.float32),
+            "transition_rewards": np.asarray([-3.0], dtype=np.float32),
+            "transition_next_states": np.asarray([[1.5, 2.5]], dtype=np.float32),
+            "transition_dones": np.asarray([False]),
+            "option_advantages": np.asarray(
+                [[0.0, 2.0, -1.0], [0.0, -2.0, 4.0]],
+                dtype=np.float32,
+            ),
+            "option_feasible": np.asarray(
+                [[True, True, False], [True, False, True]],
+            ),
+            "option_groups": np.asarray(
+                ["anchor", "reagent_transfer", "combined_transfer"],
+            ),
+            "option_epsilons": np.asarray([0.0, 0.32, 0.32], dtype=np.float32),
+            "option_signs": np.asarray([0.0, -1.0, 1.0], dtype=np.float32),
+            "improved_steps": 2,
+            "anchor_keep_steps": 0,
+            "service_rejected_steps": 1,
+            "mean_step_improvement": 3.5,
+            "improved_weight_fraction": 1.0,
+        }
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "teacher.npz"
+            save_local_search_demonstrations(path, demos)
+            loaded = load_local_search_demonstrations(path)
+
+        np.testing.assert_allclose(loaded["states"], demos["states"])
+        np.testing.assert_allclose(loaded["actions"], demos["actions"])
+        np.testing.assert_allclose(loaded["weights"], demos["weights"])
+        np.testing.assert_array_equal(
+            loaded["improved_mask"],
+            demos["improved_mask"],
+        )
+        np.testing.assert_allclose(
+            loaded["transition_next_states"],
+            demos["transition_next_states"],
+        )
+        np.testing.assert_allclose(
+            loaded["option_advantages"],
+            demos["option_advantages"],
+        )
+        np.testing.assert_array_equal(
+            loaded["option_feasible"],
+            demos["option_feasible"],
+        )
+        np.testing.assert_array_equal(
+            loaded["option_groups"],
+            demos["option_groups"],
+        )
+        self.assertEqual(loaded["improved_steps"], 2)
+        self.assertEqual(loaded["service_rejected_steps"], 1)
+
+    def test_teacher_transitions_can_seed_agent_replay(self) -> None:
+        class RecordingAgent:
+            def __init__(self) -> None:
+                self.transitions = []
+
+            def observe(self, *transition) -> None:
+                self.transitions.append(transition)
+
+        agent = RecordingAgent()
+        demos = {
+            "transition_states": np.asarray([[1.0, 2.0]], dtype=np.float32),
+            "transition_actions": np.asarray([[0.1]], dtype=np.float32),
+            "transition_rewards": np.asarray([-3.0], dtype=np.float32),
+            "transition_next_states": np.asarray([[1.5, 2.5]], dtype=np.float32),
+            "transition_dones": np.asarray([True]),
+        }
+
+        count = populate_agent_replay_from_demonstrations(agent, demos)
+
+        self.assertEqual(count, 1)
+        self.assertEqual(len(agent.transitions), 1)
+        self.assertEqual(agent.transitions[0][2], -3.0)
+        self.assertTrue(agent.transitions[0][4])
+
+    def test_dense_teacher_transitions_use_explicit_option_labels(self) -> None:
+        class RecordingOptionAgent:
+            def __init__(self) -> None:
+                self.transitions = []
+
+            def observe(self, *transition) -> None:
+                raise AssertionError("Continuous actions must not infer option labels")
+
+            def demonstration_option_labels(self, demos) -> np.ndarray:
+                return np.asarray([2], dtype=np.int64)
+
+            def add_option_transition(self, *transition) -> None:
+                self.transitions.append(transition)
+
+        agent = RecordingOptionAgent()
+        demos = {
+            "transition_states": np.asarray([[1.0, 2.0]], dtype=np.float32),
+            "transition_actions": np.asarray([[0.1]], dtype=np.float32),
+            "transition_rewards": np.asarray([-3.0], dtype=np.float32),
+            "transition_next_states": np.asarray([[1.5, 2.5]], dtype=np.float32),
+            "transition_dones": np.asarray([True]),
+            "option_advantages": np.asarray([[0.0, 1.0, 2.0]], dtype=np.float32),
+            "option_feasible": np.asarray([[True, True, True]]),
+        }
+
+        count = populate_agent_replay_from_demonstrations(agent, demos)
+
+        self.assertEqual(count, 1)
+        self.assertEqual(agent.transitions[0][1], 2)
+
+    def test_anchor_fallback_rejects_higher_manufacturing_ineligibility(self) -> None:
+        decision = select_anchor_fallback_policy(
+            90.0,
+            100.0,
+            learned_patient_ineligibility_during_manufacturing_rate=0.12,
+            anchor_patient_ineligibility_during_manufacturing_rate=0.10,
+            max_patient_ineligibility_during_manufacturing_rate_delta=0.0,
+        )
+
+        self.assertEqual(decision, "anchor")
+
+    def test_checkpoint_guardrail_rejects_cheaper_patient_harm(self) -> None:
+        candidate = {
+            "total_cost": 90.0,
+            "service_level": 0.9,
+            "completion_service_level": 0.79,
+            "patients_lost": 3.0,
+            "patient_ineligibility_during_manufacturing_rate": 0.11,
+        }
+        anchor = {
+            "total_cost": 100.0,
+            "service_level": 0.9,
+            "completion_service_level": 0.80,
+            "patients_lost": 2.0,
+            "patient_ineligibility_during_manufacturing_rate": 0.10,
+        }
+
+        decision = checkpoint_candidate_guardrail_decision(
+            candidate,
+            anchor,
+            {
+                "min_completion_service_level_delta": 0.0,
+                "max_patients_lost_delta": 0.0,
+                "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+            },
+        )
+
+        self.assertEqual(decision, "anchor")
+
     def test_smoke_budget_and_selection(self) -> None:
         plan = load_benchmark_plan()
         budget = resolve_budget(plan, "smoke")
@@ -84,6 +303,9 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         mini_pilot = resolve_budget(plan, "mini_pilot")
         targeted_100 = resolve_budget(plan, "targeted_100")
         targeted_300 = resolve_budget(plan, "targeted_300")
+        lifecycle_pilot = resolve_budget(plan, "lifecycle_pilot")
+        network_pilot = resolve_budget(plan, "network_pilot")
+        network_targeted_300 = resolve_budget(plan, "network_targeted_300")
 
         self.assertEqual(plan["name"], "20_clinic_residual_policy_benchmark")
         self.assertEqual(budget["num_episodes"], 300)
@@ -112,6 +334,87 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         )
         self.assertTrue(targeted_300["checkpoint_selection"]["enabled"])
         self.assertEqual(targeted_300["checkpoint_selection"]["validation_replications"], 20)
+        self.assertEqual(
+            lifecycle_pilot["anchor_fallback"]["min_completion_service_level_delta"],
+            0.0,
+        )
+        self.assertEqual(
+            lifecycle_pilot["anchor_fallback"]["max_patients_lost_delta"],
+            0.0,
+        )
+        self.assertEqual(
+            lifecycle_pilot["checkpoint_selection"]["service_level_weight"],
+            0.0,
+        )
+        self.assertEqual(
+            lifecycle_pilot["checkpoint_selection"]["completion_service_level_weight"],
+            100000000.0,
+        )
+        self.assertEqual(
+            lifecycle_pilot["checkpoint_selection"][
+                "patient_ineligibility_during_manufacturing_rate_weight"
+            ],
+            100000000.0,
+        )
+        lifecycle_afd = lifecycle_pilot["advantage_distillation_pretrain"][
+            "gcn_residual_mdl2_replenish_ddpg_afd"
+        ]
+        self.assertIsNone(lifecycle_afd["min_service_level_delta"])
+        self.assertEqual(lifecycle_afd["min_completion_service_level_delta"], 0.0)
+        self.assertEqual(lifecycle_afd["max_patients_lost_delta"], 0.0)
+        self.assertEqual(network_pilot["num_episodes"], 100)
+        self.assertEqual(network_pilot["seeds"], [0, 1, 2])
+        self.assertEqual(
+            network_pilot["anchor_fallback"][
+                "max_patient_ineligibility_during_manufacturing_rate_delta"
+            ],
+            0.0,
+        )
+        self.assertEqual(network_targeted_300["num_episodes"], 300)
+        self.assertEqual(network_targeted_300["checkpoint_interval"], 50)
+        self.assertEqual(network_targeted_300["seeds"], [0, 1, 2])
+        self.assertEqual(
+            network_targeted_300["anchor_fallback"]["deployment_scale_candidates"],
+            [0.0, 0.1, 0.25, 0.5, 0.75, 1.0],
+        )
+        self.assertEqual(
+            network_targeted_300["checkpoint_selection"]["completion_service_level_weight"],
+            0.0,
+        )
+        network_overrides = algorithm_config_overrides(
+            plan,
+            "gcn_residual_mdl2_network_ddpg_afd",
+        )
+        network_residual = network_overrides["residual_action"]
+        self.assertTrue(network_overrides["save_pretrain_checkpoint"])
+        self.assertFalse(network_residual["pressure_projection"]["enabled"])
+        self.assertEqual(
+            network_residual["pressure_projection"]["groups"],
+            [],
+        )
+        self.assertFalse(
+            network_residual["pressure_projection"]["replenishment_uniform_basis"]
+        )
+        self.assertEqual(network_overrides["actor_readout_mode"], "network_residual")
+        self.assertEqual(network_residual["scale"], 1.0)
+        self.assertEqual(network_residual["group_scales"]["specimen_transfer"], 0.0)
+        self.assertEqual(network_residual["group_scales"]["reagent_transfer"], 1.0)
+        self.assertEqual(network_residual["group_scales"]["capacity_transfer"], 1.0)
+        self.assertEqual(network_residual["group_scales"]["replenishment"], 1.0)
+        network_afd = network_overrides["advantage_distillation_pretrain"]
+        self.assertEqual(network_afd["lookahead"], 52)
+        self.assertTrue(network_afd["balance_label_weights"])
+        self.assertEqual(network_afd["epochs"], 300)
+        self.assertEqual(network_afd["min_improvement"], 500000.0)
+        self.assertEqual(network_afd["epsilons"][-1], 1.0)
+        self.assertIn("combined_transfer", network_afd["candidate_groups"])
+        self.assertIn("combined_network", network_afd["candidate_groups"])
+        self.assertTrue(
+            network_afd["demonstration_path"].endswith(
+                "network_teacher_end_to_go_compact90_crn5_history4.npz"
+            )
+        )
+        self.assertTrue(network_overrides["include_adaptive_demand_features"])
         self.assertEqual(targeted_100["local_search"]["gcn_residual_mdl2"]["min_improvement"], 0.0)
         self.assertEqual(
             targeted_100["local_search"]["gcn_residual_pmyo"]["service_level_weight"],
@@ -278,7 +581,7 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(config["rollout_length"], budget["max_steps_per_episode"])
         self.assertLessEqual(config["minibatch_size"], config["rollout_length"])
 
-    def test_learned_checkpoint_candidates_include_episode_and_local_search(self) -> None:
+    def test_learned_checkpoint_candidates_include_pretrain_episode_and_local_search(self) -> None:
         with TemporaryDirectory() as tmpdir:
             plan = {"output_root": tmpdir}
             scenario = {"name": "s"}
@@ -286,8 +589,9 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             checkpoint_dir.mkdir(parents=True)
             episode100 = checkpoint_dir / "algo_seed0_episode100.pt"
             episode50 = checkpoint_dir / "algo_seed0_episode50.pt"
+            pretrain = checkpoint_dir / "algo_seed0_pretrain.pt"
             local_search = checkpoint_dir / "algo_seed0_local_search.pt"
-            for path in (episode100, episode50, local_search):
+            for path in (episode100, episode50, pretrain, local_search):
                 path.touch()
 
             candidates = learned_checkpoint_candidates(
@@ -299,7 +603,8 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
                 local_search,
             )
 
-            self.assertEqual(candidates, (episode50, episode100, local_search))
+            self.assertEqual(candidates, (pretrain, episode50, episode100, local_search))
+            self.assertEqual(checkpoint_label(pretrain), "pretrain")
             self.assertEqual(checkpoint_label(episode50), "episode50")
             self.assertEqual(checkpoint_label(local_search), "local_search")
 
@@ -429,6 +734,43 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             advantage_distillation_settings(flat_config, budget, flat_algorithm),
             advantage_distillation_settings(gcn_config, budget, gcn_algorithm),
         )
+
+    def test_option_dqn_flat_ablation_changes_only_encoder_recipe(self) -> None:
+        plan = load_benchmark_plan(
+            "experiments/configs/residual_policy_benchmark.json"
+        )
+        budget = resolve_budget(plan, "network_targeted_300")
+        scenario = select_scenarios(
+            plan,
+            ["patient_condition_geo_demand_drift"],
+        )[0]
+        graph_config = make_training_config(
+            plan,
+            "network_targeted_300",
+            budget,
+            "gcn_residual_mdl2_option_dqn_afd",
+            scenario,
+            seed=0,
+        )
+        flat_config = make_training_config(
+            plan,
+            "network_targeted_300",
+            budget,
+            "flat_residual_mdl2_option_dqn_afd",
+            scenario,
+            seed=0,
+        )
+
+        self.assertEqual(flat_config["env"], graph_config["env"])
+        self.assertEqual(
+            flat_config["advantage_distillation_pretrain"],
+            graph_config["advantage_distillation_pretrain"],
+        )
+        self.assertEqual(
+            flat_config["residual_option"]["explicit_options"],
+            graph_config["residual_option"]["explicit_options"],
+        )
+        self.assertEqual(flat_config["env"]["graph_ablation"], "full_graph")
 
     def test_patient_priority_residual_plan_sets_patient_aware_anchor(self) -> None:
         plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
@@ -884,6 +1226,39 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
             np.testing.assert_allclose(action[: 3 * n], baseline_action[: 3 * n])
             self.assertTrue(np.all(action[3 * n : 4 * n] >= baseline_action[3 * n : 4 * n]))
 
+    def test_local_search_candidate_actions_can_gate_anchor_transfers(self) -> None:
+        env_config = load_config("experiments/configs/2_clinic_patient_condition.json")
+        env = build_env({"env": env_config}, seed=0)
+        state = env.reset(seed=0)
+        n = env.config.num_facilities
+        baseline_action = np.linspace(-0.8, 0.8, env.action_size, dtype=np.float32)
+
+        class FixedBaseline:
+            def select_action(self, state, explore=False, env=None):
+                return baseline_action.copy()
+
+        actions = local_search_candidate_actions(
+            state,
+            env,
+            FixedBaseline(),
+            epsilons=(1.0,),
+            candidate_groups=(
+                "reagent_transfer_shrink",
+                "capacity_transfer_shrink",
+                "combined_transfer_shrink",
+                "all_transfer_shrink",
+            ),
+            candidate_signs=(1.0,),
+        )
+
+        self.assertEqual(len(actions), 5)
+        np.testing.assert_allclose(actions[1][n : 2 * n], 0.0)
+        np.testing.assert_allclose(actions[2][2 * n : 3 * n], 0.0)
+        np.testing.assert_allclose(actions[3][n : 3 * n], 0.0)
+        np.testing.assert_allclose(actions[4][: 3 * n], 0.0)
+        for action in actions[1:]:
+            np.testing.assert_allclose(action[3 * n :], baseline_action[3 * n :])
+
     def test_local_search_candidate_actions_can_target_patient_risk_replenishment(self) -> None:
         n = 2
 
@@ -943,6 +1318,37 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
 
         self.assertEqual(len(actions), 2)
         self.assertGreater(actions[1][3 * n + 1], actions[1][3 * n])
+
+    def test_local_search_candidate_actions_can_jointly_correct_network_groups(self) -> None:
+        n = 2
+
+        class ZeroBaseline:
+            def select_action(self, state, explore=False, env=None):
+                return np.zeros(4 * n, dtype=np.float32)
+
+        env = SimpleNamespace(
+            config=SimpleNamespace(num_facilities=n),
+            demand=np.array([0.0, 10.0]),
+            demand_forecast=np.array([0.0, 10.0]),
+            specimens=np.array([0.0, 10.0]),
+            reagents=np.array([10.0, 0.0]),
+            bioreactors=np.array([[5.0], [0.0]]),
+        )
+
+        actions = local_search_candidate_actions(
+            np.zeros(1, dtype=np.float32),
+            env,
+            ZeroBaseline(),
+            epsilons=(0.1,),
+            candidate_groups=("reagent_replenishment", "combined_network"),
+            candidate_signs=(1.0,),
+        )
+
+        self.assertEqual(len(actions), 3)
+        self.assertFalse(np.allclose(actions[1][n : 2 * n], 0.0))
+        self.assertFalse(np.allclose(actions[1][3 * n : 4 * n], 0.0))
+        np.testing.assert_allclose(actions[1][2 * n : 3 * n], 0.0)
+        self.assertFalse(np.allclose(actions[2][2 * n : 3 * n], 0.0))
 
     def test_local_search_candidate_actions_account_for_pending_transfer_arrivals(self) -> None:
         config = replace(
@@ -1020,6 +1426,8 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(config["train_randomization"]["forecast_error_range"], [0.0, 0.35])
         self.assertEqual(config["env"]["transfer_lead_time"], 3)
         self.assertEqual(len(config["env"]["clinic_coordinates"]), 20)
+        self.assertAlmostEqual(config["env"]["patient"]["frail_decay_rate"], 0.0156)
+        self.assertEqual(config["env"]["weight_patient_lost"], 500000)
 
     def test_patient_condition_geo_severe_demand_drift_raises_true_rates(self) -> None:
         plan = load_benchmark_plan("experiments/configs/residual_policy_benchmark.json")
@@ -1090,6 +1498,45 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(
             select_anchor_fallback_policy(float("nan"), 100.0, min_improvement=0.0),
             "anchor",
+        )
+        self.assertEqual(
+            select_anchor_fallback_policy(
+                95.0,
+                100.0,
+                learned_completion_service_level=0.89,
+                anchor_completion_service_level=0.90,
+                min_completion_service_level_delta=0.0,
+                learned_patients_lost=9.0,
+                anchor_patients_lost=10.0,
+                max_patients_lost_delta=0.0,
+            ),
+            "anchor",
+        )
+        self.assertEqual(
+            select_anchor_fallback_policy(
+                95.0,
+                100.0,
+                learned_completion_service_level=0.91,
+                anchor_completion_service_level=0.90,
+                min_completion_service_level_delta=0.0,
+                learned_patients_lost=11.0,
+                anchor_patients_lost=10.0,
+                max_patients_lost_delta=0.0,
+            ),
+            "anchor",
+        )
+        self.assertEqual(
+            select_anchor_fallback_policy(
+                95.0,
+                100.0,
+                learned_completion_service_level=0.91,
+                anchor_completion_service_level=0.90,
+                min_completion_service_level_delta=0.0,
+                learned_patients_lost=9.0,
+                anchor_patients_lost=10.0,
+                max_patients_lost_delta=0.0,
+            ),
+            "learned",
         )
 
     def test_residual_deployment_candidate_selection_uses_partial_trust_region(self) -> None:
@@ -1312,21 +1759,27 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
     def test_local_search_metric_score_values_patient_outcomes(self) -> None:
         weights = {
             "service_level": 100.0,
+            "completion_service_level": 200.0,
             "eligibility_rate": 50.0,
+            "patient_ineligibility_during_manufacturing_rate": 500.0,
             "at_risk_unserved": 10.0,
             "patients_lost": 1000.0,
         }
         safe = {
             "total_cost": 1000.0,
             "service_level": 0.9,
+            "completion_service_level": 0.85,
             "eligibility_rate": 0.95,
+            "patient_ineligibility_during_manufacturing_rate": 0.1,
             "at_risk_unserved": 1.0,
             "patients_lost": 0.0,
         }
         risky = {
             "total_cost": 900.0,
             "service_level": 0.8,
+            "completion_service_level": 0.7,
             "eligibility_rate": 0.9,
+            "patient_ineligibility_during_manufacturing_rate": 0.2,
             "at_risk_unserved": 5.0,
             "patients_lost": 1.0,
         }
@@ -1366,6 +1819,9 @@ class FullBenchmarkRunnerTests(unittest.TestCase):
         self.assertEqual(demos["states"].shape[1], env.observation_size)
         self.assertEqual(demos["actions"].shape[1], env.action_size)
         self.assertEqual(demos["weights"].shape[0], demos["states"].shape[0])
+        self.assertEqual(demos["transition_states"].shape, (2, env.observation_size))
+        self.assertEqual(demos["transition_actions"].shape, (2, env.action_size))
+        self.assertEqual(demos["transition_rewards"].shape, (2,))
 
     def test_local_search_demo_collection_keeps_anchor_references(self) -> None:
         config = replace(make_legacy_two_facility_config(episode_horizon=2), action_mode="facility_net")

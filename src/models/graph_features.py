@@ -17,6 +17,7 @@ import numpy as np
 
 from src.graph.edges import Edge, complete_undirected_edges, k_nearest_ring_edges, ring_edges
 from src.graph.geography import (
+    geographic_distance_matrix,
     geographic_knn_edges,
     geographic_transfer_time_matrix,
     normalize_coordinates,
@@ -33,13 +34,21 @@ class GraphStateSpec:
     production_lead_time: int
     include_supplier_state: bool
     include_demand_forecast_state: bool
+    include_demand_history_state: bool
     include_central_capacity_hub: bool
     include_transfer_pipeline_state: bool
+    include_adaptive_demand_features: bool
+    include_time_state: bool
     features_per_facility: int
     node_feature_dim: int
     num_nodes: int
     edge_index: tuple[Edge, ...]
     edge_weights: tuple[float, ...] = ()
+    resource_edge_index: tuple[Edge, ...] = ()
+    capacity_edge_index: tuple[Edge, ...] = ()
+    resource_edge_features: tuple[tuple[float, ...], ...] = ()
+    capacity_edge_features: tuple[tuple[float, ...], ...] = ()
+    edge_feature_dim: int = 0
     normalize_node_features: bool = False
     node_feature_scale: tuple[float, ...] = ()
     patient_summary_width: int = 0
@@ -52,14 +61,16 @@ class GraphStateSpec:
 def _patient_summary_width(env_config: dict[str, Any]) -> int:
     """Per-clinic patient-summary width, matching PatientConditionCapacityEnv.
 
-    Layout is ``[count, mean_survival, near_expiry, histogram...]`` where the
-    histogram has ``len(edges) + 1`` buckets, i.e. ``3 + len(edges) + 1``.
+    Layout is ``[waiting_count, waiting_mean_survival, near_expiry,
+    in_production_count, in_production_mean_survival,
+    in_production_at_risk, waiting_histogram...]`` where the histogram has
+    ``len(edges) + 1`` buckets.
     """
 
     if env_config.get("env_type") != "patient_condition":
         return 0
     edges = env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
-    return 3 + len(tuple(edges)) + 1
+    return 6 + len(tuple(edges)) + 1
 
 
 def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
@@ -73,13 +84,29 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
     production_lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier_state = bool(env_config.get("include_supplier_state", False))
     include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+    include_demand_history = bool(
+        env_config.get("include_demand_history_state", False)
+    )
     include_hub = bool(env_config.get("include_central_capacity_hub", False))
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-    features_per_facility = 3 + production_lead_time + int(include_supplier_state) + int(include_forecast)
+    include_adaptive_demand_features = bool(
+        config.get("include_adaptive_demand_features", False)
+    )
+    include_time_state = bool(env_config.get("include_time_state", False))
+    features_per_facility = (
+        3
+        + production_lead_time
+        + int(include_supplier_state)
+        + int(include_forecast)
+        + 3 * int(include_demand_history)
+    )
     if include_transfer_pipeline:
         features_per_facility += 3
     summary_width = _patient_summary_width(env_config)
-    expected_state_dim = num_facilities * (features_per_facility + summary_width)
+    expected_state_dim = (
+        num_facilities * (features_per_facility + summary_width)
+        + int(include_time_state)
+    )
     if state_dim != expected_state_dim:
         raise ValueError(
             f"GCN agent expected state_dim={expected_state_dim} from config, got {state_dim}"
@@ -162,6 +189,25 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         graph_edges.extend(edge_sets[edge_type])
     graph_edges = list(_dedupe_edges(graph_edges, num_nodes))
     edge_weights = _geographic_edge_weights(env_config, graph_edges, num_facilities)
+    resource_edge_features = _network_edge_features(
+        env_config,
+        resource_edges,
+        num_facilities,
+    )
+    capacity_edge_features = _network_edge_features(
+        env_config,
+        capacity_edges,
+        num_facilities,
+    )
+    edge_feature_dim = (
+        len(resource_edge_features[0])
+        if resource_edge_features
+        else (
+            len(capacity_edge_features[0])
+            if capacity_edge_features
+            else 0
+        )
+    )
 
     residual_config = dict(config.get("residual_action", {}))
     include_base_action_features = bool(
@@ -174,6 +220,9 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         + int(include_supplier_state)
         + int(include_forecast)
         + 3 * int(include_transfer_pipeline)
+        + 3 * int(include_demand_history)
+        + 3 * int(include_adaptive_demand_features)
+        + int(include_time_state)
         + base_action_width
         + int(include_hub)
         + summary_width
@@ -185,13 +234,21 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         production_lead_time=production_lead_time,
         include_supplier_state=include_supplier_state,
         include_demand_forecast_state=include_forecast,
+        include_demand_history_state=include_demand_history,
         include_central_capacity_hub=include_hub,
         include_transfer_pipeline_state=include_transfer_pipeline,
+        include_adaptive_demand_features=include_adaptive_demand_features,
+        include_time_state=include_time_state,
         features_per_facility=features_per_facility,
         node_feature_dim=node_feature_dim,
         num_nodes=num_nodes,
         edge_index=tuple(graph_edges),
         edge_weights=edge_weights,
+        resource_edge_index=tuple(resource_edges),
+        capacity_edge_index=tuple(capacity_edges),
+        resource_edge_features=resource_edge_features,
+        capacity_edge_features=capacity_edge_features,
+        edge_feature_dim=edge_feature_dim,
         normalize_node_features=normalize_node_features,
         node_feature_scale=node_feature_scale,
         patient_summary_width=summary_width,
@@ -219,12 +276,22 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
     summary_width = graph_spec.patient_summary_width
 
     base_width = n * graph_spec.features_per_facility
+    summary_end = base_width + n * summary_width
     if summary_width > 0:
         base_state = state[:, :base_width]
-        summary_state = state[:, base_width:].reshape(batch_size, n, summary_width)
+        summary_state = state[:, base_width:summary_end].reshape(
+            batch_size,
+            n,
+            summary_width,
+        )
     else:
-        base_state = state
+        base_state = state[:, :base_width]
         summary_state = None
+    time_state = (
+        state[:, summary_end : summary_end + 1]
+        if graph_spec.include_time_state
+        else None
+    )
     facility_state = base_state.reshape(batch_size, n, graph_spec.features_per_facility)
 
     demand = facility_state[:, :, 0:1]
@@ -246,6 +313,35 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
             + int(graph_spec.include_demand_forecast_state)
         )
         feature_parts.append(facility_state[:, :, pending_start : pending_start + 3])
+    if graph_spec.include_demand_history_state:
+        history_start = (
+            3
+            + lead_time
+            + int(graph_spec.include_supplier_state)
+            + int(graph_spec.include_demand_forecast_state)
+            + 3 * int(graph_spec.include_transfer_pipeline_state)
+        )
+        feature_parts.append(
+            facility_state[:, :, history_start : history_start + 3]
+        )
+    if graph_spec.include_adaptive_demand_features:
+        feature_parts.append(
+            adaptive_demand_node_features(
+                demand,
+                (
+                    facility_state[:, :, forecast_start : forecast_start + 1]
+                    if graph_spec.include_demand_forecast_state
+                    else demand
+                ),
+                graph_spec,
+            )
+        )
+    time_feature_col = None
+    if time_state is not None:
+        time_feature_col = sum(part.shape[-1] for part in feature_parts)
+        feature_parts.append(
+            time_state.unsqueeze(1).expand(-1, n, -1)
+        )
     if graph_spec.include_base_action_features:
         feature_parts.append(_base_action_node_features(state, graph_spec))
     if graph_spec.include_central_capacity_hub:
@@ -267,10 +363,78 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
     # Hub aggregates capacity; columns 3/4 are idle/total bioreactors, last flags the hub.
     hub_features[:, 0, 3] = idle_bioreactors.sum(dim=1).squeeze(-1)
     hub_features[:, 0, 4] = total_bioreactors.sum(dim=1).squeeze(-1)
+    if time_feature_col is not None:
+        hub_features[:, 0, time_feature_col] = time_state[:, 0]
     hub_flag_col = graph_spec.node_feature_dim - 1 - summary_width
     hub_features[:, 0, hub_flag_col] = 1.0
     node_features = torch.cat((node_features, hub_features), dim=1)
     return _normalize_node_features(node_features, graph_spec)
+
+
+def adaptive_demand_node_features(
+    demand,
+    forecast,
+    graph_spec: GraphStateSpec,
+):
+    """Return observable demand-regime indicators relative to the MDL-2 prior."""
+
+    env_config = graph_spec.env_config or {}
+    estimates = env_config.get(
+        "demand_rate_estimates",
+        env_config.get("demand_rates", 1.0),
+    )
+    estimate_array = np.asarray(estimates, dtype=np.float32)
+    if estimate_array.shape == ():
+        estimate_array = np.full(
+            graph_spec.num_facilities,
+            float(estimate_array),
+            dtype=np.float32,
+        )
+    if estimate_array.shape != (graph_spec.num_facilities,):
+        raise ValueError("Adaptive demand features require one prior per facility")
+    prior = torch.as_tensor(
+        np.maximum(estimate_array, 1e-6),
+        dtype=demand.dtype,
+        device=demand.device,
+    ).reshape(1, graph_spec.num_facilities, 1)
+    horizon = max(
+        int(env_config.get("demand_forecast_horizon", 1)),
+        1,
+    )
+    demand_ratio = demand / prior
+    forecast_ratio = forecast / (prior * float(horizon))
+    surprise = demand_ratio - forecast_ratio
+    return torch.cat((demand_ratio, forecast_ratio, surprise), dim=-1).clamp(
+        -10.0,
+        10.0,
+    )
+
+
+def flat_state_to_adaptive_demand_features(
+    state,
+    graph_spec: GraphStateSpec,
+):
+    """Extract the same adaptive demand indicators for a matched flat policy."""
+
+    if state.dim() == 1:
+        state = state.unsqueeze(0)
+    n = graph_spec.num_facilities
+    facility_state = state[:, : n * graph_spec.features_per_facility].reshape(
+        state.shape[0],
+        n,
+        graph_spec.features_per_facility,
+    )
+    demand = facility_state[:, :, 0:1]
+    if graph_spec.include_demand_forecast_state:
+        forecast_start = (
+            3
+            + graph_spec.production_lead_time
+            + int(graph_spec.include_supplier_state)
+        )
+        forecast = facility_state[:, :, forecast_start : forecast_start + 1]
+    else:
+        forecast = demand
+    return adaptive_demand_node_features(demand, forecast, graph_spec)
 
 
 def _base_action_node_features(state, graph_spec: GraphStateSpec):
@@ -370,3 +534,86 @@ def _geographic_edge_weights(
         hours = float(transfer_times[int(i), int(j)])
         weights.append(max(float(np.exp(-hours / time_scale)), 0.05))
     return tuple(weights)
+
+
+def _network_edge_features(
+    env_config: dict[str, Any],
+    edges: Sequence[Edge],
+    num_facilities: int,
+) -> tuple[tuple[float, ...], ...]:
+    """Return normalized distance, travel time, lead time, and cost surcharge."""
+
+    if not edges:
+        return ()
+    coordinates = normalize_coordinates(
+        env_config.get("clinic_coordinates"),
+        num_facilities,
+    )
+    if coordinates:
+        distances = np.asarray(
+            geographic_distance_matrix(coordinates),
+            dtype=float,
+        )
+        transfer_times = np.asarray(
+            geographic_transfer_time_matrix(
+                coordinates,
+                speed_mph=float(
+                    env_config.get("geographic_transfer_speed_mph", 500.0)
+                ),
+                fixed_handling_hours=float(
+                    env_config.get("geographic_transfer_fixed_hours", 0.5)
+                ),
+            ),
+            dtype=float,
+        )
+    else:
+        distances = np.zeros((num_facilities, num_facilities), dtype=float)
+        transfer_times = np.zeros_like(distances)
+
+    max_distance = max(float(distances.max()), 1.0)
+    max_time = max(float(transfer_times.max()), 1.0)
+    max_lead_time = max(int(env_config.get("transfer_lead_time", 0)), 1)
+    thresholds = tuple(
+        float(value)
+        for value in (
+            env_config.get(
+                "transfer_lead_time_distance_thresholds",
+                (),
+            )
+            or ()
+        )
+    )
+    distance_cost_scale = float(
+        env_config.get("geographic_transfer_cost_scale", 0.0)
+    )
+    time_cost_scale = float(
+        env_config.get("geographic_transfer_time_cost_scale", 0.0)
+    )
+    surcharges = (
+        distance_cost_scale * distances / 1000.0
+        + time_cost_scale * transfer_times
+    )
+    max_surcharge = max(float(surcharges.max()), 1.0)
+
+    features: list[tuple[float, ...]] = []
+    for i, j in edges:
+        distance = float(distances[int(i), int(j)])
+        travel_time = float(transfer_times[int(i), int(j)])
+        lead_time = (
+            0
+            if int(env_config.get("transfer_lead_time", 0)) <= 0
+            else min(
+                1 + sum(distance > threshold for threshold in thresholds),
+                max_lead_time,
+            )
+        )
+        surcharge = float(surcharges[int(i), int(j)])
+        features.append(
+            (
+                distance / max_distance,
+                travel_time / max_time,
+                float(lead_time) / float(max_lead_time),
+                surcharge / max_surcharge,
+            )
+        )
+    return tuple(features)

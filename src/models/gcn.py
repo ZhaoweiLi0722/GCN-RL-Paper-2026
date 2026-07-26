@@ -144,6 +144,47 @@ if torch is not None:
             encoded = self.encoder(node_features)
             return graph_readout(encoded, self.num_facilities, self.include_global_context)
 
+    def _edge_pair_tensor(edges: Sequence[Edge]):
+        if not edges:
+            return torch.zeros((2, 0), dtype=torch.long)
+        return torch.as_tensor(tuple(edges), dtype=torch.long).transpose(0, 1)
+
+
+    def _edge_feature_tensor(
+        features: Sequence[Sequence[float]],
+        feature_dim: int,
+    ):
+        if not features:
+            return torch.zeros((0, int(feature_dim)), dtype=torch.float32)
+        if int(feature_dim) == 0 or len(tuple(features[0])) == 0:
+            return torch.zeros((len(features), int(feature_dim)), dtype=torch.float32)
+        return torch.as_tensor(tuple(features), dtype=torch.float32)
+
+
+    def _validate_network_edge_metadata(
+        resource_edges: Sequence[Edge],
+        capacity_edges: Sequence[Edge],
+        resource_features: Sequence[Sequence[float]],
+        capacity_features: Sequence[Sequence[float]],
+    ) -> int:
+        if len(resource_edges) != len(resource_features):
+            raise ValueError(
+                "network_residual requires one feature row per resource edge"
+            )
+        if len(capacity_edges) != len(capacity_features):
+            raise ValueError(
+                "network_residual requires one feature row per capacity edge"
+            )
+        dimensions = {
+            len(tuple(row))
+            for row in (*resource_features, *capacity_features)
+        }
+        if len(dimensions) > 1:
+            raise ValueError(
+                "network_residual edge feature rows must have a common width"
+            )
+        return next(iter(dimensions), 0)
+
 
     class GCNActor(nn.Module):
         """GCN encoder followed by a deterministic DDPG actor head."""
@@ -160,8 +201,13 @@ if torch is not None:
             include_global_context: bool = True,
             readout_mode: str = "global_flat",
             edge_weights: Sequence[float] | None = None,
+            resource_edges: Sequence[Edge] | None = None,
+            capacity_edges: Sequence[Edge] | None = None,
+            resource_edge_features: Sequence[Sequence[float]] | None = None,
+            capacity_edge_features: Sequence[Sequence[float]] | None = None,
         ):
             super().__init__()
+            self.node_feature_dim = int(node_feature_dim)
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
             self.readout_mode = str(readout_mode)
@@ -192,12 +238,134 @@ if torch is not None:
                     self.facility_action_dim,
                     output_tanh=True,
                 )
+            elif self.readout_mode == "network_residual":
+                if int(action_dim) != 4 * self.num_facilities:
+                    raise ValueError(
+                        "network_residual readout requires a facility-net action layout"
+                    )
+                resource_edges = tuple(resource_edges or ())
+                capacity_edges = tuple(capacity_edges or ())
+                resource_edge_features = tuple(
+                    resource_edge_features
+                    if resource_edge_features is not None
+                    else (() for _edge in resource_edges)
+                )
+                capacity_edge_features = tuple(
+                    capacity_edge_features
+                    if capacity_edge_features is not None
+                    else (() for _edge in capacity_edges)
+                )
+                edge_feature_dim = _validate_network_edge_metadata(
+                    resource_edges,
+                    capacity_edges,
+                    resource_edge_features,
+                    capacity_edge_features,
+                )
+                self.register_buffer(
+                    "resource_edge_pairs",
+                    _edge_pair_tensor(resource_edges),
+                )
+                self.register_buffer(
+                    "capacity_edge_pairs",
+                    _edge_pair_tensor(capacity_edges),
+                )
+                self.register_buffer(
+                    "resource_static_edge_features",
+                    _edge_feature_tensor(
+                        resource_edge_features,
+                        edge_feature_dim,
+                    ),
+                )
+                self.register_buffer(
+                    "capacity_static_edge_features",
+                    _edge_feature_tensor(
+                        capacity_edge_features,
+                        edge_feature_dim,
+                    ),
+                )
+                context_dim = (
+                    self.encoder.output_dim if self.include_global_context else 0
+                )
+                node_input_dim = (
+                    self.encoder.output_dim
+                    + self.node_feature_dim
+                    + context_dim
+                )
+                edge_input_dim = (
+                    3 * self.encoder.output_dim
+                    + self.node_feature_dim
+                    + context_dim
+                    + edge_feature_dim
+                )
+                self.replenishment_head = _build_mlp(
+                    node_input_dim,
+                    head_hidden_sizes,
+                    1,
+                    output_tanh=True,
+                )
+                self.reagent_edge_head = _build_mlp(
+                    edge_input_dim,
+                    head_hidden_sizes,
+                    1,
+                    output_tanh=True,
+                )
+                self.capacity_edge_head = _build_mlp(
+                    edge_input_dim,
+                    head_hidden_sizes,
+                    1,
+                    output_tanh=True,
+                )
             else:
                 raise ValueError(f"Unsupported GCN actor readout_mode: {self.readout_mode}")
 
         def forward(self, node_features):
             encoded = self.encoder(node_features)
             facility_encoded = encoded[:, : self.num_facilities, :]
+            if self.readout_mode == "network_residual":
+                facility_features = node_features[:, : self.num_facilities, :]
+                graph_context = (
+                    encoded.mean(dim=1)
+                    if self.include_global_context
+                    else None
+                )
+                node_inputs = [facility_encoded, facility_features]
+                if graph_context is not None:
+                    node_inputs.append(
+                        graph_context.unsqueeze(1).expand(
+                            -1,
+                            self.num_facilities,
+                            -1,
+                        )
+                    )
+                replenishment = self.replenishment_head(
+                    torch.cat(node_inputs, dim=-1)
+                ).squeeze(-1)
+                reagent_net = self._edge_net_actions(
+                    facility_encoded,
+                    facility_features,
+                    graph_context,
+                    self.resource_edge_pairs,
+                    self.resource_static_edge_features,
+                    self.reagent_edge_head,
+                )
+                capacity_net = self._edge_net_actions(
+                    facility_encoded,
+                    facility_features,
+                    graph_context,
+                    self.capacity_edge_pairs,
+                    self.capacity_static_edge_features,
+                    self.capacity_edge_head,
+                )
+                specimen_net = torch.zeros_like(reagent_net)
+                return torch.cat(
+                    (
+                        specimen_net,
+                        reagent_net,
+                        capacity_net,
+                        replenishment,
+                    ),
+                    dim=1,
+                )
             if self.readout_mode == "facility_action":
                 if self.include_global_context:
                     graph_context = encoded.mean(dim=1, keepdim=True).expand(
@@ -209,6 +377,138 @@ if torch is not None:
 
             readout = graph_readout(encoded, self.num_facilities, self.include_global_context)
             return self.head(readout)
+
+        def _edge_net_actions(
+            self,
+            facility_encoded,
+            facility_features,
+            graph_context,
+            edge_pairs,
+            static_edge_features,
+            edge_head,
+        ):
+            batch_size = facility_encoded.shape[0]
+            if edge_pairs.shape[1] == 0:
+                return torch.zeros(
+                    batch_size,
+                    self.num_facilities,
+                    dtype=facility_encoded.dtype,
+                    device=facility_encoded.device,
+                )
+            source = edge_pairs[0]
+            target = edge_pairs[1]
+            source_encoded = facility_encoded[:, source, :]
+            target_encoded = facility_encoded[:, target, :]
+            edge_inputs = [
+                source_encoded,
+                target_encoded,
+                target_encoded - source_encoded,
+                facility_features[:, target, :] - facility_features[:, source, :],
+            ]
+            if graph_context is not None:
+                edge_inputs.append(
+                    graph_context.unsqueeze(1).expand(
+                        -1,
+                        source.shape[0],
+                        -1,
+                    )
+                )
+            if static_edge_features.shape[1] > 0:
+                edge_inputs.append(
+                    static_edge_features.unsqueeze(0).expand(
+                        batch_size,
+                        -1,
+                        -1,
+                    )
+                )
+            edge_flow = edge_head(torch.cat(edge_inputs, dim=-1)).squeeze(-1)
+            net = torch.zeros(
+                batch_size,
+                self.num_facilities,
+                dtype=edge_flow.dtype,
+                device=edge_flow.device,
+            )
+            source_index = source.unsqueeze(0).expand(batch_size, -1)
+            target_index = target.unsqueeze(0).expand(batch_size, -1)
+            net.scatter_add_(1, source_index, -edge_flow)
+            net.scatter_add_(1, target_index, edge_flow)
+            normalizer = net.abs().amax(dim=1, keepdim=True).clamp_min(1.0)
+            return net / normalizer
+
+        def zero_initialize_output_heads(self) -> None:
+            """Initialize every actor output head to the zero residual policy."""
+
+            if self.readout_mode == "network_residual":
+                heads = (
+                    self.replenishment_head,
+                    self.reagent_edge_head,
+                    self.capacity_edge_head,
+                )
+            else:
+                heads = (self.head,)
+            for head in heads:
+                output_layer = next(
+                    module
+                    for module in reversed(tuple(head.modules()))
+                    if isinstance(module, nn.Linear)
+                )
+                nn.init.zeros_(output_layer.weight)
+                nn.init.zeros_(output_layer.bias)
+
+
+    class GCNCorrectionGate(nn.Module):
+        """Graph classifier deciding whether a residual correction is admissible."""
+
+        def __init__(
+            self,
+            node_feature_dim: int,
+            num_facilities: int,
+            num_nodes: int,
+            edges: Sequence[Edge],
+            gcn_hidden_sizes: Sequence[int],
+            head_hidden_sizes: Sequence[int],
+            include_global_context: bool = True,
+            edge_weights: Sequence[float] | None = None,
+            output_dim: int = 1,
+        ):
+            super().__init__()
+            self.num_facilities = int(num_facilities)
+            self.include_global_context = bool(include_global_context)
+            self.encoder = GCNEncoder(
+                node_feature_dim,
+                gcn_hidden_sizes,
+                num_nodes,
+                edges,
+                edge_weights=edge_weights,
+            )
+            readout_dim = graph_readout_dim(
+                self.num_facilities,
+                self.encoder.output_dim,
+                self.include_global_context,
+            )
+            self.head = _build_mlp(
+                readout_dim,
+                head_hidden_sizes,
+                int(output_dim),
+                output_tanh=False,
+            )
+            output_layer = next(
+                module
+                for module in reversed(tuple(self.head.modules()))
+                if isinstance(module, nn.Linear)
+            )
+            nn.init.zeros_(output_layer.weight)
+            nn.init.zeros_(output_layer.bias)
+
+        def forward(self, node_features):
+            encoded = self.encoder(node_features)
+            readout = graph_readout(
+                encoded,
+                self.num_facilities,
+                self.include_global_context,
+            )
+            output = self.head(readout)
+            return output.squeeze(-1) if output.shape[-1] == 1 else output
 
 
     def transfer_matching_parameters(source_state_dict, target_module):
@@ -465,6 +765,11 @@ else:
 
 
     class GCNActor:  # pragma: no cover
+        def __init__(self, *args, **kwargs):
+            require_torch()
+
+
+    class GCNCorrectionGate:  # pragma: no cover
         def __init__(self, *args, **kwargs):
             require_torch()
 

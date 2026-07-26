@@ -1,15 +1,17 @@
 """Patient-condition capacity-planning environment (Phase 4, task group 3).
 
 Extends the base PRM capacity-planning environment so that **patients drive
-demand** (approach a): each clinic holds a queue of individual patients whose
-health deteriorates while they wait (`patient_condition`). The count of *eligible
-waiting patients* is the specimen supply the base manufacturing dynamics consume.
+demand** (approach a): each clinic holds individual patients whose health
+deteriorates both while they wait and while their autologous therapy is in
+manufacturing (`patient_condition`). The count of *eligible waiting patients* is
+the specimen supply the manufacturing dynamics consume.
 
 Two loss channels are added on top of the base cost:
-- **Patients lost** — survival falls below the eligibility threshold before the
-  patient is served.
+- **Patients lost** — survival falls below the eligibility threshold before
+  infusion, including during manufacturing.
 - **Material wasted** — a waiting specimen ages past its shelf life, or finished
-  product expires before delivery (`aging_inventory`), plus an urgency penalty on
+  product expires before delivery (`aging_inventory`), or an in-process therapy
+  is discarded after the patient becomes ineligible, plus an urgency penalty on
   at-risk patients left unserved.
 
 Modeling notes:
@@ -19,8 +21,9 @@ Modeling notes:
   clinics. Reagent and capacity transfers may arrive through the base delayed
   transfer pipeline when ``transfer_lead_time > 0``.
 - Inter-clinic patient routing (with the cold-chain viability hook) is deferred.
+- A bioreactor attached to a discarded therapy is cleaned during the current
+  epoch and returns to the idle pool at the next decision epoch.
 - Requires ``action_mode == "facility_net"``.
-- The base env (`capacity_planning.py`) is not modified.
 """
 
 from __future__ import annotations
@@ -40,6 +43,7 @@ from src.env.capacity_planning import (
 from src.env.patient_condition import (
     PatientConditionConfig,
     PatientConditionModel,
+    PatientState,
     PatientStatus,
 )
 
@@ -74,8 +78,8 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         self._summary_edges = np.asarray(self.env_config.survival_bucket_edges, dtype=float)
         if self._summary_edges.ndim != 1 or (np.diff(self._summary_edges) <= 0).any():
             raise ValueError("survival_bucket_edges must be strictly increasing")
-        # 3 scalars (waiting count, mean survival, near-expiry count) + histogram.
-        self.summary_width = 3 + len(self._summary_edges) + 1
+        # Six scalars (waiting + manufacturing risk) plus waiting histogram.
+        self.summary_width = 6 + len(self._summary_edges) + 1
         # base __init__ calls self.reset(), which needs the attributes above.
         super().__init__(self.env_config.base, seed)
         if self.config.action_mode != "facility_net":
@@ -83,7 +87,9 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         # The patient summary is appended as a per-clinic block; extend the sizes.
         self.base_observation_size = self.config.num_facilities * self.features_per_facility
         self.observation_size = (
-            self.base_observation_size + self.config.num_facilities * self.summary_width
+            self.base_observation_size
+            + self.config.num_facilities * self.summary_width
+            + int(self.config.include_time_state)
         )
 
     # ------------------------------------------------------------------ reset
@@ -92,6 +98,10 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         n = self.config.num_facilities
         viability_fn = self._viability_fn if self.env_config.enable_viability_hook else None
         self.patient_queues = [[] for _ in range(n)]
+        lead_time = self.config.production_lead_time
+        self.in_production_patients: list[list[list[PatientState]]] = [
+            [[] for _ in range(lead_time)] for _ in range(n)
+        ]
         self.finished_product = [
             AgingInventory(self.env_config.finished_shelf_life, viability_fn) for _ in range(n)
         ]
@@ -103,6 +113,9 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         self.cumulative_enrolled = float(self.specimens.sum())
         self.cumulative_lost = 0.0
         self.cumulative_served = 0.0
+        self.cumulative_started = 0.0
+        self.cumulative_manufacturing_lost = 0.0
+        self.cumulative_turnaround_time = 0.0
         return self.observation()
 
     # ------------------------------------------------------------ observation
@@ -117,8 +130,12 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         base = super().observation()
         if not hasattr(self, "patient_queues"):  # during base __init__/reset setup
             return base
+        if self.config.include_time_state:
+            base, time_state = base[:-1], base[-1:]
+        else:
+            time_state = np.empty(0, dtype=np.float32)
         summary = self._patient_summary().reshape(-1)
-        return np.concatenate([base, summary]).astype(np.float32)
+        return np.concatenate([base, summary, time_state]).astype(np.float32)
 
     def graph_observation(self) -> dict[str, np.ndarray]:
         """Base graph observation with patient-summary columns on each clinic node."""
@@ -135,7 +152,12 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         return data
 
     def _patient_summary(self) -> np.ndarray:
-        """Per-clinic fixed-width summary: [count, mean_survival, near_expiry, hist...]."""
+        """Per-clinic waiting/manufacturing risk summary.
+
+        Columns are ``[waiting_count, waiting_mean_survival, near_expiry_count,
+        in_production_count, in_production_mean_survival,
+        in_production_at_risk_count, waiting_survival_histogram...]``.
+        """
 
         n = self.config.num_facilities
         buckets = len(self._summary_edges) + 1
@@ -152,7 +174,22 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             rows[i, 0] = float(len(queue))
             rows[i, 1] = float(survivals.mean())
             rows[i, 2] = float((ages >= near_expiry_age).sum())
-            rows[i, 3:] = histogram
+            rows[i, 6:] = histogram
+        for i in range(n):
+            in_production = [
+                patient
+                for stage in self.in_production_patients[i][1:]
+                for patient in stage
+            ]
+            if not in_production:
+                continue
+            survivals = np.array([p.survival for p in in_production], dtype=float)
+            threshold = (
+                self.env_config.patient.eligibility_threshold + self.env_config.urgency_margin
+            )
+            rows[i, 3] = float(len(in_production))
+            rows[i, 4] = float(survivals.mean())
+            rows[i, 5] = float((survivals < threshold).sum())
         return rows
 
     # ------------------------------------------------------------------- step
@@ -174,35 +211,56 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             * supplier_available
         )
 
-        # 1) Age waiting patients; apply the loss channels (expiry then eligibility).
-        lost_ineligible, lost_expired = self._age_and_gate_patients()
-
-        # 2) Production consumes the most-urgent eligible patients, bounded by
-        #    idle bioreactors and reagents.
+        # 1) Start the most-urgent eligible patients, bounded by idle
+        #    bioreactors and reagents. A start is not counted as treatment until
+        #    the therapy completes manufacturing and is infused.
         idle_bioreactors = self.bioreactors[:, 0]
         waiting = self._waiting_counts()
         production = np.floor(
             np.minimum.reduce((waiting, idle_bioreactors, self.reagents))
         ).astype(float)
-        self._start_production(production)
+        started_patients = self._start_production(production)
 
-        # 3) Base resource bookkeeping (reagents + bioreactor pipeline), then
-        #    reagent/capacity transfers (specimens are identity-bound: no pooling).
+        # 2) During the epoch, waiting and in-production patients both
+        #    deteriorate. In-process therapies are discarded when their matched
+        #    patient becomes ineligible; the associated bioreactor is cleaned
+        #    and returns idle at the next decision epoch.
+        lost_waiting_ineligible, lost_expired = self._age_and_gate_patients()
+        completed_patients, lost_manufacturing = self._advance_manufacturing_patients(
+            started_patients
+        )
+        completed_counts = np.array(
+            [float(len(patients)) for patients in completed_patients], dtype=float
+        )
+
+        # 3) Resource bookkeeping (reagents + patient-aligned bioreactor
+        #    pipeline), then reagent/capacity transfers. Specimens remain
+        #    identity-bound and cannot be pooled.
         next_reagents = self.reagents - production + replenishment
         next_bioreactors = np.zeros_like(self.bioreactors)
-        next_bioreactors[:, 0] = self.bioreactors[:, 0] - production + self.bioreactors[:, 1]
-        if self.config.production_lead_time > 2:
-            next_bioreactors[:, 1:-1] = self.bioreactors[:, 2:]
-        next_bioreactors[:, -1] = production
+        next_bioreactors[:, 0] = (
+            self.bioreactors[:, 0] - production + completed_counts + lost_manufacturing
+        )
+        for i in range(n):
+            for stage in range(1, self.config.production_lead_time):
+                next_bioreactors[i, stage] = float(
+                    len(self.in_production_patients[i][stage])
+                )
 
         specimen_net = np.zeros(n, dtype=float)
         specimen_flows = np.zeros(len(self.specimen_edges), dtype=float)
         if self.config.transfer_lead_time > 0:
             reagent_net, reagent_flows, reagent_future_arrivals = _apply_net_transfers_delayed(
-                next_reagents, self.resource_edges, reagent_transfer_requests
+                next_reagents,
+                self.resource_edges,
+                reagent_transfer_requests,
+                edge_priorities=self.reagent_transfer_priorities,
             )
             capacity_net, capacity_flows, capacity_future_arrivals = _apply_net_transfers_delayed(
-                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+                next_bioreactors[:, 0],
+                self.capacity_edges,
+                capacity_requests,
+                edge_priorities=self.capacity_transfer_priorities,
             )
             if self._uses_geographic_transfer_delays():
                 self._schedule_edge_transfer_arrivals(
@@ -220,18 +278,28 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 )
         else:
             reagent_net, reagent_flows = _apply_net_transfers(
-                next_reagents, self.resource_edges, reagent_transfer_requests
+                next_reagents,
+                self.resource_edges,
+                reagent_transfer_requests,
+                edge_priorities=self.reagent_transfer_priorities,
             )
             capacity_net, capacity_flows = _apply_net_transfers(
-                next_bioreactors[:, 0], self.capacity_edges, capacity_requests
+                next_bioreactors[:, 0],
+                self.capacity_edges,
+                capacity_requests,
+                edge_priorities=self.capacity_transfer_priorities,
             )
 
         self.reagents = np.clip(next_reagents, 0.0, self.max_reagents)
         next_bioreactors[:, 0] = np.clip(next_bioreactors[:, 0], 0.0, self.max_idle_bioreactors)
         self.bioreactors = np.maximum(next_bioreactors, 0.0)
 
-        # 4) Finished product ages and is delivered; expired product is wasted.
-        finished_expired = self._age_and_deliver_finished()
+        # 4) Completed therapies enter finished inventory and are infused
+        #    locally. Existing inventory ages first, so a future delivery
+        #    constraint can use the same hook without changing patient identity.
+        finished_expired, delivered_counts = self._age_and_deliver_finished(
+            completed_patients
+        )
 
         # 5) New patient arrivals (demand) enroll into the queues.
         current_demand = self.demand.copy()
@@ -244,8 +312,9 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         under_bioreactors = np.maximum(self.specimens - self.bioreactors[:, 0], 0.0)
         idle_bioreactor_counts = np.maximum(self.bioreactors[:, 0] - self.specimens, 0.0)
 
-        patients_lost = lost_ineligible + lost_expired
-        material_wasted = lost_expired + finished_expired
+        patients_lost_ineligible = lost_waiting_ineligible + lost_manufacturing
+        patients_lost = patients_lost_ineligible + lost_expired
+        material_wasted = lost_expired + finished_expired + lost_manufacturing
         at_risk_unserved = self._at_risk_unserved_counts()
         reagent_transfer_cost = self._facility_net_transfer_cost(
             costs.reagent_transfer,
@@ -260,24 +329,33 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             capacity_net,
         )
 
-        base_cost = (
-            costs.reagent_purchase * float(replenishment.sum())
-            + costs.reagent_holding * float(idle_reagents.sum())
-            + costs.reagent_shortage * float(under_reagents.sum())
-            + costs.bioreactor_holding * float(idle_bioreactor_counts.sum())
-            + costs.bioreactor_shortage * float(under_bioreactors.sum())
-            + reagent_transfer_cost
-            + capacity_transfer_cost
+        operating_cost_components = self._operating_cost_components(
+            replenishment=replenishment,
+            idle_reagents=idle_reagents,
+            under_reagents=under_reagents,
+            idle_bioreactors=idle_bioreactor_counts,
+            under_bioreactors=under_bioreactors,
+            specimen_transfer_cost=0.0,
+            capacity_transfer_cost=capacity_transfer_cost,
+            reagent_transfer_cost=reagent_transfer_cost,
         )
-        cost = (
-            base_cost
-            + self.env_config.weight_patient_lost * float(patients_lost.sum())
-            + self.env_config.weight_expiry * float(material_wasted.sum())
-            + self.env_config.weight_urgency * float(at_risk_unserved.sum())
-        )
+        base_cost = float(sum(operating_cost_components.values()))
+        patient_cost_components = {
+            "patient_loss_cost": self.env_config.weight_patient_lost
+            * float(patients_lost.sum()),
+            "expiry_cost": self.env_config.weight_expiry * float(material_wasted.sum()),
+            "urgency_cost": self.env_config.weight_urgency
+            * float(at_risk_unserved.sum()),
+        }
+        cost = float(base_cost + sum(patient_cost_components.values()))
 
         self.cumulative_lost += float(patients_lost.sum())
-        self.cumulative_served += float(production.sum())
+        self.cumulative_started += float(production.sum())
+        self.cumulative_manufacturing_lost += float(lost_manufacturing.sum())
+        self.cumulative_served += float(delivered_counts.sum())
+        self.cumulative_turnaround_time += float(
+            sum(patient.age for patients in completed_patients for patient in patients)
+        )
         self._update_running_metrics(current_demand, production, self.specimens, self.bioreactors)
         if np.any(under_reagents > 0):
             self.reagent_shortage_steps += 1
@@ -288,18 +366,35 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         info: dict[str, np.ndarray | float] = {
             "cost": cost,
             "base_cost": base_cost,
+            **operating_cost_components,
+            **patient_cost_components,
             "production": production.copy(),
             "demand": current_demand.copy(),
             "replenishment": replenishment.copy(),
             "patients_lost": patients_lost.copy(),
-            "patients_lost_ineligible": lost_ineligible.copy(),
+            "patients_lost_ineligible": patients_lost_ineligible.copy(),
+            "patients_lost_waiting_ineligible": lost_waiting_ineligible.copy(),
+            "patients_lost_manufacturing": lost_manufacturing.copy(),
             "patients_lost_expired": lost_expired.copy(),
+            "patients_started": production.copy(),
+            "patients_completed": delivered_counts.copy(),
+            "therapies_discarded": lost_manufacturing.copy(),
+            "bioreactors_released_after_cleaning": lost_manufacturing.copy(),
             "material_wasted": material_wasted.copy(),
             "finished_expired": finished_expired.copy(),
             "at_risk_unserved": at_risk_unserved.copy(),
             "risk_type_counts": self.risk_type_counts().copy(),
+            "in_production_risk_type_counts": self.in_production_risk_type_counts().copy(),
             "waiting_patients": self.specimens.copy(),
+            "in_production_patients": self._in_production_counts(),
             "eligibility_rate": self._eligibility_rate(),
+            "completion_service_level": self._completion_service_level(),
+            "patient_ineligibility_during_manufacturing_rate": (
+                self._manufacturing_loss_rate()
+            ),
+            # Compatibility alias for pre-calibration result readers.
+            "manufacturing_loss_rate": self._manufacturing_loss_rate(),
+            "average_turnaround_time": self._average_turnaround_time(),
             "under_reagents": under_reagents.copy(),
             "under_bioreactors": under_bioreactors.copy(),
             "specimen_transfer_arrivals": specimen_arrivals.copy(),
@@ -339,22 +434,66 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             self.patient_queues[i] = survivors
         return lost_ineligible, lost_expired
 
-    def _start_production(self, production: np.ndarray) -> None:
+    def _start_production(self, production: np.ndarray) -> list[list[PatientState]]:
+        started: list[list[PatientState]] = []
         for i, count in enumerate(production.astype(int)):
             served = self.patient_queues[i][:count]
             for patient in served:
                 patient.status = PatientStatus.IN_PRODUCTION
-            self.finished_product[i].add(float(count))
+            started.append(served)
             self.patient_queues[i] = self.patient_queues[i][count:]
+        return started
 
-    def _age_and_deliver_finished(self) -> np.ndarray:
+    def _advance_manufacturing_patients(
+        self,
+        started_patients: list[list[PatientState]],
+    ) -> tuple[list[list[PatientState]], np.ndarray]:
+        """Advance patient-aligned therapies by one manufacturing epoch."""
+
+        n = self.config.num_facilities
+        lead_time = self.config.production_lead_time
+        next_pipeline: list[list[list[PatientState]]] = [
+            [[] for _ in range(lead_time)] for _ in range(n)
+        ]
+        completed: list[list[PatientState]] = [[] for _ in range(n)]
+        lost = np.zeros(n, dtype=float)
+
+        def advance_one(patient: PatientState, facility: int, next_stage: int) -> None:
+            self.patient_model.advance(patient)
+            if not self.patient_model.is_eligible(patient):
+                patient.status = PatientStatus.LOST
+                lost[facility] += 1.0
+            elif next_stage == 0:
+                completed[facility].append(patient)
+            else:
+                next_pipeline[facility][next_stage].append(patient)
+
+        for i in range(n):
+            for stage in range(1, lead_time):
+                for patient in self.in_production_patients[i][stage]:
+                    advance_one(patient, i, stage - 1)
+            for patient in started_patients[i]:
+                advance_one(patient, i, lead_time - 1)
+
+        self.in_production_patients = next_pipeline
+        return completed, lost
+
+    def _age_and_deliver_finished(
+        self,
+        completed_patients: list[list[PatientState]],
+    ) -> tuple[np.ndarray, np.ndarray]:
         n = self.config.num_facilities
         expired = np.zeros(n, dtype=float)
+        delivered = np.zeros(n, dtype=float)
         for i, inventory in enumerate(self.finished_product):
             expired[i] = inventory.advance()
-            # MVP: deliver all available finished product this epoch.
-            inventory.consume(inventory.total())
-        return expired
+            inventory.add(float(len(completed_patients[i])))
+            # Local POC infusion is immediate after manufacturing completion.
+            result = inventory.consume(inventory.total())
+            delivered[i] = result.delivered
+            for patient in completed_patients[i]:
+                patient.status = PatientStatus.DELIVERED
+        return expired, delivered
 
     def _enroll_arrivals(self, demand: np.ndarray) -> None:
         for i, count in enumerate(demand.astype(int)):
@@ -399,9 +538,38 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 counts[i, int(patient.risk_type)] += 1.0
         return counts
 
+    def in_production_risk_type_counts(self) -> np.ndarray:
+        """Per-clinic in-production patient counts by risk type."""
+
+        risk_types = len(self.patient_model.risk_decay_multipliers)
+        counts = np.zeros((self.config.num_facilities, risk_types), dtype=float)
+        for i, stages in enumerate(self.in_production_patients):
+            for stage in stages[1:]:
+                for patient in stage:
+                    counts[i, int(patient.risk_type)] += 1.0
+        return counts
+
+    def _in_production_counts(self) -> np.ndarray:
+        return np.array(
+            [
+                float(sum(len(stage) for stage in stages[1:]))
+                for stages in self.in_production_patients
+            ],
+            dtype=float,
+        )
+
     def _eligibility_rate(self) -> float:
         resolved = self.cumulative_served + self.cumulative_lost
         return self.cumulative_served / max(resolved, 1.0)
+
+    def _completion_service_level(self) -> float:
+        return self.cumulative_served / max(self.cumulative_enrolled, 1.0)
+
+    def _manufacturing_loss_rate(self) -> float:
+        return self.cumulative_manufacturing_lost / max(self.cumulative_started, 1.0)
+
+    def _average_turnaround_time(self) -> float:
+        return self.cumulative_turnaround_time / max(self.cumulative_served, 1.0)
 
     def _viability_fn(self, age: int, transport_time: float) -> float:
         # Placeholder cold-chain curve; only used when enable_viability_hook=True.

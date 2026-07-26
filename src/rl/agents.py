@@ -12,16 +12,21 @@ def available_algorithms() -> tuple[str, ...]:
         "flat_ddpg",
         "flat_residual_iso",
         "flat_residual_mdl2",
+        "flat_residual_mdl2_network_ddpg_afd",
+        "flat_residual_mdl2_option_dqn_afd",
         "flat_residual_mdl2_replenish_ddpg_afd",
         "flat_residual_myo",
         "flat_residual_pmyo",
         "gcn_ddpg",
         "gcn_pure_ddpg",
         "gcn_ppo",
+        "gcn_residual_mdl2_option_dqn_afd",
         "gcn_mdl2_shield_selector",
         "gcn_pmyo_shield_selector",
         "gcn_residual_iso",
         "gcn_residual_mdl2",
+        "gcn_residual_mdl2_network_ddpg_afd",
+        "gcn_residual_mdl2_network_td3_afd",
         "gcn_residual_mdl2_replenish_ddpg",
         "gcn_residual_mdl2_replenish_ddpg_afd",
         "gcn_residual_myo",
@@ -51,6 +56,7 @@ def get_agent_class(algorithm: str) -> Any:
         "flat_ddpg",
         "flat_residual_iso",
         "flat_residual_mdl2",
+        "flat_residual_mdl2_network_ddpg_afd",
         "flat_residual_mdl2_replenish_ddpg_afd",
         "flat_residual_myo",
         "flat_residual_pmyo",
@@ -58,6 +64,10 @@ def get_agent_class(algorithm: str) -> Any:
         from src.baselines.flat_ddpg import FlatDDPGAgent
 
         return FlatDDPGAgent
+    if algorithm == "flat_residual_mdl2_option_dqn_afd":
+        from src.baselines.flat_option_dqn import FlatResidualOptionDQNAgent
+
+        return FlatResidualOptionDQNAgent
     if algorithm == "gcn_ddpg":
         from src.models.gcn_ddpg import GCNDDPGAgent
 
@@ -66,6 +76,7 @@ def get_agent_class(algorithm: str) -> Any:
         "gcn_pure_ddpg",
         "gcn_residual_iso",
         "gcn_residual_mdl2",
+        "gcn_residual_mdl2_network_ddpg_afd",
         "gcn_residual_mdl2_replenish_ddpg",
         "gcn_residual_mdl2_replenish_ddpg_afd",
         "gcn_residual_myo",
@@ -76,6 +87,7 @@ def get_agent_class(algorithm: str) -> Any:
         return GCNDDPGAgent
     if algorithm in {
         "gcn_td3",
+        "gcn_residual_mdl2_network_td3_afd",
         "gcn_residual_mdl2_replenish_td3",
         "gcn_residual_mdl2_replenish_td3_afd",
         "gcn_residual_mdl2_td3",
@@ -99,6 +111,10 @@ def get_agent_class(algorithm: str) -> Any:
         from src.models.gcn_ppo import GCNPPOAgent
 
         return GCNPPOAgent
+    if algorithm == "gcn_residual_mdl2_option_dqn_afd":
+        from src.models.gcn_option_dqn import GCNResidualOptionDQNAgent
+
+        return GCNResidualOptionDQNAgent
     if algorithm in {"gcn_mdl2_shield_selector", "gcn_pmyo_shield_selector"}:
         from src.models.gcn_shield_selector import GCNShieldSelectorAgent
 

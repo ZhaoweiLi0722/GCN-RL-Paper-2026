@@ -13,6 +13,8 @@ from typing import Any, Sequence
 
 import numpy as np
 
+from src.rl.networks import torch
+
 
 @dataclass(frozen=True)
 class ProjectedAction:
@@ -62,6 +64,42 @@ def project_action(
         clipped=not np.allclose(action, projected),
         repair_magnitude=float(np.linalg.norm(projected - action)),
     )
+
+
+def project_tensor_to_pattern_basis(
+    current,
+    pattern,
+    *,
+    include_uniform: bool = False,
+):
+    """Project batched actions onto a state-derived pattern basis.
+
+    Transfer corrections use one centered pressure pattern. Replenishment can
+    additionally retain a uniform component, matching the two structured
+    correction families used by the end-to-go teacher.
+    """
+
+    if current.ndim != 2 or pattern.ndim != 2 or current.shape != pattern.shape:
+        raise ValueError(
+            "current and pattern must have the same rank-2 shape, "
+            f"got {tuple(current.shape)} and {tuple(pattern.shape)}"
+        )
+    uniform = torch.zeros(
+        (current.shape[0], 1),
+        dtype=current.dtype,
+        device=current.device,
+    )
+    projected_source = current
+    projected_pattern = pattern
+    if include_uniform:
+        uniform = current.mean(dim=1, keepdim=True)
+        projected_source = current - uniform
+        projected_pattern = pattern - pattern.mean(dim=1, keepdim=True)
+    denominator = projected_pattern.pow(2).sum(dim=1, keepdim=True).clamp_min(1e-6)
+    coefficient = (
+        projected_source * projected_pattern
+    ).sum(dim=1, keepdim=True) / denominator
+    return uniform + coefficient * projected_pattern
 
 
 def _infer_action_size(env_state: Any | None, action_space_info: Any | None) -> int | None:

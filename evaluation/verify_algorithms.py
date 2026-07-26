@@ -228,6 +228,12 @@ def patient_env_sanity(
             "seed": seed,
             "hidden_sizes": [64, 64],
             "batch_size": 128,
+            "normalize_observations": True,
+            "observation_clip": 10.0,
+            # Patient-loss costs are O(1e4-1e5); scale critic targets into a
+            # numerically stable range for this deliberately short sanity run.
+            "reward_scale": 1e-7,
+            "exploration_noise": {"theta": 0.15, "sigma": 0.1},
             "env": load_config(env_config_path),
         },
     )

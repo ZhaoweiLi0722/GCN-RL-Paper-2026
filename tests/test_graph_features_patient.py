@@ -17,6 +17,7 @@ from src.rl.experiment import build_env
 
 DEV_CONFIG = "experiments/configs/2_clinic_patient_condition.json"       # no hub
 HUB_CONFIG = "experiments/configs/20_clinic_patient_condition.json"      # central hub
+TIME_CONFIG = "experiments/configs/20_clinic_patient_condition_geo_demand_drift.json"
 
 
 def _spec_and_env(path: str):
@@ -27,22 +28,24 @@ def _spec_and_env(path: str):
 
 class PatientGraphSpecTests(unittest.TestCase):
     def test_spec_dims_match_patient_env(self) -> None:
-        for path in (DEV_CONFIG, HUB_CONFIG):
+        for path in (DEV_CONFIG, HUB_CONFIG, TIME_CONFIG):
             with self.subTest(path=path):
                 spec, env = _spec_and_env(path)
-                # Summary width = 3 scalars + (len(edges)+1) histogram buckets.
+                # Summary width = 6 lifecycle scalars + waiting-survival buckets.
                 self.assertEqual(spec.patient_summary_width, env.summary_width)
                 node_width = env.graph_observation()["node_features"].shape[1]
                 self.assertEqual(spec.node_feature_dim, node_width)
 
     def test_expected_state_dim_accepts_patient_observation(self) -> None:
         # build_graph_spec used to hard-raise on the appended summary block.
-        for path in (DEV_CONFIG, HUB_CONFIG):
+        for path in (DEV_CONFIG, HUB_CONFIG, TIME_CONFIG):
             with self.subTest(path=path):
                 _spec, env = _spec_and_env(path)  # would raise on mismatch
                 self.assertEqual(
                     env.observation_size,
-                    env.base_observation_size + env.config.num_facilities * env.summary_width,
+                    env.base_observation_size
+                    + env.config.num_facilities * env.summary_width
+                    + int(env.config.include_time_state),
                 )
 
 
@@ -56,7 +59,7 @@ class PatientNodeFeatureEquivalenceTests(unittest.TestCase):
             self.skipTest("torch not available")
         from src.models.graph_features import flat_state_to_node_features
 
-        for path in (DEV_CONFIG, HUB_CONFIG):
+        for path in (DEV_CONFIG, HUB_CONFIG, TIME_CONFIG):
             with self.subTest(path=path):
                 spec, env = _spec_and_env(path)
                 # Advance a few steps so queues are non-trivial (histogram populated).

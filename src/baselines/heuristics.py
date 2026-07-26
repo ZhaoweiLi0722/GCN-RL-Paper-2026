@@ -23,6 +23,8 @@ class HeuristicSettings:
     allow_sharing: bool = True
     local_order_up_to_multiplier: float = 1.0
     use_demand_forecast: bool = False
+    use_demand_history: bool = False
+    demand_history_weight: float = 1.0
     use_patient_priority: bool = False
     patient_priority_weight: float = 0.5
     near_expiry_weight: float = 1.0
@@ -54,6 +56,18 @@ class CapacityHeuristicPolicy:
             allow_sharing=bool(config.get("allow_sharing", self.default_allow_sharing())),
             local_order_up_to_multiplier=float(config.get("local_order_up_to_multiplier", 1.0)),
             use_demand_forecast=bool(config.get("use_demand_forecast", self.default_use_demand_forecast())),
+            use_demand_history=bool(
+                config.get(
+                    "use_demand_history",
+                    self.default_use_demand_history(),
+                )
+            ),
+            demand_history_weight=float(
+                config.get(
+                    "demand_history_weight",
+                    self.default_demand_history_weight(),
+                )
+            ),
         )
 
     def default_lookahead_periods(self) -> int:
@@ -64,6 +78,12 @@ class CapacityHeuristicPolicy:
 
     def default_use_demand_forecast(self) -> bool:
         return False
+
+    def default_use_demand_history(self) -> bool:
+        return False
+
+    def default_demand_history_weight(self) -> float:
+        return 1.0
 
     def reset(self) -> None:
         return None
@@ -100,6 +120,11 @@ class CapacityHeuristicPolicy:
             bioreactors=env.bioreactors,
             supplier_available=env.supplier_available,
             demand_forecast=getattr(env, "demand_forecast", None),
+            demand_history_mean=(
+                env._demand_history_features()[0]
+                if env.config.include_demand_history_state
+                else None
+            ),
             demand_rates=getattr(env, "demand_rate_estimates", env.demand_rates),
             max_reagent_replenishment=env.max_reagent_replenishment,
             max_specimen_transfer=float(env.config.max_specimen_transfer),
@@ -156,6 +181,27 @@ class ForecastMyopicPolicy(CapacityHeuristicPolicy):
 
     def default_use_demand_forecast(self) -> bool:
         return True
+
+
+class ForecastMeanDemandLookahead2Policy(MeanDemandLookahead2Policy):
+    """fMDL-2: MDL-2 network sharing driven by the observable forecast."""
+
+    algorithm = "fmdl2"
+
+    def default_use_demand_forecast(self) -> bool:
+        return True
+
+
+class RollingMeanDemandLookahead2Policy(MeanDemandLookahead2Policy):
+    """rMDL-2: MDL-2 driven by the causal rolling demand mean."""
+
+    algorithm = "rmdl2"
+
+    def default_use_demand_history(self) -> bool:
+        return True
+
+    def default_demand_history_weight(self) -> float:
+        return 0.05
 
 
 class UrgencyAwareMyopicPolicy(MyopicPolicy):
@@ -235,6 +281,12 @@ class ShieldedPatientPriorityMyopicPolicy(PatientPriorityMyopicPolicy):
         config = config or {}
         self.anchor_policy_name = str(config.get("anchor_policy", self.default_anchor_policy()))
         self.shield_lookahead = int(config.get("shield_lookahead", 3))
+        self.shield_rollout_replications = max(
+            int(config.get("shield_rollout_replications", 1)),
+            1,
+        )
+        self.shield_seed = int(config.get("shield_seed", 1970000))
+        self._shield_decision_index = 0
         self.shield_epsilons = tuple(float(value) for value in config.get("shield_epsilons", (0.005, 0.01)))
         self.min_service_level_delta = float(config.get("min_service_level_delta", 0.0))
         self.min_score_improvement = float(config.get("min_score_improvement", 0.0))
@@ -257,6 +309,11 @@ class ShieldedPatientPriorityMyopicPolicy(PatientPriorityMyopicPolicy):
         )
         self._anchor_policy = self._make_anchor_policy(state_dim, action_dim, config)
 
+    def reset(self) -> None:
+        super().reset()
+        self._anchor_policy.reset()
+        self._shield_decision_index = 0
+
     def _make_anchor_policy(self, state_dim, action_dim, config):
         policy_map = {
             "myo": MyopicPolicy,
@@ -264,6 +321,8 @@ class ShieldedPatientPriorityMyopicPolicy(PatientPriorityMyopicPolicy):
             "mdl1": MeanDemandLookahead1Policy,
             "mdl2": MeanDemandLookahead2Policy,
             "fmyo": ForecastMyopicPolicy,
+            "fmdl2": ForecastMeanDemandLookahead2Policy,
+            "rmdl2": RollingMeanDemandLookahead2Policy,
             "umyo": UrgencyAwareMyopicPolicy,
             "pmyo": PatientPriorityMyopicPolicy,
         }
@@ -285,12 +344,31 @@ class ShieldedPatientPriorityMyopicPolicy(PatientPriorityMyopicPolicy):
         )
         if len(candidates) <= 1 or self.shield_lookahead <= 0:
             return anchor_action
-        candidate_metrics = [
-            shield_rollout_metrics(copy.deepcopy(env), self._anchor_policy, action, horizon=self.shield_lookahead)
-            for action in candidates
-        ]
+        candidate_metrics = self._evaluate_candidates(env, candidates)
         best_index = select_shield_candidate_index(self, candidate_metrics)
         return project_action(candidates[best_index], env_state=env, action_space_info=env.action_size).action
+
+    def _evaluate_candidates(
+        self,
+        env: CapacityPlanningEnv,
+        candidates: Sequence[np.ndarray],
+    ) -> list[dict[str, float]]:
+        start = self.shield_seed + self._shield_decision_index * self.shield_rollout_replications
+        rollout_seeds = tuple(
+            start + replication
+            for replication in range(self.shield_rollout_replications)
+        )
+        self._shield_decision_index += 1
+        return [
+            mean_shield_rollout_metrics(
+                env,
+                self._anchor_policy,
+                action,
+                horizon=self.shield_lookahead,
+                rollout_seeds=rollout_seeds,
+            )
+            for action in candidates
+        ]
 
 
 class ShieldedMeanDemandLookahead2Policy(ShieldedPatientPriorityMyopicPolicy):
@@ -308,6 +386,8 @@ HEURISTIC_POLICIES = {
     "mdl1": MeanDemandLookahead1Policy,
     "mdl2": MeanDemandLookahead2Policy,
     "fmyo": ForecastMyopicPolicy,
+    "fmdl2": ForecastMeanDemandLookahead2Policy,
+    "rmdl2": RollingMeanDemandLookahead2Policy,
     "umyo": UrgencyAwareMyopicPolicy,
     "pmyo": PatientPriorityMyopicPolicy,
     "mdl2_shield": ShieldedMeanDemandLookahead2Policy,
@@ -355,6 +435,9 @@ def facility_net_action_from_state(
     lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier = bool(env_config.get("include_supplier_state", False))
     include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+    include_demand_history = bool(
+        env_config.get("include_demand_history_state", False)
+    )
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     features_per_facility = (
         3
@@ -362,6 +445,7 @@ def facility_net_action_from_state(
         + int(include_supplier)
         + int(include_forecast)
         + 3 * int(include_transfer_pipeline)
+        + 3 * int(include_demand_history)
     )
 
     base_width = n * features_per_facility
@@ -385,6 +469,17 @@ def facility_net_action_from_state(
         demand_forecast = state_array[:, forecast_start]
     else:
         demand_forecast = None
+    if include_demand_history:
+        history_start = (
+            3
+            + lead_time
+            + int(include_supplier)
+            + int(include_forecast)
+            + 3 * int(include_transfer_pipeline)
+        )
+        demand_history_mean = state_array[:, history_start]
+    else:
+        demand_history_mean = None
     patient_priority = patient_priority_from_state(state_vector, env_config, settings)
 
     demand_rate_estimates = env_config.get("demand_rate_estimates")
@@ -397,6 +492,7 @@ def facility_net_action_from_state(
         bioreactors=bioreactors,
         supplier_available=supplier_available,
         demand_forecast=demand_forecast,
+        demand_history_mean=demand_history_mean,
         demand_rates=_config_vector(demand_rate_estimates, n, "demand_rate_estimates"),
         max_reagent_replenishment=_config_vector(
             env_config.get("max_reagent_replenishment", 0.0),
@@ -422,6 +518,7 @@ def facility_net_action_from_arrays(
     bioreactors: np.ndarray,
     supplier_available: np.ndarray,
     demand_forecast: np.ndarray | None,
+    demand_history_mean: np.ndarray | None,
     demand_rates: np.ndarray,
     max_reagent_replenishment: np.ndarray,
     max_specimen_transfer: float,
@@ -435,8 +532,23 @@ def facility_net_action_from_arrays(
 ) -> np.ndarray:
     """Compute normalized ``(w, e, q, p)`` facility-net actions."""
 
-    n = int(np.asarray(demand).shape[0])
-    bioreactors = np.asarray(bioreactors, dtype=float)
+    # Replay states are stored as float32. Normalize live-environment inputs to
+    # the same precision so equal-pressure routing ties resolve identically in
+    # training, validation, and deployment.
+    demand = np.asarray(demand, dtype=np.float32)
+    specimens = np.asarray(specimens, dtype=np.float32)
+    reagents = np.asarray(reagents, dtype=np.float32)
+    bioreactors = np.asarray(bioreactors, dtype=np.float32)
+    supplier_available = np.asarray(supplier_available, dtype=np.float32)
+    demand_rates = np.asarray(demand_rates, dtype=np.float32)
+    if demand_forecast is not None:
+        demand_forecast = np.asarray(demand_forecast, dtype=np.float32)
+    if demand_history_mean is not None:
+        demand_history_mean = np.asarray(
+            demand_history_mean,
+            dtype=np.float32,
+        )
+    n = int(demand.shape[0])
     idle_bioreactors = bioreactors[:, 0]
     next_stage_bioreactors = bioreactors[:, 1] if bioreactors.shape[1] > 1 else np.zeros(n)
     production = np.minimum.reduce((specimens, idle_bioreactors, reagents))
@@ -446,6 +558,18 @@ def facility_net_action_from_arrays(
 
     if settings.use_demand_forecast and demand_forecast is not None:
         lookahead_demand = np.asarray(demand_forecast, dtype=float)
+    elif settings.use_demand_history and demand_history_mean is not None:
+        history_weight = float(
+            np.clip(settings.demand_history_weight, 0.0, 1.0)
+        )
+        estimated_rate = (
+            (1.0 - history_weight) * demand_rates
+            + history_weight * np.asarray(demand_history_mean, dtype=float)
+        )
+        lookahead_demand = (
+            settings.lookahead_periods
+            * estimated_rate
+        )
     else:
         lookahead_demand = settings.lookahead_periods * demand_rates
     target_workload = np.maximum(next_specimens, 0.0) + lookahead_demand
@@ -613,6 +737,9 @@ def patient_priority_from_state(
     lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier = bool(env_config.get("include_supplier_state", False))
     include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+    include_demand_history = bool(
+        env_config.get("include_demand_history_state", False)
+    )
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     features_per_facility = (
         3
@@ -620,9 +747,10 @@ def patient_priority_from_state(
         + int(include_supplier)
         + int(include_forecast)
         + 3 * int(include_transfer_pipeline)
+        + 3 * int(include_demand_history)
     )
     summary_edges = tuple(env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
-    summary_width = 3 + len(summary_edges) + 1
+    summary_width = 6 + len(summary_edges) + 1
     base_width = n * features_per_facility
     state_vector = np.asarray(state, dtype=np.float32)
     expected_width = base_width + n * summary_width
@@ -631,7 +759,7 @@ def patient_priority_from_state(
     summary = state_vector[base_width:expected_width].reshape(n, summary_width)
     waiting = np.maximum(summary[:, 0], 1.0)
     near_expiry = summary[:, 2]
-    histogram = summary[:, 3:]
+    histogram = summary[:, 6:]
     patient_cfg = dict(env_config.get("patient", {}))
     risk_cutoff = float(patient_cfg.get("eligibility_threshold", 0.80)) + float(
         env_config.get("urgency_margin", 0.1)
@@ -747,9 +875,12 @@ def shield_rollout_metrics(
     action: np.ndarray,
     *,
     horizon: int,
+    rollout_seed: int | None = None,
 ) -> dict[str, float]:
     from src.rl.experiment import EpisodeMetrics
 
+    if rollout_seed is not None:
+        env.rng = np.random.default_rng(int(rollout_seed))
     state, _reward, done, info = env.step(action)
     metrics = EpisodeMetrics()
     metrics.update(info)
@@ -767,6 +898,35 @@ def shield_rollout_metrics(
         else 0.0,
         "at_risk_unserved": float(metrics.at_risk_unserved),
         "patients_lost": float(metrics.patients_lost),
+    }
+
+
+def mean_shield_rollout_metrics(
+    env: CapacityPlanningEnv,
+    anchor_policy: CapacityHeuristicPolicy,
+    action: np.ndarray,
+    *,
+    horizon: int,
+    rollout_seeds: Sequence[int],
+) -> dict[str, float]:
+    """Average a shield candidate over CRN draws independent of the live episode."""
+
+    seeds = tuple(int(seed) for seed in rollout_seeds)
+    if not seeds:
+        raise ValueError("rollout_seeds must contain at least one seed")
+    rows = [
+        shield_rollout_metrics(
+            copy.deepcopy(env),
+            anchor_policy,
+            action,
+            horizon=horizon,
+            rollout_seed=seed,
+        )
+        for seed in seeds
+    ]
+    return {
+        key: float(np.mean([float(row[key]) for row in rows]))
+        for key in rows[0]
     }
 
 

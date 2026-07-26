@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
@@ -187,6 +188,107 @@ class SmokeRunTests(unittest.TestCase):
         self.assertEqual(tuple(agent.imitation_states.shape), (2, env.observation_size))
         self.assertEqual(tuple(agent.imitation_weights.shape), (2,))
         self.assertTrue(torch.isfinite(agent._actor_imitation_loss()))
+
+    def test_flat_residual_ddpg_uses_and_persists_matched_correction_gate(self) -> None:
+        try:
+            from src.rl.networks import torch
+        except Exception:  # pragma: no cover
+            self.skipTest("torch not available")
+        if torch is None:  # pragma: no cover
+            self.skipTest("torch not available")
+        from src.baselines.flat_ddpg import FlatDDPGAgent
+
+        config = {
+            "seed": 4,
+            "hidden_sizes": [32, 32],
+            "batch_size": 2,
+            "normalize_observations": True,
+            "residual_action": {
+                "enabled": True,
+                "base_policy": "mdl2",
+                "include_base_action_features": True,
+                "zero_init_actor": True,
+                "scale": 0.1,
+                "group_scales": {
+                    "specimen_transfer": 0.0,
+                    "reagent_transfer": 0.1,
+                    "capacity_transfer": 0.1,
+                    "replenishment": 0.1,
+                },
+                "correction_gate": {
+                    "enabled": True,
+                    "mode": "classification",
+                    "threshold": 0.8,
+                    "groups": [
+                        "reagent_transfer",
+                        "capacity_transfer",
+                        "replenishment",
+                    ],
+                    "hidden_sizes": [16],
+                    "target_delta": 1e-5,
+                },
+            },
+            "env": load_config(DEV_CONFIG),
+        }
+        env = build_env(config, seed=4)
+        agent = FlatDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=4)
+        base_action = facility_net_action_from_state(
+            state,
+            config["env"],
+            settings=heuristic_settings_for_policy("mdl2"),
+        )
+        actor_output = next(
+            module
+            for module in reversed(tuple(agent.actor.modules()))
+            if isinstance(module, torch.nn.Linear)
+        )
+        with torch.no_grad():
+            actor_output.weight.zero_()
+            actor_output.bias.fill_(0.5)
+
+        closed_action = agent.select_action(state, explore=False, env=env)
+        np.testing.assert_allclose(closed_action, base_action, atol=1e-6)
+
+        agent.correction_gate_group_thresholds = (0.4, 0.4, 0.4)
+        open_action = agent.select_action(state, explore=False, env=env)
+        self.assertGreater(float(np.abs(open_action - base_action).max()), 1e-4)
+
+        corrected_target = base_action.copy()
+        corrected_target[env.config.num_facilities :] = np.clip(
+            corrected_target[env.config.num_facilities :] + 0.05,
+            -1.0,
+            1.0,
+        )
+        summary = agent.fit_action_batch(
+            np.stack((state, state)),
+            np.stack((base_action, corrected_target)),
+            {"epochs": 1, "batch_size": 2},
+        )
+        self.assertIn("correction_gate_loss", summary)
+        self.assertEqual(
+            summary["correction_gate_groups"],
+            "reagent_transfer|capacity_transfer|replenishment",
+        )
+
+        with TemporaryDirectory() as tmp:
+            checkpoint = f"{tmp}/flat_gate.pt"
+            agent.save(checkpoint)
+            loaded = FlatDDPGAgent(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            loaded.load_actor(checkpoint)
+            self.assertEqual(
+                loaded.correction_gate_group_thresholds,
+                agent.correction_gate_group_thresholds,
+            )
+            for expected, actual in zip(
+                agent.correction_gate.parameters(),
+                loaded.correction_gate.parameters(),
+            ):
+                self.assertTrue(torch.allclose(expected, actual))
 
 
 if __name__ == "__main__":

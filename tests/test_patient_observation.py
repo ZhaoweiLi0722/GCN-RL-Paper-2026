@@ -36,8 +36,8 @@ def _env(**cfg) -> PatientConditionCapacityEnv:
 
 class PatientObservationTests(unittest.TestCase):
     def test_observation_size_accounts_for_summary(self) -> None:
-        env = _env()  # default 4 buckets -> summary_width = 3 + 4 = 7
-        self.assertEqual(env.summary_width, 7)
+        env = _env()  # six lifecycle scalars + four waiting-survival buckets
+        self.assertEqual(env.summary_width, 10)
         expected = env.base_observation_size + env.config.num_facilities * env.summary_width
         obs = env.reset(seed=0)
         self.assertEqual(env.observation_size, expected)
@@ -52,9 +52,27 @@ class PatientObservationTests(unittest.TestCase):
             widths.add(obs.shape[0])
         self.assertEqual(widths, {env.observation_size})
 
+    def test_optional_time_state_is_appended_after_patient_summary(self) -> None:
+        env = PatientConditionCapacityEnv(
+            PatientEnvConfig(base=_small_base(include_time_state=True)),
+            seed=0,
+        )
+
+        initial = env.reset(seed=0)
+        next_state, *_ = env.step(env.noop_action())
+
+        self.assertEqual(
+            env.observation_size,
+            env.base_observation_size
+            + env.config.num_facilities * env.summary_width
+            + 1,
+        )
+        self.assertEqual(float(initial[-1]), 0.0)
+        self.assertAlmostEqual(float(next_state[-1]), 1.0 / env.config.episode_horizon)
+
     def test_bucket_count_is_config_driven(self) -> None:
         env = _env(survival_bucket_edges=(0.80, 0.85, 0.90, 0.95, 0.98))  # 6 buckets
-        self.assertEqual(env.summary_width, 3 + 6)
+        self.assertEqual(env.summary_width, 6 + 6)
         obs = env.reset(seed=0)
         self.assertEqual(obs.shape[0], env.observation_size)
 
@@ -66,9 +84,21 @@ class PatientObservationTests(unittest.TestCase):
         summary = env._patient_summary()
         for i in range(env.config.num_facilities):
             waiting = summary[i, 0]
-            hist_sum = summary[i, 3:].sum()
+            hist_sum = summary[i, 6:].sum()
             self.assertAlmostEqual(waiting, hist_sum)
             self.assertAlmostEqual(waiting, float(len(env.patient_queues[i])))
+
+    def test_manufacturing_summary_matches_patient_pipeline(self) -> None:
+        env = _env()
+        env.reset(seed=2)
+        for _ in range(3):
+            env.step(env.noop_action())
+        summary = env._patient_summary()
+        np.testing.assert_allclose(summary[:, 3], env._in_production_counts())
+        for i, stages in enumerate(env.in_production_patients):
+            patients = [patient for stage in stages[1:] for patient in stage]
+            expected_mean = float(np.mean([p.survival for p in patients])) if patients else 0.0
+            self.assertAlmostEqual(summary[i, 4], expected_mean)
 
     def test_mean_survival_matches_queue(self) -> None:
         env = _env()

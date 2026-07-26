@@ -9,6 +9,8 @@ import numpy as np
 
 from src.env.capacity_planning import CapacityPlanningEnv, make_20_clinic_config
 from src.models.gcn_ddpg import build_graph_spec
+from src.rl.config import load_config
+from src.rl.experiment import build_env
 
 try:
     import torch
@@ -78,6 +80,31 @@ class GraphSpecTests(unittest.TestCase):
 
 @unittest.skipIf(torch is None, "PyTorch is not installed")
 class GraphStateConversionTests(unittest.TestCase):
+    def test_residual_patient_pressure_matches_waiting_risk_definition(self) -> None:
+        env_config = load_config("experiments/configs/2_clinic_patient_condition.json")
+        env = build_env({"env": env_config}, seed=41)
+        config = _config_dict()
+        config["env"] = env_config
+        state = np.zeros(env.observation_size, dtype=np.float32)
+        n = env.config.num_facilities
+        summary_edges = tuple(env_config["survival_bucket_edges"])
+        summary_width = 6 + len(summary_edges) + 1
+        base_width = n * env.features_per_facility
+        summary = state[base_width:].reshape(n, summary_width)
+        summary[0, 2] = 2.0
+        summary[0, 5] = 99.0
+        summary[0, 6:] = np.asarray([1.0, 3.0, 5.0, 7.0])
+        state_tensor = torch.as_tensor(state, dtype=torch.float32).unsqueeze(0)
+
+        for agent_cls in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_cls(env.observation_size, env.action_size, config)
+            risk = agent._patient_risk_signal_tensor(
+                state_tensor,
+                env.features_per_facility,
+            )
+            self.assertEqual(float(risk[0, 0]), 3.0)
+            self.assertEqual(float(risk[0, 1]), 0.0)
+
     def test_flat_state_conversion_matches_environment_graph_features(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=7)
         state = env.reset(seed=7)
@@ -424,6 +451,44 @@ class GraphStateConversionTests(unittest.TestCase):
         np.testing.assert_allclose(residual[n : 2 * n], expected, atol=1e-6)
         np.testing.assert_allclose(residual[2 * n : 3 * n], np.zeros(n), atol=1e-6)
 
+    def test_pressure_patterns_account_for_pending_transfer_arrivals(self) -> None:
+        env_config = replace(
+            make_20_clinic_config(episode_horizon=2),
+            transfer_lead_time=2,
+            include_transfer_pipeline_state=True,
+        )
+        baseline_env = CapacityPlanningEnv(env_config, seed=32)
+        pipeline_env = CapacityPlanningEnv(env_config, seed=32)
+        for env in (baseline_env, pipeline_env):
+            env.reset(seed=32)
+            env.demand[:2] = np.array([5.0, 20.0])
+            env.demand_forecast[:2] = np.array([5.0, 20.0])
+            env.specimens[:2] = np.array([5.0, 20.0])
+            env.reagents[:2] = np.array([25.0, 0.0])
+        pipeline_env.reagent_transfer_pipeline[:, 1] = 60.0
+        config = _config_dict()
+        config["env"] = asdict(env_config)
+
+        for agent_cls in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_cls(baseline_env.observation_size, baseline_env.action_size, config)
+            baseline_state = torch.as_tensor(
+                baseline_env.observation(),
+                dtype=torch.float32,
+            ).unsqueeze(0)
+            pipeline_state = torch.as_tensor(
+                pipeline_env.observation(),
+                dtype=torch.float32,
+            ).unsqueeze(0)
+            baseline_pattern = agent._residual_pressure_patterns_tensor(
+                baseline_state
+            )["resource"][0]
+            pipeline_pattern = agent._residual_pressure_patterns_tensor(
+                pipeline_state
+            )["resource"][0]
+
+            self.assertGreater(float(baseline_pattern[1]), float(baseline_pattern[0]))
+            self.assertLess(float(pipeline_pattern[1]), float(pipeline_pattern[0]))
+
     def test_gcn_agent_fits_external_action_batch(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=19)
         config = _config_dict()
@@ -505,6 +570,162 @@ class GraphStateConversionTests(unittest.TestCase):
                 actions,
                 {"epochs": 1, "target_mode": "unsupported"},
             )
+
+    def test_graph_correction_gate_learns_teacher_labels_and_can_return_anchor(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=29)
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "env": asdict(env.config),
+                "actor_readout_mode": "facility_action",
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "correction_gate": {
+                        "enabled": True,
+                        "threshold": 0.5,
+                        "hidden_sizes": [8],
+                        "lr": 0.001,
+                    },
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        first_state = env.reset(seed=29)
+        first_anchor = agent._base_action_from_state_np(first_state)
+        second_state, _reward, _done, _info = env.step(first_anchor)
+        second_anchor = agent._base_action_from_state_np(second_state)
+        corrected = second_anchor.copy()
+        corrected[3 * env.config.num_facilities] = np.clip(
+            corrected[3 * env.config.num_facilities] + 0.05,
+            -1.0,
+            1.0,
+        )
+
+        summary = agent.fit_action_batch(
+            np.stack([first_state, second_state]),
+            np.stack([first_anchor, corrected]),
+            {"epochs": 2, "batch_size": 2},
+        )
+
+        self.assertIsNotNone(agent.correction_gate)
+        self.assertAlmostEqual(summary["correction_gate_label_rate"], 0.5)
+        self.assertTrue(np.isfinite(summary["correction_gate_loss"]))
+        gate_summary = agent.fit_correction_gate_batch(
+            np.stack([first_state, second_state]),
+            np.asarray([0.0, 1.0], dtype=np.float32),
+            {"epochs": 2, "batch_size": 2},
+        )
+        self.assertEqual(gate_summary["samples"], 2)
+        self.assertAlmostEqual(gate_summary["label_rate"], 0.5)
+        ungated = agent.select_ungated_residual_action(
+            first_state,
+            env=env,
+            residual_scale=0.25,
+        )
+        self.assertEqual(ungated.shape, (env.action_size,))
+
+        for parameter in agent.correction_gate.parameters():
+            parameter.data.zero_()
+        output_layer = next(
+            module
+            for module in reversed(tuple(agent.correction_gate.head.modules()))
+            if isinstance(module, torch.nn.Linear)
+        )
+        output_layer.bias.data.fill_(-10.0)
+        action = agent.select_action(first_state, explore=False, env=env)
+        np.testing.assert_allclose(action, first_anchor, atol=1e-6)
+
+    def test_deployment_gate_does_not_block_residual_training_path(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=31)
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "env": asdict(env.config),
+                "actor_readout_mode": "facility_action",
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "correction_gate": {
+                        "enabled": True,
+                        "mode": "advantage",
+                        "threshold": 0.5,
+                        "hidden_sizes": [8],
+                    },
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=31)
+        anchor = agent._base_action_from_state_np(state)
+        residual = np.zeros(env.action_size, dtype=np.float32)
+        replenishment_index = 3 * env.config.num_facilities
+        residual[replenishment_index] = (
+            -0.5 if anchor[replenishment_index] > 0.0 else 0.5
+        )
+
+        deployment_action = agent._compose_action_np(state, residual)
+        training_action = agent._compose_action_np(
+            state,
+            residual,
+            apply_correction_gate=False,
+        )
+
+        np.testing.assert_allclose(deployment_action, anchor, atol=1e-6)
+        self.assertFalse(np.allclose(training_action, anchor))
+
+    def test_group_gate_can_release_replenishment_without_transfer(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=41)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "actor_readout_mode": "facility_action",
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "correction_gate": {
+                        "enabled": True,
+                        "mode": "classification",
+                        "threshold": 0.5,
+                        "hidden_sizes": [8],
+                        "groups": [
+                            "reagent_transfer",
+                            "capacity_transfer",
+                            "replenishment",
+                        ],
+                    },
+                },
+            }
+        )
+        agent = GCNDDPGAgent(env.observation_size, env.action_size, config)
+        state = env.reset(seed=41)
+        anchor = agent._base_action_from_state_np(state)
+        residual = np.zeros(env.action_size, dtype=np.float32)
+        n = env.config.num_facilities
+        residual[n] = 0.5
+        residual[n + 1] = -0.5
+        residual[3 * n] = -0.5 if anchor[3 * n] > 0.0 else 0.5
+
+        for parameter in agent.correction_gate.parameters():
+            parameter.data.zero_()
+        output_layer = next(
+            module
+            for module in reversed(tuple(agent.correction_gate.head.modules()))
+            if isinstance(module, torch.nn.Linear)
+        )
+        output_layer.bias.data.copy_(
+            torch.as_tensor([-10.0, -10.0, 10.0])
+        )
+        action = agent._compose_action_np(state, residual)
+
+        np.testing.assert_allclose(action[n : 3 * n], anchor[n : 3 * n], atol=1e-6)
+        self.assertFalse(np.allclose(action[3 * n :], anchor[3 * n :]))
 
 
 if __name__ == "__main__":

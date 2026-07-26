@@ -443,12 +443,46 @@ def run_post_training_steps(
             if min_service_level_delta is not None
             else None
         ),
+        min_completion_service_level_delta=optional_float(
+            settings,
+            "min_completion_service_level_delta",
+        ),
+        max_patients_lost_delta=optional_float(settings, "max_patients_lost_delta"),
+        max_patient_ineligibility_during_manufacturing_rate_delta=optional_float(
+            settings,
+            "max_patient_ineligibility_during_manufacturing_rate_delta",
+        ),
         service_level_weight=float(settings.get("service_level_weight", 0.0)),
+        completion_service_level_weight=float(
+            settings.get("completion_service_level_weight", 0.0)
+        ),
         eligibility_rate_weight=float(settings.get("eligibility_rate_weight", 0.0)),
+        patient_ineligibility_during_manufacturing_rate_weight=float(
+            settings.get(
+                "patient_ineligibility_during_manufacturing_rate_weight",
+                0.0,
+            )
+        ),
         at_risk_unserved_weight=float(settings.get("at_risk_unserved_weight", 0.0)),
         patients_lost_weight=float(settings.get("patients_lost_weight", 0.0)),
         candidate_groups=local_search_candidate_groups(settings),
         candidate_signs=local_search_candidate_signs(settings),
+        demonstration_path=settings.get("demonstration_path"),
+        populate_replay_buffer=bool(settings.get("populate_replay_buffer", False)),
+        lookahead_replications=int(settings.get("lookahead_replications", 1)),
+        lookahead_seed=(
+            int(settings["lookahead_seed"])
+            if settings.get("lookahead_seed") is not None
+            else None
+        ),
+        dense_advantage_weight_scale=(
+            float(settings["dense_advantage_weight_scale"])
+            if settings.get("dense_advantage_weight_scale") is not None
+            else None
+        ),
+        dense_advantage_weight_cap=float(
+            settings.get("dense_advantage_weight_cap", 10.0)
+        ),
     )
     checkpoint_path = local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
     agent.save(checkpoint_path)
@@ -522,12 +556,46 @@ def run_advantage_distillation_pretrain(
             if settings.get("min_service_level_delta") is not None
             else None
         ),
+        min_completion_service_level_delta=optional_float(
+            settings,
+            "min_completion_service_level_delta",
+        ),
+        max_patients_lost_delta=optional_float(settings, "max_patients_lost_delta"),
+        max_patient_ineligibility_during_manufacturing_rate_delta=optional_float(
+            settings,
+            "max_patient_ineligibility_during_manufacturing_rate_delta",
+        ),
         service_level_weight=float(settings.get("service_level_weight", 0.0)),
+        completion_service_level_weight=float(
+            settings.get("completion_service_level_weight", 0.0)
+        ),
         eligibility_rate_weight=float(settings.get("eligibility_rate_weight", 0.0)),
+        patient_ineligibility_during_manufacturing_rate_weight=float(
+            settings.get(
+                "patient_ineligibility_during_manufacturing_rate_weight",
+                0.0,
+            )
+        ),
         at_risk_unserved_weight=float(settings.get("at_risk_unserved_weight", 0.0)),
         patients_lost_weight=float(settings.get("patients_lost_weight", 0.0)),
         candidate_groups=local_search_candidate_groups(settings),
         candidate_signs=local_search_candidate_signs(settings),
+        demonstration_path=settings.get("demonstration_path"),
+        populate_replay_buffer=bool(settings.get("populate_replay_buffer", False)),
+        lookahead_replications=int(settings.get("lookahead_replications", 1)),
+        lookahead_seed=(
+            int(settings["lookahead_seed"])
+            if settings.get("lookahead_seed") is not None
+            else None
+        ),
+        dense_advantage_weight_scale=(
+            float(settings["dense_advantage_weight_scale"])
+            if settings.get("dense_advantage_weight_scale") is not None
+            else None
+        ),
+        dense_advantage_weight_cap=float(
+            settings.get("dense_advantage_weight_cap", 10.0)
+        ),
     )
     renamed = {
         key.replace("local_search_", "advantage_distillation_", 1): value
@@ -648,11 +716,57 @@ def select_validation_checkpoint(
     max_steps = int(config.get("max_steps_per_episode", budget["max_steps_per_episode"]))
     score_weights = {
         "service_level": float(settings.get("service_level_weight", 0.0)),
+        "completion_service_level": float(
+            settings.get("completion_service_level_weight", 0.0)
+        ),
         "eligibility_rate": float(settings.get("eligibility_rate_weight", 0.0)),
+        "patient_ineligibility_during_manufacturing_rate": float(
+            settings.get(
+                "patient_ineligibility_during_manufacturing_rate_weight",
+                0.0,
+            )
+        ),
         "at_risk_unserved": float(settings.get("at_risk_unserved_weight", 0.0)),
         "patients_lost": float(settings.get("patients_lost_weight", 0.0)),
     }
-    scored: list[tuple[float, dict[str, float], Path]] = []
+    require_anchor_noninferiority = bool(
+        settings.get("require_anchor_noninferiority", False)
+    )
+    fallback_settings = anchor_fallback_settings(config, budget)
+    anchor_metrics = None
+    if require_anchor_noninferiority:
+        residual_config = dict(config.get("residual_action", {}))
+        anchor_policy = str(
+            fallback_settings.get(
+                "anchor_policy",
+                residual_config.get("base_policy", ""),
+            )
+        )
+        if anchor_policy not in available_heuristics():
+            raise ValueError(
+                "Checkpoint guardrails require a valid heuristic anchor"
+            )
+        anchor_env = build_env(config, seed=validation_seed)
+        anchor_agent = get_agent_class(anchor_policy)(
+            anchor_env.observation_size,
+            anchor_env.action_size,
+            dict(
+                fallback_settings.get(
+                    "anchor_policy_config",
+                    residual_config.get("base_policy_config", {}),
+                )
+            ),
+        )
+        anchor_rows = evaluate_agent(
+            anchor_agent,
+            anchor_env,
+            algorithm=anchor_policy,
+            seed=validation_seed,
+            replications=validation_replications,
+            max_steps=max_steps,
+        )
+        anchor_metrics = checkpoint_score_metrics(summarize_rows(anchor_rows))
+    scored: list[dict[str, Any]] = []
     for path in candidates:
         validation_env = build_env(config, seed=validation_seed)
         validation_agent = get_agent_class(algorithm)(
@@ -672,18 +786,43 @@ def select_validation_checkpoint(
         summary = summarize_rows(rows)
         metrics = checkpoint_score_metrics(summary)
         score = local_search_metric_score(metrics, score_weights)
-        scored.append((score, metrics, path))
+        guardrail_passed = bool(
+            anchor_metrics is None
+            or checkpoint_candidate_guardrail_decision(
+                metrics,
+                anchor_metrics,
+                fallback_settings,
+            )
+            == "learned"
+        )
+        scored.append(
+            {
+                "score": score,
+                "metrics": metrics,
+                "path": path,
+                "guardrail_passed": guardrail_passed,
+            }
+        )
 
-    selected_score, selected_metrics, selected_path = min(
-        scored,
-        key=lambda item: item[0],
+    guardrail_candidates = [
+        candidate for candidate in scored if candidate["guardrail_passed"]
+    ]
+    selection_pool = guardrail_candidates or scored
+    selected = min(
+        selection_pool,
+        key=lambda item: item["score"],
     )
+    selected_score = float(selected["score"])
+    selected_metrics = selected["metrics"]
+    selected_path = selected["path"]
     selected_cost = selected_metrics["total_cost"]
     selected_service_level = selected_metrics["service_level"]
+    selected_completion_service_level = selected_metrics["completion_service_level"]
     print(
         "checkpoint_selection "
         f"algorithm={algorithm} selected={checkpoint_label(selected_path)} "
         f"cost={selected_cost:.3f} service={selected_service_level:.6f} "
+        f"completion={selected_completion_service_level:.6f} "
         f"score={selected_score:.3f} candidates={len(candidates)}",
         flush=True,
     )
@@ -693,18 +832,85 @@ def select_validation_checkpoint(
         "checkpoint_selection_selected_label": checkpoint_label(selected_path),
         "checkpoint_selection_validation_cost": selected_cost,
         "checkpoint_selection_validation_service_level": selected_service_level,
+        "checkpoint_selection_validation_completion_service_level": (
+            selected_completion_service_level
+        ),
         "checkpoint_selection_validation_eligibility_rate": selected_metrics["eligibility_rate"],
+        "checkpoint_selection_validation_patient_ineligibility_during_manufacturing_rate": (
+            selected_metrics["patient_ineligibility_during_manufacturing_rate"]
+        ),
         "checkpoint_selection_validation_at_risk_unserved": selected_metrics["at_risk_unserved"],
         "checkpoint_selection_validation_patients_lost": selected_metrics["patients_lost"],
         "checkpoint_selection_validation_score": selected_score,
         "checkpoint_selection_service_level_weight": score_weights["service_level"],
+        "checkpoint_selection_completion_service_level_weight": score_weights[
+            "completion_service_level"
+        ],
         "checkpoint_selection_eligibility_rate_weight": score_weights["eligibility_rate"],
+        "checkpoint_selection_patient_ineligibility_during_manufacturing_rate_weight": (
+            score_weights["patient_ineligibility_during_manufacturing_rate"]
+        ),
         "checkpoint_selection_at_risk_unserved_weight": score_weights["at_risk_unserved"],
         "checkpoint_selection_patients_lost_weight": score_weights["patients_lost"],
         "checkpoint_selection_candidate_count": len(candidates),
+        "checkpoint_selection_require_anchor_noninferiority": (
+            require_anchor_noninferiority
+        ),
+        "checkpoint_selection_guardrail_candidate_count": len(
+            guardrail_candidates
+        ),
+        "checkpoint_selection_selected_guardrail_passed": bool(
+            selected["guardrail_passed"]
+        ),
         "checkpoint_selection_validation_replications": validation_replications,
         "checkpoint_selection_validation_seed": validation_seed,
     }
+
+
+def checkpoint_candidate_guardrail_decision(
+    candidate: dict[str, float],
+    anchor: dict[str, float],
+    settings: dict[str, Any],
+) -> str:
+    """Apply the deployment cost and patient guardrails during checkpoint selection."""
+
+    return select_anchor_fallback_policy(
+        candidate["total_cost"],
+        anchor["total_cost"],
+        min_improvement=float(settings.get("min_improvement", 0.0)),
+        learned_service_level=candidate.get("service_level"),
+        anchor_service_level=anchor.get("service_level"),
+        min_service_level_delta=optional_float(
+            settings,
+            "min_service_level_delta",
+        ),
+        learned_completion_service_level=candidate.get(
+            "completion_service_level"
+        ),
+        anchor_completion_service_level=anchor.get(
+            "completion_service_level"
+        ),
+        min_completion_service_level_delta=optional_float(
+            settings,
+            "min_completion_service_level_delta",
+        ),
+        learned_patients_lost=candidate.get("patients_lost"),
+        anchor_patients_lost=anchor.get("patients_lost"),
+        max_patients_lost_delta=optional_float(
+            settings,
+            "max_patients_lost_delta",
+        ),
+        learned_patient_ineligibility_during_manufacturing_rate=candidate.get(
+            "patient_ineligibility_during_manufacturing_rate"
+        ),
+        anchor_patient_ineligibility_during_manufacturing_rate=anchor.get(
+            "patient_ineligibility_during_manufacturing_rate"
+        ),
+        max_patient_ineligibility_during_manufacturing_rate_delta=optional_float(
+            settings,
+            "max_patient_ineligibility_during_manufacturing_rate_delta",
+        ),
+    )
 
 
 def checkpoint_score_metrics(summary: dict[str, Any]) -> dict[str, float]:
@@ -713,10 +919,19 @@ def checkpoint_score_metrics(summary: dict[str, Any]) -> dict[str, float]:
     return {
         "total_cost": float(summary.get("total_cost_mean", float("inf"))),
         "service_level": float(summary.get("service_level_mean", 0.0)),
+        "completion_service_level": float(
+            summary.get("completion_service_level_mean", 0.0)
+        ),
         "eligibility_rate": float(
             summary.get(
                 "eligibility_rate_mean_mean",
                 summary.get("eligibility_rate_mean", 0.0),
+            )
+        ),
+        "patient_ineligibility_during_manufacturing_rate": float(
+            summary.get(
+                "patient_ineligibility_during_manufacturing_rate_mean",
+                summary.get("manufacturing_loss_rate_mean", 0.0),
             )
         ),
         "at_risk_unserved": float(summary.get("at_risk_unserved_mean", 0.0)),
@@ -735,6 +950,9 @@ def learned_checkpoint_candidates(
     checkpoint_dir = checkpoint_dir_path(plan, budget_name, algorithm, scenario, seed)
     pattern = f"{algorithm}_seed{int(seed)}_episode*.pt"
     candidates = sorted(checkpoint_dir.glob(pattern), key=checkpoint_sort_key)
+    pretrain_path = checkpoint_dir / f"{algorithm}_seed{int(seed)}_pretrain.pt"
+    if pretrain_path.exists():
+        candidates.insert(0, pretrain_path)
     local_search_path = local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
     if local_search_path.exists():
         candidates.append(local_search_path)
@@ -755,6 +973,8 @@ def checkpoint_sort_key(path: Path) -> tuple[int, str]:
 
 def checkpoint_label(path: Path) -> str:
     stem = path.stem
+    if stem.endswith("_pretrain"):
+        return "pretrain"
     if "_episode" in stem:
         return f"episode{stem.rsplit('_episode', 1)[1]}"
     if stem.endswith("_local_search"):
@@ -893,9 +1113,47 @@ def maybe_apply_anchor_fallback(
             "service_level_mean",
             "",
         ),
+        "anchor_fallback_validation_learned_completion_service_level_mean": (
+            learned_summary.get("completion_service_level_mean", "")
+        ),
+        "anchor_fallback_validation_anchor_completion_service_level_mean": (
+            anchor_summary.get("completion_service_level_mean", "")
+        ),
+        "anchor_fallback_validation_learned_patients_lost_mean": learned_summary.get(
+            "patients_lost_mean",
+            "",
+        ),
+        "anchor_fallback_validation_anchor_patients_lost_mean": anchor_summary.get(
+            "patients_lost_mean",
+            "",
+        ),
+        "anchor_fallback_validation_learned_manufacturing_ineligibility_rate_mean": (
+            learned_summary.get(
+                "patient_ineligibility_during_manufacturing_rate_mean",
+                "",
+            )
+        ),
+        "anchor_fallback_validation_anchor_manufacturing_ineligibility_rate_mean": (
+            anchor_summary.get(
+                "patient_ineligibility_during_manufacturing_rate_mean",
+                "",
+            )
+        ),
         "anchor_fallback_min_improvement": float(settings.get("min_improvement", 0.0)),
         "anchor_fallback_min_service_level_delta": settings.get(
             "min_service_level_delta",
+            "",
+        ),
+        "anchor_fallback_min_completion_service_level_delta": settings.get(
+            "min_completion_service_level_delta",
+            "",
+        ),
+        "anchor_fallback_max_patients_lost_delta": settings.get(
+            "max_patients_lost_delta",
+            "",
+        ),
+        "anchor_fallback_max_manufacturing_ineligibility_rate_delta": settings.get(
+            "max_patient_ineligibility_during_manufacturing_rate_delta",
             "",
         ),
     }
@@ -958,10 +1216,15 @@ def select_residual_deployment_candidate(
 ) -> tuple[dict[str, Any], str]:
     if not candidates:
         raise ValueError("At least one residual deployment candidate is required")
-    min_service_level_delta = (
-        float(settings["min_service_level_delta"])
-        if "min_service_level_delta" in settings
-        else None
+    min_service_level_delta = optional_float(settings, "min_service_level_delta")
+    min_completion_service_level_delta = optional_float(
+        settings,
+        "min_completion_service_level_delta",
+    )
+    max_patients_lost_delta = optional_float(settings, "max_patients_lost_delta")
+    max_manufacturing_ineligibility_delta = optional_float(
+        settings,
+        "max_patient_ineligibility_during_manufacturing_rate_delta",
     )
     feasible = []
     for candidate in candidates:
@@ -973,6 +1236,31 @@ def select_residual_deployment_candidate(
             learned_service_level=float(summary.get("service_level_mean", "nan")),
             anchor_service_level=float(anchor_summary.get("service_level_mean", "nan")),
             min_service_level_delta=min_service_level_delta,
+            learned_completion_service_level=float(
+                summary.get("completion_service_level_mean", "nan")
+            ),
+            anchor_completion_service_level=float(
+                anchor_summary.get("completion_service_level_mean", "nan")
+            ),
+            min_completion_service_level_delta=min_completion_service_level_delta,
+            learned_patients_lost=float(summary.get("patients_lost_mean", "nan")),
+            anchor_patients_lost=float(anchor_summary.get("patients_lost_mean", "nan")),
+            max_patients_lost_delta=max_patients_lost_delta,
+            learned_patient_ineligibility_during_manufacturing_rate=float(
+                summary.get(
+                    "patient_ineligibility_during_manufacturing_rate_mean",
+                    "nan",
+                )
+            ),
+            anchor_patient_ineligibility_during_manufacturing_rate=float(
+                anchor_summary.get(
+                    "patient_ineligibility_during_manufacturing_rate_mean",
+                    "nan",
+                )
+            ),
+            max_patient_ineligibility_during_manufacturing_rate_delta=(
+                max_manufacturing_ineligibility_delta
+            ),
         )
         if decision == "learned" and float(candidate["residual_scale"]) > 1e-12:
             feasible.append(candidate)
@@ -988,10 +1276,27 @@ def anchor_fallback_candidate_diagnostics(
 ) -> dict[str, Any]:
     anchor_cost = float(anchor_summary.get("total_cost_mean", float("nan")))
     anchor_service = float(anchor_summary.get("service_level_mean", float("nan")))
-    min_service_level_delta = (
-        float(settings["min_service_level_delta"])
-        if "min_service_level_delta" in settings
-        else None
+    anchor_completion = float(
+        anchor_summary.get("completion_service_level_mean", float("nan"))
+    )
+    anchor_patients_lost = float(
+        anchor_summary.get("patients_lost_mean", float("nan"))
+    )
+    anchor_manufacturing_ineligibility = float(
+        anchor_summary.get(
+            "patient_ineligibility_during_manufacturing_rate_mean",
+            float("nan"),
+        )
+    )
+    min_service_level_delta = optional_float(settings, "min_service_level_delta")
+    min_completion_service_level_delta = optional_float(
+        settings,
+        "min_completion_service_level_delta",
+    )
+    max_patients_lost_delta = optional_float(settings, "max_patients_lost_delta")
+    max_manufacturing_ineligibility_delta = optional_float(
+        settings,
+        "max_patient_ineligibility_during_manufacturing_rate_delta",
     )
     diagnostics: list[dict[str, Any]] = []
     for candidate in candidates:
@@ -999,6 +1304,18 @@ def anchor_fallback_candidate_diagnostics(
         summary = candidate["summary"]
         candidate_cost = float(summary.get("total_cost_mean", float("nan")))
         candidate_service = float(summary.get("service_level_mean", float("nan")))
+        candidate_completion = float(
+            summary.get("completion_service_level_mean", float("nan"))
+        )
+        candidate_patients_lost = float(
+            summary.get("patients_lost_mean", float("nan"))
+        )
+        candidate_manufacturing_ineligibility = float(
+            summary.get(
+                "patient_ineligibility_during_manufacturing_rate_mean",
+                float("nan"),
+            )
+        )
         gate_decision = select_anchor_fallback_policy(
             candidate_cost,
             anchor_cost,
@@ -1006,6 +1323,21 @@ def anchor_fallback_candidate_diagnostics(
             learned_service_level=candidate_service,
             anchor_service_level=anchor_service,
             min_service_level_delta=min_service_level_delta,
+            learned_completion_service_level=candidate_completion,
+            anchor_completion_service_level=anchor_completion,
+            min_completion_service_level_delta=min_completion_service_level_delta,
+            learned_patients_lost=candidate_patients_lost,
+            anchor_patients_lost=anchor_patients_lost,
+            max_patients_lost_delta=max_patients_lost_delta,
+            learned_patient_ineligibility_during_manufacturing_rate=(
+                candidate_manufacturing_ineligibility
+            ),
+            anchor_patient_ineligibility_during_manufacturing_rate=(
+                anchor_manufacturing_ineligibility
+            ),
+            max_patient_ineligibility_during_manufacturing_rate_delta=(
+                max_manufacturing_ineligibility_delta
+            ),
         )
         diagnostics.append(
             {
@@ -1013,15 +1345,23 @@ def anchor_fallback_candidate_diagnostics(
                 "decision": "anchor_equivalent" if scale <= 1e-12 else gate_decision,
                 "cost": candidate_cost,
                 "service": candidate_service,
+                "completion_service": candidate_completion,
                 "eligibility": summary_float(
                     summary,
                     "eligibility_rate_mean_mean",
                     "eligibility_rate_mean",
                 ),
                 "patients_lost": summary_float(summary, "patients_lost_mean"),
+                "manufacturing_ineligibility": candidate_manufacturing_ineligibility,
                 "at_risk_unserved": summary_float(summary, "at_risk_unserved_mean"),
                 "cost_gap_pct": percentage_gap(candidate_cost, anchor_cost),
                 "service_gap": candidate_service - anchor_service,
+                "completion_service_gap": candidate_completion - anchor_completion,
+                "patients_lost_gap": candidate_patients_lost - anchor_patients_lost,
+                "manufacturing_ineligibility_gap": (
+                    candidate_manufacturing_ineligibility
+                    - anchor_manufacturing_ineligibility
+                ),
             }
         )
     best_nonzero = min(
@@ -1042,11 +1382,17 @@ def anchor_fallback_candidate_diagnostics(
         "anchor_fallback_validation_candidate_service_level_means": pipe_join(
             row["service"] for row in diagnostics
         ),
+        "anchor_fallback_validation_candidate_completion_service_level_means": pipe_join(
+            row["completion_service"] for row in diagnostics
+        ),
         "anchor_fallback_validation_candidate_eligibility_rate_means": pipe_join(
             row["eligibility"] for row in diagnostics
         ),
         "anchor_fallback_validation_candidate_patients_lost_means": pipe_join(
             row["patients_lost"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_manufacturing_ineligibility_rate_means": pipe_join(
+            row["manufacturing_ineligibility"] for row in diagnostics
         ),
         "anchor_fallback_validation_candidate_at_risk_unserved_means": pipe_join(
             row["at_risk_unserved"] for row in diagnostics
@@ -1057,6 +1403,15 @@ def anchor_fallback_candidate_diagnostics(
         "anchor_fallback_validation_candidate_service_gap": pipe_join(
             row["service_gap"] for row in diagnostics
         ),
+        "anchor_fallback_validation_candidate_completion_service_gap": pipe_join(
+            row["completion_service_gap"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_patients_lost_gap": pipe_join(
+            row["patients_lost_gap"] for row in diagnostics
+        ),
+        "anchor_fallback_validation_candidate_manufacturing_ineligibility_rate_gap": pipe_join(
+            row["manufacturing_ineligibility_gap"] for row in diagnostics
+        ),
     }
     if best_nonzero is None:
         metadata.update(
@@ -1065,8 +1420,12 @@ def anchor_fallback_candidate_diagnostics(
                 "anchor_fallback_validation_best_nonzero_decision": "",
                 "anchor_fallback_validation_best_nonzero_cost_mean": "",
                 "anchor_fallback_validation_best_nonzero_service_level_mean": "",
+                "anchor_fallback_validation_best_nonzero_completion_service_level_mean": "",
                 "anchor_fallback_validation_best_nonzero_cost_gap_pct": "",
                 "anchor_fallback_validation_best_nonzero_service_gap": "",
+                "anchor_fallback_validation_best_nonzero_completion_service_gap": "",
+                "anchor_fallback_validation_best_nonzero_patients_lost_gap": "",
+                "anchor_fallback_validation_best_nonzero_manufacturing_ineligibility_rate_gap": "",
             }
         )
     else:
@@ -1078,12 +1437,24 @@ def anchor_fallback_candidate_diagnostics(
                 "anchor_fallback_validation_best_nonzero_service_level_mean": best_nonzero[
                     "service"
                 ],
+                "anchor_fallback_validation_best_nonzero_completion_service_level_mean": (
+                    best_nonzero["completion_service"]
+                ),
                 "anchor_fallback_validation_best_nonzero_cost_gap_pct": best_nonzero[
                     "cost_gap_pct"
                 ],
                 "anchor_fallback_validation_best_nonzero_service_gap": best_nonzero[
                     "service_gap"
                 ],
+                "anchor_fallback_validation_best_nonzero_completion_service_gap": (
+                    best_nonzero["completion_service_gap"]
+                ),
+                "anchor_fallback_validation_best_nonzero_patients_lost_gap": best_nonzero[
+                    "patients_lost_gap"
+                ],
+                "anchor_fallback_validation_best_nonzero_manufacturing_ineligibility_rate_gap": (
+                    best_nonzero["manufacturing_ineligibility_gap"]
+                ),
             }
         )
     return metadata
@@ -1137,6 +1508,15 @@ def select_anchor_fallback_policy(
     learned_service_level: float | None = None,
     anchor_service_level: float | None = None,
     min_service_level_delta: float | None = None,
+    learned_completion_service_level: float | None = None,
+    anchor_completion_service_level: float | None = None,
+    min_completion_service_level_delta: float | None = None,
+    learned_patients_lost: float | None = None,
+    anchor_patients_lost: float | None = None,
+    max_patients_lost_delta: float | None = None,
+    learned_patient_ineligibility_during_manufacturing_rate: float | None = None,
+    anchor_patient_ineligibility_during_manufacturing_rate: float | None = None,
+    max_patient_ineligibility_during_manufacturing_rate_delta: float | None = None,
 ) -> str:
     """Return ``learned`` only if it clears cost and patient-facing safeguards."""
 
@@ -1158,7 +1538,61 @@ def select_anchor_fallback_policy(
             service_threshold = anchor_service + float(min_service_level_delta)
             if learned_service < service_threshold:
                 return "anchor"
+    if min_completion_service_level_delta is not None:
+        learned_completion = float(
+            learned_completion_service_level
+            if learned_completion_service_level is not None
+            else float("nan")
+        )
+        anchor_completion = float(
+            anchor_completion_service_level
+            if anchor_completion_service_level is not None
+            else float("nan")
+        )
+        if not np.isfinite(learned_completion) or not np.isfinite(anchor_completion):
+            return "anchor"
+        if learned_completion < anchor_completion + float(
+            min_completion_service_level_delta
+        ):
+            return "anchor"
+    if max_patients_lost_delta is not None:
+        learned_loss = float(
+            learned_patients_lost
+            if learned_patients_lost is not None
+            else float("nan")
+        )
+        anchor_loss = float(
+            anchor_patients_lost
+            if anchor_patients_lost is not None
+            else float("nan")
+        )
+        if not np.isfinite(learned_loss) or not np.isfinite(anchor_loss):
+            return "anchor"
+        if learned_loss > anchor_loss + float(max_patients_lost_delta):
+            return "anchor"
+    if max_patient_ineligibility_during_manufacturing_rate_delta is not None:
+        learned_rate = float(
+            learned_patient_ineligibility_during_manufacturing_rate
+            if learned_patient_ineligibility_during_manufacturing_rate is not None
+            else float("nan")
+        )
+        anchor_rate = float(
+            anchor_patient_ineligibility_during_manufacturing_rate
+            if anchor_patient_ineligibility_during_manufacturing_rate is not None
+            else float("nan")
+        )
+        if not np.isfinite(learned_rate) or not np.isfinite(anchor_rate):
+            return "anchor"
+        if learned_rate > anchor_rate + float(
+            max_patient_ineligibility_during_manufacturing_rate_delta
+        ):
+            return "anchor"
     return "learned"
+
+
+def optional_float(settings: dict[str, Any], key: str) -> float | None:
+    value = settings.get(key)
+    return None if value is None or value == "" else float(value)
 
 
 def _deep_update(base: dict[str, Any], updates: dict[str, Any]) -> dict[str, Any]:

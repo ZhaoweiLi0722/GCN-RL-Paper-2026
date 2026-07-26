@@ -1,10 +1,12 @@
 import unittest
+from dataclasses import replace
 
 import numpy as np
 
 from src.env.capacity_planning import (
     CapacityPlanningConfig,
     CapacityPlanningEnv,
+    _apply_net_transfers_delayed,
     make_20_clinic_config,
     make_legacy_two_facility_config,
 )
@@ -12,6 +14,36 @@ from src.graph.ablation import with_graph_ablation
 
 
 class CapacityPlanningEnvTest(unittest.TestCase):
+    def test_facility_net_matching_prefers_lower_priority_geo_route(self):
+        values = np.asarray([5.0, 5.0, 0.0])
+        requested = np.asarray([-5.0, -5.0, 5.0])
+        edges = ((0, 2), (1, 2))
+
+        actual, edge_flows, arrivals = _apply_net_transfers_delayed(
+            values,
+            edges,
+            requested,
+            edge_priorities=(10.0, 1.0),
+        )
+
+        np.testing.assert_allclose(actual, np.asarray([0.0, -5.0, 5.0]))
+        np.testing.assert_allclose(edge_flows, np.asarray([0.0, 5.0]))
+        np.testing.assert_allclose(arrivals, np.asarray([0.0, 0.0, 5.0]))
+
+    def test_facility_net_matching_preserves_legacy_order_without_geo_priority(self):
+        values = np.asarray([5.0, 5.0, 0.0])
+        requested = np.asarray([-5.0, -5.0, 5.0])
+        edges = ((0, 2), (1, 2))
+
+        actual, edge_flows, _arrivals = _apply_net_transfers_delayed(
+            values,
+            edges,
+            requested,
+        )
+
+        np.testing.assert_allclose(actual, np.asarray([-5.0, 0.0, 5.0]))
+        np.testing.assert_allclose(edge_flows, np.asarray([5.0, 0.0]))
+
     def test_legacy_two_facility_shapes(self):
         config = make_legacy_two_facility_config(episode_horizon=3)
         env = CapacityPlanningEnv(config, seed=7)
@@ -358,6 +390,112 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         self.assertTrue(np.any(env.demand_forecast == 6.0))
         self.assertTrue(np.any(env.demand_forecast == 2.0))
         np.testing.assert_allclose(info["demand_forecast"], np.full(4, 2.0))
+
+    def test_abrupt_regional_regime_changes_at_configured_epoch(self):
+        config = replace(
+            make_legacy_two_facility_config(episode_horizon=4),
+            demand_rates=(10.0, 20.0),
+            demand_rate_estimates=(8.0, 18.0),
+            include_demand_forecast_state=True,
+            demand_forecast_horizon=2,
+            demand_forecast_source="prior_estimate",
+            demand_regime_initial_multipliers=(1.0, 0.5),
+            demand_regime_final_multipliers=(0.5, 2.0),
+            demand_regime_change_step=2,
+        )
+        env = CapacityPlanningEnv(config, seed=31)
+
+        np.testing.assert_allclose(env.demand_regime_multiplier, (1.0, 0.5))
+        np.testing.assert_allclose(env._effective_demand_rates(), (10.0, 10.0))
+        np.testing.assert_allclose(env.demand_forecast, (16.0, 36.0))
+
+        env.step(env.noop_action())
+        np.testing.assert_allclose(env.demand_regime_multiplier, (1.0, 0.5))
+        _state, _reward, _done, info = env.step(env.noop_action())
+
+        np.testing.assert_allclose(env.demand_regime_multiplier, (0.5, 2.0))
+        np.testing.assert_allclose(env._effective_demand_rates(), (5.0, 40.0))
+        np.testing.assert_allclose(env.demand_forecast, (16.0, 36.0))
+        np.testing.assert_allclose(info["demand_regime_multiplier"], (0.5, 2.0))
+
+    def test_gradual_regional_regime_interpolates_per_facility(self):
+        config = replace(
+            make_legacy_two_facility_config(episode_horizon=5),
+            demand_regime_initial_multipliers=(1.0, 2.0),
+            demand_regime_final_multipliers=(3.0, 0.0),
+            demand_regime_change_step=1,
+            demand_regime_transition_duration=2,
+        )
+        env = CapacityPlanningEnv(config, seed=32)
+
+        env.step(env.noop_action())
+        np.testing.assert_allclose(env.demand_regime_multiplier, (1.0, 2.0))
+        env.step(env.noop_action())
+        np.testing.assert_allclose(env.demand_regime_multiplier, (2.0, 1.0))
+        env.step(env.noop_action())
+        np.testing.assert_allclose(env.demand_regime_multiplier, (3.0, 0.0))
+
+    def test_effective_demand_combines_persistent_regime_and_temporary_shock(self):
+        config = replace(
+            make_legacy_two_facility_config(episode_horizon=2),
+            demand_rates=(2.0, 3.0),
+            demand_regime_final_multipliers=(1.5, 0.5),
+        )
+        env = CapacityPlanningEnv(config, seed=33)
+        env.demand_rate_multiplier = np.asarray((2.0, 4.0))
+
+        np.testing.assert_allclose(env._effective_demand_rates(), (6.0, 6.0))
+
+    def test_regional_regime_is_seed_reproducible_without_changing_observation_shape(self):
+        base = make_legacy_two_facility_config(episode_horizon=4)
+        config = replace(
+            base,
+            include_demand_forecast_state=True,
+            demand_forecast_horizon=2,
+            demand_forecast_error=0.15,
+            demand_forecast_source="prior_estimate",
+            demand_regime_initial_multipliers=(1.0, 0.8),
+            demand_regime_final_multipliers=(1.4, 0.6),
+            demand_regime_transition_duration=3,
+            demand_shock_probability=0.5,
+            demand_shock_multiplier=2.0,
+            demand_shock_duration=2,
+            demand_shock_cluster_size=1,
+        )
+        first = CapacityPlanningEnv(config, seed=34)
+        second = CapacityPlanningEnv(config, seed=34)
+
+        self.assertEqual(
+            first.observation_size,
+            CapacityPlanningEnv(
+                replace(config, demand_forecast_source="effective_rate"),
+                seed=34,
+            ).observation_size,
+        )
+        for _ in range(3):
+            np.testing.assert_allclose(first.demand, second.demand)
+            np.testing.assert_allclose(first.demand_forecast, second.demand_forecast)
+            np.testing.assert_allclose(
+                first.demand_regime_multiplier,
+                second.demand_regime_multiplier,
+            )
+            first.step(first.noop_action())
+            second.step(second.noop_action())
+
+    def test_rejects_invalid_demand_regime_configuration(self):
+        base = make_legacy_two_facility_config(episode_horizon=4)
+        invalid_configs = (
+            replace(base, demand_forecast_source="oracle"),
+            replace(base, demand_regime_change_step=4),
+            replace(base, demand_regime_transition_duration=-1),
+            replace(base, demand_regime_initial_multipliers=(1.0,)),
+            replace(base, demand_regime_final_multipliers=(1.0, -0.1)),
+        )
+
+        for config in invalid_configs:
+            with self.subTest(config=config):
+                with self.assertRaises(ValueError):
+                    CapacityPlanningEnv(config, seed=35)
 
 
 if __name__ == "__main__":

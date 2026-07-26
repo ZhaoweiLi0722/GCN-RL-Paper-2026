@@ -10,7 +10,9 @@
     "myo",
     "iso",
     "mdl1",
-    "mdl2"
+    "mdl2",
+    "fmdl2",
+    "rmdl2"
   ],
   "primary_algorithms": [
     "gcn_ddpg",
@@ -19,7 +21,9 @@
     "myo",
     "iso",
     "mdl1",
-    "mdl2"
+    "mdl2",
+    "fmdl2",
+    "rmdl2"
   ],
   "second_phase_algorithms": [
     "sac",

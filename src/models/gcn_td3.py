@@ -21,7 +21,7 @@ import numpy as np
 from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
 from src.models.gcn import GCNActor, GCNCritic, transfer_matching_parameters
 from src.models.graph_features import build_graph_spec, flat_state_to_node_features
-from src.rl.action_projection import project_action
+from src.rl.action_projection import project_action, project_tensor_to_pattern_basis
 from src.rl.networks import require_torch, resolve_torch_device, torch
 from src.rl.noise import GaussianNoise
 from src.rl.preprocessing import reward_scale_from_config
@@ -65,6 +65,12 @@ class GCNTD3Agent:
         self.residual_state_gate_groups = self._make_residual_state_gate_groups(residual_config)
         self.residual_pressure_projection_groups = self._make_pressure_projection_groups(
             residual_config
+        )
+        pressure_projection_config = dict(
+            residual_config.get("pressure_projection", {})
+        )
+        self.residual_replenishment_uniform_basis = bool(
+            pressure_projection_config.get("replenishment_uniform_basis", False)
         )
         self.residual_l2_weight = float(residual_config.get("l2_weight", 0.0))
         self.residual_base_policy = str(residual_config.get("base_policy", "mdl2"))
@@ -123,6 +129,10 @@ class GCNTD3Agent:
                 include_global_context=include_global_context,
                 readout_mode=readout_mode,
                 edge_weights=self.graph_spec.edge_weights,
+                resource_edges=self.graph_spec.resource_edge_index,
+                capacity_edges=self.graph_spec.capacity_edge_index,
+                resource_edge_features=self.graph_spec.resource_edge_features,
+                capacity_edge_features=self.graph_spec.capacity_edge_features,
             ).to(self.device)
 
         def make_critic():
@@ -715,12 +725,17 @@ class GCNTD3Agent:
             if pattern is None or group_slice is None:
                 continue
             current = projected[:, group_slice]
-            denominator = pattern.pow(2).sum(dim=1, keepdim=True).clamp_min(1e-6)
-            coefficient = (current * pattern).sum(dim=1, keepdim=True) / denominator
             projected = self._replace_action_slice_tensor(
                 projected,
                 group_slice,
-                coefficient * pattern,
+                project_tensor_to_pattern_basis(
+                    current,
+                    pattern,
+                    include_uniform=(
+                        self.residual_replenishment_uniform_basis
+                        and group in ("replenishment", "purchase")
+                    ),
+                ),
             )
         return torch.clamp(projected, -1.0, 1.0)
 
@@ -771,11 +786,15 @@ class GCNTD3Agent:
         lead_time = int(self.env_config.get("production_lead_time", 3))
         include_supplier = int(bool(self.env_config.get("include_supplier_state", False)))
         include_forecast = int(bool(self.env_config.get("include_demand_forecast_state", False)))
+        include_history = int(
+            bool(self.env_config.get("include_demand_history_state", False))
+        )
         include_transfer_pipeline = int(
             bool(self.env_config.get("include_transfer_pipeline_state", False))
         )
         features_per_facility = 3 + lead_time + include_supplier + include_forecast
         features_per_facility += 3 * include_transfer_pipeline
+        features_per_facility += 3 * include_history
         facility_state = states[:, : n * features_per_facility].reshape(
             states.shape[0],
             n,
@@ -790,9 +809,29 @@ class GCNTD3Agent:
             forecast = facility_state[:, :, forecast_col]
         else:
             forecast = demand
+        pending_reagents = torch.zeros_like(demand)
+        pending_capacity = torch.zeros_like(demand)
+        if include_transfer_pipeline:
+            pending_start = 3 + lead_time + include_supplier + include_forecast
+            pending_reagents = facility_state[:, :, pending_start + 1]
+            pending_capacity = facility_state[:, :, pending_start + 2]
         risk = self._patient_risk_signal_tensor(states, features_per_facility)
-        resource_pressure = demand + 0.25 * forecast + specimens - reagents + 0.5 * risk
-        capacity_pressure = demand + 0.25 * forecast + specimens - idle_bioreactors + 0.5 * risk
+        resource_pressure = (
+            demand
+            + 0.25 * forecast
+            + specimens
+            - reagents
+            - pending_reagents
+            + 0.5 * risk
+        )
+        capacity_pressure = (
+            demand
+            + 0.25 * forecast
+            + specimens
+            - idle_bioreactors
+            - pending_capacity
+            + 0.5 * risk
+        )
         return {
             "resource_pressure": resource_pressure,
             "capacity_pressure": capacity_pressure,
@@ -807,15 +846,27 @@ class GCNTD3Agent:
             )
         n = self.graph_spec.num_facilities
         summary_edges = tuple(self.env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
-        summary_width = 3 + len(summary_edges) + 1
+        summary_width = 6 + len(summary_edges) + 1
         base_width = n * int(features_per_facility)
         expected_width = base_width + n * summary_width
         if states.shape[1] < expected_width:
             return torch.zeros((states.shape[0], n), dtype=states.dtype, device=states.device)
         summary = states[:, base_width:expected_width].reshape(states.shape[0], n, summary_width)
         near_expiry = summary[:, :, 2]
-        critical_survival = summary[:, :, 3] if summary_width > 3 else torch.zeros_like(near_expiry)
-        return near_expiry + critical_survival
+        patient_config = dict(self.env_config.get("patient", {}))
+        risk_threshold = float(patient_config.get("eligibility_threshold", 0.80)) + float(
+            self.env_config.get("urgency_margin", 0.10)
+        )
+        at_risk_buckets = sum(
+            float(edge) <= risk_threshold + 1e-8 for edge in summary_edges
+        )
+        waiting_histogram = summary[:, :, 6:]
+        waiting_at_risk = (
+            waiting_histogram[:, :, :at_risk_buckets].sum(dim=2)
+            if at_risk_buckets > 0
+            else torch.zeros_like(near_expiry)
+        )
+        return near_expiry + waiting_at_risk
 
     def _centered_unit_pattern_tensor(self, values):
         centered = values - values.mean(dim=1, keepdim=True)
@@ -948,6 +999,9 @@ class GCNTD3Agent:
     def _zero_initialize_actor_output(self, actor) -> None:
         """Make a residual actor start as the heuristic anchor."""
 
+        if hasattr(actor, "zero_initialize_output_heads"):
+            actor.zero_initialize_output_heads()
+            return
         last_linear = None
         for module in actor.modules():
             if isinstance(module, torch.nn.Linear):

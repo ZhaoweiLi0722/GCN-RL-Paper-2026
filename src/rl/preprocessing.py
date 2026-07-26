@@ -34,12 +34,25 @@ class FixedObservationScaler:
         lead_time = int(env_config.get("production_lead_time", 3))
         include_supplier = bool(env_config.get("include_supplier_state", False))
         include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+        include_demand_history = bool(
+            env_config.get("include_demand_history_state", False)
+        )
         include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
+        include_time_state = bool(env_config.get("include_time_state", False))
         patient_summary_width = _patient_summary_width(env_config)
-        features_per_facility = 3 + lead_time + int(include_supplier) + int(include_forecast)
+        features_per_facility = (
+            3
+            + lead_time
+            + int(include_supplier)
+            + int(include_forecast)
+            + 3 * int(include_demand_history)
+        )
         if include_transfer_pipeline:
             features_per_facility += 3
-        expected_state_dim = num_facilities * (features_per_facility + patient_summary_width)
+        expected_state_dim = (
+            num_facilities * (features_per_facility + patient_summary_width)
+            + int(include_time_state)
+        )
         if expected_state_dim != int(state_dim):
             raise ValueError(
                 "normalize_observations expected state_dim="
@@ -51,7 +64,8 @@ class FixedObservationScaler:
         max_reagents = _as_vector(env_config.get("max_reagents", 1.0), num_facilities)
         max_idle = _as_vector(env_config.get("max_idle_bioreactors", 1.0), num_facilities)
 
-        rows: list[np.ndarray] = []
+        base_rows: list[np.ndarray] = []
+        patient_rows: list[np.ndarray] = []
         for facility in range(num_facilities):
             row = [
                 max(float(demand_rates[facility]), 1.0),
@@ -72,10 +86,27 @@ class FixedObservationScaler:
                         max(float(max_idle[facility]), 1.0),
                     ]
                 )
+            if include_demand_history:
+                demand_scale = max(float(demand_rates[facility]), 1.0)
+                row.extend([demand_scale, demand_scale, demand_scale])
             if patient_summary_width:
-                row.extend(_patient_summary_scale(float(max_specimens[facility]), patient_summary_width))
-            rows.append(np.asarray(row, dtype=np.float32))
-        return cls(enabled=True, scales=np.concatenate(rows), clip=clip)
+                patient_rows.append(
+                    np.asarray(
+                        _patient_summary_scale(
+                            float(max_specimens[facility]),
+                            patient_summary_width,
+                        ),
+                        dtype=np.float32,
+                    )
+                )
+            base_rows.append(np.asarray(row, dtype=np.float32))
+        # PatientConditionCapacityEnv appends all per-clinic patient summaries
+        # after the complete base-state block; mirror that exact flat layout.
+        rows = base_rows + patient_rows
+        scales = np.concatenate(rows)
+        if include_time_state:
+            scales = np.concatenate((scales, np.ones(1, dtype=np.float32)))
+        return cls(enabled=True, scales=scales, clip=clip)
 
     def normalize_np(self, value: np.ndarray) -> np.ndarray:
         if not self.enabled:
@@ -106,7 +137,14 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
     num_facilities = int(env_config.get("num_facilities", 1))
     include_supplier = bool(env_config.get("include_supplier_state", False))
     include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+    include_demand_history = bool(
+        env_config.get("include_demand_history_state", False)
+    )
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
+    include_adaptive_demand_features = bool(
+        config.get("include_adaptive_demand_features", False)
+    )
+    include_time_state = bool(env_config.get("include_time_state", False))
     include_hub = bool(env_config.get("include_central_capacity_hub", False))
     demand_rates = _as_vector(env_config.get("demand_rates", 1.0), num_facilities)
     max_specimens = _as_vector(env_config.get("max_specimens", 1.0), num_facilities)
@@ -132,6 +170,19 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
                 max(float(np.max(max_idle)), 1.0),
             ]
         )
+    if include_demand_history:
+        demand_scale = max(float(np.mean(demand_rates)), 1.0)
+        scale.extend([demand_scale, demand_scale, demand_scale])
+    if include_adaptive_demand_features:
+        scale.extend([1.0, 1.0, 1.0])
+    if include_time_state:
+        scale.append(1.0)
+    residual_config = dict(config.get("residual_action", {}))
+    if bool(
+        residual_config.get("enabled", False)
+        and residual_config.get("include_base_action_features", False)
+    ):
+        scale.extend([1.0] * 4)
     if include_hub:
         scale.append(1.0)
     patient_summary_width = _patient_summary_width(env_config)
@@ -146,13 +197,21 @@ def _patient_summary_width(env_config: dict[str, Any]) -> int:
     if env_config.get("env_type") != "patient_condition":
         return 0
     edges = env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
-    return 3 + len(tuple(edges)) + 1
+    return 6 + len(tuple(edges)) + 1
 
 
 def _patient_summary_scale(max_specimens: float, summary_width: int) -> list[float]:
     count_scale = max(max_specimens, 1.0)
-    # Layout: waiting count, mean survival, near-expiry count, then survival buckets.
-    return [count_scale, 1.0, count_scale] + [count_scale] * max(int(summary_width) - 3, 0)
+    # Layout: waiting count/survival/expiry, manufacturing count/survival/risk,
+    # then waiting-survival buckets.
+    return [
+        count_scale,
+        1.0,
+        count_scale,
+        count_scale,
+        1.0,
+        count_scale,
+    ] + [count_scale] * max(int(summary_width) - 6, 0)
 
 
 def _as_vector(values: Sequence[float] | float | int | None, length: int) -> np.ndarray:
@@ -170,8 +229,17 @@ def _infer_num_facilities(state_dim: int, env_config: dict[str, Any]) -> int:
     lead_time = int(env_config.get("production_lead_time", 3))
     include_supplier = bool(env_config.get("include_supplier_state", False))
     include_forecast = bool(env_config.get("include_demand_forecast_state", False))
+    include_demand_history = bool(
+        env_config.get("include_demand_history_state", False)
+    )
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-    features_per_facility = 3 + lead_time + int(include_supplier) + int(include_forecast)
+    features_per_facility = (
+        3
+        + lead_time
+        + int(include_supplier)
+        + int(include_forecast)
+        + 3 * int(include_demand_history)
+    )
     if include_transfer_pipeline:
         features_per_facility += 3
     if state_dim % features_per_facility != 0:

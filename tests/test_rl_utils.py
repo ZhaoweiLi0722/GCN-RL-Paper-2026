@@ -4,7 +4,7 @@ import numpy as np
 
 from evaluation.aggregate_results import DEFAULT_METRICS, aggregate_rows
 from evaluation.run_smoke_comparison import _smoke_config
-from src.rl.action_projection import project_action
+from src.rl.action_projection import project_action, project_tensor_to_pattern_basis
 from src.rl.agents import available_algorithms, get_agent_class
 from src.rl.config import load_config
 from src.rl.experiment import build_env
@@ -22,6 +22,24 @@ class RLUtilsTest(unittest.TestCase):
     def test_project_action_checks_shape(self):
         with self.assertRaises(ValueError):
             project_action(np.array([0.0, 0.0]), action_space_info=3)
+
+    def test_pattern_projection_can_retain_uniform_replenishment(self):
+        from src.rl.networks import torch
+
+        current = torch.tensor([[1.0, 2.0, 3.0]])
+        pattern = torch.tensor([[-1.0, 0.0, 1.0]])
+
+        projected = project_tensor_to_pattern_basis(
+            current,
+            pattern,
+            include_uniform=True,
+        )
+
+        np.testing.assert_allclose(
+            projected.numpy(),
+            current.numpy(),
+            atol=1e-6,
+        )
 
     def test_torch_device_auto_prefers_available_accelerator(self):
         device_name = default_torch_device()
@@ -75,6 +93,8 @@ class RLUtilsTest(unittest.TestCase):
         algorithms = available_algorithms()
 
         self.assertIn("gcn_residual_mdl2", algorithms)
+        self.assertIn("gcn_residual_mdl2_network_ddpg_afd", algorithms)
+        self.assertIn("gcn_residual_mdl2_network_td3_afd", algorithms)
         self.assertIn("gcn_residual_mdl2_replenish_ddpg", algorithms)
         self.assertIn("gcn_residual_mdl2_replenish_ddpg_afd", algorithms)
         self.assertIn("gcn_pure_ddpg", algorithms)
@@ -93,6 +113,14 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIn("gcn_residual_pmyo_transfer_td3_bc", algorithms)
         self.assertIn("gcn_residual_pmyo_transfer_td3", algorithms)
         self.assertIs(get_agent_class("gcn_residual_mdl2"), get_agent_class("gcn_ddpg"))
+        self.assertIs(
+            get_agent_class("gcn_residual_mdl2_network_ddpg_afd"),
+            get_agent_class("gcn_ddpg"),
+        )
+        self.assertIs(
+            get_agent_class("gcn_residual_mdl2_network_td3_afd"),
+            get_agent_class("gcn_td3"),
+        )
         self.assertIs(
             get_agent_class("gcn_residual_mdl2_replenish_ddpg"),
             get_agent_class("gcn_ddpg"),
@@ -124,11 +152,16 @@ class RLUtilsTest(unittest.TestCase):
         algorithms = available_algorithms()
 
         self.assertIn("flat_residual_mdl2", algorithms)
+        self.assertIn("flat_residual_mdl2_network_ddpg_afd", algorithms)
         self.assertIn("flat_residual_mdl2_replenish_ddpg_afd", algorithms)
         self.assertIn("flat_residual_iso", algorithms)
         self.assertIn("flat_residual_myo", algorithms)
         self.assertIn("flat_residual_pmyo", algorithms)
         self.assertIs(get_agent_class("flat_residual_mdl2"), get_agent_class("flat_ddpg"))
+        self.assertIs(
+            get_agent_class("flat_residual_mdl2_network_ddpg_afd"),
+            get_agent_class("flat_ddpg"),
+        )
         self.assertIs(
             get_agent_class("flat_residual_mdl2_replenish_ddpg_afd"),
             get_agent_class("flat_ddpg"),
@@ -230,12 +263,12 @@ class RLUtilsTest(unittest.TestCase):
         self.assertGreater(env.config.geographic_transfer_time_cost_scale, 0.0)
         self.assertGreater(env.config.regional_supplier_disruption_probability, 0.0)
         self.assertTrue(env.config.include_demand_forecast_state)
-        self.assertEqual(env.observation_size, 360)
-        self.assertEqual(graph["node_features"].shape, (21, 18))
+        self.assertEqual(env.observation_size, 421)
+        self.assertEqual(graph["node_features"].shape, (21, 22))
         self.assertEqual(graph["clinic_coordinates"].shape, (20, 2))
         self.assertEqual(graph["clinic_distance_matrix"].shape, (20, 20))
         self.assertEqual(graph["clinic_transfer_time_hours_matrix"].shape, (20, 20))
-        self.assertEqual(scaler.scales.shape, (360,))
+        self.assertEqual(scaler.scales.shape, (421,))
 
     def test_gcn_config_enables_imitation_pretrain(self):
         config = load_config("configs/gcn_ddpg_20_clinic.yaml")

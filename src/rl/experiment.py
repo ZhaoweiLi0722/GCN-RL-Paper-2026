@@ -14,6 +14,22 @@ from src.env.capacity_planning import CapacityPlanningConfig, CapacityPlanningEn
 from src.graph.ablation import with_graph_ablation
 
 
+COST_COMPONENT_METRICS = (
+    "base_cost",
+    "reagent_purchase_cost",
+    "reagent_holding_cost",
+    "reagent_shortage_cost",
+    "bioreactor_holding_cost",
+    "bioreactor_shortage_cost",
+    "specimen_transfer_cost",
+    "capacity_transfer_cost",
+    "reagent_transfer_cost",
+    "patient_loss_cost",
+    "expiry_cost",
+    "urgency_cost",
+)
+
+
 def build_env(config: dict[str, Any], seed: int) -> CapacityPlanningEnv:
     env_config = dict(config.get("env", {}))
     ablation = env_config.pop("graph_ablation", config.get("graph_ablation", "full_graph"))
@@ -83,6 +99,13 @@ def train_off_policy_agent(
         if post_imitation_pretrain is not None
         else {}
     )
+    pretrain_checkpoint_path = ""
+    if bool(config.get("save_pretrain_checkpoint", False)) and (
+        pretrain_summary or advantage_distillation_summary
+    ):
+        pretrain_checkpoint = checkpoint_dir / f"{algorithm}_seed{seed}_pretrain.pt"
+        agent.save(pretrain_checkpoint)
+        pretrain_checkpoint_path = str(pretrain_checkpoint)
     elite_config = dict(config.get("elite_imitation", {}))
     elite_enabled = bool(elite_config.get("enabled", False))
     elite_warmup_episodes = int(elite_config.get("warmup_episodes", 0))
@@ -96,17 +119,43 @@ def train_off_policy_agent(
         state = env.reset(seed=seed + episode)
         agent.reset()
         total_reward = 0.0
+        total_training_reward = 0.0
         metrics = EpisodeMetrics()
         episode_states: list[np.ndarray] = []
         episode_actions: list[np.ndarray] = []
 
         for _step in range(max_steps):
             action = agent.select_action(state, explore=True, env=env)
+            reward_context_builder = getattr(
+                agent,
+                "capture_training_reward_context",
+                None,
+            )
+            reward_context = (
+                reward_context_builder(state, action, env)
+                if callable(reward_context_builder)
+                else None
+            )
             next_state, reward, done, info = env.step(action)
             if elite_enabled:
                 episode_states.append(np.asarray(state, dtype=np.float32))
                 episode_actions.append(np.asarray(action, dtype=np.float32))
-            agent.observe(state, action, reward, next_state, done)
+            reward_transformer = getattr(agent, "transform_training_reward", None)
+            training_reward = (
+                reward_transformer(
+                    state,
+                    action,
+                    reward,
+                    next_state,
+                    done,
+                    info,
+                    reward_context,
+                )
+                if callable(reward_transformer)
+                else reward
+            )
+            agent.observe(state, action, training_reward, next_state, done)
+            total_training_reward += float(training_reward)
             global_step += 1
             if global_step % update_frequency == 0:
                 for _update in range(updates_per_update):
@@ -142,6 +191,7 @@ def train_off_policy_agent(
                 "graph_ablation": getattr(env, "graph_ablation", "full_graph"),
                 "episode": episode,
                 "total_reward": total_reward,
+                "total_training_reward": total_training_reward,
                 "total_cost": metrics.total_cost,
                 "service_level": metrics.service_level,
                 "average_waiting_time": metrics.average_waiting_time,
@@ -189,6 +239,13 @@ def train_off_policy_agent(
                     "advantage_distillation_loss",
                     "",
                 ),
+                "advantage_distillation_replay_transitions": (
+                    advantage_distillation_summary.get(
+                        "advantage_distillation_replay_transitions",
+                        0,
+                    )
+                ),
+                "pretrain_checkpoint_path": pretrain_checkpoint_path,
                 "elite_imitation_updates": elite_update_count,
                 "elite_buffer_size": elite_summary.get("elite_buffer_size", len(elite_episodes)),
                 "elite_best_cost": "" if not np.isfinite(elite_best_cost) else elite_best_cost,
@@ -224,6 +281,68 @@ def train_off_policy_agent(
             )
 
     return rows
+
+
+def train_offline_replay_updates(
+    agent,
+    *,
+    updates: int,
+    progress_interval: int = 0,
+) -> dict[str, Any]:
+    """Run actor-critic updates from an already populated replay buffer."""
+
+    update_count = int(updates)
+    if update_count < 0:
+        raise ValueError("offline replay updates must be non-negative")
+    if update_count == 0:
+        return {"offline_rl_updates": 0}
+
+    metric_totals: dict[str, float] = {}
+    metric_counts: dict[str, int] = {}
+    latest_metrics: dict[str, float] = {}
+    for update_index in range(update_count):
+        raw_metrics = dict(agent.update() or {})
+        if not raw_metrics:
+            raise RuntimeError(
+                "Offline replay update produced no metrics; ensure the "
+                "teacher replay buffer contains at least one training batch"
+            )
+        current_metrics: dict[str, float] = {}
+        for key, value in raw_metrics.items():
+            numeric = float(value)
+            if not np.isfinite(numeric):
+                raise RuntimeError(
+                    f"Offline replay metric {key} is not finite at update "
+                    f"{update_index + 1}"
+                )
+            metric_totals[key] = metric_totals.get(key, 0.0) + numeric
+            metric_counts[key] = metric_counts.get(key, 0) + 1
+            current_metrics[key] = numeric
+            latest_metrics[key] = numeric
+        if (
+            progress_interval > 0
+            and (update_index + 1) % int(progress_interval) == 0
+        ):
+            actor_loss = current_metrics.get("actor_loss", float("nan"))
+            critic_loss = current_metrics.get(
+                "critic_loss",
+                current_metrics.get("critic1_loss", float("nan")),
+            )
+            print(
+                "offline_rl "
+                f"updates={update_index + 1}/{update_count} "
+                f"actor_loss={actor_loss:.6f} "
+                f"critic_loss={critic_loss:.6f}",
+                flush=True,
+            )
+
+    summary: dict[str, Any] = {"offline_rl_updates": update_count}
+    for key in sorted(metric_totals):
+        summary[f"offline_rl_{key}_mean"] = (
+            metric_totals[key] / metric_counts[key]
+        )
+        summary[f"offline_rl_{key}_final"] = latest_metrics[key]
+    return summary
 
 
 def _maybe_enable_train_randomization(
@@ -374,6 +493,8 @@ class EpisodeMetrics:
         self.bioreactor_shortage_steps = 0
         self.transshipment_count = 0
         self.transshipment_cost = 0.0
+        self.has_cost_breakdown = False
+        self.cost_components = {metric: 0.0 for metric in COST_COMPONENT_METRICS}
         self.service_level = 0.0
         self.average_waiting_time = 0.0
         self.bioreactor_utilization = 0.0
@@ -384,13 +505,26 @@ class EpisodeMetrics:
         self._patient_steps = 0
         self.patients_lost = 0.0
         self.patients_lost_ineligible = 0.0
+        self.patients_lost_waiting_ineligible = 0.0
+        self.patients_lost_manufacturing = 0.0
         self.patients_lost_expired = 0.0
+        self.patients_started = 0.0
+        self.patients_completed = 0.0
+        self.therapies_discarded = 0.0
         self.material_wasted = 0.0
         self.at_risk_unserved = 0.0
+        self.completion_service_level_last = 0.0
+        self.patient_ineligibility_during_manufacturing_rate_last = 0.0
+        self.manufacturing_loss_rate_last = 0.0
+        self.average_turnaround_time_last = 0.0
 
     def update(self, info: dict[str, Any]) -> None:
         self.steps += 1
         self.total_cost += float(info.get("cost", 0.0))
+        for metric in COST_COMPONENT_METRICS:
+            if metric in info:
+                self.has_cost_breakdown = True
+                self.cost_components[metric] += float(info[metric])
         self._update_patient_metrics(info)
         self.service_level = float(info.get("service_level", self.service_level))
         self.average_waiting_time = float(info.get("average_waiting_time", self.average_waiting_time))
@@ -427,12 +561,46 @@ class EpisodeMetrics:
         self._patient_steps += 1
         lost_ineligible = float(np.asarray(info.get("patients_lost_ineligible", 0.0), dtype=float).sum())
         lost_expired = float(np.asarray(info.get("patients_lost_expired", 0.0), dtype=float).sum())
-        finished_expired = float(np.asarray(info.get("finished_expired", 0.0), dtype=float).sum())
         self.patients_lost_ineligible += lost_ineligible
+        self.patients_lost_waiting_ineligible += float(
+            np.asarray(info.get("patients_lost_waiting_ineligible", 0.0), dtype=float).sum()
+        )
+        self.patients_lost_manufacturing += float(
+            np.asarray(info.get("patients_lost_manufacturing", 0.0), dtype=float).sum()
+        )
         self.patients_lost_expired += lost_expired
         self.patients_lost += float(np.asarray(info.get("patients_lost", 0.0), dtype=float).sum())
-        self.material_wasted += finished_expired + lost_expired
+        self.patients_started += float(
+            np.asarray(info.get("patients_started", 0.0), dtype=float).sum()
+        )
+        self.patients_completed += float(
+            np.asarray(info.get("patients_completed", 0.0), dtype=float).sum()
+        )
+        self.therapies_discarded += float(
+            np.asarray(info.get("therapies_discarded", 0.0), dtype=float).sum()
+        )
+        self.material_wasted += float(
+            np.asarray(info.get("material_wasted", 0.0), dtype=float).sum()
+        )
         self.at_risk_unserved += float(np.asarray(info.get("at_risk_unserved", 0.0), dtype=float).sum())
+        self.completion_service_level_last = float(
+            info.get("completion_service_level", self.completion_service_level_last)
+        )
+        self.patient_ineligibility_during_manufacturing_rate_last = float(
+            info.get(
+                "patient_ineligibility_during_manufacturing_rate",
+                info.get(
+                    "manufacturing_loss_rate",
+                    self.patient_ineligibility_during_manufacturing_rate_last,
+                ),
+            )
+        )
+        self.manufacturing_loss_rate_last = (
+            self.patient_ineligibility_during_manufacturing_rate_last
+        )
+        self.average_turnaround_time_last = float(
+            info.get("average_turnaround_time", self.average_turnaround_time_last)
+        )
 
     @property
     def eligibility_rate_mean(self) -> float:

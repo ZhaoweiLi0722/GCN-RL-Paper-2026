@@ -139,7 +139,7 @@ class PatientConditionModel:
         return float(np.clip(survival, 0.0, 1.0))
 
     def advance(self, patient: PatientState, epochs: int = 1) -> PatientState:
-        """Age a waiting patient by ``epochs`` and update its survival in place."""
+        """Advance a waiting or in-production patient and update survival."""
 
         patient.age += int(epochs)
         patient.survival = self.survival_at(

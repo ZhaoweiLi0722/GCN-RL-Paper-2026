@@ -85,6 +85,71 @@ class FacilityActionLayoutTests(unittest.TestCase):
 
 
 @unittest.skipIf(torch is None, "torch not available")
+class NetworkResidualLayoutTests(unittest.TestCase):
+    def setUp(self) -> None:
+        torch.manual_seed(3)
+
+    def _actor(self):
+        from src.models.gcn import GCNActor
+
+        resource_edges = ((0, 1), (1, 2), (2, 3))
+        capacity_edges = (
+            (0, 1),
+            (0, 2),
+            (0, 3),
+            (1, 2),
+            (1, 3),
+            (2, 3),
+        )
+        resource_features = tuple((0.1, 0.2, 1.0, 0.3) for _ in resource_edges)
+        capacity_features = tuple((0.2, 0.3, 1.0, 0.4) for _ in capacity_edges)
+        return GCNActor(
+            NODE_DIM,
+            4,
+            4,
+            16,
+            _line_edges(4),
+            GCN_HIDDEN,
+            HEAD_HIDDEN,
+            readout_mode="network_residual",
+            resource_edges=resource_edges,
+            capacity_edges=capacity_edges,
+            resource_edge_features=resource_features,
+            capacity_edge_features=capacity_features,
+        )
+
+    def test_network_residual_layout_masks_specimens_and_conserves_transfers(self) -> None:
+        actor = self._actor()
+
+        actions = actor(torch.randn(5, 4, NODE_DIM)).reshape(5, 4, 4)
+
+        self.assertTrue(torch.allclose(actions[:, 0], torch.zeros_like(actions[:, 0])))
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 1].sum(dim=1),
+                torch.zeros(5),
+                atol=1e-6,
+            )
+        )
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 2].sum(dim=1),
+                torch.zeros(5),
+                atol=1e-6,
+            )
+        )
+        self.assertTrue(torch.all(actions.abs() <= 1.0))
+
+    def test_network_residual_zero_initializes_every_output_head(self) -> None:
+        actor = self._actor()
+
+        actor.zero_initialize_output_heads()
+        actions = actor(torch.randn(3, 4, NODE_DIM))
+
+        self.assertTrue(torch.allclose(actions, torch.zeros_like(actions)))
+
+
+@unittest.skipIf(torch is None, "torch not available")
 class CurriculumTransferTests(unittest.TestCase):
     def setUp(self) -> None:
         torch.manual_seed(1)

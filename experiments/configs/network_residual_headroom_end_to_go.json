@@ -1,0 +1,46 @@
+{
+  "name": "calibrated_network_residual_headroom_end_to_go",
+  "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift.json",
+  "anchor_policy": "mdl2",
+  "seed": 98000,
+  "max_steps": 52,
+  "state_probe_rollouts": 1,
+  "teacher_replications": 10,
+  "progress_interval_states": 25,
+  "progress_interval_decisions": 100,
+  "lookahead": 52,
+  "lookahead_replications": 1,
+  "lookahead_seed": 1870000,
+  "demonstration_advantage_weight_scale": 500000.0,
+  "demonstration_advantage_weight_cap": 10.0,
+  "epsilons": [0.08, 0.12, 0.16],
+  "candidate_groups": [
+    "replenishment_uniform",
+    "reagent_transfer",
+    "combined_transfer",
+    "reagent_replenishment",
+    "combined_network"
+  ],
+  "candidate_signs": [-1.0, 1.0],
+  "score_weights": {
+    "service_level": 0.0,
+    "completion_service_level": 0.0,
+    "eligibility_rate": 0.0,
+    "patient_ineligibility_during_manufacturing_rate": 0.0,
+    "at_risk_unserved": 0.0,
+    "patients_lost": 0.0
+  },
+  "guardrails": {
+    "min_completion_service_level_delta": 0.0,
+    "max_patients_lost_delta": 0.0,
+    "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+    "min_score_improvement": 500000.0
+  },
+  "materiality": {
+    "minimum_episode_cost_improvement_pct": 1.0,
+    "minimum_opportunity_rate": 0.05,
+    "require_episode_clinical_noninferiority": true
+  },
+  "demonstration_path": "results/network_residual_headroom_end_to_go/network_teacher_end_to_go_v1.npz",
+  "output_root": "results/network_residual_headroom_end_to_go"
+}

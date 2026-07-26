@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 from pathlib import Path
 from typing import Any
 
@@ -13,7 +12,6 @@ from src.baselines.heuristics import (
     get_heuristic_class,
     select_shield_candidate_index,
     shield_candidate_actions,
-    shield_rollout_metrics,
 )
 from src.models.gcn import GraphFeatureExtractor
 from src.models.graph_features import build_graph_spec, flat_state_to_node_features
@@ -337,15 +335,7 @@ class GCNShieldSelectorAgent:
         )
         if len(candidates) <= 1 or self.teacher_policy.shield_lookahead <= 0:
             return 0, anchor_action
-        candidate_metrics = [
-            shield_rollout_metrics(
-                copy.deepcopy(env),
-                self.teacher_policy._anchor_policy,
-                action,
-                horizon=self.teacher_policy.shield_lookahead,
-            )
-            for action in candidates
-        ]
+        candidate_metrics = self.teacher_policy._evaluate_candidates(env, candidates)
         label = select_shield_candidate_index(self.teacher_policy, candidate_metrics)
         action = project_action(candidates[label], env_state=env, action_space_info=self.action_dim).action
         return int(label), action

@@ -462,34 +462,75 @@ def run_local_search_distillation(
     balance_label_weights: bool = False,
     retain_for_regularization: bool = False,
     min_service_level_delta: float | None = None,
+    min_completion_service_level_delta: float | None = None,
+    max_patients_lost_delta: float | None = None,
+    max_patient_ineligibility_during_manufacturing_rate_delta: float | None = None,
     service_level_weight: float = 0.0,
+    completion_service_level_weight: float = 0.0,
     eligibility_rate_weight: float = 0.0,
+    patient_ineligibility_during_manufacturing_rate_weight: float = 0.0,
     at_risk_unserved_weight: float = 0.0,
     patients_lost_weight: float = 0.0,
     candidate_groups: tuple[str, ...] | None = None,
     candidate_signs: tuple[float, ...] | None = None,
+    demonstration_path: str | Path | None = None,
+    populate_replay_buffer: bool = False,
+    lookahead_replications: int = 1,
+    lookahead_seed: int | None = None,
+    dense_advantage_weight_scale: float | None = None,
+    dense_advantage_weight_cap: float = 10.0,
 ) -> dict[str, Any]:
-    demos = collect_local_search_demonstrations(
-        env,
-        seed=seed,
-        rollouts=rollouts,
-        lookahead=lookahead,
-        epsilons=epsilons,
-        max_steps=max_steps,
-        baseline_policy=baseline_policy,
-        min_improvement=min_improvement,
-        anchor_keep_probability=anchor_keep_probability,
-        anchor_keep_weight=anchor_keep_weight,
-        anchor_keep_on_improved=anchor_keep_on_improved,
-        balance_label_weights=balance_label_weights,
-        min_service_level_delta=min_service_level_delta,
-        service_level_weight=service_level_weight,
-        eligibility_rate_weight=eligibility_rate_weight,
-        at_risk_unserved_weight=at_risk_unserved_weight,
-        patients_lost_weight=patients_lost_weight,
-        candidate_groups=candidate_groups,
-        candidate_signs=candidate_signs,
-    )
+    demonstration_file = Path(demonstration_path) if demonstration_path else None
+    if demonstration_file is not None and demonstration_file.exists():
+        demos = load_local_search_demonstrations(demonstration_file)
+        demonstration_source = "cache"
+    else:
+        demos = collect_local_search_demonstrations(
+            env,
+            seed=seed,
+            rollouts=rollouts,
+            lookahead=lookahead,
+            epsilons=epsilons,
+            max_steps=max_steps,
+            baseline_policy=baseline_policy,
+            min_improvement=min_improvement,
+            anchor_keep_probability=anchor_keep_probability,
+            anchor_keep_weight=anchor_keep_weight,
+            anchor_keep_on_improved=anchor_keep_on_improved,
+            balance_label_weights=balance_label_weights,
+            min_service_level_delta=min_service_level_delta,
+            min_completion_service_level_delta=min_completion_service_level_delta,
+            max_patients_lost_delta=max_patients_lost_delta,
+            max_patient_ineligibility_during_manufacturing_rate_delta=(
+                max_patient_ineligibility_during_manufacturing_rate_delta
+            ),
+            service_level_weight=service_level_weight,
+            completion_service_level_weight=completion_service_level_weight,
+            eligibility_rate_weight=eligibility_rate_weight,
+            patient_ineligibility_during_manufacturing_rate_weight=(
+                patient_ineligibility_during_manufacturing_rate_weight
+            ),
+            at_risk_unserved_weight=at_risk_unserved_weight,
+            patients_lost_weight=patients_lost_weight,
+            candidate_groups=candidate_groups,
+            candidate_signs=candidate_signs,
+            lookahead_replications=lookahead_replications,
+            lookahead_seed=lookahead_seed,
+        )
+        demonstration_source = "collected"
+        if demonstration_file is not None:
+            save_local_search_demonstrations(demonstration_file, demos)
+    if dense_advantage_weight_scale is not None:
+        demos = calibrate_dense_option_advantage_weights(
+            demos,
+            advantage_scale=dense_advantage_weight_scale,
+            weight_cap=dense_advantage_weight_cap,
+        )
+    if balance_label_weights:
+        demos = balance_demonstration_label_weights(demos)
+    replay_transitions = 0
+    if populate_replay_buffer:
+        replay_transitions = populate_agent_replay_from_demonstrations(agent, demos)
     if demos["states"].size == 0:
         print("local_search no state-action demonstrations", flush=True)
         return {
@@ -499,14 +540,41 @@ def run_local_search_distillation(
             "local_search_anchor_keep_steps": 0,
             "local_search_anchor_keep_on_improved": bool(anchor_keep_on_improved),
             "local_search_balance_label_weights": bool(balance_label_weights),
+            "local_search_dense_advantage_weight_scale": (
+                ""
+                if dense_advantage_weight_scale is None
+                else float(dense_advantage_weight_scale)
+            ),
+            "local_search_dense_advantage_weight_cap": float(
+                dense_advantage_weight_cap
+            ),
             "local_search_retain_for_regularization": bool(
                 retain_for_regularization
             ),
             "local_search_min_service_level_delta": (
                 "" if min_service_level_delta is None else float(min_service_level_delta)
             ),
+            "local_search_min_completion_service_level_delta": (
+                ""
+                if min_completion_service_level_delta is None
+                else float(min_completion_service_level_delta)
+            ),
+            "local_search_max_patients_lost_delta": (
+                "" if max_patients_lost_delta is None else float(max_patients_lost_delta)
+            ),
+            "local_search_max_patient_ineligibility_during_manufacturing_rate_delta": (
+                ""
+                if max_patient_ineligibility_during_manufacturing_rate_delta is None
+                else float(max_patient_ineligibility_during_manufacturing_rate_delta)
+            ),
             "local_search_service_level_weight": float(service_level_weight),
+            "local_search_completion_service_level_weight": float(
+                completion_service_level_weight
+            ),
             "local_search_eligibility_rate_weight": float(eligibility_rate_weight),
+            "local_search_patient_ineligibility_during_manufacturing_rate_weight": float(
+                patient_ineligibility_during_manufacturing_rate_weight
+            ),
             "local_search_at_risk_unserved_weight": float(at_risk_unserved_weight),
             "local_search_patients_lost_weight": float(patients_lost_weight),
             "local_search_candidate_groups": "|".join(candidate_groups or ()),
@@ -514,6 +582,11 @@ def run_local_search_distillation(
                 f"{float(sign):g}" for sign in tuple(candidate_signs or ())
             ),
             "local_search_service_rejected_steps": int(demos["service_rejected_steps"]),
+            "local_search_demonstration_source": demonstration_source,
+            "local_search_demonstration_path": (
+                "" if demonstration_file is None else str(demonstration_file)
+            ),
+            "local_search_replay_transitions": replay_transitions,
             "local_search_loss": "",
         }
     weights = demos["weights"]
@@ -525,6 +598,7 @@ def run_local_search_distillation(
             "batch_size": batch_size,
             "seed": seed + 1200000,
             "retain_for_regularization": bool(retain_for_regularization),
+            "demonstrations": demos,
         },
         weights=weights,
     )
@@ -534,12 +608,18 @@ def run_local_search_distillation(
         f"improved_steps={demos['improved_steps']} "
         f"anchor_keep_steps={demos['anchor_keep_steps']} "
         f"mean_step_improvement={demos['mean_step_improvement']:.3f} "
-        f"loss={final_fit.get('final_loss'):.6f}",
+        f"loss={final_fit.get('final_loss'):.6f}"
+        + (
+            f" train_accuracy={float(final_fit['train_accuracy']):.3f}"
+            if "train_accuracy" in final_fit
+            else ""
+        ),
         flush=True,
     )
     return {
         "local_search_rollouts": int(rollouts),
         "local_search_lookahead": int(lookahead),
+        "local_search_lookahead_replications": int(lookahead_replications),
         "local_search_epsilons": "|".join(f"{value:.4g}" for value in epsilons),
         "local_search_epochs": int(epochs),
         "local_search_samples": int(demos["states"].shape[0]),
@@ -549,6 +629,14 @@ def run_local_search_distillation(
         "local_search_anchor_keep_weight": float(anchor_keep_weight),
         "local_search_anchor_keep_on_improved": bool(anchor_keep_on_improved),
         "local_search_balance_label_weights": bool(balance_label_weights),
+        "local_search_dense_advantage_weight_scale": (
+            ""
+            if dense_advantage_weight_scale is None
+            else float(dense_advantage_weight_scale)
+        ),
+        "local_search_dense_advantage_weight_cap": float(
+            dense_advantage_weight_cap
+        ),
         "local_search_retain_for_regularization": bool(retain_for_regularization),
         "local_search_improved_weight_fraction": float(
             demos["improved_weight_fraction"]
@@ -556,8 +644,27 @@ def run_local_search_distillation(
         "local_search_min_service_level_delta": (
             "" if min_service_level_delta is None else float(min_service_level_delta)
         ),
+        "local_search_min_completion_service_level_delta": (
+            ""
+            if min_completion_service_level_delta is None
+            else float(min_completion_service_level_delta)
+        ),
+        "local_search_max_patients_lost_delta": (
+            "" if max_patients_lost_delta is None else float(max_patients_lost_delta)
+        ),
+        "local_search_max_patient_ineligibility_during_manufacturing_rate_delta": (
+            ""
+            if max_patient_ineligibility_during_manufacturing_rate_delta is None
+            else float(max_patient_ineligibility_during_manufacturing_rate_delta)
+        ),
         "local_search_service_level_weight": float(service_level_weight),
+        "local_search_completion_service_level_weight": float(
+            completion_service_level_weight
+        ),
         "local_search_eligibility_rate_weight": float(eligibility_rate_weight),
+        "local_search_patient_ineligibility_during_manufacturing_rate_weight": float(
+            patient_ineligibility_during_manufacturing_rate_weight
+        ),
         "local_search_at_risk_unserved_weight": float(at_risk_unserved_weight),
         "local_search_patients_lost_weight": float(patients_lost_weight),
         "local_search_candidate_groups": "|".join(candidate_groups or ()),
@@ -565,8 +672,69 @@ def run_local_search_distillation(
             f"{float(sign):g}" for sign in tuple(candidate_signs or ())
         ),
         "local_search_service_rejected_steps": int(demos["service_rejected_steps"]),
+        "local_search_demonstration_source": demonstration_source,
+        "local_search_demonstration_path": (
+            "" if demonstration_file is None else str(demonstration_file)
+        ),
+        "local_search_replay_transitions": replay_transitions,
         "local_search_mean_step_improvement": float(demos["mean_step_improvement"]),
         "local_search_loss": final_fit.get("final_loss", ""),
+        "local_search_train_accuracy": final_fit.get("train_accuracy", ""),
+        "local_search_correction_recall": final_fit.get("correction_recall", ""),
+        "local_search_correction_accuracy": final_fit.get("correction_accuracy", ""),
+        "local_search_anchor_prediction_fraction": final_fit.get(
+            "anchor_prediction_fraction",
+            "",
+        ),
+        "local_search_changed_fraction": final_fit.get("changed_fraction", ""),
+        "local_search_option_count": final_fit.get("option_count", ""),
+        "local_search_observed_option_count": final_fit.get(
+            "observed_option_count",
+            "",
+        ),
+        "local_search_target_mode": final_fit.get("target_mode", ""),
+        "local_search_mean_best_advantage": final_fit.get(
+            "mean_best_advantage",
+            "",
+        ),
+        "local_search_mean_predicted_advantage": final_fit.get(
+            "mean_predicted_advantage",
+            "",
+        ),
+        "local_search_mean_advantage_regret": final_fit.get(
+            "mean_advantage_regret",
+            "",
+        ),
+        "local_search_predicted_feasible_fraction": final_fit.get(
+            "predicted_feasible_fraction",
+            "",
+        ),
+        "local_search_predicted_material_improvement_fraction": final_fit.get(
+            "predicted_material_improvement_fraction",
+            "",
+        ),
+        "local_search_best_epoch": final_fit.get("best_epoch", ""),
+        "local_search_epochs_completed": final_fit.get("epochs_completed", ""),
+        "local_search_correction_gate_threshold": final_fit.get(
+            "correction_gate_threshold",
+            "",
+        ),
+        "local_search_correction_gate_accuracy": final_fit.get(
+            "correction_gate_accuracy",
+            "",
+        ),
+        "local_search_correction_gate_recall": final_fit.get(
+            "correction_gate_recall",
+            "",
+        ),
+        "local_search_correction_gate_precision": final_fit.get(
+            "correction_gate_precision",
+            "",
+        ),
+        "local_search_correction_gate_prediction_fraction": final_fit.get(
+            "correction_gate_prediction_fraction",
+            "",
+        ),
     }
 
 
@@ -585,12 +753,19 @@ def collect_local_search_demonstrations(
     anchor_keep_on_improved: bool = True,
     balance_label_weights: bool = False,
     min_service_level_delta: float | None = None,
+    min_completion_service_level_delta: float | None = None,
+    max_patients_lost_delta: float | None = None,
+    max_patient_ineligibility_during_manufacturing_rate_delta: float | None = None,
     service_level_weight: float = 0.0,
+    completion_service_level_weight: float = 0.0,
     eligibility_rate_weight: float = 0.0,
+    patient_ineligibility_during_manufacturing_rate_weight: float = 0.0,
     at_risk_unserved_weight: float = 0.0,
     patients_lost_weight: float = 0.0,
     candidate_groups: tuple[str, ...] | None = None,
     candidate_signs: tuple[float, ...] | None = None,
+    lookahead_replications: int = 1,
+    lookahead_seed: int | None = None,
 ) -> dict[str, Any]:
     baseline = get_heuristic_class(baseline_policy)(
         state_dim=env.observation_size,
@@ -601,16 +776,27 @@ def collect_local_search_demonstrations(
     actions: list[np.ndarray] = []
     weights: list[float] = []
     improved_labels: list[bool] = []
+    transition_states: list[np.ndarray] = []
+    transition_actions: list[np.ndarray] = []
+    transition_rewards: list[float] = []
+    transition_next_states: list[np.ndarray] = []
+    transition_dones: list[bool] = []
     improved_steps = 0
     anchor_keep_steps = 0
     service_rejected_steps = 0
     step_improvements: list[float] = []
     rng = np.random.default_rng(seed + 770000)
+    lookahead_replications = max(int(lookahead_replications), 1)
+    lookahead_seed = int(seed + 1770000 if lookahead_seed is None else lookahead_seed)
     anchor_keep_probability = float(np.clip(anchor_keep_probability, 0.0, 1.0))
     anchor_keep_weight = max(float(anchor_keep_weight), 0.0)
     score_weights = {
         "service_level": float(service_level_weight),
+        "completion_service_level": float(completion_service_level_weight),
         "eligibility_rate": float(eligibility_rate_weight),
+        "patient_ineligibility_during_manufacturing_rate": float(
+            patient_ineligibility_during_manufacturing_rate_weight
+        ),
         "at_risk_unserved": float(at_risk_unserved_weight),
         "patients_lost": float(patients_lost_weight),
     }
@@ -628,12 +814,18 @@ def collect_local_search_demonstrations(
                 candidate_groups=candidate_groups,
                 candidate_signs=candidate_signs,
             )
+            decision_index = rollout * max(int(max_steps), 1) + step
+            rollout_seeds = tuple(
+                lookahead_seed + decision_index * lookahead_replications + replication
+                for replication in range(lookahead_replications)
+            )
             candidate_metrics = [
-                rollout_metrics_after_action(
-                    copy.deepcopy(env),
+                mean_rollout_metrics_after_action(
+                    env,
                     baseline,
                     action,
                     horizon=lookahead,
+                    rollout_seeds=rollout_seeds,
                 )
                 for action in candidate_actions
             ]
@@ -644,21 +836,56 @@ def collect_local_search_demonstrations(
             ]
             score_best_index = int(np.argmin(candidate_scores))
             best_index = score_best_index
-            if min_service_level_delta is not None:
-                baseline_service = float(candidate_metrics[0].get("service_level", float("nan")))
-                if np.isfinite(baseline_service):
-                    service_threshold = baseline_service + float(min_service_level_delta)
-                    feasible_indices = [
-                        index
-                        for index, metrics in enumerate(candidate_metrics)
-                        if float(metrics.get("service_level", float("nan"))) >= service_threshold
-                    ]
-                    if feasible_indices:
-                        best_index = min(feasible_indices, key=lambda index: candidate_scores[index])
-                    else:
-                        best_index = 0
-                    if score_best_index != best_index and score_best_index != 0:
-                        service_rejected_steps += 1
+            guardrails_enabled = any(
+                value is not None
+                for value in (
+                    min_service_level_delta,
+                    min_completion_service_level_delta,
+                    max_patients_lost_delta,
+                    max_patient_ineligibility_during_manufacturing_rate_delta,
+                )
+            )
+            if guardrails_enabled:
+                baseline_metrics = candidate_metrics[0]
+                feasible_indices = []
+                for index, metrics in enumerate(candidate_metrics):
+                    service_ok = _minimum_metric_delta_satisfied(
+                        metrics,
+                        baseline_metrics,
+                        "service_level",
+                        min_service_level_delta,
+                    )
+                    completion_ok = _minimum_metric_delta_satisfied(
+                        metrics,
+                        baseline_metrics,
+                        "completion_service_level",
+                        min_completion_service_level_delta,
+                    )
+                    patient_loss_ok = _maximum_metric_delta_satisfied(
+                        metrics,
+                        baseline_metrics,
+                        "patients_lost",
+                        max_patients_lost_delta,
+                    )
+                    manufacturing_ineligibility_ok = _maximum_metric_delta_satisfied(
+                        metrics,
+                        baseline_metrics,
+                        "patient_ineligibility_during_manufacturing_rate",
+                        max_patient_ineligibility_during_manufacturing_rate_delta,
+                    )
+                    if (
+                        service_ok
+                        and completion_ok
+                        and patient_loss_ok
+                        and manufacturing_ineligibility_ok
+                    ):
+                        feasible_indices.append(index)
+                if feasible_indices:
+                    best_index = min(feasible_indices, key=lambda index: candidate_scores[index])
+                else:
+                    best_index = 0
+                if score_best_index != best_index and score_best_index != 0:
+                    service_rejected_steps += 1
             baseline_cost = float(candidate_costs[0])
             best_cost = float(candidate_costs[best_index])
             baseline_score = float(candidate_scores[0])
@@ -684,7 +911,13 @@ def collect_local_search_demonstrations(
                 weights.append(max(anchor_keep_weight, 1.0))
                 improved_labels.append(False)
                 anchor_keep_steps += 1
-            state, _reward, done, _info = env.step(selected_action)
+            next_state, reward, done, _info = env.step(selected_action)
+            transition_states.append(np.asarray(state, dtype=np.float32))
+            transition_actions.append(np.asarray(selected_action, dtype=np.float32))
+            transition_rewards.append(float(reward))
+            transition_next_states.append(np.asarray(next_state, dtype=np.float32))
+            transition_dones.append(bool(done))
+            state = next_state
             step += 1
 
     if not states:
@@ -692,6 +925,19 @@ def collect_local_search_demonstrations(
             "states": np.empty((0, env.observation_size), dtype=np.float32),
             "actions": np.empty((0, env.action_size), dtype=np.float32),
             "weights": np.empty((0,), dtype=np.float32),
+            "improved_mask": np.empty((0,), dtype=bool),
+            "transition_states": np.asarray(transition_states, dtype=np.float32).reshape(
+                -1, env.observation_size
+            ),
+            "transition_actions": np.asarray(transition_actions, dtype=np.float32).reshape(
+                -1, env.action_size
+            ),
+            "transition_rewards": np.asarray(transition_rewards, dtype=np.float32),
+            "transition_next_states": np.asarray(
+                transition_next_states,
+                dtype=np.float32,
+            ).reshape(-1, env.observation_size),
+            "transition_dones": np.asarray(transition_dones, dtype=bool),
             "improved_steps": 0,
             "anchor_keep_steps": 0,
             "service_rejected_steps": service_rejected_steps,
@@ -712,6 +958,19 @@ def collect_local_search_demonstrations(
         "states": np.asarray(states, dtype=np.float32),
         "actions": np.asarray(actions, dtype=np.float32),
         "weights": weight_array,
+        "improved_mask": improved_mask,
+        "transition_states": np.asarray(transition_states, dtype=np.float32).reshape(
+            -1, env.observation_size
+        ),
+        "transition_actions": np.asarray(transition_actions, dtype=np.float32).reshape(
+            -1, env.action_size
+        ),
+        "transition_rewards": np.asarray(transition_rewards, dtype=np.float32),
+        "transition_next_states": np.asarray(
+            transition_next_states,
+            dtype=np.float32,
+        ).reshape(-1, env.observation_size),
+        "transition_dones": np.asarray(transition_dones, dtype=bool),
         "improved_steps": improved_steps,
         "anchor_keep_steps": anchor_keep_steps,
         "service_rejected_steps": service_rejected_steps,
@@ -722,6 +981,332 @@ def collect_local_search_demonstrations(
             else 0.0
         ),
     }
+
+
+def save_local_search_demonstrations(path: str | Path, demos: dict[str, Any]) -> None:
+    """Persist a teacher batch so matched graph/flat agents use identical labels."""
+
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "states": np.asarray(demos["states"], dtype=np.float32),
+        "actions": np.asarray(demos["actions"], dtype=np.float32),
+        "weights": np.asarray(demos["weights"], dtype=np.float32),
+        "improved_steps": np.asarray(int(demos["improved_steps"]), dtype=np.int64),
+        "anchor_keep_steps": np.asarray(int(demos["anchor_keep_steps"]), dtype=np.int64),
+        "service_rejected_steps": np.asarray(
+            int(demos["service_rejected_steps"]),
+            dtype=np.int64,
+        ),
+        "mean_step_improvement": np.asarray(
+            float(demos["mean_step_improvement"]),
+            dtype=np.float64,
+        ),
+        "improved_weight_fraction": np.asarray(
+            float(demos["improved_weight_fraction"]),
+            dtype=np.float64,
+        ),
+    }
+    for key, dtype in (
+        ("improved_mask", bool),
+        ("demand_history_window", np.int64),
+        ("transition_states", np.float32),
+        ("transition_actions", np.float32),
+        ("transition_rewards", np.float32),
+        ("transition_next_states", np.float32),
+        ("transition_dones", bool),
+        ("option_advantages", np.float32),
+        ("option_feasible", bool),
+        ("option_groups", "U32"),
+        ("option_epsilons", np.float32),
+        ("option_signs", np.float32),
+    ):
+        if key in demos:
+            payload[key] = np.asarray(demos[key], dtype=dtype)
+    np.savez_compressed(output_path, **payload)
+
+
+def load_local_search_demonstrations(path: str | Path) -> dict[str, Any]:
+    """Load a fixed teacher batch without allowing pickled object payloads."""
+
+    with np.load(Path(path), allow_pickle=False) as payload:
+        states = np.asarray(payload["states"], dtype=np.float32)
+        actions = np.asarray(payload["actions"], dtype=np.float32)
+        weights = np.asarray(payload["weights"], dtype=np.float32)
+        if states.ndim != 2 or actions.ndim != 2:
+            raise ValueError("Cached demonstrations require rank-2 states and actions")
+        if states.shape[0] != actions.shape[0] or weights.shape != (states.shape[0],):
+            raise ValueError("Cached demonstration arrays have inconsistent sample counts")
+        result = {
+            "states": states,
+            "actions": actions,
+            "weights": weights,
+            "improved_steps": int(payload["improved_steps"]),
+            "anchor_keep_steps": int(payload["anchor_keep_steps"]),
+            "service_rejected_steps": int(payload["service_rejected_steps"]),
+            "mean_step_improvement": float(payload["mean_step_improvement"]),
+            "improved_weight_fraction": float(payload["improved_weight_fraction"]),
+        }
+        if "improved_mask" in payload.files:
+            improved_mask = np.asarray(payload["improved_mask"], dtype=bool)
+            if improved_mask.shape != (states.shape[0],):
+                raise ValueError(
+                    "Cached demonstration improved_mask has inconsistent shape"
+                )
+            result["improved_mask"] = improved_mask
+        option_keys = (
+            "option_advantages",
+            "option_feasible",
+            "option_groups",
+            "option_epsilons",
+            "option_signs",
+        )
+        present_option_keys = tuple(
+            key for key in option_keys if key in payload.files
+        )
+        if present_option_keys and len(present_option_keys) != len(option_keys):
+            raise ValueError(
+                "Cached option advantages require values, feasibility, and metadata"
+            )
+        if present_option_keys:
+            option_advantages = np.asarray(
+                payload["option_advantages"],
+                dtype=np.float32,
+            )
+            option_feasible = np.asarray(payload["option_feasible"], dtype=bool)
+            option_groups = np.asarray(payload["option_groups"], dtype="U32")
+            option_epsilons = np.asarray(
+                payload["option_epsilons"],
+                dtype=np.float32,
+            )
+            option_signs = np.asarray(payload["option_signs"], dtype=np.float32)
+            option_count = int(option_groups.size)
+            if (
+                option_advantages.shape != (states.shape[0], option_count)
+                or option_feasible.shape != option_advantages.shape
+                or option_epsilons.shape != (option_count,)
+                or option_signs.shape != (option_count,)
+                or not np.all(np.isfinite(option_advantages))
+                or not np.all(np.isfinite(option_epsilons))
+                or not np.all(np.isfinite(option_signs))
+            ):
+                raise ValueError(
+                    "Cached option advantage arrays have inconsistent shapes or values"
+                )
+            result.update(
+                {
+                    "option_advantages": option_advantages,
+                    "option_feasible": option_feasible,
+                    "option_groups": option_groups,
+                    "option_epsilons": option_epsilons,
+                    "option_signs": option_signs,
+                }
+            )
+        transition_keys = (
+            "transition_states",
+            "transition_actions",
+            "transition_rewards",
+            "transition_next_states",
+            "transition_dones",
+        )
+        if all(key in payload.files for key in transition_keys):
+            transition_states = np.asarray(payload["transition_states"], dtype=np.float32)
+            transition_actions = np.asarray(payload["transition_actions"], dtype=np.float32)
+            transition_rewards = np.asarray(payload["transition_rewards"], dtype=np.float32)
+            transition_next_states = np.asarray(
+                payload["transition_next_states"],
+                dtype=np.float32,
+            )
+            transition_dones = np.asarray(payload["transition_dones"], dtype=bool)
+            transition_count = transition_states.shape[0]
+            if (
+                transition_states.ndim != 2
+                or transition_actions.ndim != 2
+                or transition_next_states.ndim != 2
+                or transition_actions.shape[0] != transition_count
+                or transition_rewards.shape != (transition_count,)
+                or transition_next_states.shape[0] != transition_count
+                or transition_dones.shape != (transition_count,)
+            ):
+                raise ValueError("Cached demonstration transitions have inconsistent shapes")
+            result.update(
+                {
+                    "transition_states": transition_states,
+                    "transition_actions": transition_actions,
+                    "transition_rewards": transition_rewards,
+                    "transition_next_states": transition_next_states,
+                    "transition_dones": transition_dones,
+                }
+            )
+        if "demand_history_window" in payload.files:
+            result["demand_history_window"] = int(
+                payload["demand_history_window"]
+            )
+        return result
+
+
+def balance_demonstration_label_weights(
+    demos: dict[str, Any],
+) -> dict[str, Any]:
+    """Give correction and anchor labels equal aggregate supervised weight."""
+
+    balanced = dict(demos)
+    weights = np.asarray(demos["weights"], dtype=np.float32).copy()
+    improved = np.asarray(
+        demos.get("improved_mask", weights > 1.0 + 1e-6),
+        dtype=bool,
+    )
+    if improved.shape != weights.shape:
+        raise ValueError("Demonstration improved_mask must match weights")
+    if not np.any(improved) or not np.any(~improved):
+        return balanced
+    improved_total = float(weights[improved].sum())
+    anchor_total = float(weights[~improved].sum())
+    if improved_total <= 0.0 or anchor_total <= 0.0:
+        return balanced
+    weights[improved] *= 0.5 / improved_total
+    weights[~improved] *= 0.5 / anchor_total
+    weights *= float(weights.size) / float(weights.sum())
+    balanced["weights"] = weights
+    balanced["improved_mask"] = improved
+    balanced["improved_weight_fraction"] = 0.5
+    return balanced
+
+
+def populate_agent_replay_from_demonstrations(agent, demos: dict[str, Any]) -> int:
+    """Seed an off-policy critic with the same teacher trajectory used for actor fitting."""
+
+    required = (
+        "transition_states",
+        "transition_actions",
+        "transition_rewards",
+        "transition_next_states",
+        "transition_dones",
+    )
+    if not all(key in demos for key in required):
+        return 0
+    if not hasattr(agent, "observe"):
+        raise ValueError("Replay population requires an agent.observe method")
+    count = int(np.asarray(demos["transition_states"]).shape[0])
+    explicit_labels = None
+    label_builder = getattr(agent, "demonstration_option_labels", None)
+    transition_adder = getattr(agent, "add_option_transition", None)
+    if (
+        callable(label_builder)
+        and callable(transition_adder)
+        and "option_advantages" in demos
+        and "option_feasible" in demos
+    ):
+        explicit_labels = np.asarray(label_builder(demos), dtype=np.int64)
+        if explicit_labels.shape != (count,):
+            raise ValueError(
+                "Dense option labels must align with demonstration transitions"
+            )
+    for index in range(count):
+        if explicit_labels is not None:
+            transition_adder(
+                demos["transition_states"][index],
+                int(explicit_labels[index]),
+                float(demos["transition_rewards"][index]),
+                demos["transition_next_states"][index],
+                bool(demos["transition_dones"][index]),
+            )
+        else:
+            agent.observe(
+                demos["transition_states"][index],
+                demos["transition_actions"][index],
+                float(demos["transition_rewards"][index]),
+                demos["transition_next_states"][index],
+                bool(demos["transition_dones"][index]),
+            )
+    return count
+
+
+def calibrate_demonstration_advantage_weights(
+    demos: dict[str, Any],
+    *,
+    advantage_scale: float,
+    weight_cap: float,
+) -> dict[str, Any]:
+    """Bound raw rollout advantages so correction labels do not erase anchors."""
+
+    scale = float(advantage_scale)
+    cap = float(weight_cap)
+    if scale <= 0.0:
+        raise ValueError("advantage_scale must be positive")
+    if cap < 1.0:
+        raise ValueError("weight_cap must be at least 1")
+    calibrated = dict(demos)
+    raw_weights = np.asarray(demos["weights"], dtype=np.float32)
+    improved = np.asarray(
+        demos.get("improved_mask", raw_weights > 1.0 + 1e-6),
+        dtype=bool,
+    )
+    weights = np.ones_like(raw_weights, dtype=np.float32)
+    weights[improved] = np.minimum(
+        1.0 + raw_weights[improved] / scale,
+        cap,
+    )
+    total = float(weights.sum())
+    calibrated["weights"] = weights
+    calibrated["improved_mask"] = improved
+    calibrated["improved_weight_fraction"] = (
+        float(weights[improved].sum()) / total if total > 0.0 else 0.0
+    )
+    return calibrated
+
+
+def calibrate_dense_option_advantage_weights(
+    demos: dict[str, Any],
+    *,
+    advantage_scale: float,
+    weight_cap: float,
+) -> dict[str, Any]:
+    """Reweight corrections from dense feasible option advantages."""
+
+    scale = float(advantage_scale)
+    cap = float(weight_cap)
+    if scale <= 0.0:
+        raise ValueError("advantage_scale must be positive")
+    if cap < 1.0:
+        raise ValueError("weight_cap must be at least 1")
+    if "option_advantages" not in demos or "option_feasible" not in demos:
+        raise ValueError(
+            "Dense advantage weighting requires option advantages and feasibility"
+        )
+    advantages = np.asarray(demos["option_advantages"], dtype=np.float32)
+    feasible = np.asarray(demos["option_feasible"], dtype=bool)
+    if (
+        advantages.ndim != 2
+        or advantages.shape != feasible.shape
+        or advantages.shape[0] != np.asarray(demos["weights"]).shape[0]
+    ):
+        raise ValueError("Dense option advantage arrays must align with weights")
+    if not np.all(np.isfinite(advantages)):
+        raise ValueError("Dense option advantages must be finite")
+    best_advantage = np.max(
+        np.where(feasible, advantages, -np.inf),
+        axis=1,
+    )
+    improved = np.asarray(
+        demos.get("improved_mask", best_advantage > 0.0),
+        dtype=bool,
+    )
+    if improved.shape != best_advantage.shape:
+        raise ValueError("Demonstration improved_mask must align with advantages")
+    weights = np.ones(best_advantage.shape, dtype=np.float32)
+    weights[improved] = np.minimum(
+        1.0 + np.maximum(best_advantage[improved], 0.0) / scale,
+        cap,
+    ).astype(np.float32)
+    calibrated = dict(demos)
+    calibrated["weights"] = weights
+    calibrated["improved_mask"] = improved
+    total = float(weights.sum())
+    calibrated["improved_weight_fraction"] = (
+        float(weights[improved].sum()) / total if total > 0.0 else 0.0
+    )
+    return calibrated
 
 
 def local_search_candidate_actions(
@@ -869,6 +1454,61 @@ def local_search_candidate_actions(
                     1.0,
                 )
                 actions.append(combined_transfer.astype(np.float32))
+
+            if "reagent_replenishment" in groups:
+                resource_action = baseline_action.copy()
+                resource_action[n : 2 * n] = np.clip(
+                    resource_action[n : 2 * n] + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                resource_action[3 * n : 4 * n] = np.clip(
+                    resource_action[3 * n : 4 * n]
+                    + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(resource_action.astype(np.float32))
+
+            if "combined_network" in groups:
+                network_action = baseline_action.copy()
+                network_action[n : 2 * n] = np.clip(
+                    network_action[n : 2 * n] + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                network_action[2 * n : 3 * n] = np.clip(
+                    network_action[2 * n : 3 * n] + sign * epsilon * capacity_pattern,
+                    -1.0,
+                    1.0,
+                )
+                network_action[3 * n : 4 * n] = np.clip(
+                    network_action[3 * n : 4 * n]
+                    + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(network_action.astype(np.float32))
+
+            if sign > 0.0 and "reagent_transfer_shrink" in groups:
+                reagent_shrink = baseline_action.copy()
+                reagent_shrink[n : 2 * n] *= max(1.0 - epsilon, 0.0)
+                actions.append(reagent_shrink.astype(np.float32))
+
+            if sign > 0.0 and "capacity_transfer_shrink" in groups:
+                capacity_shrink = baseline_action.copy()
+                capacity_shrink[2 * n : 3 * n] *= max(1.0 - epsilon, 0.0)
+                actions.append(capacity_shrink.astype(np.float32))
+
+            if sign > 0.0 and "combined_transfer_shrink" in groups:
+                combined_shrink = baseline_action.copy()
+                combined_shrink[n : 3 * n] *= max(1.0 - epsilon, 0.0)
+                actions.append(combined_shrink.astype(np.float32))
+
+            if sign > 0.0 and "all_transfer_shrink" in groups:
+                all_transfer_shrink = baseline_action.copy()
+                all_transfer_shrink[: 3 * n] *= max(1.0 - epsilon, 0.0)
+                actions.append(all_transfer_shrink.astype(np.float32))
     return actions
 
 
@@ -930,14 +1570,56 @@ def local_search_metric_score(metrics: dict[str, float], weights: dict[str, floa
     return (
         float(metrics["total_cost"])
         - float(weights.get("service_level", 0.0)) * float(metrics.get("service_level", 0.0))
+        - float(weights.get("completion_service_level", 0.0))
+        * float(metrics.get("completion_service_level", 0.0))
         - float(weights.get("eligibility_rate", 0.0)) * float(metrics.get("eligibility_rate", 0.0))
+        + float(weights.get("patient_ineligibility_during_manufacturing_rate", 0.0))
+        * float(metrics.get("patient_ineligibility_during_manufacturing_rate", 0.0))
         + float(weights.get("at_risk_unserved", 0.0))
         * float(metrics.get("at_risk_unserved", 0.0))
         + float(weights.get("patients_lost", 0.0)) * float(metrics.get("patients_lost", 0.0))
     )
 
 
-def rollout_metrics_after_action(env, baseline, action: np.ndarray, *, horizon: int) -> dict[str, float]:
+def mean_rollout_metrics_after_action(
+    env,
+    baseline,
+    action: np.ndarray,
+    *,
+    horizon: int,
+    rollout_seeds: tuple[int, ...],
+) -> dict[str, float]:
+    """Estimate candidate value with CRN draws independent of the live episode."""
+
+    seeds = tuple(int(seed) for seed in rollout_seeds)
+    if not seeds:
+        raise ValueError("rollout_seeds must contain at least one seed")
+    rows = [
+        rollout_metrics_after_action(
+            copy.deepcopy(env),
+            baseline,
+            action,
+            horizon=horizon,
+            rollout_seed=seed,
+        )
+        for seed in seeds
+    ]
+    return {
+        key: float(np.mean([float(row[key]) for row in rows]))
+        for key in rows[0]
+    }
+
+
+def rollout_metrics_after_action(
+    env,
+    baseline,
+    action: np.ndarray,
+    *,
+    horizon: int,
+    rollout_seed: int | None = None,
+) -> dict[str, float]:
+    if rollout_seed is not None:
+        env.rng = np.random.default_rng(int(rollout_seed))
     state, _reward, done, info = env.step(action)
     metrics = EpisodeMetrics()
     metrics.update(info)
@@ -953,9 +1635,47 @@ def rollout_metrics_after_action(env, baseline, action: np.ndarray, *, horizon: 
         "eligibility_rate": float(metrics.eligibility_rate_mean)
         if getattr(metrics, "has_patient_metrics", False)
         else float("nan"),
+        "completion_service_level": float(metrics.completion_service_level_last),
+        "patient_ineligibility_during_manufacturing_rate": float(
+            metrics.patient_ineligibility_during_manufacturing_rate_last
+        ),
         "at_risk_unserved": float(metrics.at_risk_unserved),
         "patients_lost": float(metrics.patients_lost),
     }
+
+
+def _minimum_metric_delta_satisfied(
+    metrics: dict[str, float],
+    baseline_metrics: dict[str, float],
+    key: str,
+    minimum_delta: float | None,
+) -> bool:
+    if minimum_delta is None:
+        return True
+    value = float(metrics.get(key, float("nan")))
+    baseline = float(baseline_metrics.get(key, float("nan")))
+    return bool(
+        np.isfinite(value)
+        and np.isfinite(baseline)
+        and value >= baseline + float(minimum_delta)
+    )
+
+
+def _maximum_metric_delta_satisfied(
+    metrics: dict[str, float],
+    baseline_metrics: dict[str, float],
+    key: str,
+    maximum_delta: float | None,
+) -> bool:
+    if maximum_delta is None:
+        return True
+    value = float(metrics.get(key, float("nan")))
+    baseline = float(baseline_metrics.get(key, float("nan")))
+    return bool(
+        np.isfinite(value)
+        and np.isfinite(baseline)
+        and value <= baseline + float(maximum_delta)
+    )
 
 
 def elite_sample_weights(

@@ -1,0 +1,37 @@
+{
+  "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift.json",
+  "algorithms": ["iso", "mdl2"],
+  "replications": 100,
+  "seed": 94000,
+  "target_manufacturing_ineligibility_rate": [0.10, 0.15],
+  "decay_scales": [0.10, 0.12, 0.13, 0.14, 0.15],
+  "reference_patient": {
+    "healthy_decay_rate": 0.01,
+    "frail_decay_rate": 0.12,
+    "weibull_shape": 1.5,
+    "weibull_scale": 4.0,
+    "post_shock_multiplier": 3.0,
+    "eligibility_threshold": 0.80,
+    "risk_type_probabilities": [0.45, 0.35, 0.20],
+    "risk_decay_multipliers": [0.8, 1.0, 1.35],
+    "waiting_time_decay_rate": 0.01,
+    "waiting_time_decay_power": 1.0
+  },
+  "scaled_patient_fields": [
+    "healthy_decay_rate",
+    "frail_decay_rate",
+    "waiting_time_decay_rate"
+  ],
+  "cost_profiles": {
+    "legacy": {
+      "weight_patient_lost": 50000,
+      "weight_expiry": 40000,
+      "weight_urgency": 5000
+    },
+    "clinically_weighted": {
+      "weight_patient_lost": 500000,
+      "weight_expiry": 100000,
+      "weight_urgency": 25000
+    }
+  }
+}

@@ -3,11 +3,16 @@
   "description": "First-stage benchmark for graph-aware residual policies. Learned residual arms compose a strong heuristic base action with a bounded GCN correction instead of relearning the whole capacity policy from scratch.",
   "algorithms": [
     "flat_residual_mdl2",
+    "flat_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_option_dqn_afd",
     "flat_residual_mdl2_replenish_ddpg_afd",
     "flat_residual_iso",
     "flat_residual_myo",
     "flat_residual_pmyo",
     "gcn_residual_mdl2",
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "gcn_residual_mdl2_option_dqn_afd",
+    "gcn_residual_mdl2_network_td3_afd",
     "gcn_residual_mdl2_replenish_ddpg",
     "gcn_residual_mdl2_replenish_ddpg_afd",
     "gcn_residual_iso",
@@ -39,16 +44,23 @@
     "myo",
     "umyo",
     "pmyo",
+    "fmdl2",
+    "rmdl2",
     "mdl2_shield",
     "pmyo_shield"
   ],
   "primary_algorithms": [
     "flat_residual_mdl2",
+    "flat_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_option_dqn_afd",
     "flat_residual_mdl2_replenish_ddpg_afd",
     "flat_residual_iso",
     "flat_residual_myo",
     "flat_residual_pmyo",
     "gcn_residual_mdl2",
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "gcn_residual_mdl2_option_dqn_afd",
+    "gcn_residual_mdl2_network_td3_afd",
     "gcn_residual_mdl2_replenish_ddpg",
     "gcn_residual_mdl2_replenish_ddpg_afd",
     "gcn_residual_iso",
@@ -74,16 +86,23 @@
     "myo",
     "umyo",
     "pmyo",
+    "fmdl2",
+    "rmdl2",
     "mdl2_shield",
     "pmyo_shield"
   ],
   "learned_config_paths": {
     "flat_residual_mdl2": "configs/flat_residual_20_clinic.yaml",
+    "flat_residual_mdl2_network_ddpg_afd": "configs/flat_residual_20_clinic.yaml",
+    "flat_residual_mdl2_option_dqn_afd": "configs/gcn_residual_20_clinic.yaml",
     "flat_residual_mdl2_replenish_ddpg_afd": "configs/flat_residual_20_clinic.yaml",
     "flat_residual_iso": "configs/flat_residual_20_clinic.yaml",
     "flat_residual_myo": "configs/flat_residual_20_clinic.yaml",
     "flat_residual_pmyo": "configs/flat_residual_20_clinic.yaml",
     "gcn_residual_mdl2": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_residual_mdl2_network_ddpg_afd": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_residual_mdl2_option_dqn_afd": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_residual_mdl2_network_td3_afd": "configs/gcn_td3_20_clinic.yaml",
     "gcn_residual_mdl2_replenish_ddpg": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_mdl2_replenish_ddpg_afd": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_iso": "configs/gcn_residual_20_clinic.yaml",
@@ -113,6 +132,133 @@
   },
   "heuristic_env_reference_algorithm": "gcn_residual_mdl2",
   "algorithm_settings": {
+    "flat_residual_mdl2_option_dqn_afd": {
+      "inherits": "gcn_residual_mdl2_option_dqn_afd",
+      "config_overrides": {
+        "residual_action": {
+          "include_base_action_features": false
+        },
+        "residual_option": {
+          "hidden_sizes": [160, 80]
+        }
+      },
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "gcn_residual_mdl2_option_dqn_afd": {
+      "config_overrides": {
+        "save_pretrain_checkpoint": true,
+        "include_adaptive_demand_features": true,
+        "imitation_pretrain": {
+          "enabled": false
+        },
+        "elite_imitation": {
+          "enabled": false
+        },
+        "residual_action": {
+          "include_base_action_features": false
+        },
+        "residual_option": {
+          "anchor_policy": "mdl2",
+          "explicit_options": [
+            {"group": "reagent_replenishment", "epsilon": 1.0, "sign": 1.0},
+            {"group": "replenishment_uniform", "epsilon": 1.0, "sign": -1.0},
+            {"group": "reagent_replenishment", "epsilon": 0.64, "sign": 1.0}
+          ],
+          "online_reward_mode": "environment",
+          "hidden_sizes": [128, 64],
+          "lr": 0.0001,
+          "exploration_start": 0.15,
+          "exploration_end": 0.02,
+          "exploration_decay_steps": 15000,
+          "target_update_interval": 250,
+          "anchor_q_margin": 0.0,
+          "option_advantage_scale": 1000000000.0,
+          "option_advantage_clip": 1.0,
+          "option_min_advantage": 500000.0,
+          "option_infeasible_penalty": 0.1,
+          "positive_advantage_weight": 1.0,
+          "infeasible_loss_weight": 1.0,
+          "early_stopping_patience": 25,
+          "correction_gate_enabled": true,
+          "correction_gate_threshold": 0.47,
+          "correction_gate_loss_weight": 0.1,
+          "ranking_loss_weight": 0.1,
+          "ranking_temperature": 1.0,
+          "class_weight_power": 0.5,
+          "imitation_regularization_weight": 0.25,
+          "imitation_batch_size": 128
+        },
+        "advantage_distillation_pretrain": {
+          "enabled": true,
+          "baseline_policy": "mdl2",
+          "seed": 96000,
+          "rollouts": 20,
+          "lookahead": 52,
+          "lookahead_replications": 5,
+          "lookahead_seed": 4870000,
+          "epsilons": [0.32, 0.48, 0.64, 1.0],
+          "epochs": 200,
+          "batch_size": 128,
+          "max_steps": 52,
+          "min_improvement": 500000.0,
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+          "anchor_keep_probability": 1.0,
+          "anchor_keep_weight": 1.0,
+          "anchor_keep_on_improved": false,
+          "balance_label_weights": true,
+          "retain_for_regularization": true,
+          "populate_replay_buffer": false,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 0.0,
+          "eligibility_rate_weight": 0.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+          "at_risk_unserved_weight": 0.0,
+          "patients_lost_weight": 0.0,
+          "candidate_groups": [
+            "replenishment_uniform",
+            "reagent_transfer",
+            "combined_transfer",
+            "reagent_replenishment",
+            "combined_network"
+          ],
+          "candidate_signs": [-1.0, 1.0],
+          "demonstration_path": "results/network_residual_headroom_end_to_go_compact90_crn5/network_teacher_end_to_go_compact90_crn5_history4.npz"
+        },
+        "anchor_fallback": {
+          "enabled": true,
+          "validation_replications": 30,
+          "validation_seed_offset": 250000,
+          "min_improvement": 0.0,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0
+        },
+        "checkpoint_selection": {
+          "require_anchor_noninferiority": true
+        },
+        "train_randomization": {
+          "enabled": true,
+          "demand_rate_multiplier_range": [0.8, 1.5],
+          "forecast_error_range": [0.0, 0.35]
+        },
+        "update_frequency": 4,
+        "updates_per_update": 1
+      },
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "flat_residual_mdl2_network_ddpg_afd": {
+      "inherits": "gcn_residual_mdl2_network_ddpg_afd",
+      "local_search": {
+        "enabled": false
+      }
+    },
     "flat_residual_mdl2_replenish_ddpg_afd": {
       "inherits": "gcn_residual_mdl2_replenish_ddpg_afd",
       "local_search": {
@@ -121,6 +267,7 @@
     },
     "flat_residual_mdl2": {
       "config_overrides": {
+        "save_pretrain_checkpoint": true,
         "residual_action": {
           "enabled": true,
           "base_policy": "mdl2",
@@ -548,6 +695,153 @@
         "enabled": false
       }
     },
+    "gcn_residual_mdl2_network_ddpg_afd": {
+      "inherits": "gcn_residual_mdl2_replenish_ddpg",
+      "config_overrides": {
+        "save_pretrain_checkpoint": true,
+        "include_adaptive_demand_features": true,
+        "actor_readout_mode": "network_residual",
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "mdl2",
+          "include_base_action_features": true,
+          "zero_init_actor": true,
+          "scale": 1.0,
+          "group_scales": {
+            "specimen_transfer": 0.0,
+            "reagent_transfer": 1.0,
+            "capacity_transfer": 1.0,
+            "replenishment": 1.0
+          },
+          "pressure_projection": {
+            "enabled": false,
+            "groups": [],
+            "replenishment_uniform_basis": false
+          },
+          "center_groups": [
+            "reagent_transfer",
+            "capacity_transfer"
+          ],
+          "positive_only_groups": [],
+          "state_gate": {
+            "enabled": false,
+            "groups": []
+          },
+          "correction_gate": {
+            "enabled": true,
+            "mode": "classification",
+            "threshold": 0.8,
+            "groups": [
+              "reagent_transfer",
+              "capacity_transfer",
+              "replenishment"
+            ],
+            "advantage_scale": 1000000.0,
+            "advantage_clip": 5.0,
+            "target_delta": 0.00001,
+            "hidden_sizes": [64, 32],
+            "lr": 0.0003,
+            "loss_weight": 1.0
+          },
+          "l2_weight": 0.02
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "mdl2",
+          "episodes": 20,
+          "max_steps_per_episode": 52,
+          "epochs": 4,
+          "batch_size": 256,
+          "seed": 95900,
+          "populate_replay_buffer": true,
+          "regularization_weight": 0.25,
+          "regularization_batch_size": 128
+        },
+        "elite_imitation": {
+          "enabled": false
+        },
+        "advantage_distillation_pretrain": {
+          "enabled": true,
+          "baseline_policy": "mdl2",
+          "seed": 96000,
+          "rollouts": 10,
+          "lookahead": 52,
+          "lookahead_replications": 3,
+          "lookahead_seed": 1870000,
+          "epsilons": [0.32, 0.48, 0.64, 0.8, 1.0],
+          "epochs": 300,
+          "batch_size": 256,
+          "max_steps": 52,
+          "min_improvement": 500000.0,
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+          "anchor_keep_probability": 1.0,
+          "anchor_keep_weight": 1.0,
+          "anchor_keep_on_improved": false,
+          "balance_label_weights": true,
+          "retain_for_regularization": true,
+          "populate_replay_buffer": true,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 0.0,
+          "eligibility_rate_weight": 0.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+          "at_risk_unserved_weight": 0.0,
+          "patients_lost_weight": 0.0,
+          "candidate_groups": [
+            "replenishment_uniform",
+            "reagent_transfer",
+            "combined_transfer",
+            "reagent_replenishment",
+            "combined_network"
+          ],
+          "candidate_signs": [-1.0, 1.0],
+          "demonstration_path": "results/network_residual_headroom_end_to_go_compact90_crn5/network_teacher_end_to_go_compact90_crn5_history4.npz"
+        },
+        "anchor_fallback": {
+          "enabled": true,
+          "validation_replications": 20,
+          "validation_seed_offset": 250000,
+          "min_improvement": 0.0,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+          "deployment_scale_candidates": [
+            0.0,
+            0.01,
+            0.025,
+            0.05,
+            0.075,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ]
+        },
+        "anchor_advantage_actor_loss": {
+          "enabled": true,
+          "margin": 0.0,
+          "temperature": 0.05,
+          "negative_penalty_weight": 0.25
+        },
+        "patient_service_proxy_actor_loss": {
+          "enabled": false
+        },
+        "exploration_noise": {
+          "theta": 0.15,
+          "sigma": 0.01
+        },
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "local_search": {
+        "enabled": false
+      }
+    },
     "gcn_residual_mdl2_replenish_td3": {
       "config_overrides": {
         "residual_action": {
@@ -672,6 +966,27 @@
           ],
           "candidate_signs": [1.0]
         }
+      },
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "gcn_residual_mdl2_network_td3_afd": {
+      "inherits": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_overrides": {
+        "anchor_advantage_actor_loss": {
+          "enabled": true,
+          "margin": 0.0,
+          "temperature": 0.05,
+          "use_twin_min": true,
+          "negative_penalty_weight": 0.25
+        },
+        "exploration_noise_std": 0.01,
+        "policy_noise": 0.015,
+        "noise_clip": 0.03,
+        "policy_delay": 2,
+        "update_frequency": 1,
+        "updates_per_update": 1
       },
       "local_search": {
         "enabled": false
@@ -1437,6 +1752,8 @@
       "config_overrides": {
         "anchor_policy": "mdl2",
         "shield_lookahead": 3,
+        "shield_rollout_replications": 3,
+        "shield_seed": 1970000,
         "shield_epsilons": [0.005, 0.01],
         "min_service_level_delta": 0.0,
         "min_score_improvement": 0.0,
@@ -1456,6 +1773,8 @@
     "pmyo_shield": {
       "config_overrides": {
         "shield_lookahead": 3,
+        "shield_rollout_replications": 3,
+        "shield_seed": 1970000,
         "shield_epsilons": [0.005, 0.01],
         "min_service_level_delta": 0.0,
         "min_score_improvement": 0.0,
@@ -1499,6 +1818,18 @@
       "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift_severe.json"
     },
     {
+      "name": "patient_condition_geo_regional_drift",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_regional_drift.json"
+    },
+    {
+      "name": "patient_condition_geo_abrupt_regime_shift",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_abrupt_regime_shift.json"
+    },
+    {
+      "name": "patient_condition_geo_compound_regional_stress",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_compound_regional_stress.json"
+    },
+    {
       "name": "patient_condition_stress",
       "env_config": "experiments/configs/20_clinic_patient_condition_stress.json"
     }
@@ -1519,6 +1850,22 @@
         "deployment_scale_candidates": [0.0, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
       },
       "advantage_distillation_pretrain": {
+        "flat_residual_mdl2_network_ddpg_afd": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epochs": 1,
+          "batch_size": 16,
+          "max_steps": 2,
+          "demonstration_path": null
+        },
+        "flat_residual_mdl2_option_dqn_afd": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epochs": 1,
+          "batch_size": 16,
+          "max_steps": 2,
+          "demonstration_path": null
+        },
         "flat_residual_mdl2_replenish_ddpg_afd": {
           "rollouts": 1,
           "lookahead": 1,
@@ -1532,6 +1879,30 @@
           "epochs": 1,
           "batch_size": 16,
           "max_steps": 2
+        },
+        "gcn_residual_mdl2_network_ddpg_afd": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epochs": 1,
+          "batch_size": 16,
+          "max_steps": 2,
+          "demonstration_path": null
+        },
+        "gcn_residual_mdl2_option_dqn_afd": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epochs": 1,
+          "batch_size": 16,
+          "max_steps": 2,
+          "demonstration_path": null
+        },
+        "gcn_residual_mdl2_network_td3_afd": {
+          "rollouts": 1,
+          "lookahead": 1,
+          "epochs": 1,
+          "batch_size": 16,
+          "max_steps": 2,
+          "demonstration_path": null
         },
         "gcn_residual_mdl2_replenish_td3_afd": {
           "rollouts": 1,
@@ -1834,6 +2205,67 @@
         }
       }
     },
+    "diagnostic_pretrain": {
+      "seeds": [0],
+      "num_episodes": 1,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 1,
+      "progress_interval": 1,
+      "evaluation_replications": 30,
+      "evaluation_seed": 70000,
+      "anchor_fallback": {
+        "validation_replications": 20,
+        "min_improvement": 0.0,
+        "min_service_level_delta": 0.0,
+        "deployment_scale_candidates": [
+          0.0,
+          0.01,
+          0.025,
+          0.05,
+          0.075,
+          0.1,
+          0.15,
+          0.2,
+          0.25,
+          0.5,
+          0.75,
+          1.0
+        ]
+      },
+      "checkpoint_selection": {
+        "enabled": true,
+        "validation_replications": 10,
+        "service_level_weight": 100000000.0,
+        "eligibility_rate_weight": 100000000.0,
+        "at_risk_unserved_weight": 50000.0,
+        "patients_lost_weight": 500000.0
+      }
+    },
+    "diagnostic_50": {
+      "seeds": [0],
+      "num_episodes": 50,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 25,
+      "progress_interval": 10,
+      "evaluation_replications": 30,
+      "evaluation_seed": 70000,
+      "anchor_fallback": {
+        "validation_replications": 20,
+        "min_improvement": 0.0,
+        "min_service_level_delta": 0.0,
+        "deployment_scale_candidates": [0.0, 0.25, 0.5, 0.75, 1.0]
+      },
+      "checkpoint_selection": {
+        "enabled": true,
+        "validation_replications": 10,
+        "service_level_weight": 100000000.0,
+        "eligibility_rate_weight": 100000000.0,
+        "at_risk_unserved_weight": 50000.0,
+        "patients_lost_weight": 500000.0
+      }
+    },
     "targeted_100": {
       "seeds": [0, 1],
       "num_episodes": 100,
@@ -2017,6 +2449,194 @@
         "eligibility_rate_weight": 100000000.0,
         "at_risk_unserved_weight": 50000.0,
         "patients_lost_weight": 500000.0
+      }
+    },
+    "lifecycle_calibration": {
+      "seeds": [0],
+      "num_episodes": 10,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 10,
+      "progress_interval": 5,
+      "evaluation_replications": 5,
+      "evaluation_seed": 81000,
+      "anchor_fallback": {
+        "validation_replications": 3,
+        "min_improvement": 0.0,
+        "min_service_level_delta": 0.0,
+        "deployment_scale_candidates": [0.0, 0.1, 0.25, 0.5, 1.0]
+      }
+    },
+    "lifecycle_pilot": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 100,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 25,
+      "progress_interval": 10,
+      "evaluation_replications": 100,
+      "evaluation_seed": 82000,
+      "anchor_fallback": {
+        "validation_replications": 20,
+        "min_improvement": 0.0,
+        "min_service_level_delta": 0.0,
+        "min_completion_service_level_delta": 0.0,
+        "max_patients_lost_delta": 0.0,
+        "deployment_scale_candidates": [0.0, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
+      },
+      "checkpoint_selection": {
+        "enabled": true,
+        "validation_replications": 10,
+        "service_level_weight": 0.0,
+        "completion_service_level_weight": 100000000.0,
+        "eligibility_rate_weight": 100000000.0,
+        "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+        "at_risk_unserved_weight": 50000.0,
+        "patients_lost_weight": 500000.0
+      },
+      "advantage_distillation_pretrain": {
+        "flat_residual_mdl2_replenish_ddpg_afd": {
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 100000000.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+          "patients_lost_weight": 500000.0
+        },
+        "gcn_residual_mdl2_replenish_ddpg_afd": {
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 100000000.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+          "patients_lost_weight": 500000.0
+        },
+        "gcn_residual_mdl2_replenish_td3_afd": {
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 100000000.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+          "patients_lost_weight": 500000.0
+        }
+      }
+    },
+    "network_pilot": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 100,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 25,
+      "progress_interval": 10,
+      "evaluation_replications": 100,
+      "evaluation_seed": 84000,
+      "anchor_fallback": {
+        "validation_replications": 30,
+        "min_improvement": 0.0,
+        "min_service_level_delta": null,
+        "min_completion_service_level_delta": 0.0,
+        "max_patients_lost_delta": 0.0,
+        "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "deployment_scale_candidates": [0.0, 0.25, 0.5, 0.75, 1.0]
+      },
+      "checkpoint_selection": {
+        "enabled": true,
+        "validation_replications": 15,
+        "service_level_weight": 0.0,
+        "completion_service_level_weight": 100000000.0,
+        "eligibility_rate_weight": 100000000.0,
+        "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+        "at_risk_unserved_weight": 50000.0,
+        "patients_lost_weight": 500000.0
+      }
+    },
+    "network_targeted_300": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 300,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 50,
+      "progress_interval": 25,
+      "evaluation_replications": 100,
+      "evaluation_seed": 85000,
+      "anchor_fallback": {
+        "validation_replications": 30,
+        "min_improvement": 0.0,
+        "min_service_level_delta": null,
+        "min_completion_service_level_delta": 0.0,
+        "max_patients_lost_delta": 0.0,
+        "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "deployment_scale_candidates": [0.0, 0.1, 0.25, 0.5, 0.75, 1.0]
+      },
+      "checkpoint_selection": {
+        "enabled": true,
+        "validation_replications": 20,
+        "service_level_weight": 0.0,
+        "completion_service_level_weight": 0.0,
+        "eligibility_rate_weight": 0.0,
+        "patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+        "at_risk_unserved_weight": 0.0,
+        "patients_lost_weight": 0.0
+      }
+    },
+    "lifecycle_targeted_300": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 300,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 50,
+      "progress_interval": 25,
+      "evaluation_replications": 100,
+      "evaluation_seed": 83000,
+      "anchor_fallback": {
+        "validation_replications": 50,
+        "min_improvement": 0.0,
+        "min_service_level_delta": 0.0,
+        "min_completion_service_level_delta": 0.0,
+        "max_patients_lost_delta": 0.0,
+        "deployment_scale_candidates": [0.0, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0]
+      },
+      "checkpoint_selection": {
+        "enabled": true,
+        "validation_replications": 20,
+        "service_level_weight": 0.0,
+        "completion_service_level_weight": 100000000.0,
+        "eligibility_rate_weight": 100000000.0,
+        "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+        "at_risk_unserved_weight": 50000.0,
+        "patients_lost_weight": 500000.0
+      },
+      "advantage_distillation_pretrain": {
+        "flat_residual_mdl2_replenish_ddpg_afd": {
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 100000000.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+          "patients_lost_weight": 500000.0
+        },
+        "gcn_residual_mdl2_replenish_ddpg_afd": {
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 100000000.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+          "patients_lost_weight": 500000.0
+        },
+        "gcn_residual_mdl2_replenish_td3_afd": {
+          "min_service_level_delta": null,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "service_level_weight": 0.0,
+          "completion_service_level_weight": 100000000.0,
+          "patient_ineligibility_during_manufacturing_rate_weight": 100000000.0,
+          "patients_lost_weight": 500000.0
+        }
       }
     },
     "pilot": {

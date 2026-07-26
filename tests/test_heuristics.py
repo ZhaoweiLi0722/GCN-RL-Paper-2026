@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 from dataclasses import asdict, replace
 import unittest
 
@@ -11,6 +12,7 @@ from evaluation.evaluate_formal import evaluate_agent, summarize_rows
 from src.baselines.heuristics import (
     available_heuristics,
     facility_net_action_from_state,
+    ForecastMeanDemandLookahead2Policy,
     ForecastMyopicPolicy,
     heuristic_settings_for_policy,
     IsolatedPolicy,
@@ -18,8 +20,10 @@ from src.baselines.heuristics import (
     MeanDemandLookahead2Policy,
     MyopicPolicy,
     PatientPriorityMyopicPolicy,
+    RollingMeanDemandLookahead2Policy,
     ShieldedMeanDemandLookahead2Policy,
     ShieldedPatientPriorityMyopicPolicy,
+    shield_rollout_metrics,
 )
 from src.env.capacity_planning import CapacityPlanningEnv, make_20_clinic_config
 from src.rl.config import load_config
@@ -38,6 +42,8 @@ class HeuristicPolicyTests(unittest.TestCase):
             MeanDemandLookahead1Policy,
             MeanDemandLookahead2Policy,
             ForecastMyopicPolicy,
+            ForecastMeanDemandLookahead2Policy,
+            RollingMeanDemandLookahead2Policy,
         ):
             with self.subTest(policy=policy_cls.__name__):
                 policy = policy_cls()
@@ -116,6 +122,65 @@ class HeuristicPolicyTests(unittest.TestCase):
             float(myopic_action[3 * n : 4 * n].mean()),
         )
 
+    def test_forecast_mdl2_is_registered_and_matches_two_period_fmyo(self) -> None:
+        config = replace(
+            make_20_clinic_config(episode_horizon=2),
+            include_demand_forecast_state=True,
+            demand_forecast_horizon=2,
+            demand_forecast_error=0.0,
+        )
+        env = CapacityPlanningEnv(config, seed=17)
+        state = env.reset(seed=17)
+
+        forecast_mdl2 = ForecastMeanDemandLookahead2Policy().select_action(
+            state,
+            env=env,
+        )
+        forecast_myo = ForecastMyopicPolicy().select_action(state, env=env)
+        state_action = facility_net_action_from_state(
+            state,
+            asdict(env.config),
+            settings=heuristic_settings_for_policy("fmdl2"),
+        )
+
+        self.assertIn("fmdl2", available_heuristics())
+        np.testing.assert_allclose(forecast_mdl2, forecast_myo, atol=1e-6)
+        np.testing.assert_allclose(forecast_mdl2, state_action, atol=1e-6)
+
+    def test_rolling_mdl2_matches_state_helper(self) -> None:
+        env_config = load_config(
+            "experiments/configs/20_clinic_patient_condition_geo_demand_drift.json"
+        )
+        env_config["demand_history_window"] = 12
+        config = load_config("configs/gcn_residual_20_clinic.yaml")
+        config["env"] = env_config
+        env = build_env(config, seed=18)
+        state = env.reset(seed=18)
+        anchor = MeanDemandLookahead2Policy()
+        for _ in range(5):
+            state, _reward, done, _info = env.step(
+                anchor.select_action(state, env=env)
+            )
+            if done:
+                break
+
+        live_action = RollingMeanDemandLookahead2Policy().select_action(
+            state,
+            env=env,
+        )
+        state_action = facility_net_action_from_state(
+            state,
+            env_config,
+            settings=heuristic_settings_for_policy("rmdl2"),
+        )
+
+        self.assertIn("rmdl2", available_heuristics())
+        np.testing.assert_allclose(live_action, state_action, atol=1e-6)
+        self.assertAlmostEqual(
+            heuristic_settings_for_policy("rmdl2").demand_history_weight,
+            0.05,
+        )
+
     def test_patient_priority_helper_matches_live_policy_with_pipeline_state(self) -> None:
         env_config = load_config("experiments/configs/20_clinic_patient_condition_geo.json")
         config = load_config("configs/gcn_residual_20_clinic.yaml")
@@ -187,6 +252,30 @@ class HeuristicPolicyTests(unittest.TestCase):
         self.assertEqual(action.shape, (env.action_size,))
         self.assertTrue(np.all(action >= -1.0))
         self.assertTrue(np.all(action <= 1.0))
+
+    def test_shield_rollout_seed_is_independent_of_live_rng_state(self) -> None:
+        first = copy.deepcopy(self.env)
+        second = copy.deepcopy(self.env)
+        second.rng.random(20)
+        anchor = MeanDemandLookahead2Policy()
+        action = anchor.select_action(self.state, env=self.env)
+
+        first_metrics = shield_rollout_metrics(
+            first,
+            anchor,
+            action,
+            horizon=2,
+            rollout_seed=12345,
+        )
+        second_metrics = shield_rollout_metrics(
+            second,
+            anchor,
+            action,
+            horizon=2,
+            rollout_seed=12345,
+        )
+
+        self.assertEqual(first_metrics, second_metrics)
 
     def test_formal_evaluation_summarizes_heuristic_rows(self) -> None:
         policy = MyopicPolicy()

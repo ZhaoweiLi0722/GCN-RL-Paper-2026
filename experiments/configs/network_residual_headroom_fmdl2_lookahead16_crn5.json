@@ -1,0 +1,48 @@
+{
+  "name": "network_residual_headroom_fmdl2_lookahead16_crn5",
+  "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift.json",
+  "anchor_policy": "fmdl2",
+  "seed": 118000,
+  "max_steps": 52,
+  "state_probe_rollouts": 1,
+  "teacher_replications": 10,
+  "progress_interval_states": 25,
+  "progress_interval_decisions": 25,
+  "lookahead": 16,
+  "lookahead_replications": 5,
+  "lookahead_seed": 5870000,
+  "store_option_advantages": true,
+  "demonstration_advantage_weight_scale": 500000.0,
+  "demonstration_advantage_weight_cap": 10.0,
+  "explicit_options": [
+    {"group": "combined_transfer", "epsilon": 0.32, "sign": -1.0},
+    {"group": "reagent_replenishment", "epsilon": 1.0, "sign": 1.0},
+    {"group": "combined_network", "epsilon": 1.0, "sign": 1.0},
+    {"group": "combined_network", "epsilon": 0.48, "sign": 1.0},
+    {"group": "replenishment_uniform", "epsilon": 1.0, "sign": -1.0},
+    {"group": "combined_transfer", "epsilon": 0.48, "sign": -1.0},
+    {"group": "reagent_replenishment", "epsilon": 0.64, "sign": 1.0},
+    {"group": "combined_network", "epsilon": 0.64, "sign": 1.0}
+  ],
+  "score_weights": {
+    "service_level": 0.0,
+    "completion_service_level": 0.0,
+    "eligibility_rate": 0.0,
+    "patient_ineligibility_during_manufacturing_rate": 0.0,
+    "at_risk_unserved": 0.0,
+    "patients_lost": 0.0
+  },
+  "guardrails": {
+    "min_completion_service_level_delta": 0.0,
+    "max_patients_lost_delta": 0.0,
+    "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+    "min_score_improvement": 500000.0
+  },
+  "materiality": {
+    "minimum_episode_cost_improvement_pct": 1.0,
+    "minimum_opportunity_rate": 0.05,
+    "require_episode_clinical_noninferiority": true
+  },
+  "demonstration_path": "results/network_residual_headroom_fmdl2_lookahead16_crn5/network_teacher_fmdl2_lookahead16_crn5.npz",
+  "output_root": "results/network_residual_headroom_fmdl2_lookahead16_crn5"
+}

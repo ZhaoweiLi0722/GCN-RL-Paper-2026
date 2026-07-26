@@ -11,6 +11,8 @@ from src.env.patient_capacity_planning import (
     PatientConditionCapacityEnv,
     PatientEnvConfig,
 )
+from src.env.patient_condition import PatientConditionConfig
+from src.rl.experiment import COST_COMPONENT_METRICS
 
 
 def _small_base(**overrides) -> CapacityPlanningConfig:
@@ -75,6 +77,145 @@ class PatientEnvBasicsTests(unittest.TestCase):
 
 
 class PatientEnvDynamicsTests(unittest.TestCase):
+    def test_patient_env_routes_facility_net_transfer_from_nearest_donor(self) -> None:
+        base = CapacityPlanningConfig(
+            num_facilities=3,
+            production_lead_time=2,
+            episode_horizon=2,
+            demand_rates=(0.0, 0.0, 0.0),
+            initial_specimens=(0.0, 0.0, 0.0),
+            initial_reagents=(5.0, 5.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0, 0.0),
+            max_specimens=(10.0, 10.0, 10.0),
+            max_reagents=(10.0, 10.0, 10.0),
+            max_idle_bioreactors=(1.0, 1.0, 1.0),
+            max_reagent_replenishment=(0.0, 0.0, 0.0),
+            max_reagent_transfer=5.0,
+            action_mode="facility_net",
+            transfer_lead_time=1,
+            include_transfer_pipeline_state=True,
+            clinic_coordinates=((0.0, 10.0), (0.0, 0.1), (0.0, 0.0)),
+            resource_edges=((0, 2), (1, 2)),
+        )
+        env = _env(
+            base=base,
+            patient=PatientConditionConfig(
+                healthy_decay_rate=0.0,
+                frail_decay_rate=0.0,
+            ),
+        )
+        action = env.noop_action()
+        action[3:6] = (-1.0, -1.0, 1.0)
+
+        _observation, _reward, _done, info = env.step(action)
+
+        np.testing.assert_allclose(
+            info["reagent_transfers"],
+            np.asarray([0.0, -5.0, 5.0]),
+        )
+        self.assertAlmostEqual(env.reagent_transfer_pipeline[0, 2], 5.0)
+
+    def test_service_is_recorded_after_manufacturing_completion(self) -> None:
+        base = _small_base(
+            production_lead_time=3,
+            demand_rates=(0.0, 0.0),
+            initial_specimens=(1.0, 0.0),
+            initial_reagents=(10.0, 10.0),
+            initial_idle_bioreactors=(1.0, 1.0),
+            max_reagent_replenishment=(0.0, 0.0),
+        )
+        env = _env(
+            base=base,
+            patient=PatientConditionConfig(
+                healthy_decay_rate=0.0,
+                frail_decay_rate=0.0,
+            ),
+        )
+        env.reset(seed=0)
+
+        _, _, _, info = env.step(env.noop_action())
+        self.assertEqual(float(info["patients_started"].sum()), 1.0)
+        self.assertEqual(float(info["patients_completed"].sum()), 0.0)
+        self.assertEqual(float(info["in_production_patients"].sum()), 1.0)
+        self.assertEqual(env.cumulative_served, 0.0)
+
+        env.step(env.noop_action())
+        _, _, _, info = env.step(env.noop_action())
+        self.assertEqual(float(info["patients_completed"].sum()), 1.0)
+        self.assertEqual(float(info["in_production_patients"].sum()), 0.0)
+        self.assertEqual(env.cumulative_served, 1.0)
+        self.assertEqual(info["average_turnaround_time"], 3.0)
+        self.assertEqual(env.bioreactors[0, 0], 1.0)
+
+    def test_manufacturing_deterioration_discards_therapy_and_releases_reactor(self) -> None:
+        base = _small_base(
+            production_lead_time=3,
+            demand_rates=(0.0, 0.0),
+            initial_specimens=(1.0, 0.0),
+            initial_reagents=(10.0, 10.0),
+            initial_idle_bioreactors=(1.0, 1.0),
+            max_reagent_replenishment=(0.0, 0.0),
+        )
+        env = _env(
+            base=base,
+            patient=PatientConditionConfig(
+                healthy_decay_rate=1.0,
+                frail_decay_rate=1.0,
+                eligibility_threshold=0.9,
+            ),
+        )
+        env.reset(seed=0)
+
+        _, _, _, info = env.step(env.noop_action())
+
+        self.assertEqual(float(info["patients_lost_manufacturing"].sum()), 1.0)
+        self.assertEqual(float(info["therapies_discarded"].sum()), 1.0)
+        self.assertEqual(float(info["bioreactors_released_after_cleaning"].sum()), 1.0)
+        self.assertEqual(float(info["patients_completed"].sum()), 0.0)
+        self.assertEqual(float(info["material_wasted"].sum()), 1.0)
+        self.assertEqual(float(info["in_production_patients"].sum()), 0.0)
+        self.assertEqual(
+            info["patient_ineligibility_during_manufacturing_rate"],
+            info["manufacturing_loss_rate"],
+        )
+        self.assertEqual(env.bioreactors[0, 0], 1.0)
+        self.assertEqual(float(env.bioreactors[0, 1:].sum()), 0.0)
+
+    def test_patient_and_bioreactor_manufacturing_pipelines_stay_aligned(self) -> None:
+        env = _env(
+            patient=PatientConditionConfig(
+                healthy_decay_rate=0.0,
+                frail_decay_rate=0.0,
+            )
+        )
+        env.reset(seed=5)
+        for _ in range(8):
+            env.step(env.noop_action())
+            for facility, stages in enumerate(env.in_production_patients):
+                for stage in range(1, env.config.production_lead_time):
+                    self.assertEqual(
+                        float(len(stages[stage])),
+                        env.bioreactors[facility, stage],
+                    )
+
+    def test_cost_breakdown_is_additive(self) -> None:
+        env = _env()
+        env.reset(seed=1)
+        _, _, _, info = env.step(env.noop_action())
+        operating = [
+            name
+            for name in COST_COMPONENT_METRICS
+            if name not in {"base_cost", "patient_loss_cost", "expiry_cost", "urgency_cost"}
+        ]
+        self.assertAlmostEqual(sum(float(info[name]) for name in operating), info["base_cost"])
+        self.assertAlmostEqual(
+            info["base_cost"]
+            + info["patient_loss_cost"]
+            + info["expiry_cost"]
+            + info["urgency_cost"],
+            float(info["cost"]),
+        )
+
     def test_zero_capacity_loses_patients(self) -> None:
         env = _env(
             base=_small_base(
@@ -164,8 +305,6 @@ class PatientEnvDynamicsTests(unittest.TestCase):
         self.assertAlmostEqual(info["reagent_transfer_arrivals"][1], 20.0)
 
     def test_patient_risk_counts_match_waiting_queue(self) -> None:
-        from src.env.patient_condition import PatientConditionConfig
-
         env = _env(
             patient=PatientConditionConfig(
                 risk_type_probabilities=(0.0, 1.0),

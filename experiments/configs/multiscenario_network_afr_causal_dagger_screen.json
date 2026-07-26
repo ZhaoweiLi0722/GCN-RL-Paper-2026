@@ -1,0 +1,36 @@
+{
+  "name": "multiscenario_network_afr_causal_dagger_screen",
+  "plan": "experiments/configs/residual_policy_benchmark.json",
+  "training_manifest": "results/multiscenario_network_afr/multiscenario_network_afr_screen/training_manifest.json",
+  "selection_summary": "results/multiscenario_network_afr_screen_gate_eval/summary.json",
+  "base_teacher_cache": "results/multiscenario_teacher_screen/teacher_train.npz",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "training_seeds": [1],
+  "checkpoint_variant": "pretrain",
+  "scenarios": [
+    "patient_condition_geo_nominal_history",
+    "patient_condition_geo_abrupt_regime_shift",
+    "patient_condition_geo_regional_drift",
+    "patient_condition_geo_compound_regional_stress"
+  ],
+  "teacher_configs": {
+    "patient_condition_geo_nominal_history": "experiments/configs/network_residual_headroom_nominal_history_mini.json",
+    "patient_condition_geo_abrupt_regime_shift": "experiments/configs/network_residual_headroom_abrupt_shift_mini.json",
+    "patient_condition_geo_regional_drift": "experiments/configs/network_residual_headroom_regional_drift_mini.json",
+    "patient_condition_geo_compound_regional_stress": "experiments/configs/network_residual_headroom_compound_stress_mini.json"
+  },
+  "rollouts_per_policy": 1,
+  "max_steps": 52,
+  "collection_seed": 8600000,
+  "detection_delay": 4,
+  "filter_base_cache_causally": true,
+  "teacher_behavior_probability": 0.0,
+  "balance_scenarios": true,
+  "teacher_overrides": {
+    "lookahead": 12,
+    "lookahead_replications": 1,
+    "lookahead_seed": 9600000,
+    "progress_interval_decisions": 50
+  },
+  "output_root": "results/multiscenario_network_afr_causal_dagger_screen"
+}

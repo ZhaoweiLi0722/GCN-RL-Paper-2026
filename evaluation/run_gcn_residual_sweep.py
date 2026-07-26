@@ -479,6 +479,12 @@ def run_local_search_distillation(
     lookahead_seed: int | None = None,
     dense_advantage_weight_scale: float | None = None,
     dense_advantage_weight_cap: float = 10.0,
+    trajectory_validation_fraction: float = 0.0,
+    trajectory_validation_min_per_scenario: int = 1,
+    early_stopping_patience: int = 0,
+    early_stopping_check_interval: int = 1,
+    early_stopping_min_delta: float = 0.0,
+    early_stopping_gate_loss_weight: float = 1.0,
 ) -> dict[str, Any]:
     demonstration_file = Path(demonstration_path) if demonstration_path else None
     if demonstration_file is not None and demonstration_file.exists():
@@ -589,19 +595,58 @@ def run_local_search_distillation(
             "local_search_replay_transitions": replay_transitions,
             "local_search_loss": "",
         }
-    weights = demos["weights"]
-    final_fit = agent.fit_action_batch(
-        demos["states"],
-        demos["actions"],
-        {
-            "epochs": epochs,
-            "batch_size": batch_size,
-            "seed": seed + 1200000,
-            "retain_for_regularization": bool(retain_for_regularization),
-            "demonstrations": demos,
-        },
-        weights=weights,
-    )
+    split_summary: dict[str, Any] = {
+        "trajectory_validation_enabled": False,
+        "train_samples": int(demos["states"].shape[0]),
+        "validation_samples": 0,
+        "train_trajectory_ids": "",
+        "validation_trajectory_ids": "",
+    }
+    if float(trajectory_validation_fraction) > 0.0:
+        train_demos, validation_demos, split_summary = (
+            split_demonstrations_by_trajectory(
+                demos,
+                validation_fraction=float(
+                    trajectory_validation_fraction
+                ),
+                min_per_scenario=int(
+                    trajectory_validation_min_per_scenario
+                ),
+                seed=seed + 1190000,
+            )
+        )
+        final_fit = fit_action_batch_with_early_stopping(
+            agent,
+            train_demos,
+            validation_demos,
+            epochs=epochs,
+            batch_size=batch_size,
+            seed=seed + 1200000,
+            retain_for_regularization=bool(
+                retain_for_regularization
+            ),
+            patience=int(early_stopping_patience),
+            check_interval=int(early_stopping_check_interval),
+            min_delta=float(early_stopping_min_delta),
+            gate_loss_weight=float(
+                early_stopping_gate_loss_weight
+            ),
+        )
+    else:
+        final_fit = agent.fit_action_batch(
+            demos["states"],
+            demos["actions"],
+            {
+                "epochs": epochs,
+                "batch_size": batch_size,
+                "seed": seed + 1200000,
+                "retain_for_regularization": bool(
+                    retain_for_regularization
+                ),
+                "demonstrations": demos,
+            },
+            weights=demos["weights"],
+        )
     print(
         "local_search "
         f"rollouts={rollouts} samples={demos['states'].shape[0]} "
@@ -616,7 +661,7 @@ def run_local_search_distillation(
         ),
         flush=True,
     )
-    return {
+    summary = {
         "local_search_rollouts": int(rollouts),
         "local_search_lookahead": int(lookahead),
         "local_search_lookahead_replications": int(lookahead_replications),
@@ -735,7 +780,358 @@ def run_local_search_distillation(
             "correction_gate_prediction_fraction",
             "",
         ),
+        "local_search_correction_gate_groups": final_fit.get(
+            "correction_gate_groups",
+            "",
+        ),
+        "local_search_correction_gate_group_label_rates": final_fit.get(
+            "correction_gate_group_label_rates",
+            "",
+        ),
+        "local_search_correction_gate_group_prediction_rates": final_fit.get(
+            "correction_gate_group_prediction_rates",
+            "",
+        ),
+        "local_search_correction_gate_group_positive_weights": final_fit.get(
+            "correction_gate_group_positive_weights",
+            "",
+        ),
+        "local_search_trajectory_validation_enabled": bool(
+            split_summary["trajectory_validation_enabled"]
+        ),
+        "local_search_train_samples": int(split_summary["train_samples"]),
+        "local_search_validation_samples": int(
+            split_summary["validation_samples"]
+        ),
+        "local_search_train_trajectory_ids": str(
+            split_summary["train_trajectory_ids"]
+        ),
+        "local_search_validation_trajectory_ids": str(
+            split_summary["validation_trajectory_ids"]
+        ),
+        "local_search_validation_loss": final_fit.get(
+            "validation_loss",
+            "",
+        ),
+        "local_search_validation_actor_loss": final_fit.get(
+            "validation_actor_loss",
+            "",
+        ),
+        "local_search_validation_correction_gate_loss": final_fit.get(
+            "validation_correction_gate_loss",
+            "",
+        ),
+        "local_search_validation_correction_gate_precision": final_fit.get(
+            "validation_correction_gate_precision",
+            "",
+        ),
+        "local_search_validation_correction_gate_recall": final_fit.get(
+            "validation_correction_gate_recall",
+            "",
+        ),
+        "local_search_early_stopping_gate_loss_weight": final_fit.get(
+            "early_stopping_gate_loss_weight",
+            "",
+        ),
     }
+    return summary
+
+
+_NON_ROW_DEMONSTRATION_KEYS = frozenset(
+    {
+        "scenario_names",
+        "option_groups",
+        "option_epsilons",
+        "option_signs",
+    }
+)
+
+
+def split_demonstrations_by_trajectory(
+    demos: dict[str, Any],
+    *,
+    validation_fraction: float,
+    min_per_scenario: int,
+    seed: int,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Hold out complete trajectories within every represented scenario."""
+
+    validation_fraction = float(validation_fraction)
+    if not 0.0 < validation_fraction < 1.0:
+        raise ValueError(
+            "trajectory validation_fraction must be between zero and one"
+        )
+    min_per_scenario = max(int(min_per_scenario), 1)
+    row_count = int(np.asarray(demos["states"]).shape[0])
+    for key in ("scenario_ids", "trajectory_ids"):
+        if key not in demos:
+            raise ValueError(
+                "Trajectory validation requires scenario_ids and "
+                "trajectory_ids in the teacher cache"
+            )
+        if np.asarray(demos[key]).shape != (row_count,):
+            raise ValueError(f"{key} must align with demonstration rows")
+    scenario_ids = np.asarray(demos["scenario_ids"], dtype=np.int64)
+    trajectory_ids = np.asarray(
+        demos["trajectory_ids"],
+        dtype=np.int64,
+    )
+    validation_trajectory_ids: list[int] = []
+    rng = np.random.default_rng(int(seed))
+    for scenario_id in np.unique(scenario_ids):
+        scenario_rows = scenario_ids == scenario_id
+        scenario_trajectories = np.unique(
+            trajectory_ids[scenario_rows]
+        )
+        if scenario_trajectories.size < 2:
+            raise ValueError(
+                "Trajectory validation requires at least two trajectories "
+                f"for scenario {int(scenario_id)}"
+            )
+        for trajectory_id in scenario_trajectories:
+            rows = trajectory_ids == trajectory_id
+            if np.any(scenario_ids[rows] != scenario_id):
+                raise ValueError(
+                    "Each trajectory_id must belong to exactly one scenario"
+                )
+        validation_count = max(
+            min_per_scenario,
+            int(np.ceil(
+                validation_fraction
+                * int(scenario_trajectories.size)
+            )),
+        )
+        validation_count = min(
+            validation_count,
+            int(scenario_trajectories.size) - 1,
+        )
+        chosen = rng.choice(
+            scenario_trajectories,
+            size=validation_count,
+            replace=False,
+        )
+        validation_trajectory_ids.extend(
+            int(value) for value in chosen
+        )
+    validation_mask = np.isin(
+        trajectory_ids,
+        np.asarray(validation_trajectory_ids, dtype=np.int64),
+    )
+    if not np.any(validation_mask) or not np.any(~validation_mask):
+        raise ValueError(
+            "Trajectory validation split must retain train and validation rows"
+        )
+    train_demos = subset_demonstrations(demos, ~validation_mask)
+    validation_demos = subset_demonstrations(
+        demos,
+        validation_mask,
+    )
+    train_ids = sorted(
+        int(value)
+        for value in np.unique(train_demos["trajectory_ids"])
+    )
+    validation_ids = sorted(
+        int(value)
+        for value in np.unique(validation_demos["trajectory_ids"])
+    )
+    summary = {
+        "trajectory_validation_enabled": True,
+        "train_samples": int(train_demos["states"].shape[0]),
+        "validation_samples": int(
+            validation_demos["states"].shape[0]
+        ),
+        "train_trajectory_ids": "|".join(map(str, train_ids)),
+        "validation_trajectory_ids": "|".join(
+            map(str, validation_ids)
+        ),
+    }
+    return train_demos, validation_demos, summary
+
+
+def subset_demonstrations(
+    demos: dict[str, Any],
+    row_mask: np.ndarray,
+) -> dict[str, Any]:
+    """Slice row-aligned teacher arrays while retaining cache metadata."""
+
+    mask = np.asarray(row_mask, dtype=bool)
+    row_count = int(np.asarray(demos["states"]).shape[0])
+    if mask.shape != (row_count,):
+        raise ValueError("Demonstration subset mask must align with rows")
+    subset: dict[str, Any] = {}
+    for key, value in demos.items():
+        if (
+            key not in _NON_ROW_DEMONSTRATION_KEYS
+            and isinstance(value, np.ndarray)
+            and value.ndim > 0
+            and value.shape[0] == row_count
+        ):
+            subset[key] = value[mask]
+        else:
+            subset[key] = value
+    improved_mask = np.asarray(
+        subset.get(
+            "improved_mask",
+            np.zeros(int(mask.sum()), dtype=bool),
+        ),
+        dtype=bool,
+    )
+    weights = np.asarray(subset["weights"], dtype=np.float32)
+    subset["improved_steps"] = int(improved_mask.sum())
+    subset["anchor_keep_steps"] = int((~improved_mask).sum())
+    weight_total = float(weights.sum())
+    subset["improved_weight_fraction"] = (
+        float(weights[improved_mask].sum()) / weight_total
+        if weight_total > 0.0
+        else 0.0
+    )
+    return subset
+
+
+def fit_action_batch_with_early_stopping(
+    agent,
+    train_demos: dict[str, Any],
+    validation_demos: dict[str, Any],
+    *,
+    epochs: int,
+    batch_size: int,
+    seed: int,
+    retain_for_regularization: bool,
+    patience: int,
+    check_interval: int,
+    min_delta: float,
+    gate_loss_weight: float = 1.0,
+) -> dict[str, Any]:
+    """Select supervised actor/gate weights using held-out trajectories."""
+
+    if not hasattr(agent, "evaluate_action_batch"):
+        raise ValueError(
+            "Trajectory early stopping requires evaluate_action_batch"
+        )
+    total_epochs = max(int(epochs), 1)
+    check_interval = max(int(check_interval), 1)
+    patience = max(int(patience), 0)
+    min_delta = max(float(min_delta), 0.0)
+    gate_loss_weight = max(float(gate_loss_weight), 0.0)
+    best_metric = float("inf")
+    best_epoch = 0
+    epochs_completed = 0
+    checks_without_improvement = 0
+    best_state = snapshot_supervised_agent(agent)
+    last_fit: dict[str, Any] = {}
+    while epochs_completed < total_epochs:
+        chunk_epochs = min(
+            check_interval,
+            total_epochs - epochs_completed,
+        )
+        last_fit = agent.fit_action_batch(
+            train_demos["states"],
+            train_demos["actions"],
+            {
+                "epochs": chunk_epochs,
+                "batch_size": batch_size,
+                "seed": seed + epochs_completed,
+                "retain_for_regularization": bool(
+                    retain_for_regularization
+                ),
+                "demonstrations": train_demos,
+            },
+            weights=train_demos["weights"],
+        )
+        epochs_completed += chunk_epochs
+        validation = agent.evaluate_action_batch(
+            validation_demos["states"],
+            validation_demos["actions"],
+            weights=validation_demos["weights"],
+        )
+        metric = float(validation["actor_loss"]) + gate_loss_weight * float(
+            validation.get("correction_gate_loss", 0.0)
+        )
+        if metric < best_metric - min_delta:
+            best_metric = metric
+            best_epoch = epochs_completed
+            checks_without_improvement = 0
+            best_state = snapshot_supervised_agent(agent)
+        else:
+            checks_without_improvement += 1
+        if (
+            patience > 0
+            and checks_without_improvement >= patience
+        ):
+            break
+    restore_supervised_agent(agent, best_state)
+    train_metrics = agent.evaluate_action_batch(
+        train_demos["states"],
+        train_demos["actions"],
+        weights=train_demos["weights"],
+    )
+    validation_metrics = agent.evaluate_action_batch(
+        validation_demos["states"],
+        validation_demos["actions"],
+        weights=validation_demos["weights"],
+    )
+    final_fit = dict(last_fit)
+    final_fit.update(train_metrics)
+    final_fit.update(
+        {
+            f"validation_{key}": value
+            for key, value in validation_metrics.items()
+        }
+    )
+    final_fit.update(
+        {
+            "samples": int(train_demos["states"].shape[0]),
+            "final_loss": float(train_metrics["actor_loss"]),
+            "correction_gate_loss": train_metrics.get(
+                "correction_gate_loss",
+                "",
+            ),
+            "best_epoch": int(best_epoch),
+            "epochs_completed": int(epochs_completed),
+            "early_stopped": bool(
+                epochs_completed < total_epochs
+            ),
+            "early_stopping_gate_loss_weight": gate_loss_weight,
+        }
+    )
+    return final_fit
+
+
+def snapshot_supervised_agent(agent) -> dict[str, Any]:
+    """Copy actor/gate modules and optimizers used by supervised fitting."""
+
+    state: dict[str, Any] = {}
+    for name in ("actor", "actor_target", "correction_gate"):
+        module = getattr(agent, name, None)
+        if module is not None:
+            state[name] = copy.deepcopy(module.state_dict())
+    for name in (
+        "actor_optimizer",
+        "correction_gate_optimizer",
+    ):
+        optimizer = getattr(agent, name, None)
+        if optimizer is not None:
+            state[name] = copy.deepcopy(optimizer.state_dict())
+    return state
+
+
+def restore_supervised_agent(
+    agent,
+    state: dict[str, Any],
+) -> None:
+    """Restore a supervised actor/gate snapshot selected on validation."""
+
+    for name in ("actor", "actor_target", "correction_gate"):
+        module = getattr(agent, name, None)
+        if module is not None and name in state:
+            module.load_state_dict(state[name])
+    for name in (
+        "actor_optimizer",
+        "correction_gate_optimizer",
+    ):
+        optimizer = getattr(agent, name, None)
+        if optimizer is not None and name in state:
+            optimizer.load_state_dict(state[name])
 
 
 def collect_local_search_demonstrations(
@@ -1010,6 +1406,11 @@ def save_local_search_demonstrations(path: str | Path, demos: dict[str, Any]) ->
     for key, dtype in (
         ("improved_mask", bool),
         ("demand_history_window", np.int64),
+        ("scenario_cache_version", np.int64),
+        ("scenario_ids", np.int64),
+        ("trajectory_ids", np.int64),
+        ("trajectory_steps", np.int64),
+        ("scenario_names", "U96"),
         ("transition_states", np.float32),
         ("transition_actions", np.float32),
         ("transition_rewards", np.float32),
@@ -1142,6 +1543,58 @@ def load_local_search_demonstrations(path: str | Path) -> dict[str, Any]:
             result["demand_history_window"] = int(
                 payload["demand_history_window"]
             )
+        if "scenario_cache_version" in payload.files:
+            result["scenario_cache_version"] = int(
+                payload["scenario_cache_version"]
+            )
+        if "scenario_names" in payload.files:
+            scenario_names = np.asarray(
+                payload["scenario_names"],
+                dtype="U96",
+            )
+            if scenario_names.ndim != 1 or scenario_names.size == 0:
+                raise ValueError(
+                    "Cached scenario_names must be a non-empty vector"
+                )
+            result["scenario_names"] = scenario_names
+        provenance_keys = (
+            "scenario_ids",
+            "trajectory_ids",
+            "trajectory_steps",
+        )
+        present_provenance = tuple(
+            key for key in provenance_keys if key in payload.files
+        )
+        if present_provenance and len(present_provenance) != len(
+            provenance_keys
+        ):
+            raise ValueError(
+                "Cached scenario provenance requires scenario, trajectory, "
+                "and within-trajectory indices"
+            )
+        if present_provenance:
+            for key in provenance_keys:
+                values = np.asarray(payload[key], dtype=np.int64)
+                if values.shape != (states.shape[0],):
+                    raise ValueError(
+                        f"Cached {key} must align with demonstration rows"
+                    )
+                if np.any(values < 0):
+                    raise ValueError(f"Cached {key} cannot contain negatives")
+                result[key] = values
+            scenario_names = result.get("scenario_names")
+            if scenario_names is None:
+                raise ValueError(
+                    "Cached scenario provenance requires scenario_names"
+                )
+            if (
+                result["scenario_ids"].size
+                and int(result["scenario_ids"].max())
+                >= int(scenario_names.size)
+            ):
+                raise ValueError(
+                    "Cached scenario_ids exceed the scenario_names table"
+                )
         return result
 
 

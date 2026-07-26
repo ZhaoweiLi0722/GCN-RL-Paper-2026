@@ -1,0 +1,28 @@
+{
+  "name": "multiscenario_bounded_reagent_actor_gate_seed1",
+  "plan": "experiments/configs/residual_policy_benchmark.json",
+  "training_manifest": "results/multiscenario_bounded_reagent/multiscenario_bounded_reagent_train_seed1/training_manifest.json",
+  "selection_summary": "results/multiscenario_bounded_reagent_seed1_eval/summary.json",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "training_seeds": [1],
+  "checkpoint_variant": "final",
+  "scenarios": [
+    "patient_condition_geo_nominal_history",
+    "patient_condition_geo_abrupt_regime_shift",
+    "patient_condition_geo_regional_drift",
+    "patient_condition_geo_compound_regional_stress"
+  ],
+  "rollouts_per_scenario": 3,
+  "max_steps": 52,
+  "lookahead": 12,
+  "lookahead_replications": 1,
+  "actor_scale": 0.25,
+  "min_improvement": 100000.0,
+  "detection_delay": 4,
+  "collection_seed": 9700000,
+  "gate_epochs": 200,
+  "gate_batch_size": 128,
+  "reinitialize_gate": true,
+  "positive_weight_mass": null,
+  "output_root": "results/multiscenario_bounded_reagent_actor_gate_seed1"
+}

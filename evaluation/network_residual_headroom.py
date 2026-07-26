@@ -38,6 +38,11 @@ def main() -> None:
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--skip-state-probe", action="store_true")
     parser.add_argument("--skip-teacher", action="store_true")
+    parser.add_argument("--teacher-replications", type=int, default=None)
+    parser.add_argument("--output-root", default=None)
+    parser.add_argument("--demonstration-path", default=None)
+    parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--lookahead-seed", type=int, default=None)
     parser.add_argument("--teacher-shard-index", type=int, default=None)
     parser.add_argument("--teacher-shard-count", type=int, default=None)
     args = parser.parse_args()
@@ -45,6 +50,18 @@ def main() -> None:
     config = load_config(args.config)
     if args.smoke:
         config = smoke_config(config)
+    if args.teacher_replications is not None:
+        if args.teacher_replications < 1:
+            raise SystemExit("--teacher-replications must be positive")
+        config["teacher_replications"] = int(args.teacher_replications)
+    if args.output_root is not None:
+        config["output_root"] = str(args.output_root)
+    if args.demonstration_path is not None:
+        config["demonstration_path"] = str(args.demonstration_path)
+    if args.seed is not None:
+        config["seed"] = int(args.seed)
+    if args.lookahead_seed is not None:
+        config["lookahead_seed"] = int(args.lookahead_seed)
     if (
         args.teacher_shard_index is not None
         or args.teacher_shard_count is not None
@@ -156,6 +173,7 @@ def teacher_shard_config(
 
 def load_env_config(config: dict[str, Any]) -> dict[str, Any]:
     env_config = load_config(config["env_config"])
+    env_config.update(dict(config.get("env_overrides", {})))
     return {
         "algorithm": str(config.get("anchor_policy", "mdl2")),
         "env": env_config,

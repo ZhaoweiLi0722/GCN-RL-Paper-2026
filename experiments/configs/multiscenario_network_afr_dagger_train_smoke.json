@@ -1,0 +1,38 @@
+{
+  "name": "multiscenario_network_afr_dagger_train_smoke",
+  "plan": "experiments/configs/residual_policy_benchmark.json",
+  "budget": "diagnostic_pretrain",
+  "reference_scenario": "patient_condition_geo_nominal_history",
+  "scenarios": [
+    "patient_condition_geo_nominal_history",
+    "patient_condition_geo_abrupt_regime_shift",
+    "patient_condition_geo_regional_drift",
+    "patient_condition_geo_compound_regional_stress"
+  ],
+  "teacher_cache": "results/multiscenario_network_afr_dagger_smoke/teacher_train_dagger.npz",
+  "demand_history_window": 12,
+  "online_episodes": 0,
+  "pretrain_epochs": 2,
+  "offline_updates": 0,
+  "seeds": [1],
+  "config_overrides": {
+    "batch_size": 64,
+    "train_randomization": {
+      "enabled": false
+    },
+    "imitation_pretrain": {
+      "episodes": 1,
+      "epochs": 1,
+      "batch_size": 64,
+      "regularization_weight": 1.0,
+      "regularization_batch_size": 64
+    }
+  },
+  "algorithms": [
+    {
+      "name": "gcn_residual_mdl2_network_ddpg_afd",
+      "seeds": [1]
+    }
+  ],
+  "output_root": "results/multiscenario_network_afr"
+}

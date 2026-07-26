@@ -1,0 +1,383 @@
+"""Train matched graph/flat network residual agents across scenario episodes."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any
+
+from evaluation.run_full_benchmark import (
+    advantage_distillation_settings,
+    load_benchmark_plan,
+    make_training_config,
+    resolve_budget,
+    run_advantage_distillation_pretrain,
+    select_scenarios,
+)
+from evaluation.train_network_residual_history_screen import (
+    make_history_screen_config,
+)
+from src.env.multi_scenario import EpisodeScenarioEnv
+from src.rl.agents import get_agent_class
+from src.rl.config import load_config, save_config_snapshot
+from src.rl.experiment import (
+    build_env,
+    train_off_policy_agent,
+    train_offline_replay_updates,
+    write_rows,
+)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", required=True)
+    parser.add_argument("--force", action="store_true")
+    args = parser.parse_args()
+
+    run_config = load_config(args.config)
+    result = train_multiscenario_agents(
+        run_config,
+        force=bool(args.force),
+    )
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
+def train_multiscenario_agents(
+    run_config: dict[str, Any],
+    *,
+    force: bool = False,
+) -> dict[str, Any]:
+    plan = load_benchmark_plan(
+        run_config.get(
+            "plan",
+            "experiments/configs/residual_policy_benchmark.json",
+        )
+    )
+    budget_name = str(run_config.get("budget", "diagnostic_pretrain"))
+    budget = resolve_budget(plan, budget_name)
+    scenario_names = tuple(
+        str(value) for value in run_config.get("scenarios", ())
+    )
+    if len(scenario_names) < 2:
+        raise ValueError("Multi-scenario training requires at least two scenarios")
+    selected_scenarios = select_scenarios(plan, scenario_names)
+    scenarios_by_name = {
+        str(scenario["name"]): scenario
+        for scenario in selected_scenarios
+    }
+    scenarios = [
+        scenarios_by_name[name]
+        for name in scenario_names
+    ]
+    reference_name = str(
+        run_config.get("reference_scenario", scenario_names[0])
+    )
+    reference_scenario = select_scenarios(plan, (reference_name,))[0]
+    teacher_cache = Path(run_config["teacher_cache"])
+    if not teacher_cache.is_file():
+        raise FileNotFoundError(teacher_cache)
+    demand_history_window = int(
+        run_config.get("demand_history_window", 12)
+    )
+    online_episodes = int(run_config.get("online_episodes", 0))
+    pretrain_epochs = run_config.get("pretrain_epochs")
+    offline_updates = int(run_config.get("offline_updates", 0))
+    if online_episodes < 0 or offline_updates < 0:
+        raise ValueError("Training episode and update counts cannot be negative")
+    output_root = Path(
+        run_config.get(
+            "output_root",
+            "results/multiscenario_network_afr",
+        )
+    )
+    run_name = str(run_config.get("name", "multiscenario_network_afr"))
+    run_root = output_root / run_name
+    run_root.mkdir(parents=True, exist_ok=True)
+
+    algorithm_entries = tuple(run_config.get("algorithms", ()))
+    if not algorithm_entries:
+        raise ValueError("At least one learned algorithm is required")
+    results: list[dict[str, Any]] = []
+    for raw_entry in algorithm_entries:
+        entry = dict(raw_entry)
+        algorithm = str(entry["name"])
+        seeds = tuple(
+            int(value)
+            for value in entry.get("seeds", run_config.get("seeds", (0,)))
+        )
+        if not seeds:
+            raise ValueError(f"{algorithm} requires at least one seed")
+        for seed in seeds:
+            result = train_one_multiscenario_agent(
+                plan=plan,
+                budget_name=budget_name,
+                budget=budget,
+                algorithm=algorithm,
+                scenarios=scenarios,
+                reference_scenario=reference_scenario,
+                scenario_names=scenario_names,
+                seed=seed,
+                teacher_cache=teacher_cache,
+                demand_history_window=demand_history_window,
+                online_episodes=online_episodes,
+                pretrain_epochs=(
+                    None
+                    if pretrain_epochs is None
+                    else int(pretrain_epochs)
+                ),
+                offline_updates=offline_updates,
+                output_root=run_root,
+                common_overrides=dict(
+                    run_config.get("config_overrides", {})
+                ),
+                algorithm_overrides=dict(
+                    entry.get("config_overrides", {})
+                ),
+                force=force,
+            )
+            results.append(result)
+
+    payload = {
+        "name": run_name,
+        "budget": budget_name,
+        "scenarios": list(scenario_names),
+        "reference_scenario": reference_name,
+        "teacher_cache": str(teacher_cache),
+        "demand_history_window": demand_history_window,
+        "online_episodes": online_episodes,
+        "pretrain_epochs": pretrain_epochs,
+        "offline_updates": offline_updates,
+        "runs": results,
+    }
+    (run_root / "training_manifest.json").write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return payload
+
+
+def train_one_multiscenario_agent(
+    *,
+    plan: dict[str, Any],
+    budget_name: str,
+    budget: dict[str, Any],
+    algorithm: str,
+    scenarios: list[dict[str, Any]],
+    reference_scenario: dict[str, Any],
+    scenario_names: tuple[str, ...],
+    seed: int,
+    teacher_cache: Path,
+    demand_history_window: int,
+    online_episodes: int,
+    pretrain_epochs: int | None,
+    offline_updates: int,
+    output_root: Path,
+    common_overrides: dict[str, Any],
+    algorithm_overrides: dict[str, Any],
+    force: bool,
+) -> dict[str, Any]:
+    config = make_history_screen_config(
+        plan,
+        budget_name=f"multiscenario_{budget_name}",
+        budget=budget,
+        algorithm=algorithm,
+        scenario=reference_scenario,
+        seed=seed,
+        teacher_cache=teacher_cache,
+        demand_history_window=demand_history_window,
+        online_episodes=online_episodes,
+        pretrain_epochs=pretrain_epochs,
+    )
+    config = deep_update(config, common_overrides)
+    config = deep_update(config, algorithm_overrides)
+    config["algorithm"] = algorithm
+    config["seed"] = int(seed)
+    config["num_episodes"] = int(online_episodes)
+    config["checkpoint_interval"] = max(int(online_episodes), 1)
+    config["save_pretrain_checkpoint"] = True
+    config.setdefault("elite_imitation", {})["enabled"] = False
+    config.setdefault("advantage_distillation_pretrain", {})[
+        "demonstration_path"
+    ] = str(teacher_cache)
+    config["multi_scenario_training"] = {
+        "scenarios": list(scenario_names),
+        "scenario_schedule": "episode_round_robin",
+        "scenario_start_index": int(seed) % len(scenarios),
+        "scenario_label_in_observation": False,
+        "teacher_cache": str(teacher_cache),
+    }
+
+    run_dir = output_root / algorithm / f"seed{int(seed)}"
+    checkpoint_dir = run_dir / "checkpoints"
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    config["checkpoint_dir"] = str(checkpoint_dir)
+    config["result_csv_path"] = str(run_dir / "training.csv")
+    config["config_snapshot_path"] = str(run_dir / "config.json")
+    final_label = (
+        f"{algorithm}_seed{int(seed)}_episode{online_episodes}.pt"
+        if online_episodes > 0
+        else f"{algorithm}_seed{int(seed)}_pretrain.pt"
+    )
+    final_checkpoint = checkpoint_dir / final_label
+    summary_path = run_dir / "summary.json"
+    if final_checkpoint.is_file() and summary_path.is_file() and not force:
+        return json.loads(summary_path.read_text(encoding="utf-8"))
+
+    environments = []
+    environment_summaries = []
+    for scenario_index, scenario in enumerate(scenarios):
+        scenario_config = make_training_config(
+            plan,
+            budget_name,
+            budget,
+            algorithm,
+            scenario,
+            seed,
+        )
+        scenario_config["env"]["demand_history_window"] = int(
+            demand_history_window
+        )
+        scenario_config["env"]["include_demand_history_state"] = True
+        environment = build_env(
+            scenario_config,
+            seed=int(seed) + scenario_index * 10_000,
+        )
+        environments.append(environment)
+        environment_summaries.append(
+            {
+                "scenario": str(
+                    getattr(environment, "scenario_name", "default")
+                ),
+                "observation_size": int(environment.observation_size),
+                "action_size": int(environment.action_size),
+            }
+        )
+    env = EpisodeScenarioEnv(
+        environments,
+        start_index=int(seed) % len(environments),
+    )
+    if env.observation_size != int(
+        environments[0].observation_size
+    ):
+        raise RuntimeError("Multi-scenario observation validation failed")
+    config["env"] = dict(
+        make_training_config(
+            plan,
+            budget_name,
+            budget,
+            algorithm,
+            reference_scenario,
+            seed,
+        )["env"]
+    )
+    config["env"]["demand_history_window"] = int(demand_history_window)
+    config["env"]["include_demand_history_state"] = True
+
+    agent = get_agent_class(algorithm)(
+        env.observation_size,
+        env.action_size,
+        config,
+    )
+    settings = advantage_distillation_settings(
+        config,
+        budget,
+        algorithm,
+    )
+    pretrain_report: dict[str, Any] = {}
+
+    def post_imitation_pretrain(current_agent, current_env):
+        summary = run_advantage_distillation_pretrain(
+            settings,
+            algorithm=algorithm,
+            seed=int(seed),
+            agent=current_agent,
+            env=current_env,
+            config=config,
+            budget=budget,
+        )
+        summary.update(
+            train_offline_replay_updates(
+                current_agent,
+                updates=int(offline_updates),
+                progress_interval=max(
+                    int(offline_updates) // 4,
+                    1,
+                )
+                if offline_updates
+                else 0,
+            )
+        )
+        pretrain_report.update(summary)
+        return summary
+
+    training_rows = train_off_policy_agent(
+        agent,
+        env,
+        config,
+        post_imitation_pretrain=post_imitation_pretrain,
+    )
+    if not final_checkpoint.is_file():
+        agent.save(final_checkpoint)
+    if training_rows:
+        write_rows(training_rows, config["result_csv_path"])
+    save_config_snapshot(config, config["config_snapshot_path"])
+
+    scenario_episode_counts: dict[str, int] = {}
+    for row in training_rows:
+        scenario = str(row["scenario"])
+        scenario_episode_counts[scenario] = (
+            scenario_episode_counts.get(scenario, 0) + 1
+        )
+    summary = {
+        "algorithm": algorithm,
+        "seed": int(seed),
+        "checkpoint": str(final_checkpoint),
+        "config": str(config["config_snapshot_path"]),
+        "pretrain_checkpoint": str(
+            checkpoint_dir
+            / f"{algorithm}_seed{int(seed)}_pretrain.pt"
+        ),
+        "online_episodes": int(online_episodes),
+        "scenario_episode_counts": scenario_episode_counts,
+        "environments": environment_summaries,
+        "pretrain": pretrain_report,
+        "parameter_count": agent_parameter_count(agent),
+    }
+    summary_path.write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return summary
+
+
+def deep_update(
+    base: dict[str, Any],
+    updates: dict[str, Any],
+) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in updates.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = deep_update(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+def agent_parameter_count(agent: Any) -> int:
+    modules = (
+        getattr(agent, name, None)
+        for name in ("actor", "critic", "correction_gate")
+    )
+    return int(
+        sum(
+            parameter.numel()
+            for module in modules
+            if module is not None
+            for parameter in module.parameters()
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()

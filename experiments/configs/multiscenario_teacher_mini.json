@@ -1,0 +1,35 @@
+{
+  "name": "multiscenario_teacher_mini",
+  "plan": "experiments/configs/residual_policy_benchmark.json",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "base_policy": "mdl2",
+  "restrict_options": true,
+  "allowed_groups": [
+    "reagent_transfer",
+    "combined_transfer",
+    "combined_network"
+  ],
+  "min_advantage": 500000.0,
+  "validation_fraction": 0.5,
+  "split_seed": 740000,
+  "balance_scenarios": true,
+  "sources": [
+    {
+      "scenario": "patient_condition_geo_nominal_history",
+      "cache": "results/network_residual_headroom_nominal_history_mini/teacher_cache.npz"
+    },
+    {
+      "scenario": "patient_condition_geo_abrupt_regime_shift",
+      "cache": "results/network_residual_headroom_abrupt_shift_mini/teacher_cache.npz"
+    },
+    {
+      "scenario": "patient_condition_geo_regional_drift",
+      "cache": "results/network_residual_headroom_regional_drift_mini/teacher_cache.npz"
+    },
+    {
+      "scenario": "patient_condition_geo_compound_regional_stress",
+      "cache": "results/network_residual_headroom_compound_stress_mini/teacher_cache.npz"
+    }
+  ],
+  "output_root": "results/multiscenario_teacher_mini"
+}

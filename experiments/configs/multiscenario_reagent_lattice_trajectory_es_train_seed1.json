@@ -1,0 +1,94 @@
+{
+  "name": "multiscenario_reagent_lattice_trajectory_es_train_seed1",
+  "plan": "experiments/configs/residual_policy_benchmark.json",
+  "budget": "diagnostic_pretrain",
+  "reference_scenario": "patient_condition_geo_nominal_history",
+  "scenarios": [
+    "patient_condition_geo_nominal_history",
+    "patient_condition_geo_abrupt_regime_shift",
+    "patient_condition_geo_regional_drift",
+    "patient_condition_geo_compound_regional_stress"
+  ],
+  "teacher_cache": "results/multiscenario_reagent_lattice/teacher_train_reagent_lattice.npz",
+  "demand_history_window": 12,
+  "online_episodes": 0,
+  "pretrain_epochs": 150,
+  "offline_updates": 0,
+  "seeds": [1],
+  "config_overrides": {
+    "batch_size": 128,
+    "train_randomization": {
+      "enabled": false
+    },
+    "imitation_pretrain": {
+      "episodes": 10,
+      "epochs": 2,
+      "batch_size": 128,
+      "populate_replay_buffer": false,
+      "regularization_weight": 1.0,
+      "regularization_batch_size": 128
+    },
+    "advantage_distillation_pretrain": {
+      "balance_label_weights": false,
+      "populate_replay_buffer": false,
+      "retain_for_regularization": true,
+      "trajectory_validation_fraction": 0.25,
+      "trajectory_validation_min_per_scenario": 1,
+      "early_stopping_patience": 8,
+      "early_stopping_check_interval": 5,
+      "early_stopping_min_delta": 0.0001
+    },
+    "residual_action": {
+      "enabled": true,
+      "base_policy": "mdl2",
+      "scale": 1.0,
+      "group_scales": {
+        "specimen_transfer": 0.0,
+        "reagent_transfer": 0.1,
+        "capacity_transfer": 0.0,
+        "replenishment": 0.0
+      },
+      "center_groups": [
+        "reagent_transfer"
+      ],
+      "positive_only_groups": [],
+      "include_base_action_features": true,
+      "pressure_projection": {
+        "enabled": true,
+        "groups": [
+          "reagent_transfer"
+        ],
+        "subtract_pipeline": false,
+        "replenishment_uniform_basis": false
+      },
+      "state_gate": {
+        "enabled": false,
+        "groups": [],
+        "threshold": 0.0
+      },
+      "correction_gate": {
+        "enabled": true,
+        "mode": "classification",
+        "groups": [
+          "reagent_transfer"
+        ],
+        "threshold": 0.5,
+        "target_delta": 0.00001,
+        "hidden_sizes": [64, 32],
+        "positive_class_weight_power": 0.0,
+        "positive_class_weight_max": 1.0,
+        "loss_weight": 1.0,
+        "lr": 0.0003
+      },
+      "l2_weight": 0.01,
+      "zero_init_actor": true
+    }
+  },
+  "algorithms": [
+    {
+      "name": "gcn_residual_mdl2_network_ddpg_afd",
+      "seeds": [1]
+    }
+  ],
+  "output_root": "results/multiscenario_reagent_lattice"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "multiscenario_bounded_reagent_cache",
+  "plan": "experiments/configs/residual_policy_benchmark.json",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "base_policy": "mdl2",
+  "source_cache": "results/multiscenario_network_afr_causal_dagger_screen/teacher_train_dagger.npz",
+  "output_cache": "results/multiscenario_bounded_reagent/teacher_train_bounded_reagent.npz",
+  "manifest": "results/multiscenario_bounded_reagent/cache_manifest.json",
+  "min_advantage": 500000.0,
+  "max_residual_scale": 0.1,
+  "coefficient_advantage_scale": 2000000.0,
+  "min_positive_coefficient": 0.25,
+  "weight_advantage_scale": 1000000.0,
+  "weight_cap": 3.0
+}

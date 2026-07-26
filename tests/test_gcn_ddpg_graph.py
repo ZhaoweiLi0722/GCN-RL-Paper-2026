@@ -275,6 +275,36 @@ class GraphStateConversionTests(unittest.TestCase):
         self.assertIn("actor_patient_service_proxy_cost_penalty", metrics)
         self.assertIn("residual_l2_loss", metrics)
 
+    def test_ddpg_can_delay_actor_updates_for_conservative_fine_tuning(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=3), seed=14)
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "reward_scale": 1e-9,
+                "env": asdict(env.config),
+                "actor_update_frequency": 2,
+                "critic_warmup_updates": 0,
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(env.observation_size, env.action_size, config)
+            state = env.reset(seed=14)
+            for _step in range(2):
+                action = agent.select_action(state, explore=False, env=env)
+                next_state, reward, done, _info = env.step(action)
+                agent.observe(state, action, reward, next_state, done)
+                state = next_state
+
+            critic_only = agent.update()
+            actor_and_critic = agent.update()
+
+            self.assertEqual(critic_only["actor_updated"], 0.0)
+            self.assertNotIn("actor_loss", critic_only)
+            self.assertEqual(actor_and_critic["actor_updated"], 1.0)
+            self.assertIn("actor_loss", actor_and_critic)
+
     def test_residual_action_zero_network_output_returns_heuristic_base(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=13)
         state = env.reset(seed=13)
@@ -489,6 +519,36 @@ class GraphStateConversionTests(unittest.TestCase):
             self.assertGreater(float(baseline_pattern[1]), float(baseline_pattern[0]))
             self.assertLess(float(pipeline_pattern[1]), float(pipeline_pattern[0]))
 
+        config["residual_action"] = {
+            "pressure_projection": {
+                "subtract_pipeline": False,
+            },
+        }
+        for agent_cls in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_cls(
+                baseline_env.observation_size,
+                baseline_env.action_size,
+                config,
+            )
+            baseline_pattern = agent._residual_pressure_patterns_tensor(
+                torch.as_tensor(
+                    baseline_env.observation(),
+                    dtype=torch.float32,
+                ).unsqueeze(0)
+            )["resource"]
+            pipeline_pattern = agent._residual_pressure_patterns_tensor(
+                torch.as_tensor(
+                    pipeline_env.observation(),
+                    dtype=torch.float32,
+                ).unsqueeze(0)
+            )["resource"]
+
+            np.testing.assert_allclose(
+                baseline_pattern.numpy(),
+                pipeline_pattern.numpy(),
+                atol=1e-6,
+            )
+
     def test_gcn_agent_fits_external_action_batch(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=19)
         config = _config_dict()
@@ -562,6 +622,14 @@ class GraphStateConversionTests(unittest.TestCase):
         self.assertEqual(tuple(agent.imitation_states.shape), (2, env.observation_size))
         self.assertEqual(tuple(agent.imitation_weights.shape), (2,))
         self.assertTrue(torch.isfinite(agent._actor_imitation_loss()))
+        diagnostics = agent.evaluate_action_batch(
+            states,
+            actions,
+            weights=np.asarray([0.25, 1.75], dtype=np.float32),
+        )
+        self.assertEqual(diagnostics["samples"], 2)
+        self.assertTrue(np.isfinite(diagnostics["loss"]))
+        self.assertTrue(np.isfinite(diagnostics["actor_loss"]))
         with self.assertRaises(ValueError):
             agent.fit_action_batch(states, actions, {"epochs": 1}, weights=np.asarray([1.0]))
         with self.assertRaises(ValueError):
@@ -583,8 +651,15 @@ class GraphStateConversionTests(unittest.TestCase):
                     "enabled": True,
                     "base_policy": "mdl2",
                     "scale": 0.1,
+                    "group_scales": {
+                        "specimen_transfer": 0.0,
+                        "reagent_transfer": 0.0,
+                        "capacity_transfer": 0.0,
+                        "replenishment": 0.1,
+                    },
                     "correction_gate": {
                         "enabled": True,
+                        "groups": ["replenishment"],
                         "threshold": 0.5,
                         "hidden_sizes": [8],
                         "lr": 0.001,
@@ -637,6 +712,123 @@ class GraphStateConversionTests(unittest.TestCase):
         output_layer.bias.data.fill_(-10.0)
         action = agent.select_action(first_state, explore=False, env=env)
         np.testing.assert_allclose(action, first_anchor, atol=1e-6)
+
+    def test_correction_gate_can_penalize_false_positives(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=290,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "correction_gate": {
+                        "enabled": True,
+                        "groups": ["reagent_transfer"],
+                        "negative_class_weight": 3.0,
+                    },
+                },
+            }
+        )
+        agent = GCNDDPGAgent(
+            env.observation_size,
+            env.action_size,
+            config,
+        )
+        losses = agent._correction_gate_bce(
+            torch.zeros(2),
+            torch.tensor([0.0, 1.0]),
+        )
+
+        self.assertAlmostEqual(
+            float(losses[0]),
+            3.0 * float(losses[1]),
+            places=5,
+        )
+
+    def test_single_group_gate_uses_deployment_group_threshold(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=291,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "correction_gate": {
+                        "enabled": True,
+                        "groups": ["reagent_transfer"],
+                        "threshold": 0.3,
+                    },
+                },
+            }
+        )
+
+        for agent_cls in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_cls(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            agent.correction_gate_group_thresholds = (0.1,)
+            threshold = agent._correction_gate_threshold_tensor(
+                torch.as_tensor([0.2], dtype=torch.float32)
+            )
+
+            self.assertAlmostEqual(float(threshold), 0.1)
+
+    def test_group_gate_can_upweight_rare_positive_labels(self) -> None:
+        env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=30)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "correction_gate": {
+                        "enabled": True,
+                        "groups": [
+                            "reagent_transfer",
+                            "capacity_transfer",
+                            "replenishment",
+                        ],
+                        "positive_class_weight_power": 0.5,
+                        "positive_class_weight_max": 4.0,
+                    },
+                },
+            }
+        )
+        labels = torch.as_tensor(
+            [
+                [1.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0],
+            ]
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            weights = agent._correction_gate_positive_weights(
+                labels.to(agent.device)
+            ).cpu().numpy()
+
+            np.testing.assert_allclose(
+                weights,
+                np.asarray([1.0, np.sqrt(3.0), 1.0]),
+                rtol=1e-6,
+            )
 
     def test_deployment_gate_does_not_block_residual_training_path(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=31)

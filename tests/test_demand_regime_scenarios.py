@@ -2,7 +2,11 @@ import unittest
 
 import numpy as np
 
-from evaluation.run_full_benchmark import load_benchmark_plan, select_scenarios
+from evaluation.run_full_benchmark import (
+    load_benchmark_plan,
+    make_scenario_env_config,
+    select_scenarios,
+)
 from src.rl.config import load_config
 from src.rl.experiment import build_env
 
@@ -99,6 +103,26 @@ class DemandRegimeScenarioTest(unittest.TestCase):
         selected = select_scenarios(plan, names)
 
         self.assertEqual(tuple(item["name"] for item in selected), names)
+
+    def test_nominal_history_overlay_preserves_online_observability(self):
+        plan = load_benchmark_plan(
+            "experiments/configs/residual_policy_benchmark.json"
+        )
+        scenario = select_scenarios(
+            plan,
+            ("patient_condition_geo_nominal_history",),
+        )[0]
+
+        config = make_scenario_env_config(plan, "mdl2", scenario)
+        env = build_env({"env": config}, seed=55)
+
+        self.assertEqual(
+            config["scenario_name"],
+            "patient_condition_geo_nominal_history",
+        )
+        self.assertTrue(config["include_demand_history_state"])
+        self.assertEqual(config["demand_history_window"], 12)
+        self.assertEqual(env.reset(seed=55).shape, (481,))
 
 
 if __name__ == "__main__":

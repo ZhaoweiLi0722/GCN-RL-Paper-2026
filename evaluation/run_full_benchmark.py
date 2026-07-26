@@ -483,6 +483,30 @@ def run_post_training_steps(
         dense_advantage_weight_cap=float(
             settings.get("dense_advantage_weight_cap", 10.0)
         ),
+        trajectory_validation_fraction=float(
+            settings.get("trajectory_validation_fraction", 0.0)
+        ),
+        trajectory_validation_min_per_scenario=int(
+            settings.get(
+                "trajectory_validation_min_per_scenario",
+                1,
+            )
+        ),
+        early_stopping_patience=int(
+            settings.get("early_stopping_patience", 0)
+        ),
+        early_stopping_check_interval=int(
+            settings.get("early_stopping_check_interval", 1)
+        ),
+        early_stopping_min_delta=float(
+            settings.get("early_stopping_min_delta", 0.0)
+        ),
+        early_stopping_gate_loss_weight=float(
+            settings.get(
+                "early_stopping_gate_loss_weight",
+                1.0,
+            )
+        ),
     )
     checkpoint_path = local_search_checkpoint_path(plan, budget_name, algorithm, scenario, seed)
     agent.save(checkpoint_path)
@@ -595,6 +619,30 @@ def run_advantage_distillation_pretrain(
         ),
         dense_advantage_weight_cap=float(
             settings.get("dense_advantage_weight_cap", 10.0)
+        ),
+        trajectory_validation_fraction=float(
+            settings.get("trajectory_validation_fraction", 0.0)
+        ),
+        trajectory_validation_min_per_scenario=int(
+            settings.get(
+                "trajectory_validation_min_per_scenario",
+                1,
+            )
+        ),
+        early_stopping_patience=int(
+            settings.get("early_stopping_patience", 0)
+        ),
+        early_stopping_check_interval=int(
+            settings.get("early_stopping_check_interval", 1)
+        ),
+        early_stopping_min_delta=float(
+            settings.get("early_stopping_min_delta", 0.0)
+        ),
+        early_stopping_gate_loss_weight=float(
+            settings.get(
+                "early_stopping_gate_loss_weight",
+                1.0,
+            )
         ),
     )
     renamed = {
@@ -1649,7 +1697,10 @@ def make_scenario_env_config(
         )
 
     reference_config = load_config(plan["learned_config_paths"][reference_algorithm])
-    scenario_env = load_config(scenario["env_config"])
+    scenario_env = _deep_update(
+        load_config(scenario["env_config"]),
+        dict(scenario.get("env_overrides", {})),
+    )
     base_env = dict(reference_config.get("env", {}))
     graph_ablation = base_env.get("graph_ablation", scenario_env.get("graph_ablation", "full_graph"))
     env = dict(base_env)

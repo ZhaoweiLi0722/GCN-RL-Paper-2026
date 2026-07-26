@@ -1810,6 +1810,15 @@
       "env_config": "experiments/configs/20_clinic_patient_condition_geo.json"
     },
     {
+      "name": "patient_condition_geo_nominal_history",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
+      "env_overrides": {
+        "scenario_name": "patient_condition_geo_nominal_history",
+        "include_demand_history_state": true,
+        "demand_history_window": 12
+      }
+    },
+    {
       "name": "patient_condition_geo_demand_drift",
       "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift.json"
     },

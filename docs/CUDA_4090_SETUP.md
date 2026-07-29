@@ -24,22 +24,20 @@ not compile custom CUDA extensions.
 
 ```powershell
 cd C:\
-git clone --branch codex/rtx4090-matched-ablation --single-branch `
-  https://github.com/ZhaoweiLi0722/GCN-RL-Paper-2026.git gcnrl
+git clone https://github.com/ZhaoweiLi0722/GCN-RL-Paper-2026.git gcnrl
 cd C:\gcnrl
+git switch --track origin/codex/rtx4090-matched-ablation
 git status --short --branch
 ```
 
 The checked-out branch must be `codex/rtx4090-matched-ablation`.
 
-## 3. Extract the teacher-cache bundle
+## 3. Prepare the teacher-cache bundle
 
-Copy `regional_4090_training_data.zip` from the Mac to the PC, then extract it
-at the repository root:
+The required synthetic teacher caches are versioned in the repository at:
 
-```powershell
-Get-FileHash C:\path\regional_4090_training_data.zip -Algorithm SHA256
-Expand-Archive C:\path\regional_4090_training_data.zip C:\gcnrl -Force
+```text
+training_data\regional_4090_training_data.zip
 ```
 
 The expected SHA-256 is:
@@ -48,8 +46,10 @@ The expected SHA-256 is:
 f7792fa97a889f463f22ebae2d2846cc475225412141a1f377b4a84d55efec17
 ```
 
-The archive restores six required `.npz` files under `results\`. These files
-are intentionally excluded from Git.
+The setup, smoke, and full-pipeline scripts call
+`scripts\prepare_regional_training_data.ps1`, which verifies the hash and
+restores six required `.npz` files under `results\`. No file transfer from the
+Mac is required.
 
 ## 4. Install and verify CUDA PyTorch
 
@@ -76,7 +76,29 @@ cuda_available=True
 device_name=NVIDIA GeForce RTX 4090
 ```
 
-## 5. Run the experiment
+## 5. Run the CUDA smoke and merge to main
+
+Run the matched one-epoch GCN/flat smoke:
+
+```powershell
+.\scripts\run_regional_cuda_smoke.ps1
+```
+
+When the smoke succeeds, fast-forward the verified branch into `main`:
+
+```powershell
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git merge --ff-only codex/rtx4090-matched-ablation
+git push origin main
+```
+
+Do not force the merge. If `--ff-only` fails, stop and reconcile the newer
+`main` before continuing. The full experiment does not need to finish before
+this merge.
+
+## 6. Run the experiment
 
 Prevent Windows from sleeping while the experiment is running, then execute:
 
@@ -108,7 +130,7 @@ Logs and outputs are written to:
 results\regional_cuda_pipeline
 ```
 
-## 6. Return results to the Mac
+## 7. Return results to the Mac
 
 After completion:
 

@@ -9,19 +9,7 @@ if (-not (Test-Path $Python)) {
     throw "Run scripts\setup_cuda_4090.ps1 first."
 }
 
-$RequiredData = @(
-    "results\decoupled_transfer_regional_teacher_h52_crn8_100traj_temporal\teacher_train.npz",
-    "results\decoupled_transfer_regional_teacher_h52_crn8_100traj_temporal\teacher_validation.npz",
-    "results\regional_specialist_temporal_gcn_ddpg_onpolicy_dagger_seed0_smoke\teacher_train_dagger.npz",
-    "results\regional_specialist_temporal_gcn_ddpg_onpolicy_dagger_seed0_smoke_validation\teacher_dagger_only.npz",
-    "results\regional_specialist_temporal_gcn_ddpg_onpolicy_dagger_iter2_seed0\teacher_train_dagger.npz",
-    "results\regional_specialist_temporal_gcn_ddpg_onpolicy_dagger_iter2_seed0_validation\teacher_dagger_only.npz"
-)
-foreach ($Path in $RequiredData) {
-    if (-not (Test-Path $Path)) {
-        throw "Missing training bundle file: $Path"
-    }
-}
+& (Join-Path $PSScriptRoot "prepare_regional_training_data.ps1")
 
 $env:PYTHONPATH = $RepoRoot
 $env:CUDA_VISIBLE_DEVICES = "0"

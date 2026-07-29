@@ -46,6 +46,8 @@ $env:PYTHONPATH = $RepoRoot
 $env:MPLCONFIGDIR = Join-Path $RepoRoot ".matplotlib-cache"
 New-Item -ItemType Directory -Force $env:MPLCONFIGDIR | Out-Null
 
+& (Join-Path $PSScriptRoot "prepare_regional_training_data.ps1")
+
 & $Python scripts\verify_cuda.py
 if ($LASTEXITCODE -ne 0) {
     throw "CUDA verification failed."

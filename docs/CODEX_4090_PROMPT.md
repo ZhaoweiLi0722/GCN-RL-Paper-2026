@@ -22,11 +22,13 @@ ablation, not a hyperparameter search.
 Operating rules:
 1. Read AGENTS.md and docs/CUDA_4090_SETUP.md before doing anything.
 2. Use C:\gcnrl as the repository path to avoid Windows path-length problems.
-3. Do not merge branches, rewrite Git history, or commit generated results.
+3. Do not merge before the matched CUDA smoke succeeds. After it succeeds,
+   use only the documented fast-forward merge. Never rewrite Git history or
+   commit generated results.
 4. Do not change algorithms, hyperparameters, seeds, training epochs,
    projection thresholds, evaluation replications, or CRNs.
-5. Do not regenerate teacher caches. I will provide
-   regional_4090_training_data.zip.
+5. Do not regenerate teacher caches. The required archive is versioned at
+   training_data\regional_4090_training_data.zip.
 6. CUDA is mandatory. Abort and diagnose the environment if PyTorch cannot
    see the RTX 4090; never silently fall back to CPU.
 7. You may fix genuine Windows portability or dependency errors, but keep
@@ -42,9 +44,9 @@ Step 1: Locate or clone the exact branch.
 If C:\gcnrl does not exist, run:
 
 cd C:\
-git clone --branch codex/rtx4090-matched-ablation --single-branch `
-  https://github.com/ZhaoweiLi0722/GCN-RL-Paper-2026.git gcnrl
+git clone https://github.com/ZhaoweiLi0722/GCN-RL-Paper-2026.git gcnrl
 cd C:\gcnrl
+git switch --track origin/codex/rtx4090-matched-ablation
 
 If it already exists, inspect its status first. Preserve unrelated user
 changes. Fetch origin and switch to codex/rtx4090-matched-ablation only when
@@ -75,26 +77,23 @@ After installation, open a fresh PowerShell session if PATH has not refreshed.
 Do not install a separate CUDA Toolkit unless a real dependency requires it;
 this project uses the CUDA runtime distributed in the PyTorch wheel.
 
-Step 3: Locate and validate the teacher-cache bundle.
+Step 3: Validate the repository teacher-cache bundle.
 
-Find regional_4090_training_data.zip in my Downloads, Desktop, attached files,
-or a path I provide. If it is unavailable, stop and ask me for the file rather
-than regenerating data.
+The archive must exist at:
+
+C:\gcnrl\training_data\regional_4090_training_data.zip
 
 Check its SHA-256:
 
-Get-FileHash <FULL_ZIP_PATH> -Algorithm SHA256
+Get-FileHash C:\gcnrl\training_data\regional_4090_training_data.zip `
+  -Algorithm SHA256
 
 Expected value:
 f7792fa97a889f463f22ebae2d2846cc475225412141a1f377b4a84d55efec17
 
-If the hash differs, stop and report it. If it matches, extract at the
-repository root:
-
-Expand-Archive <FULL_ZIP_PATH> C:\gcnrl -Force
-
-Do not create an extra regional_4090_training_data directory. Extraction must
-place six NPZ files below C:\gcnrl\results.
+If the archive is missing or the hash differs, stop and report it. Do not
+regenerate data. The setup script will verify and extract the archive without
+creating an extra directory.
 
 Step 4: Install the environment and verify real CUDA execution.
 
@@ -118,7 +117,33 @@ If setup fails, diagnose driver, Python architecture/version, virtual
 environment, and PyTorch wheel selection. Keep torch==2.8.0 with the cu126
 wheel unless there is a documented incompatibility.
 
-Step 5: Run the verified pipeline.
+Step 5: Run the matched CUDA smoke and merge to main.
+
+Run:
+
+.\scripts\run_regional_cuda_smoke.ps1
+
+This must complete one distillation epoch for both
+gcn_residual_mdl2_network_ddpg_afd and
+flat_residual_mdl2_network_ddpg_afd on seed 0, with real CUDA execution.
+Confirm that both summaries and checkpoints exist under:
+
+C:\gcnrl\results\regional_cuda_smoke
+
+Only after this smoke succeeds, fast-forward the verified code into main:
+
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git merge --ff-only codex/rtx4090-matched-ablation
+git push origin main
+
+Do not force push and do not use a non-fast-forward merge. If authentication
+is unavailable or `--ff-only` fails, stop and report the exact condition; the
+verified branch remains safe. Do not wait for the full experiment before
+merging. After a successful push, remain on main for the full run.
+
+Step 6: Run the verified pipeline.
 
 Explain the planned workload before starting:
 - stage 1: base distillation, 300 epochs;
@@ -146,7 +171,7 @@ After the first policy has made measurable progress, estimate the remaining
 runtime from observed throughput. Distinguish GPU training time from
 CPU-bound environment/evaluation time.
 
-Step 6: Validate completion.
+Step 7: Validate completion.
 
 Confirm that all six GCN/flat training-seed runs completed at each of the three
 stages and that stage 4 produced validation and holdout summaries. Check logs
@@ -166,7 +191,7 @@ Summarize, for every method and training seed:
 Also report the paired GCN-versus-flat comparison. Do not claim a graph
 advantage unless the matched multi-seed holdout supports it.
 
-Step 7: Package the outputs.
+Step 8: Package the outputs.
 
 Run:
 

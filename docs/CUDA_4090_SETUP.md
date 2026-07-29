@@ -24,12 +24,13 @@ not compile custom CUDA extensions.
 
 ```powershell
 cd C:\
-git clone https://github.com/ZhaoweiLi0722/GCN-RL-Paper-2026.git gcnrl
+git clone --branch codex/rtx4090-matched-ablation --single-branch `
+  https://github.com/ZhaoweiLi0722/GCN-RL-Paper-2026.git gcnrl
 cd C:\gcnrl
+git status --short --branch
 ```
 
-The Mac changes must be committed and pushed before cloning or pulling them on
-the PC.
+The checked-out branch must be `codex/rtx4090-matched-ablation`.
 
 ## 3. Extract the teacher-cache bundle
 
@@ -37,7 +38,14 @@ Copy `regional_4090_training_data.zip` from the Mac to the PC, then extract it
 at the repository root:
 
 ```powershell
+Get-FileHash C:\path\regional_4090_training_data.zip -Algorithm SHA256
 Expand-Archive C:\path\regional_4090_training_data.zip C:\gcnrl -Force
+```
+
+The expected SHA-256 is:
+
+```text
+f7792fa97a889f463f22ebae2d2846cc475225412141a1f377b4a84d55efec17
 ```
 
 The archive restores six required `.npz` files under `results\`. These files
@@ -112,14 +120,5 @@ Transfer `regional_cuda_results.zip` back to the Mac. The final analysis should
 pair GCN and flat rows by training seed, evaluation seed, and replication
 before computing confidence intervals.
 
-## Codex prompt for the PC
-
-```text
-Open C:\gcnrl. Read AGENTS.md and docs/CUDA_4090_SETUP.md. Do not regenerate
-teacher caches. Verify that scripts\verify_cuda.py reports the RTX 4090 and
-cuda_available=True. Confirm all six required NPZ files exist, then run
-scripts\run_regional_cuda_pipeline.ps1. Monitor the log and fix only genuine
-environment or portability errors. Do not change experiment hyperparameters,
-seeds, projection settings, or CRNs. When complete, summarize each training
-seed and create regional_cuda_results.zip.
-```
+The complete task prompt for Codex on the PC is in
+`docs/CODEX_4090_PROMPT.md`.

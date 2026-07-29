@@ -474,6 +474,7 @@ def run_local_search_distillation(
     candidate_groups: tuple[str, ...] | None = None,
     candidate_signs: tuple[float, ...] | None = None,
     demonstration_path: str | Path | None = None,
+    validation_demonstration_path: str | Path | None = None,
     populate_replay_buffer: bool = False,
     lookahead_replications: int = 1,
     lookahead_seed: int | None = None,
@@ -526,14 +527,41 @@ def run_local_search_distillation(
         demonstration_source = "collected"
         if demonstration_file is not None:
             save_local_search_demonstrations(demonstration_file, demos)
+    validation_file = (
+        Path(validation_demonstration_path)
+        if validation_demonstration_path
+        else None
+    )
+    validation_demos = None
+    if validation_file is not None:
+        if not validation_file.is_file():
+            raise FileNotFoundError(validation_file)
+        if float(trajectory_validation_fraction) > 0.0:
+            raise ValueError(
+                "Choose either validation_demonstration_path or "
+                "trajectory_validation_fraction"
+            )
+        validation_demos = load_local_search_demonstrations(
+            validation_file
+        )
     if dense_advantage_weight_scale is not None:
         demos = calibrate_dense_option_advantage_weights(
             demos,
             advantage_scale=dense_advantage_weight_scale,
             weight_cap=dense_advantage_weight_cap,
         )
+        if validation_demos is not None:
+            validation_demos = calibrate_dense_option_advantage_weights(
+                validation_demos,
+                advantage_scale=dense_advantage_weight_scale,
+                weight_cap=dense_advantage_weight_cap,
+            )
     if balance_label_weights:
         demos = balance_demonstration_label_weights(demos)
+        if validation_demos is not None:
+            validation_demos = balance_demonstration_label_weights(
+                validation_demos
+            )
     replay_transitions = 0
     if populate_replay_buffer:
         replay_transitions = populate_agent_replay_from_demonstrations(agent, demos)
@@ -602,7 +630,29 @@ def run_local_search_distillation(
         "train_trajectory_ids": "",
         "validation_trajectory_ids": "",
     }
-    if float(trajectory_validation_fraction) > 0.0:
+    if validation_demos is not None:
+        split_summary = external_validation_summary(
+            demos,
+            validation_demos,
+        )
+        final_fit = fit_action_batch_with_early_stopping(
+            agent,
+            demos,
+            validation_demos,
+            epochs=epochs,
+            batch_size=batch_size,
+            seed=seed + 1200000,
+            retain_for_regularization=bool(
+                retain_for_regularization
+            ),
+            patience=int(early_stopping_patience),
+            check_interval=int(early_stopping_check_interval),
+            min_delta=float(early_stopping_min_delta),
+            gate_loss_weight=float(
+                early_stopping_gate_loss_weight
+            ),
+        )
+    elif float(trajectory_validation_fraction) > 0.0:
         train_demos, validation_demos, split_summary = (
             split_demonstrations_by_trajectory(
                 demos,
@@ -721,6 +771,9 @@ def run_local_search_distillation(
         "local_search_demonstration_path": (
             "" if demonstration_file is None else str(demonstration_file)
         ),
+        "local_search_validation_demonstration_path": (
+            "" if validation_file is None else str(validation_file)
+        ),
         "local_search_replay_transitions": replay_transitions,
         "local_search_mean_step_improvement": float(demos["mean_step_improvement"]),
         "local_search_loss": final_fit.get("final_loss", ""),
@@ -835,6 +888,46 @@ def run_local_search_distillation(
         ),
     }
     return summary
+
+
+def external_validation_summary(
+    train_demos: dict[str, Any],
+    validation_demos: dict[str, Any],
+) -> dict[str, Any]:
+    """Describe a pre-split trajectory validation cache."""
+
+    train_ids = np.unique(
+        np.asarray(
+            train_demos.get("trajectory_ids", ()),
+            dtype=np.int64,
+        )
+    )
+    validation_ids = np.unique(
+        np.asarray(
+            validation_demos.get("trajectory_ids", ()),
+            dtype=np.int64,
+        )
+    )
+    if train_ids.size and validation_ids.size:
+        overlap = np.intersect1d(train_ids, validation_ids)
+        if overlap.size:
+            raise ValueError(
+                "Training and validation demonstration caches share "
+                f"trajectory ids: {overlap.tolist()}"
+            )
+    return {
+        "trajectory_validation_enabled": True,
+        "train_samples": int(train_demos["states"].shape[0]),
+        "validation_samples": int(
+            validation_demos["states"].shape[0]
+        ),
+        "train_trajectory_ids": "|".join(
+            str(int(value)) for value in train_ids
+        ),
+        "validation_trajectory_ids": "|".join(
+            str(int(value)) for value in validation_ids
+        ),
+    }
 
 
 _NON_ROW_DEMONSTRATION_KEYS = frozenset(
@@ -1039,10 +1132,9 @@ def fit_action_batch_with_early_stopping(
             weights=train_demos["weights"],
         )
         epochs_completed += chunk_epochs
-        validation = agent.evaluate_action_batch(
-            validation_demos["states"],
-            validation_demos["actions"],
-            weights=validation_demos["weights"],
+        validation = evaluate_supervised_action_batch(
+            agent,
+            validation_demos,
         )
         metric = float(validation["actor_loss"]) + gate_loss_weight * float(
             validation.get("correction_gate_loss", 0.0)
@@ -1054,21 +1146,28 @@ def fit_action_batch_with_early_stopping(
             best_state = snapshot_supervised_agent(agent)
         else:
             checks_without_improvement += 1
+        print(
+            "supervised_early_stopping "
+            f"epochs={epochs_completed}/{total_epochs} "
+            f"validation_metric={metric:.6f} "
+            f"best_metric={best_metric:.6f} "
+            f"best_epoch={best_epoch} "
+            f"stale_checks={checks_without_improvement}",
+            flush=True,
+        )
         if (
             patience > 0
             and checks_without_improvement >= patience
         ):
             break
     restore_supervised_agent(agent, best_state)
-    train_metrics = agent.evaluate_action_batch(
-        train_demos["states"],
-        train_demos["actions"],
-        weights=train_demos["weights"],
+    train_metrics = evaluate_supervised_action_batch(
+        agent,
+        train_demos,
     )
-    validation_metrics = agent.evaluate_action_batch(
-        validation_demos["states"],
-        validation_demos["actions"],
-        weights=validation_demos["weights"],
+    validation_metrics = evaluate_supervised_action_batch(
+        agent,
+        validation_demos,
     )
     final_fit = dict(last_fit)
     final_fit.update(train_metrics)
@@ -1097,17 +1196,49 @@ def fit_action_batch_with_early_stopping(
     return final_fit
 
 
+def evaluate_supervised_action_batch(
+    agent,
+    demonstrations: dict[str, Any],
+) -> dict[str, Any]:
+    kwargs: dict[str, Any] = {
+        "weights": demonstrations["weights"],
+    }
+    if (
+        bool(getattr(agent, "edge_supervision_enabled", False))
+        or bool(
+            getattr(
+                agent,
+                "requires_demonstrations_for_action_evaluation",
+                False,
+            )
+        )
+    ):
+        kwargs["demonstrations"] = demonstrations
+    return agent.evaluate_action_batch(
+        demonstrations["states"],
+        demonstrations["actions"],
+        **kwargs,
+    )
+
+
 def snapshot_supervised_agent(agent) -> dict[str, Any]:
     """Copy actor/gate modules and optimizers used by supervised fitting."""
 
     state: dict[str, Any] = {}
-    for name in ("actor", "actor_target", "correction_gate"):
+    for name in (
+        "actor",
+        "actor_target",
+        "correction_gate",
+        "q_network",
+        "target_q_network",
+    ):
         module = getattr(agent, name, None)
         if module is not None:
             state[name] = copy.deepcopy(module.state_dict())
     for name in (
         "actor_optimizer",
         "correction_gate_optimizer",
+        "optimizer",
     ):
         optimizer = getattr(agent, name, None)
         if optimizer is not None:
@@ -1121,13 +1252,20 @@ def restore_supervised_agent(
 ) -> None:
     """Restore a supervised actor/gate snapshot selected on validation."""
 
-    for name in ("actor", "actor_target", "correction_gate"):
+    for name in (
+        "actor",
+        "actor_target",
+        "correction_gate",
+        "q_network",
+        "target_q_network",
+    ):
         module = getattr(agent, name, None)
         if module is not None and name in state:
             module.load_state_dict(state[name])
     for name in (
         "actor_optimizer",
         "correction_gate_optimizer",
+        "optimizer",
     ):
         optimizer = getattr(agent, name, None)
         if optimizer is not None and name in state:
@@ -1421,6 +1559,10 @@ def save_local_search_demonstrations(path: str | Path, demos: dict[str, Any]) ->
         ("option_groups", "U32"),
         ("option_epsilons", np.float32),
         ("option_signs", np.float32),
+        ("edge_groups", "U32"),
+        ("edge_sources", np.int64),
+        ("edge_targets", np.int64),
+        ("edge_flows", np.float32),
     ):
         if key in demos:
             payload[key] = np.asarray(demos[key], dtype=dtype)
@@ -1501,6 +1643,56 @@ def load_local_search_demonstrations(path: str | Path) -> dict[str, Any]:
                     "option_groups": option_groups,
                     "option_epsilons": option_epsilons,
                     "option_signs": option_signs,
+                }
+            )
+        edge_keys = (
+            "edge_groups",
+            "edge_sources",
+            "edge_targets",
+            "edge_flows",
+        )
+        present_edge_keys = tuple(
+            key for key in edge_keys if key in payload.files
+        )
+        if present_edge_keys and len(present_edge_keys) != len(edge_keys):
+            raise ValueError(
+                "Cached edge supervision requires groups, endpoints, and flows"
+            )
+        if present_edge_keys:
+            edge_groups = np.asarray(payload["edge_groups"], dtype="U32")
+            edge_sources = np.asarray(payload["edge_sources"], dtype=np.int64)
+            edge_targets = np.asarray(payload["edge_targets"], dtype=np.int64)
+            edge_flows = np.asarray(payload["edge_flows"], dtype=np.float32)
+            expected_rows = states.shape[0]
+            if (
+                edge_groups.shape != (expected_rows,)
+                or edge_sources.ndim != 2
+                or edge_sources.shape[0] != expected_rows
+                or edge_sources.shape[1] < 1
+                or edge_targets.shape != edge_sources.shape
+                or edge_flows.shape != edge_sources.shape
+                or not np.all(np.isfinite(edge_flows))
+                or np.any(edge_flows < 0.0)
+            ):
+                raise ValueError(
+                    "Cached edge supervision arrays have inconsistent shapes or values"
+                )
+            valid_sources = edge_sources >= 0
+            valid_targets = edge_targets >= 0
+            if (
+                not np.array_equal(valid_sources, valid_targets)
+                or np.any(edge_sources[valid_sources] == edge_targets[valid_targets])
+                or np.any(edge_flows[~valid_sources] != 0.0)
+            ):
+                raise ValueError(
+                    "Cached edge supervision contains invalid padded endpoints"
+                )
+            result.update(
+                {
+                    "edge_groups": edge_groups,
+                    "edge_sources": edge_sources,
+                    "edge_targets": edge_targets,
+                    "edge_flows": edge_flows,
                 }
             )
         transition_keys = (

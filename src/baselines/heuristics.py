@@ -13,6 +13,7 @@ from src.env.capacity_planning import CapacityPlanningEnv
 from src.graph.edges import Edge, complete_undirected_edges, ring_edges
 from src.graph.geography import geographic_knn_edges, normalize_coordinates
 from src.rl.action_projection import project_action
+from src.rl.preprocessing import facility_state_width
 
 
 @dataclass(frozen=True)
@@ -439,14 +440,7 @@ def facility_net_action_from_state(
         env_config.get("include_demand_history_state", False)
     )
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-    features_per_facility = (
-        3
-        + lead_time
-        + int(include_supplier)
-        + int(include_forecast)
-        + 3 * int(include_transfer_pipeline)
-        + 3 * int(include_demand_history)
-    )
+    features_per_facility = facility_state_width(env_config)
 
     base_width = n * features_per_facility
     state_vector = np.asarray(state, dtype=np.float32)
@@ -741,14 +735,7 @@ def patient_priority_from_state(
         env_config.get("include_demand_history_state", False)
     )
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
-    features_per_facility = (
-        3
-        + lead_time
-        + int(include_supplier)
-        + int(include_forecast)
-        + 3 * int(include_transfer_pipeline)
-        + 3 * int(include_demand_history)
-    )
+    features_per_facility = facility_state_width(env_config)
     summary_edges = tuple(env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
     summary_width = 6 + len(summary_edges) + 1
     base_width = n * features_per_facility

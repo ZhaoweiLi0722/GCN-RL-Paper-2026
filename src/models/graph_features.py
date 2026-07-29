@@ -23,7 +23,11 @@ from src.graph.geography import (
     normalize_coordinates,
 )
 from src.rl.networks import require_torch, torch
-from src.rl.preprocessing import graph_node_feature_scale
+from src.rl.preprocessing import (
+    demand_sequence_length,
+    facility_state_width,
+    graph_node_feature_scale,
+)
 
 
 @dataclass(frozen=True)
@@ -56,6 +60,9 @@ class GraphStateSpec:
     base_action_policy: str = ""
     base_action_policy_config: dict[str, Any] | None = None
     env_config: dict[str, Any] | None = None
+    include_demand_sequence_state: bool = False
+    demand_sequence_length: int = 0
+    demand_sequence_feature_start: int = -1
 
 
 def _patient_summary_width(env_config: dict[str, Any]) -> int:
@@ -87,21 +94,14 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
     include_demand_history = bool(
         env_config.get("include_demand_history_state", False)
     )
+    sequence_length = demand_sequence_length(env_config)
     include_hub = bool(env_config.get("include_central_capacity_hub", False))
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     include_adaptive_demand_features = bool(
         config.get("include_adaptive_demand_features", False)
     )
     include_time_state = bool(env_config.get("include_time_state", False))
-    features_per_facility = (
-        3
-        + production_lead_time
-        + int(include_supplier_state)
-        + int(include_forecast)
-        + 3 * int(include_demand_history)
-    )
-    if include_transfer_pipeline:
-        features_per_facility += 3
+    features_per_facility = facility_state_width(env_config)
     summary_width = _patient_summary_width(env_config)
     expected_state_dim = (
         num_facilities * (features_per_facility + summary_width)
@@ -221,11 +221,21 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         + int(include_forecast)
         + 3 * int(include_transfer_pipeline)
         + 3 * int(include_demand_history)
+        + 3 * sequence_length
         + 3 * int(include_adaptive_demand_features)
         + int(include_time_state)
         + base_action_width
         + int(include_hub)
         + summary_width
+    )
+    demand_sequence_feature_start = (
+        5
+        + int(include_supplier_state)
+        + int(include_forecast)
+        + 3 * int(include_transfer_pipeline)
+        + 3 * int(include_demand_history)
+        if sequence_length
+        else -1
     )
     normalize_node_features = bool(config.get("normalize_observations", False))
     node_feature_scale = graph_node_feature_scale(config, node_feature_dim)
@@ -256,6 +266,9 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         base_action_policy=str(residual_config.get("base_policy", "")),
         base_action_policy_config=dict(residual_config.get("base_policy_config", {})),
         env_config=env_config,
+        include_demand_sequence_state=bool(sequence_length),
+        demand_sequence_length=sequence_length,
+        demand_sequence_feature_start=demand_sequence_feature_start,
     )
 
 
@@ -323,6 +336,35 @@ def flat_state_to_node_features(state, graph_spec: GraphStateSpec):
         )
         feature_parts.append(
             facility_state[:, :, history_start : history_start + 3]
+        )
+    if bool(
+        getattr(
+            graph_spec,
+            "include_demand_sequence_state",
+            False,
+        )
+    ):
+        sequence_start = (
+            3
+            + lead_time
+            + int(graph_spec.include_supplier_state)
+            + int(graph_spec.include_demand_forecast_state)
+            + 3 * int(graph_spec.include_transfer_pipeline_state)
+            + 3 * int(graph_spec.include_demand_history_state)
+        )
+        sequence_width = 3 * int(
+            getattr(
+                graph_spec,
+                "demand_sequence_length",
+                0,
+            )
+        )
+        feature_parts.append(
+            facility_state[
+                :,
+                :,
+                sequence_start : sequence_start + sequence_width,
+            ]
         )
     if graph_spec.include_adaptive_demand_features:
         feature_parts.append(

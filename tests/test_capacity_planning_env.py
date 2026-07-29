@@ -104,6 +104,57 @@ class CapacityPlanningEnvTest(unittest.TestCase):
         self.assertIn("supplier_available", info)
         self.assertEqual(info["supplier_available"].shape, (20,))
 
+    def test_causal_demand_sequence_state_is_left_padded_and_masked(self):
+        config = replace(
+            make_20_clinic_config(
+                episode_horizon=3,
+                supplier_disruption_rate=0.0,
+            ),
+            include_demand_forecast_state=True,
+            demand_forecast_error=0.0,
+            include_demand_sequence_state=True,
+            demand_sequence_length=3,
+        )
+        env = CapacityPlanningEnv(config, seed=17)
+
+        initial_demand = env.demand.copy()
+        demand_sequence, error_sequence, mask = (
+            env._demand_sequence_features()
+        )
+        np.testing.assert_allclose(
+            demand_sequence[:, -1],
+            initial_demand,
+        )
+        np.testing.assert_allclose(demand_sequence[:, :2], 0.0)
+        np.testing.assert_allclose(error_sequence[:, :2], 0.0)
+        np.testing.assert_allclose(
+            error_sequence[:, -1],
+            initial_demand
+            - env.demand_forecast
+            / float(env.config.demand_forecast_horizon),
+        )
+        np.testing.assert_allclose(mask[:, :2], 0.0)
+        np.testing.assert_allclose(mask[:, -1], 1.0)
+
+        env.step(env.noop_action())
+        next_sequence, _next_error, next_mask = (
+            env._demand_sequence_features()
+        )
+        np.testing.assert_allclose(
+            next_sequence[:, -2],
+            initial_demand,
+        )
+        np.testing.assert_allclose(next_mask[:, 0], 0.0)
+        np.testing.assert_allclose(next_mask[:, 1:], 1.0)
+        self.assertEqual(
+            env.observation_size,
+            20 * (8 + 9),
+        )
+        self.assertEqual(
+            env.graph_observation()["node_features"].shape,
+            (21, 8 + 9),
+        )
+
     def test_supplier_disruption_blocks_replenishment(self):
         config = make_20_clinic_config(episode_horizon=1, supplier_disruption_rate=1.0)
         env = CapacityPlanningEnv(config, seed=4)

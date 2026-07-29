@@ -123,6 +123,10 @@ def train_off_policy_agent(
         metrics = EpisodeMetrics()
         episode_states: list[np.ndarray] = []
         episode_actions: list[np.ndarray] = []
+        update_calls = 0
+        update_metric_totals: dict[str, float] = {}
+        update_metric_counts: dict[str, int] = {}
+        update_metric_final: dict[str, float] = {}
 
         for _step in range(max_steps):
             action = agent.select_action(state, explore=True, env=env)
@@ -159,7 +163,23 @@ def train_off_policy_agent(
             global_step += 1
             if global_step % update_frequency == 0:
                 for _update in range(updates_per_update):
-                    agent.update()
+                    update_calls += 1
+                    raw_update_metrics = dict(agent.update() or {})
+                    for key, value in raw_update_metrics.items():
+                        numeric = float(value)
+                        if not np.isfinite(numeric):
+                            raise RuntimeError(
+                                f"Online RL metric {key} is not finite "
+                                f"in episode {episode + 1}"
+                            )
+                        update_metric_totals[key] = (
+                            update_metric_totals.get(key, 0.0)
+                            + numeric
+                        )
+                        update_metric_counts[key] = (
+                            update_metric_counts.get(key, 0) + 1
+                        )
+                        update_metric_final[key] = numeric
             metrics.update(info)
             total_reward += float(reward)
             state = next_state
@@ -183,8 +203,7 @@ def train_off_policy_agent(
             elite_best_cost = float(elite_summary.get("elite_best_cost", metrics.total_cost))
             elite_update_count += 1
 
-        rows.append(
-            {
+        row = {
                 "algorithm": algorithm,
                 "seed": seed,
                 "scenario": getattr(env, "scenario_name", "default"),
@@ -265,8 +284,19 @@ def train_off_policy_agent(
                     "",
                 ),
                 "runtime_seconds": time.perf_counter() - start_time,
+                "online_rl_update_calls": update_calls,
+                "online_rl_updates": max(
+                    update_metric_counts.values(),
+                    default=0,
+                ),
             }
-        )
+        for key in sorted(update_metric_totals):
+            row[f"online_rl_{key}_mean"] = (
+                update_metric_totals[key]
+                / update_metric_counts[key]
+            )
+            row[f"online_rl_{key}_final"] = update_metric_final[key]
+        rows.append(row)
 
         if (episode + 1) % checkpoint_interval == 0:
             agent.save(checkpoint_dir / f"{algorithm}_seed{seed}_episode{episode + 1}.pt")
@@ -477,6 +507,12 @@ def write_rows(rows: list[dict[str, Any]], path: str | Path) -> None:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = list(rows[0].keys())
+    known_fields = set(fieldnames)
+    for row in rows[1:]:
+        for key in row:
+            if key not in known_fields:
+                known_fields.add(key)
+                fieldnames.append(key)
     with output_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()

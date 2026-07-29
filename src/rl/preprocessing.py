@@ -10,6 +10,39 @@ import numpy as np
 from src.rl.networks import torch
 
 
+def demand_sequence_length(env_config: dict[str, Any]) -> int:
+    """Return the enabled causal demand-sequence length."""
+
+    if not bool(env_config.get("include_demand_sequence_state", False)):
+        return 0
+    length = int(
+        env_config.get(
+            "demand_sequence_length",
+            env_config.get("demand_history_window", 4),
+        )
+    )
+    if length < 1:
+        raise ValueError("demand_sequence_length must be positive")
+    return length
+
+
+def facility_state_width(env_config: dict[str, Any]) -> int:
+    """Return the flat base-observation width for one facility."""
+
+    lead_time = int(env_config.get("production_lead_time", 3))
+    width = (
+        3
+        + lead_time
+        + int(bool(env_config.get("include_supplier_state", False)))
+        + int(bool(env_config.get("include_demand_forecast_state", False)))
+        + 3
+        * int(bool(env_config.get("include_transfer_pipeline_state", False)))
+        + 3
+        * int(bool(env_config.get("include_demand_history_state", False)))
+    )
+    return width + 3 * demand_sequence_length(env_config)
+
+
 @dataclass(frozen=True)
 class FixedObservationScaler:
     """Deterministic observation scaling from environment capacity metadata."""
@@ -37,6 +70,7 @@ class FixedObservationScaler:
         include_demand_history = bool(
             env_config.get("include_demand_history_state", False)
         )
+        sequence_length = demand_sequence_length(env_config)
         include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
         include_time_state = bool(env_config.get("include_time_state", False))
         patient_summary_width = _patient_summary_width(env_config)
@@ -46,6 +80,7 @@ class FixedObservationScaler:
             + int(include_supplier)
             + int(include_forecast)
             + 3 * int(include_demand_history)
+            + 3 * sequence_length
         )
         if include_transfer_pipeline:
             features_per_facility += 3
@@ -89,6 +124,13 @@ class FixedObservationScaler:
             if include_demand_history:
                 demand_scale = max(float(demand_rates[facility]), 1.0)
                 row.extend([demand_scale, demand_scale, demand_scale])
+            if sequence_length:
+                demand_scale = max(float(demand_rates[facility]), 1.0)
+                row.extend(
+                    [demand_scale] * sequence_length
+                    + [demand_scale] * sequence_length
+                    + [1.0] * sequence_length
+                )
             if patient_summary_width:
                 patient_rows.append(
                     np.asarray(
@@ -140,6 +182,7 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
     include_demand_history = bool(
         env_config.get("include_demand_history_state", False)
     )
+    sequence_length = demand_sequence_length(env_config)
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     include_adaptive_demand_features = bool(
         config.get("include_adaptive_demand_features", False)
@@ -173,6 +216,13 @@ def graph_node_feature_scale(config: dict[str, Any], node_feature_dim: int) -> t
     if include_demand_history:
         demand_scale = max(float(np.mean(demand_rates)), 1.0)
         scale.extend([demand_scale, demand_scale, demand_scale])
+    if sequence_length:
+        demand_scale = max(float(np.mean(demand_rates)), 1.0)
+        scale.extend(
+            [demand_scale] * sequence_length
+            + [demand_scale] * sequence_length
+            + [1.0] * sequence_length
+        )
     if include_adaptive_demand_features:
         scale.extend([1.0, 1.0, 1.0])
     if include_time_state:
@@ -232,6 +282,7 @@ def _infer_num_facilities(state_dim: int, env_config: dict[str, Any]) -> int:
     include_demand_history = bool(
         env_config.get("include_demand_history_state", False)
     )
+    sequence_length = demand_sequence_length(env_config)
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     features_per_facility = (
         3
@@ -239,6 +290,7 @@ def _infer_num_facilities(state_dim: int, env_config: dict[str, Any]) -> int:
         + int(include_supplier)
         + int(include_forecast)
         + 3 * int(include_demand_history)
+        + 3 * sequence_length
     )
     if include_transfer_pipeline:
         features_per_facility += 3

@@ -9,11 +9,14 @@ robustness experiments (Phase 9) without leaking randomization into evaluation.
 from __future__ import annotations
 
 import unittest
+import csv
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
 from src.env.capacity_planning import CapacityPlanningConfig, CapacityPlanningEnv
-from src.rl.experiment import train_off_policy_agent
+from src.rl.experiment import train_off_policy_agent, write_rows
 
 
 def _base_config() -> CapacityPlanningConfig:
@@ -48,6 +51,19 @@ class _NoopAgent:
 
     def save(self, path):
         return None
+
+
+class _MetricAgent(_NoopAgent):
+    def __init__(self, env: CapacityPlanningEnv):
+        super().__init__(env)
+        self.update_count = 0
+
+    def update(self):
+        self.update_count += 1
+        return {
+            "critic_loss": float(self.update_count),
+            "actor_updated": float(self.update_count % 2 == 0),
+        }
 
 
 class TrainRandomizationTest(unittest.TestCase):
@@ -166,6 +182,46 @@ class TrainRandomizationTest(unittest.TestCase):
         self.assertEqual(rows[0]["train_randomization_disruption_range"], "0|0.5")
         self.assertEqual(rows[0]["train_randomization_forecast_error_range"], "0|0.5")
         self.assertEqual(rows[0]["train_randomization_demand_rate_multiplier_range"], "0.8|1.5")
+
+    def test_training_loop_records_online_update_metrics(self):
+        env = CapacityPlanningEnv(_base_config(), seed=0)
+        rows = train_off_policy_agent(
+            _MetricAgent(env),
+            env,
+            {
+                "algorithm": "metric",
+                "seed": 4100,
+                "num_episodes": 2,
+                "max_steps_per_episode": 2,
+                "checkpoint_interval": 999,
+            },
+        )
+
+        self.assertEqual(rows[0]["online_rl_update_calls"], 2)
+        self.assertEqual(rows[0]["online_rl_updates"], 2)
+        self.assertAlmostEqual(rows[0]["online_rl_critic_loss_mean"], 1.5)
+        self.assertAlmostEqual(rows[0]["online_rl_critic_loss_final"], 2.0)
+        self.assertAlmostEqual(rows[1]["online_rl_critic_loss_mean"], 3.5)
+        self.assertAlmostEqual(rows[1]["online_rl_actor_updated_mean"], 0.5)
+
+    def test_write_rows_unions_late_training_metric_columns(self):
+        rows = [
+            {"episode": 0, "online_rl_updates": 0},
+            {
+                "episode": 1,
+                "online_rl_updates": 1,
+                "online_rl_critic_loss_mean": 0.25,
+            },
+        ]
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "training.csv"
+            write_rows(rows, path)
+            with path.open(newline="") as handle:
+                saved = list(csv.DictReader(handle))
+
+        self.assertIn("online_rl_critic_loss_mean", saved[0])
+        self.assertEqual(saved[0]["online_rl_critic_loss_mean"], "")
+        self.assertEqual(saved[1]["online_rl_critic_loss_mean"], "0.25")
 
     def test_reproducible_given_episode_seed(self):
         env = CapacityPlanningEnv(_base_config(), seed=0)

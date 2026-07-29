@@ -8,6 +8,12 @@ from typing import Any
 import numpy as np
 
 from src.baselines.heuristics import facility_net_action_from_state, heuristic_settings_for_policy
+from src.models.graph_features import build_graph_spec
+from src.models.temporal import (
+    TemporalFlatActor,
+    TemporalFlatCorrectionGate,
+    TemporalFlatCritic,
+)
 from src.rl.action_projection import project_action, project_tensor_to_pattern_basis
 from src.rl.networks import (
     MLPActor,
@@ -18,8 +24,14 @@ from src.rl.networks import (
     torch,
 )
 from src.rl.noise import OUNoise
-from src.rl.preprocessing import FixedObservationScaler, reward_scale_from_config
+from src.rl.preprocessing import (
+    FixedObservationScaler,
+    facility_state_width,
+    reward_scale_from_config,
+)
 from src.rl.replay_buffer import ReplayBuffer
+from src.rl.residual_endpoint_projection import ResidualEndpointProjection
+from src.rl.residual_temporal_guard import ResidualTemporalGuard
 
 
 class FlatDDPGAgent:
@@ -60,6 +72,11 @@ class FlatDDPGAgent:
         self.residual_scale_vector = self._make_residual_scale_vector(residual_config)
         self.residual_center_slices = self._make_residual_center_slices(residual_config)
         self.residual_positive_slices = self._make_residual_positive_slices(residual_config)
+        self.residual_endpoint_projection = ResidualEndpointProjection(
+            num_facilities=int(self.env_config.get("num_facilities", 0)),
+            action_dim=self.action_dim,
+            settings=residual_config.get("endpoint_projection", {}),
+        )
         self.residual_pressure_projection_groups = (
             self._make_pressure_projection_groups(residual_config)
         )
@@ -72,9 +89,81 @@ class FlatDDPGAgent:
         self.residual_pressure_projection_subtract_pipeline = bool(
             pressure_projection_config.get("subtract_pipeline", True)
         )
+        self.residual_pressure_projection_coefficient_mode = str(
+            pressure_projection_config.get(
+                "coefficient_mode",
+                "least_squares",
+            )
+        )
+        if self.residual_pressure_projection_coefficient_mode not in (
+            "least_squares",
+            "mean",
+        ):
+            raise ValueError(
+                "residual_action.pressure_projection.coefficient_mode must be "
+                "'least_squares' or 'mean'"
+            )
+        self.residual_pressure_projection_positive_coefficient = bool(
+            pressure_projection_config.get(
+                "positive_coefficient",
+                False,
+            )
+        )
+        if (
+            self.residual_pressure_projection_coefficient_mode == "mean"
+            and self.residual_replenishment_uniform_basis
+        ):
+            raise ValueError(
+                "mean pressure coefficients cannot be combined with "
+                "replenishment_uniform_basis"
+            )
         self.residual_state_gate_config = dict(residual_config.get("state_gate", {}))
         self.residual_state_gate_groups = self._make_residual_state_gate_groups(residual_config)
         self.residual_l2_weight = float(residual_config.get("l2_weight", 0.0))
+        sparse_target_config = dict(
+            residual_config.get("supervised_sparse_target", {})
+        )
+        self.supervised_sparse_target_enabled = bool(
+            sparse_target_config.get("enabled", False)
+        )
+        self.supervised_sparse_target_threshold = max(
+            float(sparse_target_config.get("change_threshold", 1e-6)),
+            0.0,
+        )
+        self.supervised_sparse_target_changed_weight = max(
+            float(sparse_target_config.get("changed_weight", 1.0)),
+            0.0,
+        )
+        self.supervised_sparse_target_zero_weight = max(
+            float(sparse_target_config.get("zero_weight", 0.05)),
+            0.0,
+        )
+        self.supervised_support_ranking_weight = max(
+            float(
+                sparse_target_config.get(
+                    "support_ranking_weight",
+                    0.0,
+                )
+            ),
+            0.0,
+        )
+        self.supervised_support_ranking_margin = max(
+            float(
+                sparse_target_config.get(
+                    "support_ranking_margin",
+                    0.02,
+                )
+            ),
+            0.0,
+        )
+        if (
+            self.supervised_sparse_target_enabled
+            and self.supervised_sparse_target_changed_weight <= 0.0
+            and self.supervised_sparse_target_zero_weight <= 0.0
+        ):
+            raise ValueError(
+                "supervised_sparse_target requires a positive dimension weight"
+            )
         correction_gate_config = dict(residual_config.get("correction_gate", {}))
         self.correction_gate_enabled = bool(
             self.residual_action_enabled
@@ -195,6 +284,27 @@ class FlatDDPGAgent:
             self.residual_base_policy,
             dict(residual_config.get("base_policy_config", {})),
         )
+        temporal_guard_config = dict(
+            residual_config.get("temporal_guard", {})
+        )
+        if (
+            temporal_guard_config.get("enabled", False)
+            and not self.residual_action_enabled
+        ):
+            raise ValueError(
+                "residual_action.temporal_guard requires residual_action.enabled"
+            )
+        self.residual_temporal_guard = ResidualTemporalGuard(
+            num_facilities=int(
+                self.env_config.get("num_facilities", 0)
+            ),
+            action_dim=self.action_dim,
+            env_config=self.env_config,
+            settings=temporal_guard_config,
+        )
+        self.last_residual_guard_info = dict(
+            self.residual_temporal_guard.last_info
+        )
         if self.include_base_action_features and not self.residual_action_enabled:
             raise ValueError(
                 "residual_action.include_base_action_features requires residual_action.enabled"
@@ -246,13 +356,93 @@ class FlatDDPGAgent:
             patient_proxy_config.get("positive_only", True)
         )
         hidden_sizes = tuple(config.get("hidden_sizes", [256, 256]))
+        include_global_context = bool(
+            config.get("include_global_context", True)
+        )
+        actor_readout_mode = str(
+            config.get("actor_readout_mode", "global_flat")
+        )
         self.device = resolve_torch_device(config.get("device"))
+        temporal_encoder_config = dict(
+            config.get("temporal_demand_encoder", {})
+        )
+        self.temporal_demand_encoder_enabled = bool(
+            temporal_encoder_config.get("enabled", False)
+        )
+        self.temporal_demand_hidden_size = (
+            int(temporal_encoder_config.get("hidden_size", 16))
+            if self.temporal_demand_encoder_enabled
+            else 0
+        )
+        self.temporal_graph_spec = (
+            build_graph_spec(config, state_dim)
+            if self.temporal_demand_encoder_enabled
+            else None
+        )
+        if (
+            self.temporal_demand_encoder_enabled
+            and not self.temporal_graph_spec.include_demand_sequence_state
+        ):
+            raise ValueError(
+                "temporal_demand_encoder requires "
+                "env.include_demand_sequence_state=true"
+            )
+        if (
+            self.temporal_demand_encoder_enabled
+            and actor_readout_mode == "pressure_intensity"
+            and self.residual_pressure_projection_coefficient_mode != "mean"
+        ):
+            raise ValueError(
+                "pressure_intensity actor readout requires "
+                "pressure_projection.coefficient_mode='mean'"
+            )
+        if (
+            self.temporal_demand_encoder_enabled
+            and actor_readout_mode == "pressure_intensity"
+            and self.residual_center_slices
+        ):
+            raise ValueError(
+                "pressure_intensity actor readout requires "
+                "residual_action.center_groups=[]"
+            )
 
         actor_input_dim = state_dim + action_dim if self.include_base_action_features else state_dim
-        self.actor = MLPActor(actor_input_dim, action_dim, hidden_sizes).to(self.device)
-        self.actor_target = MLPActor(actor_input_dim, action_dim, hidden_sizes).to(self.device)
-        self.critic = MLPCritic(state_dim, action_dim, hidden_sizes).to(self.device)
-        self.critic_target = MLPCritic(state_dim, action_dim, hidden_sizes).to(self.device)
+        if self.temporal_demand_encoder_enabled:
+            self.actor = TemporalFlatActor(
+                self.temporal_graph_spec,
+                action_dim,
+                self.temporal_demand_hidden_size,
+                hidden_sizes,
+                include_global_context=include_global_context,
+                readout_mode=actor_readout_mode,
+            ).to(self.device)
+            self.actor_target = TemporalFlatActor(
+                self.temporal_graph_spec,
+                action_dim,
+                self.temporal_demand_hidden_size,
+                hidden_sizes,
+                include_global_context=include_global_context,
+                readout_mode=actor_readout_mode,
+            ).to(self.device)
+            self.critic = TemporalFlatCritic(
+                self.temporal_graph_spec,
+                action_dim,
+                self.temporal_demand_hidden_size,
+                hidden_sizes,
+                include_global_context=include_global_context,
+            ).to(self.device)
+            self.critic_target = TemporalFlatCritic(
+                self.temporal_graph_spec,
+                action_dim,
+                self.temporal_demand_hidden_size,
+                hidden_sizes,
+                include_global_context=include_global_context,
+            ).to(self.device)
+        else:
+            self.actor = MLPActor(actor_input_dim, action_dim, hidden_sizes).to(self.device)
+            self.actor_target = MLPActor(actor_input_dim, action_dim, hidden_sizes).to(self.device)
+            self.critic = MLPCritic(state_dim, action_dim, hidden_sizes).to(self.device)
+            self.critic_target = MLPCritic(state_dim, action_dim, hidden_sizes).to(self.device)
         if self.residual_action_enabled and bool(residual_config.get("zero_init_actor", False)):
             self._zero_initialize_actor_output(self.actor)
         self.actor_target.load_state_dict(self.actor.state_dict())
@@ -261,11 +451,25 @@ class FlatDDPGAgent:
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=float(config.get("actor_lr", 1e-4)))
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=float(config.get("critic_lr", 1e-3)))
         if self.correction_gate_enabled:
-            self.correction_gate = MLPCorrectionGate(
-                actor_input_dim,
-                tuple(correction_gate_config.get("hidden_sizes", (64, 32))),
-                output_dim=self.correction_gate_output_dim,
-            ).to(self.device)
+            if self.temporal_demand_encoder_enabled:
+                self.correction_gate = TemporalFlatCorrectionGate(
+                    self.temporal_graph_spec,
+                    self.temporal_demand_hidden_size,
+                    tuple(
+                        correction_gate_config.get(
+                            "hidden_sizes",
+                            (64, 32),
+                        )
+                    ),
+                    self.correction_gate_output_dim,
+                    include_global_context=include_global_context,
+                ).to(self.device)
+            else:
+                self.correction_gate = MLPCorrectionGate(
+                    actor_input_dim,
+                    tuple(correction_gate_config.get("hidden_sizes", (64, 32))),
+                    output_dim=self.correction_gate_output_dim,
+                ).to(self.device)
             self.correction_gate_optimizer = torch.optim.Adam(
                 self.correction_gate.parameters(),
                 lr=float(correction_gate_config.get("lr", 3e-4)),
@@ -289,9 +493,13 @@ class FlatDDPGAgent:
 
     def reset(self) -> None:
         self.noise.reset()
+        self.residual_temporal_guard.reset()
         self.last_residual_action = np.zeros(
             self.action_dim,
             dtype=np.float32,
+        )
+        self.last_residual_guard_info = dict(
+            self.residual_temporal_guard.last_info
         )
 
     def select_action(self, state: np.ndarray, explore: bool = True, env=None) -> np.ndarray:
@@ -334,8 +542,16 @@ class FlatDDPGAgent:
         rewards = torch.as_tensor(batch.rewards, dtype=torch.float32, device=self.device)
         raw_next_states = torch.as_tensor(batch.next_states, dtype=torch.float32, device=self.device)
         dones = torch.as_tensor(batch.dones, dtype=torch.float32, device=self.device)
-        states = self.observation_scaler.normalize_tensor(raw_states)
-        next_states = self.observation_scaler.normalize_tensor(raw_next_states)
+        states = (
+            raw_states
+            if self.temporal_demand_encoder_enabled
+            else self.observation_scaler.normalize_tensor(raw_states)
+        )
+        next_states = (
+            raw_next_states
+            if self.temporal_demand_encoder_enabled
+            else self.observation_scaler.normalize_tensor(raw_next_states)
+        )
         actor_inputs = self._actor_input_tensor(raw_states, normalized_states=states)
         next_actor_inputs = self._actor_input_tensor(
             raw_next_states,
@@ -420,6 +636,8 @@ class FlatDDPGAgent:
         return metrics
 
     def _actor_input_tensor(self, raw_states, *, normalized_states=None):
+        if self.temporal_demand_encoder_enabled:
+            return raw_states
         normalized_states = (
             self.observation_scaler.normalize_tensor(raw_states)
             if normalized_states is None
@@ -676,6 +894,12 @@ class FlatDDPGAgent:
                     action_tensor,
                     state_tensor,
                 ).detach()
+                residual_mask_tensor = (
+                    self._supervised_residual_dimension_mask(
+                        residual_mask_tensor,
+                        residual_target_tensor,
+                    ).detach()
+                )
                 if (
                     self.correction_gate_enabled
                     and self.correction_gate_mode == "classification"
@@ -717,7 +941,7 @@ class FlatDDPGAgent:
                         if residual_mask_tensor.shape[0] == 1
                         else residual_mask_tensor[indices]
                     )
-                    loss = self._weighted_action_mse(
+                    loss = self._supervised_residual_loss(
                         predicted_residuals,
                         residual_target_tensor[indices],
                         batch_weights,
@@ -908,12 +1132,16 @@ class FlatDDPGAgent:
                         action_tensor,
                         state_tensor,
                     )
+                    residual_mask = self._supervised_residual_dimension_mask(
+                        residual_mask,
+                        residual_targets,
+                    )
                     predicted_residuals = self._policy_residuals_tensor(
                         state_tensor,
                         network_actions,
                         apply_correction_gate=False,
                     )
-                    actor_loss = self._weighted_action_mse(
+                    actor_loss = self._supervised_residual_loss(
                         predicted_residuals,
                         residual_targets,
                         weight_tensor,
@@ -1146,8 +1374,17 @@ class FlatDDPGAgent:
             raise ValueError("residual target mode requires residual_action.enabled")
         residual_targets = self._residual_targets_tensor(states, target_actions)
         residual_mask = self._residual_loss_mask(network_actions, states)
+        residual_mask = self._supervised_residual_dimension_mask(
+            residual_mask,
+            residual_targets,
+        )
         predicted_residuals = self._policy_residuals_tensor(states, network_actions)
-        return self._weighted_action_mse(predicted_residuals, residual_targets, weights, residual_mask)
+        return self._supervised_residual_loss(
+            predicted_residuals,
+            residual_targets,
+            weights,
+            residual_mask,
+        )
 
     def _weighted_action_mse(self, predicted_actions, target_actions, weights, dim_mask=None):
         squared_error = (predicted_actions - target_actions).pow(2)
@@ -1160,6 +1397,101 @@ class FlatDDPGAgent:
         if weights is None:
             return per_sample_loss.mean()
         return (per_sample_loss * weights).sum() / weights.sum().clamp_min(1e-8)
+
+    def _supervised_residual_loss(
+        self,
+        predicted_residuals,
+        residual_targets,
+        weights,
+        dim_mask,
+    ):
+        loss = self._weighted_action_mse(
+            predicted_residuals,
+            residual_targets,
+            weights,
+            dim_mask,
+        )
+        if self.supervised_support_ranking_weight <= 0.0:
+            return loss
+        ranking = self._support_ranking_loss(
+            predicted_residuals,
+            residual_targets,
+            weights,
+            dim_mask,
+        )
+        return loss + self.supervised_support_ranking_weight * ranking
+
+    def _support_ranking_loss(
+        self,
+        predicted_residuals,
+        residual_targets,
+        weights,
+        dim_mask,
+    ):
+        active = dim_mask.to(
+            dtype=torch.bool,
+            device=predicted_residuals.device,
+        )
+        if active.shape[0] == 1:
+            active = active.expand_as(residual_targets)
+        changed = (
+            residual_targets.abs()
+            > self.supervised_sparse_target_threshold
+        ) & active
+        unchanged = (~changed) & active
+        changed_count = changed.sum(dim=1)
+        unchanged_count = unchanged.sum(dim=1)
+        valid = (changed_count > 0) & (unchanged_count > 0)
+        changed_score = (
+            predicted_residuals
+            * residual_targets.sign()
+            * changed
+        ).sum(dim=1) / changed_count.clamp_min(1)
+        unchanged_score = torch.where(
+            unchanged,
+            predicted_residuals.abs(),
+            torch.full_like(predicted_residuals, -1.0),
+        ).amax(dim=1)
+        per_sample = torch.relu(
+            self.supervised_support_ranking_margin
+            + unchanged_score
+            - changed_score
+        )
+        valid_weights = valid.to(dtype=per_sample.dtype)
+        if weights is not None:
+            valid_weights = valid_weights * weights
+        denominator = valid_weights.sum()
+        if float(denominator.detach().item()) <= 0.0:
+            return predicted_residuals.sum() * 0.0
+        return (per_sample * valid_weights).sum() / denominator
+
+    def _supervised_residual_dimension_mask(
+        self,
+        base_mask,
+        residual_targets,
+    ):
+        if not self.supervised_sparse_target_enabled:
+            return base_mask
+        mask = base_mask.to(
+            dtype=residual_targets.dtype,
+            device=residual_targets.device,
+        ).expand_as(residual_targets)
+        changed = (
+            residual_targets.abs()
+            > self.supervised_sparse_target_threshold
+        )
+        target_weights = torch.where(
+            changed,
+            torch.full_like(
+                residual_targets,
+                self.supervised_sparse_target_changed_weight,
+            ),
+            torch.full_like(
+                residual_targets,
+                self.supervised_sparse_target_zero_weight,
+            ),
+        )
+        return mask * target_weights
 
     def _residual_targets_tensor(self, states, target_actions):
         base_actions = self._base_actions_from_states_tensor(states)
@@ -1207,14 +1539,54 @@ class FlatDDPGAgent:
             network_action,
             apply_correction_gate=apply_correction_gate,
         )
-        self.last_residual_action = (
+        scaled_residual = (
             self.residual_scale_vector * residual_action
         ).astype(np.float32)
+        self.last_residual_action = self.residual_temporal_guard.apply(
+            scaled_residual,
+            state,
+        )
+        self.last_residual_guard_info = dict(
+            self.residual_temporal_guard.last_info
+        )
         return np.clip(
             base_action + self.last_residual_action,
             -1.0,
             1.0,
         ).astype(np.float32)
+
+    def configure_residual_temporal_guard(
+        self,
+        settings: dict[str, Any] | None,
+    ) -> None:
+        """Replace deployment-time temporal constraints and reset their state."""
+
+        self.residual_temporal_guard = ResidualTemporalGuard(
+            num_facilities=int(
+                self.env_config.get("num_facilities", 0)
+            ),
+            action_dim=self.action_dim,
+            env_config=self.env_config,
+            settings=settings,
+        )
+        self.residual_temporal_guard.reset()
+        self.last_residual_guard_info = dict(
+            self.residual_temporal_guard.last_info
+        )
+
+    def configure_residual_endpoint_projection(
+        self,
+        settings: dict[str, Any] | None,
+    ) -> None:
+        """Replace deployment-time endpoint sparsity constraints."""
+
+        self.residual_endpoint_projection = ResidualEndpointProjection(
+            num_facilities=int(
+                self.env_config.get("num_facilities", 0)
+            ),
+            action_dim=self.action_dim,
+            settings=settings,
+        )
 
     def _compose_actions_tensor(
         self,
@@ -1248,6 +1620,7 @@ class FlatDDPGAgent:
         if (
             not self.residual_pressure_projection_groups
             and not self.residual_state_gate_groups
+            and not self.residual_endpoint_projection.enabled
             and (self.correction_gate is None or not apply_correction_gate)
         ):
             return self._transform_network_residual_np(network_action)
@@ -1282,6 +1655,7 @@ class FlatDDPGAgent:
             residuals = self._project_residuals_to_pressure_patterns(states, residuals)
             residuals = self._apply_positive_residual_slices_tensor(residuals)
         residuals = self._apply_state_gate_residuals_tensor(states, residuals)
+        residuals = self.residual_endpoint_projection.apply_tensor(residuals)
         if apply_correction_gate and self.correction_gate is not None:
             gate_scores = self.correction_gate(
                 self._actor_input_tensor(states)
@@ -1403,17 +1777,24 @@ class FlatDDPGAgent:
             if pattern is None or group_slice is None:
                 continue
             current = projected[:, group_slice]
-            projected = self._replace_action_slice_tensor(
-                projected,
-                group_slice,
-                project_tensor_to_pattern_basis(
+            if self.residual_pressure_projection_coefficient_mode == "mean":
+                coefficient = current.mean(dim=1, keepdim=True)
+                if self.residual_pressure_projection_positive_coefficient:
+                    coefficient = coefficient.clamp_min(0.0)
+                replacement = coefficient * pattern
+            else:
+                replacement = project_tensor_to_pattern_basis(
                     current,
                     pattern,
                     include_uniform=(
                         self.residual_replenishment_uniform_basis
                         and group in ("replenishment", "purchase")
                     ),
-                ),
+                )
+            projected = self._replace_action_slice_tensor(
+                projected,
+                group_slice,
+                replacement,
             )
         return torch.clamp(projected, -1.0, 1.0)
 
@@ -1469,9 +1850,7 @@ class FlatDDPGAgent:
         include_transfer_pipeline = int(
             bool(self.env_config.get("include_transfer_pipeline_state", False))
         )
-        features_per_facility = 3 + lead_time + include_supplier + include_forecast
-        features_per_facility += 3 * include_transfer_pipeline
-        features_per_facility += 3 * include_history
+        features_per_facility = facility_state_width(self.env_config)
         facility_state = states[:, : n * features_per_facility].reshape(
             states.shape[0],
             n,

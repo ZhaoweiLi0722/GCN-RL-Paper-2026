@@ -468,6 +468,9 @@ def run_post_training_steps(
         candidate_groups=local_search_candidate_groups(settings),
         candidate_signs=local_search_candidate_signs(settings),
         demonstration_path=settings.get("demonstration_path"),
+        validation_demonstration_path=settings.get(
+            "validation_demonstration_path"
+        ),
         populate_replay_buffer=bool(settings.get("populate_replay_buffer", False)),
         lookahead_replications=int(settings.get("lookahead_replications", 1)),
         lookahead_seed=(
@@ -605,6 +608,9 @@ def run_advantage_distillation_pretrain(
         candidate_groups=local_search_candidate_groups(settings),
         candidate_signs=local_search_candidate_signs(settings),
         demonstration_path=settings.get("demonstration_path"),
+        validation_demonstration_path=settings.get(
+            "validation_demonstration_path"
+        ),
         populate_replay_buffer=bool(settings.get("populate_replay_buffer", False)),
         lookahead_replications=int(settings.get("lookahead_replications", 1)),
         lookahead_seed=(

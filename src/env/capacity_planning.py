@@ -71,6 +71,8 @@ class CapacityPlanningConfig:
     demand_forecast_source: str = "effective_rate"
     include_demand_history_state: bool = False
     demand_history_window: int = 4
+    include_demand_sequence_state: bool = False
+    demand_sequence_length: int = 12
     demand_regime_initial_multipliers: Sequence[float] | float = 1.0
     demand_regime_final_multipliers: Sequence[float] | float = 1.0
     demand_regime_change_step: int = 0
@@ -222,6 +224,10 @@ class CapacityPlanningEnv:
             self.features_per_facility += 3
         if self.config.include_demand_history_state:
             self.features_per_facility += 3
+        if self.config.include_demand_sequence_state:
+            self.features_per_facility += 3 * int(
+                self.config.demand_sequence_length
+            )
         self.observation_size = (
             n * self.features_per_facility + int(self.config.include_time_state)
         )
@@ -329,6 +335,9 @@ class CapacityPlanningEnv:
         rolling_mean, demand_trend, rolling_forecast_error = (
             self._demand_history_features()
         )
+        demand_sequence, error_sequence, sequence_mask = (
+            self._demand_sequence_features()
+        )
         for i in range(self.config.num_facilities):
             row_parts = [
                 np.array([self.demand[i], self.specimens[i], self.reagents[i]], dtype=float),
@@ -354,6 +363,16 @@ class CapacityPlanningEnv:
                             rolling_forecast_error[i],
                         ],
                         dtype=float,
+                    )
+                )
+            if self.config.include_demand_sequence_state:
+                row_parts.append(
+                    np.concatenate(
+                        (
+                            demand_sequence[i],
+                            error_sequence[i],
+                            sequence_mask[i],
+                        )
                     )
                 )
             rows.append(np.concatenate(tuple(row_parts)))
@@ -409,6 +428,22 @@ class CapacityPlanningEnv:
             facility_columns.extend(self._pending_transfer_arrivals())
         if self.config.include_demand_history_state:
             facility_columns.extend(self._demand_history_features())
+        if self.config.include_demand_sequence_state:
+            demand_sequence, error_sequence, sequence_mask = (
+                self._demand_sequence_features()
+            )
+            facility_columns.extend(
+                demand_sequence[:, index]
+                for index in range(demand_sequence.shape[1])
+            )
+            facility_columns.extend(
+                error_sequence[:, index]
+                for index in range(error_sequence.shape[1])
+            )
+            facility_columns.extend(
+                sequence_mask[:, index]
+                for index in range(sequence_mask.shape[1])
+            )
         time_feature_index = None
         if self.config.include_time_state:
             time_feature_index = len(facility_columns)
@@ -843,6 +878,8 @@ class CapacityPlanningEnv:
             )
         if self.config.demand_history_window < 1:
             raise ValueError("demand_history_window must be positive")
+        if self.config.demand_sequence_length < 1:
+            raise ValueError("demand_sequence_length must be positive")
         if self.config.demand_forecast_error is not None and self.config.demand_forecast_error < 0.0:
             raise ValueError("demand_forecast_error must be nonnegative or null")
         if not 0 <= self.config.demand_regime_change_step < self.config.episode_horizon:
@@ -910,7 +947,15 @@ class CapacityPlanningEnv:
         return done
 
     def _record_demand_observation(self) -> None:
-        window = max(int(self.config.demand_history_window), 1)
+        window = max(
+            int(self.config.demand_history_window),
+            (
+                int(self.config.demand_sequence_length)
+                if self.config.include_demand_sequence_state
+                else 1
+            ),
+            1,
+        )
         per_period_forecast = self.demand_forecast / max(
             int(self.config.demand_forecast_horizon),
             1,
@@ -929,17 +974,42 @@ class CapacityPlanningEnv:
         if not getattr(self, "demand_history", None):
             zeros = np.zeros(n, dtype=float)
             return zeros, zeros.copy(), zeros.copy()
-        history = np.stack(self.demand_history, axis=0)
+        window = max(int(self.config.demand_history_window), 1)
+        history = np.stack(self.demand_history[-window:], axis=0)
         rolling_mean = history.mean(axis=0)
         if history.shape[0] <= 1:
             trend = np.zeros(n, dtype=float)
         else:
             trend = (history[-1] - history[0]) / float(history.shape[0] - 1)
         forecast_error = np.stack(
-            self.forecast_error_history,
+            self.forecast_error_history[-window:],
             axis=0,
         ).mean(axis=0)
         return rolling_mean, trend, forecast_error
+
+    def _demand_sequence_features(
+        self,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """Return left-padded causal demand/error sequences and validity masks."""
+
+        n = self.config.num_facilities
+        length = max(int(self.config.demand_sequence_length), 1)
+        demand_sequence = np.zeros((n, length), dtype=float)
+        error_sequence = np.zeros((n, length), dtype=float)
+        sequence_mask = np.zeros((n, length), dtype=float)
+        if not getattr(self, "demand_history", None):
+            return demand_sequence, error_sequence, sequence_mask
+
+        demand = np.stack(self.demand_history[-length:], axis=0)
+        error = np.stack(
+            self.forecast_error_history[-length:],
+            axis=0,
+        )
+        valid = demand.shape[0]
+        demand_sequence[:, -valid:] = demand.transpose(1, 0)
+        error_sequence[:, -valid:] = error.transpose(1, 0)
+        sequence_mask[:, -valid:] = 1.0
+        return demand_sequence, error_sequence, sequence_mask
 
     def _normalized_time(self) -> float:
         return float(np.clip(self.t / self.config.episode_horizon, 0.0, 1.0))

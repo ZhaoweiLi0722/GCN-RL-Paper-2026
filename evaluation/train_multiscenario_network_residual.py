@@ -59,8 +59,8 @@ def train_multiscenario_agents(
     scenario_names = tuple(
         str(value) for value in run_config.get("scenarios", ())
     )
-    if len(scenario_names) < 2:
-        raise ValueError("Multi-scenario training requires at least two scenarios")
+    if not scenario_names:
+        raise ValueError("Residual training requires at least one scenario")
     selected_scenarios = select_scenarios(plan, scenario_names)
     scenarios_by_name = {
         str(scenario["name"]): scenario
@@ -206,6 +206,11 @@ def train_one_multiscenario_agent(
         "scenario_start_index": int(seed) % len(scenarios),
         "scenario_label_in_observation": False,
         "teacher_cache": str(teacher_cache),
+        "env_overrides": multiscenario_env_overrides(
+            common_overrides=common_overrides,
+            algorithm_overrides=algorithm_overrides,
+            demand_history_window=demand_history_window,
+        ),
     }
 
     run_dir = output_root / algorithm / f"seed{int(seed)}"
@@ -235,10 +240,12 @@ def train_one_multiscenario_agent(
             scenario,
             seed,
         )
-        scenario_config["env"]["demand_history_window"] = int(
-            demand_history_window
+        scenario_config["env"] = merge_multiscenario_env_overrides(
+            scenario_config["env"],
+            common_overrides=common_overrides,
+            algorithm_overrides=algorithm_overrides,
+            demand_history_window=demand_history_window,
         )
-        scenario_config["env"]["include_demand_history_state"] = True
         environment = build_env(
             scenario_config,
             seed=int(seed) + scenario_index * 10_000,
@@ -261,7 +268,7 @@ def train_one_multiscenario_agent(
         environments[0].observation_size
     ):
         raise RuntimeError("Multi-scenario observation validation failed")
-    config["env"] = dict(
+    config["env"] = merge_multiscenario_env_overrides(
         make_training_config(
             plan,
             budget_name,
@@ -269,16 +276,18 @@ def train_one_multiscenario_agent(
             algorithm,
             reference_scenario,
             seed,
-        )["env"]
+        )["env"],
+        common_overrides=common_overrides,
+        algorithm_overrides=algorithm_overrides,
+        demand_history_window=demand_history_window,
     )
-    config["env"]["demand_history_window"] = int(demand_history_window)
-    config["env"]["include_demand_history_state"] = True
 
     agent = get_agent_class(algorithm)(
         env.observation_size,
         env.action_size,
         config,
     )
+    initial_checkpoint = maybe_load_initial_checkpoint(agent, config)
     settings = advantage_distillation_settings(
         config,
         budget,
@@ -338,6 +347,7 @@ def train_one_multiscenario_agent(
             checkpoint_dir
             / f"{algorithm}_seed{int(seed)}_pretrain.pt"
         ),
+        "initial_checkpoint": initial_checkpoint,
         "online_episodes": int(online_episodes),
         "scenario_episode_counts": scenario_episode_counts,
         "environments": environment_summaries,
@@ -349,6 +359,27 @@ def train_one_multiscenario_agent(
         encoding="utf-8",
     )
     return summary
+
+
+def maybe_load_initial_checkpoint(
+    agent: Any,
+    config: dict[str, Any],
+) -> str | None:
+    """Warm-start a multi-scenario run without restoring optimizer state."""
+
+    raw_path = config.get("initial_checkpoint")
+    if raw_path in (None, ""):
+        return None
+    checkpoint = Path(
+        str(raw_path).format(
+            algorithm=str(config.get("algorithm", "")),
+            seed=int(config.get("seed", 0)),
+        )
+    )
+    if not checkpoint.is_file():
+        raise FileNotFoundError(checkpoint)
+    agent.load_actor(checkpoint)
+    return str(checkpoint)
 
 
 def deep_update(
@@ -364,16 +395,63 @@ def deep_update(
     return merged
 
 
-def agent_parameter_count(agent: Any) -> int:
-    modules = (
-        getattr(agent, name, None)
-        for name in ("actor", "critic", "correction_gate")
+def merge_multiscenario_env_overrides(
+    scenario_env: dict[str, Any],
+    *,
+    common_overrides: dict[str, Any],
+    algorithm_overrides: dict[str, Any],
+    demand_history_window: int,
+) -> dict[str, Any]:
+    """Apply run-level env overrides without erasing scenario parameters."""
+
+    return deep_update(
+        scenario_env,
+        multiscenario_env_overrides(
+            common_overrides=common_overrides,
+            algorithm_overrides=algorithm_overrides,
+            demand_history_window=demand_history_window,
+        ),
     )
+
+
+def multiscenario_env_overrides(
+    *,
+    common_overrides: dict[str, Any],
+    algorithm_overrides: dict[str, Any],
+    demand_history_window: int,
+) -> dict[str, Any]:
+    """Return the env contract shared by every training scenario."""
+
+    merged: dict[str, Any] = {}
+    for overrides in (common_overrides, algorithm_overrides):
+        env_overrides = overrides.get("env", {})
+        if not isinstance(env_overrides, dict):
+            raise TypeError("config_overrides.env must be a mapping")
+        merged = deep_update(merged, env_overrides)
+    merged["demand_history_window"] = int(demand_history_window)
+    merged["include_demand_history_state"] = True
+    return merged
+
+
+def agent_parameter_count(agent: Any) -> int:
+    modules = [
+        getattr(agent, name, None)
+        for name in (
+            "actor",
+            "critic",
+            "correction_gate",
+            "q_network",
+        )
+    ]
+    unique_modules = {
+        id(module): module
+        for module in modules
+        if module is not None
+    }
     return int(
         sum(
             parameter.numel()
-            for module in modules
-            if module is not None
+            for module in unique_modules.values()
             for parameter in module.parameters()
         )
     )

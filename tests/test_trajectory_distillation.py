@@ -7,6 +7,7 @@ import unittest
 import numpy as np
 
 from evaluation.run_gcn_residual_sweep import (
+    external_validation_summary,
     fit_action_batch_with_early_stopping,
     split_demonstrations_by_trajectory,
 )
@@ -92,6 +93,31 @@ class TrajectoryDistillationTests(unittest.TestCase):
                 min_per_scenario=1,
                 seed=3,
             )
+
+    def test_external_validation_summary_rejects_trajectory_overlap(
+        self,
+    ) -> None:
+        train = make_demonstrations()
+        validation = make_demonstrations()
+        with self.assertRaisesRegex(ValueError, "share trajectory ids"):
+            external_validation_summary(train, validation)
+
+    def test_external_validation_summary_preserves_all_rows(self) -> None:
+        train = make_demonstrations()
+        validation = make_demonstrations()
+        validation["trajectory_ids"] = (
+            np.asarray(validation["trajectory_ids"]) + 100
+        )
+
+        summary = external_validation_summary(train, validation)
+
+        self.assertTrue(summary["trajectory_validation_enabled"])
+        self.assertEqual(summary["train_samples"], 8)
+        self.assertEqual(summary["validation_samples"], 8)
+        self.assertEqual(
+            summary["validation_trajectory_ids"],
+            "110|111|120|121",
+        )
 
     def test_early_stopping_restores_best_epoch(self) -> None:
         require_torch()

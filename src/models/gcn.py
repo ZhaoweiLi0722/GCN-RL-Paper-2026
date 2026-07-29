@@ -95,6 +95,150 @@ if torch is not None:
             return x
 
 
+    class TemporalDemandNodeEncoder(nn.Module):
+        """Compress a fixed causal demand/error sequence for every graph node."""
+
+        def __init__(
+            self,
+            node_feature_dim: int,
+            sequence_start: int,
+            sequence_length: int,
+            hidden_size: int,
+        ):
+            super().__init__()
+            self.node_feature_dim = int(node_feature_dim)
+            self.sequence_start = int(sequence_start)
+            self.sequence_length = int(sequence_length)
+            self.hidden_size = int(hidden_size)
+            if self.sequence_length < 1:
+                raise ValueError("temporal sequence_length must be positive")
+            if self.hidden_size < 1:
+                raise ValueError("temporal hidden_size must be positive")
+            sequence_width = 3 * self.sequence_length
+            if (
+                self.sequence_start < 0
+                or self.sequence_start + sequence_width
+                > self.node_feature_dim
+            ):
+                raise ValueError(
+                    "Temporal demand sequence is outside the node feature layout"
+                )
+            self.sequence_width = sequence_width
+            self.output_dim = (
+                self.node_feature_dim - sequence_width + self.hidden_size
+            )
+            self.gru = nn.GRU(
+                input_size=3,
+                hidden_size=self.hidden_size,
+                batch_first=True,
+            )
+
+        def forward(self, node_features):
+            start = self.sequence_start
+            stop = start + self.sequence_width
+            sequence_block = node_features[:, :, start:stop]
+            demand, error, mask = torch.split(
+                sequence_block,
+                self.sequence_length,
+                dim=-1,
+            )
+            sequence = torch.stack((demand, error, mask), dim=-1)
+            batch_size, num_nodes = sequence.shape[:2]
+            sequence = sequence.reshape(
+                batch_size * num_nodes,
+                self.sequence_length,
+                3,
+            )
+            _output, hidden = self.gru(sequence)
+            temporal = hidden[-1].reshape(
+                batch_size,
+                num_nodes,
+                self.hidden_size,
+            )
+            has_history = (
+                mask.sum(dim=-1, keepdim=True) > 0.0
+            ).to(dtype=temporal.dtype)
+            temporal = temporal * has_history
+            return torch.cat(
+                (
+                    node_features[:, :, :start],
+                    temporal,
+                    node_features[:, :, stop:],
+                ),
+                dim=-1,
+            )
+
+
+    class HistoryAwareGCNEncoder(nn.Module):
+        """Shared per-clinic GRU followed by geographic message passing."""
+
+        def __init__(
+            self,
+            node_feature_dim: int,
+            hidden_sizes: Sequence[int],
+            num_nodes: int,
+            edges: Sequence[Edge],
+            *,
+            sequence_start: int,
+            sequence_length: int,
+            temporal_hidden_size: int,
+            edge_weights: Sequence[float] | None = None,
+        ):
+            super().__init__()
+            self.temporal = TemporalDemandNodeEncoder(
+                node_feature_dim,
+                sequence_start,
+                sequence_length,
+                temporal_hidden_size,
+            )
+            self.gcn = GCNEncoder(
+                self.temporal.output_dim,
+                hidden_sizes,
+                num_nodes,
+                edges,
+                edge_weights=edge_weights,
+            )
+            self.output_dim = self.gcn.output_dim
+
+        def forward(self, node_features):
+            return self.gcn(self.temporal(node_features))
+
+
+    def _make_gcn_encoder(
+        node_feature_dim: int,
+        hidden_sizes: Sequence[int],
+        num_nodes: int,
+        edges: Sequence[Edge],
+        *,
+        edge_weights: Sequence[float] | None,
+        temporal_sequence_start: int | None,
+        temporal_sequence_length: int,
+        temporal_hidden_size: int,
+    ):
+        if temporal_hidden_size <= 0:
+            return GCNEncoder(
+                node_feature_dim,
+                hidden_sizes,
+                num_nodes,
+                edges,
+                edge_weights=edge_weights,
+            )
+        if temporal_sequence_start is None or temporal_sequence_start < 0:
+            raise ValueError(
+                "Temporal GCN encoder requires demand-sequence node features"
+            )
+        return HistoryAwareGCNEncoder(
+            node_feature_dim,
+            hidden_sizes,
+            num_nodes,
+            edges,
+            sequence_start=temporal_sequence_start,
+            sequence_length=temporal_sequence_length,
+            temporal_hidden_size=temporal_hidden_size,
+            edge_weights=edge_weights,
+        )
+
+
     def graph_readout(encoded, num_facilities, include_global_context):
         """Flatten facility node embeddings, optionally with a mean global context."""
 
@@ -125,16 +269,22 @@ if torch is not None:
             gcn_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
             edge_weights: Sequence[float] | None = None,
+            temporal_sequence_start: int | None = None,
+            temporal_sequence_length: int = 0,
+            temporal_hidden_size: int = 0,
         ):
             super().__init__()
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
-            self.encoder = GCNEncoder(
+            self.encoder = _make_gcn_encoder(
                 node_feature_dim,
                 gcn_hidden_sizes,
                 num_nodes,
                 edges,
                 edge_weights=edge_weights,
+                temporal_sequence_start=temporal_sequence_start,
+                temporal_sequence_length=temporal_sequence_length,
+                temporal_hidden_size=temporal_hidden_size,
             )
             self.output_dim = graph_readout_dim(
                 self.num_facilities, self.encoder.output_dim, self.include_global_context
@@ -205,18 +355,48 @@ if torch is not None:
             capacity_edges: Sequence[Edge] | None = None,
             resource_edge_features: Sequence[Sequence[float]] | None = None,
             capacity_edge_features: Sequence[Sequence[float]] | None = None,
+            edge_selector_enabled: bool = False,
+            edge_selector_top_k: int = 2,
+            edge_selector_temperature: float = 1.0,
+            edge_selector_training_gate: str = "soft",
+            temporal_sequence_start: int | None = None,
+            temporal_sequence_length: int = 0,
+            temporal_hidden_size: int = 0,
         ):
             super().__init__()
             self.node_feature_dim = int(node_feature_dim)
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
             self.readout_mode = str(readout_mode)
-            self.encoder = GCNEncoder(
+            self.last_edge_flows = {}
+            self.last_edge_selector_logits = {}
+            self.edge_selector_enabled = bool(edge_selector_enabled)
+            self.edge_selector_top_k = max(int(edge_selector_top_k), 1)
+            self.edge_selector_temperature = max(
+                float(edge_selector_temperature),
+                1e-6,
+            )
+            self.edge_selector_training_gate = str(
+                edge_selector_training_gate
+            )
+            if self.edge_selector_training_gate not in (
+                "none",
+                "soft",
+                "straight_through",
+            ):
+                raise ValueError(
+                    "edge_selector_training_gate must be none, soft, "
+                    "or straight_through"
+                )
+            self.encoder = _make_gcn_encoder(
                 node_feature_dim,
                 gcn_hidden_sizes,
                 num_nodes,
                 edges,
                 edge_weights=edge_weights,
+                temporal_sequence_start=temporal_sequence_start,
+                temporal_sequence_length=temporal_sequence_length,
+                temporal_hidden_size=temporal_hidden_size,
             )
             if self.readout_mode == "global_flat":
                 readout_dim = self.num_facilities * self.encoder.output_dim
@@ -236,6 +416,17 @@ if torch is not None:
                     facility_input_dim,
                     head_hidden_sizes,
                     self.facility_action_dim,
+                    output_tanh=True,
+                )
+            elif self.readout_mode == "pressure_intensity":
+                if int(action_dim) != 4 * self.num_facilities:
+                    raise ValueError(
+                        "pressure_intensity readout requires a facility-net action layout"
+                    )
+                self.head = _build_mlp(
+                    self.encoder.output_dim,
+                    head_hidden_sizes,
+                    3,
                     output_tanh=True,
                 )
             elif self.readout_mode == "network_residual":
@@ -315,6 +506,22 @@ if torch is not None:
                     1,
                     output_tanh=True,
                 )
+                if self.edge_selector_enabled:
+                    self.reagent_edge_selector_head = _build_mlp(
+                        edge_input_dim,
+                        head_hidden_sizes,
+                        1,
+                        output_tanh=False,
+                    )
+                    self.capacity_edge_selector_head = _build_mlp(
+                        edge_input_dim,
+                        head_hidden_sizes,
+                        1,
+                        output_tanh=False,
+                    )
+                else:
+                    self.reagent_edge_selector_head = None
+                    self.capacity_edge_selector_head = None
             else:
                 raise ValueError(f"Unsupported GCN actor readout_mode: {self.readout_mode}")
 
@@ -340,22 +547,40 @@ if torch is not None:
                 replenishment = self.replenishment_head(
                     torch.cat(node_inputs, dim=-1)
                 ).squeeze(-1)
-                reagent_net = self._edge_net_actions(
+                (
+                    reagent_net,
+                    reagent_edge_flow,
+                    reagent_selector_logits,
+                ) = self._edge_net_actions(
                     facility_encoded,
                     facility_features,
                     graph_context,
                     self.resource_edge_pairs,
                     self.resource_static_edge_features,
                     self.reagent_edge_head,
+                    self.reagent_edge_selector_head,
                 )
-                capacity_net = self._edge_net_actions(
+                (
+                    capacity_net,
+                    capacity_edge_flow,
+                    capacity_selector_logits,
+                ) = self._edge_net_actions(
                     facility_encoded,
                     facility_features,
                     graph_context,
                     self.capacity_edge_pairs,
                     self.capacity_static_edge_features,
                     self.capacity_edge_head,
+                    self.capacity_edge_selector_head,
                 )
+                self.last_edge_flows = {
+                    "reagent_transfer": reagent_edge_flow,
+                    "capacity_transfer": capacity_edge_flow,
+                }
+                self.last_edge_selector_logits = {
+                    "reagent_transfer": reagent_selector_logits,
+                    "capacity_transfer": capacity_selector_logits,
+                }
                 specimen_net = torch.zeros_like(reagent_net)
                 return torch.cat(
                     (
@@ -363,6 +588,35 @@ if torch is not None:
                         reagent_net,
                         capacity_net,
                         replenishment,
+                    ),
+                    dim=1,
+                )
+            if self.readout_mode == "pressure_intensity":
+                intensities = self.head(encoded.mean(dim=1))
+                specimen_net = torch.zeros(
+                    encoded.shape[0],
+                    self.num_facilities,
+                    dtype=encoded.dtype,
+                    device=encoded.device,
+                )
+                reagent_intensity = intensities[:, 0:1].expand(
+                    -1,
+                    self.num_facilities,
+                )
+                capacity_intensity = intensities[:, 1:2].expand(
+                    -1,
+                    self.num_facilities,
+                )
+                replenishment_intensity = intensities[:, 2:3].expand(
+                    -1,
+                    self.num_facilities,
+                )
+                return torch.cat(
+                    (
+                        specimen_net,
+                        reagent_intensity,
+                        capacity_intensity,
+                        replenishment_intensity,
                     ),
                     dim=1,
                 )
@@ -386,15 +640,23 @@ if torch is not None:
             edge_pairs,
             static_edge_features,
             edge_head,
+            selector_head,
         ):
             batch_size = facility_encoded.shape[0]
             if edge_pairs.shape[1] == 0:
-                return torch.zeros(
+                net = torch.zeros(
                     batch_size,
                     self.num_facilities,
                     dtype=facility_encoded.dtype,
                     device=facility_encoded.device,
                 )
+                edge_flow = torch.zeros(
+                    batch_size,
+                    0,
+                    dtype=facility_encoded.dtype,
+                    device=facility_encoded.device,
+                )
+                return net, edge_flow, edge_flow
             source = edge_pairs[0]
             target = edge_pairs[1]
             source_encoded = facility_encoded[:, source, :]
@@ -421,7 +683,15 @@ if torch is not None:
                         -1,
                     )
                 )
-            edge_flow = edge_head(torch.cat(edge_inputs, dim=-1)).squeeze(-1)
+            edge_inputs = torch.cat(edge_inputs, dim=-1)
+            edge_flow = edge_head(edge_inputs).squeeze(-1)
+            if selector_head is None:
+                selector_logits = torch.zeros_like(edge_flow)
+            else:
+                selector_logits = selector_head(edge_inputs).squeeze(-1)
+                edge_flow = edge_flow * self._edge_selector_gate(
+                    selector_logits
+                )
             net = torch.zeros(
                 batch_size,
                 self.num_facilities,
@@ -433,19 +703,63 @@ if torch is not None:
             net.scatter_add_(1, source_index, -edge_flow)
             net.scatter_add_(1, target_index, edge_flow)
             normalizer = net.abs().amax(dim=1, keepdim=True).clamp_min(1.0)
-            return net / normalizer
+            return net / normalizer, edge_flow, selector_logits
+
+        def _edge_selector_gate(self, selector_logits):
+            edge_count = int(selector_logits.shape[1])
+            if edge_count == 0:
+                return selector_logits
+            top_k = min(self.edge_selector_top_k, edge_count)
+            if self.training:
+                if self.edge_selector_training_gate == "none":
+                    return torch.ones_like(selector_logits)
+                probabilities = torch.softmax(
+                    selector_logits / self.edge_selector_temperature,
+                    dim=1,
+                )
+                soft_gate = torch.clamp(
+                    probabilities * float(top_k),
+                    max=1.0,
+                )
+                if self.edge_selector_training_gate == "soft":
+                    return soft_gate
+                selected = torch.topk(
+                    selector_logits,
+                    k=top_k,
+                    dim=1,
+                ).indices
+                hard_gate = torch.zeros_like(selector_logits).scatter(
+                    1,
+                    selected,
+                    1.0,
+                )
+                return hard_gate + soft_gate - soft_gate.detach()
+            selected = torch.topk(
+                selector_logits,
+                k=top_k,
+                dim=1,
+            ).indices
+            mask = torch.zeros_like(selector_logits)
+            return mask.scatter(1, selected, 1.0)
 
         def zero_initialize_output_heads(self) -> None:
             """Initialize every actor output head to the zero residual policy."""
 
             if self.readout_mode == "network_residual":
-                heads = (
+                heads = [
                     self.replenishment_head,
                     self.reagent_edge_head,
                     self.capacity_edge_head,
-                )
+                ]
+                if self.edge_selector_enabled:
+                    heads.extend(
+                        (
+                            self.reagent_edge_selector_head,
+                            self.capacity_edge_selector_head,
+                        )
+                    )
             else:
-                heads = (self.head,)
+                heads = [self.head]
             for head in heads:
                 output_layer = next(
                     module
@@ -470,16 +784,22 @@ if torch is not None:
             include_global_context: bool = True,
             edge_weights: Sequence[float] | None = None,
             output_dim: int = 1,
+            temporal_sequence_start: int | None = None,
+            temporal_sequence_length: int = 0,
+            temporal_hidden_size: int = 0,
         ):
             super().__init__()
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
-            self.encoder = GCNEncoder(
+            self.encoder = _make_gcn_encoder(
                 node_feature_dim,
                 gcn_hidden_sizes,
                 num_nodes,
                 edges,
                 edge_weights=edge_weights,
+                temporal_sequence_start=temporal_sequence_start,
+                temporal_sequence_length=temporal_sequence_length,
+                temporal_hidden_size=temporal_hidden_size,
             )
             readout_dim = graph_readout_dim(
                 self.num_facilities,
@@ -554,16 +874,22 @@ if torch is not None:
             head_hidden_sizes: Sequence[int],
             include_global_context: bool = True,
             edge_weights: Sequence[float] | None = None,
+            temporal_sequence_start: int | None = None,
+            temporal_sequence_length: int = 0,
+            temporal_hidden_size: int = 0,
         ):
             super().__init__()
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
-            self.encoder = GCNEncoder(
+            self.encoder = _make_gcn_encoder(
                 node_feature_dim,
                 gcn_hidden_sizes,
                 num_nodes,
                 edges,
                 edge_weights=edge_weights,
+                temporal_sequence_start=temporal_sequence_start,
+                temporal_sequence_length=temporal_sequence_length,
+                temporal_hidden_size=temporal_hidden_size,
             )
             readout_dim = self.num_facilities * self.encoder.output_dim
             if self.include_global_context:

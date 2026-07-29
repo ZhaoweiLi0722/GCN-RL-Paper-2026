@@ -89,7 +89,7 @@ class NetworkResidualLayoutTests(unittest.TestCase):
     def setUp(self) -> None:
         torch.manual_seed(3)
 
-    def _actor(self):
+    def _actor(self, *, edge_selector_enabled=False):
         from src.models.gcn import GCNActor
 
         resource_edges = ((0, 1), (1, 2), (2, 3))
@@ -116,6 +116,8 @@ class NetworkResidualLayoutTests(unittest.TestCase):
             capacity_edges=capacity_edges,
             resource_edge_features=resource_features,
             capacity_edge_features=capacity_features,
+            edge_selector_enabled=edge_selector_enabled,
+            edge_selector_top_k=1,
         )
 
     def test_network_residual_layout_masks_specimens_and_conserves_transfers(self) -> None:
@@ -141,6 +143,131 @@ class NetworkResidualLayoutTests(unittest.TestCase):
         self.assertTrue(torch.all(actions.abs() <= 1.0))
 
     def test_network_residual_zero_initializes_every_output_head(self) -> None:
+        actor = self._actor()
+
+        actor.zero_initialize_output_heads()
+        actions = actor(torch.randn(3, 4, NODE_DIM))
+
+        self.assertTrue(torch.allclose(actions, torch.zeros_like(actions)))
+
+    def test_edge_selector_uses_soft_training_and_hard_topk_evaluation(self) -> None:
+        actor = self._actor(edge_selector_enabled=True)
+        nodes = torch.randn(3, 4, NODE_DIM)
+
+        actor.train()
+        actor(nodes)
+        self.assertEqual(
+            tuple(
+                actor.last_edge_selector_logits[
+                    "reagent_transfer"
+                ].shape
+            ),
+            (3, 3),
+        )
+        actor.eval()
+        actions = actor(nodes).reshape(3, 4, 4)
+        reagent_flows = actor.last_edge_flows["reagent_transfer"]
+        capacity_flows = actor.last_edge_flows["capacity_transfer"]
+
+        self.assertTrue(
+            torch.all((reagent_flows.abs() > 1e-8).sum(dim=1) <= 1)
+        )
+        self.assertTrue(
+            torch.all((capacity_flows.abs() > 1e-8).sum(dim=1) <= 1)
+        )
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 1].sum(dim=1),
+                torch.zeros(3),
+                atol=1e-6,
+            )
+        )
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 2].sum(dim=1),
+                torch.zeros(3),
+                atol=1e-6,
+            )
+        )
+
+    def test_temporal_network_residual_preserves_edge_flow_conservation(self) -> None:
+        from src.models.gcn import GCNActor
+
+        actor = GCNActor(
+            NODE_DIM,
+            4,
+            4,
+            16,
+            _line_edges(4),
+            GCN_HIDDEN,
+            HEAD_HIDDEN,
+            readout_mode="network_residual",
+            resource_edges=((0, 1), (1, 2), (2, 3)),
+            capacity_edges=((0, 1), (0, 2), (1, 3), (2, 3)),
+            resource_edge_features=tuple(
+                (0.1, 0.2) for _ in range(3)
+            ),
+            capacity_edge_features=tuple(
+                (0.2, 0.3) for _ in range(4)
+            ),
+            temporal_sequence_start=3,
+            temporal_sequence_length=2,
+            temporal_hidden_size=4,
+        )
+        nodes = torch.randn(5, 4, NODE_DIM)
+        nodes[:, :, 7:9] = 1.0
+
+        actions = actor(nodes).reshape(5, 4, 4)
+
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 1].sum(dim=1),
+                torch.zeros(5),
+                atol=1e-6,
+            )
+        )
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 2].sum(dim=1),
+                torch.zeros(5),
+                atol=1e-6,
+            )
+        )
+
+
+@unittest.skipIf(torch is None, "torch not available")
+class PressureIntensityLayoutTests(unittest.TestCase):
+    def setUp(self) -> None:
+        torch.manual_seed(5)
+
+    def _actor(self):
+        from src.models.gcn import GCNActor
+
+        return GCNActor(
+            NODE_DIM,
+            4,
+            4,
+            16,
+            _line_edges(4),
+            GCN_HIDDEN,
+            HEAD_HIDDEN,
+            readout_mode="pressure_intensity",
+        )
+
+    def test_pressure_intensity_emits_three_shared_group_coefficients(self) -> None:
+        actor = self._actor()
+
+        actions = actor(torch.randn(5, 4, NODE_DIM)).reshape(5, 4, 4)
+
+        self.assertTrue(
+            torch.allclose(actions[:, 0], torch.zeros_like(actions[:, 0]))
+        )
+        for group in (1, 2, 3):
+            expected = actions[:, group, 0:1].expand(-1, 4)
+            self.assertTrue(torch.allclose(actions[:, group], expected))
+        self.assertTrue(torch.all(actions.abs() <= 1.0))
+
+    def test_pressure_intensity_zero_initializes_to_anchor(self) -> None:
         actor = self._actor()
 
         actor.zero_initialize_output_heads()

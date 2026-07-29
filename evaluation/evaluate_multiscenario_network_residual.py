@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -32,6 +33,20 @@ PAIRING_KEYS = (
     "evaluation_seed",
     "replication",
 )
+CLINICAL_METRICS = {
+    "completion_service_level": {
+        "direction": "higher",
+        "delta_key": "completion_service_level_delta",
+    },
+    "patients_lost": {
+        "direction": "lower",
+        "delta_key": "patients_lost_delta",
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+        "direction": "lower",
+        "delta_key": "manufacturing_ineligibility_rate_delta",
+    },
+}
 
 
 class ResidualUsageMonitor:
@@ -42,11 +57,24 @@ class ResidualUsageMonitor:
         self.num_facilities = int(num_facilities)
         self.total_decisions = 0
         self.corrected_decisions = 0
+        self.temporally_suppressed_decisions = 0
+        self.raw_residual_l1 = 0.0
+        self.applied_residual_l1 = 0.0
+        self.temporally_suppressed_l1 = 0.0
         self.group_corrected_decisions = {
             "specimen_transfer": 0,
             "reagent_transfer": 0,
             "capacity_transfer": 0,
             "replenishment": 0,
+        }
+        self.capacity_action_effect = {
+            "anchor_l1": 0.0,
+            "final_l1": 0.0,
+            "delta_l1": 0.0,
+            "amplification_l1": 0.0,
+            "damping_l1": 0.0,
+            "reversal_l1": 0.0,
+            "new_flow_l1": 0.0,
         }
 
     def reset(self) -> None:
@@ -58,24 +86,132 @@ class ResidualUsageMonitor:
             explore=explore,
             env=env,
         )
-        residual = np.asarray(
+        if hasattr(self.agent, "last_residual_action"):
+            residual = np.asarray(
+                self.agent.last_residual_action,
+                dtype=np.float32,
+            )
+        elif getattr(self.agent, "_pending_anchor_action", None) is not None:
+            residual = (
+                np.asarray(action, dtype=np.float32)
+                - np.asarray(
+                    self.agent._pending_anchor_action,
+                    dtype=np.float32,
+                )
+            )
+        else:
+            residual = np.zeros_like(action, dtype=np.float32)
+        active = np.abs(residual) > 1e-6
+        guard_info = dict(
             getattr(
                 self.agent,
-                "last_residual_action",
-                np.zeros_like(action),
-            ),
-            dtype=np.float32,
+                "last_residual_guard_info",
+                {},
+            )
         )
-        active = np.abs(residual) > 1e-6
+        raw_l1 = float(
+            guard_info.get(
+                "raw_l1",
+                np.abs(residual).sum(),
+            )
+        )
+        applied_l1 = float(
+            guard_info.get(
+                "applied_l1",
+                np.abs(residual).sum(),
+            )
+        )
+        suppressed_l1 = max(raw_l1 - applied_l1, 0.0)
         self.total_decisions += 1
         self.corrected_decisions += int(np.any(active))
+        self.temporally_suppressed_decisions += int(
+            suppressed_l1 > 1e-8
+        )
+        self.raw_residual_l1 += raw_l1
+        self.applied_residual_l1 += applied_l1
+        self.temporally_suppressed_l1 += suppressed_l1
         for index, group in enumerate(self.group_corrected_decisions):
             start = index * self.num_facilities
             stop = start + self.num_facilities
             self.group_corrected_decisions[group] += int(
                 np.any(active[start:stop])
             )
+        self._record_capacity_action_effect(state, action)
         return action
+
+    def _record_capacity_action_effect(
+        self,
+        state: np.ndarray,
+        action: np.ndarray,
+    ) -> None:
+        anchor = None
+        base_action = getattr(
+            self.agent,
+            "_base_action_from_state_np",
+            None,
+        )
+        if callable(base_action):
+            anchor = np.asarray(
+                base_action(state),
+                dtype=np.float32,
+            )
+        elif getattr(self.agent, "_pending_anchor_action", None) is not None:
+            anchor = np.asarray(
+                self.agent._pending_anchor_action,
+                dtype=np.float32,
+            )
+        final = np.asarray(action, dtype=np.float32)
+        if anchor is None or anchor.shape != final.shape:
+            return
+
+        start = 2 * self.num_facilities
+        stop = 3 * self.num_facilities
+        anchor_capacity = anchor[start:stop]
+        final_capacity = final[start:stop]
+        anchor_abs = np.abs(anchor_capacity)
+        final_abs = np.abs(final_capacity)
+        epsilon = 1e-6
+        anchor_active = anchor_abs > epsilon
+        final_active = final_abs > epsilon
+        same_direction = (
+            anchor_active
+            & final_active
+            & (anchor_capacity * final_capacity > 0.0)
+        )
+        reversed_direction = (
+            anchor_active
+            & final_active
+            & (anchor_capacity * final_capacity < 0.0)
+        )
+        new_flow = (~anchor_active) & final_active
+
+        self.capacity_action_effect["anchor_l1"] += float(
+            anchor_abs.sum()
+        )
+        self.capacity_action_effect["final_l1"] += float(
+            final_abs.sum()
+        )
+        self.capacity_action_effect["delta_l1"] += float(
+            np.abs(final_capacity - anchor_capacity).sum()
+        )
+        self.capacity_action_effect["amplification_l1"] += float(
+            np.maximum(final_abs - anchor_abs, 0.0)[
+                same_direction
+            ].sum()
+        )
+        self.capacity_action_effect["damping_l1"] += float(
+            np.maximum(anchor_abs - final_abs, 0.0)[
+                same_direction
+            ].sum()
+            + anchor_abs[reversed_direction].sum()
+            + anchor_abs[anchor_active & ~final_active].sum()
+        )
+        self.capacity_action_effect["reversal_l1"] += float(
+            final_abs[reversed_direction].sum()
+        )
+        self.capacity_action_effect["new_flow_l1"] += float(
+            final_abs[new_flow].sum()
+        )
 
     def summary(self) -> dict[str, Any]:
         denominator = max(self.total_decisions, 1)
@@ -83,10 +219,22 @@ class ResidualUsageMonitor:
             "total_decisions": self.total_decisions,
             "corrected_decisions": self.corrected_decisions,
             "correction_rate": self.corrected_decisions / denominator,
+            "temporally_suppressed_decisions": (
+                self.temporally_suppressed_decisions
+            ),
+            "temporal_suppression_rate": (
+                self.temporally_suppressed_decisions / denominator
+            ),
+            "raw_residual_l1": self.raw_residual_l1,
+            "applied_residual_l1": self.applied_residual_l1,
+            "temporally_suppressed_l1": self.temporally_suppressed_l1,
             "group_correction_rates": {
                 group: count / denominator
                 for group, count in self.group_corrected_decisions.items()
             },
+            "capacity_action_effect": dict(
+                self.capacity_action_effect
+            ),
         }
 
     def __getattr__(self, name: str) -> Any:
@@ -147,6 +295,24 @@ def evaluate_multiscenario_agents(
     )
     if not any(np.isclose(candidate["scale"], 0.0) for candidate in candidates):
         raise ValueError("Deployment candidates must include scale=0 fallback")
+    fixed_candidate = (
+        None
+        if evaluation_config.get("fixed_deployment_candidate") is None
+        else normalized_deployment_candidate(
+            dict(evaluation_config["fixed_deployment_candidate"])
+        )
+    )
+    fixed_checkpoint_variant = str(
+        evaluation_config.get(
+            "fixed_checkpoint_variant",
+            "final",
+        )
+    )
+    if fixed_candidate is not None and fixed_candidate not in candidates:
+        raise ValueError(
+            "fixed_deployment_candidate must also appear in "
+            "deployment_candidates"
+        )
 
     validation_replications = int(
         evaluation_config.get("validation_replications", 10)
@@ -166,6 +332,12 @@ def evaluate_multiscenario_agents(
             "strict_scenario_clinical_noninferiority",
             False,
         )
+    )
+    selection_guardrails = dict(
+        evaluation_config.get("selection_guardrails", {})
+    )
+    clinical_noninferiority = normalized_clinical_noninferiority(
+        evaluation_config.get("clinical_noninferiority", {})
     )
     output_root = Path(
         evaluation_config.get(
@@ -237,6 +409,7 @@ def evaluate_multiscenario_agents(
                     evaluation_seed=validation_seed,
                     replications=validation_replications,
                     max_steps=max_steps,
+                    clinical_noninferiority=clinical_noninferiority,
                     precomputed_anchor_rows=(
                         validation_anchor_rows_by_scenario
                     ),
@@ -270,9 +443,18 @@ def evaluate_multiscenario_agents(
                         anchor_rows,
                         run_root / "validation_anchor_rows.csv",
                     )
-        selected = select_deployment_candidate(
-            validation_results,
-            strict_scenario_guardrail=strict_scenario_guardrail,
+        selected = (
+            select_fixed_deployment_candidate(
+                validation_results,
+                candidate=fixed_candidate,
+                checkpoint_variant=fixed_checkpoint_variant,
+            )
+            if fixed_candidate is not None
+            else select_deployment_candidate(
+                validation_results,
+                strict_scenario_guardrail=strict_scenario_guardrail,
+                selection_guardrails=selection_guardrails,
+            )
         )
         selected_candidate = normalized_deployment_candidate(
             selected["candidate"]
@@ -296,6 +478,7 @@ def evaluate_multiscenario_agents(
                 evaluation_seed=holdout_seed,
                 replications=holdout_replications,
                 max_steps=max_steps,
+                clinical_noninferiority=clinical_noninferiority,
             )
         )
         print(
@@ -346,6 +529,14 @@ def evaluate_multiscenario_agents(
         "holdout_replications": holdout_replications,
         "holdout_seed": holdout_seed,
         "strict_scenario_clinical_noninferiority": strict_scenario_guardrail,
+        "selection_guardrails": selection_guardrails,
+        "clinical_noninferiority": clinical_noninferiority,
+        "fixed_deployment_candidate": fixed_candidate,
+        "fixed_checkpoint_variant": (
+            fixed_checkpoint_variant
+            if fixed_candidate is not None
+            else None
+        ),
         "algorithms": sorted(requested_algorithms),
         "training_seeds": sorted(requested_training_seeds),
         "runs": run_results,
@@ -356,6 +547,34 @@ def evaluate_multiscenario_agents(
         encoding="utf-8",
     )
     return payload
+
+
+def apply_multiscenario_env_contract(
+    scenario_env: dict[str, Any],
+    config_snapshot: dict[str, Any],
+) -> dict[str, Any]:
+    """Restore shared observation settings when rebuilding an eval scenario."""
+
+    shared = (
+        config_snapshot.get("multi_scenario_training", {})
+        .get("env_overrides", {})
+    )
+    if not isinstance(shared, dict):
+        raise TypeError("multi_scenario_training.env_overrides must be a mapping")
+    return deep_update_dict(scenario_env, shared)
+
+
+def deep_update_dict(
+    base: dict[str, Any],
+    updates: dict[str, Any],
+) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in updates.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = deep_update_dict(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
 
 
 def evaluate_deployment_candidate(
@@ -371,6 +590,7 @@ def evaluate_deployment_candidate(
     evaluation_seed: int,
     replications: int,
     max_steps: int,
+    clinical_noninferiority: dict[str, Any] | None = None,
     precomputed_anchor_rows: dict[
         str,
         list[dict[str, Any]],
@@ -389,10 +609,13 @@ def evaluate_deployment_candidate(
     ):
         seed = int(evaluation_seed) + scenario_index * 100_000
         config = dict(config_snapshot)
-        config["env"] = make_scenario_env_config(
-            plan,
-            algorithm,
-            scenario,
+        config["env"] = apply_multiscenario_env_contract(
+            make_scenario_env_config(
+                plan,
+                algorithm,
+                scenario,
+            ),
+            config_snapshot,
         )
         if precomputed_anchor_rows is None:
             env = build_env(config, seed=seed)
@@ -452,10 +675,17 @@ def evaluate_deployment_candidate(
             max_steps=max_steps,
         )
         add_training_seed(scenario_candidate_rows, training_seed)
-        per_scenario[scenario_name] = paired_candidate_summary(
+        scenario_summary = paired_candidate_summary(
             scenario_candidate_rows,
             scenario_anchor_rows,
         )
+        apply_clinical_noninferiority(
+            scenario_summary,
+            scenario_candidate_rows,
+            scenario_anchor_rows,
+            clinical_noninferiority,
+        )
+        per_scenario[scenario_name] = scenario_summary
         per_scenario[scenario_name]["residual_usage"] = (
             monitored_agent.summary()
         )
@@ -463,6 +693,12 @@ def evaluate_deployment_candidate(
         anchor_rows.extend(scenario_anchor_rows)
 
     aggregate = paired_candidate_summary(candidate_rows, anchor_rows)
+    apply_clinical_noninferiority(
+        aggregate,
+        candidate_rows,
+        anchor_rows,
+        clinical_noninferiority,
+    )
     aggregate["residual_usage"] = aggregate_residual_usage(
         per_scenario
     )
@@ -481,6 +717,104 @@ def evaluate_deployment_candidate(
     )
 
 
+def normalized_clinical_noninferiority(
+    value: Any,
+) -> dict[str, Any]:
+    raw = dict(value or {})
+    mode = str(raw.get("mode", "point"))
+    if mode not in ("point", "paired_ci"):
+        raise ValueError(
+            "clinical_noninferiority.mode must be 'point' or 'paired_ci'"
+        )
+    margins = {
+        metric: float(dict(raw.get("margins", {})).get(metric, 0.0))
+        for metric in CLINICAL_METRICS
+    }
+    if any(margin < 0.0 for margin in margins.values()):
+        raise ValueError(
+            "Clinical noninferiority margins cannot be negative"
+        )
+    z_value = float(raw.get("z_value", 1.96))
+    if z_value < 0.0:
+        raise ValueError(
+            "clinical_noninferiority.z_value cannot be negative"
+        )
+    return {
+        "mode": mode,
+        "z_value": z_value,
+        "margins": margins,
+    }
+
+
+def apply_clinical_noninferiority(
+    summary: dict[str, Any],
+    candidate_rows: list[dict[str, Any]],
+    anchor_rows: list[dict[str, Any]],
+    settings: dict[str, Any] | None,
+) -> None:
+    """Apply point or paired-CI clinical noninferiority in place."""
+
+    config = normalized_clinical_noninferiority(settings)
+    intervals: dict[str, Any] = {}
+    passed = []
+    for metric, spec in CLINICAL_METRICS.items():
+        differences = np.asarray(
+            [
+                float(candidate[metric]) - float(anchor[metric])
+                for candidate, anchor in zip(
+                    candidate_rows,
+                    anchor_rows,
+                )
+            ],
+            dtype=np.float64,
+        )
+        mean = float(differences.mean())
+        sem = (
+            float(
+                differences.std(ddof=1)
+                / np.sqrt(differences.size)
+            )
+            if differences.size > 1
+            else 0.0
+        )
+        radius = float(config["z_value"]) * sem
+        ci_low = mean - radius
+        ci_high = mean + radius
+        margin = float(config["margins"][metric])
+        bound = (
+            mean
+            if config["mode"] == "point"
+            else (
+                ci_low
+                if spec["direction"] == "higher"
+                else ci_high
+            )
+        )
+        metric_passed = bool(
+            bound >= -margin
+            if spec["direction"] == "higher"
+            else bound <= margin
+        )
+        passed.append(metric_passed)
+        intervals[metric] = {
+            "mean_difference": mean,
+            "sem": sem,
+            "ci_low": ci_low,
+            "ci_high": ci_high,
+            "margin": margin,
+            "direction": spec["direction"],
+            "noninferiority_bound": float(bound),
+            "noninferior": metric_passed,
+        }
+        summary[spec["delta_key"]] = mean
+
+    summary["clinical_noninferiority_mode"] = config["mode"]
+    summary["clinical_noninferiority_z_value"] = config["z_value"]
+    summary["clinical_noninferiority_margins"] = config["margins"]
+    summary["clinical_metric_intervals"] = intervals
+    summary["clinically_noninferior"] = bool(all(passed))
+
+
 def rows_by_scenario(
     rows: list[dict[str, Any]],
 ) -> dict[str, list[dict[str, Any]]]:
@@ -496,21 +830,66 @@ def configure_deployment(
     candidate: dict[str, Any],
 ) -> None:
     scale = float(candidate["scale"])
-    agent.residual_scale_vector = (
-        np.asarray(agent.residual_scale_vector, dtype=np.float32)
-        * scale
-    )
-    thresholds = tuple(
-        float(value) for value in candidate["group_thresholds"]
-    )
-    if getattr(agent, "correction_gate_groups", ()):
-        if len(thresholds) != len(agent.correction_gate_groups):
+    if hasattr(agent, "residual_scale_vector"):
+        agent.residual_scale_vector = (
+            np.asarray(agent.residual_scale_vector, dtype=np.float32)
+            * scale
+        )
+    elif hasattr(agent, "correction_gate_threshold"):
+        if not (np.isclose(scale, 0.0) or np.isclose(scale, 1.0)):
             raise ValueError(
-                "Deployment group thresholds must match correction groups"
+                "Structured-option deployment scale must be 0 or 1"
             )
-        agent.correction_gate_group_thresholds = thresholds
-    elif thresholds:
-        agent.correction_gate_threshold = thresholds[0]
+        if np.isclose(scale, 0.0):
+            agent.correction_gate_threshold = 1.0
+    else:
+        raise ValueError(
+            "Agent does not expose a residual or structured-option "
+            "deployment control"
+        )
+    if not bool(candidate.get("use_checkpoint_group_thresholds", False)):
+        thresholds = tuple(
+            float(value) for value in candidate["group_thresholds"]
+        )
+        if getattr(agent, "correction_gate_groups", ()):
+            if len(thresholds) != len(agent.correction_gate_groups):
+                raise ValueError(
+                    "Deployment group thresholds must match correction groups"
+                )
+            agent.correction_gate_group_thresholds = thresholds
+        elif thresholds:
+            agent.correction_gate_threshold = thresholds[0]
+    if "anchor_q_margin" in candidate:
+        if not hasattr(agent, "anchor_q_margin"):
+            raise ValueError(
+                "Deployment candidate requests an anchor Q margin, but the "
+                "agent does not support it"
+            )
+        agent.anchor_q_margin = float(candidate["anchor_q_margin"])
+    if "temporal_guard" in candidate:
+        configure_guard = getattr(
+            agent,
+            "configure_residual_temporal_guard",
+            None,
+        )
+        if configure_guard is None:
+            raise ValueError(
+                "Deployment candidate requests a temporal guard, but the "
+                "agent does not support it"
+            )
+        configure_guard(dict(candidate["temporal_guard"]))
+    if "endpoint_projection" in candidate:
+        configure_projection = getattr(
+            agent,
+            "configure_residual_endpoint_projection",
+            None,
+        )
+        if configure_projection is None:
+            raise ValueError(
+                "Deployment candidate requests endpoint projection, but the "
+                "agent does not support it"
+            )
+        configure_projection(dict(candidate["endpoint_projection"]))
 
 
 def aggregate_residual_usage(
@@ -546,9 +925,57 @@ def aggregate_residual_usage(
         "total_decisions": total,
         "corrected_decisions": corrected,
         "correction_rate": corrected / denominator,
+        "temporally_suppressed_decisions": int(
+            sum(
+                value.get("temporally_suppressed_decisions", 0)
+                for value in summaries
+            )
+        ),
+        "temporal_suppression_rate": (
+            sum(
+                value.get("temporally_suppressed_decisions", 0)
+                for value in summaries
+            )
+            / denominator
+        ),
+        "raw_residual_l1": float(
+            sum(value.get("raw_residual_l1", 0.0) for value in summaries)
+        ),
+        "applied_residual_l1": float(
+            sum(
+                value.get("applied_residual_l1", 0.0)
+                for value in summaries
+            )
+        ),
+        "temporally_suppressed_l1": float(
+            sum(
+                value.get("temporally_suppressed_l1", 0.0)
+                for value in summaries
+            )
+        ),
         "group_correction_rates": {
             group: count / denominator
             for group, count in group_corrected.items()
+        },
+        "capacity_action_effect": {
+            metric: float(
+                sum(
+                    value.get("capacity_action_effect", {}).get(
+                        metric,
+                        0.0,
+                    )
+                    for value in summaries
+                )
+            )
+            for metric in (
+                "anchor_l1",
+                "final_l1",
+                "delta_l1",
+                "amplification_l1",
+                "damping_l1",
+                "reversal_l1",
+                "new_flow_l1",
+            )
         },
     }
 
@@ -560,38 +987,143 @@ def normalized_deployment_candidate(
     scale = float(candidate.get("scale", 0.0))
     if scale < 0.0:
         raise ValueError("Deployment residual scale cannot be negative")
-    thresholds = tuple(
-        float(item)
-        for item in candidate.get(
-            "group_thresholds",
-            (0.8, 0.8, 0.8),
+    use_checkpoint_thresholds = bool(
+        candidate.get("use_checkpoint_group_thresholds", False)
+    )
+    thresholds = (
+        ()
+        if use_checkpoint_thresholds
+        else tuple(
+            float(item)
+            for item in candidate.get(
+                "group_thresholds",
+                (0.8, 0.8, 0.8),
+            )
         )
     )
     if any(not 0.0 <= item <= 1.0 for item in thresholds):
         raise ValueError("Deployment gate thresholds must lie in [0, 1]")
-    return {
+    normalized = {
         "scale": scale,
         "group_thresholds": list(thresholds),
     }
+    if use_checkpoint_thresholds:
+        normalized["use_checkpoint_group_thresholds"] = True
+    if "anchor_q_margin" in candidate:
+        margin = float(candidate["anchor_q_margin"])
+        if not np.isfinite(margin) or margin < 0.0:
+            raise ValueError(
+                "Deployment anchor_q_margin must be finite and non-negative"
+            )
+        normalized["anchor_q_margin"] = margin
+    if "temporal_guard" in candidate:
+        temporal_guard = candidate["temporal_guard"]
+        if temporal_guard is None:
+            temporal_guard = {}
+        if not isinstance(temporal_guard, dict):
+            raise ValueError("Deployment temporal_guard must be a mapping")
+        normalized["temporal_guard"] = dict(temporal_guard)
+    if "endpoint_projection" in candidate:
+        endpoint_projection = candidate["endpoint_projection"]
+        if endpoint_projection is None:
+            endpoint_projection = {}
+        if not isinstance(endpoint_projection, dict):
+            raise ValueError(
+                "Deployment endpoint_projection must be a mapping"
+            )
+        normalized["endpoint_projection"] = dict(endpoint_projection)
+    return normalized
 
 
 def deployment_candidate_label(candidate: dict[str, Any]) -> str:
-    thresholds = "-".join(
-        f"{float(value):g}"
-        for value in candidate["group_thresholds"]
+    thresholds = (
+        "checkpoint"
+        if bool(candidate.get("use_checkpoint_group_thresholds", False))
+        else "-".join(
+            f"{float(value):g}"
+            for value in candidate["group_thresholds"]
+        )
     )
-    return f"scale{float(candidate['scale']):g}_gate{thresholds}"
+    label = f"scale{float(candidate['scale']):g}_gate{thresholds}"
+    if "anchor_q_margin" in candidate:
+        label = (
+            f"{label}_qmargin"
+            f"{float(candidate['anchor_q_margin']):g}"
+        )
+    if "temporal_guard" in candidate:
+        guard_token = hashlib.sha1(
+            json.dumps(
+                candidate["temporal_guard"],
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()[:8]
+        label = f"{label}_guard{guard_token}"
+    if "endpoint_projection" in candidate:
+        projection_token = hashlib.sha1(
+            json.dumps(
+                candidate["endpoint_projection"],
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()[:8]
+        label = f"{label}_projection{projection_token}"
+    return label
 
 
 def select_deployment_candidate(
     results: list[dict[str, Any]],
     *,
     strict_scenario_guardrail: bool,
+    selection_guardrails: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    guardrails = dict(selection_guardrails or {})
+    metric_limits = (
+        ("max_cost_gap_pct", "cost_gap_pct", float("-inf")),
+        (
+            "max_cost_difference_ci_high",
+            "cost_difference_ci_high",
+            float("-inf"),
+        ),
+    )
+    metric_floors = (
+        ("min_paired_win_rate", "paired_win_rate", float("inf")),
+    )
+
+    def passes_statistical_guardrails(
+        result: dict[str, Any],
+    ) -> bool:
+        aggregate = result["aggregate"]
+        max_scenario_cost_gap_pct = guardrails.get(
+            "max_scenario_cost_gap_pct"
+        )
+        if max_scenario_cost_gap_pct is not None:
+            scenario_summaries = result.get("per_scenario", {})
+            if not scenario_summaries or any(
+                float(summary.get("cost_gap_pct", float("inf")))
+                > float(max_scenario_cost_gap_pct)
+                for summary in scenario_summaries.values()
+            ):
+                return False
+        for setting, metric, missing_default in metric_limits:
+            if setting not in guardrails:
+                continue
+            value = float(aggregate.get(metric, missing_default))
+            if value > float(guardrails[setting]):
+                return False
+        for setting, metric, missing_default in metric_floors:
+            if setting not in guardrails:
+                continue
+            value = float(aggregate.get(metric, missing_default))
+            if value < float(guardrails[setting]):
+                return False
+        return True
+
     eligible = [
         result
         for result in results
         if bool(result["aggregate"]["clinically_noninferior"])
+        and passes_statistical_guardrails(result)
         and (
             not strict_scenario_guardrail
             or bool(result["all_scenarios_clinically_noninferior"])
@@ -619,6 +1151,40 @@ def select_deployment_candidate(
         "all_scenarios_clinically_noninferior": bool(
             selected["all_scenarios_clinically_noninferior"]
         ),
+        "selection_guardrails": guardrails,
+    }
+
+
+def select_fixed_deployment_candidate(
+    results: list[dict[str, Any]],
+    *,
+    candidate: dict[str, Any],
+    checkpoint_variant: str,
+) -> dict[str, Any]:
+    """Return a deployment frozen before validation outcomes are observed."""
+
+    matches = [
+        result
+        for result in results
+        if result["candidate"] == candidate
+        and str(result.get("checkpoint_variant", "final"))
+        == str(checkpoint_variant)
+    ]
+    if len(matches) != 1:
+        raise ValueError(
+            "Pre-registered deployment must match exactly one validation "
+            f"result, found {len(matches)}"
+        )
+    selected = matches[0]
+    return {
+        "candidate": selected["candidate"],
+        "checkpoint_variant": str(checkpoint_variant),
+        "selection_source": "pre_registered_fixed",
+        "validation_aggregate": selected["aggregate"],
+        "all_scenarios_clinically_noninferior": bool(
+            selected["all_scenarios_clinically_noninferior"]
+        ),
+        "selection_guardrails": {},
     }
 
 

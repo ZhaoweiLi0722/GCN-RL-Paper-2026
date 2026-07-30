@@ -339,6 +339,9 @@ def evaluate_multiscenario_agents(
     clinical_noninferiority = normalized_clinical_noninferiority(
         evaluation_config.get("clinical_noninferiority", {})
     )
+    evaluation_config_overrides = dict(
+        evaluation_config.get("config_overrides", {})
+    )
     output_root = Path(
         evaluation_config.get(
             "output_root",
@@ -389,7 +392,10 @@ def evaluate_multiscenario_agents(
             run,
             requested_checkpoint_variants,
         )
-        config_snapshot = load_config(run["config"])
+        config_snapshot = deep_update_dict(
+            load_config(resolve_manifest_artifact_path(run["config"])),
+            evaluation_config_overrides,
+        )
         run_root = output_root / algorithm / f"seed{training_seed}"
         run_root.mkdir(parents=True, exist_ok=True)
 
@@ -1216,7 +1222,7 @@ def resolve_checkpoint_variants(
             raise ValueError(
                 f"Training manifest is missing {manifest_key!r}"
             )
-        path = Path(raw_path)
+        path = resolve_manifest_artifact_path(raw_path)
         if not path.is_file():
             raise FileNotFoundError(
                 f"{variant} checkpoint does not exist: {path}"
@@ -1229,6 +1235,21 @@ def resolve_checkpoint_variants(
     if not resolved:
         raise ValueError("Checkpoint variants resolved to an empty set")
     return resolved
+
+
+def resolve_manifest_artifact_path(raw_path: str | Path) -> Path:
+    """Resolve relative manifest paths produced on Windows or POSIX."""
+
+    path = Path(raw_path)
+    if path.is_file():
+        return path
+    raw_text = str(raw_path)
+    if "\\" in raw_text:
+        portable_path = Path(raw_text.replace("\\", "/"))
+        if portable_path.is_file():
+            return portable_path
+        return portable_path
+    return path
 
 
 def aggregate_holdout_results(
@@ -1266,18 +1287,23 @@ def aggregate_holdout_results(
             seed=bootstrap_seed,
         )
 
-    graph = "gcn_residual_mdl2_network_ddpg_afd"
-    flat = "flat_residual_mdl2_network_ddpg_afd"
-    graph_seeds = {
-        seed for algorithm, seed in holdout_rows_by_run
-        if algorithm == graph
-    }
-    flat_seeds = {
-        seed for algorithm, seed in holdout_rows_by_run
-        if algorithm == flat
-    }
-    common_seeds = sorted(graph_seeds & flat_seeds)
-    if common_seeds:
+    matched_pairs = [
+        (graph, f"flat_{graph[4:]}")
+        for graph in algorithms
+        if graph.startswith("gcn_") and f"flat_{graph[4:]}" in algorithms
+    ]
+    for pair_index, (graph, flat) in enumerate(matched_pairs):
+        graph_seeds = {
+            seed for algorithm, seed in holdout_rows_by_run
+            if algorithm == graph
+        }
+        flat_seeds = {
+            seed for algorithm, seed in holdout_rows_by_run
+            if algorithm == flat
+        }
+        common_seeds = sorted(graph_seeds & flat_seeds)
+        if not common_seeds:
+            continue
         graph_rows = [
             row
             for seed in common_seeds
@@ -1288,11 +1314,14 @@ def aggregate_holdout_results(
             for seed in common_seeds
             for row in holdout_rows_by_run[(flat, seed)]
         ]
-        result["graph_vs_flat"] = metric_bootstrap_bundle(
+        bundle = metric_bootstrap_bundle(
             graph_rows,
             flat_rows,
-            seed=bootstrap_seed + 1,
+            seed=bootstrap_seed + pair_index + 1,
         )
+        result[f"{graph}_vs_{flat}"] = bundle
+        if "graph_vs_flat" not in result:
+            result["graph_vs_flat"] = bundle
     return result
 
 

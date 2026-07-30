@@ -54,6 +54,8 @@ Implement or verify the following for both graph and matched-flat agents:
 2. Target-policy smoothing and delayed policy updates.
 3. Critic-only warm-up before the first actor update.
 4. Teacher/behavior-cloning regularization retained during online updates.
+   In the implemented screen this is a frozen Stage-3 policy-output trust
+   region, avoiding an extra supervised epoch before online training.
 5. Residual L2 penalty and the existing endpoint projection.
 6. Fixed deployment scale and threshold selected without holdout leakage.
 7. Actor drift diagnostics relative to the Stage-3 checkpoint.
@@ -69,13 +71,16 @@ Initial conservative settings:
 - exploration standard deviation: `0.005`;
 - target-policy noise: `0.01`;
 - target-noise clip: `0.02`;
-- teacher regularization weight: start at `2.0`;
+- frozen reference-policy regularization weight: `25.0`;
+- actor advantage baseline: the frozen Stage-3 policy, not raw MDL-2;
+- conservative reference comparison: lower twin-Q for the candidate versus
+  upper twin-Q for the frozen reference;
 - residual deployment scale: fixed at `0.1`;
 - specimen transfer residual: always zero.
 
 ## Phase C: Smoke and Stability Diagnostics
 
-Run one GCN seed for 5-10 episodes on CUDA or MPS.
+Run one matched GCN/flat seed for 3-10 episodes on CPU, CUDA, or MPS.
 
 Required checks:
 
@@ -93,6 +98,10 @@ Stop and revise if:
 - candidate cost degrades by more than 0.25% in the smoke holdout;
 - clinical noninferiority fails badly;
 - the deployment scale collapses to zero.
+
+Status: passed for both graph and matched-flat policies. The smoke run
+produced real critic updates and delayed actor updates after warm-up, with
+finite twin-Q diagnostics and bounded Stage-3 actor drift.
 
 ## Phase D: Three-Seed Targeted Screen
 
@@ -190,3 +199,21 @@ Only after Phase F:
 - Merge pipeline/reproducibility code independently of final manuscript
   claims.
 - Add final results and manuscript in a later, evidence-locked commit.
+
+## Mac/PC Transfer Protocol
+
+1. GitHub carries source code, configs, tests, compact summaries, and
+   provenance manifests.
+2. OneDrive carries checkpoints, teacher caches, raw CSV rows, and ZIP
+   archives. These files remain outside Git history.
+3. Only one machine edits the shared branch at a time. The Mac commits and
+   pushes, the PC pulls and runs, then the PC returns a ZIP plus SHA256.
+4. The PC command is:
+
+   `powershell -ExecutionPolicy Bypass -File scripts\run_regional_conservative_td3_screen.ps1`
+
+5. An optional OneDrive destination can be supplied with
+   `-ExportDirectory "C:\path\to\OneDrive\RTX4090-Transfer"`.
+6. The Mac independently verifies the SHA256, raw row counts, common-random-
+   number pairing, final-versus-pretrain deltas, graph-versus-flat deltas, and
+   clinical noninferiority before any result commit.

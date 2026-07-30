@@ -1094,6 +1094,8 @@ class GCNDDPGAgent:
             return {"samples": 0, "final_loss": 0.0}
         weight_tensor = self._fit_action_weights(weights, sample_count)
         epochs = int(settings.get("epochs", 1))
+        if epochs < 0:
+            raise ValueError("fit_action_batch epochs must be non-negative")
         batch_size = min(max(int(settings.get("batch_size", self.batch_size)), 1), sample_count)
         seed = int(settings.get("seed", self.seed + 400000))
         target_mode = str(
@@ -1151,7 +1153,7 @@ class GCNDDPGAgent:
         self.actor.train()
         if self.correction_gate is not None:
             self.correction_gate.train()
-        for _epoch in range(max(epochs, 1)):
+        for _epoch in range(epochs):
             permutation = torch.randperm(sample_count, generator=generator)
             for start in range(0, sample_count, batch_size):
                 indices = permutation[start : start + batch_size].to(self.device)

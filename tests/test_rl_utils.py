@@ -112,6 +112,7 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIn("gcn_residual_pmyo_shield_td3", algorithms)
         self.assertIn("gcn_residual_pmyo_transfer_td3_bc", algorithms)
         self.assertIn("gcn_residual_pmyo_transfer_td3", algorithms)
+        self.assertIn("gcn_residual_mdl2_network_td3_bc", algorithms)
         self.assertIs(get_agent_class("gcn_residual_mdl2"), get_agent_class("gcn_ddpg"))
         self.assertIs(
             get_agent_class("gcn_residual_mdl2_network_ddpg_afd"),
@@ -120,6 +121,12 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIs(
             get_agent_class("gcn_residual_mdl2_network_td3_afd"),
             get_agent_class("gcn_td3"),
+        )
+        self.assertEqual(
+            get_agent_class(
+                "gcn_residual_mdl2_network_td3_bc"
+            ).__name__,
+            "ConservativeGCNResidualTD3Agent",
         )
         self.assertIs(
             get_agent_class("gcn_residual_mdl2_replenish_ddpg"),
@@ -153,6 +160,7 @@ class RLUtilsTest(unittest.TestCase):
 
         self.assertIn("flat_residual_mdl2", algorithms)
         self.assertIn("flat_residual_mdl2_network_ddpg_afd", algorithms)
+        self.assertIn("flat_residual_mdl2_network_td3_bc", algorithms)
         self.assertIn("flat_residual_mdl2_replenish_ddpg_afd", algorithms)
         self.assertIn("flat_residual_iso", algorithms)
         self.assertIn("flat_residual_myo", algorithms)
@@ -161,6 +169,12 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIs(
             get_agent_class("flat_residual_mdl2_network_ddpg_afd"),
             get_agent_class("flat_ddpg"),
+        )
+        self.assertEqual(
+            get_agent_class(
+                "flat_residual_mdl2_network_td3_bc"
+            ).__name__,
+            "ConservativeFlatResidualTD3Agent",
         )
         self.assertIs(
             get_agent_class("flat_residual_mdl2_replenish_ddpg_afd"),

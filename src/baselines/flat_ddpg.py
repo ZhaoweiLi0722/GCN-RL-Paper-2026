@@ -842,17 +842,35 @@ class FlatDDPGAgent:
         if state_tensor.shape[0] == 0:
             return {"samples": 0, "final_loss": 0.0}
         weight_tensor = self._fit_action_weights(weights, int(state_tensor.shape[0]))
-        summary = self._fit_action_tensors(
-            state_tensor,
-            action_tensor,
-            epochs=int(settings.get("epochs", 1)),
-            batch_size=int(settings.get("batch_size", self.batch_size)),
-            seed=int(settings.get("seed", self.seed + 400000)),
-            target_mode=str(
-                settings.get("target_mode", "residual" if self.residual_action_enabled else "action")
-            ),
-            weights=weight_tensor,
+        epochs = int(settings.get("epochs", 1))
+        if epochs < 0:
+            raise ValueError(
+                "fit_action_batch epochs must be non-negative"
+            )
+        target_mode = str(
+            settings.get(
+                "target_mode",
+                "residual" if self.residual_action_enabled else "action",
+            )
         )
+        if epochs == 0:
+            summary = {
+                "samples": int(state_tensor.shape[0]),
+                "final_loss": 0.0,
+                "target_mode": target_mode,
+            }
+        else:
+            summary = self._fit_action_tensors(
+                state_tensor,
+                action_tensor,
+                epochs=epochs,
+                batch_size=int(
+                    settings.get("batch_size", self.batch_size)
+                ),
+                seed=int(settings.get("seed", self.seed + 400000)),
+                target_mode=target_mode,
+                weights=weight_tensor,
+            )
         if bool(settings.get("retain_for_regularization", False)):
             self.imitation_states = state_tensor.detach()
             self.imitation_actions = action_tensor.detach()

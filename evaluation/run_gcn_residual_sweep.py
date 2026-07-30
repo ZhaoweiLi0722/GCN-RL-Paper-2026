@@ -630,7 +630,29 @@ def run_local_search_distillation(
         "train_trajectory_ids": "",
         "validation_trajectory_ids": "",
     }
-    if validation_demos is not None:
+    if epochs < 0:
+        raise ValueError("local-search distillation epochs must be non-negative")
+    if epochs == 0:
+        if validation_demos is not None:
+            split_summary = external_validation_summary(
+                demos,
+                validation_demos,
+            )
+        final_fit = agent.fit_action_batch(
+            demos["states"],
+            demos["actions"],
+            {
+                "epochs": 0,
+                "batch_size": batch_size,
+                "seed": seed + 1200000,
+                "retain_for_regularization": bool(
+                    retain_for_regularization
+                ),
+                "demonstrations": demos,
+            },
+            weights=demos["weights"],
+        )
+    elif validation_demos is not None:
         split_summary = external_validation_summary(
             demos,
             validation_demos,

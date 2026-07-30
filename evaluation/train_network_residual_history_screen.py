@@ -362,8 +362,8 @@ def make_history_screen_config(
         "demonstration_path"
     ] = str(cache_path)
     if pretrain_epochs is not None:
-        if pretrain_epochs < 1:
-            raise ValueError("pretrain_epochs must be positive")
+        if pretrain_epochs < 0:
+            raise ValueError("pretrain_epochs must be non-negative")
         config["advantage_distillation_pretrain"]["epochs"] = int(
             pretrain_epochs
         )

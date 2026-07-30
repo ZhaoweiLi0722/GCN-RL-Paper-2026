@@ -13,7 +13,7 @@ if (-not (Test-Path $Python)) {
     throw "Run scripts\setup_cuda_4090.ps1 first."
 }
 
-$DirtyPaths = @(git status --porcelain)
+$DirtyPaths = @(git status --porcelain --untracked-files=no)
 if ($DirtyPaths.Count -gt 0) {
     throw "Commit or stash tracked source changes before a paper run."
 }

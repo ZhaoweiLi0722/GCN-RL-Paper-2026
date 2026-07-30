@@ -1905,6 +1905,16 @@
       "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift_severe.json"
     },
     {
+      "name": "patient_condition_geo_demand_drift_severe_history",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift_severe.json",
+      "env_overrides": {
+        "scenario_name": "patient_condition_geo_demand_drift_severe_history",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "include_time_state": true
+      }
+    },
+    {
       "name": "patient_condition_geo_regional_drift",
       "env_config": "experiments/configs/20_clinic_patient_condition_geo_regional_drift.json"
     },

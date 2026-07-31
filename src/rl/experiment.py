@@ -12,6 +12,10 @@ import numpy as np
 
 from src.env.capacity_planning import CapacityPlanningConfig, CapacityPlanningEnv
 from src.graph.ablation import with_graph_ablation
+from src.rl.training_state import (
+    load_off_policy_training_state,
+    save_off_policy_training_state,
+)
 
 
 COST_COMPONENT_METRICS = (
@@ -79,35 +83,110 @@ def train_off_policy_agent(
     config: dict[str, Any],
     *,
     post_imitation_pretrain: Callable[[Any, CapacityPlanningEnv], dict[str, Any]] | None = None,
+    pretrain_report_out: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
     seed = int(config.get("seed", 0))
     num_episodes = int(config.get("num_episodes", 1))
     max_steps = int(config.get("max_steps_per_episode", env.config.episode_horizon))
     algorithm = str(config.get("algorithm", agent.algorithm))
     checkpoint_dir = Path(config.get("checkpoint_dir", f"checkpoints/{algorithm}"))
     checkpoint_interval = int(config.get("checkpoint_interval", max(num_episodes, 1)))
+    training_state_interval = int(
+        config.get("training_state_checkpoint_interval", 0)
+    )
+    training_state_path = Path(
+        config.get(
+            "training_state_checkpoint_path",
+            checkpoint_dir / f"{algorithm}_seed{seed}_training_state.pt",
+        )
+    )
+    resume_path_value = config.get("resume_training_state_path")
+    resume_path = (
+        None
+        if resume_path_value in (None, "")
+        else Path(str(resume_path_value))
+    )
     progress_interval = int(config.get("progress_interval", 0))
     update_frequency = max(int(config.get("update_frequency", 1)), 1)
     updates_per_update = max(int(config.get("updates_per_update", 1)), 1)
     train_randomization_summary = _maybe_enable_train_randomization(env, config)
-    global_step = 0
-    start_time = time.perf_counter()
-    pretrain_summary = _maybe_pretrain_agent(agent, env, config)
-    advantage_distillation_summary = (
-        dict(post_imitation_pretrain(agent, env) or {})
-        if post_imitation_pretrain is not None
-        else {}
-    )
-    pretrain_checkpoint_path = ""
-    if bool(config.get("save_pretrain_checkpoint", False)) and (
-        pretrain_summary or advantage_distillation_summary
-    ):
-        pretrain_checkpoint = checkpoint_dir / f"{algorithm}_seed{seed}_pretrain.pt"
-        agent.save(pretrain_checkpoint)
-        pretrain_checkpoint_path = str(pretrain_checkpoint)
     elite_config = dict(config.get("elite_imitation", {}))
     elite_enabled = bool(elite_config.get("enabled", False))
+    if training_state_interval < 0:
+        raise ValueError("training_state_checkpoint_interval cannot be negative")
+    if training_state_interval and elite_enabled:
+        raise ValueError(
+            "Full-state resumption does not support elite_imitation"
+        )
+
+    rows: list[dict[str, Any]] = []
+    global_step = 0
+    start_episode = 0
+    elapsed_runtime_seconds = 0.0
+    pretrain_summary: dict[str, Any] = {}
+    advantage_distillation_summary: dict[str, Any] = {}
+    pretrain_checkpoint_path = ""
+    checkpoint_runtime_start = time.perf_counter()
+    if resume_path is not None:
+        resume_metadata = load_off_policy_training_state(
+            agent,
+            resume_path,
+            config=config,
+        )
+        rows = [dict(row) for row in resume_metadata.get("rows", ())]
+        global_step = int(resume_metadata["global_step"])
+        start_episode = int(resume_metadata["next_episode"])
+        elapsed_runtime_seconds = float(
+            resume_metadata.get("elapsed_runtime_seconds", 0.0)
+        )
+        pretrain_summary = dict(
+            resume_metadata.get("pretrain_summary", {})
+        )
+        advantage_distillation_summary = dict(
+            resume_metadata.get("advantage_distillation_summary", {})
+        )
+        pretrain_checkpoint_path = str(
+            resume_metadata.get("pretrain_checkpoint_path", "")
+        )
+        if not 0 <= start_episode <= num_episodes:
+            raise ValueError(
+                f"Invalid resumed episode boundary: {start_episode}"
+            )
+        if len(rows) != start_episode:
+            raise ValueError(
+                "Training-state row count does not match next_episode"
+            )
+        episode_seeker = getattr(env, "set_episode_index", None)
+        if start_episode and not callable(episode_seeker):
+            raise ValueError(
+                "Environment does not support episode-boundary resumption"
+            )
+        if callable(episode_seeker):
+            episode_seeker(start_episode)
+        print(
+            f"Resuming {algorithm} seed={seed} at episode "
+            f"{start_episode + 1}/{num_episodes}",
+            flush=True,
+        )
+    else:
+        pretrain_summary = _maybe_pretrain_agent(agent, env, config)
+        advantage_distillation_summary = (
+            dict(post_imitation_pretrain(agent, env) or {})
+            if post_imitation_pretrain is not None
+            else {}
+        )
+        if bool(config.get("save_pretrain_checkpoint", False)) and (
+            pretrain_summary or advantage_distillation_summary
+        ):
+            pretrain_checkpoint = (
+                checkpoint_dir / f"{algorithm}_seed{seed}_pretrain.pt"
+            )
+            agent.save(pretrain_checkpoint)
+            pretrain_checkpoint_path = str(pretrain_checkpoint)
+    if pretrain_report_out is not None:
+        pretrain_report_out.update(advantage_distillation_summary)
+    start_time = checkpoint_runtime_start - elapsed_runtime_seconds
+
     elite_warmup_episodes = int(elite_config.get("warmup_episodes", 0))
     elite_min_improvement = float(elite_config.get("min_improvement", 0.0))
     elite_max_episodes = int(elite_config.get("max_episodes", 5))
@@ -115,7 +194,7 @@ def train_off_policy_agent(
     elite_best_cost = float("inf")
     elite_update_count = 0
 
-    for episode in range(num_episodes):
+    for episode in range(start_episode, num_episodes):
         state = env.reset(seed=seed + episode)
         agent.reset()
         total_reward = 0.0
@@ -300,6 +379,32 @@ def train_off_policy_agent(
 
         if (episode + 1) % checkpoint_interval == 0:
             agent.save(checkpoint_dir / f"{algorithm}_seed{seed}_episode{episode + 1}.pt")
+
+        if training_state_interval and (
+            (episode + 1) % training_state_interval == 0
+            or episode + 1 == num_episodes
+        ):
+            save_off_policy_training_state(
+                agent,
+                training_state_path,
+                config=config,
+                training={
+                    "next_episode": int(episode + 1),
+                    "global_step": int(global_step),
+                    "rows": rows,
+                    "pretrain_summary": pretrain_summary,
+                    "advantage_distillation_summary": (
+                        advantage_distillation_summary
+                    ),
+                    "pretrain_checkpoint_path": pretrain_checkpoint_path,
+                    "elapsed_runtime_seconds": (
+                        time.perf_counter() - start_time
+                    ),
+                },
+            )
+            result_csv_path = config.get("result_csv_path")
+            if result_csv_path:
+                write_rows(rows, result_csv_path)
 
         if progress_interval and (
             episode == 0 or (episode + 1) % progress_interval == 0 or episode + 1 == num_episodes

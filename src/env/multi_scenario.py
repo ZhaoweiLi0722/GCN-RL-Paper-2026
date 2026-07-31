@@ -71,6 +71,17 @@ class EpisodeScenarioEnv:
         self._reset_count += 1
         return self.current_env.reset(seed=seed)
 
+    def set_episode_index(self, episode_index: int) -> None:
+        """Position the next reset at an episode boundary for resumption."""
+
+        index = int(episode_index)
+        if index < 0:
+            raise ValueError("episode_index must be non-negative")
+        self._reset_count = index
+        self._current_index = (
+            self._start_index + index
+        ) % len(self._environments)
+
     def step(
         self,
         action: np.ndarray,

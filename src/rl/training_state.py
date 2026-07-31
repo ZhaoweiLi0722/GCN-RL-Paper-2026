@@ -1,0 +1,231 @@
+"""Atomic, full-state checkpoints for resumable off-policy training."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import random
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+try:
+    import torch
+except ModuleNotFoundError:  # pragma: no cover - exercised in CPU-only installs
+    torch = None
+
+
+FORMAT_VERSION = 1
+_MODULE_NAMES = (
+    "actor",
+    "actor_target",
+    "critic",
+    "critic_target",
+    "correction_gate",
+    "correction_safety_gate",
+)
+_OPTIMIZER_NAMES = (
+    "actor_optimizer",
+    "critic_optimizer",
+    "correction_gate_optimizer",
+    "correction_safety_gate_optimizer",
+)
+_IMITATION_TENSOR_NAMES = (
+    "imitation_states",
+    "imitation_actions",
+    "imitation_node_features",
+    "imitation_weights",
+)
+_EXECUTION_ONLY_CONFIG_KEYS = frozenset(
+    {
+        "checkpoint_dir",
+        "checkpoint_interval",
+        "config_snapshot_path",
+        "progress_interval",
+        "result_csv_path",
+        "resume_training_state_path",
+        "training_state_checkpoint_interval",
+        "training_state_checkpoint_path",
+    }
+)
+
+
+def training_contract_sha256(config: dict[str, Any]) -> str:
+    """Hash scientific settings while ignoring execution-only file controls."""
+
+    scientific = {
+        key: value
+        for key, value in config.items()
+        if key not in _EXECUTION_ONLY_CONFIG_KEYS
+    }
+    payload = json.dumps(
+        _jsonable(scientific),
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def save_off_policy_training_state(
+    agent: Any,
+    path: str | Path,
+    *,
+    config: dict[str, Any],
+    training: dict[str, Any],
+) -> Path:
+    """Atomically save model, optimizer, replay, RNG, and loop state."""
+
+    _require_torch()
+    output = Path(path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = output.with_name(f".{output.name}.{os.getpid()}.tmp")
+    payload = {
+        "format_version": FORMAT_VERSION,
+        "algorithm": str(agent.algorithm),
+        "seed": int(agent.seed),
+        "training_contract_sha256": training_contract_sha256(config),
+        "agent": _agent_state_dict(agent),
+        "training": dict(training),
+    }
+    try:
+        torch.save(payload, temporary)
+        os.replace(temporary, output)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+    return output
+
+
+def load_off_policy_training_state(
+    agent: Any,
+    path: str | Path,
+    *,
+    config: dict[str, Any],
+) -> dict[str, Any]:
+    """Restore a checkpoint and return its training-loop metadata."""
+
+    _require_torch()
+    checkpoint_path = Path(path)
+    if not checkpoint_path.is_file():
+        raise FileNotFoundError(checkpoint_path)
+    checkpoint = torch.load(
+        checkpoint_path,
+        map_location=agent.device,
+        weights_only=False,
+    )
+    if int(checkpoint.get("format_version", -1)) != FORMAT_VERSION:
+        raise ValueError("Unsupported off-policy training-state format")
+    if str(checkpoint.get("algorithm")) != str(agent.algorithm):
+        raise ValueError("Training-state algorithm does not match")
+    if int(checkpoint.get("seed", -1)) != int(agent.seed):
+        raise ValueError("Training-state seed does not match")
+    expected_contract = training_contract_sha256(config)
+    if checkpoint.get("training_contract_sha256") != expected_contract:
+        raise ValueError(
+            "Training-state scientific contract does not match the current config"
+        )
+    _load_agent_state_dict(agent, checkpoint["agent"])
+    return dict(checkpoint["training"])
+
+
+def _agent_state_dict(agent: Any) -> dict[str, Any]:
+    modules = {}
+    module_modes = {}
+    for name in _MODULE_NAMES:
+        module = getattr(agent, name, None)
+        if module is not None:
+            modules[name] = module.state_dict()
+            module_modes[name] = bool(module.training)
+    optimizers = {
+        name: optimizer.state_dict()
+        for name in _OPTIMIZER_NAMES
+        if (optimizer := getattr(agent, name, None)) is not None
+    }
+    imitation_tensors = {}
+    for name in _IMITATION_TENSOR_NAMES:
+        value = getattr(agent, name, None)
+        imitation_tensors[name] = (
+            None if value is None else value.detach().cpu()
+        )
+    cuda_rng_states = []
+    if torch.cuda.is_available():
+        cuda_rng_states = [state.cpu() for state in torch.cuda.get_rng_state_all()]
+    return {
+        "modules": modules,
+        "module_modes": module_modes,
+        "optimizers": optimizers,
+        "total_updates": int(getattr(agent, "total_updates", 0)),
+        "replay_buffer": agent.replay_buffer.state_dict(),
+        "noise": agent.noise.state_dict(),
+        "imitation_tensors": imitation_tensors,
+        "imitation_rng_state": agent.imitation_rng.bit_generator.state,
+        "python_rng_state": random.getstate(),
+        "numpy_rng_state": np.random.get_state(),
+        "torch_rng_state": torch.get_rng_state().cpu(),
+        "torch_cuda_rng_states": cuda_rng_states,
+    }
+
+
+def _load_agent_state_dict(agent: Any, state: dict[str, Any]) -> None:
+    modules = dict(state["modules"])
+    for name, module_state in modules.items():
+        module = getattr(agent, name, None)
+        if module is None:
+            raise ValueError(f"Training-state module is unavailable: {name}")
+        module.load_state_dict(module_state)
+    for name, is_training in dict(state.get("module_modes", {})).items():
+        module = getattr(agent, name, None)
+        if module is not None:
+            module.train(bool(is_training))
+    for name, optimizer_state in dict(state["optimizers"]).items():
+        optimizer = getattr(agent, name, None)
+        if optimizer is None:
+            raise ValueError(f"Training-state optimizer is unavailable: {name}")
+        optimizer.load_state_dict(optimizer_state)
+        _move_optimizer_state(optimizer, agent.device)
+    agent.total_updates = int(state["total_updates"])
+    agent.replay_buffer.load_state_dict(state["replay_buffer"])
+    agent.noise.load_state_dict(state["noise"])
+    for name, value in dict(state["imitation_tensors"]).items():
+        setattr(
+            agent,
+            name,
+            None if value is None else value.to(agent.device),
+        )
+    agent.imitation_rng.bit_generator.state = state["imitation_rng_state"]
+    random.setstate(state["python_rng_state"])
+    np.random.set_state(state["numpy_rng_state"])
+    torch.set_rng_state(state["torch_rng_state"].cpu())
+    cuda_rng_states = list(state.get("torch_cuda_rng_states", ()))
+    if cuda_rng_states:
+        if not torch.cuda.is_available():
+            raise RuntimeError("CUDA RNG state cannot be restored without CUDA")
+        torch.cuda.set_rng_state_all(cuda_rng_states)
+
+
+def _move_optimizer_state(optimizer: Any, device: Any) -> None:
+    for optimizer_state in optimizer.state.values():
+        for key, value in optimizer_state.items():
+            if torch.is_tensor(value):
+                optimizer_state[key] = value.to(device)
+
+
+def _jsonable(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {str(key): _jsonable(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_jsonable(item) for item in value]
+    if isinstance(value, Path):
+        return str(value)
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, np.generic):
+        return value.item()
+    return value
+
+
+def _require_torch() -> None:
+    if torch is None:
+        raise RuntimeError("PyTorch is required for off-policy training state")

@@ -69,6 +69,18 @@ class EpisodeScenarioEnvTests(unittest.TestCase):
         self.assertEqual(env.observation_size, 3)
         self.assertEqual(env._private_helper(), "a")
 
+    def test_episode_index_positions_next_resumed_reset(self) -> None:
+        env = EpisodeScenarioEnv(
+            (_StubEnv("a"), _StubEnv("b"), _StubEnv("c")),
+            start_index=1,
+        )
+
+        env.set_episode_index(5)
+        env.reset(seed=105)
+
+        self.assertEqual(env.current_scenario_index, 0)
+        self.assertEqual(env.scenario_name, "a")
+
     def test_rejects_incompatible_observation_layouts(self) -> None:
         with self.assertRaisesRegex(ValueError, "observation_size"):
             EpisodeScenarioEnv(

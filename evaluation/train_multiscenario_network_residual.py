@@ -32,13 +32,26 @@ from src.rl.experiment import (
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
+    parser.add_argument("--algorithm")
+    parser.add_argument("--seed", type=int)
+    parser.add_argument("--resume-training-state")
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
+
+    if args.resume_training_state and (
+        args.algorithm is None or args.seed is None
+    ):
+        parser.error(
+            "--resume-training-state requires --algorithm and --seed"
+        )
 
     run_config = load_config(args.config)
     result = train_multiscenario_agents(
         run_config,
         force=bool(args.force),
+        algorithm_filter=args.algorithm,
+        seed_filter=args.seed,
+        resume_training_state=args.resume_training_state,
     )
     print(json.dumps(result, indent=2, sort_keys=True))
 
@@ -47,7 +60,16 @@ def train_multiscenario_agents(
     run_config: dict[str, Any],
     *,
     force: bool = False,
+    algorithm_filter: str | None = None,
+    seed_filter: int | None = None,
+    resume_training_state: str | Path | None = None,
 ) -> dict[str, Any]:
+    if resume_training_state is not None and (
+        algorithm_filter is None or seed_filter is None
+    ):
+        raise ValueError(
+            "Resuming training requires one algorithm and one seed"
+        )
     plan = load_benchmark_plan(
         run_config.get(
             "plan",
@@ -102,12 +124,18 @@ def train_multiscenario_agents(
     for raw_entry in algorithm_entries:
         entry = dict(raw_entry)
         algorithm = str(entry["name"])
+        if algorithm_filter is not None and algorithm != algorithm_filter:
+            continue
         seeds = tuple(
             int(value)
             for value in entry.get("seeds", run_config.get("seeds", (0,)))
         )
         if not seeds:
             raise ValueError(f"{algorithm} requires at least one seed")
+        if seed_filter is not None:
+            if int(seed_filter) not in seeds:
+                continue
+            seeds = (int(seed_filter),)
         for seed in seeds:
             result = train_one_multiscenario_agent(
                 plan=plan,
@@ -134,9 +162,19 @@ def train_multiscenario_agents(
                 algorithm_overrides=dict(
                     entry.get("config_overrides", {})
                 ),
+                resume_training_state=(
+                    None
+                    if resume_training_state is None
+                    else Path(resume_training_state)
+                ),
                 force=force,
             )
             results.append(result)
+
+    if not results:
+        raise ValueError(
+            "No training run matched the requested algorithm/seed filter"
+        )
 
     payload = {
         "name": run_name,
@@ -150,10 +188,30 @@ def train_multiscenario_agents(
         "offline_updates": offline_updates,
         "runs": results,
     }
-    (run_root / "training_manifest.json").write_text(
+    manifest_path = run_root / "training_manifest.json"
+    if manifest_path.is_file():
+        existing = json.loads(manifest_path.read_text(encoding="utf-8"))
+        for key, value in payload.items():
+            if key != "runs" and existing.get(key) != value:
+                raise ValueError(
+                    f"Incremental manifest contract mismatch: {key}"
+                )
+        merged_runs = {
+            (str(run["algorithm"]), int(run["seed"])): dict(run)
+            for run in existing.get("runs", ())
+        }
+        for run in results:
+            merged_runs[(str(run["algorithm"]), int(run["seed"]))] = run
+        payload["runs"] = [
+            merged_runs[key]
+            for key in sorted(merged_runs)
+        ]
+    temporary_manifest = manifest_path.with_suffix(".json.tmp")
+    temporary_manifest.write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    temporary_manifest.replace(manifest_path)
     return payload
 
 
@@ -175,6 +233,7 @@ def train_one_multiscenario_agent(
     output_root: Path,
     common_overrides: dict[str, Any],
     algorithm_overrides: dict[str, Any],
+    resume_training_state: Path | None,
     force: bool,
 ) -> dict[str, Any]:
     config = make_history_screen_config(
@@ -194,7 +253,10 @@ def train_one_multiscenario_agent(
     config["algorithm"] = algorithm
     config["seed"] = int(seed)
     config["num_episodes"] = int(online_episodes)
-    config["checkpoint_interval"] = max(int(online_episodes), 1)
+    config.setdefault(
+        "checkpoint_interval",
+        max(int(online_episodes), 1),
+    )
     config["save_pretrain_checkpoint"] = True
     config.setdefault("elite_imitation", {})["enabled"] = False
     config.setdefault("advantage_distillation_pretrain", {})[
@@ -219,6 +281,17 @@ def train_one_multiscenario_agent(
     config["checkpoint_dir"] = str(checkpoint_dir)
     config["result_csv_path"] = str(run_dir / "training.csv")
     config["config_snapshot_path"] = str(run_dir / "config.json")
+    training_state_checkpoint = (
+        checkpoint_dir
+        / f"{algorithm}_seed{int(seed)}_training_state.pt"
+    )
+    config["training_state_checkpoint_path"] = str(
+        training_state_checkpoint
+    )
+    if resume_training_state is not None:
+        config["resume_training_state_path"] = str(
+            resume_training_state
+        )
     final_label = (
         f"{algorithm}_seed{int(seed)}_episode{online_episodes}.pt"
         if online_episodes > 0
@@ -228,6 +301,15 @@ def train_one_multiscenario_agent(
     summary_path = run_dir / "summary.json"
     if final_checkpoint.is_file() and summary_path.is_file() and not force:
         return json.loads(summary_path.read_text(encoding="utf-8"))
+    if (
+        training_state_checkpoint.is_file()
+        and resume_training_state is None
+        and not force
+    ):
+        raise FileExistsError(
+            "Partial training state exists; resume it explicitly with "
+            "--resume-training-state"
+        )
 
     environments = []
     environment_summaries = []
@@ -325,6 +407,7 @@ def train_one_multiscenario_agent(
         env,
         config,
         post_imitation_pretrain=post_imitation_pretrain,
+        pretrain_report_out=pretrain_report,
     )
     if not final_checkpoint.is_file():
         agent.save(final_checkpoint)
@@ -348,6 +431,12 @@ def train_one_multiscenario_agent(
             / f"{algorithm}_seed{int(seed)}_pretrain.pt"
         ),
         "initial_checkpoint": initial_checkpoint,
+        "resumed_training_state": (
+            None
+            if resume_training_state is None
+            else str(resume_training_state)
+        ),
+        "training_state_checkpoint": str(training_state_checkpoint),
         "online_episodes": int(online_episodes),
         "scenario_episode_counts": scenario_episode_counts,
         "environments": environment_summaries,

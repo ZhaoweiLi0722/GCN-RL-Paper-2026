@@ -6,10 +6,18 @@ from evaluation.train_multiscenario_network_residual import (
     maybe_load_initial_checkpoint,
     merge_multiscenario_env_overrides,
     multiscenario_env_overrides,
+    train_multiscenario_agents,
 )
 
 
 class MultiscenarioEnvOverrideTests(unittest.TestCase):
+    def test_resume_requires_single_algorithm_and_seed(self):
+        with self.assertRaisesRegex(ValueError, "one algorithm and one seed"):
+            train_multiscenario_agents(
+                {},
+                resume_training_state="partial.pt",
+            )
+
     def test_optional_initial_checkpoint_is_loaded(self):
         class Agent:
             def __init__(self):

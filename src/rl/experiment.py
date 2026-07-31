@@ -553,6 +553,7 @@ class EpisodeMetrics:
         self.patient_ineligibility_during_manufacturing_rate_last = 0.0
         self.manufacturing_loss_rate_last = 0.0
         self.average_turnaround_time_last = 0.0
+        self.risk_type_count_recoveries_last = 0.0
 
     def update(self, info: dict[str, Any]) -> None:
         self.steps += 1
@@ -636,6 +637,12 @@ class EpisodeMetrics:
         )
         self.average_turnaround_time_last = float(
             info.get("average_turnaround_time", self.average_turnaround_time_last)
+        )
+        self.risk_type_count_recoveries_last = float(
+            info.get(
+                "risk_type_count_recoveries",
+                self.risk_type_count_recoveries_last,
+            )
         )
 
     @property

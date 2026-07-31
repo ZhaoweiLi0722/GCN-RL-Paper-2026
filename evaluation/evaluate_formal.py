@@ -47,6 +47,7 @@ PATIENT_METRICS = (
     "patient_ineligibility_during_manufacturing_rate",
     "manufacturing_loss_rate",
     "average_turnaround_time",
+    "risk_type_count_recoveries",
 )
 
 
@@ -174,6 +175,9 @@ def evaluate_agent(
                     ),
                     "manufacturing_loss_rate": metrics.manufacturing_loss_rate_last,
                     "average_turnaround_time": metrics.average_turnaround_time_last,
+                    "risk_type_count_recoveries": (
+                        metrics.risk_type_count_recoveries_last
+                    ),
                 }
             )
         if metrics.has_cost_breakdown:

@@ -32,6 +32,7 @@ class PatientEvalMetricsTests(unittest.TestCase):
             self.assertGreaterEqual(row["patients_lost"], 0.0)
             self.assertGreaterEqual(row["material_wasted"], 0.0)
             self.assertGreaterEqual(row["at_risk_unserved"], 0.0)
+            self.assertEqual(row["risk_type_count_recoveries"], 0.0)
             # env defines patients_lost = ineligible + expired.
             self.assertAlmostEqual(
                 row["patients_lost"],

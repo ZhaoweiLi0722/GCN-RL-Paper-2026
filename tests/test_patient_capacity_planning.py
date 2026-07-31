@@ -318,6 +318,50 @@ class PatientEnvDynamicsTests(unittest.TestCase):
         self.assertEqual(risk_counts.shape, (2, 2))
         np.testing.assert_allclose(risk_counts[:, 0], np.zeros(2))
         np.testing.assert_allclose(risk_counts.sum(axis=1), info["waiting_patients"])
+        self.assertEqual(info["risk_type_count_recoveries"], 0.0)
+
+    def test_in_production_risk_count_recovers_from_unique_multiplier(self) -> None:
+        env = _env(
+            base=_small_base(
+                production_lead_time=3,
+                demand_rates=(0.0, 0.0),
+                initial_specimens=(1.0, 0.0),
+                initial_reagents=(10.0, 10.0),
+                initial_idle_bioreactors=(1.0, 1.0),
+                max_reagent_replenishment=(0.0, 0.0),
+            ),
+            patient=PatientConditionConfig(
+                healthy_decay_rate=0.0,
+                frail_decay_rate=0.0,
+            ),
+        )
+        env.reset(seed=0)
+        env.patient_queues[0][0].risk_type = int
+
+        _obs, _reward, _done, info = env.step(env.noop_action())
+
+        self.assertEqual(float(info["in_production_risk_type_counts"].sum()), 1.0)
+        self.assertEqual(info["risk_type_count_recoveries"], 1.0)
+
+    def test_risk_count_rejects_ambiguous_multiplier_recovery(self) -> None:
+        env = _env(
+            base=_small_base(
+                demand_rates=(0.0, 0.0),
+                initial_specimens=(1.0, 0.0),
+            ),
+            patient=PatientConditionConfig(
+                risk_type_probabilities=(1.0, 0.0),
+                risk_decay_multipliers=(1.0, 1.0),
+            ),
+        )
+        env.reset(seed=0)
+        env.patient_queues[0][0].risk_type = int
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "epoch=0, facility=0, stage='waiting'",
+        ):
+            env.risk_type_counts()
 
 
 if __name__ == "__main__":

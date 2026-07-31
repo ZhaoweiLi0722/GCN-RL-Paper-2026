@@ -116,6 +116,7 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         self.cumulative_started = 0.0
         self.cumulative_manufacturing_lost = 0.0
         self.cumulative_turnaround_time = 0.0
+        self.risk_type_count_recoveries = 0
         return self.observation()
 
     # ------------------------------------------------------------ observation
@@ -385,6 +386,7 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             "at_risk_unserved": at_risk_unserved.copy(),
             "risk_type_counts": self.risk_type_counts().copy(),
             "in_production_risk_type_counts": self.in_production_risk_type_counts().copy(),
+            "risk_type_count_recoveries": float(self.risk_type_count_recoveries),
             "waiting_patients": self.specimens.copy(),
             "in_production_patients": self._in_production_counts(),
             "eligibility_rate": self._eligibility_rate(),
@@ -535,7 +537,12 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         counts = np.zeros((self.config.num_facilities, risk_types), dtype=float)
         for i, queue in enumerate(self.patient_queues):
             for patient in queue:
-                counts[i, int(patient.risk_type)] += 1.0
+                risk_type = self._patient_risk_type_index(
+                    patient,
+                    facility=i,
+                    stage="waiting",
+                )
+                counts[i, risk_type] = float(counts[i, risk_type]) + 1.0
         return counts
 
     def in_production_risk_type_counts(self) -> np.ndarray:
@@ -544,10 +551,66 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         risk_types = len(self.patient_model.risk_decay_multipliers)
         counts = np.zeros((self.config.num_facilities, risk_types), dtype=float)
         for i, stages in enumerate(self.in_production_patients):
-            for stage in stages[1:]:
+            for stage_index, stage in enumerate(stages[1:], start=1):
                 for patient in stage:
-                    counts[i, int(patient.risk_type)] += 1.0
+                    risk_type = self._patient_risk_type_index(
+                        patient,
+                        facility=i,
+                        stage=stage_index,
+                    )
+                    counts[i, risk_type] = float(counts[i, risk_type]) + 1.0
         return counts
+
+    def _patient_risk_type_index(
+        self,
+        patient: PatientState,
+        *,
+        facility: int,
+        stage: int | str,
+    ) -> int:
+        """Return a valid risk index, using the active multiplier as a safe fallback."""
+
+        configured = np.asarray(
+            self.patient_model.risk_decay_multipliers,
+            dtype=float,
+        )
+        value = patient.risk_type
+        if isinstance(value, (int, np.integer)) and not isinstance(
+            value,
+            (bool, np.bool_),
+        ):
+            index = int(value)
+            if 0 <= index < configured.size:
+                return index
+
+        multiplier = patient.risk_multiplier
+        try:
+            multiplier_value = float(multiplier)
+        except (TypeError, ValueError, OverflowError):
+            matches = np.empty(0, dtype=int)
+        else:
+            matches = np.flatnonzero(
+                np.isclose(
+                    configured,
+                    multiplier_value,
+                    rtol=0.0,
+                    atol=1e-12,
+                )
+            )
+        if matches.size == 1:
+            self.risk_type_count_recoveries += 1
+            return int(matches[0])
+
+        patient_type = f"{type(patient).__module__}.{type(patient).__qualname__}"
+        raise TypeError(
+            "Cannot resolve patient risk type for info accounting: "
+            f"epoch={self.t}, facility={facility}, stage={stage!r}, "
+            f"patient_type={patient_type}, risk_type={value!r}, "
+            f"risk_type_type={type(value).__name__}, "
+            f"risk_multiplier={multiplier!r}, "
+            f"risk_multiplier_type={type(multiplier).__name__}, "
+            f"configured_multipliers={configured.tolist()}"
+        )
 
     def _in_production_counts(self) -> np.ndarray:
         return np.array(

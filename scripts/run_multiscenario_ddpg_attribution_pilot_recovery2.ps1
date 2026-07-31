@@ -8,6 +8,49 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Get-IndependentRelatedProcesses {
+    param(
+        [Parameter(Mandatory = $true)]
+        [object[]]$ProcessSnapshot,
+        [Parameter(Mandatory = $true)]
+        [int]$CurrentProcessId
+    )
+
+    $ProcessById = @{}
+    foreach ($Process in $ProcessSnapshot) {
+        $ProcessById[[int]$Process.ProcessId] = $Process
+    }
+
+    # Start-Process leaves a short-lived PowerShell ancestor whose command line
+    # contains this runner path. Ancestors are launchers, not other campaigns.
+    $ExcludedProcessIds = @($CurrentProcessId)
+    $CursorId = $CurrentProcessId
+    while ($ProcessById.ContainsKey($CursorId)) {
+        $ParentId = [int]$ProcessById[$CursorId].ParentProcessId
+        if (
+            $ParentId -le 0 -or
+            $ExcludedProcessIds -contains $ParentId
+        ) {
+            break
+        }
+        $ExcludedProcessIds += $ParentId
+        $CursorId = $ParentId
+    }
+
+    return @(
+        $ProcessSnapshot | Where-Object {
+            -not ($ExcludedProcessIds -contains [int]$_.ProcessId) -and
+            $_.CommandLine -and (
+                $_.CommandLine -match "train_multiscenario_network_residual" -or
+                $_.CommandLine -match "evaluate_multiscenario_network_residual" -or
+                $_.CommandLine -match (
+                    "(?:run|resume)_multiscenario_ddpg_attribution"
+                )
+            )
+        }
+    )
+}
+
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
 
@@ -32,15 +75,11 @@ $DirtyPaths = @(git status --porcelain --untracked-files=no)
 if ($DirtyPaths.Count -gt 0) {
     throw "Commit or stash tracked source changes before a paper run."
 }
+$ProcessSnapshot = @(Get-CimInstance Win32_Process)
 $RelatedProcesses = @(
-    Get-CimInstance Win32_Process | Where-Object {
-        [int]$_.ProcessId -ne [int]$PID -and
-        $_.CommandLine -and (
-            $_.CommandLine -match "train_multiscenario_network_residual" -or
-            $_.CommandLine -match "evaluate_multiscenario_network_residual" -or
-            $_.CommandLine -match "run_multiscenario_ddpg_attribution"
-        )
-    }
+    Get-IndependentRelatedProcesses `
+        -ProcessSnapshot $ProcessSnapshot `
+        -CurrentProcessId ([int]$PID)
 )
 if ($RelatedProcesses.Count -gt 0) {
     throw "A related DDPG attribution process is already active."

@@ -77,6 +77,24 @@ class MultiscenarioDDPGRecovery2Tests(unittest.TestCase):
         self.assertIn("non-paper GCN seed 0 online stability gate", runner)
         self.assertIn("training_state.pt", resume)
 
+    def test_process_gate_excludes_current_process_and_ancestors(self):
+        for script_name in (
+            "run_multiscenario_ddpg_attribution_pilot_recovery2.ps1",
+            "resume_multiscenario_ddpg_attribution_recovery2_run.ps1",
+        ):
+            with self.subTest(script=script_name):
+                script = (Path("scripts") / script_name).read_text(
+                    encoding="utf-8"
+                )
+                self.assertIn("Get-IndependentRelatedProcesses", script)
+                self.assertIn("ParentProcessId", script)
+                self.assertIn("ExcludedProcessIds", script)
+                self.assertIn("CurrentProcessId ([int]$PID)", script)
+                self.assertIn(
+                    "(?:run|resume)_multiscenario_ddpg_attribution",
+                    script,
+                )
+
 
 if __name__ == "__main__":
     unittest.main()

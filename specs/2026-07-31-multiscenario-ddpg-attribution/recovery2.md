@@ -61,3 +61,18 @@ runner. It must not auto-relaunch. A later audited resume may invoke
 `resume_multiscenario_ddpg_attribution_recovery2_run.ps1` once for the failed
 method/seed, using the last atomic state. Completed runs and prior failure
 evidence remain untouched.
+
+## Recovery 2B launcher correction
+
+The first Recovery 2 launcher attempt at `2026-07-31 09:50:39 EDT`
+stopped before creating any stability-gate or official output. Its duplicate-
+process guard counted the short-lived PowerShell process that launched the
+runner because that ancestor's command line contained the runner filename.
+The empty stdout and gate-only stderr are retained as execution evidence.
+
+Recovery 2B excludes the current PowerShell process and its complete ancestor
+chain from duplicate-campaign matching. Independent runner, resume, training,
+and evaluation processes remain blocking. This is an execution-only launcher
+correction; the diagnostic gate, training configurations, evaluation settings,
+checkpoints, seeds, episode budgets, and scientific acceptance criteria are
+unchanged.

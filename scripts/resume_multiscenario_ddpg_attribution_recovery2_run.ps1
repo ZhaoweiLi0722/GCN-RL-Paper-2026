@@ -15,6 +15,47 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Get-IndependentRelatedProcesses {
+    param(
+        [Parameter(Mandatory = $true)]
+        [object[]]$ProcessSnapshot,
+        [Parameter(Mandatory = $true)]
+        [int]$CurrentProcessId
+    )
+
+    $ProcessById = @{}
+    foreach ($Process in $ProcessSnapshot) {
+        $ProcessById[[int]$Process.ProcessId] = $Process
+    }
+
+    $ExcludedProcessIds = @($CurrentProcessId)
+    $CursorId = $CurrentProcessId
+    while ($ProcessById.ContainsKey($CursorId)) {
+        $ParentId = [int]$ProcessById[$CursorId].ParentProcessId
+        if (
+            $ParentId -le 0 -or
+            $ExcludedProcessIds -contains $ParentId
+        ) {
+            break
+        }
+        $ExcludedProcessIds += $ParentId
+        $CursorId = $ParentId
+    }
+
+    return @(
+        $ProcessSnapshot | Where-Object {
+            -not ($ExcludedProcessIds -contains [int]$_.ProcessId) -and
+            $_.CommandLine -and (
+                $_.CommandLine -match "train_multiscenario_network_residual" -or
+                $_.CommandLine -match "evaluate_multiscenario_network_residual" -or
+                $_.CommandLine -match (
+                    "(?:run|resume)_multiscenario_ddpg_attribution"
+                )
+            )
+        }
+    )
+}
+
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
 $Python = if ($PythonExecutable) {
@@ -55,13 +96,11 @@ if (Test-Path $Summary) {
     throw "Run already has a completed summary; refusing to resume it."
 }
 
+$ProcessSnapshot = @(Get-CimInstance Win32_Process)
 $RelatedProcesses = @(
-    Get-CimInstance Win32_Process | Where-Object {
-        $_.CommandLine -and (
-            $_.CommandLine -match "train_multiscenario_network_residual" -or
-            $_.CommandLine -match "run_multiscenario_ddpg_attribution"
-        )
-    }
+    Get-IndependentRelatedProcesses `
+        -ProcessSnapshot $ProcessSnapshot `
+        -CurrentProcessId ([int]$PID)
 )
 if ($RelatedProcesses.Count -gt 0) {
     throw "A related training or runner process is already active."

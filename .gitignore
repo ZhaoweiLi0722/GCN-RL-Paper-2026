@@ -69,7 +69,7 @@ figures/residual_policy_benchmark/
 [Pp]aper/**/*.zip
 
 # Private / personal research materials (not for sharing)
-docs/research_howard/
+docs/local_progress_reports/
 
 # Local editor / assistant tooling config (not part of the project)
 .claude/

@@ -628,14 +628,32 @@ def _balance_shortage_surplus(
     edges: Sequence[Edge],
     max_abs: float,
 ) -> np.ndarray:
-    net = np.zeros_like(shortage, dtype=float)
+    shortage_remaining = np.asarray(shortage, dtype=float).copy()
+    surplus_remaining = np.asarray(surplus, dtype=float).copy()
+    if shortage_remaining.ndim != 1:
+        raise ValueError("shortage must be a one-dimensional finite array")
+    if surplus_remaining.shape != shortage_remaining.shape:
+        raise ValueError("shortage and surplus must have identical shapes")
+    if not (
+        np.all(np.isfinite(shortage_remaining))
+        and np.all(np.isfinite(surplus_remaining))
+    ):
+        raise ValueError("shortage and surplus must contain only finite values")
+    if not np.isfinite(max_abs):
+        raise ValueError("max_abs must be finite")
+
+    net = np.zeros_like(shortage_remaining, dtype=float)
     if not edges or max_abs <= 0.0:
         return net
 
-    shortage_remaining = np.asarray(shortage, dtype=float).copy()
-    surplus_remaining = np.asarray(surplus, dtype=float).copy()
     adjacency = _adjacency(edges)
-    receivers = list(np.argsort(-shortage_remaining))
+    # This runs in every residual-policy update on small facility vectors.
+    # Keep the ordering in Python to avoid repeatedly entering NumPy's native
+    # sort implementation and make equal-shortage ordering deterministic.
+    receivers = sorted(
+        range(shortage_remaining.size),
+        key=lambda index: (-float(shortage_remaining[index]), index),
+    )
 
     for receiver in receivers:
         if shortage_remaining[receiver] <= 1e-8:

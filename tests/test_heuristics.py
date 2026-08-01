@@ -10,6 +10,7 @@ import numpy as np
 
 from evaluation.evaluate_formal import evaluate_agent, summarize_rows
 from src.baselines.heuristics import (
+    _balance_shortage_surplus,
     available_heuristics,
     facility_net_action_from_state,
     ForecastMeanDemandLookahead2Policy,
@@ -66,6 +67,119 @@ class HeuristicPolicyTests(unittest.TestCase):
         )
 
         np.testing.assert_allclose(state_action, live_action, atol=1e-6)
+
+    def test_balance_shortage_surplus_orders_ties_by_facility_index(self) -> None:
+        net = _balance_shortage_surplus(
+            shortage=np.array([0.0, 1.0, 1.0]),
+            surplus=np.array([1.0, 0.0, 0.0]),
+            edges=((0, 1), (0, 2)),
+            max_abs=1.0,
+        )
+
+        np.testing.assert_allclose(net, np.array([-1.0, 1.0, 0.0]))
+
+    def test_balance_shortage_surplus_rejects_invalid_arrays(self) -> None:
+        cases = (
+            (
+                np.array([[1.0, 0.0]]),
+                np.array([[0.0, 1.0]]),
+                1.0,
+            ),
+            (np.array([1.0, 0.0]), np.array([0.0]), 1.0),
+            (np.array([np.nan, 0.0]), np.array([0.0, 1.0]), 1.0),
+            (np.array([1.0, 0.0]), np.array([0.0, np.inf]), 1.0),
+            (np.array([1.0, 0.0]), np.array([0.0, 1.0]), np.inf),
+        )
+        for shortage, surplus, max_abs in cases:
+            with self.subTest(shortage=shortage, surplus=surplus, max_abs=max_abs):
+                with self.assertRaises(ValueError):
+                    _balance_shortage_surplus(
+                        shortage=shortage,
+                        surplus=surplus,
+                        edges=((0, 1),),
+                        max_abs=max_abs,
+                    )
+
+    def test_balance_shortage_surplus_matches_numpy_reference(self) -> None:
+        rng = np.random.default_rng(61000000)
+        edges = tuple((i, j) for i in range(8) for j in range(i + 1, 8))
+        for _ in range(250):
+            shortage = rng.uniform(0.0, 20.0, size=8)
+            surplus = rng.uniform(0.0, 20.0, size=8)
+            expected = self._numpy_balance_reference(
+                shortage=shortage,
+                surplus=surplus,
+                edges=edges,
+                max_abs=5.0,
+            )
+
+            actual = _balance_shortage_surplus(
+                shortage=shortage,
+                surplus=surplus,
+                edges=edges,
+                max_abs=5.0,
+            )
+
+            np.testing.assert_allclose(actual, expected, rtol=0.0, atol=0.0)
+
+    def test_balance_shortage_surplus_sustains_repeated_calls(self) -> None:
+        shortage = np.linspace(0.0, 20.0, num=20)
+        surplus = shortage[::-1].copy()
+        edges = tuple((i, (i + 1) % 20) for i in range(20))
+
+        for _ in range(20_000):
+            net = _balance_shortage_surplus(
+                shortage=shortage,
+                surplus=surplus,
+                edges=edges,
+                max_abs=5.0,
+            )
+
+        self.assertTrue(np.all(np.isfinite(net)))
+        self.assertLessEqual(float(np.max(np.abs(net))), 5.0)
+
+    @staticmethod
+    def _numpy_balance_reference(
+        *,
+        shortage: np.ndarray,
+        surplus: np.ndarray,
+        edges: tuple[tuple[int, int], ...],
+        max_abs: float,
+    ) -> np.ndarray:
+        net = np.zeros_like(shortage, dtype=float)
+        shortage_remaining = np.asarray(shortage, dtype=float).copy()
+        surplus_remaining = np.asarray(surplus, dtype=float).copy()
+        adjacency: dict[int, set[int]] = {}
+        for i, j in edges:
+            adjacency.setdefault(i, set()).add(j)
+            adjacency.setdefault(j, set()).add(i)
+
+        for receiver in np.argsort(-shortage_remaining):
+            if shortage_remaining[receiver] <= 1e-8:
+                continue
+            donors = sorted(
+                adjacency.get(int(receiver), ()),
+                key=lambda node: surplus_remaining[node],
+                reverse=True,
+            )
+            for donor in donors:
+                if shortage_remaining[receiver] <= 1e-8:
+                    break
+                if surplus_remaining[donor] <= 1e-8:
+                    continue
+                flow = min(
+                    shortage_remaining[receiver],
+                    surplus_remaining[donor],
+                    max_abs,
+                )
+                if flow <= 1e-8:
+                    continue
+                net[receiver] += flow
+                net[donor] -= flow
+                shortage_remaining[receiver] -= flow
+                surplus_remaining[donor] -= flow
+
+        return np.clip(net, -max_abs, max_abs)
 
     def test_mean_demand_heuristic_uses_prior_estimates_when_truth_drifts(self) -> None:
         estimated = (12.0,) * 20

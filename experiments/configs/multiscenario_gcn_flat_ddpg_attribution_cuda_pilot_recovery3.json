@@ -1,0 +1,130 @@
+{
+  "name": "multiscenario_gcn_flat_ddpg_attribution_cuda_pilot_recovery3",
+  "plan": "experiments/configs/residual_policy_benchmark.json",
+  "budget": "diagnostic_pretrain",
+  "reference_scenario": "patient_condition_geo_nominal_history",
+  "scenarios": [
+    "patient_condition_geo_nominal_history",
+    "patient_condition_geo_abrupt_regime_shift",
+    "patient_condition_geo_regional_drift",
+    "patient_condition_geo_compound_regional_stress"
+  ],
+  "teacher_cache": "results/multiscenario_teacher_screen/teacher_train.npz",
+  "demand_history_window": 12,
+  "online_episodes": 100,
+  "pretrain_epochs": 300,
+  "offline_updates": 0,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "config_overrides": {
+    "device": "cuda",
+    "batch_size": 128,
+    "actor_lr": 0.00001,
+    "critic_lr": 0.0003,
+    "critic_warmup_updates": 500,
+    "actor_update_frequency": 2,
+    "update_frequency": 1,
+    "updates_per_update": 1,
+    "progress_interval": 10,
+    "checkpoint_interval": 5,
+    "training_state_checkpoint_interval": 5,
+    "include_adaptive_demand_features": true,
+    "train_randomization": {
+      "enabled": true,
+      "forecast_error_range": [
+        0.0,
+        0.2
+      ],
+      "demand_rate_multiplier_range": [
+        0.9,
+        1.1
+      ]
+    },
+    "imitation_pretrain": {
+      "enabled": false,
+      "regularization_weight": 0.25,
+      "regularization_batch_size": 128
+    },
+    "exploration_noise": {
+      "theta": 0.15,
+      "sigma": 0.005
+    },
+    "anchor_advantage_actor_loss": {
+      "enabled": true,
+      "margin": 0.0,
+      "temperature": 0.05,
+      "negative_penalty_weight": 1.0
+    },
+    "residual_action": {
+      "enabled": true,
+      "base_policy": "mdl2",
+      "scale": 1.0,
+      "group_scales": {
+        "specimen_transfer": 0.0,
+        "reagent_transfer": 1.0,
+        "capacity_transfer": 1.0,
+        "replenishment": 0.0
+      },
+      "center_groups": [
+        "reagent_transfer",
+        "capacity_transfer"
+      ],
+      "positive_only_groups": [],
+      "pressure_projection": {
+        "enabled": false,
+        "groups": []
+      },
+      "endpoint_projection": {
+        "enabled": true,
+        "groups": [
+          "reagent_transfer",
+          "capacity_transfer"
+        ],
+        "max_endpoints_per_side": 1,
+        "min_abs": 0.04
+      },
+      "l2_weight": 0.05,
+      "zero_init_actor": true
+    },
+    "advantage_distillation_pretrain": {
+      "validation_demonstration_path": "results/multiscenario_teacher_screen/teacher_validation.npz",
+      "balance_label_weights": true,
+      "populate_replay_buffer": false,
+      "retain_for_regularization": true,
+      "trajectory_validation_fraction": 0.0,
+      "early_stopping_patience": 8,
+      "early_stopping_check_interval": 5,
+      "early_stopping_min_delta": 0.0001,
+      "early_stopping_gate_loss_weight": 0.5
+    }
+  },
+  "algorithms": [
+    {
+      "name": "gcn_residual_mdl2_network_ddpg_afd",
+      "seeds": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "flat_residual_mdl2_network_ddpg_afd",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "config_overrides": {
+        "hidden_sizes": [
+          272,
+          212,
+          128
+        ]
+      }
+    }
+  ],
+  "output_root": "results"
+}

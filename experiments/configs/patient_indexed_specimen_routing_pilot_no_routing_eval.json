@@ -1,5 +1,7 @@
 {
   "name": "patient_indexed_specimen_routing_pilot_no_routing_eval",
+  "experimental_role": "optional_no_routing_supplement_only",
+  "requires_separate_approval": true,
   "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
   "training_manifest": "results/patient_indexed_specimen_routing/training/patient_indexed_specimen_routing_pilot_no_routing/training_manifest.json",
   "algorithms": [

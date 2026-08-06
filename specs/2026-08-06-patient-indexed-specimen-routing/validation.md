@@ -38,7 +38,7 @@ if ($errors.Count -ne 0) { throw ($errors | Out-String) }
 - forced nonzero legal route and MDL-2 headroom;
 - matched GCN/flat observation, action, specimen head, and parameter budget;
 - valid configs, isolated result paths, and no legacy routing checkpoint input;
-- attribution pairing and graph-interaction arithmetic;
+- routing-primary attribution pairing and final-versus-pretrain arithmetic;
 - runner AST parse and static no-force/no-overwrite contract.
 
 No formal training or evaluation is part of repository validation.
@@ -48,17 +48,18 @@ No formal training or evaluation is part of repository validation.
 Validation was run from the isolated routing worktree on 2026-08-06 with
 Python 3.9.6, PyTorch 2.8.0, and no routing result directory present:
 
-- `python -m unittest discover -s tests`: 481 tests passed in 33.544 seconds;
-- focused routing/contract suite: 22 tests passed;
+- `python -m unittest discover -s tests`: 480 tests passed in 33.565 seconds;
+- focused routing/contract suite: 39 tests passed in 0.445 seconds;
 - `python -m compileall -q .`: passed;
 - `jq empty experiments/configs/patient_indexed_specimen_routing_*.json`:
   passed;
 - `git diff --check`: passed;
-- PowerShell AST parse: passed with 3,169 tokens and zero parse errors;
-- benchmark `routing_smoke` dry run: 3 algorithms, 10 scenarios, 1 seed,
-  20 learned training jobs, and 30 evaluation jobs.
+- PowerShell AST parse: passed with 2,832 tokens and zero parse errors;
+- benchmark `routing_smoke` dry run: 3 algorithms, 4 default routing scenarios,
+  1 seed, 8 learned training jobs, and 12 evaluation jobs.
 
 The mechanics runner itself was not executed locally because it intentionally
 writes the first artifact in the new result namespace. No teacher generation,
-smoke training, pilot training, formal evaluation, packaging, or manuscript
-editing was performed.
+smoke training, pilot training, formal evaluation, or packaging was performed.
+The manuscript protocol wording was subsequently updated, but no unobserved
+routing result was inserted.

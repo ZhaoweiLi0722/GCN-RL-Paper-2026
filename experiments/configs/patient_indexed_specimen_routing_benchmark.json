@@ -1,6 +1,6 @@
 {
   "name": "patient_indexed_specimen_routing_benchmark",
-  "description": "Preregistered routing x architecture pilot with matched state, action, CRN, budget, and explicit qualified specimen edges.",
+  "description": "Preregistered routing-primary architecture pilot with matched state, action, CRN, budget, and explicit qualified specimen edges. No-routing scenarios are retained only for mechanics regression or a separately approved supplementary ablation.",
   "algorithms": [
     "gcn_residual_mdl2_network_ddpg_afd",
     "flat_residual_mdl2_network_ddpg_afd",
@@ -10,6 +10,20 @@
     "gcn_residual_mdl2_network_ddpg_afd",
     "flat_residual_mdl2_network_ddpg_afd",
     "mdl2"
+  ],
+  "primary_scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "optional_scenarios": [
+    "routing_nominal_lead0_sensitivity",
+    "routing_nominal_return1_sensitivity",
+    "no_routing_nominal_history",
+    "no_routing_abrupt_regime_shift",
+    "no_routing_regional_drift",
+    "no_routing_compound_regional_stress"
   ],
   "learned_config_paths": {
     "gcn_residual_mdl2_network_ddpg_afd": "configs/gcn_residual_20_clinic.yaml",

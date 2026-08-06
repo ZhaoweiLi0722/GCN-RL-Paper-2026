@@ -12,14 +12,13 @@ import unittest
 import numpy as np
 
 from evaluation.compare_patient_indexed_specimen_routing import (
-    _interaction_rows,
-    _metric_bundle,
     compare_attribution,
 )
 from evaluation.run_full_benchmark import (
     load_benchmark_plan,
     make_training_config,
     resolve_budget,
+    select_scenarios,
 )
 from evaluation.train_multiscenario_network_residual import (
     actor_checkpoint_drift,
@@ -61,7 +60,7 @@ def _config(plan: dict, algorithm: str, scenario: dict) -> dict:
 
 
 class RoutingExperimentContractTests(unittest.TestCase):
-    def test_factor_plan_is_matched_and_sensitivities_are_explicit(self) -> None:
+    def test_routing_primary_plan_and_optional_controls_are_explicit(self) -> None:
         plan = load_benchmark_plan(PLAN_PATH)
         self.assertEqual(resolve_budget(plan, "routing_smoke")["num_episodes"], 5)
         pilot = resolve_budget(plan, "routing_pilot")
@@ -74,6 +73,20 @@ class RoutingExperimentContractTests(unittest.TestCase):
             plan["parameter_matching"]["relative_gap"],
             plan["parameter_matching"]["maximum_relative_gap"],
         )
+
+        default_names = {
+            scenario["name"] for scenario in select_scenarios(plan, None)
+        }
+        self.assertEqual(
+            default_names,
+            {
+                "routing_nominal_history",
+                "routing_abrupt_regime_shift",
+                "routing_regional_drift",
+                "routing_compound_regional_stress",
+            },
+        )
+        self.assertTrue(all(name.startswith("routing_") for name in default_names))
 
         routing = _scenario(plan, "routing_nominal_history")["env_overrides"]
         control = _scenario(plan, "no_routing_nominal_history")["env_overrides"]
@@ -108,6 +121,11 @@ class RoutingExperimentContractTests(unittest.TestCase):
                 "patient_indexed_specimen_routing_teacher_no_routing.json"
             ).read_text(encoding="utf-8")
         )
+        self.assertEqual(
+            control_teacher["experimental_role"],
+            "optional_no_routing_supplement_only",
+        )
+        self.assertTrue(control_teacher["requires_separate_approval"])
         self.assertEqual(routing_teacher["seed"], control_teacher["seed"])
         self.assertEqual(
             routing_teacher["lookahead_seed"],
@@ -235,38 +253,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertAlmostEqual(drift["max_abs"], 0.25)
         self.assertEqual(drift["parameter_count"], 2.0)
 
-    def test_graph_interaction_uses_the_preregistered_difference_of_differences(self) -> None:
-        def row(cost: float) -> dict:
-            return {
-                "training_seed": 0,
-                "scenario_family": "nominal_history",
-                "evaluation_seed": 8400000,
-                "replication": 0,
-                "total_cost": cost,
-            }
-
-        routing_gap, control_gap = _interaction_rows(
-            routing_gcn=[row(80.0)],
-            routing_flat=[row(100.0)],
-            no_routing_gcn=[row(90.0)],
-            no_routing_flat=[row(100.0)],
-            metrics={"total_cost": "lower"},
-        )
-        self.assertEqual(routing_gap[0]["interaction_total_cost"], -20.0)
-        self.assertEqual(control_gap[0]["interaction_total_cost"], -10.0)
-        summary = _metric_bundle(
-            routing_gap,
-            control_gap,
-            metrics={"interaction_total_cost": "lower"},
-            resamples=20,
-            seed=1,
-        )
-        self.assertEqual(
-            summary["pooled"]["interaction_total_cost"]["mean_difference"],
-            -10.0,
-        )
-
-    def test_attribution_integrates_four_cells_and_uses_conservative_language(self) -> None:
+    def test_attribution_integrates_routing_primary_cells(self) -> None:
         def write_root(
             root: Path,
             *,
@@ -308,9 +295,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         with TemporaryDirectory() as directory:
             temporary = Path(directory)
             routing_final = temporary / "routing_final"
-            control_final = temporary / "control_final"
             routing_pretrain = temporary / "routing_pretrain"
-            control_pretrain = temporary / "control_pretrain"
             write_root(
                 routing_final,
                 scenario="routing_nominal_history",
@@ -319,32 +304,16 @@ class RoutingExperimentContractTests(unittest.TestCase):
                 anchor_cost=95.0,
             )
             write_root(
-                control_final,
-                scenario="no_routing_nominal_history",
-                gcn_cost=90.0,
-                flat_cost=100.0,
-                anchor_cost=100.0,
-            )
-            write_root(
                 routing_pretrain,
                 scenario="routing_nominal_history",
                 gcn_cost=85.0,
                 flat_cost=95.0,
                 anchor_cost=95.0,
             )
-            write_root(
-                control_pretrain,
-                scenario="no_routing_nominal_history",
-                gcn_cost=95.0,
-                flat_cost=105.0,
-                anchor_cost=100.0,
-            )
             output = temporary / "attribution.json"
             config = {
                 "routing_final_root": str(routing_final),
-                "no_routing_final_root": str(control_final),
                 "routing_pretrain_root": str(routing_pretrain),
-                "no_routing_pretrain_root": str(control_pretrain),
                 "algorithms": [GCN, FLAT],
                 "metrics": {"total_cost": "lower"},
                 "bootstrap_resamples": 20,
@@ -352,14 +321,16 @@ class RoutingExperimentContractTests(unittest.TestCase):
                 "output_path": str(output),
             }
             result = compare_attribution(config)
-            self.assertTrue(result["decision"]["routing_beneficial_total_cost"])
-            self.assertFalse(
-                result["decision"]["graph_specific_advantage_total_cost"]
+            self.assertTrue(result["decision"]["gcn_vs_flat_total_cost_supported"])
+            self.assertTrue(result["decision"]["gcn_vs_mdl2_total_cost_supported"])
+            self.assertTrue(
+                result["decision"]["gcn_final_vs_pretrain_total_cost_supported"]
             )
             self.assertEqual(
                 result["decision"]["interpretation"],
-                "Specimen routing is beneficial, but graph-specific DRL "
-                "advantage is not established.",
+                "Under patient-indexed specimen routing, the preregistered "
+                "total-cost comparisons support GCN residual control over both "
+                "matched flat residual control and MDL-2.",
             )
             self.assertTrue(output.is_file())
             with self.assertRaises(FileExistsError):
@@ -374,6 +345,12 @@ class RoutingExperimentContractTests(unittest.TestCase):
         for phase in ("Validate", "Teachers", "Smoke", "Pilot", "Evaluate"):
             self.assertIn(f'"{phase}"', runner)
         self.assertIn("-ApprovePilot", runner)
+        self.assertNotIn("teacher_no_routing.json", runner)
+        self.assertNotIn("smoke_no_routing.json", runner)
+        self.assertNotIn("pilot_no_routing.json", runner)
+        self.assertNotIn("pilot_no_routing_eval.json", runner)
+        self.assertIn("learned_runs = 2", runner)
+        self.assertIn("learned_runs = 6", runner)
         for forbidden in (
             "--force",
             "Remove-Item",

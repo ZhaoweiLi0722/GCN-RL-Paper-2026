@@ -1,19 +1,23 @@
 # Experiment Plan
 
-## Fixed Factorial Design
+## Scientific Role of Routing
 
-The learned pilot has four treatment cells:
+Patient-indexed, identity-preserving, pre-manufacturing specimen routing is part
+of the admissible operating model. It is not the treatment whose benefit this
+study is designed to prove. The primary comparisons therefore hold routing
+enabled and ask whether graph-aware residual control improves on a
+parameter-matched flat residual controller and the MDL-2 anchor.
 
-1. GCN plus routing;
-2. matched flat plus routing;
-3. GCN plus no routing;
-4. matched flat plus no routing.
+No-routing is retained only as a deterministic mechanics control and as an
+optional, separately approved supplementary ablation. The locked default runner
+does not generate a no-routing teacher, train a no-routing policy, evaluate a
+no-routing learned policy, or include routing-versus-no-routing interaction
+claims.
 
-Routing and no-routing MDL-2 are evaluated as CRN anchors. Training seeds are
-`0, 1, 2`; final and frozen-pretrain checkpoints use the same 100-replication
-holdout streams. Main routing uses one-epoch specimen transport and immediate
-modeled product return. Lead-zero and return-one scenarios are sensitivities,
-not alternative main analyses.
+Training seeds are `0, 1, 2`. Final and frozen-pretrain checkpoints use the same
+100-replication holdout streams. Main routing uses one-epoch specimen transport
+and immediate modeled product return. Lead-zero and return-one scenarios are
+sensitivities, not alternative main analyses.
 
 No hyperparameter may be selected from smoke, pilot holdout, or sensitivity
 outcomes. Any changed scientific setting requires a new config name, output
@@ -28,61 +32,72 @@ Run focused tests and the deterministic regional bottleneck gate. It must show:
 - nonzero MDL-2 routing;
 - more completed patients than the paired no-routing mechanics control.
 
-This gate validates mechanism and headroom only. It is not a performance result.
+This gate validates implementation mechanics and the existence of routing
+headroom only. It is not a formal routing-effect estimate and cannot support a
+manuscript claim that routing itself is beneficial.
 
-## Fresh Teachers
+## Fresh Routing Teacher
 
-After Stage A passes, independently generate routing and no-routing teacher
-caches under the new routing output root. Neither arm may import any legacy
-teacher, normalization artifact, pretrain, policy checkpoint, or training state.
+After Stage A passes, independently generate one routing-enabled teacher cache
+under the new routing output root. Neither learned architecture may import any
+legacy teacher, normalization artifact, pretrain, policy checkpoint, or training
+state. GCN and matched flat use the same reviewed teacher-generation protocol.
 
 ## Stage B: Five-Episode Smoke
 
-Run GCN and matched flat in isolated processes and distinct algorithm output
-directories for each arm. Required checks are:
+Run routing-enabled GCN and matched flat in isolated processes and distinct
+algorithm output directories, both at seed 0. Required checks are:
 
 - exactly five episode rows per run;
 - finite cost and loss diagnostics;
 - positive online update count after replay warmup;
 - finite, nonzero actor drift from frozen pretrain;
-- legal, nonzero routing in the routing arm and zero routes in control;
+- legal, nonzero routing;
 - expected actor and atomic full-state checkpoints;
 - no identity, CRN, NaN/Inf, OOM, CUDA fallback, or duplicate-process anomaly.
 
 Smoke results cannot be used to tune the pilot. Any anomaly stops escalation.
 
-## Stage C: Matched Pilot
+## Stage C: Matched Routing Pilot
 
-Pilot execution requires explicit `-ApprovePilot`. Run each algorithm/seed in a
-new process, preserving the locked order in the runner. Each run has 100 online
-episodes and full atomic training-state plus actor checkpoints every five
-completed episodes. A partial run is resumed only by a separate, explicit
-reviewed command; the locked runner neither repairs nor auto-resumes it.
+Pilot execution requires explicit `-ApprovePilot`. Run GCN seeds 0/1/2 followed
+by matched-flat seeds 0/1/2, with every algorithm/seed in a new process. Each of
+the six learned runs has 100 online episodes and full atomic training-state plus
+actor checkpoints every five completed episodes. A partial run is resumed only
+by a separate, explicit reviewed command; the locked runner neither repairs nor
+auto-resumes it.
 
-Only after all twelve learned runs pass output, update, finite-loss, drift,
-parameter-gap, and route-arm checks may evaluation begin.
+Only after all six learned runs pass output, update, finite-loss, drift,
+parameter-gap, and nonzero-route checks may evaluation begin.
 
 ## Evaluation and Attribution
 
-Report pooled and per scenario with paired hierarchical bootstrap intervals:
+Evaluate four primary routing scenarios with 100 paired CRN replications for
+each training seed. Report pooled and per-scenario paired hierarchical bootstrap
+intervals for:
 
-1. routing GCN versus routing flat;
-2. routing GCN versus routing MDL-2;
-3. GCN, flat, and MDL-2 routing versus their no-routing counterparts;
-4. `(GCN - flat)_routing - (GCN - flat)_no-routing`;
-5. final versus frozen pretrain in each learned treatment cell.
+1. routing-enabled GCN versus routing-enabled matched flat;
+2. routing-enabled GCN versus routing-enabled MDL-2;
+3. final versus frozen pretrain for GCN;
+4. final versus frozen pretrain for matched flat.
+
+The MDL-2 routing anchor is evaluated, not trained. Lead-zero and return-one
+sensitivities reuse the trained routing policies and the locked holdout seed.
 
 Metrics include total cost, completion service, patients lost, manufacturing
-ineligibility, waiting/transit expiry, turnaround time, route count/distance/time/
-cost, blocked requests, residual use, updates, finite losses, and actor drift.
+ineligibility, waiting/transit expiry, turnaround time, route count, distance,
+time, cost, blocked requests, residual use, updates, finite losses, and actor
+drift. Route activity is a mechanism diagnostic, not evidence that routing is a
+novel contribution.
 
-The holdout is never used for retraining or deployment selection. Sensitivity
-evaluations reuse the trained routing policies and the main holdout seed.
+The holdout is never used for retraining or deployment selection. If GCN
+improves on MDL-2 but not on matched flat, the permitted summary is:
 
-If routing is beneficial but the graph interaction is not established, the
-only permitted summary is:
-
-> Specimen routing is beneficial, but graph-specific DRL advantage is not established.
+> Under patient-indexed specimen routing, GCN residual control improves on
+> MDL-2, but an advantage over matched flat residual control is not established.
 
 Expansion beyond this pilot is prohibited unless all identity, conservation,
-CRN, nonzero-routing, checkpoint, CUDA, and finite-metric gates pass.
+CRN, nonzero-routing, checkpoint, CUDA, and finite-metric gates pass. A formal
+no-routing campaign requires a separate scientific justification and explicit
+approval; prior no-routing Recovery outputs remain immutable historical
+evidence and are not retrained by default.

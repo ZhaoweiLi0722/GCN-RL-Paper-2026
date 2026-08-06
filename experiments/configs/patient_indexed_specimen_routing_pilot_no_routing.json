@@ -1,5 +1,7 @@
 {
   "name": "patient_indexed_specimen_routing_pilot_no_routing",
+  "experimental_role": "optional_no_routing_supplement_only",
+  "requires_separate_approval": true,
   "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
   "budget": "routing_pilot",
   "reference_scenario": "no_routing_nominal_history",

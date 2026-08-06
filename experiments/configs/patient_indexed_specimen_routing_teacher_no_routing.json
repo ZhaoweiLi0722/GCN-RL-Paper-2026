@@ -1,5 +1,7 @@
 {
   "name": "patient_indexed_specimen_routing_teacher_no_routing",
+  "experimental_role": "optional_no_routing_supplement_only",
+  "requires_separate_approval": true,
   "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
   "env_overrides": {
     "scenario_name": "no_routing_nominal_history",

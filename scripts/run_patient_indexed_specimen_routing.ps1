@@ -187,8 +187,7 @@ function Assert-TrainingRun {
         [Parameter(Mandatory = $true)][string]$RunName,
         [Parameter(Mandatory = $true)][string]$Algorithm,
         [Parameter(Mandatory = $true)][int]$Seed,
-        [Parameter(Mandatory = $true)][int]$Episodes,
-        [Parameter(Mandatory = $true)][bool]$ExpectRouting
+        [Parameter(Mandatory = $true)][int]$Episodes
     )
 
     $RunDirectory = Get-TrainingRunDirectory $RunName $Algorithm $Seed
@@ -223,11 +222,8 @@ function Assert-TrainingRun {
     if ($OnlineUpdates -le 0) {
         throw "$RunName $Algorithm seed $Seed completed with zero online updates."
     }
-    if ($ExpectRouting -and $RouteCount -le 0.0) {
+    if ($RouteCount -le 0.0) {
         throw "$RunName $Algorithm seed $Seed produced no specimen routes."
-    }
-    if (-not $ExpectRouting -and $RouteCount -ne 0.0) {
-        throw "$RunName $Algorithm seed $Seed routed in the no-routing control."
     }
 
     $Summary = Get-Content $SummaryPath -Raw | ConvertFrom-Json
@@ -308,7 +304,9 @@ function Write-PhaseProvenance {
             $CompletedPhase -eq "Pilot" -or $CompletedPhase -eq "Evaluate"
         )
         formal_evaluation_started = ($CompletedPhase -eq "Evaluate")
-        manuscript_modified = $false
+        formal_no_routing_training = $false
+        manuscript_protocol_wording_updated = $true
+        manuscript_results_inserted = $false
     }
     $Path = Join-Path $ProvenanceRoot (
         "${CompletedPhase}_$Timestamp.json"
@@ -377,14 +375,11 @@ $LogPath = Join-Path $LogRoot "${Phase}_$Timestamp.txt"
 
 $MechanicsReport = Join-Path $ResultRoot "mechanics_gate\report.json"
 $RoutingTeacher = Join-Path $ResultRoot "teachers\routing\teacher_cache.npz"
-$NoRoutingTeacher = Join-Path $ResultRoot "teachers\no_routing\teacher_cache.npz"
 $SmokeGate = Join-Path $ResultRoot "gates\smoke_gate.json"
 $PilotGate = Join-Path $ResultRoot "gates\pilot_gate.json"
 
 $RoutingSmokeName = "patient_indexed_specimen_routing_smoke_routing"
-$NoRoutingSmokeName = "patient_indexed_specimen_routing_smoke_no_routing"
 $RoutingPilotName = "patient_indexed_specimen_routing_pilot_routing"
-$NoRoutingPilotName = "patient_indexed_specimen_routing_pilot_no_routing"
 
 Start-Transcript -Path $LogPath
 try {
@@ -424,76 +419,44 @@ try {
                 throw "Mechanics/headroom gate did not pass."
             }
             Assert-FreshPath (Split-Path $RoutingTeacher -Parent)
-            Assert-FreshPath (Split-Path $NoRoutingTeacher -Parent)
-            foreach ($Config in @(
-                "patient_indexed_specimen_routing_teacher_routing.json",
-                "patient_indexed_specimen_routing_teacher_no_routing.json"
-            )) {
-                Invoke-CheckedPython -Stage "fresh teacher $Config" -Arguments @(
-                    "-m", "evaluation.network_residual_headroom",
-                    "--config", (Join-Path "experiments\configs" $Config)
-                )
-            }
+            $Config = "patient_indexed_specimen_routing_teacher_routing.json"
+            Invoke-CheckedPython -Stage "fresh teacher $Config" -Arguments @(
+                "-m", "evaluation.network_residual_headroom",
+                "--config", (Join-Path "experiments\configs" $Config)
+            )
             Assert-RequiredFile $RoutingTeacher
-            Assert-RequiredFile $NoRoutingTeacher
         }
         "Smoke" {
             Assert-RequiredFile $RoutingTeacher
-            Assert-RequiredFile $NoRoutingTeacher
             Assert-FreshPath (Join-Path $ResultRoot "training\$RoutingSmokeName")
-            Assert-FreshPath (Join-Path $ResultRoot "training\$NoRoutingSmokeName")
             Assert-FreshPath $SmokeGate
             Assert-CudaReady
             $Jobs = @(
-                @("patient_indexed_specimen_routing_smoke_routing.json", $GraphAlgorithm, $true),
-                @("patient_indexed_specimen_routing_smoke_routing.json", $FlatAlgorithm, $true),
-                @("patient_indexed_specimen_routing_smoke_no_routing.json", $GraphAlgorithm, $false),
-                @("patient_indexed_specimen_routing_smoke_no_routing.json", $FlatAlgorithm, $false)
+                @("patient_indexed_specimen_routing_smoke_routing.json", $GraphAlgorithm),
+                @("patient_indexed_specimen_routing_smoke_routing.json", $FlatAlgorithm)
             )
             foreach ($Job in $Jobs) {
                 $Config = [string]$Job[0]
                 $Algorithm = [string]$Job[1]
-                $ExpectRouting = [bool]$Job[2]
                 Invoke-CheckedPython -Stage "smoke $Algorithm $Config" -Arguments @(
                     "-m", "evaluation.train_multiscenario_network_residual",
                     "--config", (Join-Path "experiments\configs" $Config),
                     "--algorithm", $Algorithm,
                     "--seed", "0"
                 )
-                $RunName = if ($ExpectRouting) {
-                    $RoutingSmokeName
-                } else {
-                    $NoRoutingSmokeName
-                }
-                Assert-TrainingRun $RunName $Algorithm 0 5 $ExpectRouting
+                Assert-TrainingRun $RoutingSmokeName $Algorithm 0 5
             }
             $RoutingManifest = Join-Path $ResultRoot (
                 "training\$RoutingSmokeName\training_manifest.json"
             )
-            $NoRoutingManifest = Join-Path $ResultRoot (
-                "training\$NoRoutingSmokeName\training_manifest.json"
-            )
-            foreach ($ManifestPath in @($RoutingManifest, $NoRoutingManifest)) {
-                Assert-RequiredFile $ManifestPath
-                $Manifest = Get-Content $ManifestPath -Raw | ConvertFrom-Json
-                $Graph = @($Manifest.runs | Where-Object { $_.algorithm -eq $GraphAlgorithm })
-                $Flat = @($Manifest.runs | Where-Object { $_.algorithm -eq $FlatAlgorithm })
-                $Gap = [Math]::Abs(
-                    [double]$Graph[0].parameter_count - [double]$Flat[0].parameter_count
-                ) / [Math]::Max(
-                    [double]$Graph[0].parameter_count,
-                    [double]$Flat[0].parameter_count
-                )
-                if ($Gap -gt 0.01) {
-                    throw "Smoke GCN/flat parameter gap exceeds 1%: $Gap"
-                }
-            }
+            Assert-ParameterMatch $RoutingManifest
             New-Item -ItemType Directory -Force (Split-Path $SmokeGate -Parent) |
                 Out-Null
             [ordered]@{
                 status = "PASS"
                 completed_at = (Get-Date).ToUniversalTime().ToString("o")
                 git_commit = $Commit
+                learned_runs = 2
                 episodes_per_run = 5
                 tuning_from_smoke_permitted = $false
             } | ConvertTo-Json | Set-Content -Encoding UTF8 $SmokeGate
@@ -508,46 +471,42 @@ try {
                 throw "Smoke gate is absent, failed, or from another commit."
             }
             Assert-FreshPath (Join-Path $ResultRoot "training\$RoutingPilotName")
-            Assert-FreshPath (Join-Path $ResultRoot "training\$NoRoutingPilotName")
             Assert-FreshPath $PilotGate
             Assert-CudaReady
             $PilotSpecs = @()
-            foreach ($Arm in @(
-                @("patient_indexed_specimen_routing_pilot_routing.json", $RoutingPilotName, $true),
-                @("patient_indexed_specimen_routing_pilot_no_routing.json", $NoRoutingPilotName, $false)
-            )) {
-                foreach ($Algorithm in @($GraphAlgorithm, $FlatAlgorithm)) {
-                    foreach ($Seed in 0..2) {
-                        $PilotSpecs += ,@($Arm[0], $Arm[1], $Arm[2], $Algorithm, $Seed)
-                    }
+            foreach ($Algorithm in @($GraphAlgorithm, $FlatAlgorithm)) {
+                foreach ($Seed in 0..2) {
+                    $PilotSpecs += ,@(
+                        "patient_indexed_specimen_routing_pilot_routing.json",
+                        $RoutingPilotName,
+                        $Algorithm,
+                        $Seed
+                    )
                 }
             }
             foreach ($Spec in $PilotSpecs) {
                 $Config = [string]$Spec[0]
                 $RunName = [string]$Spec[1]
-                $ExpectRouting = [bool]$Spec[2]
-                $Algorithm = [string]$Spec[3]
-                $Seed = [int]$Spec[4]
+                $Algorithm = [string]$Spec[2]
+                $Seed = [int]$Spec[3]
                 Invoke-CheckedPython -Stage "pilot $RunName $Algorithm seed $Seed" -Arguments @(
                     "-m", "evaluation.train_multiscenario_network_residual",
                     "--config", (Join-Path "experiments\configs" $Config),
                     "--algorithm", $Algorithm,
                     "--seed", [string]$Seed
                 )
-                Assert-TrainingRun $RunName $Algorithm $Seed 100 $ExpectRouting
+                Assert-TrainingRun $RunName $Algorithm $Seed 100
             }
-            foreach ($RunName in @($RoutingPilotName, $NoRoutingPilotName)) {
-                Assert-ParameterMatch (Join-Path $ResultRoot (
-                    "training\$RunName\training_manifest.json"
-                ))
-            }
+            Assert-ParameterMatch (Join-Path $ResultRoot (
+                "training\$RoutingPilotName\training_manifest.json"
+            ))
             New-Item -ItemType Directory -Force (Split-Path $PilotGate -Parent) |
                 Out-Null
             [ordered]@{
                 status = "PASS"
                 completed_at = (Get-Date).ToUniversalTime().ToString("o")
                 git_commit = $Commit
-                learned_runs = 12
+                learned_runs = 6
                 episodes_per_run = 100
                 checkpoint_interval = 5
             } | ConvertTo-Json | Set-Content -Encoding UTF8 $PilotGate
@@ -561,8 +520,6 @@ try {
             $EvaluationRoots = @(
                 "evaluation\routing_final",
                 "evaluation\routing_pretrain",
-                "evaluation\no_routing_final",
-                "evaluation\no_routing_pretrain",
                 "evaluation\routing_lead0_sensitivity",
                 "evaluation\routing_return1_sensitivity",
                 "analysis\routing_attribution.json"
@@ -574,8 +531,6 @@ try {
             foreach ($Config in @(
                 "patient_indexed_specimen_routing_pilot_routing_eval.json",
                 "patient_indexed_specimen_routing_pilot_routing_pretrain_eval.json",
-                "patient_indexed_specimen_routing_pilot_no_routing_eval.json",
-                "patient_indexed_specimen_routing_pilot_no_routing_pretrain_eval.json",
                 "patient_indexed_specimen_routing_lead0_sensitivity_eval.json",
                 "patient_indexed_specimen_routing_return1_sensitivity_eval.json"
             )) {

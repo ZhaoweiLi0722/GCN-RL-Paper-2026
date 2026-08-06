@@ -19,9 +19,11 @@ All generated artifacts live below:
 results/patient_indexed_specimen_routing/
 ```
 
-Subtrees are reserved for mechanics gate, fresh teachers, routing/no-routing
-training, final/frozen/sensitivity evaluation, analysis, logs, and provenance.
-Every stage refuses to overwrite its expected outputs.
+Subtrees are reserved for the mechanics gate, a fresh routing teacher,
+routing-enabled training, final/frozen/sensitivity evaluation, analysis, logs,
+and provenance. Optional no-routing config paths remain reserved but are not
+entered by the locked default runner. Every stage refuses to overwrite its
+expected outputs.
 
 ## Forbidden Legacy Inputs
 
@@ -39,6 +41,8 @@ attribution outputs remain untouched. They may be cited only as historical
 no-routing baselines after an explicit comparability review; they are not
 reinterpreted as routing results and are never copied into the new campaign.
 
-The routing and matched no-routing control teachers are both regenerated. This
-keeps their data-generation protocol matched and prevents the routing treatment
-from inheriting a policy that never observed the new state/action dynamics.
+The primary campaign regenerates one routing-enabled teacher and shares its
+reviewed generation protocol across GCN and matched flat. It does not regenerate
+a no-routing teacher. This prevents the routing-enabled policies from inheriting
+a teacher that never observed the new state/action dynamics while avoiding an
+unnecessary second training campaign.

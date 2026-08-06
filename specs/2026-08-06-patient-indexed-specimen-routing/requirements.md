@@ -98,10 +98,11 @@ additional observation values:
 3. transferred specimens currently waiting there;
 4. waiting specimens still route-eligible there.
 
-Routing and no-routing control scenarios expose the same state width, action
-width, graph metadata, and specimen actor head. The no-routing control disables
-execution only. This prevents architecture or parameter-count changes from
-being confounded with the routing treatment.
+Routing-enabled GCN and matched-flat policies expose the same state width,
+action width, graph metadata, and specimen actor head. The disabled executor is
+retained for deterministic regression and any separately approved supplementary
+no-routing ablation; it preserves those same dimensions and disables route
+execution only. No-routing is not a primary treatment cell.
 
 The preregistered routing pilot uses:
 
@@ -132,5 +133,7 @@ Step `info`, episode CSV, evaluation rows, and provenance expose, as applicable:
 - online update counts, finite losses, final actor drift from frozen pretrain,
   residual usage, and parameter counts.
 
-`enable_specimen_routing` defaults to false. With routing state also disabled,
-the environment must reproduce the frozen `ce9b627` no-routing trajectory hash.
+Backward-compatible environment construction leaves `enable_specimen_routing`
+false unless a config opts in. Every primary campaign config must explicitly set
+it to true. With routing state also disabled, the environment must reproduce the
+frozen `ce9b627` no-routing trajectory hash.

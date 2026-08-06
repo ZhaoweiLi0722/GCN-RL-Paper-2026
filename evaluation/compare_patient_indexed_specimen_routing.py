@@ -1,4 +1,4 @@
-"""Paired attribution for the patient-indexed specimen-routing pilot."""
+"""Paired attribution for the routing-primary specimen-routing pilot."""
 
 from __future__ import annotations
 
@@ -64,9 +64,7 @@ def compare_attribution(config: dict[str, Any]) -> dict[str, Any]:
         name: Path(config[name])
         for name in (
             "routing_final_root",
-            "no_routing_final_root",
             "routing_pretrain_root",
-            "no_routing_pretrain_root",
         )
     }
     for name, root in roots.items():
@@ -77,16 +75,10 @@ def compare_attribution(config: dict[str, Any]) -> dict[str, Any]:
         name: _load_learned_rows(root, algorithms)
         for name, root in roots.items()
     }
-    anchors = {
-        "routing_final": _load_anchor_rows(
-            roots["routing_final_root"],
-            source_algorithm=gcn_algorithm,
-        ),
-        "no_routing_final": _load_anchor_rows(
-            roots["no_routing_final_root"],
-            source_algorithm=gcn_algorithm,
-        ),
-    }
+    routing_anchor = _load_anchor_rows(
+        roots["routing_final_root"],
+        source_algorithm=gcn_algorithm,
+    )
     metrics = {
         str(metric): str(direction)
         for metric, direction in config.get("metrics", DEFAULT_METRICS).items()
@@ -95,9 +87,7 @@ def compare_attribution(config: dict[str, Any]) -> dict[str, Any]:
     bootstrap_seed = int(config.get("bootstrap_seed", 8_500_000))
 
     routing_final = learned["routing_final_root"]
-    no_routing_final = learned["no_routing_final_root"]
     routing_pretrain = learned["routing_pretrain_root"]
-    no_routing_pretrain = learned["no_routing_pretrain_root"]
     comparisons: dict[str, Any] = {}
 
     pairs = {
@@ -107,23 +97,7 @@ def compare_attribution(config: dict[str, Any]) -> dict[str, Any]:
         ),
         "routing_gcn_vs_mdl2": (
             routing_final[gcn_algorithm],
-            anchors["routing_final"],
-        ),
-        "no_routing_gcn_vs_flat": (
-            no_routing_final[gcn_algorithm],
-            no_routing_final[flat_algorithm],
-        ),
-        "routing_vs_no_routing_gcn": (
-            routing_final[gcn_algorithm],
-            no_routing_final[gcn_algorithm],
-        ),
-        "routing_vs_no_routing_flat": (
-            routing_final[flat_algorithm],
-            no_routing_final[flat_algorithm],
-        ),
-        "routing_vs_no_routing_mdl2": (
-            anchors["routing_final"],
-            anchors["no_routing_final"],
+            routing_anchor,
         ),
         "routing_final_vs_pretrain_gcn": (
             routing_final[gcn_algorithm],
@@ -132,14 +106,6 @@ def compare_attribution(config: dict[str, Any]) -> dict[str, Any]:
         "routing_final_vs_pretrain_flat": (
             routing_final[flat_algorithm],
             routing_pretrain[flat_algorithm],
-        ),
-        "no_routing_final_vs_pretrain_gcn": (
-            no_routing_final[gcn_algorithm],
-            no_routing_pretrain[gcn_algorithm],
-        ),
-        "no_routing_final_vs_pretrain_flat": (
-            no_routing_final[flat_algorithm],
-            no_routing_pretrain[flat_algorithm],
         ),
     }
     for index, (label, (candidate, baseline)) in enumerate(pairs.items()):
@@ -151,45 +117,41 @@ def compare_attribution(config: dict[str, Any]) -> dict[str, Any]:
             seed=bootstrap_seed + index * 10_000,
         )
 
-    interaction_candidate, interaction_baseline = _interaction_rows(
-        routing_gcn=routing_final[gcn_algorithm],
-        routing_flat=routing_final[flat_algorithm],
-        no_routing_gcn=no_routing_final[gcn_algorithm],
-        no_routing_flat=no_routing_final[flat_algorithm],
-        metrics=metrics,
-    )
-    comparisons["graph_specific_interaction"] = _metric_bundle(
-        interaction_candidate,
-        interaction_baseline,
-        metrics={f"interaction_{metric}": direction for metric, direction in metrics.items()},
-        resamples=resamples,
-        seed=bootstrap_seed + 500_000,
-    )
-
-    routing_cost = comparisons["routing_vs_no_routing_gcn"]["pooled"].get(
+    graph_cost = comparisons["routing_gcn_vs_flat"]["pooled"].get("total_cost")
+    anchor_cost = comparisons["routing_gcn_vs_mdl2"]["pooled"].get("total_cost")
+    gcn_online_cost = comparisons["routing_final_vs_pretrain_gcn"]["pooled"].get(
         "total_cost"
     )
-    interaction_cost = comparisons["graph_specific_interaction"]["pooled"].get(
-        "interaction_total_cost"
+    flat_online_cost = comparisons["routing_final_vs_pretrain_flat"]["pooled"].get(
+        "total_cost"
     )
-    routing_beneficial = bool(routing_cost and float(routing_cost["ci_high"]) < 0.0)
-    graph_advantage = bool(
-        interaction_cost and float(interaction_cost["ci_high"]) < 0.0
-    )
-    if routing_beneficial and not graph_advantage:
+    graph_advantage = _lower_cost_supported(graph_cost)
+    anchor_advantage = _lower_cost_supported(anchor_cost)
+    gcn_online_advantage = _lower_cost_supported(gcn_online_cost)
+    flat_online_advantage = _lower_cost_supported(flat_online_cost)
+    if anchor_advantage and not graph_advantage:
         interpretation = (
-            "Specimen routing is beneficial, but graph-specific DRL advantage "
-            "is not established."
+            "Under patient-indexed specimen routing, GCN residual control "
+            "improves on MDL-2, but an advantage over matched flat residual "
+            "control is not established."
         )
-    elif routing_beneficial and graph_advantage:
+    elif anchor_advantage and graph_advantage:
         interpretation = (
-            "Specimen routing and a graph-specific routing interaction are "
-            "supported by the preregistered total-cost comparison."
+            "Under patient-indexed specimen routing, the preregistered "
+            "total-cost comparisons support GCN residual control over both "
+            "matched flat residual control and MDL-2."
+        )
+    elif graph_advantage:
+        interpretation = (
+            "Under patient-indexed specimen routing, an advantage over matched "
+            "flat residual control is supported, but improvement over MDL-2 is "
+            "not established."
         )
     else:
         interpretation = (
-            "The preregistered total-cost comparison does not establish a "
-            "benefit from specimen routing."
+            "Under patient-indexed specimen routing, the preregistered "
+            "total-cost comparisons do not establish an advantage for GCN "
+            "residual control over matched flat residual control or MDL-2."
         )
 
     result = {
@@ -200,8 +162,10 @@ def compare_attribution(config: dict[str, Any]) -> dict[str, Any]:
         "metric_directions": metrics,
         "comparisons": comparisons,
         "decision": {
-            "routing_beneficial_total_cost": routing_beneficial,
-            "graph_specific_advantage_total_cost": graph_advantage,
+            "gcn_vs_flat_total_cost_supported": graph_advantage,
+            "gcn_vs_mdl2_total_cost_supported": anchor_advantage,
+            "gcn_final_vs_pretrain_total_cost_supported": gcn_online_advantage,
+            "flat_final_vs_pretrain_total_cost_supported": flat_online_advantage,
             "interpretation": interpretation,
         },
         "output_path": str(output_path),
@@ -249,8 +213,6 @@ def _read_rows(paths: Iterable[Path]) -> list[dict[str, Any]]:
 
 
 def _scenario_family(name: str) -> str:
-    if name.startswith("no_routing_"):
-        return name[len("no_routing_") :]
     if name.startswith("routing_"):
         return name[len("routing_") :]
     return name
@@ -319,62 +281,8 @@ def _with_direction(summary: dict[str, Any], direction: str) -> dict[str, Any]:
     return result
 
 
-def _interaction_rows(
-    *,
-    routing_gcn: list[dict[str, Any]],
-    routing_flat: list[dict[str, Any]],
-    no_routing_gcn: list[dict[str, Any]],
-    no_routing_flat: list[dict[str, Any]],
-    metrics: dict[str, str],
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    groups = [routing_gcn, routing_flat, no_routing_gcn, no_routing_flat]
-    keyed = [_key_rows(rows) for rows in groups]
-    keys = keyed[0].keys()
-    if any(group.keys() != keys for group in keyed[1:]):
-        raise ValueError("Routing interaction inputs do not share exact CRN keys")
-    routing_gap_rows: list[dict[str, Any]] = []
-    no_routing_gap_rows: list[dict[str, Any]] = []
-    for key in sorted(keys, key=lambda value: tuple(str(item) for item in value)):
-        routing_gcn_row, routing_flat_row, no_gcn_row, no_flat_row = (
-            group[key] for group in keyed
-        )
-        common = {
-            name: routing_gcn_row[name]
-            for name in PAIRING_KEYS
-        }
-        routing_gap = dict(common)
-        no_routing_gap = dict(common)
-        for metric in metrics:
-            if not all(
-                row.get(metric) not in (None, "")
-                for row in (
-                    routing_gcn_row,
-                    routing_flat_row,
-                    no_gcn_row,
-                    no_flat_row,
-                )
-            ):
-                continue
-            interaction_metric = f"interaction_{metric}"
-            routing_gap[interaction_metric] = (
-                float(routing_gcn_row[metric]) - float(routing_flat_row[metric])
-            )
-            no_routing_gap[interaction_metric] = (
-                float(no_gcn_row[metric]) - float(no_flat_row[metric])
-            )
-        routing_gap_rows.append(routing_gap)
-        no_routing_gap_rows.append(no_routing_gap)
-    return routing_gap_rows, no_routing_gap_rows
-
-
-def _key_rows(rows: list[dict[str, Any]]) -> dict[tuple[Any, ...], dict[str, Any]]:
-    result: dict[tuple[Any, ...], dict[str, Any]] = {}
-    for row in rows:
-        key = tuple(row[name] for name in PAIRING_KEYS)
-        if key in result:
-            raise ValueError(f"Duplicate attribution key: {key}")
-        result[key] = row
-    return result
+def _lower_cost_supported(summary: dict[str, Any] | None) -> bool:
+    return bool(summary and float(summary["ci_high"]) < 0.0)
 
 
 if __name__ == "__main__":

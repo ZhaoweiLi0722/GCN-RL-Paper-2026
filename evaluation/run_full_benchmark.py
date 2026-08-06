@@ -130,7 +130,9 @@ def select_algorithms(
 def select_scenarios(plan: dict[str, Any], requested: Iterable[str] | None) -> tuple[dict[str, Any], ...]:
     scenarios = tuple(plan["scenarios"])
     if requested is None:
-        return scenarios
+        requested = plan.get("primary_scenarios")
+        if requested is None:
+            return scenarios
     requested_names = set(requested)
     selected = tuple(scenario for scenario in scenarios if scenario["name"] in requested_names)
     found_names = {scenario["name"] for scenario in selected}

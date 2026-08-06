@@ -247,7 +247,8 @@ def _patient_summary_width(env_config: dict[str, Any]) -> int:
     if env_config.get("env_type") != "patient_condition":
         return 0
     edges = env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
-    return 6 + len(tuple(edges)) + 1
+    routing_width = 4 if env_config.get("include_specimen_routing_state", False) else 0
+    return 6 + len(tuple(edges)) + 1 + routing_width
 
 
 def _patient_summary_scale(max_specimens: float, summary_width: int) -> list[float]:

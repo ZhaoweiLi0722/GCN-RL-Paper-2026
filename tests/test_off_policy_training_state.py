@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import random
 from tempfile import TemporaryDirectory
 import unittest
@@ -6,6 +7,12 @@ import unittest
 import numpy as np
 import torch
 
+from src.env.capacity_planning import CapacityPlanningConfig
+from src.env.patient_capacity_planning import (
+    PatientConditionCapacityEnv,
+    PatientEnvConfig,
+)
+from src.env.patient_condition import PatientConditionConfig
 from src.rl.noise import OUNoise
 from src.rl.replay_buffer import ReplayBuffer
 from src.rl.training_state import (
@@ -168,6 +175,77 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
             }
         )
         self.assertEqual(left, right)
+
+    def test_round_trip_restores_patient_routing_environment_state(self):
+        base = CapacityPlanningConfig(
+            num_facilities=2,
+            production_lead_time=2,
+            episode_horizon=4,
+            demand_rates=(0.5, 0.1),
+            initial_specimens=(1.0, 0.0),
+            initial_reagents=(0.0, 0.0),
+            initial_idle_bioreactors=(0.0, 0.0),
+            max_specimens=(10.0, 10.0),
+            max_reagents=(10.0, 10.0),
+            max_idle_bioreactors=(2.0, 2.0),
+            max_reagent_replenishment=(0.0, 0.0),
+            max_specimen_transfer=1.0,
+            action_mode="facility_net",
+            specimen_edges=((0, 1),),
+        )
+        env = PatientConditionCapacityEnv(
+            PatientEnvConfig(
+                base=base,
+                patient=PatientConditionConfig(
+                    healthy_decay_rate=0.0,
+                    frail_decay_rate=0.0,
+                ),
+                enable_specimen_routing=True,
+                include_specimen_routing_state=True,
+                specimen_routing_lead_time_epochs=1,
+            ),
+            seed=41,
+        )
+        env.reset(seed=4100)
+        action = env.noop_action()
+        action[:2] = (-1.0, 1.0)
+        env.step(action)
+        expected_ids = tuple(env.patient_registry)
+        expected_transits = tuple(
+            transit.patient_id for transit in env.specimen_transits
+        )
+        expected_rng = json.dumps(env.rng.bit_generator.state, sort_keys=True)
+        agent = _StubAgent()
+        config = {"algorithm": agent.algorithm, "seed": agent.seed}
+
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "routing-state.pt"
+            save_off_policy_training_state(
+                agent,
+                path,
+                config=config,
+                env=env,
+                training={"next_episode": 1, "global_step": 1},
+            )
+            env.reset(seed=999)
+            metadata = load_off_policy_training_state(
+                agent,
+                path,
+                config=config,
+                env=env,
+            )
+
+        self.assertEqual(metadata["next_episode"], 1)
+        self.assertEqual(tuple(env.patient_registry), expected_ids)
+        self.assertEqual(
+            tuple(transit.patient_id for transit in env.specimen_transits),
+            expected_transits,
+        )
+        self.assertEqual(
+            json.dumps(env.rng.bit_generator.state, sort_keys=True),
+            expected_rng,
+        )
+        env.assert_identity_conservation()
 
     def test_wrapped_replay_buffer_preserves_index_layout(self):
         buffer = ReplayBuffer(2, 1, capacity=3, seed=31)

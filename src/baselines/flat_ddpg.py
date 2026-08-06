@@ -1915,7 +1915,16 @@ class FlatDDPGAgent:
             return torch.zeros((states.shape[0], n), dtype=states.dtype, device=states.device)
         n = int(self.env_config.get("num_facilities", 0))
         summary_edges = tuple(self.env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
-        summary_width = 6 + len(summary_edges) + 1
+        summary_width = (
+            6
+            + len(summary_edges)
+            + 1
+            + (
+                4
+                if self.env_config.get("include_specimen_routing_state", False)
+                else 0
+            )
+        )
         base_width = n * int(features_per_facility)
         expected_width = base_width + n * summary_width
         if states.shape[1] < expected_width:

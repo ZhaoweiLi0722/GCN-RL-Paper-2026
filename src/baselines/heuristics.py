@@ -755,7 +755,12 @@ def patient_priority_from_state(
     include_transfer_pipeline = bool(env_config.get("include_transfer_pipeline_state", False))
     features_per_facility = facility_state_width(env_config)
     summary_edges = tuple(env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
-    summary_width = 6 + len(summary_edges) + 1
+    summary_width = (
+        6
+        + len(summary_edges)
+        + 1
+        + (4 if env_config.get("include_specimen_routing_state", False) else 0)
+    )
     base_width = n * features_per_facility
     state_vector = np.asarray(state, dtype=np.float32)
     expected_width = base_width + n * summary_width

@@ -74,8 +74,9 @@ def save_off_policy_training_state(
     *,
     config: dict[str, Any],
     training: dict[str, Any],
+    env: Any | None = None,
 ) -> Path:
-    """Atomically save model, optimizer, replay, RNG, and loop state."""
+    """Atomically save model, optimizer, replay, RNG, loop, and env state."""
 
     _require_torch()
     output = Path(path)
@@ -88,6 +89,7 @@ def save_off_policy_training_state(
         "training_contract_sha256": training_contract_sha256(config),
         "agent": _agent_state_dict(agent),
         "training": dict(training),
+        "environment": _environment_state_dict(env),
     }
     try:
         torch.save(payload, temporary)
@@ -103,6 +105,7 @@ def load_off_policy_training_state(
     path: str | Path,
     *,
     config: dict[str, Any],
+    env: Any | None = None,
 ) -> dict[str, Any]:
     """Restore a checkpoint and return its training-loop metadata."""
 
@@ -127,7 +130,31 @@ def load_off_policy_training_state(
             "Training-state scientific contract does not match the current config"
         )
     _load_agent_state_dict(agent, checkpoint["agent"])
+    _load_environment_state_dict(env, checkpoint.get("environment"))
     return dict(checkpoint["training"])
+
+
+def _environment_state_dict(env: Any | None) -> dict[str, Any] | None:
+    if env is None:
+        return None
+    snapshot = getattr(env, "state_dict", None)
+    if not callable(snapshot):
+        return None
+    return dict(snapshot())
+
+
+def _load_environment_state_dict(
+    env: Any | None,
+    state: dict[str, Any] | None,
+) -> None:
+    if state is None:
+        return
+    if env is None:
+        raise ValueError("Training state contains environment state but no env was supplied")
+    restore = getattr(env, "load_state_dict", None)
+    if not callable(restore):
+        raise ValueError("Environment cannot restore the saved training state")
+    restore(dict(state))
 
 
 def _agent_state_dict(agent: Any) -> dict[str, Any]:

@@ -1,0 +1,41 @@
+{
+  "name": "patient_indexed_specimen_routing_pilot_no_routing",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "budget": "routing_pilot",
+  "reference_scenario": "no_routing_nominal_history",
+  "scenarios": [
+    "no_routing_nominal_history",
+    "no_routing_abrupt_regime_shift",
+    "no_routing_regional_drift",
+    "no_routing_compound_regional_stress"
+  ],
+  "teacher_cache": "results/patient_indexed_specimen_routing/teachers/no_routing/teacher_cache.npz",
+  "demand_history_window": 12,
+  "online_episodes": 100,
+  "pretrain_epochs": 300,
+  "offline_updates": 0,
+  "seeds": [0, 1, 2],
+  "config_overrides": {
+    "device": "cuda",
+    "batch_size": 128,
+    "checkpoint_interval": 5,
+    "training_state_checkpoint_interval": 5,
+    "progress_interval": 5,
+    "train_randomization": {
+      "enabled": true,
+      "forecast_error_range": [0.0, 0.2],
+      "demand_rate_multiplier_range": [0.9, 1.1]
+    }
+  },
+  "algorithms": [
+    {
+      "name": "gcn_residual_mdl2_network_ddpg_afd",
+      "seeds": [0, 1, 2]
+    },
+    {
+      "name": "flat_residual_mdl2_network_ddpg_afd",
+      "seeds": [0, 1, 2]
+    }
+  ],
+  "output_root": "results/patient_indexed_specimen_routing/training"
+}

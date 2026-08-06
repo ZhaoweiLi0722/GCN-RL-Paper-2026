@@ -576,6 +576,12 @@ class GCNDDPGAgent:
                 "the shared intensity before pressure projection"
             )
         self.device = resolve_torch_device(config.get("device"))
+        specimen_routing_head_enabled = bool(
+            config.get(
+                "specimen_routing_head_enabled",
+                self.env_config.get("enable_specimen_routing", False),
+            )
+        )
 
         self.actor = GCNActor(
             self.graph_spec.node_feature_dim,
@@ -588,8 +594,11 @@ class GCNDDPGAgent:
             include_global_context=include_global_context,
             readout_mode=actor_readout_mode,
             edge_weights=self.graph_spec.edge_weights,
+            specimen_routing_enabled=specimen_routing_head_enabled,
+            specimen_edges=self.graph_spec.specimen_edge_index,
             resource_edges=self.graph_spec.resource_edge_index,
             capacity_edges=self.graph_spec.capacity_edge_index,
+            specimen_edge_features=self.graph_spec.specimen_edge_features,
             resource_edge_features=self.graph_spec.resource_edge_features,
             capacity_edge_features=self.graph_spec.capacity_edge_features,
             edge_selector_enabled=self.edge_selector_enabled,
@@ -611,8 +620,11 @@ class GCNDDPGAgent:
             include_global_context=include_global_context,
             readout_mode=actor_readout_mode,
             edge_weights=self.graph_spec.edge_weights,
+            specimen_routing_enabled=specimen_routing_head_enabled,
+            specimen_edges=self.graph_spec.specimen_edge_index,
             resource_edges=self.graph_spec.resource_edge_index,
             capacity_edges=self.graph_spec.capacity_edge_index,
+            specimen_edge_features=self.graph_spec.specimen_edge_features,
             resource_edge_features=self.graph_spec.resource_edge_features,
             capacity_edge_features=self.graph_spec.capacity_edge_features,
             edge_selector_enabled=self.edge_selector_enabled,
@@ -3325,7 +3337,16 @@ class GCNDDPGAgent:
             )
         n = self.graph_spec.num_facilities
         summary_edges = tuple(self.env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
-        summary_width = 6 + len(summary_edges) + 1
+        summary_width = (
+            6
+            + len(summary_edges)
+            + 1
+            + (
+                4
+                if self.env_config.get("include_specimen_routing_state", False)
+                else 0
+            )
+        )
         base_width = n * int(features_per_facility)
         expected_width = base_width + n * summary_width
         if states.shape[1] < expected_width:

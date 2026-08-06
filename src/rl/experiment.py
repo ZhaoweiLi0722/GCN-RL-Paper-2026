@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -132,6 +133,7 @@ def train_off_policy_agent(
             agent,
             resume_path,
             config=config,
+            env=env,
         )
         rows = [dict(row) for row in resume_metadata.get("rows", ())]
         global_step = int(resume_metadata["global_step"])
@@ -369,6 +371,12 @@ def train_off_policy_agent(
                     default=0,
                 ),
             }
+        if metrics.has_patient_metrics:
+            row.update(metrics.patient_row())
+        if metrics.has_routing_metrics:
+            row.update(metrics.routing_row())
+        if metrics.has_cost_breakdown:
+            row.update(metrics.cost_components)
         for key in sorted(update_metric_totals):
             row[f"online_rl_{key}_mean"] = (
                 update_metric_totals[key]
@@ -388,6 +396,7 @@ def train_off_policy_agent(
                 agent,
                 training_state_path,
                 config=config,
+                env=env,
                 training={
                     "next_episode": int(episode + 1),
                     "global_step": int(global_step),
@@ -649,6 +658,7 @@ class EpisodeMetrics:
         self.patients_lost_waiting_ineligible = 0.0
         self.patients_lost_manufacturing = 0.0
         self.patients_lost_expired = 0.0
+        self.patients_lost_waiting_expired = 0.0
         self.patients_started = 0.0
         self.patients_completed = 0.0
         self.therapies_discarded = 0.0
@@ -659,6 +669,19 @@ class EpisodeMetrics:
         self.manufacturing_loss_rate_last = 0.0
         self.average_turnaround_time_last = 0.0
         self.risk_type_count_recoveries_last = 0.0
+        self.has_routing_metrics = False
+        self.specimen_route_count = 0.0
+        self.specimen_route_distance_miles = 0.0
+        self.specimen_route_time_hours = 0.0
+        self.specimen_route_cost = 0.0
+        self.blocked_specimen_requests = 0.0
+        self.transit_loss = 0.0
+        self.transit_expiry = 0.0
+        self.transit_ineligible = 0.0
+        self.transferred_patient_ids: list[str] = []
+        self.specimen_route_events: list[dict[str, Any]] = []
+        self.finished_product_return_assumption = ""
+        self.finished_product_return_lead_time_epochs = 0.0
 
     def update(self, info: dict[str, Any]) -> None:
         self.steps += 1
@@ -693,6 +716,7 @@ class EpisodeMetrics:
                 + 500.0 * float(np.abs(capacity_transfers).sum())
                 + 200.0 * float(np.abs(reagent_transfers).sum())
             )
+        self._update_routing_metrics(info)
 
     def _update_patient_metrics(self, info: dict[str, Any]) -> None:
         if "eligibility_rate" not in info:
@@ -711,6 +735,12 @@ class EpisodeMetrics:
             np.asarray(info.get("patients_lost_manufacturing", 0.0), dtype=float).sum()
         )
         self.patients_lost_expired += lost_expired
+        self.patients_lost_waiting_expired += float(
+            np.asarray(
+                info.get("patients_lost_waiting_expired", 0.0),
+                dtype=float,
+            ).sum()
+        )
         self.patients_lost += float(np.asarray(info.get("patients_lost", 0.0), dtype=float).sum())
         self.patients_started += float(
             np.asarray(info.get("patients_started", 0.0), dtype=float).sum()
@@ -749,6 +779,112 @@ class EpisodeMetrics:
                 self.risk_type_count_recoveries_last,
             )
         )
+
+    def _update_routing_metrics(self, info: dict[str, Any]) -> None:
+        if "specimen_route_count" not in info:
+            return
+        self.has_routing_metrics = True
+        self.specimen_route_count += float(info.get("specimen_route_count", 0.0))
+        self.specimen_route_distance_miles += float(
+            info.get("specimen_route_distance_miles", 0.0)
+        )
+        self.specimen_route_time_hours += float(
+            info.get("specimen_route_time_hours", 0.0)
+        )
+        self.specimen_route_cost += float(info.get("specimen_route_cost", 0.0))
+        self.blocked_specimen_requests += float(
+            info.get("blocked_specimen_requests", 0.0)
+        )
+        self.transit_loss += float(
+            np.asarray(info.get("transit_loss", 0.0), dtype=float).sum()
+        )
+        self.transit_expiry += float(
+            np.asarray(info.get("transit_expiry", 0.0), dtype=float).sum()
+        )
+        self.transit_ineligible += float(
+            np.asarray(
+                info.get("patients_lost_transit_ineligible", 0.0),
+                dtype=float,
+            ).sum()
+        )
+        self.transferred_patient_ids.extend(
+            str(patient_id)
+            for patient_id in info.get("transferred_patient_ids", ())
+        )
+        self.specimen_route_events.extend(
+            dict(event) for event in info.get("specimen_route_events", ())
+        )
+        self.finished_product_return_assumption = str(
+            info.get(
+                "finished_product_return_assumption",
+                self.finished_product_return_assumption,
+            )
+        )
+        self.finished_product_return_lead_time_epochs = float(
+            info.get(
+                "finished_product_return_lead_time_epochs",
+                self.finished_product_return_lead_time_epochs,
+            )
+        )
+
+    def patient_row(self) -> dict[str, float]:
+        """CSV-ready patient lifecycle aggregates for one episode."""
+
+        return {
+            "eligibility_rate": self.eligibility_rate_last,
+            "eligibility_rate_mean": self.eligibility_rate_mean,
+            "patients_lost": self.patients_lost,
+            "patients_lost_ineligible": self.patients_lost_ineligible,
+            "patients_lost_waiting_ineligible": (
+                self.patients_lost_waiting_ineligible
+            ),
+            "patients_lost_manufacturing": self.patients_lost_manufacturing,
+            "patients_lost_expired": self.patients_lost_expired,
+            "patients_lost_waiting_expired": (
+                self.patients_lost_waiting_expired
+            ),
+            "patients_started": self.patients_started,
+            "patients_completed": self.patients_completed,
+            "therapies_discarded": self.therapies_discarded,
+            "material_wasted": self.material_wasted,
+            "at_risk_unserved": self.at_risk_unserved,
+            "completion_service_level": self.completion_service_level_last,
+            "patient_ineligibility_during_manufacturing_rate": (
+                self.patient_ineligibility_during_manufacturing_rate_last
+            ),
+            "manufacturing_loss_rate": self.manufacturing_loss_rate_last,
+            "average_turnaround_time": self.average_turnaround_time_last,
+            "risk_type_count_recoveries": self.risk_type_count_recoveries_last,
+        }
+
+    def routing_row(self) -> dict[str, Any]:
+        """CSV-ready identity-preserving route diagnostics for one episode."""
+
+        return {
+            "specimen_route_count": self.specimen_route_count,
+            "specimen_route_distance_miles": self.specimen_route_distance_miles,
+            "specimen_route_time_hours": self.specimen_route_time_hours,
+            "specimen_route_cost": self.specimen_route_cost,
+            "blocked_specimen_requests": self.blocked_specimen_requests,
+            "transit_loss": self.transit_loss,
+            "transit_expiry": self.transit_expiry,
+            "transit_ineligible": self.transit_ineligible,
+            "transferred_patient_ids_json": json.dumps(
+                self.transferred_patient_ids,
+                separators=(",", ":"),
+            ),
+            "specimen_route_events_json": json.dumps(
+                self.specimen_route_events,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+            "finished_product_return_assumption": (
+                self.finished_product_return_assumption
+            ),
+            "finished_product_return_lead_time_epochs": (
+                self.finished_product_return_lead_time_epochs
+            ),
+        }
 
     @property
     def eligibility_rate_mean(self) -> float:

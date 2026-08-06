@@ -312,11 +312,17 @@ if torch is not None:
 
 
     def _validate_network_edge_metadata(
+        specimen_edges: Sequence[Edge],
         resource_edges: Sequence[Edge],
         capacity_edges: Sequence[Edge],
+        specimen_features: Sequence[Sequence[float]],
         resource_features: Sequence[Sequence[float]],
         capacity_features: Sequence[Sequence[float]],
     ) -> int:
+        if len(specimen_edges) != len(specimen_features):
+            raise ValueError(
+                "network_residual requires one feature row per specimen edge"
+            )
         if len(resource_edges) != len(resource_features):
             raise ValueError(
                 "network_residual requires one feature row per resource edge"
@@ -327,7 +333,11 @@ if torch is not None:
             )
         dimensions = {
             len(tuple(row))
-            for row in (*resource_features, *capacity_features)
+            for row in (
+                *specimen_features,
+                *resource_features,
+                *capacity_features,
+            )
         }
         if len(dimensions) > 1:
             raise ValueError(
@@ -351,8 +361,11 @@ if torch is not None:
             include_global_context: bool = True,
             readout_mode: str = "global_flat",
             edge_weights: Sequence[float] | None = None,
+            specimen_routing_enabled: bool = False,
+            specimen_edges: Sequence[Edge] | None = None,
             resource_edges: Sequence[Edge] | None = None,
             capacity_edges: Sequence[Edge] | None = None,
+            specimen_edge_features: Sequence[Sequence[float]] | None = None,
             resource_edge_features: Sequence[Sequence[float]] | None = None,
             capacity_edge_features: Sequence[Sequence[float]] | None = None,
             edge_selector_enabled: bool = False,
@@ -368,6 +381,7 @@ if torch is not None:
             self.num_facilities = int(num_facilities)
             self.include_global_context = bool(include_global_context)
             self.readout_mode = str(readout_mode)
+            self.specimen_routing_enabled = bool(specimen_routing_enabled)
             self.last_edge_flows = {}
             self.last_edge_selector_logits = {}
             self.edge_selector_enabled = bool(edge_selector_enabled)
@@ -429,6 +443,16 @@ if torch is not None:
                     3,
                     output_tanh=True,
                 )
+                if self.specimen_routing_enabled:
+                    specimen_input_dim = self.encoder.output_dim
+                    if self.include_global_context:
+                        specimen_input_dim += self.encoder.output_dim
+                    self.specimen_pressure_head = _build_mlp(
+                        specimen_input_dim,
+                        head_hidden_sizes,
+                        1,
+                        output_tanh=True,
+                    )
             elif self.readout_mode == "network_residual":
                 if int(action_dim) != 4 * self.num_facilities:
                     raise ValueError(
@@ -436,6 +460,16 @@ if torch is not None:
                     )
                 resource_edges = tuple(resource_edges or ())
                 capacity_edges = tuple(capacity_edges or ())
+                if self.specimen_routing_enabled:
+                    specimen_edges = tuple(specimen_edges or ())
+                    specimen_edge_features = tuple(
+                        specimen_edge_features
+                        if specimen_edge_features is not None
+                        else (() for _edge in specimen_edges)
+                    )
+                else:
+                    specimen_edges = ()
+                    specimen_edge_features = ()
                 resource_edge_features = tuple(
                     resource_edge_features
                     if resource_edge_features is not None
@@ -447,11 +481,25 @@ if torch is not None:
                     else (() for _edge in capacity_edges)
                 )
                 edge_feature_dim = _validate_network_edge_metadata(
+                    specimen_edges,
                     resource_edges,
                     capacity_edges,
+                    specimen_edge_features,
                     resource_edge_features,
                     capacity_edge_features,
                 )
+                if self.specimen_routing_enabled:
+                    self.register_buffer(
+                        "specimen_edge_pairs",
+                        _edge_pair_tensor(specimen_edges),
+                    )
+                    self.register_buffer(
+                        "specimen_static_edge_features",
+                        _edge_feature_tensor(
+                            specimen_edge_features,
+                            edge_feature_dim,
+                        ),
+                    )
                 self.register_buffer(
                     "resource_edge_pairs",
                     _edge_pair_tensor(resource_edges),
@@ -506,6 +554,13 @@ if torch is not None:
                     1,
                     output_tanh=True,
                 )
+                if self.specimen_routing_enabled:
+                    self.specimen_edge_head = _build_mlp(
+                        edge_input_dim,
+                        head_hidden_sizes,
+                        1,
+                        output_tanh=True,
+                    )
                 if self.edge_selector_enabled:
                     self.reagent_edge_selector_head = _build_mlp(
                         edge_input_dim,
@@ -519,9 +574,18 @@ if torch is not None:
                         1,
                         output_tanh=False,
                     )
+                    if self.specimen_routing_enabled:
+                        self.specimen_edge_selector_head = _build_mlp(
+                            edge_input_dim,
+                            head_hidden_sizes,
+                            1,
+                            output_tanh=False,
+                        )
                 else:
                     self.reagent_edge_selector_head = None
                     self.capacity_edge_selector_head = None
+                    if self.specimen_routing_enabled:
+                        self.specimen_edge_selector_head = None
             else:
                 raise ValueError(f"Unsupported GCN actor readout_mode: {self.readout_mode}")
 
@@ -573,6 +637,22 @@ if torch is not None:
                     self.capacity_edge_head,
                     self.capacity_edge_selector_head,
                 )
+                if self.specimen_routing_enabled:
+                    (
+                        specimen_net,
+                        specimen_edge_flow,
+                        specimen_selector_logits,
+                    ) = self._edge_net_actions(
+                        facility_encoded,
+                        facility_features,
+                        graph_context,
+                        self.specimen_edge_pairs,
+                        self.specimen_static_edge_features,
+                        self.specimen_edge_head,
+                        self.specimen_edge_selector_head,
+                    )
+                else:
+                    specimen_net = torch.zeros_like(reagent_net)
                 self.last_edge_flows = {
                     "reagent_transfer": reagent_edge_flow,
                     "capacity_transfer": capacity_edge_flow,
@@ -581,7 +661,11 @@ if torch is not None:
                     "reagent_transfer": reagent_selector_logits,
                     "capacity_transfer": capacity_selector_logits,
                 }
-                specimen_net = torch.zeros_like(reagent_net)
+                if self.specimen_routing_enabled:
+                    self.last_edge_flows["specimen_transfer"] = specimen_edge_flow
+                    self.last_edge_selector_logits["specimen_transfer"] = (
+                        specimen_selector_logits
+                    )
                 return torch.cat(
                     (
                         specimen_net,
@@ -593,12 +677,30 @@ if torch is not None:
                 )
             if self.readout_mode == "pressure_intensity":
                 intensities = self.head(encoded.mean(dim=1))
-                specimen_net = torch.zeros(
-                    encoded.shape[0],
-                    self.num_facilities,
-                    dtype=encoded.dtype,
-                    device=encoded.device,
-                )
+                if self.specimen_routing_enabled:
+                    specimen_inputs = [facility_encoded]
+                    if self.include_global_context:
+                        specimen_inputs.append(
+                            encoded.mean(dim=1, keepdim=True).expand(
+                                -1,
+                                self.num_facilities,
+                                -1,
+                            )
+                        )
+                    specimen_pressure = self.specimen_pressure_head(
+                        torch.cat(specimen_inputs, dim=-1)
+                    ).squeeze(-1)
+                    specimen_net = 0.5 * (
+                        specimen_pressure
+                        - specimen_pressure.mean(dim=1, keepdim=True)
+                    )
+                else:
+                    specimen_net = torch.zeros(
+                        encoded.shape[0],
+                        self.num_facilities,
+                        dtype=encoded.dtype,
+                        device=encoded.device,
+                    )
                 reagent_intensity = intensities[:, 0:1].expand(
                     -1,
                     self.num_facilities,
@@ -751,6 +853,8 @@ if torch is not None:
                     self.reagent_edge_head,
                     self.capacity_edge_head,
                 ]
+                if self.specimen_routing_enabled:
+                    heads.append(self.specimen_edge_head)
                 if self.edge_selector_enabled:
                     heads.extend(
                         (
@@ -758,6 +862,13 @@ if torch is not None:
                             self.capacity_edge_selector_head,
                         )
                     )
+                    if self.specimen_routing_enabled:
+                        heads.append(self.specimen_edge_selector_head)
+            elif (
+                self.readout_mode == "pressure_intensity"
+                and self.specimen_routing_enabled
+            ):
+                heads = [self.head, self.specimen_pressure_head]
             else:
                 heads = [self.head]
             for head in heads:

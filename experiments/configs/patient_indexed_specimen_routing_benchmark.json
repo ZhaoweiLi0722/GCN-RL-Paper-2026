@@ -1,0 +1,349 @@
+{
+  "name": "patient_indexed_specimen_routing_benchmark",
+  "description": "Preregistered routing x architecture pilot with matched state, action, CRN, budget, and explicit qualified specimen edges.",
+  "algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd",
+    "mdl2"
+  ],
+  "primary_algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd",
+    "mdl2"
+  ],
+  "learned_config_paths": {
+    "gcn_residual_mdl2_network_ddpg_afd": "configs/gcn_residual_20_clinic.yaml",
+    "flat_residual_mdl2_network_ddpg_afd": "configs/flat_residual_20_clinic.yaml"
+  },
+  "heuristic_env_reference_algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "algorithm_settings": {
+    "gcn_residual_mdl2_network_ddpg_afd": {
+      "config_overrides": {
+        "normalize_observations": false,
+        "save_pretrain_checkpoint": true,
+        "include_adaptive_demand_features": true,
+        "actor_readout_mode": "network_residual",
+        "specimen_routing_head_enabled": true,
+        "actor_hidden_sizes": [256, 128, 64],
+        "critic_hidden_sizes": [256, 128, 64],
+        "actor_lr": 0.00001,
+        "critic_lr": 0.0003,
+        "batch_size": 128,
+        "exploration_noise": {
+          "theta": 0.15,
+          "sigma": 0.005
+        },
+        "residual_action": {
+          "enabled": true,
+          "base_policy": "mdl2",
+          "include_base_action_features": true,
+          "zero_init_actor": true,
+          "scale": 1.0,
+          "group_scales": {
+            "specimen_transfer": 1.0,
+            "reagent_transfer": 1.0,
+            "capacity_transfer": 1.0,
+            "replenishment": 0.0
+          },
+          "center_groups": [
+            "specimen_transfer",
+            "reagent_transfer",
+            "capacity_transfer"
+          ],
+          "positive_only_groups": [],
+          "pressure_projection": {
+            "enabled": false,
+            "groups": []
+          },
+          "endpoint_projection": {
+            "enabled": true,
+            "groups": [
+              "specimen_transfer",
+              "reagent_transfer",
+              "capacity_transfer"
+            ],
+            "max_endpoints_per_side": 1,
+            "min_abs": 0.04
+          },
+          "correction_gate": {
+            "enabled": false,
+            "groups": []
+          },
+          "l2_weight": 0.05
+        },
+        "imitation_pretrain": {
+          "enabled": true,
+          "policy": "mdl2",
+          "episodes": 20,
+          "max_steps_per_episode": 52,
+          "epochs": 20,
+          "batch_size": 256,
+          "seed": 970000,
+          "populate_replay_buffer": true,
+          "regularization_weight": 0.25,
+          "regularization_batch_size": 128
+        },
+        "advantage_distillation_pretrain": {
+          "enabled": true,
+          "baseline_policy": "mdl2",
+          "seed": 971000,
+          "rollouts": 10,
+          "lookahead": 52,
+          "lookahead_replications": 3,
+          "lookahead_seed": 5971000,
+          "epsilons": [0.32, 0.48, 0.64, 0.8, 1.0],
+          "epochs": 300,
+          "batch_size": 256,
+          "max_steps": 52,
+          "min_improvement": 0.0,
+          "min_completion_service_level_delta": 0.0,
+          "max_patients_lost_delta": 0.0,
+          "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+          "anchor_keep_probability": 1.0,
+          "anchor_keep_weight": 1.0,
+          "anchor_keep_on_improved": false,
+          "balance_label_weights": true,
+          "retain_for_regularization": true,
+          "populate_replay_buffer": true,
+          "candidate_groups": [
+            "specimen_transfer",
+            "reagent_transfer",
+            "capacity_transfer",
+            "combined_routing_network"
+          ],
+          "candidate_signs": [-1.0, 1.0]
+        },
+        "anchor_fallback": {
+          "enabled": false
+        },
+        "elite_imitation": {
+          "enabled": false
+        },
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "flat_residual_mdl2_network_ddpg_afd": {
+      "inherits": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_overrides": {
+        "hidden_sizes": [292, 212, 128]
+      },
+      "local_search": {
+        "enabled": false
+      }
+    }
+  },
+  "parameter_matching": {
+    "definition": "unique trainable actor plus critic parameters",
+    "gcn_count": 563397,
+    "flat_count": 564137,
+    "relative_gap": 0.0013117381061692461,
+    "maximum_relative_gap": 0.01
+  },
+  "scenarios": [
+    {
+      "name": "routing_nominal_history",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
+      "env_overrides": {
+        "scenario_name": "routing_nominal_history",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": true,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "routing_abrupt_regime_shift",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_abrupt_regime_shift.json",
+      "env_overrides": {
+        "scenario_name": "routing_abrupt_regime_shift",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": true,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "routing_regional_drift",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_regional_drift.json",
+      "env_overrides": {
+        "scenario_name": "routing_regional_drift",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": true,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "routing_compound_regional_stress",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_compound_regional_stress.json",
+      "env_overrides": {
+        "scenario_name": "routing_compound_regional_stress",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": true,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "routing_nominal_lead0_sensitivity",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
+      "env_overrides": {
+        "scenario_name": "routing_nominal_lead0_sensitivity",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": true,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 0,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "routing_nominal_return1_sensitivity",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
+      "env_overrides": {
+        "scenario_name": "routing_nominal_return1_sensitivity",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": true,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 1,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "no_routing_nominal_history",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
+      "env_overrides": {
+        "scenario_name": "no_routing_nominal_history",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": false,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "no_routing_abrupt_regime_shift",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_abrupt_regime_shift.json",
+      "env_overrides": {
+        "scenario_name": "no_routing_abrupt_regime_shift",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": false,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "no_routing_regional_drift",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_regional_drift.json",
+      "env_overrides": {
+        "scenario_name": "no_routing_regional_drift",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": false,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    },
+    {
+      "name": "no_routing_compound_regional_stress",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_compound_regional_stress.json",
+      "env_overrides": {
+        "scenario_name": "no_routing_compound_regional_stress",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "enable_specimen_routing": false,
+        "include_specimen_routing_state": true,
+        "specimen_routing_lead_time_epochs": 1,
+        "max_specimen_transfers_per_patient": 1,
+        "specimen_transit_loss_probability": 0.0,
+        "finished_product_return_assumption": "return_to_collection_facility",
+        "finished_product_return_lead_time_epochs": 0,
+        "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+      }
+    }
+  ],
+  "budgets": {
+    "routing_smoke": {
+      "seeds": [0],
+      "num_episodes": 5,
+      "max_steps_per_episode": 52,
+      "batch_size": 64,
+      "checkpoint_interval": 1,
+      "progress_interval": 1,
+      "evaluation_replications": 5,
+      "evaluation_seed": 8100000
+    },
+    "routing_pilot": {
+      "seeds": [0, 1, 2],
+      "num_episodes": 100,
+      "max_steps_per_episode": 52,
+      "batch_size": 128,
+      "checkpoint_interval": 5,
+      "progress_interval": 5,
+      "evaluation_replications": 100,
+      "evaluation_seed": 8200000
+    }
+  },
+  "output_root": "results/patient_indexed_specimen_routing/benchmark",
+  "figure_root": "results/patient_indexed_specimen_routing/figures",
+  "plot_metrics": [
+    "total_cost",
+    "completion_service_level",
+    "patients_lost",
+    "specimen_route_count",
+    "specimen_route_cost"
+  ]
+}

@@ -443,6 +443,12 @@ def train_one_multiscenario_agent(
         "pretrain": pretrain_report,
         "parameter_count": agent_parameter_count(agent),
     }
+    pretrain_checkpoint = Path(summary["pretrain_checkpoint"])
+    if pretrain_checkpoint.is_file():
+        summary["actor_drift_from_pretrain"] = actor_checkpoint_drift(
+            agent,
+            pretrain_checkpoint,
+        )
     summary_path.write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
@@ -544,6 +550,35 @@ def agent_parameter_count(agent: Any) -> int:
             for parameter in module.parameters()
         )
     )
+
+
+def actor_checkpoint_drift(agent: Any, checkpoint_path: str | Path) -> dict[str, float]:
+    """Measure final actor movement from the frozen pretrain checkpoint."""
+
+    from src.rl.networks import require_torch, torch
+
+    require_torch()
+    checkpoint = torch.load(checkpoint_path, map_location="cpu")
+    reference = dict(checkpoint["actor"])
+    squared_sum = 0.0
+    maximum = 0.0
+    parameter_count = 0
+    for name, parameter in agent.actor.named_parameters():
+        if name not in reference:
+            raise ValueError(f"Pretrain actor is missing parameter {name!r}")
+        current = parameter.detach().cpu()
+        expected = reference[name].detach().cpu()
+        if current.shape != expected.shape:
+            raise ValueError(f"Pretrain actor shape mismatch for {name!r}")
+        difference = current - expected
+        squared_sum += float(torch.sum(difference * difference).item())
+        maximum = max(maximum, float(torch.max(torch.abs(difference)).item()))
+        parameter_count += int(difference.numel())
+    return {
+        "rms": float((squared_sum / parameter_count) ** 0.5 if parameter_count else 0.0),
+        "max_abs": float(maximum),
+        "parameter_count": float(parameter_count),
+    }
 
 
 if __name__ == "__main__":

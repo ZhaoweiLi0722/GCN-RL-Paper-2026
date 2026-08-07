@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 import numpy as np
 
@@ -12,10 +13,14 @@ from evaluation.augment_teacher_cache_time_state import (
 from evaluation.merge_headroom_teacher_shards import (
     merge_demonstration_caches,
 )
+from evaluation.merge_headroom_state_probe_shards import (
+    merge_state_probe_rows,
+)
 from evaluation.network_residual_headroom import (
     headroom_decision,
     lookahead_rollout_seeds,
     select_clinical_candidate,
+    state_probe_shard_config,
     teacher_shard_config,
 )
 from evaluation.probe_option_distillation import pretrain_gate_decision
@@ -73,6 +78,55 @@ class NetworkResidualHeadroomTests(unittest.TestCase):
         self.assertEqual(shard["teacher_replication_start"], 6)
         self.assertEqual(shard["lookahead_decision_offset"], 312)
         self.assertTrue(shard["output_root"].endswith("shard_03_of_05"))
+
+    def test_state_probe_shards_preserve_global_rollout_indices(self) -> None:
+        config = {
+            "name": "test_probe",
+            "state_probe_rollouts": 10,
+            "max_steps": 52,
+            "output_root": "results/test",
+        }
+
+        shard = state_probe_shard_config(config, 3, 4)
+
+        self.assertEqual(shard["state_probe_rollouts"], 2)
+        self.assertEqual(shard["state_probe_rollout_start"], 8)
+        self.assertEqual(shard["state_probe_total_rollouts"], 10)
+        self.assertEqual(
+            Path(shard["output_root"]).parts[-2:],
+            ("state_probe_shards", "shard_03_of_04"),
+        )
+
+    def test_state_probe_rows_merge_in_canonical_order(self) -> None:
+        shard_rows = [
+            [
+                {"rollout": "1", "step": "1", "selected_group": "anchor"},
+                {"rollout": "1", "step": "0", "selected_group": "anchor"},
+            ],
+            [
+                {"rollout": "0", "step": "1", "selected_group": "anchor"},
+                {"rollout": "0", "step": "0", "selected_group": "anchor"},
+            ],
+        ]
+
+        merged = merge_state_probe_rows(
+            shard_rows,
+            total_rollouts=2,
+            max_steps=2,
+        )
+
+        self.assertEqual(
+            [(int(row["rollout"]), int(row["step"])) for row in merged],
+            [(0, 0), (0, 1), (1, 0), (1, 1)],
+        )
+
+    def test_state_probe_merge_rejects_missing_rollout(self) -> None:
+        with self.assertRaisesRegex(ValueError, "cover every rollout"):
+            merge_state_probe_rows(
+                [[{"rollout": "0", "step": "0"}]],
+                total_rollouts=2,
+                max_steps=2,
+            )
 
     def test_teacher_shard_caches_merge_in_replication_order(self) -> None:
         def cache(value: float) -> dict:

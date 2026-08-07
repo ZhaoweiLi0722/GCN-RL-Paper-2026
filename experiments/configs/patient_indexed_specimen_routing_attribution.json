@@ -1,7 +1,7 @@
 {
   "name": "patient_indexed_specimen_routing_attribution",
-  "routing_final_root": "results/patient_indexed_specimen_routing/evaluation/routing_final",
-  "routing_pretrain_root": "results/patient_indexed_specimen_routing/evaluation/routing_pretrain",
+  "routing_final_root": "results/patient_indexed_specimen_routing_recovery1/evaluation/routing_final",
+  "routing_pretrain_root": "results/patient_indexed_specimen_routing_recovery1/evaluation/routing_pretrain",
   "algorithms": [
     "gcn_residual_mdl2_network_ddpg_afd",
     "flat_residual_mdl2_network_ddpg_afd"
@@ -26,5 +26,5 @@
   },
   "bootstrap_resamples": 20000,
   "bootstrap_seed": 8500000,
-  "output_path": "results/patient_indexed_specimen_routing/analysis/routing_attribution.json"
+  "output_path": "results/patient_indexed_specimen_routing_recovery1/analysis/routing_attribution.json"
 }

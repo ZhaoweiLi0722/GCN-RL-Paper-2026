@@ -12,7 +12,10 @@ $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
-$ResultRoot = "results\patient_indexed_specimen_routing"
+$ResultRoot = "results\patient_indexed_specimen_routing_recovery1"
+$RecoveryName = "Recovery 1"
+$SupersededCommit = "fd63bd4bf1ff2b191e9cccfd4ff67bde6a25e439"
+$SupersededResultRoot = "results\patient_indexed_specimen_routing"
 $GraphAlgorithm = "gcn_residual_mdl2_network_ddpg_afd"
 $FlatAlgorithm = "flat_residual_mdl2_network_ddpg_afd"
 
@@ -297,6 +300,10 @@ function Write-PhaseProvenance {
         python_sha256 = $PythonSha256
         config_sha256 = $ConfigHashes
         result_root = $ResultRoot
+        recovery = $RecoveryName
+        supersedes_failed_commit = $SupersededCommit
+        superseded_result_root = $SupersededResultRoot
+        superseded_outputs_reused = $false
         routing_name = (
             "patient-indexed, identity-preserving, pre-manufacturing specimen routing"
         )

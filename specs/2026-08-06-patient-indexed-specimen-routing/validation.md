@@ -63,3 +63,25 @@ writes the first artifact in the new result namespace. No teacher generation,
 smoke training, pilot training, formal evaluation, or packaging was performed.
 The manuscript protocol wording was subsequently updated, but no unobserved
 routing result was inserted.
+
+## Recovery 1 Repair Validation
+
+After the first formal teacher attempt exposed the missing state-probe config
+contract, Recovery 1 validation was run before any remote retry:
+
+- full repository suite: 480 tests passed in 37.138 seconds;
+- focused routing, mechanics, contract, action, training-state, and headroom
+  suite: 48 tests passed in 0.492 seconds;
+- routing contract suite alone: 7 tests passed in 1.683 seconds;
+- a scratch `--smoke --skip-teacher` execution of the repaired routing teacher
+  config completed three state-probe steps without a missing-key failure;
+- `python -m compileall -q .`: passed;
+- every patient-indexed routing JSON config parsed with `jq empty`;
+- PowerShell AST parse: 2,860 tokens and zero parse errors;
+- benchmark `routing_smoke` dry run retained 8 learned training jobs and 12
+  evaluation jobs, all below the Recovery 1 output root;
+- `git diff --check`: passed.
+
+The scratch probe wrote only to `/private/tmp` and is not formal evidence. No
+teacher generation, learned-policy training, or formal evaluation was executed
+locally as part of this repair.

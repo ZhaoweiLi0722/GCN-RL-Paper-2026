@@ -26,6 +26,14 @@
   "lookahead": 52,
   "lookahead_replications": 3,
   "lookahead_seed": 5712000,
+  "epsilons": [0.32, 0.48, 0.64, 0.8, 1.0],
+  "candidate_groups": [
+    "specimen_transfer",
+    "reagent_transfer",
+    "capacity_transfer",
+    "combined_routing_network"
+  ],
+  "candidate_signs": [-1.0, 1.0],
   "store_option_advantages": true,
   "demonstration_advantage_weight_scale": 500000.0,
   "demonstration_advantage_weight_cap": 10.0,
@@ -58,6 +66,6 @@
     "minimum_opportunity_rate": 0.0,
     "require_episode_clinical_noninferiority": true
   },
-  "demonstration_path": "results/patient_indexed_specimen_routing/teachers/no_routing/teacher_cache.npz",
-  "output_root": "results/patient_indexed_specimen_routing/teachers/no_routing"
+  "demonstration_path": "results/patient_indexed_specimen_routing_recovery1/teachers/no_routing/teacher_cache.npz",
+  "output_root": "results/patient_indexed_specimen_routing_recovery1/teachers/no_routing"
 }

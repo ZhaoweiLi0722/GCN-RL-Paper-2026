@@ -39,6 +39,7 @@ PLAN_PATH = (
 )
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
+RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery1/"
 
 
 def _scenario(plan: dict, name: str) -> dict:
@@ -135,6 +136,13 @@ class RoutingExperimentContractTests(unittest.TestCase):
             routing_teacher["explicit_options"],
             control_teacher["explicit_options"],
         )
+        afd = plan["algorithm_settings"][GCN]["config_overrides"][
+            "advantage_distillation_pretrain"
+        ]
+        for key in ("epsilons", "candidate_groups", "candidate_signs"):
+            self.assertIn(key, routing_teacher)
+            self.assertEqual(routing_teacher[key], afd[key])
+            self.assertEqual(control_teacher[key], afd[key])
 
     @unittest.skipIf(torch is None, "PyTorch is required for model matching")
     def test_gcn_flat_and_control_contracts_are_shape_and_parameter_matched(self) -> None:
@@ -235,7 +243,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
             for value in leaves(payload):
                 if value.startswith("results/"):
                     self.assertTrue(
-                        value.startswith("results/patient_indexed_specimen_routing/"),
+                        value.startswith(RESULT_ROOT),
                         f"{path}: {value}",
                     )
 
@@ -342,6 +350,14 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertIn("codex/patient-indexed-specimen-routing", runner)
         self.assertIn("ce9b6274419c8e0e7adf800f434e47d96c18c1dc", runner)
+        self.assertIn(
+            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery1"',
+            runner,
+        )
+        self.assertIn(
+            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing"',
+            runner,
+        )
         for phase in ("Validate", "Teachers", "Smoke", "Pilot", "Evaluate"):
             self.assertIn(f'"{phase}"', runner)
         self.assertIn("-ApprovePilot", runner)

@@ -11,19 +11,30 @@ verifies the branch and clean tracked worktree, and records source/config hashes
 It never uses `--force`, deletes outputs, kills processes, repairs runs, or
 launches more than the explicitly selected stage.
 
-## New Output Namespace
+## Recovery 1 Output Namespace
+
+The first formal teacher attempt at commit
+`fd63bd4bf1ff2b191e9cccfd4ff67bde6a25e439` stopped before training because
+the headroom state-probe configuration omitted its required top-level
+`epsilons` field. That failed attempt, its transcript, and the partial original
+namespace are immutable and invalid for paper use. No Smoke, Pilot, or Evaluate
+stage began.
+
+- Failed transcript: `results/patient_indexed_specimen_routing/logs/Teachers_20260806_233110.txt`
+- Transcript SHA-256: `9fc9fb61298804c327b34311f6c0e64f1df2651331d6ac6e035f120794f9c09f`
 
 All generated artifacts live below:
 
 ```text
-results/patient_indexed_specimen_routing/
+results/patient_indexed_specimen_routing_recovery1/
 ```
 
 Subtrees are reserved for the mechanics gate, a fresh routing teacher,
 routing-enabled training, final/frozen/sensitivity evaluation, analysis, logs,
 and provenance. Optional no-routing config paths remain reserved but are not
 entered by the locked default runner. Every stage refuses to overwrite its
-expected outputs.
+expected outputs. The runner records the superseded commit and root and never
+reads from or writes to `results/patient_indexed_specimen_routing/`.
 
 ## Forbidden Legacy Inputs
 

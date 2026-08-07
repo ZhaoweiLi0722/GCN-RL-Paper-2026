@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import unittest
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
@@ -11,7 +12,10 @@ from evaluation.augment_teacher_cache_time_state import (
     augment_teacher_cache_with_time,
 )
 from evaluation.merge_headroom_teacher_shards import (
+    discover_teacher_shards,
     merge_demonstration_caches,
+    normalized_shard_rows,
+    validate_teacher_shard_result,
 )
 from evaluation.merge_headroom_state_probe_shards import (
     merge_state_probe_rows,
@@ -78,6 +82,60 @@ class NetworkResidualHeadroomTests(unittest.TestCase):
         self.assertEqual(shard["teacher_replication_start"], 6)
         self.assertEqual(shard["lookahead_decision_offset"], 312)
         self.assertTrue(shard["output_root"].endswith("shard_03_of_05"))
+
+    def test_teacher_shard_discovery_rejects_incomplete_set(self) -> None:
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "shard_00_of_02").mkdir()
+
+            with self.assertRaisesRegex(ValueError, "incomplete"):
+                discover_teacher_shards(root)
+
+    def test_teacher_shard_result_requires_exact_locked_config(self) -> None:
+        config = {
+            "name": "test_teacher",
+            "teacher_replications": 3,
+            "max_steps": 52,
+            "output_root": "results/test",
+            "demonstration_path": "results/test/teacher_cache.npz",
+        }
+        expected = teacher_shard_config(config, 1, 3)
+        result = {
+            "config": expected,
+            "online_teacher": {
+                "teacher_replication_start": 1,
+                "lookahead_decision_offset": 52,
+            },
+        }
+
+        validated = validate_teacher_shard_result(
+            config,
+            result,
+            shard_index=1,
+            shard_count=3,
+        )
+
+        self.assertEqual(validated, expected)
+        result["config"] = {**expected, "max_steps": 51}
+        with self.assertRaisesRegex(ValueError, "config does not match"):
+            validate_teacher_shard_result(
+                config,
+                result,
+                shard_index=1,
+                shard_count=3,
+            )
+
+    def test_teacher_shard_rows_require_complete_local_replications(self) -> None:
+        with self.assertRaisesRegex(ValueError, "local replications"):
+            normalized_shard_rows(
+                [
+                    {"replication": "0"},
+                    {"replication": "0"},
+                ],
+                start=0,
+                count=2,
+                base_evaluation_seed=100,
+            )
 
     def test_state_probe_shards_preserve_global_rollout_indices(self) -> None:
         config = {

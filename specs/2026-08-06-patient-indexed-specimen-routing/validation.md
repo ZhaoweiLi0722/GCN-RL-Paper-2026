@@ -14,14 +14,21 @@ python3 -m unittest tests.test_off_policy_training_state
 PowerShell syntax is checked without executing the runner:
 
 ```powershell
-$tokens = $null
-$errors = $null
-[System.Management.Automation.Language.Parser]::ParseFile(
+$paths = @(
   "scripts\run_patient_indexed_specimen_routing.ps1",
-  [ref]$tokens,
-  [ref]$errors
-) | Out-Null
-if ($errors.Count -ne 0) { throw ($errors | Out-String) }
+  "scripts\start_patient_indexed_specimen_routing_phase.ps1",
+  "scripts\invoke_patient_indexed_specimen_routing_phase_detached.ps1"
+)
+foreach ($path in $paths) {
+  $tokens = $null
+  $errors = $null
+  [System.Management.Automation.Language.Parser]::ParseFile(
+    $path,
+    [ref]$tokens,
+    [ref]$errors
+  ) | Out-Null
+  if ($errors.Count -ne 0) { throw ($errors | Out-String) }
+}
 ```
 
 ## Required Automated Evidence
@@ -85,3 +92,32 @@ contract, Recovery 1 validation was run before any remote retry:
 The scratch probe wrote only to `/private/tmp` and is not formal evidence. No
 teacher generation, learned-policy training, or formal evaluation was executed
 locally as part of this repair.
+
+## Recovery 2 Launcher Validation
+
+Recovery 2 preparation was validated against parent commit
+`ecab3650780aafb746027fb26f2f02512b7b0495` before any PC launch:
+
+- all 15 patient-indexed routing JSON configs were parsed structurally after
+  replacing the Recovery 1 and Recovery 2 root strings with one placeholder;
+  scientific config mismatches: 0;
+- routing contract suite: 8 tests passed in 0.624 seconds;
+- focused routing, mechanics, contract, action, training-state, and headroom
+  suite: 49 tests passed in 0.507 seconds;
+- full repository suite: 481 tests passed in 38.063 seconds;
+- `python -m compileall -q .`: passed;
+- every patient-indexed routing JSON config parsed with `jq empty`;
+- main runner AST: 2,880 tokens and zero errors;
+- detached launcher AST: 536 tokens and zero errors;
+- detached exit wrapper AST: 348 tokens and zero errors;
+- benchmark `routing_smoke` dry run retained 8 learned training jobs and 12
+  evaluation jobs below the Recovery 2 root;
+- a `/private/tmp` stub-runner check confirmed immediate launcher PID/path
+  output and confirmed that the wrapper persists both exit 0 and exit 120 in
+  status JSON without changing the exit code;
+- `git diff --check`: passed.
+
+macOS PowerShell does not support Windows `Start-Process -WindowStyle Hidden`,
+and the local command sandbox reaps detached children. Therefore long-lived
+background survival is a PC Validate launch acceptance check. The Mac test did
+not run the scientific phase runner or create any formal result artifact.

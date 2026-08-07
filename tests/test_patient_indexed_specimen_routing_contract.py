@@ -39,7 +39,7 @@ PLAN_PATH = (
 )
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
-RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery1/"
+RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery2/"
 
 
 def _scenario(plan: dict, name: str) -> dict:
@@ -351,11 +351,16 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("codex/patient-indexed-specimen-routing", runner)
         self.assertIn("ce9b6274419c8e0e7adf800f434e47d96c18c1dc", runner)
         self.assertIn(
-            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery1"',
+            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery2"',
             runner,
         )
         self.assertIn(
-            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing"',
+            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery1"',
+            runner,
+        )
+        self.assertIn("ecab3650780aafb746027fb26f2f02512b7b0495", runner)
+        self.assertIn(
+            '$FailureClassification = "launcher/output-channel failure"',
             runner,
         )
         for phase in ("Validate", "Teachers", "Smoke", "Pilot", "Evaluate"):
@@ -376,6 +381,36 @@ class RoutingExperimentContractTests(unittest.TestCase):
             "resume-training-state",
         ):
             self.assertNotIn(forbidden, runner)
+
+    def test_recovery2_launcher_detaches_and_redirects_both_streams(self) -> None:
+        launcher = Path(
+            "scripts/start_patient_indexed_specimen_routing_phase.ps1"
+        ).read_text(encoding="utf-8")
+        wrapper = Path(
+            "scripts/invoke_patient_indexed_specimen_routing_phase_detached.ps1"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("Start-Process", launcher)
+        self.assertIn("-RedirectStandardOutput", launcher)
+        self.assertIn("-RedirectStandardError", launcher)
+        self.assertIn("-PassThru", launcher)
+        self.assertNotIn("-Wait", launcher)
+        self.assertIn("launcher-logs", launcher)
+        self.assertIn("patient_indexed_specimen_routing_recovery2", launcher)
+        self.assertIn("PID=$($Process.Id)", launcher)
+        self.assertIn("run_patient_indexed_specimen_routing.ps1", wrapper)
+        self.assertIn("exit $ExitCode", wrapper)
+        self.assertIn("status.json", launcher)
+        for forbidden in (
+            "--force",
+            "Remove-Item",
+            "Stop-Process",
+            "Copy-Item",
+            "git reset",
+            "git clean",
+        ):
+            self.assertNotIn(forbidden, launcher)
+            self.assertNotIn(forbidden, wrapper)
 
 
 if __name__ == "__main__":

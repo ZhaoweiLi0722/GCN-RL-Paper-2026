@@ -12,10 +12,14 @@ $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
-$ResultRoot = "results\patient_indexed_specimen_routing_recovery1"
-$RecoveryName = "Recovery 1"
-$SupersededCommit = "fd63bd4bf1ff2b191e9cccfd4ff67bde6a25e439"
-$SupersededResultRoot = "results\patient_indexed_specimen_routing"
+$ResultRoot = "results\patient_indexed_specimen_routing_recovery2"
+$RecoveryName = "Recovery 2"
+$SupersededCommit = "ecab3650780aafb746027fb26f2f02512b7b0495"
+$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery1"
+$SupersededTranscriptSha256 = (
+    "3307e86aafc80813b020a3102603f02001e7af50ddbea0b21020e9d81f255ee8"
+)
+$FailureClassification = "launcher/output-channel failure"
 $GraphAlgorithm = "gcn_residual_mdl2_network_ddpg_afd"
 $FlatAlgorithm = "flat_residual_mdl2_network_ddpg_afd"
 
@@ -304,6 +308,8 @@ function Write-PhaseProvenance {
         supersedes_failed_commit = $SupersededCommit
         superseded_result_root = $SupersededResultRoot
         superseded_outputs_reused = $false
+        superseded_transcript_sha256 = $SupersededTranscriptSha256
+        failure_classification = $FailureClassification
         routing_name = (
             "patient-indexed, identity-preserving, pre-manufacturing specimen routing"
         )

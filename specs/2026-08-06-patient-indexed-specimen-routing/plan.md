@@ -43,6 +43,22 @@ under the new routing output root. Neither learned architecture may import any
 legacy teacher, normalization artifact, pretrain, policy checkpoint, or training
 state. GCN and matched flat use the same reviewed teacher-generation protocol.
 
+## Recovery 2 Execution Transport
+
+Recovery 2 changes no scientific parameter. Every phase is launched through
+`start_patient_indexed_specimen_routing_phase.ps1`, which starts an independent
+background PowerShell process, redirects stdout and stderr to distinct new
+timestamped launcher logs, writes a one-time phase claim, and immediately
+returns the detached PID. A thin detached wrapper writes the final process exit
+code to a new status JSON. The long-running process therefore does not inherit
+the Codex foreground command output pipe.
+
+The sequence remains Validate, Teachers, Smoke, Pilot, Evaluate. A phase may be
+claimed only once, its predecessor must pass, and any nonzero exit stops the
+campaign without retry. Read-only monitoring may inspect process trees, GPU
+state, logs, checkpoints, hashes, and output metadata; it may not alter the
+process or any artifact.
+
 ## Stage B: Five-Episode Smoke
 
 Run routing-enabled GCN and matched flat in isolated processes and distinct

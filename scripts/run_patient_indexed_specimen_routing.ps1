@@ -8,6 +8,8 @@ param(
     [string]$ControlProcessIds,
     [switch]$ApprovePilot,
     [string]$TeacherBundle = "",
+    [ValidatePattern("^$|^[0-9a-fA-F]{64}$")]
+    [string]$ExpectedTeacherBundleSha256 = "",
     [string]$PythonExecutable = ""
 )
 
@@ -16,20 +18,23 @@ $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
-$ResultRoot = "results\patient_indexed_specimen_routing_recovery5"
-$RecoveryName = "Recovery 5"
-$SupersededCommit = "0628af8bbfa584b344d145eaff1234e1e49b122a"
-$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery4"
+$ResultRoot = "results\patient_indexed_specimen_routing_recovery6"
+$RecoveryName = "Recovery 6"
+$SupersededCommit = "d0e6da53473b079e34d0774af3251f63205c1ad5"
+$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery5"
 $SupersededFailureEvidenceSha256 = [ordered]@{
-    validate_status = "5d0bf8d478096d7241d2aeb4bfd8ecd77cc15598169eca6532d945802a7f00a3"
-    mechanics_report = "7f8b1f3774ab0e9e2ae5453615052e273a027c5c4f34a90a240159c8eb925e27"
-    import_teacher_claim = "4b34fb0703b49ca0817ffefc30a31a05474df6b59dc58413a3031487b8094a72"
+    preflight_claim = "71202adc2df4871121e819ef687d977446f93e1dbcc07816c6c4cc028dc04dc0"
+    preflight_stdout = "df5f9a6a0ce0401506df3a69f99ac9364745de1c1c4d3cdfbfd0215b765bb3dd"
+    preflight_stderr = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    preflight_status = "d94845c13077c7d1830c29a4e31d2f72f5efb7a75fa394567537561b30b25a7b"
+    preflight_transcript = "2205a93abbe1cccf89f64b99a8d6fb7261e9d07f9eb229b0dbc85eff7c9c3ed0"
+    import_teacher_claim = "aaa429d5684f62752250d04e0173de41f8cb8e8d713c530a434ba9ef9d1da34c"
     import_teacher_stdout = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    import_teacher_stderr = "8e2d82058532bef73bbb3b59325c0162eaf9aaf76846b5387be919b36597b6f8"
-    import_teacher_status = "4243c0944f0ec01be48a34a9c6886574bffd21750a77ff25e4b57c3b416585c4"
+    import_teacher_stderr = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 }
 $FailureClassification = (
-    "PC launcher process-gate false positive before frozen teacher import"
+    "Windows PowerShell PSArgument native crash while binding a spaced " +
+    "OneDrive TeacherBundle path before frozen teacher import"
 )
 $PriorRecovery2Commit = "304dc83d6eb7447c6371150a551ea6d01999d5aa"
 $PriorRecovery2ResultRoot = "results\patient_indexed_specimen_routing_recovery2"
@@ -54,6 +59,7 @@ $MacValidationEvidenceSha256 = (
 $MacMechanicsReportSha256 = (
     "1409c76ae01673b87108f311c91a941535796cfe0edd43f218ae8d344faa0260"
 )
+$Recovery5ResultRoot = "results\patient_indexed_specimen_routing_recovery5"
 $Recovery5ValidateEvidenceSha256 = [ordered]@{
     claim = "f4f154f59e5611db021586c05d41e682c52d3ed99c57844e082f26a4d977da78"
     stdout = "3d55cc7bd6d5c3207f8e3dee0a2079d437b4a18f58c4177c5a7bf5aa8d54cfd6"
@@ -63,18 +69,44 @@ $Recovery5ValidateEvidenceSha256 = [ordered]@{
     mechanics = "7f8b1f3774ab0e9e2ae5453615052e273a027c5c4f34a90a240159c8eb925e27"
 }
 $Recovery5ValidateEvidencePaths = [ordered]@{
-    claim = Join-Path $ResultRoot "launcher-logs\Validate.claim.json"
-    stdout = Join-Path $ResultRoot (
+    claim = Join-Path $Recovery5ResultRoot "launcher-logs\Validate.claim.json"
+    stdout = Join-Path $Recovery5ResultRoot (
         "launcher-logs\Validate_20260808_063602.stdout.log"
     )
-    stderr = Join-Path $ResultRoot (
+    stderr = Join-Path $Recovery5ResultRoot (
         "launcher-logs\Validate_20260808_063602.stderr.log"
     )
-    status = Join-Path $ResultRoot (
+    status = Join-Path $Recovery5ResultRoot (
         "launcher-logs\Validate_20260808_063602.status.json"
     )
-    transcript = Join-Path $ResultRoot "logs\Validate_20260808_063604.txt"
-    mechanics = Join-Path $ResultRoot "mechanics_gate\report.json"
+    transcript = Join-Path $Recovery5ResultRoot "logs\Validate_20260808_063604.txt"
+    mechanics = Join-Path $Recovery5ResultRoot "mechanics_gate\report.json"
+}
+$Recovery5FailureEvidencePaths = [ordered]@{
+    preflight_claim = Join-Path $Recovery5ResultRoot (
+        "launcher-logs\Preflight.claim.json"
+    )
+    preflight_stdout = Join-Path $Recovery5ResultRoot (
+        "launcher-logs\Preflight_20260808_071058.stdout.log"
+    )
+    preflight_stderr = Join-Path $Recovery5ResultRoot (
+        "launcher-logs\Preflight_20260808_071058.stderr.log"
+    )
+    preflight_status = Join-Path $Recovery5ResultRoot (
+        "launcher-logs\Preflight_20260808_071058.status.json"
+    )
+    preflight_transcript = Join-Path $Recovery5ResultRoot (
+        "logs\Preflight_20260808_071059.txt"
+    )
+    import_teacher_claim = Join-Path $Recovery5ResultRoot (
+        "launcher-logs\ImportTeacher.claim.json"
+    )
+    import_teacher_stdout = Join-Path $Recovery5ResultRoot (
+        "launcher-logs\ImportTeacher_20260808_072434.stdout.log"
+    )
+    import_teacher_stderr = Join-Path $Recovery5ResultRoot (
+        "launcher-logs\ImportTeacher_20260808_072434.stderr.log"
+    )
 }
 
 function Get-IndependentRelatedProcesses {
@@ -251,6 +283,35 @@ function Assert-NewArtifactNamespace {
     }
 }
 
+function Assert-Recovery5FailureEvidence {
+    foreach ($Name in $Recovery5FailureEvidencePaths.Keys) {
+        $Path = [string]$Recovery5FailureEvidencePaths[$Name]
+        Assert-RequiredFile $Path
+        $ActualHash = (
+            Get-FileHash -Algorithm SHA256 $Path
+        ).Hash.ToLowerInvariant()
+        $ExpectedHash = [string]$SupersededFailureEvidenceSha256[$Name]
+        if ($ActualHash -ne $ExpectedHash) {
+            throw "Recovery 5 $Name hash mismatch: $ActualHash"
+        }
+    }
+    foreach ($ForbiddenPath in @(
+        (Join-Path $Recovery5ResultRoot (
+            "launcher-logs\ImportTeacher_20260808_072434.status.json"
+        )),
+        (Join-Path $Recovery5ResultRoot "teachers\routing")
+    )) {
+        if (Test-Path $ForbiddenPath) {
+            throw "Recovery 5 failure boundary changed: $ForbiddenPath"
+        }
+    }
+    if (@(Get-ChildItem (Join-Path $Recovery5ResultRoot "logs") -Filter (
+        "ImportTeacher_*.txt"
+    )).Count -ne 0) {
+        throw "Recovery 5 unexpectedly contains an ImportTeacher transcript."
+    }
+}
+
 function Assert-CudaReady {
     Invoke-CheckedPython -Stage "CUDA verification" -Arguments @(
         "scripts\verify_cuda.py"
@@ -288,7 +349,9 @@ function Assert-Recovery5ValidationEvidence {
     ) {
         throw "Recovery 5 Validate status is not a locked PASS."
     }
-    $Gate = Get-Content $MechanicsReport -Raw | ConvertFrom-Json
+    $Gate = Get-Content (
+        [string]$Recovery5ValidateEvidencePaths["mechanics"]
+    ) -Raw | ConvertFrom-Json
     if ($Gate.status -ne "PASS") {
         throw "Recovery 5 PC mechanics/headroom gate did not pass."
     }
@@ -504,8 +567,17 @@ if (-not (Test-Path -PathType Leaf $Python)) {
 if ($Phase -eq "ImportTeacher" -and -not $TeacherBundle) {
     throw "ImportTeacher requires -TeacherBundle."
 }
-if ($Phase -ne "ImportTeacher" -and $TeacherBundle) {
-    throw "-TeacherBundle is only valid for ImportTeacher."
+if ($Phase -eq "ImportTeacher" -and -not $ExpectedTeacherBundleSha256) {
+    throw "ImportTeacher requires -ExpectedTeacherBundleSha256."
+}
+if (
+    $Phase -ne "ImportTeacher" -and
+    ($TeacherBundle -or $ExpectedTeacherBundleSha256)
+) {
+    throw (
+        "-TeacherBundle and -ExpectedTeacherBundleSha256 are only valid " +
+        "for ImportTeacher."
+    )
 }
 $PythonVersion = ((& $Python --version 2>&1) | Out-String).Trim()
 $PythonSha256 = (
@@ -573,6 +645,7 @@ try {
     switch ($Phase) {
         "Preflight" {
             Assert-Recovery5ValidationEvidence
+            Assert-Recovery5FailureEvidence
             Invoke-CheckedPython -Stage "verify frozen Mac validation evidence" -Arguments @(
                 "-m", "evaluation.verify_patient_indexed_specimen_routing_validation",
                 "--evidence", $MacValidationEvidence,
@@ -582,11 +655,30 @@ try {
         }
         "ImportTeacher" {
             Assert-Recovery5ValidationEvidence
+            Assert-Recovery5FailureEvidence
             if (-not $TeacherBundle) {
                 throw "ImportTeacher requires -TeacherBundle."
             }
             $ResolvedTeacherBundle = [string](Resolve-Path $TeacherBundle)
             Assert-RequiredFile $ResolvedTeacherBundle
+            $ResolvedTeacherSidecar = "$ResolvedTeacherBundle.sha256"
+            Assert-RequiredFile $ResolvedTeacherSidecar
+            $ActualTeacherBundleSha256 = (
+                Get-FileHash -Algorithm SHA256 $ResolvedTeacherBundle
+            ).Hash.ToLowerInvariant()
+            $SidecarTeacherBundleSha256 = (
+                (Get-Content $ResolvedTeacherSidecar | Select-Object -First 1) `
+                    -split "\s+"
+            )[0].ToLowerInvariant()
+            $ExpectedTeacherBundleSha256 = (
+                $ExpectedTeacherBundleSha256.ToLowerInvariant()
+            )
+            if (
+                $ActualTeacherBundleSha256 -ne $ExpectedTeacherBundleSha256 -or
+                $SidecarTeacherBundleSha256 -ne $ExpectedTeacherBundleSha256
+            ) {
+                throw "Frozen teacher bundle changed after launcher verification."
+            }
             Assert-FreshPath (Split-Path $RoutingTeacher -Parent)
             Invoke-CheckedPython -Stage "verify and import frozen Mac teacher" -Arguments @(
                 "-m", "evaluation.headroom_teacher_bundle", "extract",
@@ -602,6 +694,7 @@ try {
         }
         "Smoke" {
             Assert-Recovery5ValidationEvidence
+            Assert-Recovery5FailureEvidence
             Assert-RequiredFile $RoutingTeacher
             Assert-FreshPath (Join-Path $ResultRoot "training\$RoutingSmokeName")
             Assert-FreshPath $SmokeGate
@@ -638,6 +731,7 @@ try {
         }
         "Pilot" {
             Assert-Recovery5ValidationEvidence
+            Assert-Recovery5FailureEvidence
             if (-not $ApprovePilot) {
                 throw "Pilot requires explicit -ApprovePilot."
             }
@@ -689,6 +783,7 @@ try {
         }
         "Evaluate" {
             Assert-Recovery5ValidationEvidence
+            Assert-Recovery5FailureEvidence
             Assert-RequiredFile $PilotGate
             $Pilot = Get-Content $PilotGate -Raw | ConvertFrom-Json
             if ($Pilot.status -ne "PASS" -or $Pilot.git_commit -ne $Commit) {

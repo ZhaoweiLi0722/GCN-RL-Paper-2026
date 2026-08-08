@@ -66,6 +66,6 @@
     "minimum_opportunity_rate": 0.0,
     "require_episode_clinical_noninferiority": true
   },
-  "demonstration_path": "results/patient_indexed_specimen_routing_recovery5/teachers/no_routing/teacher_cache.npz",
-  "output_root": "results/patient_indexed_specimen_routing_recovery5/teachers/no_routing"
+  "demonstration_path": "results/patient_indexed_specimen_routing_recovery6/teachers/no_routing/teacher_cache.npz",
+  "output_root": "results/patient_indexed_specimen_routing_recovery6/teachers/no_routing"
 }

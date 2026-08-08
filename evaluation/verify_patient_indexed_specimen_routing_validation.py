@@ -18,6 +18,26 @@ EXPECTED_FULL_TESTS = 497
 EXPECTED_EVIDENCE_SHA256 = (
     "4805af6790999a4403ebb35495179444f667da079a4cd5a08015371316d14953"
 )
+RECOVERY5_RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery5"
+RECOVERY6_RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery6"
+RECOVERY6_PATH_ONLY_CONFIGS = frozenset(
+    {
+        "experiments/configs/patient_indexed_specimen_routing_attribution.json",
+        "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+        "experiments/configs/patient_indexed_specimen_routing_lead0_sensitivity_eval.json",
+        "experiments/configs/patient_indexed_specimen_routing_mechanics_gate.json",
+        "experiments/configs/patient_indexed_specimen_routing_pilot_no_routing.json",
+        "experiments/configs/patient_indexed_specimen_routing_pilot_no_routing_eval.json",
+        "experiments/configs/patient_indexed_specimen_routing_pilot_no_routing_pretrain_eval.json",
+        "experiments/configs/patient_indexed_specimen_routing_pilot_routing.json",
+        "experiments/configs/patient_indexed_specimen_routing_pilot_routing_eval.json",
+        "experiments/configs/patient_indexed_specimen_routing_pilot_routing_pretrain_eval.json",
+        "experiments/configs/patient_indexed_specimen_routing_return1_sensitivity_eval.json",
+        "experiments/configs/patient_indexed_specimen_routing_smoke_no_routing.json",
+        "experiments/configs/patient_indexed_specimen_routing_smoke_routing.json",
+        "experiments/configs/patient_indexed_specimen_routing_teacher_no_routing.json",
+    }
+)
 ALLOWED_DESCENDANT_PATHS = frozenset(
     {
         "evaluation/verify_patient_indexed_specimen_routing_validation.py",
@@ -29,7 +49,7 @@ ALLOWED_DESCENDANT_PATHS = frozenset(
         "tests/test_patient_indexed_specimen_routing_contract.py",
         "tests/test_patient_indexed_specimen_routing_validation.py",
     }
-)
+) | RECOVERY6_PATH_ONLY_CONFIGS
 
 
 def sha256_file(path: Path) -> str:
@@ -61,6 +81,48 @@ def git_blob_bytes(repo_root: Path, commit: str, relative_path: str) -> bytes:
         check=True,
         capture_output=True,
     ).stdout
+
+
+def replace_recovery6_result_root(value: Any) -> Any:
+    if isinstance(value, str):
+        return value.replace(RECOVERY6_RESULT_ROOT, RECOVERY5_RESULT_ROOT)
+    if isinstance(value, list):
+        return [replace_recovery6_result_root(item) for item in value]
+    if isinstance(value, dict):
+        return {
+            key: replace_recovery6_result_root(item)
+            for key, item in value.items()
+        }
+    return value
+
+
+def assert_recovery6_configs_are_path_only(
+    repo_root: Path,
+    *,
+    validated_commit: str,
+    expected_commit: str,
+) -> None:
+    for relative_path in sorted(RECOVERY6_PATH_ONLY_CONFIGS):
+        validated = json.loads(
+            git_blob_bytes(repo_root, validated_commit, relative_path).decode(
+                "utf-8"
+            )
+        )
+        recovery6 = json.loads(
+            git_blob_bytes(repo_root, expected_commit, relative_path).decode(
+                "utf-8"
+            )
+        )
+        serialized = json.dumps(recovery6, sort_keys=True)
+        if RECOVERY5_RESULT_ROOT in serialized:
+            raise ValueError(
+                f"Recovery 6 config retains Recovery 5 output: {relative_path}"
+            )
+        if replace_recovery6_result_root(recovery6) != validated:
+            raise ValueError(
+                "Recovery 6 config changed beyond its result namespace: "
+                f"{relative_path}"
+            )
 
 
 def verify_validation_evidence(
@@ -110,6 +172,11 @@ def verify_validation_evidence(
             "Scientific paths changed after Mac validation: "
             + ", ".join(unexpected_paths)
         )
+    assert_recovery6_configs_are_path_only(
+        repo_root,
+        validated_commit=validated_commit,
+        expected_commit=expected_commit,
+    )
 
     focused = evidence.get("focused_tests", {})
     if focused.get("status") != "PASS" or focused.get("total") != EXPECTED_FOCUSED_TESTS:

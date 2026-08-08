@@ -351,8 +351,8 @@
       "evaluation_seed": 8200000
     }
   },
-  "output_root": "results/patient_indexed_specimen_routing_recovery5/benchmark",
-  "figure_root": "results/patient_indexed_specimen_routing_recovery5/figures",
+  "output_root": "results/patient_indexed_specimen_routing_recovery6/benchmark",
+  "figure_root": "results/patient_indexed_specimen_routing_recovery6/figures",
   "plot_metrics": [
     "total_cost",
     "completion_service_level",

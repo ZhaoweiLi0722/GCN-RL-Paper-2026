@@ -11,8 +11,10 @@ param(
     [ValidatePattern("^[0-9]+(?:,[0-9]+)*$")]
     [string]$ControlProcessIds,
     [switch]$ApprovePilot,
-    [string]$TeacherBundle = "",
-    [string]$PythonExecutable = ""
+    [string]$TeacherBundleBase64 = "",
+    [ValidatePattern("^$|^[0-9a-fA-F]{64}$")]
+    [string]$ExpectedTeacherBundleSha256 = "",
+    [string]$PythonExecutableBase64 = ""
 )
 
 Set-StrictMode -Version Latest
@@ -22,34 +24,44 @@ $StartedAt = (Get-Date).ToUniversalTime().ToString("o")
 $ExitCode = 1
 $State = "failed"
 $FailureMessage = ""
+$TeacherBundle = ""
+$PythonExecutable = ""
+
+function ConvertFrom-Utf8Base64 {
+    param([Parameter(Mandatory = $true)][string]$Value)
+    if (-not $Value) {
+        return ""
+    }
+    return [Text.Encoding]::UTF8.GetString(
+        [Convert]::FromBase64String($Value)
+    )
+}
 
 try {
+    $TeacherBundle = ConvertFrom-Utf8Base64 $TeacherBundleBase64
+    $PythonExecutable = ConvertFrom-Utf8Base64 $PythonExecutableBase64
     $Runner = Join-Path $PSScriptRoot "run_patient_indexed_specimen_routing.ps1"
-    $RunnerArguments = @(
-        "-NoProfile",
-        "-ExecutionPolicy", "Bypass",
-        "-File", $Runner,
-        "-Phase", $Phase,
-        "-ExpectedCommit", $ExpectedCommit,
-        "-ControlProcessIds", $ControlProcessIds
-    )
+    $RunnerParameters = @{
+        Phase = $Phase
+        ExpectedCommit = $ExpectedCommit
+        ControlProcessIds = $ControlProcessIds
+    }
     if ($PythonExecutable) {
-        $RunnerArguments += @("-PythonExecutable", $PythonExecutable)
+        $RunnerParameters["PythonExecutable"] = $PythonExecutable
     }
     if ($TeacherBundle) {
-        $RunnerArguments += @("-TeacherBundle", $TeacherBundle)
+        $RunnerParameters["TeacherBundle"] = $TeacherBundle
+        $RunnerParameters["ExpectedTeacherBundleSha256"] = (
+            $ExpectedTeacherBundleSha256
+        )
     }
     if ($ApprovePilot) {
-        $RunnerArguments += "-ApprovePilot"
+        $RunnerParameters["ApprovePilot"] = $true
     }
 
-    & powershell.exe @RunnerArguments
-    $ExitCode = [int32]$LASTEXITCODE
-    if ($ExitCode -eq 0) {
-        $State = "completed"
-    } else {
-        $FailureMessage = "Locked phase runner exited nonzero."
-    }
+    & $Runner @RunnerParameters
+    $ExitCode = 0
+    $State = "completed"
 } catch {
     $FailureMessage = $_.Exception.Message
 } finally {
@@ -68,6 +80,8 @@ try {
         exit_code = $ExitCode
         failure_message = $FailureMessage
         teacher_bundle = $TeacherBundle
+        expected_teacher_bundle_sha256 = $ExpectedTeacherBundleSha256
+        argument_transport = "utf8_base64"
         python_executable = $PythonExecutable
     }
     $TemporaryStatusPath = "$StatusPath.tmp.$PID"

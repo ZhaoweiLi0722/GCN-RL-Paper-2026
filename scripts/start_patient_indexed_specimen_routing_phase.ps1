@@ -7,6 +7,8 @@ param(
     [string]$ExpectedCommit,
     [switch]$ApprovePilot,
     [string]$TeacherBundle = "",
+    [ValidatePattern("^$|^[0-9a-fA-F]{64}$")]
+    [string]$ExpectedTeacherBundleSha256 = "",
     [string]$PythonExecutable = ""
 )
 
@@ -14,9 +16,14 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
-$ResultRootName = "results\patient_indexed_specimen_routing_recovery5"
+$ResultRootName = "results\patient_indexed_specimen_routing_recovery6"
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
+
+function ConvertTo-Utf8Base64 {
+    param([Parameter(Mandatory = $true)][string]$Value)
+    return [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Value))
+}
 
 function Get-ControlProcessIds {
     param(
@@ -226,11 +233,43 @@ if ($DirtyPaths.Count -gt 0) {
 if ($Phase -eq "ImportTeacher" -and -not $TeacherBundle) {
     throw "ImportTeacher requires -TeacherBundle."
 }
-if ($Phase -ne "ImportTeacher" -and $TeacherBundle) {
-    throw "-TeacherBundle is only valid for ImportTeacher."
+if ($Phase -eq "ImportTeacher" -and -not $ExpectedTeacherBundleSha256) {
+    throw "ImportTeacher requires -ExpectedTeacherBundleSha256."
+}
+if (
+    $Phase -ne "ImportTeacher" -and
+    ($TeacherBundle -or $ExpectedTeacherBundleSha256)
+) {
+    throw (
+        "-TeacherBundle and -ExpectedTeacherBundleSha256 are only valid " +
+        "for ImportTeacher."
+    )
 }
 if ($TeacherBundle -and -not (Test-Path -PathType Leaf $TeacherBundle)) {
     throw "Missing frozen teacher bundle: $TeacherBundle"
+}
+$ActualTeacherBundleSha256 = ""
+if ($TeacherBundle) {
+    $SidecarPath = "$TeacherBundle.sha256"
+    if (-not (Test-Path -PathType Leaf $SidecarPath)) {
+        throw "Missing frozen teacher bundle sidecar: $SidecarPath"
+    }
+    $ActualTeacherBundleSha256 = (
+        Get-FileHash -Algorithm SHA256 $TeacherBundle
+    ).Hash.ToLowerInvariant()
+    $ExpectedTeacherBundleSha256 = $ExpectedTeacherBundleSha256.ToLowerInvariant()
+    $SidecarTeacherBundleSha256 = (
+        (Get-Content $SidecarPath | Select-Object -First 1) -split "\s+"
+    )[0].ToLowerInvariant()
+    if (
+        $ActualTeacherBundleSha256 -ne $ExpectedTeacherBundleSha256 -or
+        $SidecarTeacherBundleSha256 -ne $ExpectedTeacherBundleSha256
+    ) {
+        throw (
+            "Frozen teacher bundle SHA256 mismatch: actual=" +
+            "$ActualTeacherBundleSha256 sidecar=$SidecarTeacherBundleSha256"
+        )
+    }
 }
 
 $PythonProbe = Resolve-RoutingPython `
@@ -240,13 +279,16 @@ $ResolvedPythonExecutable = [string]$PythonProbe.path
 
 $ResultRoot = Join-Path $RepoRoot $ResultRootName
 if (-not (Test-Path -PathType Container $ResultRoot)) {
-    throw "Recovery 5 result root does not exist for phase $Phase."
+    if ($Phase -ne "Preflight") {
+        throw "Recovery 6 result root does not exist for phase $Phase."
+    }
+    New-Item -ItemType Directory $ResultRoot | Out-Null
 }
 
 $LauncherRoot = Join-Path $ResultRoot "launcher-logs"
 $ClaimPath = Join-Path $LauncherRoot "$Phase.claim.json"
 if (Test-Path $ClaimPath) {
-    throw "Phase $Phase already has a Recovery 5 launch claim."
+    throw "Phase $Phase already has a Recovery 6 launch claim."
 }
 New-Item -ItemType Directory -Force $LauncherRoot | Out-Null
 
@@ -269,6 +311,7 @@ $ControlProcessIds = @(
         -CurrentProcessId ([int]$PID)
 )
 $SerializedControlProcessIds = $ControlProcessIds -join ","
+$EncodedPythonExecutable = ConvertTo-Utf8Base64 $ResolvedPythonExecutable
 $Arguments = @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
@@ -277,10 +320,13 @@ $Arguments = @(
     "-ExpectedCommit", $ExpectedCommit,
     "-StatusPath", $StatusPath,
     "-ControlProcessIds", $SerializedControlProcessIds,
-    "-PythonExecutable", $ResolvedPythonExecutable
+    "-PythonExecutableBase64", $EncodedPythonExecutable
 )
 if ($TeacherBundle) {
-    $Arguments += @("-TeacherBundle", $TeacherBundle)
+    $Arguments += @(
+        "-TeacherBundleBase64", (ConvertTo-Utf8Base64 $TeacherBundle),
+        "-ExpectedTeacherBundleSha256", $ExpectedTeacherBundleSha256
+    )
 }
 if ($ApprovePilot) {
     $Arguments += "-ApprovePilot"
@@ -297,6 +343,9 @@ $Claim = [ordered]@{
     launcher_pid = $null
     control_process_ids = $ControlProcessIds
     teacher_bundle = $TeacherBundle
+    expected_teacher_bundle_sha256 = $ExpectedTeacherBundleSha256
+    actual_teacher_bundle_sha256 = $ActualTeacherBundleSha256
+    argument_transport = "utf8_base64"
     requested_python = $PythonExecutable
     python_executable = $ResolvedPythonExecutable
     python_sha256 = [string]$PythonProbe.sha256

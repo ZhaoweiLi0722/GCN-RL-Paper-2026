@@ -43,7 +43,7 @@ PLAN_PATH = (
 )
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
-RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery5/"
+RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery6/"
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -370,20 +370,20 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("codex/patient-indexed-specimen-routing", runner)
         self.assertIn("ce9b6274419c8e0e7adf800f434e47d96c18c1dc", runner)
         self.assertIn(
-            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery5"',
+            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery6"',
             runner,
         )
         self.assertIn(
-            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery4"',
+            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery5"',
             runner,
         )
-        self.assertIn("0628af8bbfa584b344d145eaff1234e1e49b122a", runner)
+        self.assertIn("d0e6da53473b079e34d0774af3251f63205c1ad5", runner)
         self.assertIn(
-            "launcher process-gate false positive",
+            "PowerShell PSArgument native crash",
             runner,
         )
         self.assertIn(
-            "8e2d82058532bef73bbb3b59325c0162eaf9aaf76846b5387be919b36597b6f8",
+            "aaa429d5684f62752250d04e0173de41f8cb8e8d713c530a434ba9ef9d1da34c",
             runner,
         )
         self.assertIn("ControlProcessIds", runner)
@@ -432,12 +432,15 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, runner)
 
-    def test_recovery5_launcher_detaches_and_preserves_control_chain(self) -> None:
+    def test_recovery6_launcher_detaches_and_preserves_control_chain(self) -> None:
         launcher = Path(
             "scripts/start_patient_indexed_specimen_routing_phase.ps1"
         ).read_text(encoding="utf-8")
         wrapper = Path(
             "scripts/invoke_patient_indexed_specimen_routing_phase_detached.ps1"
+        ).read_text(encoding="utf-8")
+        runner = Path(
+            "scripts/run_patient_indexed_specimen_routing.ps1"
         ).read_text(encoding="utf-8")
 
         self.assertIn("Start-Process", launcher)
@@ -446,9 +449,20 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("-PassThru", launcher)
         self.assertNotIn("-Wait", launcher)
         self.assertIn("launcher-logs", launcher)
-        self.assertIn("patient_indexed_specimen_routing_recovery5", launcher)
+        self.assertIn("patient_indexed_specimen_routing_recovery6", launcher)
         self.assertIn("TeacherBundle", launcher)
         self.assertIn("TeacherBundle", wrapper)
+        self.assertIn("TeacherBundleBase64", launcher)
+        self.assertIn("TeacherBundleBase64", wrapper)
+        self.assertIn("ExpectedTeacherBundleSha256", launcher)
+        self.assertIn("ExpectedTeacherBundleSha256", wrapper)
+        self.assertIn("ExpectedTeacherBundleSha256", runner)
+        self.assertIn("ConvertTo-Utf8Base64", launcher)
+        self.assertIn("ConvertFrom-Utf8Base64", wrapper)
+        self.assertIn("[Convert]::FromBase64String", wrapper)
+        self.assertIn("& $Runner @RunnerParameters", wrapper)
+        self.assertNotIn("& powershell.exe @RunnerArguments", wrapper)
+        self.assertNotIn('@("-TeacherBundle", $TeacherBundle)', launcher)
         self.assertIn("Get-ControlProcessIds", launcher)
         self.assertIn("SerializedControlProcessIds", launcher)
         self.assertIn("ControlProcessIds", launcher)
@@ -474,6 +488,8 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn(r'C:\gcnrl\.venv\Scripts\python.exe', launcher)
         self.assertIn("requested_python", launcher)
         self.assertIn("python_sha256", launcher)
+        self.assertIn('argument_transport = "utf8_base64"', launcher)
+        self.assertIn('argument_transport = "utf8_base64"', wrapper)
         self.assertIn('"Preflight"', launcher)
         self.assertIn('"Preflight"', wrapper)
         self.assertNotIn('"Validate"', launcher)
@@ -496,7 +512,22 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         probe = launcher.split("$ProbeScript = @'\n", 1)[1].split("\n'@", 1)[0]
         encoded = base64.b64encode(probe.encode("utf-8")).decode("ascii")
-        command = f"import base64;exec(base64.b64decode('{encoded}'))"
+        prelude = (
+            "import sys,types;"
+            "numpy=types.ModuleType('numpy');numpy.__version__='2.0.2';"
+            "torch=types.ModuleType('torch');torch.__version__='test';"
+            "torch.cuda=types.SimpleNamespace(is_available=lambda:False);"
+            "evaluation=types.ModuleType('evaluation');evaluation.__path__=[];"
+            "training=types.ModuleType("
+            "'evaluation.train_multiscenario_network_residual');"
+            "sys.modules.update({'numpy':numpy,'torch':torch,"
+            "'evaluation':evaluation,"
+            "'evaluation.train_multiscenario_network_residual':training});"
+        )
+        command = (
+            prelude
+            + f"import base64;exec(base64.b64decode('{encoded}'))"
+        )
         environment = os.environ.copy()
         environment["PYTHONPATH"] = str(Path.cwd())
 

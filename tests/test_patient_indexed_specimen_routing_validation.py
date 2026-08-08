@@ -102,6 +102,26 @@ class FrozenMacValidationTests(unittest.TestCase):
                 "evidence/validation.json": evidence_path.read_bytes(),
                 "evidence/mechanics.json": mechanics_path.read_bytes(),
             }
+            validated_configs = {
+                path: json.dumps(
+                    {"output_root": validation.RECOVERY5_RESULT_ROOT}
+                ).encode("utf-8")
+                for path in validation.RECOVERY6_PATH_ONLY_CONFIGS
+            }
+            recovery6_configs = {
+                path: json.dumps(
+                    {"output_root": validation.RECOVERY6_RESULT_ROOT}
+                ).encode("utf-8")
+                for path in validation.RECOVERY6_PATH_ONLY_CONFIGS
+            }
+
+            def git_blob(_repo, commit, path):
+                if path in blobs:
+                    return blobs[path]
+                if commit == VALIDATED_COMMIT:
+                    return validated_configs[path]
+                return recovery6_configs[path]
+
             evidence_path.write_text("working-tree CRLF may differ\r\n", encoding="utf-8")
             mechanics_path.write_text("working-tree CRLF may differ\r\n", encoding="utf-8")
             changed = "\n".join(sorted(validation.ALLOWED_DESCENDANT_PATHS))
@@ -112,7 +132,7 @@ class FrozenMacValidationTests(unittest.TestCase):
             ), mock.patch.object(
                 validation,
                 "git_blob_bytes",
-                side_effect=lambda _repo, _commit, path: blobs[path],
+                side_effect=git_blob,
             ), mock.patch.object(
                 validation,
                 "EXPECTED_EVIDENCE_SHA256",
@@ -130,6 +150,53 @@ class FrozenMacValidationTests(unittest.TestCase):
             self.assertEqual(mechanics, root / "evidence" / "mechanics.json")
             self.assertEqual(mechanics_blob, blobs["evidence/mechanics.json"])
             merge_base.assert_called_once()
+
+    def test_verifier_rejects_recovery6_scientific_config_change(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            evidence_path = _write_fixture(root)
+            mechanics_path = root / "evidence" / "mechanics.json"
+            config_path = next(iter(validation.RECOVERY6_PATH_ONLY_CONFIGS))
+            blobs = {
+                "evidence/validation.json": evidence_path.read_bytes(),
+                "evidence/mechanics.json": mechanics_path.read_bytes(),
+            }
+
+            def git_blob(_repo, commit, path):
+                if path in blobs:
+                    return blobs[path]
+                root_name = (
+                    validation.RECOVERY5_RESULT_ROOT
+                    if commit == VALIDATED_COMMIT
+                    else validation.RECOVERY6_RESULT_ROOT
+                )
+                episodes = 100 if commit == VALIDATED_COMMIT else 101
+                return json.dumps(
+                    {"output_root": root_name, "episodes": episodes}
+                ).encode("utf-8")
+
+            with mock.patch.object(
+                validation,
+                "git_output",
+                side_effect=_git_output(config_path),
+            ), mock.patch.object(
+                validation,
+                "git_blob_bytes",
+                side_effect=git_blob,
+            ), mock.patch.object(
+                validation,
+                "EXPECTED_EVIDENCE_SHA256",
+                _sha256(evidence_path),
+            ), mock.patch.object(validation.subprocess, "run"):
+                with self.assertRaisesRegex(
+                    ValueError,
+                    "changed beyond its result namespace",
+                ):
+                    validation.verify_validation_evidence(
+                        evidence_path,
+                        repo_root=root,
+                        expected_commit=EXPECTED_COMMIT,
+                    )
 
     def test_verifier_rejects_scientific_descendant_change(self) -> None:
         with TemporaryDirectory() as directory:

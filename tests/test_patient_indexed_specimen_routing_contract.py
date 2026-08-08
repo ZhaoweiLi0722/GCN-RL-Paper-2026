@@ -128,6 +128,10 @@ class RoutingExperimentContractTests(unittest.TestCase):
             plan["parameter_matching"]["relative_gap"],
             plan["parameter_matching"]["maximum_relative_gap"],
         )
+        endpoint_projection = plan["algorithm_settings"][GCN][
+            "config_overrides"
+        ]["residual_action"]["endpoint_projection"]
+        self.assertTrue(endpoint_projection["straight_through_gradient"])
 
         default_names = {
             scenario["name"] for scenario in select_scenarios(plan, None)

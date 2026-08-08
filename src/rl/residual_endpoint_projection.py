@@ -41,6 +41,9 @@ class ResidualEndpointProjection:
             1,
         )
         self.min_abs = max(float(config.get("min_abs", 0.0)), 0.0)
+        self.straight_through_gradient = bool(
+            config.get("straight_through_gradient", False)
+        )
         self.groups = tuple(
             str(group)
             for group in config.get(
@@ -93,6 +96,10 @@ class ResidualEndpointProjection:
             group_slice = self._group_slice(group)
             values = projected[:, group_slice]
             replacement = self._project_tensor_group(values)
+            if self.straight_through_gradient:
+                # Preserve the exact hard projection in the forward pass while
+                # keeping a zero-initialized residual actor trainable.
+                replacement = values + (replacement - values).detach()
             projected = torch.cat(
                 (
                     projected[:, : group_slice.start],

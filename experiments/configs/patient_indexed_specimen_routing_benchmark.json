@@ -77,7 +77,8 @@
               "capacity_transfer"
             ],
             "max_endpoints_per_side": 1,
-            "min_abs": 0.04
+            "min_abs": 0.04,
+            "straight_through_gradient": true
           },
           "correction_gate": {
             "enabled": false,

@@ -37,5 +37,5 @@
       "seeds": [0]
     }
   ],
-  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/smoke_training"
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/smoke_training_post_ste"
 }

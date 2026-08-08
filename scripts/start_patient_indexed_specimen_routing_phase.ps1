@@ -14,9 +14,34 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
-$ResultRootName = "results\patient_indexed_specimen_routing_recovery4"
+$ResultRootName = "results\patient_indexed_specimen_routing_recovery5"
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
+
+function Get-ControlProcessIds {
+    param(
+        [Parameter(Mandatory = $true)]
+        [object[]]$ProcessSnapshot,
+        [Parameter(Mandatory = $true)]
+        [int]$CurrentProcessId
+    )
+
+    $ProcessById = @{}
+    foreach ($Process in $ProcessSnapshot) {
+        $ProcessById[[int]$Process.ProcessId] = $Process
+    }
+    $ProcessIds = @($CurrentProcessId)
+    $CursorId = $CurrentProcessId
+    while ($ProcessById.ContainsKey($CursorId)) {
+        $ParentId = [int]$ProcessById[$CursorId].ParentProcessId
+        if ($ParentId -le 0 -or $ProcessIds -contains $ParentId) {
+            break
+        }
+        $ProcessIds += $ParentId
+        $CursorId = $ParentId
+    }
+    return @($ProcessIds | Sort-Object -Unique)
+}
 
 $Branch = (git branch --show-current).Trim()
 $Commit = (git rev-parse HEAD).Trim()
@@ -45,16 +70,16 @@ if ($TeacherBundle -and -not (Test-Path -PathType Leaf $TeacherBundle)) {
 
 $ResultRoot = Join-Path $RepoRoot $ResultRootName
 if ($Phase -eq "Validate" -and (Test-Path $ResultRoot)) {
-    throw "Recovery 4 result root already exists; refusing to launch Validate."
+    throw "Recovery 5 result root already exists; refusing to launch Validate."
 }
 if ($Phase -ne "Validate" -and -not (Test-Path -PathType Container $ResultRoot)) {
-    throw "Recovery 4 result root does not exist for phase $Phase."
+    throw "Recovery 5 result root does not exist for phase $Phase."
 }
 
 $LauncherRoot = Join-Path $ResultRoot "launcher-logs"
 $ClaimPath = Join-Path $LauncherRoot "$Phase.claim.json"
 if (Test-Path $ClaimPath) {
-    throw "Phase $Phase already has a Recovery 4 launch claim."
+    throw "Phase $Phase already has a Recovery 5 launch claim."
 }
 New-Item -ItemType Directory -Force $LauncherRoot | Out-Null
 
@@ -71,13 +96,20 @@ foreach ($Path in @($StandardOutputPath, $StandardErrorPath, $StatusPath)) {
 $DetachedWrapper = Join-Path $PSScriptRoot (
     "invoke_patient_indexed_specimen_routing_phase_detached.ps1"
 )
+$ControlProcessIds = @(
+    Get-ControlProcessIds `
+        -ProcessSnapshot @(Get-CimInstance Win32_Process) `
+        -CurrentProcessId ([int]$PID)
+)
+$SerializedControlProcessIds = $ControlProcessIds -join ","
 $Arguments = @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
     "-File", $DetachedWrapper,
     "-Phase", $Phase,
     "-ExpectedCommit", $ExpectedCommit,
-    "-StatusPath", $StatusPath
+    "-StatusPath", $StatusPath,
+    "-ControlProcessIds", $SerializedControlProcessIds
 )
 if ($PythonExecutable) {
     $Arguments += @("-PythonExecutable", $PythonExecutable)
@@ -98,6 +130,7 @@ $Claim = [ordered]@{
     stderr_path = $StandardErrorPath
     status_path = $StatusPath
     launcher_pid = $null
+    control_process_ids = $ControlProcessIds
     teacher_bundle = $TeacherBundle
 }
 $Claim | ConvertTo-Json -Depth 4 | Set-Content -Encoding UTF8 $ClaimPath

@@ -11,7 +11,7 @@
     "minimum_routes": 1,
     "minimum_completion_gain": 1
   },
-  "output_path": "results/patient_indexed_specimen_routing_recovery4/mechanics_gate/report.json",
+  "output_path": "results/patient_indexed_specimen_routing_recovery5/mechanics_gate/report.json",
   "env": {
     "env_type": "patient_condition",
     "scenario_name": "patient_indexed_specimen_routing_regional_bottleneck",

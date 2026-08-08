@@ -7,6 +7,9 @@ param(
     [string]$ExpectedCommit,
     [Parameter(Mandatory = $true)]
     [string]$StatusPath,
+    [Parameter(Mandatory = $true)]
+    [ValidatePattern("^[0-9]+(?:,[0-9]+)*$")]
+    [string]$ControlProcessIds,
     [switch]$ApprovePilot,
     [string]$TeacherBundle = "",
     [string]$PythonExecutable = ""
@@ -27,7 +30,8 @@ try {
         "-ExecutionPolicy", "Bypass",
         "-File", $Runner,
         "-Phase", $Phase,
-        "-ExpectedCommit", $ExpectedCommit
+        "-ExpectedCommit", $ExpectedCommit,
+        "-ControlProcessIds", $ControlProcessIds
     )
     if ($PythonExecutable) {
         $RunnerArguments += @("-PythonExecutable", $PythonExecutable)
@@ -58,6 +62,7 @@ try {
         state = $State
         expected_commit = $ExpectedCommit
         wrapper_pid = [int]$PID
+        control_process_ids = $ControlProcessIds
         started_at = $StartedAt
         completed_at = (Get-Date).ToUniversalTime().ToString("o")
         exit_code = $ExitCode

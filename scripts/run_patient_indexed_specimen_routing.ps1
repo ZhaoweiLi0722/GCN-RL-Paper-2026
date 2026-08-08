@@ -3,6 +3,9 @@ param(
     [string]$Phase = "Validate",
     [Parameter(Mandatory = $true)]
     [string]$ExpectedCommit,
+    [Parameter(Mandatory = $true)]
+    [ValidatePattern("^[0-9]+(?:,[0-9]+)*$")]
+    [string]$ControlProcessIds,
     [switch]$ApprovePilot,
     [string]$TeacherBundle = "",
     [string]$PythonExecutable = ""
@@ -13,17 +16,20 @@ $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
-$ResultRoot = "results\patient_indexed_specimen_routing_recovery4"
-$RecoveryName = "Recovery 4"
-$SupersededCommit = "3be152840b668c14b81e7cf2b744882ea49e23ad"
-$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery3"
+$ResultRoot = "results\patient_indexed_specimen_routing_recovery5"
+$RecoveryName = "Recovery 5"
+$SupersededCommit = "0628af8bbfa584b344d145eaff1234e1e49b122a"
+$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery4"
 $SupersededFailureEvidenceSha256 = [ordered]@{
-    teacher_status = "50203653dc3d59cc8147178aa2ff45ea34ab3014ce8ba1fdd79997c14d148039"
-    merge_status = "a7c43c23b404528089e089940fb35807fa423f83db176a6b0cee480536a34232"
-    merge_stderr = "52d15e194a8cadfa71950b3bd542ae269f58b1cd3b71ef863c0b065be7e2eb0c"
+    validate_status = "5d0bf8d478096d7241d2aeb4bfd8ecd77cc15598169eca6532d945802a7f00a3"
+    mechanics_report = "7f8b1f3774ab0e9e2ae5453615052e273a027c5c4f34a90a240159c8eb925e27"
+    import_teacher_claim = "4b34fb0703b49ca0817ffefc30a31a05474df6b59dc58413a3031487b8094a72"
+    import_teacher_stdout = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    import_teacher_stderr = "8e2d82058532bef73bbb3b59325c0162eaf9aaf76846b5387be919b36597b6f8"
+    import_teacher_status = "4243c0944f0ec01be48a34a9c6886574bffd21750a77ff25e4b57c3b416585c4"
 }
 $FailureClassification = (
-    "Mac CPU teacher CSV merge field-size limit failure after 3/3 shards completed"
+    "PC launcher process-gate false positive before frozen teacher import"
 )
 $PriorRecovery2Commit = "304dc83d6eb7447c6371150a551ea6d01999d5aa"
 $PriorRecovery2ResultRoot = "results\patient_indexed_specimen_routing_recovery2"
@@ -32,20 +38,30 @@ $PriorRecovery2TranscriptSha256 = (
 )
 $GraphAlgorithm = "gcn_residual_mdl2_network_ddpg_afd"
 $FlatAlgorithm = "flat_residual_mdl2_network_ddpg_afd"
+$FrozenTeacherConfigName = (
+    "patient_indexed_specimen_routing_teacher_routing.json"
+)
+$FrozenTeacherSourceRoot = (
+    "results\patient_indexed_specimen_routing_recovery4\teachers\routing"
+)
 
 function Get-IndependentRelatedProcesses {
     param(
         [Parameter(Mandatory = $true)]
         [object[]]$ProcessSnapshot,
         [Parameter(Mandatory = $true)]
-        [int]$CurrentProcessId
+        [int]$CurrentProcessId,
+        [int[]]$ControlProcessIds = @()
     )
 
     $ProcessById = @{}
     foreach ($Process in $ProcessSnapshot) {
         $ProcessById[[int]$Process.ProcessId] = $Process
     }
-    $ExcludedProcessIds = @($CurrentProcessId)
+    $ExcludedProcessIds = @(
+        @($CurrentProcessId) + @($ControlProcessIds) |
+            Sort-Object -Unique
+    )
     $CursorId = $CurrentProcessId
     while ($ProcessById.ContainsKey($CursorId)) {
         $ParentId = [int]$ProcessById[$CursorId].ParentProcessId
@@ -57,13 +73,26 @@ function Get-IndependentRelatedProcesses {
     }
     return @(
         $ProcessSnapshot | Where-Object {
-            -not ($ExcludedProcessIds -contains [int]$_.ProcessId) -and
-            $_.CommandLine -and (
-                $_.CommandLine -match "patient_indexed_specimen_routing" -or
-                $_.CommandLine -match "train_multiscenario_network_residual" -or
-                $_.CommandLine -match "evaluate_multiscenario_network_residual" -or
-                $_.CommandLine -match "network_residual_headroom"
+            $ProcessName = [string]$_.Name
+            $CommandLine = [string]$_.CommandLine
+            $IsPythonWorkload = (
+                $ProcessName -match "(?i)^python(?:w)?\.exe$" -and
+                $CommandLine -and (
+                    $CommandLine -match "train_multiscenario_network_residual" -or
+                    $CommandLine -match "evaluate_multiscenario_network_residual" -or
+                    $CommandLine -match "network_residual_headroom"
+                )
             )
+            $IsDetachedRoutingLauncher = (
+                $ProcessName -match "(?i)^(?:powershell|pwsh)\.exe$" -and
+                $CommandLine -and
+                $CommandLine -match (
+                    "(?i)-File\s+.*(?:run_patient_indexed_specimen_routing|" +
+                    "invoke_patient_indexed_specimen_routing_phase_detached)\.ps1"
+                )
+            )
+            -not ($ExcludedProcessIds -contains [int]$_.ProcessId) -and
+                ($IsPythonWorkload -or $IsDetachedRoutingLauncher)
         }
     )
 }
@@ -169,9 +198,17 @@ function Assert-NewArtifactNamespace {
         $Payload = Get-Content $ConfigFile.FullName -Raw | ConvertFrom-Json
         foreach ($Leaf in @(Get-StringLeaves $Payload)) {
             $Normalized = $Leaf.Replace("/", "\")
+            $IsFrozenTeacherReference = (
+                $ConfigFile.Name -eq $FrozenTeacherConfigName -and
+                $Normalized -in @(
+                    "$FrozenTeacherSourceRoot\teacher_cache.npz",
+                    $FrozenTeacherSourceRoot
+                )
+            )
             if (
                 $Normalized -match "^results\\" -and
-                -not $Normalized.StartsWith("$ResultRoot\")
+                -not $Normalized.StartsWith("$ResultRoot\") -and
+                -not $IsFrozenTeacherReference
             ) {
                 throw (
                     "Routing config references a forbidden legacy artifact: " +
@@ -325,6 +362,8 @@ function Write-PhaseProvenance {
         superseded_outputs_reused = $false
         superseded_failure_evidence_sha256 = $SupersededFailureEvidenceSha256
         failure_classification = $FailureClassification
+        launcher_control_process_ids = $ExplicitControlProcessIds
+        frozen_teacher_config_source_root = $FrozenTeacherSourceRoot
         prior_recovery2_commit = $PriorRecovery2Commit
         prior_recovery2_result_root = $PriorRecovery2ResultRoot
         prior_recovery2_transcript_sha256 = $PriorRecovery2TranscriptSha256
@@ -362,6 +401,11 @@ function Write-PhaseProvenance {
 
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
+$ExplicitControlProcessIds = @(
+    $ControlProcessIds.Split(",") |
+        ForEach-Object { [int]$_ } |
+        Sort-Object -Unique
+)
 $Python = if ($PythonExecutable) {
     [string](Resolve-Path $PythonExecutable)
 } else {
@@ -403,7 +447,8 @@ $ProcessSnapshot = @(Get-CimInstance Win32_Process)
 $RelatedProcesses = @(
     Get-IndependentRelatedProcesses `
         -ProcessSnapshot $ProcessSnapshot `
-        -CurrentProcessId ([int]$PID)
+        -CurrentProcessId ([int]$PID) `
+        -ControlProcessIds $ExplicitControlProcessIds
 )
 if ($RelatedProcesses.Count -gt 0) {
     $Details = ($RelatedProcesses | ForEach-Object {

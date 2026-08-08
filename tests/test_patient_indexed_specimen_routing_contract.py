@@ -39,7 +39,13 @@ PLAN_PATH = (
 )
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
-RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery4/"
+RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery5/"
+FROZEN_TEACHER_CONFIG = (
+    "patient_indexed_specimen_routing_teacher_routing.json"
+)
+FROZEN_TEACHER_ROOT = (
+    "results/patient_indexed_specimen_routing_recovery4/teachers/routing"
+)
 
 
 def _scenario(plan: dict, name: str) -> dict:
@@ -242,8 +248,17 @@ class RoutingExperimentContractTests(unittest.TestCase):
             payload = json.loads(path.read_text(encoding="utf-8"))
             for value in leaves(payload):
                 if value.startswith("results/"):
+                    frozen_teacher_reference = (
+                        path.name == FROZEN_TEACHER_CONFIG
+                        and value
+                        in {
+                            FROZEN_TEACHER_ROOT,
+                            f"{FROZEN_TEACHER_ROOT}/teacher_cache.npz",
+                        }
+                    )
                     self.assertTrue(
-                        value.startswith(RESULT_ROOT),
+                        value.startswith(RESULT_ROOT)
+                        or frozen_teacher_reference,
                         f"{path}: {value}",
                     )
 
@@ -351,20 +366,28 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("codex/patient-indexed-specimen-routing", runner)
         self.assertIn("ce9b6274419c8e0e7adf800f434e47d96c18c1dc", runner)
         self.assertIn(
-            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery4"',
+            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery5"',
             runner,
         )
         self.assertIn(
-            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery3"',
+            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery4"',
             runner,
         )
-        self.assertIn("3be152840b668c14b81e7cf2b744882ea49e23ad", runner)
+        self.assertIn("0628af8bbfa584b344d145eaff1234e1e49b122a", runner)
         self.assertIn(
-            "teacher CSV merge field-size limit failure",
+            "launcher process-gate false positive",
             runner,
         )
         self.assertIn(
-            "52d15e194a8cadfa71950b3bd542ae269f58b1cd3b71ef863c0b065be7e2eb0c",
+            "8e2d82058532bef73bbb3b59325c0162eaf9aaf76846b5387be919b36597b6f8",
+            runner,
+        )
+        self.assertIn("ControlProcessIds", runner)
+        self.assertIn("$ExplicitControlProcessIds", runner)
+        self.assertIn("$IsPythonWorkload", runner)
+        self.assertIn("$IsDetachedRoutingLauncher", runner)
+        self.assertNotIn(
+            '$_.CommandLine -match "patient_indexed_specimen_routing"',
             runner,
         )
         self.assertIn("superseded_outputs_reused = $false", runner)
@@ -391,7 +414,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, runner)
 
-    def test_recovery4_launcher_detaches_and_redirects_both_streams(self) -> None:
+    def test_recovery5_launcher_detaches_and_preserves_control_chain(self) -> None:
         launcher = Path(
             "scripts/start_patient_indexed_specimen_routing_phase.ps1"
         ).read_text(encoding="utf-8")
@@ -405,9 +428,15 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("-PassThru", launcher)
         self.assertNotIn("-Wait", launcher)
         self.assertIn("launcher-logs", launcher)
-        self.assertIn("patient_indexed_specimen_routing_recovery4", launcher)
+        self.assertIn("patient_indexed_specimen_routing_recovery5", launcher)
         self.assertIn("TeacherBundle", launcher)
         self.assertIn("TeacherBundle", wrapper)
+        self.assertIn("Get-ControlProcessIds", launcher)
+        self.assertIn("SerializedControlProcessIds", launcher)
+        self.assertIn("ControlProcessIds", launcher)
+        self.assertIn("ControlProcessIds", wrapper)
+        self.assertIn("control_process_ids", launcher)
+        self.assertIn("control_process_ids", wrapper)
         self.assertIn("PID=$($Process.Id)", launcher)
         self.assertIn("run_patient_indexed_specimen_routing.ps1", wrapper)
         self.assertIn("exit $ExitCode", wrapper)

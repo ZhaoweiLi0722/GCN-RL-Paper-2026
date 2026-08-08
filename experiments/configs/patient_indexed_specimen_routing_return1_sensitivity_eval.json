@@ -1,7 +1,7 @@
 {
   "name": "patient_indexed_specimen_routing_return1_sensitivity_eval",
   "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
-  "training_manifest": "results/patient_indexed_specimen_routing_recovery2/training/patient_indexed_specimen_routing_pilot_routing/training_manifest.json",
+  "training_manifest": "results/patient_indexed_specimen_routing_recovery3/training/patient_indexed_specimen_routing_pilot_routing/training_manifest.json",
   "algorithms": [
     "gcn_residual_mdl2_network_ddpg_afd",
     "flat_residual_mdl2_network_ddpg_afd"
@@ -56,5 +56,5 @@
       "patient_ineligibility_during_manufacturing_rate": 0.001
     }
   },
-  "output_root": "results/patient_indexed_specimen_routing_recovery2/evaluation/routing_return1_sensitivity"
+  "output_root": "results/patient_indexed_specimen_routing_recovery3/evaluation/routing_return1_sensitivity"
 }

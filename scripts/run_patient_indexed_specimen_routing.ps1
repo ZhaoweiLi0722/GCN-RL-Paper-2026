@@ -1,9 +1,10 @@
 param(
-    [ValidateSet("Validate", "Teachers", "Smoke", "Pilot", "Evaluate")]
+    [ValidateSet("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
     [string]$Phase = "Validate",
     [Parameter(Mandatory = $true)]
     [string]$ExpectedCommit,
     [switch]$ApprovePilot,
+    [string]$TeacherBundle = "",
     [string]$PythonExecutable = ""
 )
 
@@ -12,14 +13,16 @@ $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
-$ResultRoot = "results\patient_indexed_specimen_routing_recovery2"
-$RecoveryName = "Recovery 2"
-$SupersededCommit = "ecab3650780aafb746027fb26f2f02512b7b0495"
-$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery1"
+$ResultRoot = "results\patient_indexed_specimen_routing_recovery3"
+$RecoveryName = "Recovery 3"
+$SupersededCommit = "304dc83d6eb7447c6371150a551ea6d01999d5aa"
+$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery2"
 $SupersededTranscriptSha256 = (
-    "3307e86aafc80813b020a3102603f02001e7af50ddbea0b21020e9d81f255ee8"
+    "d9a3e7f598b2991a90662ae3f1326be7cade6889888a3f5ff6f9d17f7b9bbfed"
 )
-$FailureClassification = "launcher/output-channel failure"
+$FailureClassification = (
+    "patient_registry look-ahead AttributeError during Windows CPU teacher generation"
+)
 $GraphAlgorithm = "gcn_residual_mdl2_network_ddpg_afd"
 $FlatAlgorithm = "flat_residual_mdl2_network_ddpg_afd"
 
@@ -293,6 +296,11 @@ function Write-PhaseProvenance {
             Get-FileHash -Algorithm SHA256 $Config.FullName
         ).Hash.ToLowerInvariant()
     }
+    $TeacherManifest = $null
+    if (Test-Path -PathType Leaf $RoutingTeacherManifest) {
+        $TeacherManifest = Get-Content $RoutingTeacherManifest -Raw |
+            ConvertFrom-Json
+    }
     $Payload = [ordered]@{
         created_at = (Get-Date).ToUniversalTime().ToString("o")
         phase = $CompletedPhase
@@ -310,6 +318,21 @@ function Write-PhaseProvenance {
         superseded_outputs_reused = $false
         superseded_transcript_sha256 = $SupersededTranscriptSha256
         failure_classification = $FailureClassification
+        teacher_origin = if ($null -ne $TeacherManifest) {
+            "frozen Mac CPU shard bundle"
+        } else {
+            $null
+        }
+        teacher_bundle_sha256 = if ($null -ne $TeacherManifest) {
+            $TeacherManifest.bundle_sha256
+        } else {
+            $null
+        }
+        teacher_source_commit = if ($null -ne $TeacherManifest) {
+            $TeacherManifest.provenance.git_commit
+        } else {
+            $null
+        }
         routing_name = (
             "patient-indexed, identity-preserving, pre-manufacturing specimen routing"
         )
@@ -336,6 +359,12 @@ $Python = if ($PythonExecutable) {
 }
 if (-not (Test-Path -PathType Leaf $Python)) {
     throw "Missing CUDA virtual environment Python: $Python"
+}
+if ($Phase -eq "ImportTeacher" -and -not $TeacherBundle) {
+    throw "ImportTeacher requires -TeacherBundle."
+}
+if ($Phase -ne "ImportTeacher" -and $TeacherBundle) {
+    throw "-TeacherBundle is only valid for ImportTeacher."
 }
 $PythonVersion = ((& $Python --version 2>&1) | Out-String).Trim()
 $PythonSha256 = (
@@ -388,6 +417,9 @@ $LogPath = Join-Path $LogRoot "${Phase}_$Timestamp.txt"
 
 $MechanicsReport = Join-Path $ResultRoot "mechanics_gate\report.json"
 $RoutingTeacher = Join-Path $ResultRoot "teachers\routing\teacher_cache.npz"
+$RoutingTeacherManifest = Join-Path $ResultRoot (
+    "teachers\routing\bundle_manifest.json"
+)
 $SmokeGate = Join-Path $ResultRoot "gates\smoke_gate.json"
 $PilotGate = Join-Path $ResultRoot "gates\pilot_gate.json"
 
@@ -425,19 +457,29 @@ try {
                 throw "Mechanics/headroom gate did not pass."
             }
         }
-        "Teachers" {
+        "ImportTeacher" {
             Assert-RequiredFile $MechanicsReport
             $Gate = Get-Content $MechanicsReport -Raw | ConvertFrom-Json
             if ($Gate.status -ne "PASS") {
                 throw "Mechanics/headroom gate did not pass."
             }
+            if (-not $TeacherBundle) {
+                throw "ImportTeacher requires -TeacherBundle."
+            }
+            $ResolvedTeacherBundle = [string](Resolve-Path $TeacherBundle)
+            Assert-RequiredFile $ResolvedTeacherBundle
             Assert-FreshPath (Split-Path $RoutingTeacher -Parent)
-            $Config = "patient_indexed_specimen_routing_teacher_routing.json"
-            Invoke-CheckedPython -Stage "fresh teacher $Config" -Arguments @(
-                "-m", "evaluation.network_residual_headroom",
-                "--config", (Join-Path "experiments\configs" $Config)
+            Invoke-CheckedPython -Stage "verify and import frozen Mac teacher" -Arguments @(
+                "-m", "evaluation.headroom_teacher_bundle", "extract",
+                "--bundle", $ResolvedTeacherBundle,
+                "--destination", (Split-Path $RoutingTeacher -Parent),
+                "--config", (
+                    "experiments\configs\" +
+                    "patient_indexed_specimen_routing_teacher_routing.json"
+                )
             )
             Assert-RequiredFile $RoutingTeacher
+            Assert-RequiredFile $RoutingTeacherManifest
         }
         "Smoke" {
             Assert-RequiredFile $RoutingTeacher

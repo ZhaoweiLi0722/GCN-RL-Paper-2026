@@ -41,6 +41,7 @@ SOURCE_FILES = (
     "evaluation/run_gcn_residual_sweep.py",
     "evaluation/merge_headroom_state_probe_shards.py",
     "evaluation/merge_headroom_teacher_shards.py",
+    "evaluation/run_headroom_teacher_pipeline.py",
     "evaluation/headroom_teacher_bundle.py",
 )
 
@@ -367,6 +368,9 @@ def extract_teacher_bundle(
                 archive_path = str(artifact["archive_path"])
                 target = temporary / Path(archive_path).name
                 target.write_bytes(archive.read(archive_path))
+        (temporary / "bundle_manifest.json").write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n"
+        )
         validate_teacher_root(temporary, load_config(config_path))
         os.replace(temporary, destination)
     except Exception:

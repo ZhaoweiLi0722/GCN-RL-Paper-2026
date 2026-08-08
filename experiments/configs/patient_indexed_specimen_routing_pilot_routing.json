@@ -9,7 +9,7 @@
     "routing_regional_drift",
     "routing_compound_regional_stress"
   ],
-  "teacher_cache": "results/patient_indexed_specimen_routing_recovery2/teachers/routing/teacher_cache.npz",
+  "teacher_cache": "results/patient_indexed_specimen_routing_recovery3/teachers/routing/teacher_cache.npz",
   "demand_history_window": 12,
   "online_episodes": 100,
   "pretrain_epochs": 300,
@@ -37,5 +37,5 @@
       "seeds": [0, 1, 2]
     }
   ],
-  "output_root": "results/patient_indexed_specimen_routing_recovery2/training"
+  "output_root": "results/patient_indexed_specimen_routing_recovery3/training"
 }

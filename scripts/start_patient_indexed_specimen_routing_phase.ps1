@@ -1,11 +1,12 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("Validate", "Teachers", "Smoke", "Pilot", "Evaluate")]
+    [ValidateSet("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
     [string]$Phase,
     [Parameter(Mandatory = $true)]
     [ValidatePattern("^[0-9a-fA-F]{40}$")]
     [string]$ExpectedCommit,
     [switch]$ApprovePilot,
+    [string]$TeacherBundle = "",
     [string]$PythonExecutable = ""
 )
 
@@ -13,7 +14,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
-$ResultRootName = "results\patient_indexed_specimen_routing_recovery2"
+$ResultRootName = "results\patient_indexed_specimen_routing_recovery3"
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
 
@@ -32,19 +33,28 @@ if ($DirtyPaths.Count -gt 0) {
 if ($PythonExecutable -and -not (Test-Path -PathType Leaf $PythonExecutable)) {
     throw "Missing requested Python executable: $PythonExecutable"
 }
+if ($Phase -eq "ImportTeacher" -and -not $TeacherBundle) {
+    throw "ImportTeacher requires -TeacherBundle."
+}
+if ($Phase -ne "ImportTeacher" -and $TeacherBundle) {
+    throw "-TeacherBundle is only valid for ImportTeacher."
+}
+if ($TeacherBundle -and -not (Test-Path -PathType Leaf $TeacherBundle)) {
+    throw "Missing frozen teacher bundle: $TeacherBundle"
+}
 
 $ResultRoot = Join-Path $RepoRoot $ResultRootName
 if ($Phase -eq "Validate" -and (Test-Path $ResultRoot)) {
-    throw "Recovery 2 result root already exists; refusing to launch Validate."
+    throw "Recovery 3 result root already exists; refusing to launch Validate."
 }
 if ($Phase -ne "Validate" -and -not (Test-Path -PathType Container $ResultRoot)) {
-    throw "Recovery 2 result root does not exist for phase $Phase."
+    throw "Recovery 3 result root does not exist for phase $Phase."
 }
 
 $LauncherRoot = Join-Path $ResultRoot "launcher-logs"
 $ClaimPath = Join-Path $LauncherRoot "$Phase.claim.json"
 if (Test-Path $ClaimPath) {
-    throw "Phase $Phase already has a Recovery 2 launch claim."
+    throw "Phase $Phase already has a Recovery 3 launch claim."
 }
 New-Item -ItemType Directory -Force $LauncherRoot | Out-Null
 
@@ -72,6 +82,9 @@ $Arguments = @(
 if ($PythonExecutable) {
     $Arguments += @("-PythonExecutable", $PythonExecutable)
 }
+if ($TeacherBundle) {
+    $Arguments += @("-TeacherBundle", $TeacherBundle)
+}
 if ($ApprovePilot) {
     $Arguments += "-ApprovePilot"
 }
@@ -85,6 +98,7 @@ $Claim = [ordered]@{
     stderr_path = $StandardErrorPath
     status_path = $StatusPath
     launcher_pid = $null
+    teacher_bundle = $TeacherBundle
 }
 $Claim | ConvertTo-Json -Depth 4 | Set-Content -Encoding UTF8 $ClaimPath
 

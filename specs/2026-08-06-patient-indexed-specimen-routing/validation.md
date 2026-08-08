@@ -121,3 +121,25 @@ macOS PowerShell does not support Windows `Start-Process -WindowStyle Hidden`,
 and the local command sandbox reaps detached children. Therefore long-lived
 background survival is a PC Validate launch acceptance check. The Mac test did
 not run the scientific phase runner or create any formal result artifact.
+
+## Recovery 3 Split-Execution Preparation
+
+Recovery 3 preparation was validated before any formal Mac shard was launched:
+
+- all 15 patient-indexed routing JSON configs were parsed structurally after
+  replacing the Recovery 2 and Recovery 3 root strings with one placeholder;
+  scientific config mismatches: 0;
+- Mac pipeline, bundle, headroom, and routing contract suites: 29 tests passed;
+- full repository suite: 495 tests passed in 34.489 seconds;
+- `python -m compileall .`: passed;
+- bundle extraction retains a verified `bundle_manifest.json` transfer receipt;
+- state-probe and teacher commands are mutually exclusive shard modes;
+- phase claims are single-use and every shard receives separate stdout,
+  stderr, status, Python cache, and Matplotlib cache paths;
+- `CUDA_VISIBLE_DEVICES` is empty for every Mac CPU shard;
+- the PC phase sequence contains `ImportTeacher` and no formal `Teachers`
+  phase.
+
+PowerShell AST validation and detached import acceptance remain PC preflight
+checks because PowerShell is unavailable in the Mac environment. No formal
+state probe, teacher, CUDA training, or evaluation was run during preparation.

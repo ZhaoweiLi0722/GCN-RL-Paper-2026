@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("Validate", "Teachers", "Smoke", "Pilot", "Evaluate")]
+    [ValidateSet("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
     [string]$Phase,
     [Parameter(Mandatory = $true)]
     [ValidatePattern("^[0-9a-fA-F]{40}$")]
@@ -8,6 +8,7 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$StatusPath,
     [switch]$ApprovePilot,
+    [string]$TeacherBundle = "",
     [string]$PythonExecutable = ""
 )
 
@@ -30,6 +31,9 @@ try {
     )
     if ($PythonExecutable) {
         $RunnerArguments += @("-PythonExecutable", $PythonExecutable)
+    }
+    if ($TeacherBundle) {
+        $RunnerArguments += @("-TeacherBundle", $TeacherBundle)
     }
     if ($ApprovePilot) {
         $RunnerArguments += "-ApprovePilot"
@@ -58,6 +62,7 @@ try {
         completed_at = (Get-Date).ToUniversalTime().ToString("o")
         exit_code = $ExitCode
         failure_message = $FailureMessage
+        teacher_bundle = $TeacherBundle
     }
     $TemporaryStatusPath = "$StatusPath.tmp.$PID"
     $Payload | ConvertTo-Json -Depth 4 |

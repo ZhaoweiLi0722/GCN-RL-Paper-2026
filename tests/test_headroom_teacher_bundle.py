@@ -66,6 +66,13 @@ class HeadroomTeacherBundleTests(unittest.TestCase):
                     (source / name).read_bytes(),
                     (destination / name).read_bytes(),
                 )
+            imported_manifest = json.loads(
+                (destination / "bundle_manifest.json").read_text()
+            )
+            self.assertEqual(
+                imported_manifest["bundle_sha256"],
+                created["bundle_sha256"],
+            )
 
     def test_verify_rejects_bundle_missing_canonical_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

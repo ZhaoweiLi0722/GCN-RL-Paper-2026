@@ -59,6 +59,36 @@ campaign without retry. Read-only monitoring may inspect process trees, GPU
 state, logs, checkpoints, hashes, and output metadata; it may not alter the
 process or any artifact.
 
+Recovery 2 later stopped during the routing state probe with a Python
+`AttributeError` after 325 states. It produced no teacher cache, and no Smoke,
+Pilot, or Evaluate stage started. That root is immutable partial evidence.
+
+## Recovery 3 Split Execution
+
+Recovery 3 moves all CPU-dominant teacher work to macOS and reserves the RTX
+4090 PC for CUDA work. This changes execution transport and artifact paths, not
+the scientific configuration.
+
+The Mac sequence is strictly serial at the phase level:
+
+1. run the state probe as independent rollout shards;
+2. merge shards in canonical global rollout/step order;
+3. run the routing teacher as independent replication shards;
+4. merge teacher rows and caches in canonical CRN order;
+5. require the preregistered headroom decision to advance;
+6. create one frozen bundle with manifest and SHA-256 sidecar.
+
+Individual shards may run concurrently because their global seeds, rollout or
+replication indices, and look-ahead decision offsets are fixed before launch.
+Each Mac phase has a one-time claim, per-process stdout/stderr/status files, and
+a terminal phase status. A failed phase is not retried in the same namespace.
+
+The PC sequence is `Validate`, `ImportTeacher`, `Smoke`, `Pilot`, `Evaluate`.
+`ImportTeacher` verifies the exact commit, config hash, source hashes, bundle
+hash, canonical artifact set, finite values, complete rows, and gate decision
+before atomically creating the routing teacher directory. The PC never runs a
+formal teacher phase in Recovery 3.
+
 ## Stage B: Five-Episode Smoke
 
 Run routing-enabled GCN and matched flat in isolated processes and distinct

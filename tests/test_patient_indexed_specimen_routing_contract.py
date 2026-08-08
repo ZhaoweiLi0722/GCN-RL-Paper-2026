@@ -39,7 +39,7 @@ PLAN_PATH = (
 )
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
-RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery2/"
+RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery3/"
 
 
 def _scenario(plan: dict, name: str) -> dict:
@@ -351,20 +351,24 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("codex/patient-indexed-specimen-routing", runner)
         self.assertIn("ce9b6274419c8e0e7adf800f434e47d96c18c1dc", runner)
         self.assertIn(
-            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery2"',
+            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery3"',
             runner,
         )
         self.assertIn(
-            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery1"',
+            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery2"',
             runner,
         )
-        self.assertIn("ecab3650780aafb746027fb26f2f02512b7b0495", runner)
+        self.assertIn("304dc83d6eb7447c6371150a551ea6d01999d5aa", runner)
         self.assertIn(
-            '$FailureClassification = "launcher/output-channel failure"',
+            "patient_registry look-ahead AttributeError",
             runner,
         )
-        for phase in ("Validate", "Teachers", "Smoke", "Pilot", "Evaluate"):
+        for phase in ("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate"):
             self.assertIn(f'"{phase}"', runner)
+        self.assertNotIn('"Teachers"', runner)
+        self.assertIn("evaluation.headroom_teacher_bundle", runner)
+        self.assertIn('"extract"', runner)
+        self.assertNotIn('"evaluation.network_residual_headroom"', runner)
         self.assertIn("-ApprovePilot", runner)
         self.assertNotIn("teacher_no_routing.json", runner)
         self.assertNotIn("smoke_no_routing.json", runner)
@@ -382,7 +386,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, runner)
 
-    def test_recovery2_launcher_detaches_and_redirects_both_streams(self) -> None:
+    def test_recovery3_launcher_detaches_and_redirects_both_streams(self) -> None:
         launcher = Path(
             "scripts/start_patient_indexed_specimen_routing_phase.ps1"
         ).read_text(encoding="utf-8")
@@ -396,7 +400,9 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("-PassThru", launcher)
         self.assertNotIn("-Wait", launcher)
         self.assertIn("launcher-logs", launcher)
-        self.assertIn("patient_indexed_specimen_routing_recovery2", launcher)
+        self.assertIn("patient_indexed_specimen_routing_recovery3", launcher)
+        self.assertIn("TeacherBundle", launcher)
+        self.assertIn("TeacherBundle", wrapper)
         self.assertIn("PID=$($Process.Id)", launcher)
         self.assertIn("run_patient_indexed_specimen_routing.ps1", wrapper)
         self.assertIn("exit $ExitCode", wrapper)

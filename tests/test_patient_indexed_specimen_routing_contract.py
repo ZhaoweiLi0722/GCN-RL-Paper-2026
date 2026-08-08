@@ -356,6 +356,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
                     "replication": 0,
                     "scenario": scenario,
                     "total_cost": cost,
+                    "specimen_route_events_json": "x" * 200_000,
                 }
                 with (run / "holdout_rows.csv").open(
                     "w", newline="", encoding="utf-8"

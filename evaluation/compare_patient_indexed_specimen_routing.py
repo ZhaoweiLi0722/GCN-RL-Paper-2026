@@ -16,6 +16,7 @@ DEFAULT_CONFIG = (
     "experiments/configs/"
     "patient_indexed_specimen_routing_attribution.json"
 )
+CSV_FIELD_SIZE_LIMIT = 64 * 1024 * 1024
 PAIRING_KEYS = (
     "training_seed",
     "scenario_family",
@@ -198,6 +199,7 @@ def _load_anchor_rows(root: Path, *, source_algorithm: str) -> list[dict[str, An
 
 
 def _read_rows(paths: Iterable[Path]) -> list[dict[str, Any]]:
+    csv.field_size_limit(max(csv.field_size_limit(), CSV_FIELD_SIZE_LIMIT))
     rows: list[dict[str, Any]] = []
     for path in paths:
         with path.open(newline="", encoding="utf-8") as handle:

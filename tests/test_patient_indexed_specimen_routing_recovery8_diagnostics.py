@@ -267,7 +267,7 @@ class Recovery8ActorCriticStressTests(unittest.TestCase):
         )
 
 
-class Recovery8WindowsRunnerContractTests(unittest.TestCase):
+class Recovery9WindowsRunnerContractTests(unittest.TestCase):
     def test_recovery7_launch_chain_is_permanently_frozen(self) -> None:
         for path in (
             "scripts/start_patient_indexed_specimen_routing_phase.ps1",
@@ -279,9 +279,20 @@ class Recovery8WindowsRunnerContractTests(unittest.TestCase):
             self.assertIn("0xC0000005/BEX64", source)
             self.assertIn("Retry, resume", source)
 
+    def test_recovery8_launch_chain_is_permanently_frozen(self) -> None:
+        for path in (
+            "scripts/start_patient_indexed_specimen_routing_recovery8_diagnostics.ps1",
+            "scripts/invoke_patient_indexed_specimen_routing_recovery8_diagnostics_detached.ps1",
+            "scripts/run_patient_indexed_specimen_routing_recovery8_diagnostics.ps1",
+        ):
+            source = Path(path).read_text(encoding="utf-8")
+            self.assertIn("Recovery 8 is permanently frozen", source)
+            self.assertIn("PowerShell parameter-binding", source)
+            self.assertIn("retry is prohibited", source)
+
     def test_each_diagnostic_layer_is_an_independent_python_process(self) -> None:
         runner = Path(
-            "scripts/run_patient_indexed_specimen_routing_recovery8_diagnostics.ps1"
+            "scripts/run_patient_indexed_specimen_routing_recovery9_diagnostics.ps1"
         ).read_text(encoding="utf-8")
         for layer in diagnostic.LAYERS:
             self.assertIn(layer, runner)
@@ -292,6 +303,7 @@ class Recovery8WindowsRunnerContractTests(unittest.TestCase):
         self.assertIn("observed_ppid", runner)
         self.assertIn("command_line", runner)
         self.assertIn('"-X", "faulthandler"', runner)
+        self.assertIn('"--recovery-number", "9"', runner)
         self.assertIn("Get-WinEvent", runner)
         self.assertIn("Windows Error Reporting", runner)
         self.assertIn("CrashDumps", runner)
@@ -302,12 +314,13 @@ class Recovery8WindowsRunnerContractTests(unittest.TestCase):
 
     def test_runner_rehashes_frozen_inputs_and_cannot_train(self) -> None:
         runner = Path(
-            "scripts/run_patient_indexed_specimen_routing_recovery8_diagnostics.ps1"
+            "scripts/run_patient_indexed_specimen_routing_recovery9_diagnostics.ps1"
         ).read_text(encoding="utf-8")
         self.assertIn("Get-FrozenInputManifest", runner)
         self.assertIn("Assert-FrozenInputManifest", runner)
         self.assertIn("frozen_inputs.before.json", runner)
         self.assertIn("frozen_inputs.after.json", runner)
+        self.assertIn("Get-ChildItem -Path $Recovery8Root", runner)
         self.assertIn("recovery7_outputs_read_only = $true", runner)
         self.assertIn("recovery7_outputs_reused_for_training = $false", runner)
         self.assertIn("formal_training_permitted = $false", runner)
@@ -325,12 +338,12 @@ class Recovery8WindowsRunnerContractTests(unittest.TestCase):
 
     def test_detached_launcher_is_single_use_and_nonblocking(self) -> None:
         launcher = Path(
-            "scripts/start_patient_indexed_specimen_routing_recovery8_diagnostics.ps1"
+            "scripts/start_patient_indexed_specimen_routing_recovery9_diagnostics.ps1"
         ).read_text(encoding="utf-8")
         wrapper = Path(
-            "scripts/invoke_patient_indexed_specimen_routing_recovery8_diagnostics_detached.ps1"
+            "scripts/invoke_patient_indexed_specimen_routing_recovery9_diagnostics_detached.ps1"
         ).read_text(encoding="utf-8")
-        self.assertIn("Refusing to reuse existing Recovery 8 root", launcher)
+        self.assertIn("Refusing to reuse existing Recovery 9 root", launcher)
         self.assertIn("Start-Process", launcher)
         self.assertIn("-RedirectStandardOutput", launcher)
         self.assertIn("-RedirectStandardError", launcher)
@@ -340,6 +353,32 @@ class Recovery8WindowsRunnerContractTests(unittest.TestCase):
         self.assertIn("PythonExecutableBase64", wrapper)
         self.assertIn("finally", wrapper)
         self.assertIn("exit $ExitCode", wrapper)
+
+    def test_parser_and_binding_preflight_run_before_claim_creation(self) -> None:
+        launcher = Path(
+            "scripts/start_patient_indexed_specimen_routing_recovery9_diagnostics.ps1"
+        ).read_text(encoding="utf-8")
+        runner = Path(
+            "scripts/run_patient_indexed_specimen_routing_recovery9_diagnostics.ps1"
+        ).read_text(encoding="utf-8")
+        self.assertIn("Assert-PowerShellParses $Runner", launcher)
+        self.assertIn("Assert-PowerShellParses $Wrapper", launcher)
+        self.assertIn("-PreflightOnly", launcher)
+        self.assertLess(
+            launcher.index("-PreflightOnly"),
+            launcher.index("New-Item -ItemType Directory -Force $LauncherLogs"),
+        )
+        self.assertIn("[switch]$PreflightOnly", runner)
+        self.assertIn("if ($PreflightOnly)", runner)
+        self.assertIn("no output root or launcher claim was created", runner)
+        self.assertIn(
+            "if ((Test-Path $DiagnosticRoot) -or (Test-Path $DiagnosticGate))",
+            runner,
+        )
+        self.assertNotIn(
+            "if (Test-Path $DiagnosticRoot -or Test-Path $DiagnosticGate)",
+            runner,
+        )
 
     def test_diagnostic_module_does_not_change_scientific_sources(self) -> None:
         source = Path(

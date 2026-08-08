@@ -14,11 +14,6 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-throw (
-    "Recovery 8 is permanently frozen after its PowerShell parameter-binding " +
-    "failure. No Python diagnostic layer started; retry is prohibited."
-)
-
 $StartedAt = (Get-Date).ToUniversalTime().ToString("o")
 $ExitCode = 1
 $State = "failed"
@@ -30,7 +25,7 @@ $PythonExecutable = [Text.Encoding]::UTF8.GetString(
 
 try {
     $Runner = Join-Path $PSScriptRoot (
-        "run_patient_indexed_specimen_routing_recovery8_diagnostics.ps1"
+        "run_patient_indexed_specimen_routing_recovery9_diagnostics.ps1"
     )
     & $Runner `
         -ExpectedCommit $ExpectedCommit `
@@ -60,6 +55,7 @@ try {
         python_executable = $PythonExecutable
         argument_transport = "utf8_base64"
         recovery7_retry_or_resume_permitted = $false
+        superseded_recovery8_outputs_reused = $false
         formal_training_permitted = $false
         pilot_permitted = $false
     }

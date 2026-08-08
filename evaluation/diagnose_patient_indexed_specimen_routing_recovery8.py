@@ -68,6 +68,7 @@ REPLAY_ARRAY_NAMES = (
     "next_states",
     "dones",
 )
+LOG_PREFIX = "RECOVERY8"
 
 
 def utc_now() -> str:
@@ -274,7 +275,7 @@ def validate_training_contract(
 
 def _progress(layer: str, iteration: int, total: int) -> None:
     print(
-        f"RECOVERY8_PROGRESS layer={layer} iteration={iteration}/{total}",
+        f"{LOG_PREFIX}_PROGRESS layer={layer} iteration={iteration}/{total}",
         flush=True,
     )
 
@@ -430,7 +431,7 @@ def stress_tensor_cpu_numpy(
     for index in range(iterations):
         if (index + 1) % _progress_interval(iterations) == 0:
             print(
-                "RECOVERY8_TENSOR_NUMPY "
+                f"{LOG_PREFIX}_TENSOR_NUMPY "
                 f"iteration={index + 1}/{iterations} stage=before_copy",
                 flush=True,
             )
@@ -479,7 +480,7 @@ def stress_actor_critic_update(
     metric_ranges: dict[str, list[float]] = {}
     for index in range(iterations):
         print(
-            "RECOVERY8_UPDATE "
+            f"{LOG_PREFIX}_UPDATE "
             f"device={device} iteration={index + 1}/{iterations} stage=before",
             flush=True,
         )
@@ -623,6 +624,7 @@ def run_layer(
 
 
 def main() -> None:
+    global LOG_PREFIX
     faulthandler.enable(all_threads=True)
     parser = argparse.ArgumentParser()
     parser.add_argument("--layer", choices=LAYERS, required=True)
@@ -633,15 +635,19 @@ def main() -> None:
         default="gcn_residual_mdl2_network_ddpg_afd",
     )
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--recovery-number", type=int, default=8)
     parser.add_argument("--iterations", type=int, required=True)
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
+    if args.recovery_number < 8:
+        raise ValueError("recovery number must be at least 8")
+    LOG_PREFIX = f"RECOVERY{args.recovery_number}"
 
     output = Path(args.output)
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite diagnostic result: {output}")
     print(
-        "RECOVERY8_LAYER_START "
+        f"{LOG_PREFIX}_LAYER_START "
         f"layer={args.layer} pid={os.getpid()} ppid={os.getppid()} "
         f"iterations={args.iterations}",
         flush=True,
@@ -658,9 +664,10 @@ def main() -> None:
         )
         payload["started_at"] = started_at
         payload["completed_at"] = utc_now()
+        payload["diagnostic_recovery"] = int(args.recovery_number)
         atomic_write_json(output, payload)
         print(
-            f"RECOVERY8_LAYER_PASS layer={args.layer} output={output}",
+            f"{LOG_PREFIX}_LAYER_PASS layer={args.layer} output={output}",
             flush=True,
         )
     except BaseException as error:
@@ -671,6 +678,7 @@ def main() -> None:
             "iterations": int(args.iterations),
             "algorithm": str(args.algorithm),
             "seed": int(args.seed),
+            "diagnostic_recovery": int(args.recovery_number),
             "pid": os.getpid(),
             "ppid": os.getppid(),
             "started_at": started_at,
@@ -681,7 +689,7 @@ def main() -> None:
         }
         atomic_write_json(output, failure)
         print(
-            f"RECOVERY8_LAYER_FAIL layer={args.layer} error={error}",
+            f"{LOG_PREFIX}_LAYER_FAIL layer={args.layer} error={error}",
             file=sys.stderr,
             flush=True,
         )

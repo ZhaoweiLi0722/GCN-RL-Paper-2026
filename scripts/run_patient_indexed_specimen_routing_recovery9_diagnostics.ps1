@@ -6,21 +6,19 @@ param(
     [string]$PythonExecutable,
     [Parameter(Mandatory = $true)]
     [ValidatePattern("^[0-9]+(?:,[0-9]+)*$")]
-    [string]$ControlProcessIds
+    [string]$ControlProcessIds,
+    [switch]$PreflightOnly
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-throw (
-    "Recovery 8 is permanently frozen after its PowerShell parameter-binding " +
-    "failure. No Python diagnostic layer started; retry is prohibited."
-)
-
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $Recovery7Commit = "30fe642f641e0592abc59009ae3f154019a14145"
+$Recovery8Commit = "d37870f040117eba3c76cfe4d9e128006cd4cee8"
 $Recovery7Root = "results\patient_indexed_specimen_routing_recovery7"
 $Recovery8Root = "results\patient_indexed_specimen_routing_recovery8"
+$Recovery9Root = "results\patient_indexed_specimen_routing_recovery9"
 $Algorithm = "gcn_residual_mdl2_network_ddpg_afd"
 $Seed = 0
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
@@ -48,9 +46,9 @@ $FlatRoot = Join-Path $Recovery7Root (
     "training\patient_indexed_specimen_routing_smoke_routing\" +
     "flat_residual_mdl2_network_ddpg_afd"
 )
-$DiagnosticRoot = Join-Path $Recovery8Root "diagnostics\windows_native_crash"
+$DiagnosticRoot = Join-Path $Recovery9Root "diagnostics\windows_native_crash"
 $EvidenceRoot = Join-Path $DiagnosticRoot "evidence"
-$DiagnosticGate = Join-Path $Recovery8Root (
+$DiagnosticGate = Join-Path $Recovery9Root (
     "gates\windows_native_crash_diagnostic_gate.json"
 )
 
@@ -58,10 +56,13 @@ $AllowedChangedPaths = @(
     "evaluation/diagnose_patient_indexed_specimen_routing_recovery8.py",
     "evaluation/verify_patient_indexed_specimen_routing_validation.py",
     "scripts/invoke_patient_indexed_specimen_routing_recovery8_diagnostics_detached.ps1",
+    "scripts/invoke_patient_indexed_specimen_routing_recovery9_diagnostics_detached.ps1",
     "scripts/run_patient_indexed_specimen_routing.ps1",
     "scripts/run_patient_indexed_specimen_routing_recovery8_diagnostics.ps1",
+    "scripts/run_patient_indexed_specimen_routing_recovery9_diagnostics.ps1",
     "scripts/start_patient_indexed_specimen_routing_phase.ps1",
     "scripts/start_patient_indexed_specimen_routing_recovery8_diagnostics.ps1",
+    "scripts/start_patient_indexed_specimen_routing_recovery9_diagnostics.ps1",
     "scripts/invoke_patient_indexed_specimen_routing_phase_detached.ps1",
     "tests/test_patient_indexed_specimen_routing_recovery8_diagnostics.py"
 )
@@ -97,7 +98,7 @@ function Write-AtomicJson {
         [int]$Depth = 12
     )
     if (Test-Path $Path) {
-        throw "Refusing to overwrite Recovery 8 evidence: $Path"
+        throw "Refusing to overwrite Recovery 9 evidence: $Path"
     }
     $Parent = Split-Path $Path -Parent
     if (-not (Test-Path -PathType Container $Parent)) {
@@ -183,6 +184,9 @@ function Get-FrozenInputManifest {
     $Files = @(
         Get-ChildItem -Path $Recovery7Root -File -Recurse -ErrorAction Stop
     )
+    $Files += @(
+        Get-ChildItem -Path $Recovery8Root -File -Recurse -ErrorAction Stop
+    )
     foreach ($RelativePath in $ScientificSourcePaths) {
         Assert-RequiredFile $RelativePath
         $Files += Get-Item $RelativePath
@@ -229,7 +233,7 @@ function Assert-FrozenInputManifest {
     $ActualDigest = Get-ManifestDigest $Actual
     if ($ActualDigest -ne $ExpectedDigest) {
         throw (
-            "Frozen Recovery 7/source input hash mismatch after $Stage; " +
+            "Frozen Recovery 7/8/source input hash mismatch after $Stage; " +
             "expected=$ExpectedDigest actual=$ActualDigest"
         )
     }
@@ -317,7 +321,7 @@ function Invoke-DiagnosticLayer {
     )
     $LayerRoot = Join-Path $DiagnosticRoot ("{0:D2}_{1}" -f $Ordinal, $Layer)
     if (Test-Path $LayerRoot) {
-        throw "Refusing to reuse Recovery 8 diagnostic layer: $LayerRoot"
+        throw "Refusing to reuse Recovery 9 diagnostic layer: $LayerRoot"
     }
     New-Item -ItemType Directory $LayerRoot | Out-Null
     $Stdout = Join-Path $LayerRoot "stdout.log"
@@ -332,6 +336,7 @@ function Invoke-DiagnosticLayer {
         "--smoke-config", $SmokeConfig,
         "--algorithm", $Algorithm,
         "--seed", [string]$Seed,
+        "--recovery-number", "9",
         "--iterations", [string]$Iterations,
         "--output", $Result
     )
@@ -406,7 +411,7 @@ function Invoke-DiagnosticLayer {
     Write-AtomicJson -Value $StatusPayload -Path $Status
     if ($Exit.signed -ne 0 -or $ResultStatus -ne "PASS") {
         throw (
-            "Recovery 8 layer $Layer failed: signed=$($Exit.signed), " +
+            "Recovery 9 layer $Layer failed: signed=$($Exit.signed), " +
             "unsigned=$($Exit.unsigned), hex=$($Exit.hex), " +
             "result_status=$ResultStatus"
         )
@@ -415,14 +420,14 @@ function Invoke-DiagnosticLayer {
 }
 
 if ((git branch --show-current).Trim() -ne $LockedBranch) {
-    throw "Recovery 8 diagnostics require branch $LockedBranch"
+    throw "Recovery 9 diagnostics require branch $LockedBranch"
 }
 if ((git rev-parse HEAD).Trim() -ne $ExpectedCommit) {
-    throw "Recovery 8 diagnostic commit mismatch"
+    throw "Recovery 9 diagnostic commit mismatch"
 }
-git merge-base --is-ancestor $Recovery7Commit $ExpectedCommit
+git merge-base --is-ancestor $Recovery8Commit $ExpectedCommit
 if ($LASTEXITCODE -ne 0) {
-    throw "Recovery 8 diagnostic commit is not descended from Recovery 7"
+    throw "Recovery 9 diagnostic commit is not descended from Recovery 8"
 }
 $ChangedPaths = @(
     git diff --name-only $Recovery7Commit $ExpectedCommit |
@@ -434,12 +439,12 @@ $UnexpectedPaths = @(
 )
 if ($UnexpectedPaths.Count -gt 0) {
     throw (
-        "Recovery 8 changed scientific or unauthorized paths: " +
+        "Recovery 9 changed scientific or unauthorized paths: " +
         ($UnexpectedPaths -join ", ")
     )
 }
 if (@(git status --porcelain --untracked-files=no).Count -ne 0) {
-    throw "Recovery 8 requires a clean tracked worktree"
+    throw "Recovery 9 requires a clean tracked worktree"
 }
 if (-not (Test-Path -PathType Leaf $PythonExecutable)) {
     throw "Missing locked Python executable: $PythonExecutable"
@@ -460,15 +465,28 @@ if (Test-Path $SmokeGate) {
 if (Test-Path $FlatRoot) {
     throw "Recovery 7 unexpectedly started matched-flat Smoke"
 }
-if (Test-Path $DiagnosticRoot -or Test-Path $DiagnosticGate) {
-    throw "Refusing to reuse existing Recovery 8 diagnostic outputs"
+if ((Test-Path $DiagnosticRoot) -or (Test-Path $DiagnosticGate)) {
+    throw "Refusing to reuse existing Recovery 9 diagnostic outputs"
 }
-$UnexpectedRecovery8Entries = @(
-    Get-ChildItem $Recovery8Root -Force -ErrorAction Stop |
-        Where-Object { $_.Name -ne "launcher-logs" }
+if (-not (Test-Path -PathType Container $Recovery8Root)) {
+    throw "Missing immutable Recovery 8 failure evidence"
+}
+$Recovery8Evidence = @(
+    Get-ChildItem $Recovery8Root -File -Recurse -ErrorAction Stop
 )
-if ($UnexpectedRecovery8Entries.Count -ne 0) {
-    throw "Recovery 8 root contains output outside the current launcher claim"
+if ($Recovery8Evidence.Count -lt 4) {
+    throw "Recovery 8 failure evidence is incomplete"
+}
+if (Test-Path -PathType Container $Recovery9Root) {
+    $UnexpectedRecovery9Entries = @(
+        Get-ChildItem $Recovery9Root -Force -ErrorAction Stop |
+            Where-Object { $_.Name -ne "launcher-logs" }
+    )
+    if ($UnexpectedRecovery9Entries.Count -ne 0) {
+        throw "Recovery 9 root contains output outside the current launcher claim"
+    }
+} elseif (-not $PreflightOnly) {
+    throw "Recovery 9 launcher claim root is missing"
 }
 $Rows = @(Import-Csv $TrainingCsv)
 if ($Rows.Count -ne 1) {
@@ -500,6 +518,13 @@ $Related = @(
 if ($Related.Count -ne 0) {
     throw "Related routing/training processes already exist"
 }
+if ($PreflightOnly) {
+    Write-Host (
+        "Recovery 9 pre-claim binding preflight PASS; " +
+        "no output root or launcher claim was created"
+    )
+    return
+}
 
 New-Item -ItemType Directory -Force $EvidenceRoot | Out-Null
 $FrozenManifest = @(Get-FrozenInputManifest)
@@ -510,6 +535,8 @@ Write-AtomicJson `
         captured_at = (Get-Date).ToUniversalTime().ToString("o")
         recovery7_commit = $Recovery7Commit
         recovery7_root = $Recovery7Root
+        superseded_recovery8_commit = $Recovery8Commit
+        superseded_recovery8_root = $Recovery8Root
         manifest_sha256 = $FrozenDigest
         files = $FrozenManifest
     }) `
@@ -523,6 +550,12 @@ $Incident = [ordered]@{
     recovery7_root = $Recovery7Root
     recovery7_outputs_read_only = $true
     recovery7_outputs_reused_for_training = $false
+    superseded_recovery8_commit = $Recovery8Commit
+    superseded_recovery8_root = $Recovery8Root
+    superseded_recovery8_outputs_reused = $false
+    superseded_recovery8_failure_classification = (
+        "PowerShell parameter-binding failure before Python diagnostics"
+    )
     completed_gcn_episodes = 1
     planned_gcn_episodes = 5
     online_rl_updates = 52
@@ -562,6 +595,8 @@ Write-AtomicJson `
         captured_at = (Get-Date).ToUniversalTime().ToString("o")
         recovery7_commit = $Recovery7Commit
         recovery7_root = $Recovery7Root
+        superseded_recovery8_commit = $Recovery8Commit
+        superseded_recovery8_root = $Recovery8Root
         manifest_sha256 = $FinalDigest
         files = $FinalManifest
     }) `
@@ -574,6 +609,9 @@ $GatePayload = [ordered]@{
     diagnostic_commit = $ExpectedCommit
     recovery7_commit = $Recovery7Commit
     recovery7_root = $Recovery7Root
+    superseded_recovery8_commit = $Recovery8Commit
+    superseded_recovery8_root = $Recovery8Root
+    superseded_recovery8_outputs_reused = $false
     recovery7_outputs_read_only = $true
     recovery7_outputs_reused_for_training = $false
     frozen_input_manifest_sha256 = $FrozenDigest
@@ -586,6 +624,6 @@ $GatePayload = [ordered]@{
 }
 Write-AtomicJson -Value $GatePayload -Path $DiagnosticGate
 Write-Host (
-    "Recovery 8 native-crash diagnostics PASS; " +
+    "Recovery 9 native-crash diagnostics PASS; " +
     "formal_training_permitted=false; gate=$DiagnosticGate"
 )

@@ -26,7 +26,9 @@ from evaluation.run_gcn_residual_sweep import (
 from src.rl.config import load_config
 
 
-BUNDLE_SCHEMA_VERSION = 1
+BUNDLE_SCHEMA_VERSION = 2
+SUPPORTED_BUNDLE_SCHEMA_VERSIONS = frozenset((1, 2))
+PROVENANCE_HASH_BASIS = "git_blob_sha256"
 CSV_FIELD_SIZE_LIMIT = 64 * 1024 * 1024
 ARTIFACT_NAMES = (
     "teacher_cache.npz",
@@ -44,6 +46,15 @@ SOURCE_FILES = (
     "evaluation/merge_headroom_teacher_shards.py",
     "evaluation/run_headroom_teacher_pipeline.py",
     "evaluation/headroom_teacher_bundle.py",
+)
+TEACHER_SCIENTIFIC_SOURCE_FILES = tuple(
+    path
+    for path in SOURCE_FILES
+    if path
+    not in {
+        "evaluation/headroom_teacher_bundle.py",
+        "evaluation/run_headroom_teacher_pipeline.py",
+    }
 )
 
 
@@ -194,25 +205,103 @@ def git_output(repo_root: Path, *args: str) -> str:
     return result.stdout.strip()
 
 
-def local_provenance(repo_root: Path, config_path: Path) -> dict[str, Any]:
+def git_blob_sha256(
+    repo_root: Path,
+    relative_path: str,
+    *,
+    revision: str = "HEAD",
+) -> str:
+    result = subprocess.run(
+        ("git", "show", f"{revision}:{relative_path}"),
+        cwd=repo_root,
+        check=True,
+        capture_output=True,
+    )
+    return sha256_bytes(result.stdout)
+
+
+def teacher_generation_provenance(
+    repo_root: Path,
+    config_relative_path: str,
+    source_root: Path,
+) -> dict[str, Any] | None:
+    status_path = source_root / "orchestration" / "teacher.status.json"
+    if not status_path.is_file():
+        return None
+    status = json.loads(status_path.read_text())
+    if status.get("state") != "completed":
+        raise ValueError("Teacher generation status is not completed")
+    generation_commit = str(status.get("git_commit", ""))
+    if not generation_commit:
+        raise ValueError("Teacher generation status has no git commit")
+    git_output(repo_root, "merge-base", "--is-ancestor", generation_commit, "HEAD")
+    generation_config_sha256 = git_blob_sha256(
+        repo_root,
+        config_relative_path,
+        revision=generation_commit,
+    )
+    if status.get("config_sha256") != generation_config_sha256:
+        raise ValueError("Teacher generation config hash does not match Git")
+    for path in TEACHER_SCIENTIFIC_SOURCE_FILES:
+        if git_blob_sha256(
+            repo_root,
+            path,
+            revision=generation_commit,
+        ) != git_blob_sha256(repo_root, path):
+            raise ValueError(
+                f"Scientific source changed after teacher generation: {path}"
+            )
+    changed_paths = git_output(
+        repo_root,
+        "diff",
+        "--name-only",
+        generation_commit,
+        "HEAD",
+    ).splitlines()
+    return {
+        "git_commit": generation_commit,
+        "config_sha256": generation_config_sha256,
+        "completed_at": status.get("completed_at"),
+        "teacher_status_sha256": sha256_file(status_path),
+        "changed_paths_to_bundle_commit": changed_paths,
+    }
+
+
+def local_provenance(
+    repo_root: Path,
+    config_path: Path,
+    *,
+    source_root: Path | None = None,
+) -> dict[str, Any]:
     dirty = git_output(repo_root, "status", "--porcelain", "--untracked-files=no")
     if dirty:
         raise ValueError("Tracked worktree must be clean before bundling")
+    config_relative_path = config_path.relative_to(repo_root).as_posix()
     source_hashes = {
-        path: sha256_file(repo_root / path)
+        path: git_blob_sha256(repo_root, path)
         for path in SOURCE_FILES
     }
-    return {
+    provenance = {
         "git_branch": git_output(repo_root, "branch", "--show-current"),
         "git_commit": git_output(repo_root, "rev-parse", "HEAD"),
-        "config_path": str(config_path.relative_to(repo_root)),
-        "config_sha256": sha256_file(config_path),
+        "hash_basis": PROVENANCE_HASH_BASIS,
+        "config_path": config_relative_path,
+        "config_sha256": git_blob_sha256(repo_root, config_relative_path),
         "source_sha256": source_hashes,
         "python_executable": sys.executable,
         "python_version": platform.python_version(),
         "numpy_version": np.__version__,
         "platform": platform.platform(),
     }
+    if source_root is not None:
+        generation = teacher_generation_provenance(
+            repo_root,
+            config_relative_path,
+            source_root,
+        )
+        if generation is not None:
+            provenance["teacher_generation"] = generation
+    return provenance
 
 
 def create_teacher_bundle(
@@ -295,7 +384,10 @@ def verify_teacher_bundle(bundle_path: Path) -> dict[str, Any]:
         if "manifest.json" not in names:
             raise ValueError("Teacher bundle has no manifest")
         manifest = json.loads(archive.read("manifest.json"))
-        if int(manifest.get("schema_version", -1)) != BUNDLE_SCHEMA_VERSION:
+        if (
+            int(manifest.get("schema_version", -1))
+            not in SUPPORTED_BUNDLE_SCHEMA_VERSIONS
+        ):
             raise ValueError("Unsupported teacher bundle schema")
         artifacts = manifest.get("artifacts")
         if not isinstance(artifacts, list):
@@ -339,10 +431,33 @@ def assert_local_provenance(
         "git_commit"
     ):
         raise ValueError("Local commit does not match teacher bundle")
-    if sha256_file(config_path) != provenance.get("config_sha256"):
+    config_relative_path = config_path.relative_to(repo_root).as_posix()
+    manifest_config_path = provenance.get("config_path")
+    if manifest_config_path not in (None, config_relative_path):
+        raise ValueError("Local config path does not match teacher bundle")
+    hash_basis = provenance.get("hash_basis", "working_tree_sha256")
+    if hash_basis == PROVENANCE_HASH_BASIS:
+        config_sha256 = git_blob_sha256(repo_root, config_relative_path)
+        source_hashes = provenance.get("source_sha256", {})
+        if set(source_hashes) != set(SOURCE_FILES):
+            raise ValueError("Teacher bundle source hash set is incomplete")
+        actual_source_hashes = {
+            path: git_blob_sha256(repo_root, path)
+            for path in SOURCE_FILES
+        }
+    elif hash_basis == "working_tree_sha256":
+        config_sha256 = sha256_file(config_path)
+        source_hashes = provenance.get("source_sha256", {})
+        actual_source_hashes = {
+            path: sha256_file(repo_root / path)
+            for path in source_hashes
+        }
+    else:
+        raise ValueError(f"Unsupported provenance hash basis: {hash_basis}")
+    if config_sha256 != provenance.get("config_sha256"):
         raise ValueError("Local config hash does not match teacher bundle")
-    for path, expected_hash in provenance.get("source_sha256", {}).items():
-        if sha256_file(repo_root / path) != expected_hash:
+    for path, expected_hash in source_hashes.items():
+        if actual_source_hashes[path] != expected_hash:
             raise ValueError(f"Local source hash does not match bundle: {path}")
 
 
@@ -406,7 +521,11 @@ def main() -> None:
             Path(args.source_root),
             Path(args.output),
             expected_config=load_config(config_path),
-            provenance=local_provenance(repo_root, config_path),
+            provenance=local_provenance(
+                repo_root,
+                config_path,
+                source_root=Path(args.source_root),
+            ),
         )
     elif args.command == "verify":
         result = verify_teacher_bundle(Path(args.bundle))

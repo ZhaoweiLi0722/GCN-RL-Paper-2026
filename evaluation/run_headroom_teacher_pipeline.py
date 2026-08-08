@@ -368,7 +368,11 @@ def main() -> None:
                 output_root,
                 bundle_output,
                 expected_config=config,
-                provenance=local_provenance(repo_root, config_path),
+                provenance=local_provenance(
+                    repo_root,
+                    config_path,
+                    source_root=output_root,
+                ),
             )
     except BaseException as error:
         atomic_write_json(

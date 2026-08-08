@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import tempfile
 import unittest
 import zipfile
@@ -11,8 +12,11 @@ import numpy as np
 
 from evaluation.headroom_teacher_bundle import (
     ARTIFACT_NAMES,
+    PROVENANCE_HASH_BASIS,
+    assert_local_provenance,
     create_teacher_bundle,
     extract_teacher_bundle,
+    local_provenance,
     sha256_file,
     verify_teacher_bundle,
 )
@@ -23,6 +27,47 @@ from src.rl.experiment import write_rows
 
 
 class HeadroomTeacherBundleTests(unittest.TestCase):
+    def test_git_blob_provenance_ignores_checkout_line_endings(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_path = root / "source.py"
+            config_path = root / "config.json"
+            source_path.write_bytes(b"value = 1\n")
+            config_path.write_bytes(b'{"value": 1}\n')
+            for arguments in (
+                ("init",),
+                ("config", "user.email", "test@example.com"),
+                ("config", "user.name", "Test User"),
+                ("add", "source.py", "config.json"),
+                ("commit", "-m", "fixture"),
+            ):
+                subprocess.run(
+                    ("git", *arguments),
+                    cwd=root,
+                    check=True,
+                    capture_output=True,
+                )
+            with patch(
+                "evaluation.headroom_teacher_bundle.SOURCE_FILES",
+                ("source.py",),
+            ):
+                provenance = local_provenance(root, config_path)
+                source_path.write_bytes(b"value = 1\r\n")
+                config_path.write_bytes(b'{"value": 1}\r\n')
+                self.assertNotEqual(
+                    sha256_file(config_path),
+                    provenance["config_sha256"],
+                )
+                self.assertEqual(
+                    provenance["hash_basis"],
+                    PROVENANCE_HASH_BASIS,
+                )
+                assert_local_provenance(
+                    {"provenance": provenance},
+                    root,
+                    config_path,
+                )
+
     def test_bundle_round_trip_preserves_canonical_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

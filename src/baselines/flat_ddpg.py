@@ -32,6 +32,7 @@ from src.rl.preprocessing import (
 from src.rl.replay_buffer import ReplayBuffer
 from src.rl.residual_endpoint_projection import ResidualEndpointProjection
 from src.rl.residual_temporal_guard import ResidualTemporalGuard
+from src.rl.tensor_conversion import independent_contiguous_numpy
 
 
 class FlatDDPGAgent:
@@ -1972,7 +1973,7 @@ class FlatDDPGAgent:
         )
 
     def _base_actions_from_states_tensor(self, states):
-        states_np = states.detach().cpu().numpy()
+        states_np = independent_contiguous_numpy(states)
         base_actions = np.stack(
             [self._base_action_from_state_np(state) for state in states_np],
             axis=0,

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Sequence
 
@@ -479,6 +480,10 @@ def facility_net_action_from_state(
     demand_rate_estimates = env_config.get("demand_rate_estimates")
     if demand_rate_estimates is None:
         demand_rate_estimates = env_config.get("demand_rates", 0.0)
+    specimen_edges, capacity_edges, resource_edges = _resolve_facility_edge_sets(
+        env_config,
+        n,
+    )
     return facility_net_action_from_arrays(
         demand=demand,
         specimens=specimens,
@@ -496,9 +501,9 @@ def facility_net_action_from_state(
         max_specimen_transfer=float(env_config.get("max_specimen_transfer", 0.0)),
         max_bioreactor_transfer=float(env_config.get("max_bioreactor_transfer", 0.0)),
         max_reagent_transfer=float(env_config.get("max_reagent_transfer", 0.0)),
-        specimen_edges=_resolve_facility_edges(env_config, "specimen_edges", n),
-        capacity_edges=_resolve_facility_edges(env_config, "capacity_edges", n),
-        resource_edges=_resolve_facility_edges(env_config, "resource_edges", n),
+        specimen_edges=specimen_edges,
+        capacity_edges=capacity_edges,
+        resource_edges=resource_edges,
         settings=settings,
         patient_priority=patient_priority,
     )
@@ -692,22 +697,97 @@ def _resolve_facility_edges(
     key: str,
     num_facilities: int,
 ) -> tuple[Edge, ...]:
+    edge_sets = _resolve_facility_edge_sets(env_config, num_facilities)
+    index = {
+        "specimen_edges": 0,
+        "capacity_edges": 1,
+        "resource_edges": 2,
+    }
+    try:
+        return edge_sets[index[key]]
+    except KeyError as exc:
+        raise ValueError(f"Unsupported facility edge key: {key}") from exc
+
+
+def _resolve_facility_edge_sets(
+    env_config: dict[str, Any],
+    num_facilities: int,
+) -> tuple[tuple[Edge, ...], tuple[Edge, ...], tuple[Edge, ...]]:
     action_mode = str(env_config.get("action_mode", "edge_transfer"))
-    clinic_coordinates = normalize_coordinates(env_config.get("clinic_coordinates"), num_facilities)
+    clinic_coordinates = normalize_coordinates(
+        env_config.get("clinic_coordinates"),
+        num_facilities,
+    )
+    geographic_neighbor_k = int(env_config.get("geographic_neighbor_k", 3))
+    configured = tuple(
+        _normalize_facility_edges(env_config.get(key), key, num_facilities)
+        for key in ("specimen_edges", "capacity_edges", "resource_edges")
+    )
+    return _cached_facility_edge_sets(
+        action_mode,
+        clinic_coordinates,
+        geographic_neighbor_k,
+        int(num_facilities),
+        configured[0],
+        configured[1],
+        configured[2],
+    )
+
+
+@lru_cache(maxsize=256)
+def _cached_facility_edge_sets(
+    action_mode: str,
+    clinic_coordinates: tuple[tuple[float, float], ...],
+    geographic_neighbor_k: int,
+    num_facilities: int,
+    specimen_edges: tuple[Edge, ...] | None,
+    capacity_edges: tuple[Edge, ...] | None,
+    resource_edges: tuple[Edge, ...] | None,
+) -> tuple[tuple[Edge, ...], tuple[Edge, ...], tuple[Edge, ...]]:
+    configured_by_key = {
+        "specimen_edges": specimen_edges,
+        "capacity_edges": capacity_edges,
+        "resource_edges": resource_edges,
+    }
+    needs_geographic_edges = (
+        action_mode == "facility_net"
+        and (
+            specimen_edges is None
+            or resource_edges is None
+        )
+    )
     geographic_edges = (
         geographic_knn_edges(
             clinic_coordinates,
-            k=int(env_config.get("geographic_neighbor_k", 3)),
+            k=geographic_neighbor_k,
         )
-        if clinic_coordinates
+        if clinic_coordinates and needs_geographic_edges
         else ()
     )
-    if action_mode == "facility_net" and key in ("specimen_edges", "resource_edges"):
-        default_edges = geographic_edges or ring_edges(num_facilities)
-    else:
-        default_edges = complete_undirected_edges(num_facilities)
-    configured = env_config.get(key)
-    edges = default_edges if configured is None else tuple(configured)
+    facility_net_default = geographic_edges or ring_edges(num_facilities)
+    complete_default = complete_undirected_edges(num_facilities)
+    resolved: list[tuple[Edge, ...]] = []
+    for key in ("specimen_edges", "capacity_edges", "resource_edges"):
+        configured_edges = configured_by_key[key]
+        if configured_edges is not None:
+            resolved.append(configured_edges)
+        elif action_mode == "facility_net" and key in (
+            "specimen_edges",
+            "resource_edges",
+        ):
+            resolved.append(facility_net_default)
+        else:
+            resolved.append(complete_default)
+    return resolved[0], resolved[1], resolved[2]
+
+
+def _normalize_facility_edges(
+    edges: Sequence[Sequence[int]] | None,
+    key: str,
+    num_facilities: int,
+) -> tuple[Edge, ...] | None:
+    if edges is None:
+        return None
     normalized = []
     for edge in edges:
         i, j = int(edge[0]), int(edge[1])

@@ -28,6 +28,7 @@ from src.rl.preprocessing import (
     facility_state_width,
     graph_node_feature_scale,
 )
+from src.rl.tensor_conversion import independent_contiguous_numpy
 
 
 @dataclass(frozen=True)
@@ -505,7 +506,7 @@ def _base_action_node_features(state, graph_spec: GraphStateSpec):
         graph_spec.base_action_policy_config or {},
     )
     n = graph_spec.num_facilities
-    state_np = state.detach().cpu().numpy()
+    state_np = independent_contiguous_numpy(state)
     base_actions = np.stack(
         [
             facility_net_action_from_state(row, graph_spec.env_config, settings=settings)

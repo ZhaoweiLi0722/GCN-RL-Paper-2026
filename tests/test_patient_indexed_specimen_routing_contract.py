@@ -44,6 +44,7 @@ PLAN_PATH = (
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
 RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery7/"
+MAC_RESULT_ROOT = "results/patient_indexed_specimen_routing_mac_mps_primary/"
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -71,6 +72,49 @@ def _config(plan: dict, algorithm: str, scenario: dict) -> dict:
 
 
 class RoutingExperimentContractTests(unittest.TestCase):
+    def test_mac_mps_campaign_is_matched_and_routing_primary(self) -> None:
+        config_root = Path("experiments/configs")
+        smoke = json.loads(
+            (config_root / "patient_indexed_specimen_routing_mac_mps_smoke.json").read_text()
+        )
+        primary = json.loads(
+            (config_root / "patient_indexed_specimen_routing_mac_mps_primary.json").read_text()
+        )
+        expected_teacher = (
+            "results/patient_indexed_specimen_routing_mac_mps_primary/"
+            "teachers/routing/teacher_cache.npz"
+        )
+        for config in (smoke, primary):
+            self.assertEqual(config["config_overrides"]["device"], "mps")
+            self.assertEqual(config["teacher_cache"], expected_teacher)
+            self.assertEqual(
+                [entry["name"] for entry in config["algorithms"]],
+                [GCN, FLAT],
+            )
+            self.assertTrue(
+                all(name.startswith("routing_") for name in config["scenarios"])
+            )
+        self.assertEqual(smoke["online_episodes"], 5)
+        self.assertEqual(smoke["seeds"], [0])
+        self.assertEqual(primary["online_episodes"], 100)
+        self.assertEqual(primary["seeds"], [0, 1, 2])
+        self.assertEqual(primary["pretrain_epochs"], 300)
+
+        manifest = (
+            "results/patient_indexed_specimen_routing_mac_mps_primary/"
+            "training/patient_indexed_specimen_routing_mac_mps_primary/"
+            "training_manifest.json"
+        )
+        for filename, variant in (
+            ("patient_indexed_specimen_routing_mac_mps_primary_eval.json", "final"),
+            ("patient_indexed_specimen_routing_mac_mps_pretrain_eval.json", "pretrain"),
+        ):
+            evaluation = json.loads((config_root / filename).read_text())
+            self.assertEqual(evaluation["training_manifest"], manifest)
+            self.assertEqual(evaluation["training_seeds"], [0, 1, 2])
+            self.assertEqual(evaluation["checkpoint_variants"], [variant])
+            self.assertEqual(evaluation["holdout_replications"], 100)
+
     def test_routing_primary_plan_and_optional_controls_are_explicit(self) -> None:
         plan = load_benchmark_plan(PLAN_PATH)
         self.assertEqual(resolve_budget(plan, "routing_smoke")["num_episodes"], 5)
@@ -260,9 +304,16 @@ class RoutingExperimentContractTests(unittest.TestCase):
                             f"{FROZEN_TEACHER_ROOT}/teacher_cache.npz",
                         }
                     )
+                    mac_primary_reference = (
+                        path.name.startswith(
+                            "patient_indexed_specimen_routing_mac_mps_"
+                        )
+                        and value.startswith(MAC_RESULT_ROOT)
+                    )
                     self.assertTrue(
                         value.startswith(RESULT_ROOT)
-                        or frozen_teacher_reference,
+                        or frozen_teacher_reference
+                        or mac_primary_reference,
                         f"{path}: {value}",
                     )
 

@@ -5,9 +5,11 @@ from __future__ import annotations
 import copy
 from dataclasses import asdict, replace
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
+import src.baselines.heuristics as heuristics
 from evaluation.evaluate_formal import evaluate_agent, summarize_rows
 from src.baselines.heuristics import (
     _balance_shortage_surplus,
@@ -67,6 +69,44 @@ class HeuristicPolicyTests(unittest.TestCase):
         )
 
         np.testing.assert_allclose(state_action, live_action, atol=1e-6)
+
+    def test_facility_edges_are_cached_without_changing_actions(self) -> None:
+        env_config = asdict(self.env.config)
+        env_config["action_mode"] = "facility_net"
+        env_config["clinic_coordinates"] = [
+            (33.70 + 0.01 * index, -84.50 + 0.01 * index)
+            for index in range(self.env.config.num_facilities)
+        ]
+        env_config["geographic_neighbor_k"] = 3
+        env_config["specimen_edges"] = None
+        env_config["capacity_edges"] = None
+        env_config["resource_edges"] = None
+        settings = heuristic_settings_for_policy("mdl2")
+        heuristics._cached_facility_edge_sets.cache_clear()
+
+        with patch.object(
+            heuristics,
+            "geographic_knn_edges",
+            wraps=heuristics.geographic_knn_edges,
+        ) as geographic_edges:
+            expected = facility_net_action_from_state(
+                self.state,
+                env_config,
+                settings=settings,
+            )
+            for _ in range(250):
+                actual = facility_net_action_from_state(
+                    self.state,
+                    env_config,
+                    settings=settings,
+                )
+                np.testing.assert_array_equal(actual, expected)
+
+        self.assertEqual(geographic_edges.call_count, 1)
+        cache_info = heuristics._cached_facility_edge_sets.cache_info()
+        self.assertEqual(cache_info.misses, 1)
+        self.assertGreaterEqual(cache_info.hits, 250)
+        heuristics._cached_facility_edge_sets.cache_clear()
 
     def test_balance_shortage_surplus_orders_ties_by_facility_index(self) -> None:
         net = _balance_shortage_surplus(

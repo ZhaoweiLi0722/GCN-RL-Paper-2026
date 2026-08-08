@@ -10,9 +10,22 @@ from src.rl.config import load_config
 from src.rl.experiment import build_env
 from src.rl.networks import default_torch_device, resolve_torch_device
 from src.rl.preprocessing import FixedObservationScaler
+from src.rl.tensor_conversion import independent_contiguous_numpy
 
 
 class RLUtilsTest(unittest.TestCase):
+    def test_tensor_to_numpy_copy_is_owned_and_c_contiguous(self):
+        from src.rl.networks import torch
+
+        source = torch.arange(12, dtype=torch.float32).reshape(3, 4).transpose(0, 1)
+        converted = independent_contiguous_numpy(source)
+
+        self.assertTrue(converted.flags.c_contiguous)
+        self.assertTrue(converted.flags.owndata)
+        np.testing.assert_array_equal(converted, source.contiguous().numpy())
+        converted[0, 0] = -99.0
+        self.assertNotEqual(float(source[0, 0]), -99.0)
+
     def test_project_action_clips_normalized_bounds(self):
         projected = project_action(np.array([-2.0, 0.25, 3.0]), action_space_info=3)
 

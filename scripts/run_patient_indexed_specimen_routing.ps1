@@ -54,6 +54,28 @@ $MacValidationEvidenceSha256 = (
 $MacMechanicsReportSha256 = (
     "1409c76ae01673b87108f311c91a941535796cfe0edd43f218ae8d344faa0260"
 )
+$Recovery5ValidateEvidenceSha256 = [ordered]@{
+    claim = "f4f154f59e5611db021586c05d41e682c52d3ed99c57844e082f26a4d977da78"
+    stdout = "3d55cc7bd6d5c3207f8e3dee0a2079d437b4a18f58c4177c5a7bf5aa8d54cfd6"
+    stderr = "43fead66ed2c2cbce4739f505f81c5bce96f3aec4c5e21f9b7aed1d44c9eed2b"
+    status = "9dd2449ddd6cf63bc64c9377f4948facfc157ee41c4ed24f19906593419f8c40"
+    transcript = "6d178d90fc41c169e5645e36b1fd640749669be89cbeb1359324693967440ead"
+    mechanics = "7f8b1f3774ab0e9e2ae5453615052e273a027c5c4f34a90a240159c8eb925e27"
+}
+$Recovery5ValidateEvidencePaths = [ordered]@{
+    claim = Join-Path $ResultRoot "launcher-logs\Validate.claim.json"
+    stdout = Join-Path $ResultRoot (
+        "launcher-logs\Validate_20260808_063602.stdout.log"
+    )
+    stderr = Join-Path $ResultRoot (
+        "launcher-logs\Validate_20260808_063602.stderr.log"
+    )
+    status = Join-Path $ResultRoot (
+        "launcher-logs\Validate_20260808_063602.status.json"
+    )
+    transcript = Join-Path $ResultRoot "logs\Validate_20260808_063604.txt"
+    mechanics = Join-Path $ResultRoot "mechanics_gate\report.json"
+}
 
 function Get-IndependentRelatedProcesses {
     param(
@@ -235,17 +257,49 @@ function Assert-CudaReady {
     )
 }
 
-function Assert-FrozenMechanicsReport {
-    Assert-RequiredFile $MechanicsReport
-    $ActualHash = (
-        Get-FileHash -Algorithm SHA256 $MechanicsReport
-    ).Hash.ToLowerInvariant()
-    if ($ActualHash -ne $MacMechanicsReportSha256) {
-        throw "Frozen Mac mechanics report hash mismatch: $ActualHash"
+function Assert-Recovery5ValidationEvidence {
+    foreach ($Name in $Recovery5ValidateEvidencePaths.Keys) {
+        $Path = [string]$Recovery5ValidateEvidencePaths[$Name]
+        Assert-RequiredFile $Path
+        $ActualHash = (
+            Get-FileHash -Algorithm SHA256 $Path
+        ).Hash.ToLowerInvariant()
+        $ExpectedHash = [string]$Recovery5ValidateEvidenceSha256[$Name]
+        if ($ActualHash -ne $ExpectedHash) {
+            throw "Recovery 5 Validate $Name hash mismatch: $ActualHash"
+        }
+    }
+
+    $ClaimPath = [string]$Recovery5ValidateEvidencePaths["claim"]
+    $StatusPath = [string]$Recovery5ValidateEvidencePaths["status"]
+    $Claim = Get-Content $ClaimPath -Raw | ConvertFrom-Json
+    if (
+        $Claim.phase -ne "Validate" -or
+        $Claim.expected_commit -ne $MacValidationCommit
+    ) {
+        throw "Recovery 5 Validate claim identity mismatch."
+    }
+    $Status = Get-Content $StatusPath -Raw | ConvertFrom-Json
+    if (
+        $Status.phase -ne "Validate" -or
+        $Status.expected_commit -ne $MacValidationCommit -or
+        $Status.state -ne "completed" -or
+        [int]$Status.exit_code -ne 0
+    ) {
+        throw "Recovery 5 Validate status is not a locked PASS."
     }
     $Gate = Get-Content $MechanicsReport -Raw | ConvertFrom-Json
     if ($Gate.status -ne "PASS") {
-        throw "Frozen Mac mechanics/headroom gate did not pass."
+        throw "Recovery 5 PC mechanics/headroom gate did not pass."
+    }
+    $Checks = @($Gate.checks.PSObject.Properties)
+    if ($Checks.Count -eq 0) {
+        throw "Recovery 5 PC mechanics checks are missing."
+    }
+    foreach ($Check in $Checks) {
+        if (-not [bool]$Check.Value) {
+            throw "Recovery 5 PC mechanics check failed: $($Check.Name)"
+        }
     }
 }
 
@@ -398,11 +452,15 @@ function Write-PhaseProvenance {
         failure_classification = $FailureClassification
         launcher_control_process_ids = $ExplicitControlProcessIds
         frozen_teacher_config_source_root = $FrozenTeacherSourceRoot
-        validation_origin = "frozen Mac evidence"
+        validation_origin = (
+            "Recovery 5 PC Validate at 4cc04d2 plus frozen Mac descendant " +
+            "verification"
+        )
         mac_validation_commit = $MacValidationCommit
         mac_validation_evidence = $MacValidationEvidence
         mac_validation_evidence_sha256 = $MacValidationEvidenceSha256
         mac_mechanics_report_sha256 = $MacMechanicsReportSha256
+        recovery5_validate_evidence_sha256 = $Recovery5ValidateEvidenceSha256
         prior_recovery2_commit = $PriorRecovery2Commit
         prior_recovery2_result_root = $PriorRecovery2ResultRoot
         prior_recovery2_transcript_sha256 = $PriorRecovery2TranscriptSha256
@@ -524,19 +582,17 @@ Start-Transcript -Path $LogPath
 try {
     switch ($Phase) {
         "Preflight" {
-            Assert-FreshPath $MechanicsReport
             Assert-MacValidationEvidence
+            Assert-Recovery5ValidationEvidence
             Invoke-CheckedPython -Stage "verify frozen Mac validation evidence" -Arguments @(
                 "-m", "evaluation.verify_patient_indexed_specimen_routing_validation",
                 "--evidence", $MacValidationEvidence,
-                "--output", $MechanicsReport,
                 "--expected-commit", $Commit
             )
-            Assert-FrozenMechanicsReport
             Assert-CudaReady
         }
         "ImportTeacher" {
-            Assert-FrozenMechanicsReport
+            Assert-Recovery5ValidationEvidence
             if (-not $TeacherBundle) {
                 throw "ImportTeacher requires -TeacherBundle."
             }
@@ -556,7 +612,7 @@ try {
             Assert-RequiredFile $RoutingTeacherManifest
         }
         "Smoke" {
-            Assert-FrozenMechanicsReport
+            Assert-Recovery5ValidationEvidence
             Assert-RequiredFile $RoutingTeacher
             Assert-FreshPath (Join-Path $ResultRoot "training\$RoutingSmokeName")
             Assert-FreshPath $SmokeGate
@@ -592,6 +648,7 @@ try {
             } | ConvertTo-Json | Set-Content -Encoding UTF8 $SmokeGate
         }
         "Pilot" {
+            Assert-Recovery5ValidationEvidence
             if (-not $ApprovePilot) {
                 throw "Pilot requires explicit -ApprovePilot."
             }
@@ -642,6 +699,7 @@ try {
             } | ConvertTo-Json | Set-Content -Encoding UTF8 $PilotGate
         }
         "Evaluate" {
+            Assert-Recovery5ValidationEvidence
             Assert-RequiredFile $PilotGate
             $Pilot = Get-Content $PilotGate -Raw | ConvertFrom-Json
             if ($Pilot.status -ne "PASS" -or $Pilot.git_commit -ne $Commit) {

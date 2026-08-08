@@ -136,7 +136,7 @@ def materialize_mechanics_report(source: Path, output: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--evidence", required=True)
-    parser.add_argument("--output", required=True)
+    parser.add_argument("--output")
     parser.add_argument("--expected-commit", required=True)
     args = parser.parse_args()
 
@@ -146,10 +146,12 @@ def main() -> None:
         repo_root=repo_root,
         expected_commit=args.expected_commit,
     )
-    output = Path(args.output)
-    if not output.is_absolute():
-        output = repo_root / output
-    materialize_mechanics_report(mechanics_path, output)
+    output = None
+    if args.output:
+        output = Path(args.output)
+        if not output.is_absolute():
+            output = repo_root / output
+        materialize_mechanics_report(mechanics_path, output)
     print(
         json.dumps(
             {
@@ -157,7 +159,9 @@ def main() -> None:
                 "validated_commit": evidence["validated_commit"],
                 "focused_tests": evidence["focused_tests"]["total"],
                 "full_tests": evidence["full_test_suite"]["total"],
-                "mechanics_report_sha256": sha256_file(output),
+                "mechanics_report_sha256": sha256_file(
+                    output if output is not None else mechanics_path
+                ),
             },
             indent=2,
             sort_keys=True,

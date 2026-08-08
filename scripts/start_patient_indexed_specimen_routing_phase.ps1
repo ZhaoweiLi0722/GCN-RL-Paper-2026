@@ -233,10 +233,7 @@ $PythonProbe = Resolve-RoutingPython `
 $ResolvedPythonExecutable = [string]$PythonProbe.path
 
 $ResultRoot = Join-Path $RepoRoot $ResultRootName
-if ($Phase -eq "Preflight" -and (Test-Path $ResultRoot)) {
-    throw "Recovery 5 result root already exists; refusing to launch Preflight."
-}
-if ($Phase -ne "Preflight" -and -not (Test-Path -PathType Container $ResultRoot)) {
+if (-not (Test-Path -PathType Container $ResultRoot)) {
     throw "Recovery 5 result root does not exist for phase $Phase."
 }
 

@@ -393,12 +393,14 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("superseded_outputs_reused = $false", runner)
         for phase in ("Preflight", "ImportTeacher", "Smoke", "Pilot", "Evaluate"):
             self.assertIn(f'"{phase}"', runner)
-        self.assertNotIn('"Validate"', runner)
+        self.assertNotIn('[ValidateSet("Validate"', runner)
         self.assertIn(
             "evaluation.verify_patient_indexed_specimen_routing_validation",
             runner,
         )
         self.assertIn("verify frozen Mac validation evidence", runner)
+        self.assertIn("Recovery5ValidateEvidenceSha256", runner)
+        self.assertIn("7f8b1f3774ab0e9e2ae5453615052e273a027c5c4f34a90a240159c8eb925e27", runner)
         self.assertNotIn('"-m", "unittest"', runner)
         self.assertNotIn('"-m", "compileall"', runner)
         self.assertNotIn(

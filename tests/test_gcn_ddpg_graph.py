@@ -1473,10 +1473,12 @@ class GraphStateConversionTests(unittest.TestCase):
         state_tensor = torch.as_tensor(
             state,
             dtype=torch.float32,
+            device=agent.device,
         ).unsqueeze(0)
         residuals = torch.ones(
             (1, env.action_size),
             dtype=torch.float32,
+            device=agent.device,
         )
 
         features = agent.correction_gate_node_features(
@@ -1488,6 +1490,7 @@ class GraphStateConversionTests(unittest.TestCase):
         scale = torch.as_tensor(
             agent.residual_scale_vector,
             dtype=torch.float32,
+            device=agent.device,
         ).unsqueeze(0)
         expected = (
             torch.clamp(base + residuals * scale, -1.0, 1.0)

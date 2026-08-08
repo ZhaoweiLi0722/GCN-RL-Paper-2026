@@ -77,19 +77,33 @@ def _git_output(changed_paths: str = ""):
 
 class FrozenMacValidationTests(unittest.TestCase):
     def test_locked_evidence_and_mechanics_hash_are_consistent(self) -> None:
-        evidence_path = Path(
+        repo_root = Path(__file__).resolve().parents[1]
+        evidence_relative = Path(
             "experiments/evidence/"
             "patient_indexed_specimen_routing_mac_validation.json"
         )
-        evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
-        mechanics = Path(evidence["mechanics_gate"]["path"])
+        evidence_blob = validation.git_blob_bytes(
+            repo_root,
+            "HEAD",
+            evidence_relative.as_posix(),
+        )
+        evidence = json.loads(evidence_blob.decode("utf-8"))
+        mechanics_relative = Path(evidence["mechanics_gate"]["path"])
+        mechanics_blob = validation.git_blob_bytes(
+            repo_root,
+            "HEAD",
+            mechanics_relative.as_posix(),
+        )
 
         self.assertEqual(evidence["validated_commit"], VALIDATED_COMMIT)
         self.assertEqual(evidence["focused_tests"]["total"], 40)
         self.assertEqual(evidence["full_test_suite"]["total"], 497)
-        self.assertEqual(_sha256(evidence_path), validation.EXPECTED_EVIDENCE_SHA256)
         self.assertEqual(
-            _sha256(mechanics),
+            hashlib.sha256(evidence_blob).hexdigest(),
+            validation.EXPECTED_EVIDENCE_SHA256,
+        )
+        self.assertEqual(
+            hashlib.sha256(mechanics_blob).hexdigest(),
             evidence["mechanics_gate"]["sha256"],
         )
 

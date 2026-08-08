@@ -46,6 +46,7 @@ ALLOWED_DESCENDANT_PATHS = frozenset(
         "scripts/invoke_patient_indexed_specimen_routing_phase_detached.ps1",
         "scripts/run_patient_indexed_specimen_routing.ps1",
         "scripts/start_patient_indexed_specimen_routing_phase.ps1",
+        "tests/test_gcn_ddpg_graph.py",
         "tests/test_patient_indexed_specimen_routing_contract.py",
         "tests/test_patient_indexed_specimen_routing_validation.py",
     }

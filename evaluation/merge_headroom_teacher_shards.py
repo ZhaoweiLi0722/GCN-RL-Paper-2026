@@ -31,6 +31,15 @@ from src.rl.experiment import write_rows
 SHARD_PATTERN = re.compile(r"^shard_(\d+)_of_(\d+)$")
 
 
+def carry_forward_state_probe(
+    result: dict[str, Any],
+    previous: dict[str, Any],
+) -> None:
+    for key in ("state_probe", "state_probe_shards"):
+        if key in previous:
+            result[key] = previous[key]
+
+
 def discover_teacher_shards(shards_root: Path) -> tuple[list[Path], int]:
     indexed: dict[int, Path] = {}
     shard_count: int | None = None
@@ -213,8 +222,7 @@ def main() -> None:
             "replications": total_replications,
         },
     }
-    if "state_probe" in previous:
-        result["state_probe"] = previous["state_probe"]
+    carry_forward_state_probe(result, previous)
     result["decision"] = headroom_decision(result, config)
 
     output_root.mkdir(parents=True, exist_ok=True)

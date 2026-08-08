@@ -12,6 +12,7 @@ from evaluation.augment_teacher_cache_time_state import (
     augment_teacher_cache_with_time,
 )
 from evaluation.merge_headroom_teacher_shards import (
+    carry_forward_state_probe,
     discover_teacher_shards,
     merge_demonstration_caches,
     normalized_shard_rows,
@@ -31,6 +32,22 @@ from evaluation.probe_option_distillation import pretrain_gate_decision
 
 
 class NetworkResidualHeadroomTests(unittest.TestCase):
+    def test_teacher_merge_preserves_state_probe_shard_provenance(self) -> None:
+        result = {"online_teacher": {"teacher_total_decisions": 52}}
+        state_probe = {"states": 520}
+        state_probe_shards = {"count": 10, "states": 520}
+
+        carry_forward_state_probe(
+            result,
+            {
+                "state_probe": state_probe,
+                "state_probe_shards": state_probe_shards,
+            },
+        )
+
+        self.assertIs(result["state_probe"], state_probe)
+        self.assertIs(result["state_probe_shards"], state_probe_shards)
+
     def test_teacher_cache_time_augmentation_preserves_rows(self) -> None:
         payload = {
             "states": np.asarray([[1.0], [2.0], [3.0], [4.0]], dtype=np.float32),

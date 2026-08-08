@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
+    [ValidateSet("Preflight", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
     [string]$Phase,
     [Parameter(Mandatory = $true)]
     [ValidatePattern("^[0-9a-fA-F]{40}$")]
@@ -43,6 +43,168 @@ function Get-ControlProcessIds {
     return @($ProcessIds | Sort-Object -Unique)
 }
 
+function Resolve-RoutingPython {
+    param(
+        [string]$RequestedPython,
+        [Parameter(Mandatory = $true)]
+        [string]$RepositoryRoot
+    )
+
+    $Candidates = @()
+    if ($RequestedPython) {
+        $Candidates += $RequestedPython
+    }
+    $Candidates += @(
+        (Join-Path $RepositoryRoot ".venv\Scripts\python.exe"),
+        "C:\gcnrl\.venv\Scripts\python.exe",
+        (Join-Path $env:LOCALAPPDATA "Programs\Python\Python311\python.exe")
+    )
+
+    $PyLauncher = Get-Command py.exe -ErrorAction SilentlyContinue
+    if ($null -ne $PyLauncher) {
+        try {
+            $LauncherOutput = @(
+                & $PyLauncher.Source `
+                    -3.11 `
+                    -c "import sys; print(sys.executable)" `
+                    2>$null
+            )
+            if ([int32]$LASTEXITCODE -eq 0 -and $LauncherOutput.Count -gt 0) {
+                $Candidates += [string]$LauncherOutput[-1]
+            }
+        } catch {
+            # The regular candidate scan below remains authoritative.
+        }
+    }
+    foreach ($Command in @(Get-Command python.exe -All -ErrorAction SilentlyContinue)) {
+        if ($Command.Source) {
+            $Candidates += [string]$Command.Source
+        }
+    }
+
+    $ProbeScript = @'
+import json
+import sys
+
+import numpy
+import torch
+import evaluation.train_multiscenario_network_residual
+
+cuda_available = bool(torch.cuda.is_available())
+payload = {
+    "python_version": ".".join(str(value) for value in sys.version_info[:3]),
+    "numpy_version": numpy.__version__,
+    "torch_version": torch.__version__,
+    "cuda_available": cuda_available,
+    "cuda_device_count": int(torch.cuda.device_count()) if cuda_available else 0,
+    "cuda_device_name": torch.cuda.get_device_name(0) if cuda_available else "",
+}
+print("ROUTING_PYTHON_PROBE=" + json.dumps(payload, sort_keys=True))
+'@
+
+    $Failures = @()
+    $Seen = @{}
+    foreach ($CandidateValue in $Candidates) {
+        if (-not $CandidateValue) {
+            continue
+        }
+        $Candidate = [Environment]::ExpandEnvironmentVariables(
+            [string]$CandidateValue
+        )
+        if (-not (Test-Path -PathType Leaf $Candidate)) {
+            $Failures += "missing: $Candidate"
+            continue
+        }
+        $ResolvedCandidate = [string](Resolve-Path $Candidate)
+        $CandidateKey = $ResolvedCandidate.ToLowerInvariant()
+        if ($Seen.ContainsKey($CandidateKey)) {
+            continue
+        }
+        $Seen[$CandidateKey] = $true
+
+        $PreviousPythonPath = $env:PYTHONPATH
+        $PreviousCudaDevices = $env:CUDA_VISIBLE_DEVICES
+        try {
+            $env:PYTHONPATH = $RepositoryRoot
+            $env:CUDA_VISIBLE_DEVICES = "0"
+            $ProbeOutput = @(& $ResolvedCandidate -c $ProbeScript 2>&1)
+            $ProbeExitCode = [int32]$LASTEXITCODE
+        } catch {
+            $ProbeOutput = @($_.Exception.Message)
+            $ProbeExitCode = 1
+        } finally {
+            $env:PYTHONPATH = $PreviousPythonPath
+            $env:CUDA_VISIBLE_DEVICES = $PreviousCudaDevices
+        }
+        if ($ProbeExitCode -ne 0) {
+            $Failures += (
+                "probe failed: $ResolvedCandidate :: " +
+                (($ProbeOutput | ForEach-Object { [string]$_ }) -join " | ")
+            )
+            continue
+        }
+        $ProbeLine = @(
+            $ProbeOutput | Where-Object {
+                ([string]$_).StartsWith("ROUTING_PYTHON_PROBE=")
+            }
+        ) | Select-Object -Last 1
+        if (-not $ProbeLine) {
+            $Failures += "probe payload missing: $ResolvedCandidate"
+            continue
+        }
+        try {
+            $Probe = ([string]$ProbeLine).Substring(
+                "ROUTING_PYTHON_PROBE=".Length
+            ) | ConvertFrom-Json
+        } catch {
+            $Failures += "probe payload invalid: $ResolvedCandidate"
+            continue
+        }
+        if ([string]$Probe.python_version -ne "3.11.9") {
+            $Failures += (
+                "Python version mismatch: $ResolvedCandidate :: " +
+                [string]$Probe.python_version
+            )
+            continue
+        }
+        if ([string]$Probe.numpy_version -ne "2.0.2") {
+            $Failures += (
+                "NumPy version mismatch: $ResolvedCandidate :: " +
+                [string]$Probe.numpy_version
+            )
+            continue
+        }
+        if (
+            -not [bool]$Probe.cuda_available -or
+            [int]$Probe.cuda_device_count -lt 1 -or
+            [string]$Probe.cuda_device_name -notmatch "(?i)RTX\s*4090"
+        ) {
+            $Failures += (
+                "RTX 4090 CUDA mismatch: $ResolvedCandidate :: " +
+                [string]$Probe.cuda_device_name
+            )
+            continue
+        }
+        return [pscustomobject]@{
+            path = $ResolvedCandidate
+            sha256 = (
+                Get-FileHash -Algorithm SHA256 $ResolvedCandidate
+            ).Hash.ToLowerInvariant()
+            python_version = [string]$Probe.python_version
+            numpy_version = [string]$Probe.numpy_version
+            torch_version = [string]$Probe.torch_version
+            cuda_device_count = [int]$Probe.cuda_device_count
+            cuda_device_name = [string]$Probe.cuda_device_name
+        }
+    }
+
+    throw (
+        "No existing Python satisfies the locked Python 3.11.9, NumPy 2.0.2, " +
+        "project-import, and RTX 4090 CUDA gates. No environment was changed. " +
+        ($Failures -join "`n")
+    )
+}
+
 $Branch = (git branch --show-current).Trim()
 $Commit = (git rev-parse HEAD).Trim()
 if ($Branch -ne $LockedBranch) {
@@ -55,9 +217,6 @@ $DirtyPaths = @(git status --porcelain --untracked-files=no)
 if ($DirtyPaths.Count -gt 0) {
     throw "Tracked worktree must be clean before a detached phase launch."
 }
-if ($PythonExecutable -and -not (Test-Path -PathType Leaf $PythonExecutable)) {
-    throw "Missing requested Python executable: $PythonExecutable"
-}
 if ($Phase -eq "ImportTeacher" -and -not $TeacherBundle) {
     throw "ImportTeacher requires -TeacherBundle."
 }
@@ -68,11 +227,16 @@ if ($TeacherBundle -and -not (Test-Path -PathType Leaf $TeacherBundle)) {
     throw "Missing frozen teacher bundle: $TeacherBundle"
 }
 
+$PythonProbe = Resolve-RoutingPython `
+    -RequestedPython $PythonExecutable `
+    -RepositoryRoot $RepoRoot
+$ResolvedPythonExecutable = [string]$PythonProbe.path
+
 $ResultRoot = Join-Path $RepoRoot $ResultRootName
-if ($Phase -eq "Validate" -and (Test-Path $ResultRoot)) {
-    throw "Recovery 5 result root already exists; refusing to launch Validate."
+if ($Phase -eq "Preflight" -and (Test-Path $ResultRoot)) {
+    throw "Recovery 5 result root already exists; refusing to launch Preflight."
 }
-if ($Phase -ne "Validate" -and -not (Test-Path -PathType Container $ResultRoot)) {
+if ($Phase -ne "Preflight" -and -not (Test-Path -PathType Container $ResultRoot)) {
     throw "Recovery 5 result root does not exist for phase $Phase."
 }
 
@@ -109,11 +273,9 @@ $Arguments = @(
     "-Phase", $Phase,
     "-ExpectedCommit", $ExpectedCommit,
     "-StatusPath", $StatusPath,
-    "-ControlProcessIds", $SerializedControlProcessIds
+    "-ControlProcessIds", $SerializedControlProcessIds,
+    "-PythonExecutable", $ResolvedPythonExecutable
 )
-if ($PythonExecutable) {
-    $Arguments += @("-PythonExecutable", $PythonExecutable)
-}
 if ($TeacherBundle) {
     $Arguments += @("-TeacherBundle", $TeacherBundle)
 }
@@ -132,8 +294,12 @@ $Claim = [ordered]@{
     launcher_pid = $null
     control_process_ids = $ControlProcessIds
     teacher_bundle = $TeacherBundle
+    requested_python = $PythonExecutable
+    python_executable = $ResolvedPythonExecutable
+    python_sha256 = [string]$PythonProbe.sha256
+    python_probe = $PythonProbe
 }
-$Claim | ConvertTo-Json -Depth 4 | Set-Content -Encoding UTF8 $ClaimPath
+$Claim | ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 $ClaimPath
 
 $Process = Start-Process `
     -FilePath "powershell.exe" `
@@ -146,7 +312,7 @@ $Process = Start-Process `
 
 $Claim.state = "launched"
 $Claim.launcher_pid = [int]$Process.Id
-$Claim | ConvertTo-Json -Depth 4 | Set-Content -Encoding UTF8 $ClaimPath
+$Claim | ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 $ClaimPath
 
 Write-Host "DETACHED_PHASE_STARTED=$Phase"
 Write-Host "PID=$($Process.Id)"

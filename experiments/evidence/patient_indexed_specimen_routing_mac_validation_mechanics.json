@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "forced_route_identity_unique": true,
+    "forced_route_nonzero": true,
+    "forced_route_qualified": true,
+    "mdl2_completion_headroom": true,
+    "mdl2_route_nonzero": true,
+    "paired_demand_equal": true
+  },
+  "clinical_calibration_claim": false,
+  "forced_route_events": [
+    {
+      "collection_facility": 0,
+      "destination_facility": 1,
+      "distance_miles": 60.76504939086297,
+      "lead_time_epochs": 1,
+      "origin_facility": 0,
+      "patient_id": "seed7100000:patient00000000",
+      "route_epoch": 0,
+      "specimen_id": "seed7100000:patient00000000",
+      "transfer_cost": 627.7606603720811,
+      "transfer_count": 1,
+      "transport_time_hours": 0.6215300987817259
+    }
+  ],
+  "max_steps": 6,
+  "name": "patient_indexed_specimen_routing_mechanics_gate",
+  "no_routing_mdl2": {
+    "blocked_specimen_requests": 0.0,
+    "demand_trace_sha256": "bd2961682c33c2eb3f7cfabf24d0ab42d9c16d75838808a29f59650e42608636",
+    "patients_completed": 0.0,
+    "patients_lost": 0.0,
+    "specimen_route_cost": 0.0,
+    "specimen_route_count": 0.0,
+    "specimen_route_distance_miles": 0.0,
+    "specimen_route_time_hours": 0.0,
+    "total_cost": 3288468.0,
+    "transferred_patient_ids": []
+  },
+  "return_assumption": "return_to_collection_facility",
+  "routing_mdl2": {
+    "blocked_specimen_requests": 0.0,
+    "demand_trace_sha256": "bd2961682c33c2eb3f7cfabf24d0ab42d9c16d75838808a29f59650e42608636",
+    "patients_completed": 4.0,
+    "patients_lost": 0.0,
+    "specimen_route_cost": 2511.0426414883245,
+    "specimen_route_count": 4.0,
+    "specimen_route_distance_miles": 243.06019756345188,
+    "specimen_route_time_hours": 2.4861203951269037,
+    "total_cost": 5977.042641488326,
+    "transferred_patient_ids": [
+      "seed7100000:patient00000000",
+      "seed7100000:patient00000001",
+      "seed7100000:patient00000002",
+      "seed7100000:patient00000003"
+    ]
+  },
+  "seed": 7100000,
+  "status": "PASS"
+}

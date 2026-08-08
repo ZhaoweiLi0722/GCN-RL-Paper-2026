@@ -1,6 +1,6 @@
 param(
-    [ValidateSet("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
-    [string]$Phase = "Validate",
+    [ValidateSet("Preflight", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
+    [string]$Phase = "Preflight",
     [Parameter(Mandatory = $true)]
     [string]$ExpectedCommit,
     [Parameter(Mandatory = $true)]
@@ -43,6 +43,16 @@ $FrozenTeacherConfigName = (
 )
 $FrozenTeacherSourceRoot = (
     "results\patient_indexed_specimen_routing_recovery4\teachers\routing"
+)
+$MacValidationCommit = "4cc04d298417ae65d6a0c8f4c9ca6414a6da47ee"
+$MacValidationEvidence = (
+    "experiments\evidence\patient_indexed_specimen_routing_mac_validation.json"
+)
+$MacValidationEvidenceSha256 = (
+    "4805af6790999a4403ebb35495179444f667da079a4cd5a08015371316d14953"
+)
+$MacMechanicsReportSha256 = (
+    "1409c76ae01673b87108f311c91a941535796cfe0edd43f218ae8d344faa0260"
 )
 
 function Get-IndependentRelatedProcesses {
@@ -225,6 +235,30 @@ function Assert-CudaReady {
     )
 }
 
+function Assert-FrozenMechanicsReport {
+    Assert-RequiredFile $MechanicsReport
+    $ActualHash = (
+        Get-FileHash -Algorithm SHA256 $MechanicsReport
+    ).Hash.ToLowerInvariant()
+    if ($ActualHash -ne $MacMechanicsReportSha256) {
+        throw "Frozen Mac mechanics report hash mismatch: $ActualHash"
+    }
+    $Gate = Get-Content $MechanicsReport -Raw | ConvertFrom-Json
+    if ($Gate.status -ne "PASS") {
+        throw "Frozen Mac mechanics/headroom gate did not pass."
+    }
+}
+
+function Assert-MacValidationEvidence {
+    Assert-RequiredFile $MacValidationEvidence
+    $ActualHash = (
+        Get-FileHash -Algorithm SHA256 $MacValidationEvidence
+    ).Hash.ToLowerInvariant()
+    if ($ActualHash -ne $MacValidationEvidenceSha256) {
+        throw "Frozen Mac validation evidence hash mismatch: $ActualHash"
+    }
+}
+
 function Get-TrainingRunDirectory {
     param(
         [Parameter(Mandatory = $true)][string]$RunName,
@@ -364,6 +398,11 @@ function Write-PhaseProvenance {
         failure_classification = $FailureClassification
         launcher_control_process_ids = $ExplicitControlProcessIds
         frozen_teacher_config_source_root = $FrozenTeacherSourceRoot
+        validation_origin = "frozen Mac evidence"
+        mac_validation_commit = $MacValidationCommit
+        mac_validation_evidence = $MacValidationEvidence
+        mac_validation_evidence_sha256 = $MacValidationEvidenceSha256
+        mac_mechanics_report_sha256 = $MacMechanicsReportSha256
         prior_recovery2_commit = $PriorRecovery2Commit
         prior_recovery2_result_root = $PriorRecovery2ResultRoot
         prior_recovery2_transcript_sha256 = $PriorRecovery2TranscriptSha256
@@ -484,40 +523,20 @@ $RoutingPilotName = "patient_indexed_specimen_routing_pilot_routing"
 Start-Transcript -Path $LogPath
 try {
     switch ($Phase) {
-        "Validate" {
+        "Preflight" {
             Assert-FreshPath $MechanicsReport
-            foreach ($Pattern in @(
-                "test_patient_indexed_specimen_routing.py",
-                "test_patient_indexed_specimen_routing_mechanics_gate.py",
-                "test_patient_indexed_specimen_routing_contract.py",
-                "test_gcn_facility_action.py",
-                "test_off_policy_training_state.py"
-            )) {
-                Invoke-CheckedPython `
-                    -Stage "focused test $Pattern" `
-                    -Arguments @(
-                        "-m", "unittest", "discover", "-s", "tests", "-p", $Pattern
-                    )
-            }
-            Invoke-CheckedPython -Stage "compileall" -Arguments @(
-                "-m", "compileall", "."
+            Assert-MacValidationEvidence
+            Invoke-CheckedPython -Stage "verify frozen Mac validation evidence" -Arguments @(
+                "-m", "evaluation.verify_patient_indexed_specimen_routing_validation",
+                "--evidence", $MacValidationEvidence,
+                "--output", $MechanicsReport,
+                "--expected-commit", $Commit
             )
-            Invoke-CheckedPython -Stage "mechanics and MDL-2 headroom gate" -Arguments @(
-                "-m", "evaluation.validate_patient_indexed_specimen_routing",
-                "--config",
-                "experiments\configs\patient_indexed_specimen_routing_mechanics_gate.json"
-            )
-            $Gate = Get-Content $MechanicsReport -Raw | ConvertFrom-Json
-            if ($Gate.status -ne "PASS") {
-                throw "Mechanics/headroom gate did not pass."
-            }
+            Assert-FrozenMechanicsReport
+            Assert-CudaReady
         }
         "ImportTeacher" {
-            Assert-RequiredFile $MechanicsReport
-            $Gate = Get-Content $MechanicsReport -Raw | ConvertFrom-Json
-            if ($Gate.status -ne "PASS") {
-                throw "Mechanics/headroom gate did not pass."
-            }
+            Assert-FrozenMechanicsReport
             if (-not $TeacherBundle) {
                 throw "ImportTeacher requires -TeacherBundle."
             }
@@ -537,6 +556,7 @@ try {
             Assert-RequiredFile $RoutingTeacherManifest
         }
         "Smoke" {
+            Assert-FrozenMechanicsReport
             Assert-RequiredFile $RoutingTeacher
             Assert-FreshPath (Join-Path $ResultRoot "training\$RoutingSmokeName")
             Assert-FreshPath $SmokeGate

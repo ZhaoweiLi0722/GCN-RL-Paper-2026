@@ -391,8 +391,20 @@ class RoutingExperimentContractTests(unittest.TestCase):
             runner,
         )
         self.assertIn("superseded_outputs_reused = $false", runner)
-        for phase in ("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate"):
+        for phase in ("Preflight", "ImportTeacher", "Smoke", "Pilot", "Evaluate"):
             self.assertIn(f'"{phase}"', runner)
+        self.assertNotIn('"Validate"', runner)
+        self.assertIn(
+            "evaluation.verify_patient_indexed_specimen_routing_validation",
+            runner,
+        )
+        self.assertIn("verify frozen Mac validation evidence", runner)
+        self.assertNotIn('"-m", "unittest"', runner)
+        self.assertNotIn('"-m", "compileall"', runner)
+        self.assertNotIn(
+            "evaluation.validate_patient_indexed_specimen_routing",
+            runner,
+        )
         self.assertNotIn('"Teachers"', runner)
         self.assertIn("evaluation.headroom_teacher_bundle", runner)
         self.assertIn('"extract"', runner)
@@ -441,6 +453,23 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("run_patient_indexed_specimen_routing.ps1", wrapper)
         self.assertIn("exit $ExitCode", wrapper)
         self.assertIn("status.json", launcher)
+        self.assertIn("Resolve-RoutingPython", launcher)
+        self.assertLess(
+            launcher.index("$PythonProbe = Resolve-RoutingPython"),
+            launcher.index("$ResultRoot = Join-Path"),
+        )
+        self.assertIn("Python 3.11.9", launcher)
+        self.assertIn('python_version -ne "3.11.9"', launcher)
+        self.assertIn('numpy_version -ne "2.0.2"', launcher)
+        self.assertIn('cuda_device_name -notmatch "(?i)RTX\\s*4090"', launcher)
+        self.assertIn(r'C:\gcnrl\.venv\Scripts\python.exe', launcher)
+        self.assertIn("requested_python", launcher)
+        self.assertIn("python_sha256", launcher)
+        self.assertIn('"Preflight"', launcher)
+        self.assertIn('"Preflight"', wrapper)
+        self.assertNotIn('"Validate"', launcher)
+        self.assertNotIn('"Validate"', wrapper)
+        self.assertNotIn("Missing requested Python executable", launcher)
         for forbidden in (
             "--force",
             "Remove-Item",

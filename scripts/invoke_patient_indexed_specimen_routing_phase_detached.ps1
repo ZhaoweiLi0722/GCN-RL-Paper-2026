@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
+    [ValidateSet("Preflight", "ImportTeacher", "Smoke", "Pilot", "Evaluate")]
     [string]$Phase,
     [Parameter(Mandatory = $true)]
     [ValidatePattern("^[0-9a-fA-F]{40}$")]
@@ -68,6 +68,7 @@ try {
         exit_code = $ExitCode
         failure_message = $FailureMessage
         teacher_bundle = $TeacherBundle
+        python_executable = $PythonExecutable
     }
     $TemporaryStatusPath = "$StatusPath.tmp.$PID"
     $Payload | ConvertTo-Json -Depth 4 |

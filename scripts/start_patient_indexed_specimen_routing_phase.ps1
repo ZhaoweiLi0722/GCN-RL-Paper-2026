@@ -101,6 +101,12 @@ payload = {
 }
 print("ROUTING_PYTHON_PROBE=" + json.dumps(payload, sort_keys=True))
 '@
+    $ProbeBase64 = [Convert]::ToBase64String(
+        [Text.Encoding]::UTF8.GetBytes($ProbeScript)
+    )
+    $ProbeCommand = (
+        "import base64;exec(base64.b64decode('" + $ProbeBase64 + "'))"
+    )
 
     $Failures = @()
     $Seen = @{}
@@ -127,7 +133,7 @@ print("ROUTING_PYTHON_PROBE=" + json.dumps(payload, sort_keys=True))
         try {
             $env:PYTHONPATH = $RepositoryRoot
             $env:CUDA_VISIBLE_DEVICES = "0"
-            $ProbeOutput = @(& $ResolvedCandidate -c $ProbeScript 2>&1)
+            $ProbeOutput = @(& $ResolvedCandidate -c $ProbeCommand 2>&1)
             $ProbeExitCode = [int32]$LASTEXITCODE
         } catch {
             $ProbeOutput = @($_.Exception.Message)

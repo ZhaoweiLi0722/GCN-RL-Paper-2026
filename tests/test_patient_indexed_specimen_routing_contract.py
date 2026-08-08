@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import base64
 import csv
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 import unittest
@@ -456,6 +460,9 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("exit $ExitCode", wrapper)
         self.assertIn("status.json", launcher)
         self.assertIn("Resolve-RoutingPython", launcher)
+        self.assertIn("[Convert]::ToBase64String", launcher)
+        self.assertIn("base64.b64decode", launcher)
+        self.assertNotIn("-c $ProbeScript", launcher)
         self.assertLess(
             launcher.index("$PythonProbe = Resolve-RoutingPython"),
             launcher.index("$ResultRoot = Join-Path"),
@@ -482,6 +489,34 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, launcher)
             self.assertNotIn(forbidden, wrapper)
+
+    def test_launcher_python_probe_survives_native_argument_parsing(self) -> None:
+        launcher = Path(
+            "scripts/start_patient_indexed_specimen_routing_phase.ps1"
+        ).read_text(encoding="utf-8")
+        probe = launcher.split("$ProbeScript = @'\n", 1)[1].split("\n'@", 1)[0]
+        encoded = base64.b64encode(probe.encode("utf-8")).decode("ascii")
+        command = f"import base64;exec(base64.b64decode('{encoded}'))"
+        environment = os.environ.copy()
+        environment["PYTHONPATH"] = str(Path.cwd())
+
+        completed = subprocess.run(
+            (sys.executable, "-c", command),
+            cwd=Path.cwd(),
+            env=environment,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        line = next(
+            item
+            for item in completed.stdout.splitlines()
+            if item.startswith("ROUTING_PYTHON_PROBE=")
+        )
+        payload = json.loads(line.removeprefix("ROUTING_PYTHON_PROBE="))
+        self.assertIn("python_version", payload)
+        self.assertIn("numpy_version", payload)
+        self.assertIn("cuda_available", payload)
 
 
 if __name__ == "__main__":

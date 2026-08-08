@@ -21,6 +21,11 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+throw (
+    "Recovery 7 is permanently frozen after Windows native exit " +
+    "0xC0000005/BEX64. Retry, resume, and every former phase are prohibited."
+)
+
 $StartedAt = (Get-Date).ToUniversalTime().ToString("o")
 $ExitCode = 1
 $State = "failed"

@@ -40,14 +40,19 @@ RECOVERY7_PATH_ONLY_CONFIGS = frozenset(
 )
 ALLOWED_DESCENDANT_PATHS = frozenset(
     {
+        "evaluation/diagnose_patient_indexed_specimen_routing_recovery8.py",
         "evaluation/verify_patient_indexed_specimen_routing_validation.py",
         "experiments/evidence/patient_indexed_specimen_routing_mac_validation.json",
         "experiments/evidence/patient_indexed_specimen_routing_mac_validation_mechanics.json",
         "scripts/invoke_patient_indexed_specimen_routing_phase_detached.ps1",
+        "scripts/invoke_patient_indexed_specimen_routing_recovery8_diagnostics_detached.ps1",
         "scripts/run_patient_indexed_specimen_routing.ps1",
+        "scripts/run_patient_indexed_specimen_routing_recovery8_diagnostics.ps1",
         "scripts/start_patient_indexed_specimen_routing_phase.ps1",
+        "scripts/start_patient_indexed_specimen_routing_recovery8_diagnostics.ps1",
         "tests/test_gcn_ddpg_graph.py",
         "tests/test_patient_indexed_specimen_routing_contract.py",
+        "tests/test_patient_indexed_specimen_routing_recovery8_diagnostics.py",
         "tests/test_patient_indexed_specimen_routing_validation.py",
     }
 ) | RECOVERY7_PATH_ONLY_CONFIGS

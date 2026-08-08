@@ -16,6 +16,11 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+throw (
+    "Recovery 7 is permanently frozen after Windows native exit " +
+    "0xC0000005/BEX64. Retry, resume, and every former phase are prohibited."
+)
+
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
 $ResultRoot = "results\patient_indexed_specimen_routing_recovery7"

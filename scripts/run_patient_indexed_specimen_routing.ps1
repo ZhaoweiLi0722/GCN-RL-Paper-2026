@@ -13,15 +13,22 @@ $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
-$ResultRoot = "results\patient_indexed_specimen_routing_recovery3"
-$RecoveryName = "Recovery 3"
-$SupersededCommit = "304dc83d6eb7447c6371150a551ea6d01999d5aa"
-$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery2"
-$SupersededTranscriptSha256 = (
-    "d9a3e7f598b2991a90662ae3f1326be7cade6889888a3f5ff6f9d17f7b9bbfed"
-)
+$ResultRoot = "results\patient_indexed_specimen_routing_recovery4"
+$RecoveryName = "Recovery 4"
+$SupersededCommit = "3be152840b668c14b81e7cf2b744882ea49e23ad"
+$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery3"
+$SupersededFailureEvidenceSha256 = [ordered]@{
+    teacher_status = "50203653dc3d59cc8147178aa2ff45ea34ab3014ce8ba1fdd79997c14d148039"
+    merge_status = "a7c43c23b404528089e089940fb35807fa423f83db176a6b0cee480536a34232"
+    merge_stderr = "52d15e194a8cadfa71950b3bd542ae269f58b1cd3b71ef863c0b065be7e2eb0c"
+}
 $FailureClassification = (
-    "patient_registry look-ahead AttributeError during Windows CPU teacher generation"
+    "Mac CPU teacher CSV merge field-size limit failure after 3/3 shards completed"
+)
+$PriorRecovery2Commit = "304dc83d6eb7447c6371150a551ea6d01999d5aa"
+$PriorRecovery2ResultRoot = "results\patient_indexed_specimen_routing_recovery2"
+$PriorRecovery2TranscriptSha256 = (
+    "d9a3e7f598b2991a90662ae3f1326be7cade6889888a3f5ff6f9d17f7b9bbfed"
 )
 $GraphAlgorithm = "gcn_residual_mdl2_network_ddpg_afd"
 $FlatAlgorithm = "flat_residual_mdl2_network_ddpg_afd"
@@ -316,8 +323,11 @@ function Write-PhaseProvenance {
         supersedes_failed_commit = $SupersededCommit
         superseded_result_root = $SupersededResultRoot
         superseded_outputs_reused = $false
-        superseded_transcript_sha256 = $SupersededTranscriptSha256
+        superseded_failure_evidence_sha256 = $SupersededFailureEvidenceSha256
         failure_classification = $FailureClassification
+        prior_recovery2_commit = $PriorRecovery2Commit
+        prior_recovery2_result_root = $PriorRecovery2ResultRoot
+        prior_recovery2_transcript_sha256 = $PriorRecovery2TranscriptSha256
         teacher_origin = if ($null -ne $TeacherManifest) {
             "frozen Mac CPU shard bundle"
         } else {

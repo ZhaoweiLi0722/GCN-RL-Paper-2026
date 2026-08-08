@@ -39,7 +39,7 @@ PLAN_PATH = (
 )
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
-RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery3/"
+RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery4/"
 
 
 def _scenario(plan: dict, name: str) -> dict:
@@ -351,18 +351,23 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("codex/patient-indexed-specimen-routing", runner)
         self.assertIn("ce9b6274419c8e0e7adf800f434e47d96c18c1dc", runner)
         self.assertIn(
-            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery3"',
+            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery4"',
             runner,
         )
         self.assertIn(
-            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery2"',
+            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery3"',
             runner,
         )
-        self.assertIn("304dc83d6eb7447c6371150a551ea6d01999d5aa", runner)
+        self.assertIn("3be152840b668c14b81e7cf2b744882ea49e23ad", runner)
         self.assertIn(
-            "patient_registry look-ahead AttributeError",
+            "teacher CSV merge field-size limit failure",
             runner,
         )
+        self.assertIn(
+            "52d15e194a8cadfa71950b3bd542ae269f58b1cd3b71ef863c0b065be7e2eb0c",
+            runner,
+        )
+        self.assertIn("superseded_outputs_reused = $false", runner)
         for phase in ("Validate", "ImportTeacher", "Smoke", "Pilot", "Evaluate"):
             self.assertIn(f'"{phase}"', runner)
         self.assertNotIn('"Teachers"', runner)
@@ -386,7 +391,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, runner)
 
-    def test_recovery3_launcher_detaches_and_redirects_both_streams(self) -> None:
+    def test_recovery4_launcher_detaches_and_redirects_both_streams(self) -> None:
         launcher = Path(
             "scripts/start_patient_indexed_specimen_routing_phase.ps1"
         ).read_text(encoding="utf-8")
@@ -400,7 +405,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("-PassThru", launcher)
         self.assertNotIn("-Wait", launcher)
         self.assertIn("launcher-logs", launcher)
-        self.assertIn("patient_indexed_specimen_routing_recovery3", launcher)
+        self.assertIn("patient_indexed_specimen_routing_recovery4", launcher)
         self.assertIn("TeacherBundle", launcher)
         self.assertIn("TeacherBundle", wrapper)
         self.assertIn("PID=$($Process.Id)", launcher)

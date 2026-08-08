@@ -29,6 +29,7 @@ from src.rl.experiment import write_rows
 
 
 SHARD_PATTERN = re.compile(r"^shard_(\d+)_of_(\d+)$")
+CSV_FIELD_SIZE_LIMIT = 64 * 1024 * 1024
 
 
 def carry_forward_state_probe(
@@ -305,6 +306,7 @@ def merge_demonstration_caches(
 
 
 def read_csv_rows(path: Path) -> list[dict[str, Any]]:
+    csv.field_size_limit(max(csv.field_size_limit(), CSV_FIELD_SIZE_LIMIT))
     with path.open(newline="") as handle:
         return list(csv.DictReader(handle))
 

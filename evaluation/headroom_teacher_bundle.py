@@ -27,6 +27,7 @@ from src.rl.config import load_config
 
 
 BUNDLE_SCHEMA_VERSION = 1
+CSV_FIELD_SIZE_LIMIT = 64 * 1024 * 1024
 ARTIFACT_NAMES = (
     "teacher_cache.npz",
     "state_probe.csv",
@@ -59,6 +60,7 @@ def sha256_file(path: Path) -> str:
 
 
 def read_csv_rows(path: Path) -> list[dict[str, str]]:
+    csv.field_size_limit(max(csv.field_size_limit(), CSV_FIELD_SIZE_LIMIT))
     with path.open(newline="") as handle:
         return list(csv.DictReader(handle))
 

@@ -138,6 +138,7 @@ class HeadroomTeacherBundleTests(unittest.TestCase):
             "completion_service_level": 1.0,
             "patients_lost": 0.0,
             "patient_ineligibility_during_manufacturing_rate": 0.0,
+            "serialized_state": "x" * (1024 * 1024),
         }
         write_rows([row], source / "anchor.csv")
         write_rows([row], source / "teacher.csv")

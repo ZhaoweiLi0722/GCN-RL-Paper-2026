@@ -14,7 +14,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
-$ResultRootName = "results\patient_indexed_specimen_routing_recovery3"
+$ResultRootName = "results\patient_indexed_specimen_routing_recovery4"
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
 
@@ -45,16 +45,16 @@ if ($TeacherBundle -and -not (Test-Path -PathType Leaf $TeacherBundle)) {
 
 $ResultRoot = Join-Path $RepoRoot $ResultRootName
 if ($Phase -eq "Validate" -and (Test-Path $ResultRoot)) {
-    throw "Recovery 3 result root already exists; refusing to launch Validate."
+    throw "Recovery 4 result root already exists; refusing to launch Validate."
 }
 if ($Phase -ne "Validate" -and -not (Test-Path -PathType Container $ResultRoot)) {
-    throw "Recovery 3 result root does not exist for phase $Phase."
+    throw "Recovery 4 result root does not exist for phase $Phase."
 }
 
 $LauncherRoot = Join-Path $ResultRoot "launcher-logs"
 $ClaimPath = Join-Path $LauncherRoot "$Phase.claim.json"
 if (Test-Path $ClaimPath) {
-    throw "Phase $Phase already has a Recovery 3 launch claim."
+    throw "Phase $Phase already has a Recovery 4 launch claim."
 }
 New-Item -ItemType Directory -Force $LauncherRoot | Out-Null
 

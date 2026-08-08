@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -16,6 +17,7 @@ from evaluation.merge_headroom_teacher_shards import (
     discover_teacher_shards,
     merge_demonstration_caches,
     normalized_shard_rows,
+    read_csv_rows,
     validate_teacher_shard_result,
 )
 from evaluation.merge_headroom_state_probe_shards import (
@@ -153,6 +155,25 @@ class NetworkResidualHeadroomTests(unittest.TestCase):
                 count=2,
                 base_evaluation_seed=100,
             )
+
+    def test_teacher_csv_reader_accepts_large_serialized_state_fields(self) -> None:
+        payload = "x" * (1024 * 1024)
+        with TemporaryDirectory() as temporary:
+            path = Path(temporary) / "teacher.csv"
+            with path.open("w", newline="") as handle:
+                writer = csv.DictWriter(
+                    handle,
+                    fieldnames=("replication", "serialized_state"),
+                )
+                writer.writeheader()
+                writer.writerow(
+                    {"replication": 0, "serialized_state": payload}
+                )
+
+            rows = read_csv_rows(path)
+
+        self.assertEqual(rows[0]["replication"], "0")
+        self.assertEqual(rows[0]["serialized_state"], payload)
 
     def test_state_probe_shards_preserve_global_rollout_indices(self) -> None:
         config = {

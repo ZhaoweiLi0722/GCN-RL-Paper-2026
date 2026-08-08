@@ -15,6 +15,9 @@ from typing import Any
 LOCKED_BRANCH = "codex/patient-indexed-specimen-routing"
 EXPECTED_FOCUSED_TESTS = 40
 EXPECTED_FULL_TESTS = 497
+EXPECTED_EVIDENCE_SHA256 = (
+    "4805af6790999a4403ebb35495179444f667da079a4cd5a08015371316d14953"
+)
 ALLOWED_DESCENDANT_PATHS = frozenset(
     {
         "evaluation/verify_patient_indexed_specimen_routing_validation.py",
@@ -37,6 +40,10 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
 def git_output(repo_root: Path, *arguments: str) -> str:
     return subprocess.run(
         ("git", *arguments),
@@ -47,13 +54,28 @@ def git_output(repo_root: Path, *arguments: str) -> str:
     ).stdout.strip()
 
 
+def git_blob_bytes(repo_root: Path, commit: str, relative_path: str) -> bytes:
+    return subprocess.run(
+        ("git", "show", f"{commit}:{relative_path}"),
+        cwd=repo_root,
+        check=True,
+        capture_output=True,
+    ).stdout
+
+
 def verify_validation_evidence(
     evidence_path: Path,
     *,
     repo_root: Path,
     expected_commit: str,
-) -> tuple[dict[str, Any], Path]:
-    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+) -> tuple[dict[str, Any], Path, bytes]:
+    evidence_relative = evidence_path.resolve().relative_to(
+        repo_root.resolve()
+    ).as_posix()
+    evidence_blob = git_blob_bytes(repo_root, expected_commit, evidence_relative)
+    if sha256_bytes(evidence_blob) != EXPECTED_EVIDENCE_SHA256:
+        raise ValueError("Frozen Mac validation evidence Git-blob hash mismatch")
+    evidence = json.loads(evidence_blob.decode("utf-8"))
     if evidence.get("schema_version") != 1 or evidence.get("status") != "PASS":
         raise ValueError("Mac validation evidence is absent, failed, or unsupported")
     if evidence.get("validated_branch") != LOCKED_BRANCH:
@@ -101,21 +123,25 @@ def verify_validation_evidence(
         raise ValueError("Mac compileall evidence did not pass")
 
     mechanics = evidence.get("mechanics_gate", {})
-    mechanics_path = repo_root / str(mechanics.get("path", ""))
-    if not mechanics_path.is_file():
-        raise ValueError("Frozen Mac mechanics report is missing")
-    if sha256_file(mechanics_path) != mechanics.get("sha256"):
-        raise ValueError("Frozen Mac mechanics report hash mismatch")
-    report = json.loads(mechanics_path.read_text(encoding="utf-8"))
+    mechanics_relative = str(mechanics.get("path", ""))
+    mechanics_path = repo_root / mechanics_relative
+    mechanics_blob = git_blob_bytes(
+        repo_root,
+        expected_commit,
+        Path(mechanics_relative).as_posix(),
+    )
+    if sha256_bytes(mechanics_blob) != mechanics.get("sha256"):
+        raise ValueError("Frozen Mac mechanics report Git-blob hash mismatch")
+    report = json.loads(mechanics_blob.decode("utf-8"))
     if report.get("status") != "PASS":
         raise ValueError("Frozen Mac mechanics gate did not pass")
     checks = report.get("checks", {})
     if not checks or not all(value is True for value in checks.values()):
         raise ValueError("Frozen Mac mechanics checks are incomplete")
-    return evidence, mechanics_path
+    return evidence, mechanics_path, mechanics_blob
 
 
-def materialize_mechanics_report(source: Path, output: Path) -> None:
+def materialize_bytes(payload: bytes, output: Path) -> None:
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite mechanics report: {output}")
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -125,12 +151,16 @@ def materialize_mechanics_report(source: Path, output: Path) -> None:
         delete=False,
     ) as handle:
         temporary = Path(handle.name)
-        handle.write(source.read_bytes())
+        handle.write(payload)
     try:
         os.replace(temporary, output)
     except BaseException:
         temporary.unlink(missing_ok=True)
         raise
+
+
+def materialize_mechanics_report(source: Path, output: Path) -> None:
+    materialize_bytes(source.read_bytes(), output)
 
 
 def main() -> None:
@@ -141,7 +171,7 @@ def main() -> None:
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parents[1]
-    evidence, mechanics_path = verify_validation_evidence(
+    evidence, mechanics_path, mechanics_blob = verify_validation_evidence(
         (repo_root / args.evidence).resolve(),
         repo_root=repo_root,
         expected_commit=args.expected_commit,
@@ -151,7 +181,7 @@ def main() -> None:
         output = Path(args.output)
         if not output.is_absolute():
             output = repo_root / output
-        materialize_mechanics_report(mechanics_path, output)
+        materialize_bytes(mechanics_blob, output)
     print(
         json.dumps(
             {
@@ -160,8 +190,8 @@ def main() -> None:
                 "focused_tests": evidence["focused_tests"]["total"],
                 "full_tests": evidence["full_test_suite"]["total"],
                 "mechanics_report_sha256": sha256_file(
-                    output if output is not None else mechanics_path
-                ),
+                    output
+                ) if output is not None else sha256_bytes(mechanics_blob),
             },
             indent=2,
             sort_keys=True,

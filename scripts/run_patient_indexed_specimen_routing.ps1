@@ -303,16 +303,6 @@ function Assert-Recovery5ValidationEvidence {
     }
 }
 
-function Assert-MacValidationEvidence {
-    Assert-RequiredFile $MacValidationEvidence
-    $ActualHash = (
-        Get-FileHash -Algorithm SHA256 $MacValidationEvidence
-    ).Hash.ToLowerInvariant()
-    if ($ActualHash -ne $MacValidationEvidenceSha256) {
-        throw "Frozen Mac validation evidence hash mismatch: $ActualHash"
-    }
-}
-
 function Get-TrainingRunDirectory {
     param(
         [Parameter(Mandatory = $true)][string]$RunName,
@@ -582,7 +572,6 @@ Start-Transcript -Path $LogPath
 try {
     switch ($Phase) {
         "Preflight" {
-            Assert-MacValidationEvidence
             Assert-Recovery5ValidationEvidence
             Invoke-CheckedPython -Stage "verify frozen Mac validation evidence" -Arguments @(
                 "-m", "evaluation.verify_patient_indexed_specimen_routing_validation",

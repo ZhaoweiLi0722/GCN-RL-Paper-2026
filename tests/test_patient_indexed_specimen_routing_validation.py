@@ -87,6 +87,7 @@ class FrozenMacValidationTests(unittest.TestCase):
         self.assertEqual(evidence["validated_commit"], VALIDATED_COMMIT)
         self.assertEqual(evidence["focused_tests"]["total"], 40)
         self.assertEqual(evidence["full_test_suite"]["total"], 497)
+        self.assertEqual(_sha256(evidence_path), validation.EXPECTED_EVIDENCE_SHA256)
         self.assertEqual(
             _sha256(mechanics),
             evidence["mechanics_gate"]["sha256"],
@@ -96,20 +97,38 @@ class FrozenMacValidationTests(unittest.TestCase):
         with TemporaryDirectory() as directory:
             root = Path(directory)
             evidence_path = _write_fixture(root)
+            mechanics_path = root / "evidence" / "mechanics.json"
+            blobs = {
+                "evidence/validation.json": evidence_path.read_bytes(),
+                "evidence/mechanics.json": mechanics_path.read_bytes(),
+            }
+            evidence_path.write_text("working-tree CRLF may differ\r\n", encoding="utf-8")
+            mechanics_path.write_text("working-tree CRLF may differ\r\n", encoding="utf-8")
             changed = "\n".join(sorted(validation.ALLOWED_DESCENDANT_PATHS))
             with mock.patch.object(
                 validation,
                 "git_output",
                 side_effect=_git_output(changed),
+            ), mock.patch.object(
+                validation,
+                "git_blob_bytes",
+                side_effect=lambda _repo, _commit, path: blobs[path],
+            ), mock.patch.object(
+                validation,
+                "EXPECTED_EVIDENCE_SHA256",
+                hashlib.sha256(blobs["evidence/validation.json"]).hexdigest(),
             ), mock.patch.object(validation.subprocess, "run") as merge_base:
-                evidence, mechanics = validation.verify_validation_evidence(
+                evidence, mechanics, mechanics_blob = (
+                    validation.verify_validation_evidence(
                     evidence_path,
                     repo_root=root,
                     expected_commit=EXPECTED_COMMIT,
+                    )
                 )
 
             self.assertEqual(evidence["status"], "PASS")
             self.assertEqual(mechanics, root / "evidence" / "mechanics.json")
+            self.assertEqual(mechanics_blob, blobs["evidence/mechanics.json"])
             merge_base.assert_called_once()
 
     def test_verifier_rejects_scientific_descendant_change(self) -> None:
@@ -120,6 +139,14 @@ class FrozenMacValidationTests(unittest.TestCase):
                 validation,
                 "git_output",
                 side_effect=_git_output("src/env/patient_condition.py"),
+            ), mock.patch.object(
+                validation,
+                "git_blob_bytes",
+                side_effect=lambda _repo, _commit, path: (root / path).read_bytes(),
+            ), mock.patch.object(
+                validation,
+                "EXPECTED_EVIDENCE_SHA256",
+                _sha256(evidence_path),
             ), mock.patch.object(validation.subprocess, "run"):
                 with self.assertRaisesRegex(ValueError, "Scientific paths changed"):
                     validation.verify_validation_evidence(

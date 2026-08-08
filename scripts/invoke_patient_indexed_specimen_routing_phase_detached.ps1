@@ -14,7 +14,8 @@ param(
     [string]$TeacherBundleBase64 = "",
     [ValidatePattern("^$|^[0-9a-fA-F]{64}$")]
     [string]$ExpectedTeacherBundleSha256 = "",
-    [string]$PythonExecutableBase64 = ""
+    [string]$PythonExecutableBase64 = "",
+    [switch]$TransportProbe
 )
 
 Set-StrictMode -Version Latest
@@ -24,6 +25,7 @@ $StartedAt = (Get-Date).ToUniversalTime().ToString("o")
 $ExitCode = 1
 $State = "failed"
 $FailureMessage = ""
+$FailureDetails = ""
 $TeacherBundle = ""
 $PythonExecutable = ""
 
@@ -38,8 +40,12 @@ function ConvertFrom-Utf8Base64 {
 }
 
 try {
-    $TeacherBundle = ConvertFrom-Utf8Base64 $TeacherBundleBase64
-    $PythonExecutable = ConvertFrom-Utf8Base64 $PythonExecutableBase64
+    if ($TeacherBundleBase64) {
+        $TeacherBundle = ConvertFrom-Utf8Base64 $TeacherBundleBase64
+    }
+    if ($PythonExecutableBase64) {
+        $PythonExecutable = ConvertFrom-Utf8Base64 $PythonExecutableBase64
+    }
     $Runner = Join-Path $PSScriptRoot "run_patient_indexed_specimen_routing.ps1"
     $RunnerParameters = @{
         Phase = $Phase
@@ -59,11 +65,14 @@ try {
         $RunnerParameters["ApprovePilot"] = $true
     }
 
-    & $Runner @RunnerParameters
+    if (-not $TransportProbe) {
+        & $Runner @RunnerParameters
+    }
     $ExitCode = 0
     $State = "completed"
 } catch {
     $FailureMessage = $_.Exception.Message
+    $FailureDetails = ($_ | Out-String).Trim()
 } finally {
     $StatusDirectory = Split-Path $StatusPath -Parent
     if (-not (Test-Path -PathType Container $StatusDirectory)) {
@@ -79,10 +88,12 @@ try {
         completed_at = (Get-Date).ToUniversalTime().ToString("o")
         exit_code = $ExitCode
         failure_message = $FailureMessage
+        failure_details = $FailureDetails
         teacher_bundle = $TeacherBundle
         expected_teacher_bundle_sha256 = $ExpectedTeacherBundleSha256
         argument_transport = "utf8_base64"
         python_executable = $PythonExecutable
+        transport_probe = [bool]$TransportProbe
     }
     $TemporaryStatusPath = "$StatusPath.tmp.$PID"
     $Payload | ConvertTo-Json -Depth 4 |

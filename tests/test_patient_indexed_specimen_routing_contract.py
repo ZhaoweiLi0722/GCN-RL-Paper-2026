@@ -43,7 +43,7 @@ PLAN_PATH = (
 )
 GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
-RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery6/"
+RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery7/"
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -370,16 +370,20 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("codex/patient-indexed-specimen-routing", runner)
         self.assertIn("ce9b6274419c8e0e7adf800f434e47d96c18c1dc", runner)
         self.assertIn(
-            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery6"',
+            r'$ResultRoot = "results\patient_indexed_specimen_routing_recovery7"',
             runner,
         )
         self.assertIn(
-            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery5"',
+            r'$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery6"',
             runner,
         )
-        self.assertIn("d0e6da53473b079e34d0774af3251f63205c1ad5", runner)
+        self.assertIn("d647e491f4d55c3d1e19e2c27889b11f63acd10a", runner)
         self.assertIn(
-            "PowerShell PSArgument native crash",
+            "optional empty-string Base64 parameter binding",
+            runner,
+        )
+        self.assertIn(
+            "5264bbabb6517a515aaf1cb75c662b04f00bdabbc4611f9e2cb84da1c6e0fa03",
             runner,
         )
         self.assertIn(
@@ -432,7 +436,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, runner)
 
-    def test_recovery6_launcher_detaches_and_preserves_control_chain(self) -> None:
+    def test_recovery7_launcher_detaches_and_preserves_control_chain(self) -> None:
         launcher = Path(
             "scripts/start_patient_indexed_specimen_routing_phase.ps1"
         ).read_text(encoding="utf-8")
@@ -449,7 +453,7 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("-PassThru", launcher)
         self.assertNotIn("-Wait", launcher)
         self.assertIn("launcher-logs", launcher)
-        self.assertIn("patient_indexed_specimen_routing_recovery6", launcher)
+        self.assertIn("patient_indexed_specimen_routing_recovery7", launcher)
         self.assertIn("TeacherBundle", launcher)
         self.assertIn("TeacherBundle", wrapper)
         self.assertIn("TeacherBundleBase64", launcher)
@@ -460,6 +464,11 @@ class RoutingExperimentContractTests(unittest.TestCase):
         self.assertIn("ConvertTo-Utf8Base64", launcher)
         self.assertIn("ConvertFrom-Utf8Base64", wrapper)
         self.assertIn("[Convert]::FromBase64String", wrapper)
+        self.assertIn("if ($TeacherBundleBase64)", wrapper)
+        self.assertIn("TransportProbe", wrapper)
+        self.assertNotIn("TransportProbe", launcher)
+        self.assertIn("if (-not $TransportProbe)", wrapper)
+        self.assertIn("transport_probe = [bool]$TransportProbe", wrapper)
         self.assertIn("& $Runner @RunnerParameters", wrapper)
         self.assertNotIn("& powershell.exe @RunnerArguments", wrapper)
         self.assertNotIn('@("-TeacherBundle", $TeacherBundle)', launcher)

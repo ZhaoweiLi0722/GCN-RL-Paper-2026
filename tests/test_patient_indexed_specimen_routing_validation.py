@@ -120,13 +120,13 @@ class FrozenMacValidationTests(unittest.TestCase):
                 path: json.dumps(
                     {"output_root": validation.RECOVERY5_RESULT_ROOT}
                 ).encode("utf-8")
-                for path in validation.RECOVERY6_PATH_ONLY_CONFIGS
+                for path in validation.RECOVERY7_PATH_ONLY_CONFIGS
             }
-            recovery6_configs = {
+            recovery7_configs = {
                 path: json.dumps(
-                    {"output_root": validation.RECOVERY6_RESULT_ROOT}
+                    {"output_root": validation.RECOVERY7_RESULT_ROOT}
                 ).encode("utf-8")
-                for path in validation.RECOVERY6_PATH_ONLY_CONFIGS
+                for path in validation.RECOVERY7_PATH_ONLY_CONFIGS
             }
 
             def git_blob(_repo, commit, path):
@@ -134,7 +134,7 @@ class FrozenMacValidationTests(unittest.TestCase):
                     return blobs[path]
                 if commit == VALIDATED_COMMIT:
                     return validated_configs[path]
-                return recovery6_configs[path]
+                return recovery7_configs[path]
 
             evidence_path.write_text("working-tree CRLF may differ\r\n", encoding="utf-8")
             mechanics_path.write_text("working-tree CRLF may differ\r\n", encoding="utf-8")
@@ -165,12 +165,12 @@ class FrozenMacValidationTests(unittest.TestCase):
             self.assertEqual(mechanics_blob, blobs["evidence/mechanics.json"])
             merge_base.assert_called_once()
 
-    def test_verifier_rejects_recovery6_scientific_config_change(self) -> None:
+    def test_verifier_rejects_recovery7_scientific_config_change(self) -> None:
         with TemporaryDirectory() as directory:
             root = Path(directory)
             evidence_path = _write_fixture(root)
             mechanics_path = root / "evidence" / "mechanics.json"
-            config_path = next(iter(validation.RECOVERY6_PATH_ONLY_CONFIGS))
+            config_path = next(iter(validation.RECOVERY7_PATH_ONLY_CONFIGS))
             blobs = {
                 "evidence/validation.json": evidence_path.read_bytes(),
                 "evidence/mechanics.json": mechanics_path.read_bytes(),
@@ -182,7 +182,7 @@ class FrozenMacValidationTests(unittest.TestCase):
                 root_name = (
                     validation.RECOVERY5_RESULT_ROOT
                     if commit == VALIDATED_COMMIT
-                    else validation.RECOVERY6_RESULT_ROOT
+                    else validation.RECOVERY7_RESULT_ROOT
                 )
                 episodes = 100 if commit == VALIDATED_COMMIT else 101
                 return json.dumps(

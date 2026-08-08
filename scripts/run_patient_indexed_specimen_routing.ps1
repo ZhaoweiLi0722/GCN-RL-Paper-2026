@@ -18,11 +18,17 @@ $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
 $LockedParent = "ce9b6274419c8e0e7adf800f434e47d96c18c1dc"
-$ResultRoot = "results\patient_indexed_specimen_routing_recovery6"
-$RecoveryName = "Recovery 6"
-$SupersededCommit = "d0e6da53473b079e34d0774af3251f63205c1ad5"
-$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery5"
+$ResultRoot = "results\patient_indexed_specimen_routing_recovery7"
+$RecoveryName = "Recovery 7"
+$SupersededCommit = "d647e491f4d55c3d1e19e2c27889b11f63acd10a"
+$SupersededResultRoot = "results\patient_indexed_specimen_routing_recovery6"
 $SupersededFailureEvidenceSha256 = [ordered]@{
+    preflight_claim = "5264bbabb6517a515aaf1cb75c662b04f00bdabbc4611f9e2cb84da1c6e0fa03"
+    preflight_stdout = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    preflight_stderr = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    preflight_status = "cd3e17c9c21112d93c3b63cee1de3ccc054601d369f4f64bbec465668911e17b"
+}
+$Recovery5FailureEvidenceSha256 = [ordered]@{
     preflight_claim = "71202adc2df4871121e819ef687d977446f93e1dbcc07816c6c4cc028dc04dc0"
     preflight_stdout = "df5f9a6a0ce0401506df3a69f99ac9364745de1c1c4d3cdfbfd0215b765bb3dd"
     preflight_stderr = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -33,8 +39,8 @@ $SupersededFailureEvidenceSha256 = [ordered]@{
     import_teacher_stderr = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 }
 $FailureClassification = (
-    "Windows PowerShell PSArgument native crash while binding a spaced " +
-    "OneDrive TeacherBundle path before frozen teacher import"
+    "detached PowerShell optional empty-string Base64 parameter binding " +
+    "failure before the Recovery 6 runner and CUDA transcript"
 )
 $PriorRecovery2Commit = "304dc83d6eb7447c6371150a551ea6d01999d5aa"
 $PriorRecovery2ResultRoot = "results\patient_indexed_specimen_routing_recovery2"
@@ -106,6 +112,21 @@ $Recovery5FailureEvidencePaths = [ordered]@{
     )
     import_teacher_stderr = Join-Path $Recovery5ResultRoot (
         "launcher-logs\ImportTeacher_20260808_072434.stderr.log"
+    )
+}
+$Recovery6ResultRoot = "results\patient_indexed_specimen_routing_recovery6"
+$Recovery6FailureEvidencePaths = [ordered]@{
+    preflight_claim = Join-Path $Recovery6ResultRoot (
+        "launcher-logs\Preflight.claim.json"
+    )
+    preflight_stdout = Join-Path $Recovery6ResultRoot (
+        "launcher-logs\Preflight_20260808_075534.stdout.log"
+    )
+    preflight_stderr = Join-Path $Recovery6ResultRoot (
+        "launcher-logs\Preflight_20260808_075534.stderr.log"
+    )
+    preflight_status = Join-Path $Recovery6ResultRoot (
+        "launcher-logs\Preflight_20260808_075534.status.json"
     )
 }
 
@@ -290,7 +311,7 @@ function Assert-Recovery5FailureEvidence {
         $ActualHash = (
             Get-FileHash -Algorithm SHA256 $Path
         ).Hash.ToLowerInvariant()
-        $ExpectedHash = [string]$SupersededFailureEvidenceSha256[$Name]
+        $ExpectedHash = [string]$Recovery5FailureEvidenceSha256[$Name]
         if ($ActualHash -ne $ExpectedHash) {
             throw "Recovery 5 $Name hash mismatch: $ActualHash"
         }
@@ -309,6 +330,68 @@ function Assert-Recovery5FailureEvidence {
         "ImportTeacher_*.txt"
     )).Count -ne 0) {
         throw "Recovery 5 unexpectedly contains an ImportTeacher transcript."
+    }
+}
+
+function Assert-Recovery6FailureEvidence {
+    foreach ($Name in $Recovery6FailureEvidencePaths.Keys) {
+        $Path = [string]$Recovery6FailureEvidencePaths[$Name]
+        Assert-RequiredFile $Path
+        $ActualHash = (
+            Get-FileHash -Algorithm SHA256 $Path
+        ).Hash.ToLowerInvariant()
+        $ExpectedHash = [string]$SupersededFailureEvidenceSha256[$Name]
+        if ($ActualHash -ne $ExpectedHash) {
+            throw "Recovery 6 $Name hash mismatch: $ActualHash"
+        }
+    }
+
+    $Claim = Get-Content (
+        [string]$Recovery6FailureEvidencePaths["preflight_claim"]
+    ) -Raw | ConvertFrom-Json
+    $Status = Get-Content (
+        [string]$Recovery6FailureEvidencePaths["preflight_status"]
+    ) -Raw | ConvertFrom-Json
+    if (
+        $Claim.phase -ne "Preflight" -or
+        $Claim.expected_commit -ne $SupersededCommit
+    ) {
+        throw "Recovery 6 Preflight claim identity mismatch."
+    }
+    if (
+        $Status.phase -ne "Preflight" -or
+        $Status.expected_commit -ne $SupersededCommit -or
+        $Status.state -ne "failed" -or
+        [int]$Status.exit_code -ne 1 -or
+        [string]$Status.failure_message -ne (
+            "Cannot bind argument to parameter 'Value' because it is an " +
+            "empty string."
+        )
+    ) {
+        throw "Recovery 6 Preflight failure identity mismatch."
+    }
+
+    foreach ($ForbiddenPath in @(
+        (Join-Path $Recovery6ResultRoot "teachers\routing"),
+        (Join-Path $Recovery6ResultRoot "launcher-logs\ImportTeacher.claim.json")
+    )) {
+        if (Test-Path $ForbiddenPath) {
+            throw "Recovery 6 failure boundary changed: $ForbiddenPath"
+        }
+    }
+    $Recovery6Logs = Join-Path $Recovery6ResultRoot "logs"
+    if (
+        (Test-Path -PathType Container $Recovery6Logs) -and
+        @(Get-ChildItem $Recovery6Logs -Filter "Preflight_*.txt").Count -ne 0
+    ) {
+        throw "Recovery 6 unexpectedly contains a Preflight transcript."
+    }
+    $Recovery6Provenance = Join-Path $Recovery6ResultRoot "provenance"
+    if (
+        (Test-Path -PathType Container $Recovery6Provenance) -and
+        @(Get-ChildItem $Recovery6Provenance -File).Count -ne 0
+    ) {
+        throw "Recovery 6 unexpectedly contains phase provenance."
     }
 }
 
@@ -646,6 +729,7 @@ try {
         "Preflight" {
             Assert-Recovery5ValidationEvidence
             Assert-Recovery5FailureEvidence
+            Assert-Recovery6FailureEvidence
             Invoke-CheckedPython -Stage "verify frozen Mac validation evidence" -Arguments @(
                 "-m", "evaluation.verify_patient_indexed_specimen_routing_validation",
                 "--evidence", $MacValidationEvidence,
@@ -656,6 +740,7 @@ try {
         "ImportTeacher" {
             Assert-Recovery5ValidationEvidence
             Assert-Recovery5FailureEvidence
+            Assert-Recovery6FailureEvidence
             if (-not $TeacherBundle) {
                 throw "ImportTeacher requires -TeacherBundle."
             }
@@ -695,6 +780,7 @@ try {
         "Smoke" {
             Assert-Recovery5ValidationEvidence
             Assert-Recovery5FailureEvidence
+            Assert-Recovery6FailureEvidence
             Assert-RequiredFile $RoutingTeacher
             Assert-FreshPath (Join-Path $ResultRoot "training\$RoutingSmokeName")
             Assert-FreshPath $SmokeGate
@@ -732,6 +818,7 @@ try {
         "Pilot" {
             Assert-Recovery5ValidationEvidence
             Assert-Recovery5FailureEvidence
+            Assert-Recovery6FailureEvidence
             if (-not $ApprovePilot) {
                 throw "Pilot requires explicit -ApprovePilot."
             }
@@ -784,6 +871,7 @@ try {
         "Evaluate" {
             Assert-Recovery5ValidationEvidence
             Assert-Recovery5FailureEvidence
+            Assert-Recovery6FailureEvidence
             Assert-RequiredFile $PilotGate
             $Pilot = Get-Content $PilotGate -Raw | ConvertFrom-Json
             if ($Pilot.status -ne "PASS" -or $Pilot.git_commit -ne $Commit) {

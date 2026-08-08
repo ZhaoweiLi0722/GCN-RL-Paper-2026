@@ -16,7 +16,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $LockedBranch = "codex/patient-indexed-specimen-routing"
-$ResultRootName = "results\patient_indexed_specimen_routing_recovery6"
+$ResultRootName = "results\patient_indexed_specimen_routing_recovery7"
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
 
@@ -280,7 +280,7 @@ $ResolvedPythonExecutable = [string]$PythonProbe.path
 $ResultRoot = Join-Path $RepoRoot $ResultRootName
 if (-not (Test-Path -PathType Container $ResultRoot)) {
     if ($Phase -ne "Preflight") {
-        throw "Recovery 6 result root does not exist for phase $Phase."
+        throw "Recovery 7 result root does not exist for phase $Phase."
     }
     New-Item -ItemType Directory $ResultRoot | Out-Null
 }
@@ -288,7 +288,7 @@ if (-not (Test-Path -PathType Container $ResultRoot)) {
 $LauncherRoot = Join-Path $ResultRoot "launcher-logs"
 $ClaimPath = Join-Path $LauncherRoot "$Phase.claim.json"
 if (Test-Path $ClaimPath) {
-    throw "Phase $Phase already has a Recovery 6 launch claim."
+    throw "Phase $Phase already has a Recovery 7 launch claim."
 }
 New-Item -ItemType Directory -Force $LauncherRoot | Out-Null
 

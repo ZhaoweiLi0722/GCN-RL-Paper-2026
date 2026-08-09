@@ -205,6 +205,57 @@ class RoutingExperimentContractTests(unittest.TestCase):
                 payload.pop(key)
         self.assertEqual(comparable_candidate, comparable_baseline)
 
+        confirmation_train = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_updatefreq4_seeds1_2.json"
+            ).read_text()
+        )
+        candidate_train_contract = dict(candidate)
+        confirmation_train_contract = dict(confirmation_train)
+        for payload in (candidate_train_contract, confirmation_train_contract):
+            payload.pop("seeds")
+            payload.pop("algorithms")
+        self.assertEqual(confirmation_train_contract, candidate_train_contract)
+        self.assertEqual(confirmation_train["seeds"], [1, 2])
+        self.assertTrue(
+            all(entry["seeds"] == [1, 2] for entry in confirmation_train["algorithms"])
+        )
+
+        confirmation_manifest = candidate_eval["training_manifest"]
+        for filename, variant in (
+            (
+                "patient_indexed_specimen_routing_mac_mps_updatefreq4_confirm_final_eval.json",
+                "final",
+            ),
+            (
+                "patient_indexed_specimen_routing_mac_mps_updatefreq4_confirm_pretrain_eval.json",
+                "pretrain",
+            ),
+        ):
+            evaluation = json.loads((config_root / filename).read_text())
+            self.assertEqual(evaluation["training_manifest"], confirmation_manifest)
+            self.assertEqual(evaluation["training_seeds"], [0, 1, 2])
+            self.assertEqual(evaluation["checkpoint_variants"], [variant])
+            self.assertEqual(evaluation["fixed_checkpoint_variant"], variant)
+            self.assertEqual(evaluation["holdout_seed"], 8400000)
+            self.assertEqual(evaluation["holdout_replications"], 100)
+            self.assertEqual(evaluation["fixed_deployment_candidate"]["scale"], 0.1)
+
+        attribution = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_updatefreq4_confirm_attribution.json"
+            ).read_text()
+        )
+        self.assertEqual(attribution["bootstrap_resamples"], 20000)
+        self.assertEqual(attribution["bootstrap_seed"], 8520000)
+        self.assertIn("update_frequency_4/confirmation/final_scale01", attribution["routing_final_root"])
+        self.assertIn(
+            "update_frequency_4/confirmation/pretrain_scale01",
+            attribution["routing_pretrain_root"],
+        )
+
     def test_routing_primary_plan_and_optional_controls_are_explicit(self) -> None:
         plan = load_benchmark_plan(PLAN_PATH)
         self.assertEqual(resolve_budget(plan, "routing_smoke")["num_episodes"], 5)

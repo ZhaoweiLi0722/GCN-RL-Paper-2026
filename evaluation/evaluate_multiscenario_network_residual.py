@@ -1206,7 +1206,7 @@ def resolve_checkpoint_variants(
     }
     unknown = tuple(
         value for value in requested_variants
-        if value not in supported
+        if value not in supported and _checkpoint_variant_episode(value) is None
     )
     if unknown:
         raise ValueError(
@@ -1216,13 +1216,28 @@ def resolve_checkpoint_variants(
     resolved: dict[str, Path] = {}
     seen_paths: set[Path] = set()
     for variant in requested_variants:
-        manifest_key = supported[variant]
-        raw_path = run.get(manifest_key)
-        if not raw_path:
-            raise ValueError(
-                f"Training manifest is missing {manifest_key!r}"
+        if variant in supported:
+            manifest_key = supported[variant]
+            raw_path = run.get(manifest_key)
+            if not raw_path:
+                raise ValueError(
+                    f"Training manifest is missing {manifest_key!r}"
+                )
+            path = resolve_manifest_artifact_path(raw_path)
+        else:
+            episode = _checkpoint_variant_episode(variant)
+            algorithm = str(run.get("algorithm", "")).strip()
+            seed = run.get("seed")
+            final_checkpoint = run.get("checkpoint")
+            if episode is None or not algorithm or seed is None or not final_checkpoint:
+                raise ValueError(
+                    "Intermediate checkpoint variants require algorithm, seed, "
+                    "and checkpoint in the training manifest"
+                )
+            checkpoint_dir = resolve_manifest_artifact_path(final_checkpoint).parent
+            path = checkpoint_dir / (
+                f"{algorithm}_seed{int(seed)}_episode{episode}.pt"
             )
-        path = resolve_manifest_artifact_path(raw_path)
         if not path.is_file():
             raise FileNotFoundError(
                 f"{variant} checkpoint does not exist: {path}"
@@ -1235,6 +1250,15 @@ def resolve_checkpoint_variants(
     if not resolved:
         raise ValueError("Checkpoint variants resolved to an empty set")
     return resolved
+
+
+def _checkpoint_variant_episode(value: str) -> int | None:
+    prefix = "episode"
+    suffix = value[len(prefix):] if value.startswith(prefix) else ""
+    if not suffix.isdigit():
+        return None
+    episode = int(suffix)
+    return episode if episode > 0 else None
 
 
 def resolve_manifest_artifact_path(raw_path: str | Path) -> Path:

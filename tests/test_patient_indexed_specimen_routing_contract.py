@@ -115,6 +115,96 @@ class RoutingExperimentContractTests(unittest.TestCase):
             self.assertEqual(evaluation["checkpoint_variants"], [variant])
             self.assertEqual(evaluation["holdout_replications"], 100)
 
+    def test_update_frequency_sensitivity_is_single_factor_and_prespecified(self) -> None:
+        config_root = Path("experiments/configs")
+        primary = json.loads(
+            (config_root / "patient_indexed_specimen_routing_mac_mps_primary.json").read_text()
+        )
+        candidate = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_updatefreq4_seed0.json"
+            ).read_text()
+        )
+        smoke = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_updatefreq4_smoke.json"
+            ).read_text()
+        )
+        protocol = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_updatefreq4_protocol.json"
+            ).read_text()
+        )
+        plan = load_benchmark_plan(PLAN_PATH)
+
+        self.assertEqual(
+            plan["algorithm_settings"][GCN]["config_overrides"]["update_frequency"],
+            1,
+        )
+        self.assertEqual(
+            plan["algorithm_settings"][GCN]["config_overrides"]["updates_per_update"],
+            1,
+        )
+        self.assertEqual(protocol["factor"]["baseline"], 1)
+        self.assertEqual(protocol["factor"]["candidate"], 4)
+        self.assertEqual(candidate["config_overrides"]["update_frequency"], 4)
+        self.assertEqual(smoke["config_overrides"]["update_frequency"], 4)
+
+        primary_contract = dict(primary)
+        candidate_contract = dict(candidate)
+        for key in ("name", "seeds", "algorithms", "output_root"):
+            primary_contract.pop(key)
+            candidate_contract.pop(key)
+        candidate_overrides = dict(candidate_contract["config_overrides"])
+        candidate_overrides.pop("update_frequency")
+        candidate_contract["config_overrides"] = candidate_overrides
+        self.assertEqual(candidate_contract, primary_contract)
+
+        fixed = protocol["fixed_training_contract"]
+        self.assertEqual(fixed["baseline_expected_online_updates"], 5200)
+        self.assertEqual(fixed["candidate_expected_online_updates"], 1300)
+        self.assertEqual(fixed["deployment_scale"], 0.1)
+        self.assertEqual(protocol["screening"]["training_seeds"], [0])
+        self.assertNotEqual(
+            protocol["screening"]["screening_confirmation_seed"],
+            protocol["screening"]["official_holdout_seed_reserved"],
+        )
+        self.assertTrue(
+            protocol["confirmation"]["run_only_after_screening_gate_passes"]
+        )
+
+        baseline_eval = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_updatefreq4_baseline_screen_eval.json"
+            ).read_text()
+        )
+        candidate_eval = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_updatefreq4_candidate_screen_eval.json"
+            ).read_text()
+        )
+        for evaluation in (baseline_eval, candidate_eval):
+            self.assertEqual(evaluation["training_seeds"], [0])
+            self.assertEqual(evaluation["validation_seed"], 8500000)
+            self.assertEqual(evaluation["validation_replications"], 5)
+            self.assertEqual(evaluation["holdout_seed"], 8510000)
+            self.assertEqual(evaluation["holdout_replications"], 20)
+            self.assertNotEqual(evaluation["holdout_seed"], 8400000)
+            self.assertEqual(evaluation["fixed_checkpoint_variant"], "final")
+            self.assertEqual(evaluation["fixed_deployment_candidate"]["scale"], 0.1)
+
+        comparable_baseline = dict(baseline_eval)
+        comparable_candidate = dict(candidate_eval)
+        for payload in (comparable_baseline, comparable_candidate):
+            for key in ("name", "training_manifest", "output_root"):
+                payload.pop(key)
+        self.assertEqual(comparable_candidate, comparable_baseline)
+
     def test_routing_primary_plan_and_optional_controls_are_explicit(self) -> None:
         plan = load_benchmark_plan(PLAN_PATH)
         self.assertEqual(resolve_budget(plan, "routing_smoke")["num_episodes"], 5)

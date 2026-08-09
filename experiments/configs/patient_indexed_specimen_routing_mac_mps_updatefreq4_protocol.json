@@ -1,0 +1,50 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_updatefreq4_protocol",
+  "experimental_role": "prespecified_single_factor_training_sensitivity",
+  "baseline_implementation_commit": "3f83fc96b3a2c6b8ca026a900d1bfdad1d010c73",
+  "factor": {
+    "config_path": "config_overrides.update_frequency",
+    "baseline": 1,
+    "candidate": 4
+  },
+  "fixed_training_contract": {
+    "teacher_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/routing/teacher_cache.npz",
+    "algorithms": [
+      "gcn_residual_mdl2_network_ddpg_afd",
+      "flat_residual_mdl2_network_ddpg_afd"
+    ],
+    "online_episodes": 100,
+    "max_steps_per_episode": 52,
+    "updates_per_update": 1,
+    "baseline_expected_online_updates": 5200,
+    "candidate_expected_online_updates": 1300,
+    "deployment_scale": 0.1
+  },
+  "screening": {
+    "training_seeds": [
+      0
+    ],
+    "validation_seed": 8500000,
+    "validation_replications": 5,
+    "screening_confirmation_seed": 8510000,
+    "screening_confirmation_replications": 20,
+    "official_holdout_seed_reserved": 8400000,
+    "promotion_gate": {
+      "all_algorithms_required": true,
+      "finite_training_and_evaluation": true,
+      "candidate_mean_total_cost_below_baseline_on_shared_crns": true,
+      "candidate_completion_service_level_not_below_baseline_on_shared_crns": true,
+      "candidate_actor_drift_rms_below_baseline": true,
+      "candidate_online_updates_equal_expected": true
+    }
+  },
+  "confirmation": {
+    "additional_training_seeds": [
+      1,
+      2
+    ],
+    "official_holdout_seed": 8400000,
+    "official_holdout_replications": 100,
+    "run_only_after_screening_gate_passes": true
+  }
+}

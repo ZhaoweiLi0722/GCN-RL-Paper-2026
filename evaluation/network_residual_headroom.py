@@ -298,6 +298,67 @@ def candidate_action_specs(
     return specs
 
 
+def facility_net_residual_envelope(
+    action_dim: int,
+    num_facilities: int,
+    group_limits: dict[str, Any],
+) -> np.ndarray:
+    """Return per-dimension residual limits for the facility-net action."""
+
+    n = int(num_facilities)
+    if n <= 0 or int(action_dim) != 4 * n:
+        raise ValueError(
+            "Residual action envelopes require a four-group facility-net action"
+        )
+    slices = {
+        "specimen_transfer": slice(0, n),
+        "reagent_transfer": slice(n, 2 * n),
+        "capacity_transfer": slice(2 * n, 3 * n),
+        "replenishment": slice(3 * n, 4 * n),
+    }
+    unknown = sorted(set(group_limits) - set(slices))
+    if unknown:
+        raise ValueError(f"Unsupported residual envelope groups: {unknown}")
+    envelope = np.zeros(int(action_dim), dtype=np.float32)
+    for group, group_slice in slices.items():
+        limit = float(group_limits.get(group, 0.0))
+        if not 0.0 <= limit <= 1.0:
+            raise ValueError("Residual envelope limits must lie in [0, 1]")
+        envelope[group_slice] = limit
+    return envelope
+
+
+def bound_candidate_specs_to_residual_envelope(
+    specs: list[dict[str, Any]],
+    *,
+    num_facilities: int,
+    group_limits: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Project every candidate onto an action envelope around the anchor."""
+
+    if not specs:
+        raise ValueError("At least one candidate is required")
+    anchor_action = np.asarray(specs[0]["action"], dtype=np.float32).reshape(-1)
+    envelope = facility_net_residual_envelope(
+        anchor_action.size,
+        num_facilities,
+        group_limits,
+    )
+    bounded = []
+    for spec in specs:
+        action = np.asarray(spec["action"], dtype=np.float32).reshape(-1)
+        if action.shape != anchor_action.shape:
+            raise ValueError("Candidate actions must match the anchor action shape")
+        row = dict(spec)
+        row["action"] = np.clip(
+            anchor_action + np.clip(action - anchor_action, -envelope, envelope),
+            -1.0,
+            1.0,
+        ).astype(np.float32)
+        bounded.append(row)
+    return bounded
+
+
 def lookahead_rollout_seeds(
     config: dict[str, Any],
     decision_index: int,
@@ -564,6 +625,9 @@ class ClinicalLookaheadTeacher:
             )
         else:
             self.option_specs = ()
+        self.residual_action_envelope = dict(
+            config.get("residual_action_envelope", {})
+        )
         self.total_decisions = 0
         self.corrected_decisions = 0
         self.selected_groups: Counter[str] = Counter()
@@ -614,6 +678,12 @@ class ClinicalLookaheadTeacher:
                 epsilons=self.config["epsilons"],
                 candidate_groups=self.config["candidate_groups"],
                 candidate_signs=self.config.get("candidate_signs", (-1.0, 1.0)),
+            )
+        if self.residual_action_envelope:
+            specs = bound_candidate_specs_to_residual_envelope(
+                specs,
+                num_facilities=int(env.config.num_facilities),
+                group_limits=self.residual_action_envelope,
             )
         evaluated = evaluate_candidate_specs(
             specs,

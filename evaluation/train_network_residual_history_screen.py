@@ -66,7 +66,11 @@ def main() -> None:
     parser.add_argument("--correction-gate-threshold", type=float, default=None)
     parser.add_argument(
         "--online-reward-mode",
-        choices=("environment", "one_step_anchor_relative"),
+        choices=(
+            "environment",
+            "one_step_anchor_relative",
+            "n_step_anchor_relative",
+        ),
         default=None,
     )
     parser.add_argument(

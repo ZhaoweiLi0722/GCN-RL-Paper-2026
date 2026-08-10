@@ -72,6 +72,83 @@ def _config(plan: dict, algorithm: str, scenario: dict) -> dict:
 
 
 class RoutingExperimentContractTests(unittest.TestCase):
+    def test_ddpg_confirmation_uses_untouched_seeds_and_frozen_candidate(self) -> None:
+        config_root = Path("experiments/configs")
+        candidate = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_bounded_gain01_"
+                    "specimenonly_ddpg_sharedpreonline_quantizedspecimenste_"
+                    "anchorrelreward_nstep4_materialadv_dualconfirm_"
+                    "balancedcycle8.json"
+                )
+            ).read_text()
+        )
+        confirmation = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "ddpg_confirmation_100.json"
+                )
+            ).read_text()
+        )
+
+        self.assertEqual(candidate["online_episodes"], 8)
+        self.assertEqual(confirmation["online_episodes"], 100)
+        self.assertEqual(confirmation["seeds"], [10, 11, 12, 13, 14])
+        self.assertTrue(set(confirmation["seeds"]).isdisjoint({0, 1, 2}))
+        self.assertEqual(
+            [entry["name"] for entry in confirmation["algorithms"]],
+            [GCN, FLAT],
+        )
+        self.assertTrue(
+            all(
+                entry["seeds"] == confirmation["seeds"]
+                for entry in confirmation["algorithms"]
+            )
+        )
+
+        candidate_contract = dict(candidate)
+        confirmation_contract = dict(confirmation)
+        self.assertEqual(
+            confirmation_contract.pop("teacher_cache_sha256"),
+            "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92",
+        )
+        for payload in (candidate_contract, confirmation_contract):
+            for key in (
+                "name",
+                "experimental_role",
+                "budget",
+                "online_episodes",
+                "seeds",
+                "algorithms",
+                "output_root",
+            ):
+                payload.pop(key)
+            overrides = dict(payload["config_overrides"])
+            for key in (
+                "checkpoint_interval",
+                "training_state_checkpoint_interval",
+                "progress_interval",
+            ):
+                overrides.pop(key)
+            payload["config_overrides"] = overrides
+        self.assertEqual(confirmation_contract, candidate_contract)
+
+        overrides = confirmation["config_overrides"]
+        self.assertEqual(overrides["batch_size"], 64)
+        self.assertEqual(overrides["actor_lr"], 1e-5)
+        self.assertEqual(overrides["actor_update_frequency"], 2)
+        self.assertEqual(overrides["update_frequency"], 1)
+        self.assertEqual(overrides["checkpoint_interval"], 5)
+        self.assertEqual(overrides["residual_action"]["scale"], 0.1)
+        self.assertEqual(
+            overrides["online_advantage_self_imitation"]["minimum_return"],
+            0.0005,
+        )
+
     def test_mac_mps_campaign_is_matched_and_routing_primary(self) -> None:
         config_root = Path("experiments/configs")
         smoke = json.loads(
@@ -255,6 +332,560 @@ class RoutingExperimentContractTests(unittest.TestCase):
             "update_frequency_4/confirmation/pretrain_scale01",
             attribution["routing_pretrain_root"],
         )
+
+    def test_bounded_gain_teacher_and_ddpg_smoke_share_action_envelope(self) -> None:
+        config_root = Path("experiments/configs")
+        teacher = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_teacher_bounded_gain01.json"
+            ).read_text()
+        )
+        smoke = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_smoke.json"
+            ).read_text()
+        )
+        envelope = teacher["residual_action_envelope"]
+        scales = smoke["config_overrides"]["residual_action"]["group_scales"]
+        self.assertEqual(envelope, scales)
+        self.assertEqual(smoke["config_overrides"]["update_frequency"], 1)
+        self.assertEqual(
+            [entry["name"] for entry in smoke["algorithms"]],
+            [GCN],
+        )
+        self.assertTrue(
+            all(
+                float(option["epsilon"]) <= 0.1
+                for option in teacher["explicit_options"]
+            )
+        )
+        for variant in ("pretrain", "final"):
+            evaluation = json.loads(
+                (
+                    config_root
+                    / (
+                        "patient_indexed_specimen_routing_mac_mps_"
+                        f"bounded_gain01_gcn_smoke_{variant}_eval.json"
+                    )
+                ).read_text()
+            )
+            self.assertEqual(
+                evaluation["fixed_deployment_candidate"]["scale"],
+                1.0,
+            )
+            self.assertEqual(
+                evaluation["fixed_checkpoint_variant"],
+                variant,
+            )
+            self.assertNotEqual(evaluation["holdout_seed"], 8400000)
+
+        pretrain300 = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_pretrain300_screen.json"
+            ).read_text()
+        )
+        smoke_contract = dict(smoke)
+        pretrain300_contract = dict(pretrain300)
+        for payload in (smoke_contract, pretrain300_contract):
+            for key in ("name", "experimental_role", "pretrain_epochs", "output_root"):
+                payload.pop(key)
+        self.assertEqual(pretrain300_contract, smoke_contract)
+        self.assertEqual(smoke["pretrain_epochs"], 5)
+        self.assertEqual(pretrain300["pretrain_epochs"], 300)
+
+        dense = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrain300_screen.json"
+            ).read_text()
+        )
+        pretrain300_contract = dict(pretrain300)
+        dense_contract = dict(dense)
+        for payload in (pretrain300_contract, dense_contract):
+            for key in ("name", "experimental_role", "output_root"):
+                payload.pop(key)
+        dense_residual = dict(
+            dense_contract["config_overrides"]["residual_action"]
+        )
+        self.assertFalse(dense_residual.pop("endpoint_projection")["enabled"])
+        dense_contract["config_overrides"] = dict(
+            dense_contract["config_overrides"]
+        )
+        dense_contract["config_overrides"]["residual_action"] = dense_residual
+        self.assertEqual(dense_contract, pretrain300_contract)
+
+        dense_manifest = (
+            "results/patient_indexed_specimen_routing_mac_mps_primary/"
+            "sensitivity/bounded_gain01/"
+            "gcn_dense_pretrain300_screen_training_mps/"
+            "patient_indexed_specimen_routing_mac_mps_"
+            "bounded_gain01_gcn_dense_pretrain300_screen/"
+            "training_manifest.json"
+        )
+        comparable_evaluations = []
+        for variant in ("pretrain", "final"):
+            evaluation = json.loads(
+                (
+                    config_root
+                    / (
+                        "patient_indexed_specimen_routing_mac_mps_"
+                        "bounded_gain01_gcn_dense_pretrain300_screen_"
+                        f"{variant}_eval.json"
+                    )
+                ).read_text()
+            )
+            self.assertEqual(evaluation["training_manifest"], dense_manifest)
+            self.assertEqual(evaluation["fixed_checkpoint_variant"], variant)
+            self.assertEqual(evaluation["fixed_deployment_candidate"]["scale"], 1.0)
+            self.assertFalse(
+                evaluation["fixed_deployment_candidate"]
+                ["endpoint_projection"]["enabled"]
+            )
+            comparable = dict(evaluation)
+            for key in (
+                "name",
+                "experimental_role",
+                "checkpoint_variants",
+                "fixed_checkpoint_variant",
+                "output_root",
+            ):
+                comparable.pop(key)
+            comparable_evaluations.append(comparable)
+        self.assertEqual(*comparable_evaluations)
+
+        actor_lr = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_actorlr1e4_screen.json"
+            ).read_text()
+        )
+        dense_contract = dict(dense)
+        actor_lr_contract = dict(actor_lr)
+        for payload in (dense_contract, actor_lr_contract):
+            for key in ("name", "experimental_role", "output_root"):
+                payload.pop(key)
+        actor_lr_overrides = dict(actor_lr_contract["config_overrides"])
+        self.assertEqual(actor_lr_overrides.pop("actor_lr"), 0.0001)
+        actor_lr_contract["config_overrides"] = actor_lr_overrides
+        self.assertEqual(actor_lr_contract, dense_contract)
+
+        actor_lr_manifest = (
+            "results/patient_indexed_specimen_routing_mac_mps_primary/"
+            "sensitivity/bounded_gain01/"
+            "gcn_dense_actorlr1e4_screen_training_mps/"
+            "patient_indexed_specimen_routing_mac_mps_"
+            "bounded_gain01_gcn_dense_actorlr1e4_screen/"
+            "training_manifest.json"
+        )
+        for variant in ("pretrain", "final"):
+            evaluation = json.loads(
+                (
+                    config_root
+                    / (
+                        "patient_indexed_specimen_routing_mac_mps_"
+                        "bounded_gain01_gcn_dense_actorlr1e4_screen_"
+                        f"{variant}_eval.json"
+                    )
+                ).read_text()
+            )
+            self.assertEqual(evaluation["training_manifest"], actor_lr_manifest)
+            self.assertEqual(evaluation["fixed_checkpoint_variant"], variant)
+            self.assertEqual(evaluation["validation_seed"], 8680000)
+            self.assertEqual(evaluation["holdout_seed"], 8690000)
+
+        group_gate = json.loads(
+            (
+                config_root
+                / "patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_actorlr1e4_groupgate_screen.json"
+            ).read_text()
+        )
+        actor_lr_contract = dict(actor_lr)
+        group_gate_contract = dict(group_gate)
+        for payload in (actor_lr_contract, group_gate_contract):
+            for key in ("name", "experimental_role", "output_root"):
+                payload.pop(key)
+        gated_residual = dict(
+            group_gate_contract["config_overrides"]["residual_action"]
+        )
+        gate = gated_residual.pop("correction_gate")
+        group_gate_contract["config_overrides"] = dict(
+            group_gate_contract["config_overrides"]
+        )
+        group_gate_contract["config_overrides"]["residual_action"] = (
+            gated_residual
+        )
+        self.assertEqual(group_gate_contract, actor_lr_contract)
+        self.assertTrue(gate["enabled"])
+        self.assertEqual(
+            gate["groups"],
+            [
+                "specimen_transfer",
+                "reagent_transfer",
+                "capacity_transfer",
+            ],
+        )
+        self.assertEqual(gate["threshold"], 0.5)
+        self.assertEqual(gate["target_delta"], 0.04)
+
+        phase_lr = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_screen.json"
+                )
+            ).read_text()
+        )
+        group_gate_contract = dict(group_gate)
+        phase_lr_contract = dict(phase_lr)
+        for payload in (group_gate_contract, phase_lr_contract):
+            for key in ("name", "experimental_role", "output_root"):
+                payload.pop(key)
+        group_gate_overrides = dict(
+            group_gate_contract["config_overrides"]
+        )
+        phase_lr_overrides = dict(
+            phase_lr_contract["config_overrides"]
+        )
+        self.assertEqual(group_gate_overrides.pop("actor_lr"), 0.0001)
+        self.assertEqual(phase_lr_overrides.pop("actor_lr"), 0.00001)
+        pretrain_optimizer = phase_lr_overrides.pop(
+            "advantage_distillation_pretrain"
+        )
+        self.assertEqual(pretrain_optimizer, {"actor_lr": 0.0001})
+        group_gate_contract["config_overrides"] = group_gate_overrides
+        phase_lr_contract["config_overrides"] = phase_lr_overrides
+        self.assertEqual(phase_lr_contract, group_gate_contract)
+
+        phase_lr_manifest = (
+            "results/patient_indexed_specimen_routing_mac_mps_primary/"
+            "sensitivity/bounded_gain01/"
+            "gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_"
+            "screen_training_mps/"
+            "patient_indexed_specimen_routing_mac_mps_bounded_gain01_"
+            "gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen/"
+            "training_manifest.json"
+        )
+        phase_lr_evaluations = []
+        for variant in ("pretrain", "final"):
+            evaluation = json.loads(
+                (
+                    config_root
+                    / (
+                        "patient_indexed_specimen_routing_mac_mps_"
+                        "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                        "onlinelr1e5_groupgate_screen_"
+                        f"{variant}_eval.json"
+                    )
+                ).read_text()
+            )
+            self.assertEqual(
+                evaluation["training_manifest"],
+                phase_lr_manifest,
+            )
+            self.assertEqual(
+                evaluation["fixed_checkpoint_variant"],
+                variant,
+            )
+            comparable = dict(evaluation)
+            for key in (
+                "name",
+                "experimental_role",
+                "checkpoint_variants",
+                "fixed_checkpoint_variant",
+                "output_root",
+            ):
+                comparable.pop(key)
+            phase_lr_evaluations.append(comparable)
+        self.assertEqual(*phase_lr_evaluations)
+
+        threshold_calibration = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_threshold_calibration_"
+                    "final_eval.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(
+            threshold_calibration["training_manifest"],
+            phase_lr_manifest,
+        )
+        self.assertEqual(
+            threshold_calibration["checkpoint_variants"],
+            ["final"],
+        )
+        self.assertNotIn(
+            "fixed_deployment_candidate",
+            threshold_calibration,
+        )
+        self.assertEqual(
+            [
+                candidate["group_thresholds"]
+                for candidate in threshold_calibration[
+                    "deployment_candidates"
+                ]
+            ],
+            [
+                [1.0, 1.0, 1.0],
+                [0.5, 0.5, 0.5],
+                [0.43, 0.15, 0.15],
+                [0.5, 0.2, 0.2],
+                [0.5, 0.15, 0.5],
+                [0.5, 0.5, 0.15],
+                [0.1, 0.1, 0.2],
+            ],
+        )
+        self.assertEqual(threshold_calibration["validation_seed"], 8710000)
+        self.assertEqual(threshold_calibration["holdout_seed"], 8720000)
+
+        broad_fixed = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_broad_fixed_final_eval.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(broad_fixed["training_manifest"], phase_lr_manifest)
+        self.assertEqual(
+            broad_fixed["fixed_deployment_candidate"]["group_thresholds"],
+            [0.1, 0.1, 0.2],
+        )
+        self.assertEqual(broad_fixed["fixed_checkpoint_variant"], "final")
+        self.assertEqual(broad_fixed["validation_seed"], 8730000)
+        self.assertEqual(broad_fixed["holdout_seed"], 8740000)
+
+        dagger_collection = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_groupgate_broad_dagger1.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(
+            dagger_collection["training_manifest"],
+            phase_lr_manifest,
+        )
+        self.assertEqual(
+            dagger_collection["selection_summary"],
+            threshold_calibration["output_root"] + "/summary.json",
+        )
+        self.assertEqual(
+            dagger_collection["base_teacher_cache"],
+            phase_lr["teacher_cache"],
+        )
+        self.assertEqual(dagger_collection["checkpoint_variant"], "final")
+        self.assertEqual(
+            dagger_collection["behavior_deployment_candidate"],
+            {
+                "scale": 1.0,
+                "group_thresholds": [0.1, 0.1, 0.2],
+                "endpoint_projection": {
+                    "enabled": False,
+                    "groups": [],
+                },
+            },
+        )
+        self.assertTrue(dagger_collection["filter_base_cache_causally"])
+        self.assertTrue(dagger_collection["include_base_cache"])
+        self.assertEqual(
+            dagger_collection["teacher_behavior_probability"],
+            0.0,
+        )
+        self.assertEqual(dagger_collection["rollouts_per_policy"], 1)
+
+        dagger_training = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_dagger1_screen.json"
+                )
+            ).read_text()
+        )
+        phase_lr_single_factor = json.loads(json.dumps(phase_lr))
+        dagger_single_factor = json.loads(json.dumps(dagger_training))
+        for payload in (phase_lr_single_factor, dagger_single_factor):
+            for key in ("name", "experimental_role", "output_root"):
+                payload.pop(key)
+        self.assertEqual(
+            phase_lr_single_factor.pop("teacher_cache"),
+            (
+                "results/patient_indexed_specimen_routing_mac_mps_primary/"
+                "teachers/bounded_gain01_screen/teacher_train.npz"
+            ),
+        )
+        self.assertEqual(
+            dagger_single_factor.pop("teacher_cache"),
+            (
+                "results/patient_indexed_specimen_routing_mac_mps_primary/"
+                "teachers/bounded_gain01_dagger1/teacher_train_dagger.npz"
+            ),
+        )
+        self.assertEqual(dagger_single_factor, phase_lr_single_factor)
+
+        dagger_manifest = (
+            "results/patient_indexed_specimen_routing_mac_mps_primary/"
+            "sensitivity/bounded_gain01/"
+            "gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_dagger1_"
+            "screen_training_mps/"
+            "patient_indexed_specimen_routing_mac_mps_bounded_gain01_"
+            "gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_dagger1_"
+            "screen/training_manifest.json"
+        )
+        dagger_evaluation = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_dagger1_broad_fixed_"
+                    "final_eval.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(
+            dagger_evaluation["training_manifest"],
+            dagger_manifest,
+        )
+        self.assertEqual(
+            dagger_evaluation["fixed_deployment_candidate"],
+            broad_fixed["fixed_deployment_candidate"],
+        )
+        self.assertEqual(dagger_evaluation["validation_seed"], 8760000)
+        self.assertEqual(dagger_evaluation["holdout_seed"], 8770000)
+        broad_protocol = json.loads(json.dumps(broad_fixed))
+        dagger_protocol = json.loads(json.dumps(dagger_evaluation))
+        for payload in (broad_protocol, dagger_protocol):
+            for key in (
+                "name",
+                "experimental_role",
+                "training_manifest",
+                "validation_seed",
+                "holdout_seed",
+                "output_root",
+            ):
+                payload.pop(key)
+        self.assertEqual(dagger_protocol, broad_protocol)
+
+        capacity_gate = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_dagger1_capacitygate05_"
+                    "fixed_final_eval.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(capacity_gate["training_manifest"], dagger_manifest)
+        self.assertEqual(
+            capacity_gate["fixed_deployment_candidate"]["group_thresholds"],
+            [0.1, 0.1, 0.5],
+        )
+        self.assertEqual(capacity_gate["validation_seed"], 8780000)
+        self.assertEqual(capacity_gate["holdout_seed"], 8790000)
+        broad_dagger_protocol = json.loads(json.dumps(dagger_evaluation))
+        capacity_protocol = json.loads(json.dumps(capacity_gate))
+        for payload in (broad_dagger_protocol, capacity_protocol):
+            for key in (
+                "name",
+                "experimental_role",
+                "deployment_candidates",
+                "fixed_deployment_candidate",
+                "validation_seed",
+                "holdout_seed",
+                "output_root",
+            ):
+                payload.pop(key)
+        self.assertEqual(capacity_protocol, broad_dagger_protocol)
+
+        reagent_gate = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_dagger1_reagentgate02_"
+                    "capacitygate05_fixed_final_eval.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(reagent_gate["training_manifest"], dagger_manifest)
+        self.assertEqual(
+            reagent_gate["fixed_deployment_candidate"]["group_thresholds"],
+            [0.1, 0.2, 0.5],
+        )
+        self.assertEqual(reagent_gate["validation_seed"], 8800000)
+        self.assertEqual(reagent_gate["holdout_seed"], 8810000)
+        capacity_single_factor = json.loads(json.dumps(capacity_gate))
+        reagent_single_factor = json.loads(json.dumps(reagent_gate))
+        for payload in (capacity_single_factor, reagent_single_factor):
+            for key in (
+                "name",
+                "experimental_role",
+                "deployment_candidates",
+                "fixed_deployment_candidate",
+                "validation_seed",
+                "holdout_seed",
+                "output_root",
+            ):
+                payload.pop(key)
+        self.assertEqual(reagent_single_factor, capacity_single_factor)
+
+        scale_075 = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "bounded_gain01_gcn_dense_pretrainlr1e4_"
+                    "onlinelr1e5_groupgate_dagger1_reagentgate02_"
+                    "capacitygate05_scale075_fixed_final_eval.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(scale_075["training_manifest"], dagger_manifest)
+        self.assertEqual(
+            scale_075["fixed_deployment_candidate"],
+            {
+                "scale": 0.75,
+                "group_thresholds": [0.1, 0.2, 0.5],
+                "endpoint_projection": {
+                    "enabled": False,
+                    "groups": [],
+                },
+            },
+        )
+        self.assertEqual(scale_075["validation_seed"], 8820000)
+        self.assertEqual(scale_075["holdout_seed"], 8830000)
+        reagent_scale_contract = json.loads(json.dumps(reagent_gate))
+        scale_contract = json.loads(json.dumps(scale_075))
+        for payload in (reagent_scale_contract, scale_contract):
+            for key in (
+                "name",
+                "experimental_role",
+                "deployment_candidates",
+                "fixed_deployment_candidate",
+                "validation_seed",
+                "holdout_seed",
+                "output_root",
+            ):
+                payload.pop(key)
+        self.assertEqual(scale_contract, reagent_scale_contract)
 
     def test_routing_primary_plan_and_optional_controls_are_explicit(self) -> None:
         plan = load_benchmark_plan(PLAN_PATH)

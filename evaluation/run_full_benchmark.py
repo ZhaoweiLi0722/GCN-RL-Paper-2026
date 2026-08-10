@@ -7,9 +7,10 @@ first, then ``pilot`` for stability checks, and only then ``full``.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import os
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Iterator
 
 import numpy as np
 
@@ -30,6 +31,34 @@ from src.rl.experiment import build_env, train_off_policy_agent, write_rows
 DEFAULT_PLAN = "experiments/configs/full_benchmark.json"
 PHASES = ("dry-run", "train", "evaluate", "aggregate", "plot", "all")
 LEARNED_EVALUATION_SEED_STRIDE = 10000
+
+
+@contextmanager
+def temporary_optimizer_learning_rate(
+    optimizer,
+    learning_rate: float | None,
+) -> Iterator[tuple[float, ...]]:
+    """Temporarily override every optimizer parameter-group learning rate."""
+
+    if learning_rate is None:
+        yield ()
+        return
+    value = float(learning_rate)
+    if not np.isfinite(value) or value <= 0.0:
+        raise ValueError("optimizer learning rate must be finite and positive")
+    if optimizer is None or not getattr(optimizer, "param_groups", None):
+        raise ValueError("actor_lr override requires an actor optimizer")
+    original = tuple(float(group["lr"]) for group in optimizer.param_groups)
+    for group in optimizer.param_groups:
+        group["lr"] = value
+    try:
+        yield original
+    finally:
+        for group, original_value in zip(
+            optimizer.param_groups,
+            original,
+        ):
+            group["lr"] = original_value
 
 
 def main() -> None:
@@ -562,101 +591,115 @@ def run_advantage_distillation_pretrain(
             config.get("residual_action", {}).get("base_policy", "mdl2"),
         )
     )
-    summary = run_local_search_distillation(
-        agent,
-        env,
-        seed=int(settings.get("seed", 98000))
-        + int(seed) * LEARNED_EVALUATION_SEED_STRIDE,
-        rollouts=int(settings.get("rollouts", 0)),
-        lookahead=int(settings.get("lookahead", 6)),
-        epsilons=tuple(float(value) for value in settings.get("epsilons", [0.005, 0.01])),
-        epochs=int(settings.get("epochs", 16)),
-        batch_size=int(settings.get("batch_size", config.get("batch_size", 64))),
-        max_steps=int(settings.get("max_steps", budget["max_steps_per_episode"])),
-        baseline_policy=baseline_policy,
-        min_improvement=float(settings.get("min_improvement", 0.0)),
-        anchor_keep_probability=float(settings.get("anchor_keep_probability", 1.0)),
-        anchor_keep_weight=float(settings.get("anchor_keep_weight", 1.0)),
-        anchor_keep_on_improved=bool(settings.get("anchor_keep_on_improved", False)),
-        balance_label_weights=bool(settings.get("balance_label_weights", True)),
-        retain_for_regularization=bool(settings.get("retain_for_regularization", True)),
-        min_service_level_delta=(
-            float(settings["min_service_level_delta"])
-            if settings.get("min_service_level_delta") is not None
-            else None
-        ),
-        min_completion_service_level_delta=optional_float(
-            settings,
-            "min_completion_service_level_delta",
-        ),
-        max_patients_lost_delta=optional_float(settings, "max_patients_lost_delta"),
-        max_patient_ineligibility_during_manufacturing_rate_delta=optional_float(
-            settings,
-            "max_patient_ineligibility_during_manufacturing_rate_delta",
-        ),
-        service_level_weight=float(settings.get("service_level_weight", 0.0)),
-        completion_service_level_weight=float(
-            settings.get("completion_service_level_weight", 0.0)
-        ),
-        eligibility_rate_weight=float(settings.get("eligibility_rate_weight", 0.0)),
-        patient_ineligibility_during_manufacturing_rate_weight=float(
-            settings.get(
-                "patient_ineligibility_during_manufacturing_rate_weight",
-                0.0,
-            )
-        ),
-        at_risk_unserved_weight=float(settings.get("at_risk_unserved_weight", 0.0)),
-        patients_lost_weight=float(settings.get("patients_lost_weight", 0.0)),
-        candidate_groups=local_search_candidate_groups(settings),
-        candidate_signs=local_search_candidate_signs(settings),
-        demonstration_path=settings.get("demonstration_path"),
-        validation_demonstration_path=settings.get(
-            "validation_demonstration_path"
-        ),
-        populate_replay_buffer=bool(settings.get("populate_replay_buffer", False)),
-        lookahead_replications=int(settings.get("lookahead_replications", 1)),
-        lookahead_seed=(
-            int(settings["lookahead_seed"])
-            if settings.get("lookahead_seed") is not None
-            else None
-        ),
-        dense_advantage_weight_scale=(
-            float(settings["dense_advantage_weight_scale"])
-            if settings.get("dense_advantage_weight_scale") is not None
-            else None
-        ),
-        dense_advantage_weight_cap=float(
-            settings.get("dense_advantage_weight_cap", 10.0)
-        ),
-        trajectory_validation_fraction=float(
-            settings.get("trajectory_validation_fraction", 0.0)
-        ),
-        trajectory_validation_min_per_scenario=int(
-            settings.get(
-                "trajectory_validation_min_per_scenario",
-                1,
-            )
-        ),
-        early_stopping_patience=int(
-            settings.get("early_stopping_patience", 0)
-        ),
-        early_stopping_check_interval=int(
-            settings.get("early_stopping_check_interval", 1)
-        ),
-        early_stopping_min_delta=float(
-            settings.get("early_stopping_min_delta", 0.0)
-        ),
-        early_stopping_gate_loss_weight=float(
-            settings.get(
-                "early_stopping_gate_loss_weight",
-                1.0,
-            )
-        ),
+    actor_lr = (
+        float(settings["actor_lr"])
+        if settings.get("actor_lr") is not None
+        else None
     )
+    with temporary_optimizer_learning_rate(
+        getattr(agent, "actor_optimizer", None),
+        actor_lr,
+    ) as online_actor_lrs:
+        summary = run_local_search_distillation(
+            agent,
+            env,
+            seed=int(settings.get("seed", 98000))
+            + int(seed) * LEARNED_EVALUATION_SEED_STRIDE,
+            rollouts=int(settings.get("rollouts", 0)),
+            lookahead=int(settings.get("lookahead", 6)),
+            epsilons=tuple(float(value) for value in settings.get("epsilons", [0.005, 0.01])),
+            epochs=int(settings.get("epochs", 16)),
+            batch_size=int(settings.get("batch_size", config.get("batch_size", 64))),
+            max_steps=int(settings.get("max_steps", budget["max_steps_per_episode"])),
+            baseline_policy=baseline_policy,
+            min_improvement=float(settings.get("min_improvement", 0.0)),
+            anchor_keep_probability=float(settings.get("anchor_keep_probability", 1.0)),
+            anchor_keep_weight=float(settings.get("anchor_keep_weight", 1.0)),
+            anchor_keep_on_improved=bool(settings.get("anchor_keep_on_improved", False)),
+            balance_label_weights=bool(settings.get("balance_label_weights", True)),
+            retain_for_regularization=bool(settings.get("retain_for_regularization", True)),
+            min_service_level_delta=(
+                float(settings["min_service_level_delta"])
+                if settings.get("min_service_level_delta") is not None
+                else None
+            ),
+            min_completion_service_level_delta=optional_float(
+                settings,
+                "min_completion_service_level_delta",
+            ),
+            max_patients_lost_delta=optional_float(settings, "max_patients_lost_delta"),
+            max_patient_ineligibility_during_manufacturing_rate_delta=optional_float(
+                settings,
+                "max_patient_ineligibility_during_manufacturing_rate_delta",
+            ),
+            service_level_weight=float(settings.get("service_level_weight", 0.0)),
+            completion_service_level_weight=float(
+                settings.get("completion_service_level_weight", 0.0)
+            ),
+            eligibility_rate_weight=float(settings.get("eligibility_rate_weight", 0.0)),
+            patient_ineligibility_during_manufacturing_rate_weight=float(
+                settings.get(
+                    "patient_ineligibility_during_manufacturing_rate_weight",
+                    0.0,
+                )
+            ),
+            at_risk_unserved_weight=float(settings.get("at_risk_unserved_weight", 0.0)),
+            patients_lost_weight=float(settings.get("patients_lost_weight", 0.0)),
+            candidate_groups=local_search_candidate_groups(settings),
+            candidate_signs=local_search_candidate_signs(settings),
+            demonstration_path=settings.get("demonstration_path"),
+            validation_demonstration_path=settings.get(
+                "validation_demonstration_path"
+            ),
+            populate_replay_buffer=bool(settings.get("populate_replay_buffer", False)),
+            lookahead_replications=int(settings.get("lookahead_replications", 1)),
+            lookahead_seed=(
+                int(settings["lookahead_seed"])
+                if settings.get("lookahead_seed") is not None
+                else None
+            ),
+            dense_advantage_weight_scale=(
+                float(settings["dense_advantage_weight_scale"])
+                if settings.get("dense_advantage_weight_scale") is not None
+                else None
+            ),
+            dense_advantage_weight_cap=float(
+                settings.get("dense_advantage_weight_cap", 10.0)
+            ),
+            trajectory_validation_fraction=float(
+                settings.get("trajectory_validation_fraction", 0.0)
+            ),
+            trajectory_validation_min_per_scenario=int(
+                settings.get(
+                    "trajectory_validation_min_per_scenario",
+                    1,
+                )
+            ),
+            early_stopping_patience=int(
+                settings.get("early_stopping_patience", 0)
+            ),
+            early_stopping_check_interval=int(
+                settings.get("early_stopping_check_interval", 1)
+            ),
+            early_stopping_min_delta=float(
+                settings.get("early_stopping_min_delta", 0.0)
+            ),
+            early_stopping_gate_loss_weight=float(
+                settings.get(
+                    "early_stopping_gate_loss_weight",
+                    1.0,
+                )
+            ),
+        )
     renamed = {
         key.replace("local_search_", "advantage_distillation_", 1): value
         for key, value in summary.items()
     }
+    if actor_lr is not None:
+        renamed["advantage_distillation_actor_lr"] = actor_lr
+        renamed["advantage_distillation_online_actor_lrs"] = "|".join(
+            f"{value:.12g}" for value in online_actor_lrs
+        )
     print(
         "advantage_distillation "
         f"algorithm={algorithm} samples={renamed.get('advantage_distillation_samples', 0)} "

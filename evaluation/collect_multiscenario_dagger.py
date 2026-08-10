@@ -81,9 +81,15 @@ def collect_multiscenario_dagger(
         raise ValueError("At least one behavior-policy seed is required")
     checkpoint_variant = str(
         run_config.get("checkpoint_variant", "pretrain")
-    )
-    if checkpoint_variant not in ("pretrain", "final"):
-        raise ValueError("checkpoint_variant must be pretrain or final")
+    ).strip()
+    if not checkpoint_variant:
+        raise ValueError("checkpoint_variant cannot be empty")
+    behavior_checkpoints = {
+        int(seed): Path(path)
+        for seed, path in dict(
+            run_config.get("behavior_checkpoints", {})
+        ).items()
+    }
 
     scenario_entries = tuple(run_config.get("scenarios", ()))
     if len(scenario_entries) < 2:
@@ -115,9 +121,14 @@ def collect_multiscenario_dagger(
         (str(run["algorithm"]), int(run["seed"])): run
         for run in training_manifest["runs"]
     }
+    behavior_deployment_candidate = run_config.get(
+        "behavior_deployment_candidate"
+    )
     deployments = selected_deployments(
         selection_summary,
         algorithm=algorithm,
+        behavior_candidate=behavior_deployment_candidate,
+        checkpoint_variant=checkpoint_variant,
     )
     teacher_configs = {
         str(name): Path(path)
@@ -193,12 +204,12 @@ def collect_multiscenario_dagger(
                 f"Selection summary is missing {algorithm} seed {training_seed}"
             )
         run = runs_by_key[run_key]
-        checkpoint_key = (
-            "pretrain_checkpoint"
-            if checkpoint_variant == "pretrain"
-            else "checkpoint"
+        checkpoint = resolve_behavior_checkpoint(
+            run,
+            training_seed=training_seed,
+            checkpoint_variant=checkpoint_variant,
+            behavior_checkpoints=behavior_checkpoints,
         )
-        checkpoint = Path(run[checkpoint_key])
         if not checkpoint.is_file():
             raise FileNotFoundError(checkpoint)
         config_snapshot = load_config(run["config"])
@@ -406,6 +417,22 @@ def collect_multiscenario_dagger(
         "algorithm": algorithm,
         "training_seeds": list(training_seeds),
         "checkpoint_variant": checkpoint_variant,
+        "behavior_checkpoints": {
+            str(seed): str(path)
+            for seed, path in sorted(behavior_checkpoints.items())
+        },
+        "behavior_deployment_source": (
+            "validation_candidate_override"
+            if behavior_deployment_candidate is not None
+            else "validation_selected"
+        ),
+        "behavior_deployment_candidate": (
+            normalized_deployment_candidate(
+                dict(behavior_deployment_candidate)
+            )
+            if behavior_deployment_candidate is not None
+            else None
+        ),
         "scenario_names": list(scenario_names),
         "detection_delay": detection_delay,
         "teacher_behavior_probability": teacher_behavior_probability,
@@ -434,19 +461,82 @@ def collect_multiscenario_dagger(
     return result
 
 
+def resolve_behavior_checkpoint(
+    run: dict[str, Any],
+    *,
+    training_seed: int,
+    checkpoint_variant: str,
+    behavior_checkpoints: dict[int, Path] | None = None,
+) -> Path:
+    """Resolve a provenance-explicit checkpoint for DAgger collection."""
+
+    overrides = behavior_checkpoints or {}
+    if int(training_seed) in overrides:
+        return Path(overrides[int(training_seed)])
+    if checkpoint_variant == "pretrain":
+        return Path(run["pretrain_checkpoint"])
+    if checkpoint_variant == "final":
+        return Path(run["checkpoint"])
+    variants = dict(run.get("checkpoint_variants", {}))
+    if checkpoint_variant in variants:
+        return Path(variants[checkpoint_variant])
+    raise ValueError(
+        f"Checkpoint variant {checkpoint_variant!r} requires an explicit "
+        f"behavior_checkpoints entry for training seed {int(training_seed)}"
+    )
+
+
 def selected_deployments(
     summary: dict[str, Any],
     *,
     algorithm: str,
+    behavior_candidate: dict[str, Any] | None = None,
+    checkpoint_variant: str | None = None,
 ) -> dict[int, dict[str, Any]]:
+    normalized_behavior = (
+        normalized_deployment_candidate(dict(behavior_candidate))
+        if behavior_candidate is not None
+        else None
+    )
     deployments: dict[int, dict[str, Any]] = {}
     for run in summary.get("runs", ()):
         if str(run["algorithm"]) != str(algorithm):
+            continue
+        if normalized_behavior is not None:
+            matching = [
+                result
+                for result in run.get("validation", ())
+                if normalized_deployment_candidate(
+                    dict(result["candidate"])
+                )
+                == normalized_behavior
+                and (
+                    checkpoint_variant is None
+                    or str(result.get("checkpoint_variant", "final"))
+                    == str(checkpoint_variant)
+                )
+            ]
+            if len(matching) != 1:
+                raise ValueError(
+                    "DAgger behavior override must match exactly one "
+                    "validation candidate for the requested checkpoint"
+                )
+            deployments[int(run["training_seed"])] = dict(
+                normalized_behavior
+            )
             continue
         selected = run["selected_deployment"]
         if str(selected.get("selection_source")) != "validation_only":
             raise ValueError(
                 "DAgger behavior deployments must be selected on validation only"
+            )
+        if (
+            checkpoint_variant is not None
+            and str(selected.get("checkpoint_variant", "final"))
+            != str(checkpoint_variant)
+        ):
+            raise ValueError(
+                "DAgger checkpoint variant must match validation selection"
             )
         deployments[int(run["training_seed"])] = (
             normalized_deployment_candidate(selected["candidate"])

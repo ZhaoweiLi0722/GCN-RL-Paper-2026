@@ -1,3 +1,4 @@
+from pathlib import Path
 import unittest
 
 import numpy as np
@@ -6,6 +7,7 @@ from evaluation.collect_multiscenario_dagger import (
     causally_filter_base_cache,
     causal_query_start_step,
     require_cache_provenance,
+    resolve_behavior_checkpoint,
     selected_deployments,
 )
 
@@ -80,6 +82,74 @@ class MultiScenarioDaggerTest(unittest.TestCase):
         ] = "holdout"
         with self.assertRaisesRegex(ValueError, "validation only"):
             selected_deployments(summary, algorithm="gcn")
+
+    def test_behavior_override_must_match_validation_candidate(self) -> None:
+        broad = {
+            "scale": 1.0,
+            "group_thresholds": [0.1, 0.1, 0.2],
+        }
+        summary = {
+            "runs": [
+                {
+                    "algorithm": "gcn",
+                    "training_seed": 0,
+                    "selected_deployment": {
+                        "selection_source": "validation_only",
+                        "checkpoint_variant": "final",
+                        "candidate": {
+                            "scale": 0.0,
+                            "group_thresholds": [1.0, 1.0, 1.0],
+                        },
+                    },
+                    "validation": [
+                        {
+                            "checkpoint_variant": "final",
+                            "candidate": broad,
+                        }
+                    ],
+                }
+            ]
+        }
+
+        deployments = selected_deployments(
+            summary,
+            algorithm="gcn",
+            behavior_candidate=broad,
+            checkpoint_variant="final",
+        )
+        self.assertEqual(deployments[0], broad)
+
+        with self.assertRaisesRegex(ValueError, "exactly one"):
+            selected_deployments(
+                summary,
+                algorithm="gcn",
+                behavior_candidate={
+                    "scale": 1.0,
+                    "group_thresholds": [0.2, 0.2, 0.2],
+                },
+                checkpoint_variant="final",
+            )
+
+    def test_behavior_checkpoint_supports_explicit_episode_boundary(self) -> None:
+        run = {
+            "checkpoint": "final.pt",
+            "pretrain_checkpoint": "pretrain.pt",
+        }
+        self.assertEqual(
+            resolve_behavior_checkpoint(
+                run,
+                training_seed=0,
+                checkpoint_variant="episode4",
+                behavior_checkpoints={0: "episode4.pt"},
+            ),
+            Path("episode4.pt"),
+        )
+        with self.assertRaisesRegex(ValueError, "explicit"):
+            resolve_behavior_checkpoint(
+                run,
+                training_seed=0,
+                checkpoint_variant="episode4",
+            )
 
     def test_base_cache_requires_complete_provenance(self) -> None:
         cache = {

@@ -1,0 +1,92 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_specimenonly_ddpg_sharedpreonline_criticupd2_actorfreq4_balancedcycle8",
+  "experimental_role": "prespecified single-treatment DDPG critic-learning screen forked from the immutable seed-0 episode-0 state; doubles critic updates per environment step from 1 to 2 while changing actor_update_frequency from 2 to 4 so the actor remains at approximately 26 updates per episode; teacher, model, replay, RNG, losses, exploration sigma, routing mechanics, and TD3 exclusion remain fixed",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "budget": "routing_smoke",
+  "reference_scenario": "routing_nominal_history",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "teacher_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_dagger1/teacher_train_dagger.npz",
+  "demand_history_window": 12,
+  "online_episodes": 8,
+  "pretrain_epochs": 300,
+  "offline_updates": 500,
+  "seeds": [0],
+  "config_overrides": {
+    "device": "mps",
+    "batch_size": 64,
+    "actor_lr": 0.00001,
+    "actor_update_frequency": 4,
+    "critic_warmup_updates": 500,
+    "checkpoint_interval": 4,
+    "training_state_checkpoint_interval": 4,
+    "progress_interval": 4,
+    "update_frequency": 1,
+    "updates_per_update": 2,
+    "preonline_fork_allowed_overrides": [
+      "actor_update_frequency",
+      "critic_teacher_advantage_calibration",
+      "imitation_pretrain.regularization_weight",
+      "pretrain_reference_actor_loss.weight",
+      "residual_action.correction_gate.align_online_policy",
+      "updates_per_update"
+    ],
+    "critic_teacher_advantage_calibration": {
+      "enabled": true,
+      "updates": 100,
+      "target_scale": 1.0,
+      "ranking_weight": 10.0,
+      "online_ranking_weight": 3.0
+    },
+    "pretrain_reference_actor_loss": {
+      "enabled": true,
+      "weight": 500.0
+    },
+    "imitation_pretrain": {
+      "regularization_weight": 1.0
+    },
+    "advantage_distillation_pretrain": {
+      "actor_lr": 0.0001
+    },
+    "residual_action": {
+      "scale": 0.1,
+      "group_scales": {
+        "specimen_transfer": 0.1,
+        "reagent_transfer": 0.0,
+        "capacity_transfer": 0.0,
+        "replenishment": 0.0
+      },
+      "endpoint_projection": {
+        "enabled": false
+      },
+      "correction_gate": {
+        "enabled": true,
+        "mode": "classification",
+        "groups": ["specimen_transfer"],
+        "threshold": 0.5,
+        "target_delta": 0.04,
+        "lr": 0.0003,
+        "loss_weight": 1.0,
+        "include_proposed_residual_features": true,
+        "proposed_residual_feature_mode": "clipped_action_delta",
+        "align_online_policy": true
+      }
+    },
+    "train_randomization": {
+      "enabled": true,
+      "forecast_error_range": [0.0, 0.2],
+      "demand_rate_multiplier_range": [0.9, 1.1]
+    }
+  },
+  "algorithms": [
+    {
+      "name": "gcn_residual_mdl2_network_ddpg_afd",
+      "seeds": [0]
+    }
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/specimenonly_ddpg_sharedpreonline_criticupd2_actorfreq4_balancedcycle8_training_mps"
+}

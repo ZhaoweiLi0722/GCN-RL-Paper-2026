@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
+
+import numpy as np
 
 from evaluation.run_full_benchmark import (
     advantage_distillation_settings,
@@ -14,6 +17,10 @@ from evaluation.run_full_benchmark import (
     resolve_budget,
     run_advantage_distillation_pretrain,
     select_scenarios,
+)
+from evaluation.run_gcn_residual_sweep import (
+    balance_demonstration_label_weights,
+    load_local_search_demonstrations,
 )
 from evaluation.train_network_residual_history_screen import (
     make_history_screen_config,
@@ -27,6 +34,23 @@ from src.rl.experiment import (
     train_offline_replay_updates,
     write_rows,
 )
+
+
+def verify_file_sha256(path: Path, expected_sha256: str | None = None) -> str:
+    """Return a file digest and reject a mismatched optional lock."""
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    actual_sha256 = digest.hexdigest()
+    if expected_sha256 is not None:
+        expected = str(expected_sha256).strip().lower()
+        if actual_sha256 != expected:
+            raise ValueError(
+                "File SHA256 mismatch for "
+                f"{path}: expected {expected}, got {actual_sha256}"
+            )
+    return actual_sha256
 
 
 def main() -> None:
@@ -99,6 +123,13 @@ def train_multiscenario_agents(
     teacher_cache = Path(run_config["teacher_cache"])
     if not teacher_cache.is_file():
         raise FileNotFoundError(teacher_cache)
+    expected_teacher_sha256 = run_config.get("teacher_cache_sha256")
+    teacher_cache_sha256 = verify_file_sha256(
+        teacher_cache,
+        None
+        if expected_teacher_sha256 is None
+        else str(expected_teacher_sha256),
+    )
     demand_history_window = int(
         run_config.get("demand_history_window", 12)
     )
@@ -188,6 +219,8 @@ def train_multiscenario_agents(
         "offline_updates": offline_updates,
         "runs": results,
     }
+    if expected_teacher_sha256 is not None:
+        payload["teacher_cache_sha256"] = teacher_cache_sha256
     manifest_path = run_root / "training_manifest.json"
     if manifest_path.is_file():
         existing = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -369,13 +402,43 @@ def train_one_multiscenario_agent(
         env.action_size,
         config,
     )
+    critic_calibration = dict(
+        config.get("critic_teacher_advantage_calibration", {})
+    )
+    critic_calibration_setup_summary: dict[str, Any] = {}
+    if bool(critic_calibration.get("enabled", False)):
+        critic_teacher_cache = Path(
+            critic_calibration.get("demonstration_path", teacher_cache)
+        )
+        if not critic_teacher_cache.is_file():
+            raise FileNotFoundError(critic_teacher_cache)
+        configure_calibration = getattr(
+            agent,
+            "configure_critic_teacher_advantage_calibration",
+            None,
+        )
+        if not callable(configure_calibration):
+            raise ValueError(
+                f"{algorithm} does not support teacher-advantage critic "
+                "calibration"
+            )
+        critic_calibration_setup_summary.update(
+            configure_calibration(
+                load_local_search_demonstrations(critic_teacher_cache)
+            )
+        )
+        critic_calibration_setup_summary[
+            "critic_teacher_advantage_demonstration_path"
+        ] = str(critic_teacher_cache)
     initial_checkpoint = maybe_load_initial_checkpoint(agent, config)
     settings = advantage_distillation_settings(
         config,
         budget,
         algorithm,
     )
-    pretrain_report: dict[str, Any] = {}
+    pretrain_report: dict[str, Any] = dict(
+        critic_calibration_setup_summary
+    )
 
     def post_imitation_pretrain(current_agent, current_env):
         summary = run_advantage_distillation_pretrain(
@@ -386,6 +449,16 @@ def train_one_multiscenario_agent(
             env=current_env,
             config=config,
             budget=budget,
+        )
+        capture_reference = getattr(
+            current_agent,
+            "capture_pretrain_reference_policy",
+            None,
+        )
+        summary["pretrain_reference_actor_captured"] = bool(
+            capture_reference()
+            if callable(capture_reference)
+            else False
         )
         summary.update(
             train_offline_replay_updates(
@@ -402,11 +475,18 @@ def train_one_multiscenario_agent(
         pretrain_report.update(summary)
         return summary
 
+    def preonline_setup(current_agent, _current_env):
+        return configure_online_imitation_regularization(
+            current_agent,
+            config,
+        )
+
     training_rows = train_off_policy_agent(
         agent,
         env,
         config,
         post_imitation_pretrain=post_imitation_pretrain,
+        preonline_setup=preonline_setup,
         pretrain_report_out=pretrain_report,
     )
     if not final_checkpoint.is_file():
@@ -430,6 +510,11 @@ def train_one_multiscenario_agent(
             checkpoint_dir
             / f"{algorithm}_seed{int(seed)}_pretrain.pt"
         ),
+        "preonline_training_state": (
+            None
+            if config.get("preonline_training_state_path") in (None, "")
+            else str(config["preonline_training_state_path"])
+        ),
         "initial_checkpoint": initial_checkpoint,
         "resumed_training_state": (
             None
@@ -452,6 +537,109 @@ def train_one_multiscenario_agent(
     summary_path.write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
+    )
+    return summary
+
+
+def configure_online_imitation_regularization(
+    agent: Any,
+    config: dict[str, Any],
+) -> dict[str, Any]:
+    """Load a dedicated online imitation batch without fitting the actor."""
+
+    settings = dict(config.get("online_imitation_regularization", {}))
+    if not bool(settings.get("enabled", False)):
+        return {}
+    regularization_weight = float(
+        config.get("imitation_pretrain", {}).get(
+            "regularization_weight",
+            0.0,
+        )
+    )
+    if regularization_weight <= 0.0:
+        raise ValueError(
+            "online_imitation_regularization requires a positive "
+            "imitation_pretrain.regularization_weight"
+        )
+    raw_path = settings.get("demonstration_path")
+    if raw_path in (None, ""):
+        raise ValueError(
+            "online_imitation_regularization.demonstration_path is required"
+        )
+    demonstration_path = Path(str(raw_path))
+    if not demonstration_path.is_file():
+        raise FileNotFoundError(demonstration_path)
+    demonstrations = load_local_search_demonstrations(
+        demonstration_path
+    )
+    balance_weights = bool(
+        settings.get("balance_label_weights", False)
+    )
+    if balance_weights:
+        demonstrations = balance_demonstration_label_weights(
+            demonstrations
+        )
+    configure = getattr(
+        agent,
+        "configure_online_imitation_regularization",
+        None,
+    )
+    if not callable(configure):
+        raise ValueError(
+            f"{getattr(agent, 'algorithm', type(agent).__name__)} does not "
+            "support online imitation regularization"
+        )
+    seed = int(
+        settings.get("seed", int(config.get("seed", 0)) + 1_500_000)
+    )
+    setup = dict(
+        configure(
+            demonstrations["states"],
+            demonstrations["actions"],
+            weights=demonstrations.get("weights"),
+            seed=seed,
+        )
+    )
+    weights = np.asarray(
+        demonstrations.get("weights", ()),
+        dtype=np.float64,
+    )
+    summary = {
+        "online_imitation_regularization_enabled": True,
+        "online_imitation_regularization_weight": regularization_weight,
+        "online_imitation_demonstration_path": str(demonstration_path),
+        "online_imitation_demonstration_sha256": hashlib.sha256(
+            demonstration_path.read_bytes()
+        ).hexdigest(),
+        "online_imitation_balance_label_weights": balance_weights,
+        "online_imitation_samples": int(setup["samples"]),
+        "online_imitation_weighted": bool(setup["weighted"]),
+        "online_imitation_seed": int(setup["seed"]),
+        "online_imitation_improved_steps": int(
+            demonstrations.get("improved_steps", 0)
+        ),
+        "online_imitation_anchor_keep_steps": int(
+            demonstrations.get("anchor_keep_steps", 0)
+        ),
+        "online_imitation_improved_weight_fraction": float(
+            demonstrations.get("improved_weight_fraction", 0.0)
+        ),
+        "online_imitation_weight_mean": (
+            float(weights.mean()) if weights.size else ""
+        ),
+        "online_imitation_weight_min": (
+            float(weights.min()) if weights.size else ""
+        ),
+        "online_imitation_weight_max": (
+            float(weights.max()) if weights.size else ""
+        ),
+    }
+    print(
+        "online_imitation_regularization "
+        f"samples={summary['online_imitation_samples']} "
+        f"improved_steps={summary['online_imitation_improved_steps']} "
+        f"path={demonstration_path}",
+        flush=True,
     )
     return summary
 

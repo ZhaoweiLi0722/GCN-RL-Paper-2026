@@ -1,0 +1,39 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_groupgate_broad_dagger1",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen/training_manifest.json",
+  "selection_summary": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_threshold_calibration_final_evaluation/summary.json",
+  "base_teacher_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_screen/teacher_train.npz",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "training_seeds": [0],
+  "checkpoint_variant": "final",
+  "behavior_deployment_candidate": {
+    "scale": 1.0,
+    "group_thresholds": [0.1, 0.1, 0.2],
+    "endpoint_projection": {
+      "enabled": false,
+      "groups": []
+    }
+  },
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "teacher_configs": {
+    "routing_nominal_history": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_nominal_history/scenario_config.json",
+    "routing_abrupt_regime_shift": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_abrupt_regime_shift/scenario_config.json",
+    "routing_regional_drift": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_regional_drift/scenario_config.json",
+    "routing_compound_regional_stress": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_compound_regional_stress/scenario_config.json"
+  },
+  "rollouts_per_policy": 1,
+  "max_steps": 52,
+  "collection_seed": 8750000,
+  "detection_delay": 4,
+  "filter_base_cache_causally": true,
+  "teacher_behavior_probability": 0.0,
+  "include_base_cache": true,
+  "balance_scenarios": true,
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_dagger1"
+}

@@ -1,0 +1,46 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_specimenonly_ddpg_supportalignedcritic_validation950_eval",
+  "experimental_role": "development validation for the support-aligned critic-calibration DDPG screen; evaluates the exact episode-0 fork at fixed deployment scale 1 and gate 0.575 on CRN 9500000, with checkpoint selection limited to pretrain, episode 4, and episode 8; TD3 is out of scope",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/specimenonly_ddpg_sharedpreonline_quantizedspecimenste_supportalignedcritic_balancedcycle8_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_specimenonly_ddpg_sharedpreonline_quantizedspecimenste_supportalignedcritic_balancedcycle8/training_manifest.json",
+  "algorithms": ["gcn_residual_mdl2_network_ddpg_afd"],
+  "training_seeds": [0],
+  "checkpoint_variants": ["pretrain", "episode4", "episode8"],
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "deployment_candidates": [
+    {
+      "scale": 0.0,
+      "group_thresholds": [1.0]
+    },
+    {
+      "scale": 1.0,
+      "group_thresholds": [0.575],
+      "endpoint_projection": {"enabled": false, "groups": []}
+    }
+  ],
+  "validation_replications": 25,
+  "validation_seed": 9500000,
+  "holdout_replications": 1,
+  "holdout_seed": 9509000,
+  "max_steps": 52,
+  "strict_scenario_clinical_noninferiority": false,
+  "selection_guardrails": {
+    "max_cost_difference_ci_high": 0.0,
+    "min_paired_win_rate": 0.5
+  },
+  "clinical_noninferiority": {
+    "mode": "paired_ci",
+    "z_value": 1.96,
+    "margins": {
+      "completion_service_level": 0.001,
+      "patients_lost": 1.0,
+      "patient_ineligibility_during_manufacturing_rate": 0.001
+    }
+  },
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/specimenonly_ddpg_supportalignedcritic_screen/candidate_supportalignedcritic_validation950_evaluation"
+}

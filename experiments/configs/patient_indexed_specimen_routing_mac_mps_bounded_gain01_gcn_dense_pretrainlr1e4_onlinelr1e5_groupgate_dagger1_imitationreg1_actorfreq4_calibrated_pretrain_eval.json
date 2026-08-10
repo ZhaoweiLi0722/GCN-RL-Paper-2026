@@ -1,0 +1,24 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_dagger1_imitationreg1_actorfreq4_calibrated_pretrain_eval",
+  "experimental_role": "paired DDPG frozen-pretrain evaluation for the actor-update-frequency screen; development CRN only",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_dagger1_imitationreg1_actorfreq4_screen_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_dagger1_imitationreg1_actorfreq4_screen/training_manifest.json",
+  "algorithms": ["gcn_residual_mdl2_network_ddpg_afd"],
+  "training_seeds": [0],
+  "checkpoint_variants": ["pretrain"],
+  "scenarios": ["routing_nominal_history", "routing_abrupt_regime_shift", "routing_regional_drift", "routing_compound_regional_stress"],
+  "deployment_candidates": [
+    {"scale": 0.0, "group_thresholds": [1.0, 1.0, 1.0]},
+    {"scale": 1.0, "group_thresholds": [0.55, 0.2, 0.5], "endpoint_projection": {"enabled": false, "groups": []}}
+  ],
+  "fixed_deployment_candidate": {"scale": 1.0, "group_thresholds": [0.55, 0.2, 0.5], "endpoint_projection": {"enabled": false, "groups": []}},
+  "fixed_checkpoint_variant": "pretrain",
+  "validation_replications": 5,
+  "validation_seed": 8840000,
+  "holdout_replications": 20,
+  "holdout_seed": 8850000,
+  "max_steps": 52,
+  "strict_scenario_clinical_noninferiority": true,
+  "clinical_noninferiority": {"mode": "paired_ci", "z_value": 1.96, "margins": {"completion_service_level": 0.001, "patients_lost": 1.0, "patient_ineligibility_during_manufacturing_rate": 0.001}},
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_dagger1_imitationreg1_actorfreq4_calibrated_pretrain_evaluation"
+}

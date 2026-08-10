@@ -54,6 +54,7 @@ from evaluation.run_full_benchmark import (
     select_anchor_fallback_policy,
     select_residual_deployment_candidate,
     select_scenarios,
+    temporary_optimizer_learning_rate,
     training_csv_path,
     training_outputs_complete,
 )
@@ -64,6 +65,39 @@ from src.rl.experiment import build_env
 
 
 class FullBenchmarkRunnerTests(unittest.TestCase):
+    def test_temporary_optimizer_learning_rate_restores_all_groups(self) -> None:
+        optimizer = SimpleNamespace(
+            param_groups=[{"lr": 1e-5}, {"lr": 2e-5}],
+        )
+
+        with temporary_optimizer_learning_rate(optimizer, 1e-4) as original:
+            self.assertEqual(original, (1e-5, 2e-5))
+            self.assertEqual(
+                [group["lr"] for group in optimizer.param_groups],
+                [1e-4, 1e-4],
+            )
+
+        self.assertEqual(
+            [group["lr"] for group in optimizer.param_groups],
+            [1e-5, 2e-5],
+        )
+
+    def test_temporary_optimizer_learning_rate_restores_after_error(self) -> None:
+        optimizer = SimpleNamespace(param_groups=[{"lr": 1e-5}])
+
+        with self.assertRaisesRegex(RuntimeError, "pretrain failed"):
+            with temporary_optimizer_learning_rate(optimizer, 1e-4):
+                raise RuntimeError("pretrain failed")
+
+        self.assertEqual(optimizer.param_groups[0]["lr"], 1e-5)
+
+    def test_temporary_optimizer_learning_rate_rejects_invalid_value(self) -> None:
+        optimizer = SimpleNamespace(param_groups=[{"lr": 1e-5}])
+
+        with self.assertRaisesRegex(ValueError, "finite and positive"):
+            with temporary_optimizer_learning_rate(optimizer, 0.0):
+                pass
+
     def test_teacher_advantage_weights_are_bounded_without_erasing_anchors(self) -> None:
         demos = {
             "weights": np.asarray([1.0, 500000.0, 5000000.0], dtype=np.float32),

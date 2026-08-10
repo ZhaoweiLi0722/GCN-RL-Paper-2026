@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import copy
+from collections import deque
 from pathlib import Path
 from typing import Any
 
@@ -14,7 +16,15 @@ from src.models.temporal import (
     TemporalFlatCorrectionGate,
     TemporalFlatCritic,
 )
-from src.rl.action_projection import project_action, project_tensor_to_pattern_basis
+from src.rl.action_projection import (
+    project_action,
+    project_tensor_to_pattern_basis,
+    quantize_facility_net_specimen_actions_tensor,
+)
+from src.rl.critic_advantage import (
+    teacher_advantage_loss,
+    teacher_advantage_support_mask,
+)
 from src.rl.networks import (
     MLPActor,
     MLPCorrectionGate,
@@ -61,14 +71,119 @@ class FlatDDPGAgent:
             int(config.get("critic_warmup_updates", 0)),
             0,
         )
+        online_actor_lr = config.get("online_actor_lr")
+        self.online_actor_lr = (
+            None
+            if online_actor_lr in (None, "")
+            else float(online_actor_lr)
+        )
+        if self.online_actor_lr is not None and (
+            not np.isfinite(self.online_actor_lr)
+            or self.online_actor_lr <= 0.0
+        ):
+            raise ValueError(
+                "online_actor_lr must be finite and positive"
+            )
+        online_critic_lr = config.get("online_critic_lr")
+        self.online_critic_lr = (
+            None
+            if online_critic_lr in (None, "")
+            else float(online_critic_lr)
+        )
+        if self.online_critic_lr is not None and (
+            not np.isfinite(self.online_critic_lr)
+            or self.online_critic_lr <= 0.0
+        ):
+            raise ValueError(
+                "online_critic_lr must be finite and positive"
+            )
         self.total_updates = 0
         self.reward_scale = reward_scale_from_config(config)
         self.observation_scaler = FixedObservationScaler.from_config(config, state_dim)
         residual_config = dict(config.get("residual_action", {}))
         self.residual_action_enabled = bool(residual_config.get("enabled", False))
+        self.online_reward_mode = str(
+            residual_config.get("online_reward_mode", "environment")
+        )
+        if self.online_reward_mode not in {
+            "environment",
+            "one_step_anchor_relative",
+            "n_step_anchor_relative",
+        }:
+            raise ValueError(
+                "residual_action.online_reward_mode must be 'environment', "
+                "'one_step_anchor_relative', or 'n_step_anchor_relative'"
+            )
+        if (
+            self.online_reward_mode
+            in {"one_step_anchor_relative", "n_step_anchor_relative"}
+            and not self.residual_action_enabled
+        ):
+            raise ValueError(
+                "anchor-relative reward requires residual_action.enabled"
+            )
+        self.online_reward_n_step_horizon = int(
+            residual_config.get("online_reward_n_step_horizon", 1)
+        )
+        if (
+            self.online_reward_mode == "n_step_anchor_relative"
+            and self.online_reward_n_step_horizon < 2
+        ):
+            raise ValueError(
+                "residual_action.online_reward_n_step_horizon must be at least 2"
+            )
+        self._n_step_reward_queue: deque[
+            tuple[np.ndarray, np.ndarray, float, np.ndarray, bool]
+        ] = deque()
+        self.anchor_relative_reward_sum = 0.0
+        self.anchor_relative_reward_abs_sum = 0.0
+        self.anchor_relative_reward_positive_count = 0
+        self.anchor_relative_reward_count = 0
         self.include_base_action_features = bool(
             residual_config.get("include_base_action_features", False)
         )
+        quantization_config = dict(
+            config.get("specimen_action_quantization", {})
+        )
+        self.specimen_action_quantization_enabled = bool(
+            quantization_config.get("enabled", False)
+        )
+        self.specimen_action_quantization_actor_gradient = str(
+            quantization_config.get("actor_gradient", "straight_through")
+        )
+        self.specimen_action_quantization_max_transfer = float(
+            self.env_config.get("max_specimen_transfer", 0.0)
+        )
+        if self.specimen_action_quantization_enabled:
+            facilities = int(self.env_config.get("num_facilities", 0))
+            if self.env_config.get("action_mode") != "facility_net":
+                raise ValueError(
+                    "specimen_action_quantization requires "
+                    "env.action_mode='facility_net'"
+                )
+            if facilities <= 0 or self.action_dim < facilities:
+                raise ValueError(
+                    "specimen_action_quantization requires specimen facility "
+                    "actions"
+                )
+            if (
+                not np.isfinite(
+                    self.specimen_action_quantization_max_transfer
+                )
+                or self.specimen_action_quantization_max_transfer <= 0.0
+            ):
+                raise ValueError(
+                    "specimen_action_quantization requires a finite positive "
+                    "env.max_specimen_transfer"
+                )
+            if (
+                self.specimen_action_quantization_actor_gradient
+                != "straight_through"
+            ):
+                raise ValueError(
+                    "specimen_action_quantization.actor_gradient must be "
+                    "'straight_through'"
+                )
         self.residual_scale = float(residual_config.get("scale", 0.25))
         self.residual_scale_vector = self._make_residual_scale_vector(residual_config)
         self.residual_center_slices = self._make_residual_center_slices(residual_config)
@@ -176,6 +291,18 @@ class FlatDDPGAgent:
                 False,
             )
         )
+        self.correction_gate_align_online_policy = bool(
+            correction_gate_config.get(
+                "align_online_policy",
+                False,
+            )
+        )
+        self.correction_gate_hard_actor_policy = bool(
+            correction_gate_config.get(
+                "hard_actor_policy",
+                False,
+            )
+        )
         self.correction_gate_threshold = float(
             correction_gate_config.get("threshold", 0.5)
         )
@@ -193,6 +320,22 @@ class FlatDDPGAgent:
         ):
             raise ValueError(
                 "classification correction-gate threshold must lie in [0, 1]"
+            )
+        if (
+            self.correction_gate_align_online_policy
+            and not self.correction_gate_enabled
+        ):
+            raise ValueError(
+                "correction_gate.align_online_policy requires an enabled "
+                "correction gate"
+            )
+        if (
+            self.correction_gate_hard_actor_policy
+            and not self.correction_gate_align_online_policy
+        ):
+            raise ValueError(
+                "correction_gate.hard_actor_policy requires "
+                "correction_gate.align_online_policy"
             )
         self.correction_gate_advantage_scale = max(
             float(correction_gate_config.get("advantage_scale", 1_000_000.0)),
@@ -327,6 +470,208 @@ class FlatDDPGAgent:
         self.imitation_actions = None
         self.imitation_weights = None
         self.imitation_rng = np.random.default_rng(seed + 300000)
+        reference_config = dict(
+            config.get("pretrain_reference_actor_loss", {})
+        )
+        self.pretrain_reference_actor_loss_enabled = bool(
+            reference_config.get("enabled", False)
+        )
+        self.pretrain_reference_actor_loss_weight = float(
+            reference_config.get("weight", 0.0)
+        )
+        self.pretrain_reference_actor_loss_action_space = str(
+            reference_config.get("action_space", "network")
+        )
+        self.pretrain_reference_actor_loss_mode = str(
+            reference_config.get("mode", "uniform")
+        )
+        self.pretrain_reference_actor_loss_q_filter_margin = float(
+            reference_config.get("q_filter_margin", 0.0)
+        )
+        if self.pretrain_reference_actor_loss_weight < 0.0:
+            raise ValueError(
+                "pretrain_reference_actor_loss.weight cannot be negative"
+            )
+        if self.pretrain_reference_actor_loss_action_space not in (
+            "network",
+            "executed_specimen_lots",
+        ):
+            raise ValueError(
+                "pretrain_reference_actor_loss.action_space must be "
+                "'network' or 'executed_specimen_lots'"
+            )
+        if self.pretrain_reference_actor_loss_mode not in (
+            "uniform",
+            "critic_q_filter",
+        ):
+            raise ValueError(
+                "pretrain_reference_actor_loss.mode must be 'uniform' or "
+                "'critic_q_filter'"
+            )
+        if not np.isfinite(
+            self.pretrain_reference_actor_loss_q_filter_margin
+        ):
+            raise ValueError(
+                "pretrain_reference_actor_loss.q_filter_margin must be finite"
+            )
+        if (
+            self.pretrain_reference_actor_loss_action_space
+            == "executed_specimen_lots"
+            and not self.specimen_action_quantization_enabled
+        ):
+            raise ValueError(
+                "executed_specimen_lots reference loss requires "
+                "specimen_action_quantization"
+            )
+        self_imitation_config = dict(
+            config.get("online_advantage_self_imitation", {})
+        )
+        self.online_advantage_self_imitation_enabled = bool(
+            self_imitation_config.get("enabled", False)
+        )
+        self.online_advantage_self_imitation_weight = float(
+            self_imitation_config.get("weight", 0.0)
+        )
+        self.online_advantage_self_imitation_release_reference = bool(
+            self_imitation_config.get("release_pretrain_reference", True)
+        )
+        self.online_advantage_self_imitation_require_positive_one_step = bool(
+            self_imitation_config.get(
+                "require_positive_one_step_return",
+                False,
+            )
+        )
+        self.online_advantage_self_imitation_minimum_return = float(
+            self_imitation_config.get("minimum_return", 0.0)
+        )
+        if (
+            not np.isfinite(self.online_advantage_self_imitation_weight)
+            or self.online_advantage_self_imitation_weight < 0.0
+        ):
+            raise ValueError(
+                "online_advantage_self_imitation.weight must be finite and "
+                "nonnegative"
+            )
+        if (
+            not np.isfinite(
+                self.online_advantage_self_imitation_minimum_return
+            )
+            or self.online_advantage_self_imitation_minimum_return < 0.0
+        ):
+            raise ValueError(
+                "online_advantage_self_imitation.minimum_return must be "
+                "finite and nonnegative"
+            )
+        if (
+            self.online_advantage_self_imitation_enabled
+            and self.online_advantage_self_imitation_weight <= 0.0
+        ):
+            raise ValueError(
+                "enabled online_advantage_self_imitation requires a positive "
+                "weight"
+            )
+        if (
+            self.online_advantage_self_imitation_enabled
+            and self.online_reward_mode != "n_step_anchor_relative"
+        ):
+            raise ValueError(
+                "online_advantage_self_imitation requires "
+                "residual_action.online_reward_mode='n_step_anchor_relative'"
+            )
+        if (
+            self.online_advantage_self_imitation_enabled
+            and (
+                self.env_config.get("action_mode") != "facility_net"
+                or self.action_dim
+                != 4 * int(self.env_config.get("num_facilities", 0))
+            )
+        ):
+            raise ValueError(
+                "online_advantage_self_imitation requires a facility-net "
+                "action layout"
+            )
+        critic_calibration_config = dict(
+            config.get("critic_teacher_advantage_calibration", {})
+        )
+        self.critic_teacher_advantage_calibration_enabled = bool(
+            critic_calibration_config.get("enabled", False)
+        )
+        self.critic_teacher_advantage_calibration_updates = int(
+            critic_calibration_config.get("updates", 0)
+        )
+        self.critic_teacher_advantage_target_scale = float(
+            critic_calibration_config.get("target_scale", 1.0)
+        )
+        self.critic_teacher_advantage_ranking_weight = float(
+            critic_calibration_config.get("ranking_weight", 1.0)
+        )
+        self.critic_teacher_advantage_online_ranking_weight = float(
+            critic_calibration_config.get("online_ranking_weight", 0.0)
+        )
+        self.critic_teacher_advantage_positive_margin = float(
+            critic_calibration_config.get("positive_margin", 0.0)
+        )
+        self.critic_teacher_advantage_positive_margin_weight = float(
+            critic_calibration_config.get("positive_margin_weight", 0.0)
+        )
+        self.critic_teacher_advantage_pairwise_difference_weight = float(
+            critic_calibration_config.get(
+                "pairwise_difference_weight",
+                0.0,
+            )
+        )
+        self.critic_teacher_advantage_allowed_option_groups = tuple(
+            str(group)
+            for group in critic_calibration_config.get(
+                "allowed_option_groups",
+                (),
+            )
+        )
+        if self.critic_teacher_advantage_calibration_updates < 0:
+            raise ValueError(
+                "critic_teacher_advantage_calibration.updates cannot be negative"
+            )
+        if self.critic_teacher_advantage_target_scale < 0.0:
+            raise ValueError(
+                "critic_teacher_advantage_calibration.target_scale cannot be negative"
+            )
+        if self.critic_teacher_advantage_ranking_weight < 0.0:
+            raise ValueError(
+                "critic_teacher_advantage_calibration.ranking_weight cannot be negative"
+            )
+        if self.critic_teacher_advantage_online_ranking_weight < 0.0:
+            raise ValueError(
+                "critic_teacher_advantage_calibration.online_ranking_weight "
+                "cannot be negative"
+            )
+        if self.critic_teacher_advantage_positive_margin < 0.0:
+            raise ValueError(
+                "critic_teacher_advantage_calibration.positive_margin "
+                "cannot be negative"
+            )
+        if self.critic_teacher_advantage_positive_margin_weight < 0.0:
+            raise ValueError(
+                "critic_teacher_advantage_calibration.positive_margin_weight "
+                "cannot be negative"
+            )
+        if self.critic_teacher_advantage_pairwise_difference_weight < 0.0:
+            raise ValueError(
+                "critic_teacher_advantage_calibration."
+                "pairwise_difference_weight cannot be negative"
+            )
+        if (
+            self.critic_teacher_advantage_online_ranking_weight > 0.0
+            and not self.critic_teacher_advantage_calibration_enabled
+        ):
+            raise ValueError(
+                "Online teacher-advantage ranking requires critic calibration"
+            )
+        self.critic_teacher_advantage_states = None
+        self.critic_teacher_advantage_actions = None
+        self.critic_teacher_advantage_targets = None
+        self.critic_teacher_advantage_rng = np.random.default_rng(
+            seed + 650000
+        )
         advantage_config = dict(config.get("anchor_advantage_actor_loss", {}))
         self.anchor_advantage_actor_loss_enabled = bool(
             advantage_config.get("enabled", False)
@@ -448,6 +793,13 @@ class FlatDDPGAgent:
             self._zero_initialize_actor_output(self.actor)
         self.actor_target.load_state_dict(self.actor.state_dict())
         self.critic_target.load_state_dict(self.critic.state_dict())
+        self.pretrain_reference_actor = (
+            copy.deepcopy(self.actor).to(self.device)
+            if self.pretrain_reference_actor_loss_enabled
+            else None
+        )
+        if self.pretrain_reference_actor is not None:
+            self.capture_pretrain_reference_policy()
 
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=float(config.get("actor_lr", 1e-4)))
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=float(config.get("critic_lr", 1e-3)))
@@ -478,6 +830,17 @@ class FlatDDPGAgent:
         else:
             self.correction_gate = None
             self.correction_gate_optimizer = None
+        online_replay_fraction = config.get("online_replay_fraction")
+        self.online_replay_fraction = (
+            None
+            if online_replay_fraction is None
+            else float(online_replay_fraction)
+        )
+        if (
+            self.online_replay_fraction is not None
+            and not 0.0 <= self.online_replay_fraction <= 1.0
+        ):
+            raise ValueError("online_replay_fraction must be in [0, 1]")
         self.replay_buffer = ReplayBuffer(
             state_dim=state_dim,
             action_dim=action_dim,
@@ -493,6 +856,7 @@ class FlatDDPGAgent:
         )
 
     def reset(self) -> None:
+        self.finalize_training_episode()
         self.noise.reset()
         self.residual_temporal_guard.reset()
         self.last_residual_action = np.zeros(
@@ -518,9 +882,116 @@ class FlatDDPGAgent:
             apply_correction_gate=(
                 not explore
                 or self.correction_gate_during_exploration
+                or self.correction_gate_align_online_policy
             ),
         )
         return project_action(action, env_state=env, action_space_info=self.action_dim).action
+
+    def capture_training_reward_context(
+        self,
+        state: np.ndarray,
+        action: np.ndarray,
+        env,
+    ) -> dict[str, Any]:
+        """Snapshot an exact-CRN one-step MDL-2 counterfactual."""
+
+        del action
+        if self.online_reward_mode == "environment":
+            return {}
+        anchor_action = project_action(
+            self._base_action_from_state_np(state),
+            env_state=env,
+            action_space_info=self.action_dim,
+        ).action
+        return {
+            "anchor_env": copy.deepcopy(env),
+            "anchor_action": np.asarray(anchor_action, dtype=np.float32).copy(),
+        }
+
+    def transform_training_reward(
+        self,
+        state: np.ndarray,
+        action: np.ndarray,
+        reward: float,
+        next_state: np.ndarray,
+        done: bool,
+        info: dict[str, Any],
+        context: dict[str, Any] | None,
+    ) -> float:
+        """Return the immediate reward advantage over MDL-2 under exact CRN."""
+
+        if self.online_reward_mode == "environment":
+            return float(reward)
+        del state, action, next_state, done, info
+        if context is None:
+            raise ValueError("Anchor-relative reward context is required")
+        anchor_env = context["anchor_env"]
+        anchor_action = np.asarray(context["anchor_action"], dtype=np.float32)
+        _anchor_state, anchor_reward, _anchor_done, _anchor_info = anchor_env.step(
+            anchor_action
+        )
+        relative_reward = float(reward) - float(anchor_reward)
+        self.anchor_relative_reward_sum += relative_reward
+        self.anchor_relative_reward_abs_sum += abs(relative_reward)
+        self.anchor_relative_reward_positive_count += int(relative_reward > 0.0)
+        self.anchor_relative_reward_count += 1
+        return relative_reward
+
+    def _anchor_relative_reward_metrics(self) -> dict[str, float]:
+        if self.online_reward_mode == "environment":
+            return {}
+        count = self.anchor_relative_reward_count
+        denominator = max(count, 1)
+        metrics = {
+            "anchor_relative_reward_mean": (
+                self.anchor_relative_reward_sum / denominator
+            ),
+            "anchor_relative_reward_mean_abs": (
+                self.anchor_relative_reward_abs_sum / denominator
+            ),
+            "anchor_relative_reward_positive_rate": (
+                self.anchor_relative_reward_positive_count / denominator
+            ),
+            "anchor_relative_reward_count": float(count),
+        }
+        if self.online_reward_mode == "n_step_anchor_relative":
+            metrics["anchor_relative_reward_n_step_horizon"] = float(
+                self.online_reward_n_step_horizon
+            )
+        return metrics
+
+    def _emit_n_step_reward_transition(self) -> None:
+        horizon = min(
+            len(self._n_step_reward_queue),
+            self.online_reward_n_step_horizon,
+        )
+        if horizon < 1:
+            return
+        transitions = list(self._n_step_reward_queue)[:horizon]
+        discounted_reward = sum(
+            (self.gamma**offset) * transition[2]
+            for offset, transition in enumerate(transitions)
+        )
+        state, action, _reward, _next_state, _done = transitions[0]
+        _last_state, _last_action, _last_reward, next_state, done = transitions[-1]
+        self.replay_buffer.add(
+            state,
+            action,
+            float(discounted_reward) * self.reward_scale,
+            next_state,
+            done,
+            discount_multiplier=self.gamma ** (horizon - 1),
+            one_step_reward=float(transitions[0][2]) * self.reward_scale,
+        )
+        self._n_step_reward_queue.popleft()
+
+    def finalize_training_episode(self) -> None:
+        """Flush short n-step tails without crossing an episode boundary."""
+
+        if self.online_reward_mode != "n_step_anchor_relative":
+            return
+        while self._n_step_reward_queue:
+            self._emit_n_step_reward_transition()
 
     def observe(
         self,
@@ -530,19 +1001,579 @@ class FlatDDPGAgent:
         next_state: np.ndarray,
         done: bool,
     ) -> None:
-        self.replay_buffer.add(state, action, float(reward) * self.reward_scale, next_state, done)
+        if self.online_reward_mode != "n_step_anchor_relative":
+            self.replay_buffer.add(
+                state,
+                action,
+                float(reward) * self.reward_scale,
+                next_state,
+                done,
+            )
+            return
+        self._n_step_reward_queue.append(
+            (
+                np.asarray(state, dtype=np.float32).copy(),
+                np.asarray(action, dtype=np.float32).copy(),
+                float(reward),
+                np.asarray(next_state, dtype=np.float32).copy(),
+                bool(done),
+            )
+        )
+        if len(self._n_step_reward_queue) >= self.online_reward_n_step_horizon:
+            self._emit_n_step_reward_transition()
+        if done:
+            self.finalize_training_episode()
+
+    def capture_pretrain_reference_policy(self) -> bool:
+        """Freeze the current actor as the online fine-tuning reference."""
+
+        if self.pretrain_reference_actor is None:
+            return False
+        self.pretrain_reference_actor.load_state_dict(
+            self.actor.state_dict()
+        )
+        self.pretrain_reference_actor.eval()
+        for parameter in self.pretrain_reference_actor.parameters():
+            parameter.requires_grad_(False)
+        return True
+
+    def configure_critic_teacher_advantage_calibration(
+        self,
+        demonstrations: dict[str, Any],
+    ) -> dict[str, float | str]:
+        """Load frozen teacher pairs used to calibrate critic ranking."""
+
+        if not self.critic_teacher_advantage_calibration_enabled:
+            return {"critic_teacher_advantage_samples": 0.0}
+        required = (
+            "states",
+            "actions",
+            "option_advantages",
+            "option_feasible",
+        )
+        if self.critic_teacher_advantage_allowed_option_groups:
+            required += ("option_groups",)
+        missing = [key for key in required if key not in demonstrations]
+        if missing:
+            raise ValueError(
+                "Teacher advantage calibration is missing: "
+                + ", ".join(missing)
+            )
+        states = np.asarray(demonstrations["states"], dtype=np.float32)
+        actions = np.asarray(demonstrations["actions"], dtype=np.float32)
+        advantages = np.asarray(
+            demonstrations["option_advantages"],
+            dtype=np.float32,
+        )
+        feasible = np.asarray(
+            demonstrations["option_feasible"],
+            dtype=bool,
+        )
+        source_sample_count = int(states.shape[0])
+        if states.ndim != 2 or states.shape[1] != self.state_dim:
+            raise ValueError("Teacher calibration states do not match the agent")
+        if actions.shape != (states.shape[0], self.action_dim):
+            raise ValueError("Teacher calibration actions do not match the agent")
+        if advantages.ndim != 2 or feasible.shape != advantages.shape:
+            raise ValueError("Teacher option advantages and feasibility must align")
+        if advantages.shape[0] != states.shape[0]:
+            raise ValueError("Teacher option advantages must align with states")
+        if not np.all(np.isfinite(advantages)):
+            raise ValueError("Teacher option advantages must be finite")
+        if np.any(~np.any(feasible, axis=1)):
+            raise ValueError("Every teacher state requires a feasible option")
+        if self.critic_teacher_advantage_allowed_option_groups:
+            supported = teacher_advantage_support_mask(
+                advantages,
+                feasible,
+                demonstrations["option_groups"],
+                allowed_option_groups=(
+                    self.critic_teacher_advantage_allowed_option_groups
+                ),
+            )
+            if not np.any(supported):
+                raise ValueError(
+                    "Teacher advantage calibration has no policy-supported rows"
+                )
+            states = states[supported]
+            actions = actions[supported]
+            advantages = advantages[supported]
+            feasible = feasible[supported]
+        best_advantages = np.max(
+            np.where(feasible, advantages, -np.inf),
+            axis=1,
+        )
+        targets = (
+            np.maximum(best_advantages, 0.0)
+            * self.reward_scale
+            * self.critic_teacher_advantage_target_scale
+        ).astype(np.float32)
+        self.critic_teacher_advantage_states = torch.as_tensor(
+            states,
+            dtype=torch.float32,
+            device=self.device,
+        )
+        self.critic_teacher_advantage_actions = torch.as_tensor(
+            actions,
+            dtype=torch.float32,
+            device=self.device,
+        )
+        self.critic_teacher_advantage_targets = torch.as_tensor(
+            targets,
+            dtype=torch.float32,
+            device=self.device,
+        ).reshape(-1, 1)
+        self.critic_teacher_advantage_rng = np.random.default_rng(
+            self.seed + 650000
+        )
+        return {
+            "critic_teacher_advantage_samples": float(states.shape[0]),
+            "critic_teacher_advantage_source_samples": float(
+                source_sample_count
+            ),
+            "critic_teacher_advantage_excluded_samples": float(
+                source_sample_count - states.shape[0]
+            ),
+            "critic_teacher_advantage_allowed_option_groups": "|".join(
+                self.critic_teacher_advantage_allowed_option_groups
+            ),
+            "critic_teacher_advantage_target_mean": float(targets.mean()),
+            "critic_teacher_advantage_target_positive_fraction": float(
+                np.mean(targets > 0.0)
+            ),
+        }
+
+    def _critic_actions_tensor(
+        self,
+        actions,
+        *,
+        straight_through: bool = False,
+    ):
+        if not self.specimen_action_quantization_enabled:
+            return actions
+        return quantize_facility_net_specimen_actions_tensor(
+            actions,
+            num_facilities=int(self.env_config["num_facilities"]),
+            max_specimen_transfer=(
+                self.specimen_action_quantization_max_transfer
+            ),
+            straight_through=straight_through,
+        )
+
+    def _critic_teacher_advantage_predictions(self, indices=None):
+        raw_states = self.critic_teacher_advantage_states
+        actions = self.critic_teacher_advantage_actions
+        if indices is not None:
+            raw_states = raw_states[indices]
+            actions = actions[indices]
+        critic_states = (
+            raw_states
+            if self.temporal_demand_encoder_enabled
+            else self.observation_scaler.normalize_tensor(raw_states)
+        )
+        anchor_actions = self._base_actions_from_states_tensor(raw_states)
+        actions = self._critic_actions_tensor(actions)
+        anchor_actions = self._critic_actions_tensor(anchor_actions)
+        return (
+            self.critic(critic_states, actions)
+            - self.critic(critic_states, anchor_actions)
+        )
+
+    def _critic_replay_bellman_loss(self, indices=None):
+        size = len(self.replay_buffer)
+        if size < 1:
+            raise ValueError("Critic calibration requires replay transitions")
+        if indices is None:
+            indices = np.arange(size)
+        raw_states = torch.as_tensor(
+            self.replay_buffer.states[indices],
+            dtype=torch.float32,
+            device=self.device,
+        )
+        actions = torch.as_tensor(
+            self.replay_buffer.actions[indices],
+            dtype=torch.float32,
+            device=self.device,
+        )
+        rewards = torch.as_tensor(
+            self.replay_buffer.rewards[indices],
+            dtype=torch.float32,
+            device=self.device,
+        )
+        raw_next_states = torch.as_tensor(
+            self.replay_buffer.next_states[indices],
+            dtype=torch.float32,
+            device=self.device,
+        )
+        dones = torch.as_tensor(
+            self.replay_buffer.dones[indices],
+            dtype=torch.float32,
+            device=self.device,
+        )
+        states = (
+            raw_states
+            if self.temporal_demand_encoder_enabled
+            else self.observation_scaler.normalize_tensor(raw_states)
+        )
+        next_states = (
+            raw_next_states
+            if self.temporal_demand_encoder_enabled
+            else self.observation_scaler.normalize_tensor(raw_next_states)
+        )
+        next_actor_inputs = self._actor_input_tensor(
+            raw_next_states,
+            normalized_states=next_states,
+        )
+        with torch.no_grad():
+            next_network_actions = self.actor_target(next_actor_inputs)
+            next_actions = self._compose_actions_tensor(
+                raw_next_states,
+                next_network_actions,
+                apply_correction_gate=(
+                    self.correction_gate_align_online_policy
+                ),
+                hard_correction_gate=True,
+            )
+            next_actions = self._critic_actions_tensor(next_actions)
+            targets = rewards + self.gamma * (1.0 - dones) * self.critic_target(
+                next_states,
+                next_actions,
+            )
+        return torch.nn.functional.mse_loss(
+            self.critic(
+                states,
+                self._critic_actions_tensor(actions),
+            ),
+            targets,
+        )
+
+    def _sample_critic_teacher_advantage_loss(self):
+        targets = self.critic_teacher_advantage_targets
+        if targets is None:
+            raise ValueError(
+                "Online teacher-advantage ranking is enabled but not configured"
+            )
+        sample_count = int(targets.shape[0])
+        batch_size = min(max(self.batch_size, 1), sample_count)
+        indices = self.critic_teacher_advantage_rng.choice(
+            sample_count,
+            size=batch_size,
+            replace=False,
+        )
+        index_tensor = torch.as_tensor(
+            indices,
+            dtype=torch.long,
+            device=self.device,
+        )
+        predicted = self._critic_teacher_advantage_predictions(
+            index_tensor
+        )
+        loss, _, _, _ = teacher_advantage_loss(
+            predicted,
+            targets[index_tensor],
+            positive_margin=self.critic_teacher_advantage_positive_margin,
+            positive_margin_weight=(
+                self.critic_teacher_advantage_positive_margin_weight
+            ),
+            pairwise_difference_weight=(
+                self.critic_teacher_advantage_pairwise_difference_weight
+            ),
+        )
+        return loss
+
+    def _calibrate_critic_teacher_advantage(self) -> dict[str, float]:
+        if self.critic_teacher_advantage_states is None:
+            raise ValueError(
+                "Teacher advantage calibration is enabled but not configured"
+            )
+        targets = self.critic_teacher_advantage_targets
+        sample_count = int(targets.shape[0])
+        batch_size = min(max(self.batch_size, 1), sample_count)
+        self.critic.train()
+        with torch.no_grad():
+            before = self._critic_teacher_advantage_predictions()
+            before_mse = torch.nn.functional.mse_loss(
+                before,
+                targets,
+            )
+            bellman_before = self._critic_replay_bellman_loss()
+        final_loss = before_mse
+        final_ranking_loss = before_mse
+        final_margin_loss = before_mse * 0.0
+        final_pairwise_loss = before_mse * 0.0
+        final_bellman_loss = bellman_before
+        replay_size = len(self.replay_buffer)
+        replay_batch_size = min(max(self.batch_size, 1), replay_size)
+        for _update in range(
+            self.critic_teacher_advantage_calibration_updates
+        ):
+            indices = self.critic_teacher_advantage_rng.choice(
+                sample_count,
+                size=batch_size,
+                replace=False,
+            )
+            index_tensor = torch.as_tensor(
+                indices,
+                dtype=torch.long,
+                device=self.device,
+            )
+            predicted = self._critic_teacher_advantage_predictions(
+                index_tensor
+            )
+            loss, _, margin_loss, pairwise_loss = teacher_advantage_loss(
+                predicted,
+                targets[index_tensor],
+                positive_margin=(
+                    self.critic_teacher_advantage_positive_margin
+                ),
+                positive_margin_weight=(
+                    self.critic_teacher_advantage_positive_margin_weight
+                ),
+                pairwise_difference_weight=(
+                    self.critic_teacher_advantage_pairwise_difference_weight
+                ),
+            )
+            replay_indices = self.critic_teacher_advantage_rng.choice(
+                replay_size,
+                size=replay_batch_size,
+                replace=False,
+            )
+            bellman_loss = self._critic_replay_bellman_loss(
+                replay_indices
+            )
+            combined_loss = (
+                bellman_loss
+                + self.critic_teacher_advantage_ranking_weight * loss
+            )
+            self.critic_optimizer.zero_grad()
+            combined_loss.backward()
+            torch.nn.utils.clip_grad_norm_(
+                self.critic.parameters(),
+                max_norm=5.0,
+            )
+            self.critic_optimizer.step()
+            final_loss = combined_loss.detach()
+            final_ranking_loss = loss.detach()
+            final_margin_loss = margin_loss.detach()
+            final_pairwise_loss = pairwise_loss.detach()
+            final_bellman_loss = bellman_loss.detach()
+        self.critic.eval()
+        with torch.no_grad():
+            after = self._critic_teacher_advantage_predictions()
+            after_mse = torch.nn.functional.mse_loss(after, targets)
+            bellman_after = self._critic_replay_bellman_loss()
+        return {
+            "critic_teacher_advantage_calibration_updates": float(
+                self.critic_teacher_advantage_calibration_updates
+            ),
+            "critic_teacher_advantage_calibration_loss_final": float(
+                final_loss.item()
+            ),
+            "critic_teacher_advantage_ranking_loss_final": float(
+                final_ranking_loss.item()
+            ),
+            "critic_teacher_advantage_bellman_loss_final": float(
+                final_bellman_loss.item()
+            ),
+            "critic_teacher_advantage_ranking_weight": float(
+                self.critic_teacher_advantage_ranking_weight
+            ),
+            "critic_teacher_advantage_positive_margin": float(
+                self.critic_teacher_advantage_positive_margin
+            ),
+            "critic_teacher_advantage_positive_margin_weight": float(
+                self.critic_teacher_advantage_positive_margin_weight
+            ),
+            "critic_teacher_advantage_positive_margin_loss_final": float(
+                final_margin_loss.item()
+            ),
+            "critic_teacher_advantage_pairwise_difference_weight": float(
+                self.critic_teacher_advantage_pairwise_difference_weight
+            ),
+            "critic_teacher_advantage_pairwise_difference_loss_final": float(
+                final_pairwise_loss.item()
+            ),
+            "critic_teacher_advantage_mse_before": float(
+                before_mse.item()
+            ),
+            "critic_teacher_advantage_mse_after": float(
+                after_mse.item()
+            ),
+            "critic_teacher_advantage_bellman_mse_before": float(
+                bellman_before.item()
+            ),
+            "critic_teacher_advantage_bellman_mse_after": float(
+                bellman_after.item()
+            ),
+            "critic_teacher_advantage_prediction_mean_before": float(
+                before.mean().item()
+            ),
+            "critic_teacher_advantage_prediction_mean_after": float(
+                after.mean().item()
+            ),
+            "critic_teacher_advantage_target_mean": float(
+                targets.mean().item()
+            ),
+            "critic_teacher_advantage_positive_fraction_after": float(
+                (after > 0.0).to(dtype=torch.float32).mean().item()
+            ),
+        }
+
+    def prepare_online_finetuning(
+        self,
+        *,
+        start_episode: int = 0,
+    ) -> dict[str, float | str]:
+        """Apply optimizer settings that begin only at online interaction."""
+
+        summary: dict[str, float | str] = {}
+        if (
+            self.online_replay_fraction is not None
+            or self.online_advantage_self_imitation_enabled
+        ):
+            if int(start_episode) == 0:
+                self.replay_buffer.begin_online_collection()
+            elif not self.replay_buffer.collecting_online:
+                raise ValueError(
+                    "Resumed online replay state lacks source labels"
+                )
+        if self.online_replay_fraction is not None:
+            summary["online_replay_fraction"] = float(
+                self.online_replay_fraction
+            )
+        if self.online_advantage_self_imitation_enabled:
+            summary["online_advantage_self_imitation"] = (
+                "positive_full_horizon_anchor_return|specimen_behavior_action"
+            )
+            summary["online_advantage_self_imitation_weight"] = float(
+                self.online_advantage_self_imitation_weight
+            )
+            summary["online_advantage_self_imitation_release_reference"] = (
+                str(
+                    self.online_advantage_self_imitation_release_reference
+                ).lower()
+            )
+            summary[
+                "online_advantage_self_imitation_require_positive_one_step_return"
+            ] = str(
+                self.online_advantage_self_imitation_require_positive_one_step
+            ).lower()
+            summary[
+                "online_advantage_self_imitation_minimum_return"
+            ] = float(
+                self.online_advantage_self_imitation_minimum_return
+            )
+        if self.correction_gate_align_online_policy:
+            summary["online_correction_gate_alignment"] = (
+                "hard_behavior_target|hard_actor"
+                if self.correction_gate_hard_actor_policy
+                else "hard_behavior_target|soft_actor"
+            )
+        if self.specimen_action_quantization_enabled:
+            summary["online_specimen_action_quantization"] = (
+                "critic_integer_patient_lots|actor_straight_through"
+            )
+        if self.pretrain_reference_actor is not None:
+            summary["online_pretrain_reference_action_space"] = (
+                self.pretrain_reference_actor_loss_action_space
+            )
+            summary["online_pretrain_reference_loss_mode"] = (
+                self.pretrain_reference_actor_loss_mode
+            )
+        if (
+            self.critic_teacher_advantage_calibration_enabled
+            and int(start_episode) == 0
+        ):
+            summary.update(self._calibrate_critic_teacher_advantage())
+        if self.online_critic_lr is not None:
+            offline_lrs = tuple(
+                float(group["lr"])
+                for group in self.critic_optimizer.param_groups
+            )
+            for group in self.critic_optimizer.param_groups:
+                group["lr"] = self.online_critic_lr
+            summary.update(
+                {
+                    "online_critic_lr": float(self.online_critic_lr),
+                    "offline_critic_lrs": "|".join(
+                        f"{value:.12g}" for value in offline_lrs
+                    ),
+                }
+            )
+        if self.online_actor_lr is not None:
+            offline_lrs = tuple(
+                float(group["lr"])
+                for group in self.actor_optimizer.param_groups
+            )
+            for group in self.actor_optimizer.param_groups:
+                group["lr"] = self.online_actor_lr
+            summary.update(
+                {
+                    "online_actor_lr": float(self.online_actor_lr),
+                    "offline_actor_lrs": "|".join(
+                        f"{value:.12g}" for value in offline_lrs
+                    ),
+                }
+            )
+        return summary
+
+    def _pretrain_reference_drift_metrics(self) -> dict[str, float]:
+        if self.pretrain_reference_actor is None:
+            return {}
+        squared_sum = 0.0
+        parameter_count = 0
+        max_abs = 0.0
+        with torch.no_grad():
+            reference_parameters = dict(
+                self.pretrain_reference_actor.named_parameters()
+            )
+            for name, parameter in self.actor.named_parameters():
+                difference = parameter - reference_parameters[name]
+                squared_sum += float(difference.pow(2).sum().item())
+                parameter_count += int(difference.numel())
+                max_abs = max(
+                    max_abs,
+                    float(difference.abs().max().item()),
+                )
+        rms = (
+            (squared_sum / parameter_count) ** 0.5
+            if parameter_count
+            else 0.0
+        )
+        return {
+            "pretrain_reference_parameter_drift_rms": float(rms),
+            "pretrain_reference_parameter_drift_max_abs": float(max_abs),
+        }
 
     def update(self) -> dict[str, float]:
         if len(self.replay_buffer) < self.batch_size:
             return {}
 
         self.total_updates += 1
-        batch = self.replay_buffer.sample(self.batch_size)
+        batch = self.replay_buffer.sample(
+            self.batch_size,
+            online_fraction=self.online_replay_fraction,
+        )
         raw_states = torch.as_tensor(batch.states, dtype=torch.float32, device=self.device)
         actions = torch.as_tensor(batch.actions, dtype=torch.float32, device=self.device)
         rewards = torch.as_tensor(batch.rewards, dtype=torch.float32, device=self.device)
+        one_step_rewards = torch.as_tensor(
+            batch.one_step_rewards,
+            dtype=torch.float32,
+            device=self.device,
+        )
         raw_next_states = torch.as_tensor(batch.next_states, dtype=torch.float32, device=self.device)
         dones = torch.as_tensor(batch.dones, dtype=torch.float32, device=self.device)
+        discount_multipliers = torch.as_tensor(
+            batch.discount_multipliers,
+            dtype=torch.float32,
+            device=self.device,
+        )
+        online_masks = torch.as_tensor(
+            batch.online_masks,
+            dtype=torch.float32,
+            device=self.device,
+        )
         states = (
             raw_states
             if self.temporal_demand_encoder_enabled
@@ -561,12 +1592,41 @@ class FlatDDPGAgent:
 
         with torch.no_grad():
             next_network_actions = self.actor_target(next_actor_inputs)
-            next_actions = self._compose_actions_tensor(raw_next_states, next_network_actions)
+            next_actions = self._compose_actions_tensor(
+                raw_next_states,
+                next_network_actions,
+                apply_correction_gate=(
+                    self.correction_gate_align_online_policy
+                ),
+                hard_correction_gate=True,
+            )
+            next_actions = self._critic_actions_tensor(next_actions)
             target_q = self.critic_target(next_states, next_actions)
-            q_targets = rewards + self.gamma * (1.0 - dones) * target_q
+            q_targets = (
+                rewards
+                + self.gamma
+                * discount_multipliers
+                * (1.0 - dones)
+                * target_q
+            )
 
-        q_expected = self.critic(states, actions)
-        critic_loss = torch.nn.functional.mse_loss(q_expected, q_targets)
+        q_expected = self.critic(
+            states,
+            self._critic_actions_tensor(actions),
+        )
+        bellman_critic_loss = torch.nn.functional.mse_loss(
+            q_expected,
+            q_targets,
+        )
+        critic_loss = bellman_critic_loss
+        ranking_loss = None
+        if self.critic_teacher_advantage_online_ranking_weight > 0.0:
+            ranking_loss = self._sample_critic_teacher_advantage_loss()
+            critic_loss = (
+                critic_loss
+                + self.critic_teacher_advantage_online_ranking_weight
+                * ranking_loss
+            )
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
         self.critic_optimizer.step()
@@ -583,25 +1643,131 @@ class FlatDDPGAgent:
             "critic_loss": float(critic_loss.item()),
             "actor_updated": float(actor_update_due),
         }
+        metrics.update(self._anchor_relative_reward_metrics())
+        if self.online_replay_fraction is not None:
+            metrics["replay_online_fraction"] = float(
+                batch.online_fraction
+            )
+        if ranking_loss is not None:
+            metrics.update(
+                {
+                    "critic_bellman_loss": float(
+                        bellman_critic_loss.item()
+                    ),
+                    "critic_teacher_advantage_ranking_loss": float(
+                        ranking_loss.item()
+                    ),
+                    "critic_teacher_advantage_weighted_ranking_loss": float(
+                        self.critic_teacher_advantage_online_ranking_weight
+                        * ranking_loss.item()
+                    ),
+                }
+            )
         if not actor_update_due:
             self._soft_update(self.critic, self.critic_target)
             return metrics
 
         network_actions = self.actor(actor_inputs)
-        actor_actions = self._compose_actions_tensor(raw_states, network_actions)
+        actor_actions = self._compose_actions_tensor(
+            raw_states,
+            network_actions,
+            apply_correction_gate=(
+                self.correction_gate_align_online_policy
+            ),
+            hard_correction_gate=(
+                self.correction_gate_hard_actor_policy
+            ),
+        )
         actor_loss, advantage_metrics = self._actor_objective(
             states,
             raw_states,
             actor_actions,
         )
+        self_imitation_mask = None
+        self_imitation_metrics: dict[str, float] = {}
+        if self.online_advantage_self_imitation_enabled:
+            (
+                self_imitation_loss,
+                self_imitation_mask,
+                self_imitation_metrics,
+            ) = self._online_advantage_self_imitation_loss(
+                actor_actions,
+                actions,
+                rewards,
+                one_step_rewards,
+                online_masks,
+                discount_multipliers,
+            )
+            actor_loss = (
+                actor_loss
+                + self.online_advantage_self_imitation_weight
+                * self_imitation_loss
+            )
+        reference_loss_value = None
+        reference_filter_metrics: dict[str, float] = {}
+        if self.pretrain_reference_actor is not None:
+            with torch.no_grad():
+                reference_network_actions = self.pretrain_reference_actor(
+                    actor_inputs
+                )
+            reference_mask = None
+            if self.pretrain_reference_actor_loss_mode == "critic_q_filter":
+                reference_mask, reference_filter_metrics = (
+                    self._pretrain_reference_q_filter(
+                        states,
+                        raw_states,
+                        actor_actions,
+                        reference_network_actions,
+                    )
+                )
+            if (
+                self_imitation_mask is not None
+                and self.online_advantage_self_imitation_release_reference
+            ):
+                retained_reference_mask = 1.0 - self_imitation_mask
+                reference_mask = (
+                    retained_reference_mask
+                    if reference_mask is None
+                    else reference_mask * retained_reference_mask
+                )
+            reference_loss = self._pretrain_reference_action_loss(
+                raw_states,
+                network_actions,
+                reference_network_actions,
+                sample_mask=reference_mask,
+            )
+            actor_loss = (
+                actor_loss
+                + self.pretrain_reference_actor_loss_weight
+                * reference_loss
+            )
+            reference_loss_value = float(reference_loss.item())
         residual_l2_loss_value = None
         if self.residual_action_enabled and self.residual_l2_weight > 0.0:
-            policy_residuals = self._policy_residuals_tensor(raw_states, network_actions)
+            policy_residuals = self._policy_residuals_tensor(
+                raw_states,
+                network_actions,
+                apply_correction_gate=(
+                    self.correction_gate_align_online_policy
+                ),
+                hard_correction_gate=(
+                    self.correction_gate_hard_actor_policy
+                ),
+            )
             residual_l2_loss = policy_residuals.pow(2).mean()
             actor_loss = actor_loss + self.residual_l2_weight * residual_l2_loss
             residual_l2_loss_value = float(residual_l2_loss.item())
         elif self.patient_service_proxy_actor_loss_enabled:
-            policy_residuals = self._policy_residuals_tensor(raw_states, network_actions)
+            policy_residuals = self._policy_residuals_tensor(
+                raw_states,
+                network_actions,
+                apply_correction_gate=(
+                    self.correction_gate_align_online_policy
+                ),
+                hard_correction_gate=(
+                    self.correction_gate_hard_actor_policy
+                ),
+            )
         else:
             policy_residuals = None
         proxy_metrics = {}
@@ -629,12 +1795,212 @@ class FlatDDPGAgent:
 
         metrics["actor_loss"] = float(actor_loss.item())
         metrics.update(advantage_metrics)
+        metrics.update(reference_filter_metrics)
+        metrics.update(self_imitation_metrics)
         metrics.update(proxy_metrics)
+        metrics.update(self._pretrain_reference_drift_metrics())
         if residual_l2_loss_value is not None:
             metrics["residual_l2_loss"] = residual_l2_loss_value
         if imitation_loss_value is not None:
             metrics["imitation_loss"] = imitation_loss_value
+        if reference_loss_value is not None:
+            metrics["pretrain_reference_action_mse"] = (
+                reference_loss_value
+            )
+            metrics["pretrain_reference_weighted_loss"] = (
+                self.pretrain_reference_actor_loss_weight
+                * reference_loss_value
+            )
         return metrics
+
+    def _pretrain_reference_action_loss(
+        self,
+        raw_states,
+        network_actions,
+        reference_network_actions,
+        *,
+        sample_mask=None,
+    ):
+        if self.pretrain_reference_actor_loss_action_space == "network":
+            per_sample_loss = (network_actions - reference_network_actions).pow(
+                2
+            ).mean(dim=1)
+            return self._masked_reference_loss(per_sample_loss, sample_mask)
+
+        current_actions = self._compose_actions_tensor(
+            raw_states,
+            network_actions,
+            apply_correction_gate=(
+                self.correction_gate_align_online_policy
+            ),
+            hard_correction_gate=True,
+        )
+        with torch.no_grad():
+            reference_actions = self._compose_actions_tensor(
+                raw_states,
+                reference_network_actions,
+                apply_correction_gate=(
+                    self.correction_gate_align_online_policy
+                ),
+                hard_correction_gate=True,
+            )
+            reference_actions = self._critic_actions_tensor(
+                reference_actions
+            )
+        current_actions = self._critic_actions_tensor(
+            current_actions,
+            straight_through=True,
+        )
+        per_sample_loss = (current_actions - reference_actions).pow(2).mean(
+            dim=1
+        )
+        return self._masked_reference_loss(per_sample_loss, sample_mask)
+
+    @staticmethod
+    def _masked_reference_loss(per_sample_loss, sample_mask=None):
+        if sample_mask is None:
+            return per_sample_loss.mean()
+        mask = sample_mask.to(
+            dtype=per_sample_loss.dtype,
+            device=per_sample_loss.device,
+        ).reshape(-1)
+        return (per_sample_loss * mask).sum() / mask.sum().clamp_min(1.0)
+
+    def _pretrain_reference_q_filter(
+        self,
+        states,
+        raw_states,
+        actor_actions,
+        reference_network_actions,
+    ):
+        with torch.no_grad():
+            reference_actions = self._compose_actions_tensor(
+                raw_states,
+                reference_network_actions,
+                apply_correction_gate=(
+                    self.correction_gate_align_online_policy
+                ),
+                hard_correction_gate=(
+                    self.correction_gate_hard_actor_policy
+                ),
+            )
+            actor_q = self.critic(
+                states,
+                self._critic_actions_tensor(actor_actions),
+            )
+            reference_q = self.critic(
+                states,
+                self._critic_actions_tensor(reference_actions),
+            )
+            predicted_advantage = actor_q - reference_q
+            sample_mask = (
+                predicted_advantage
+                <= self.pretrain_reference_actor_loss_q_filter_margin
+            ).to(dtype=actor_q.dtype).reshape(-1)
+        return sample_mask, {
+            "pretrain_reference_q_filter_active_fraction": float(
+                sample_mask.mean().item()
+            ),
+            "pretrain_reference_q_filter_advantage_mean": float(
+                predicted_advantage.mean().item()
+            ),
+        }
+
+    def _online_advantage_self_imitation_loss(
+        self,
+        actor_actions,
+        behavior_actions,
+        rewards,
+        one_step_rewards,
+        online_masks,
+        discount_multipliers,
+    ):
+        expected_multiplier = self.gamma ** (
+            self.online_reward_n_step_horizon - 1
+        )
+        full_horizon_mask = torch.isclose(
+            discount_multipliers.reshape(-1),
+            torch.as_tensor(
+                expected_multiplier,
+                dtype=discount_multipliers.dtype,
+                device=discount_multipliers.device,
+            ),
+            rtol=1e-5,
+            atol=1e-7,
+        )
+        online_mask = online_masks.reshape(-1) > 0.5
+        positive_mask = (
+            rewards.reshape(-1)
+            > self.online_advantage_self_imitation_minimum_return
+        )
+        positive_one_step_mask = (
+            one_step_rewards.reshape(-1)
+            > self.online_advantage_self_imitation_minimum_return
+        )
+        confirmed_positive_mask = (
+            positive_mask & positive_one_step_mask
+            if self.online_advantage_self_imitation_require_positive_one_step
+            else positive_mask
+        )
+        active_mask = (
+            online_mask & confirmed_positive_mask & full_horizon_mask
+        ).to(dtype=actor_actions.dtype)
+        eligible_mask = (online_mask & full_horizon_mask).to(
+            dtype=actor_actions.dtype
+        )
+
+        current_actions = self._critic_actions_tensor(
+            actor_actions,
+            straight_through=True,
+        )
+        with torch.no_grad():
+            target_actions = self._critic_actions_tensor(behavior_actions)
+        specimen_slice = self._facility_net_group_slices(
+            int(self.env_config.get("num_facilities", 0))
+        )["specimen_transfer"]
+        per_sample_loss = (
+            current_actions[:, specimen_slice]
+            - target_actions[:, specimen_slice]
+        ).pow(2).mean(dim=1)
+        loss = self._masked_reference_loss(per_sample_loss, active_mask)
+        active_count = active_mask.sum()
+        positive_return_mean = (
+            rewards.reshape(-1) * active_mask
+        ).sum() / active_count.clamp_min(1.0)
+        return loss, active_mask, {
+            "online_advantage_self_imitation_active_fraction": float(
+                active_mask.mean().item()
+            ),
+            "online_advantage_self_imitation_eligible_fraction": float(
+                eligible_mask.mean().item()
+            ),
+            "online_advantage_self_imitation_loss": float(loss.item()),
+            "online_advantage_self_imitation_weighted_loss": float(
+                self.online_advantage_self_imitation_weight * loss.item()
+            ),
+            "online_advantage_self_imitation_positive_return_mean": float(
+                positive_return_mean.item()
+            ),
+            "online_advantage_self_imitation_minimum_return": float(
+                self.online_advantage_self_imitation_minimum_return
+            ),
+            "online_advantage_self_imitation_one_step_confirmed_fraction": float(
+                (
+                    online_mask
+                    & positive_mask
+                    & positive_one_step_mask
+                    & full_horizon_mask
+                )
+                .to(dtype=actor_actions.dtype)
+                .mean()
+                .item()
+            ),
+            "pretrain_reference_realized_advantage_release_fraction": float(
+                active_mask.mean().item()
+                if self.online_advantage_self_imitation_release_reference
+                else 0.0
+            ),
+        }
 
     def _actor_input_tensor(self, raw_states, *, normalized_states=None):
         if self.temporal_demand_encoder_enabled:
@@ -650,12 +2016,17 @@ class FlatDDPGAgent:
         return torch.cat((normalized_states, base_actions), dim=1)
 
     def _actor_objective(self, states, raw_states, actor_actions):
+        actor_actions = self._critic_actions_tensor(
+            actor_actions,
+            straight_through=True,
+        )
         if not self.anchor_advantage_actor_loss_enabled or not self.residual_action_enabled:
             return -self.critic(states, actor_actions).mean(), {}
 
         actor_q = self.critic(states, actor_actions)
         with torch.no_grad():
             anchor_actions = self._base_actions_from_states_tensor(raw_states)
+            anchor_actions = self._critic_actions_tensor(anchor_actions)
             anchor_q = self.critic(states, anchor_actions)
         advantage = actor_q - anchor_q
         shifted = (advantage - self.anchor_advantage_margin) / self.anchor_advantage_temperature
@@ -819,6 +2190,77 @@ class FlatDDPGAgent:
         self.imitation_weights = None
         self.imitation_rng = np.random.default_rng(seed + 300000)
         return {"policy": policy_name, **summary}
+
+    def configure_online_imitation_regularization(
+        self,
+        states: np.ndarray,
+        actions: np.ndarray,
+        *,
+        weights: np.ndarray | None = None,
+        seed: int | None = None,
+    ) -> dict[str, Any]:
+        """Replace the online imitation batch without updating networks."""
+
+        state_array = np.array(
+            states,
+            dtype=np.float32,
+            copy=True,
+            order="C",
+        )
+        action_array = np.array(
+            actions,
+            dtype=np.float32,
+            copy=True,
+            order="C",
+        )
+        if state_array.ndim != 2 or state_array.shape[1] != self.state_dim:
+            raise ValueError(
+                f"Expected states shape (batch, {self.state_dim}), "
+                f"got {tuple(state_array.shape)}"
+            )
+        if (
+            action_array.ndim != 2
+            or action_array.shape != (state_array.shape[0], self.action_dim)
+        ):
+            raise ValueError(
+                f"Expected actions shape (batch, {self.action_dim}), "
+                f"got {tuple(action_array.shape)}"
+            )
+        if state_array.shape[0] == 0:
+            raise ValueError("Online imitation batch cannot be empty")
+        if not np.all(np.isfinite(state_array)):
+            raise ValueError("Online imitation states must be finite")
+        if not np.all(np.isfinite(action_array)):
+            raise ValueError("Online imitation actions must be finite")
+
+        state_tensor = torch.as_tensor(
+            state_array,
+            dtype=torch.float32,
+            device=self.device,
+        ).clone()
+        action_tensor = torch.as_tensor(
+            action_array,
+            dtype=torch.float32,
+            device=self.device,
+        ).clone()
+        weight_tensor = self._fit_action_weights(
+            weights,
+            int(state_array.shape[0]),
+        )
+        self.imitation_states = state_tensor.detach()
+        self.imitation_actions = action_tensor.detach()
+        self.imitation_weights = (
+            None if weight_tensor is None else weight_tensor.detach().clone()
+        )
+        resolved_seed = int(
+            self.seed + 300000 if seed is None else seed
+        )
+        self.imitation_rng = np.random.default_rng(resolved_seed)
+        return {
+            "samples": int(state_array.shape[0]),
+            "weighted": self.imitation_weights is not None,
+            "seed": resolved_seed,
+        }
 
     def fit_action_batch(
         self,
@@ -1613,6 +3055,7 @@ class FlatDDPGAgent:
         network_actions,
         *,
         apply_correction_gate: bool = False,
+        hard_correction_gate: bool = True,
     ):
         if not self.residual_action_enabled:
             return network_actions
@@ -1621,6 +3064,7 @@ class FlatDDPGAgent:
             states,
             network_actions,
             apply_correction_gate=apply_correction_gate,
+            hard_correction_gate=hard_correction_gate,
         )
         scale = torch.as_tensor(
             self.residual_scale_vector,

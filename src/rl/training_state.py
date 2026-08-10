@@ -23,6 +23,7 @@ _MODULE_NAMES = (
     "actor_target",
     "critic",
     "critic_target",
+    "pretrain_reference_actor",
     "correction_gate",
     "correction_safety_gate",
 )
@@ -43,6 +44,8 @@ _EXECUTION_ONLY_CONFIG_KEYS = frozenset(
         "checkpoint_dir",
         "checkpoint_interval",
         "config_snapshot_path",
+        "preonline_fork_allowed_overrides",
+        "preonline_training_state_path",
         "progress_interval",
         "result_csv_path",
         "resume_training_state_path",
@@ -50,22 +53,61 @@ _EXECUTION_ONLY_CONFIG_KEYS = frozenset(
         "training_state_checkpoint_path",
     }
 )
+_PREONLINE_FORKABLE_CONFIG_PATHS = frozenset(
+    {
+        "anchor_advantage_actor_loss",
+        "actor_update_frequency",
+        "critic_teacher_advantage_calibration",
+        "critic_teacher_advantage_calibration.enabled",
+        "critic_teacher_advantage_calibration.target_scale",
+        "critic_teacher_advantage_calibration.updates",
+        "exploration_noise.sigma",
+        "history_screen.online_episodes",
+        "imitation_pretrain.regularization_weight",
+        "num_episodes",
+        "online_actor_lr",
+        "online_advantage_self_imitation",
+        "online_advantage_self_imitation.enabled",
+        "online_advantage_self_imitation.minimum_return",
+        "online_advantage_self_imitation.release_pretrain_reference",
+        "online_advantage_self_imitation.require_positive_one_step_return",
+        "online_advantage_self_imitation.weight",
+        "online_critic_lr",
+        "online_imitation_regularization",
+        "online_replay_fraction",
+        "pretrain_reference_actor_loss.action_space",
+        "pretrain_reference_actor_loss.mode",
+        "pretrain_reference_actor_loss.q_filter_margin",
+        "pretrain_reference_actor_loss.weight",
+        "residual_action.correction_gate.align_online_policy",
+        "residual_action.correction_gate.hard_actor_policy",
+        "residual_action.correction_gate.differentiate_actor_proposal",
+        "residual_action.online_reward_mode",
+        "residual_action.online_reward_n_step_horizon",
+        "specimen_action_quantization",
+        "updates_per_update",
+    }
+)
 
 
 def training_contract_sha256(config: dict[str, Any]) -> str:
     """Hash scientific settings while ignoring execution-only file controls."""
 
-    scientific = {
-        key: value
-        for key, value in config.items()
-        if key not in _EXECUTION_ONLY_CONFIG_KEYS
-    }
+    scientific = _scientific_training_contract(config)
     payload = json.dumps(
-        _jsonable(scientific),
+        scientific,
         sort_keys=True,
         separators=(",", ":"),
     ).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
+
+
+def _scientific_training_contract(config: dict[str, Any]) -> dict[str, Any]:
+    return _jsonable({
+        key: value
+        for key, value in config.items()
+        if key not in _EXECUTION_ONLY_CONFIG_KEYS
+    })
 
 
 def save_off_policy_training_state(
@@ -82,10 +124,12 @@ def save_off_policy_training_state(
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_name(f".{output.name}.{os.getpid()}.tmp")
+    training_contract = _scientific_training_contract(config)
     payload = {
         "format_version": FORMAT_VERSION,
         "algorithm": str(agent.algorithm),
         "seed": int(agent.seed),
+        "training_contract": training_contract,
         "training_contract_sha256": training_contract_sha256(config),
         "agent": _agent_state_dict(agent),
         "training": dict(training),
@@ -106,6 +150,7 @@ def load_off_policy_training_state(
     *,
     config: dict[str, Any],
     env: Any | None = None,
+    restore_environment: bool = True,
 ) -> dict[str, Any]:
     """Restore a checkpoint and return its training-loop metadata."""
 
@@ -125,13 +170,103 @@ def load_off_policy_training_state(
     if int(checkpoint.get("seed", -1)) != int(agent.seed):
         raise ValueError("Training-state seed does not match")
     expected_contract = training_contract_sha256(config)
+    fork_overrides: dict[str, dict[str, Any]] = {}
     if checkpoint.get("training_contract_sha256") != expected_contract:
+        fork_overrides = _validate_preonline_fork(
+            checkpoint,
+            config=config,
+        )
+    _load_agent_state_dict(
+        agent,
+        checkpoint["agent"],
+        fork_overrides=fork_overrides,
+    )
+    if restore_environment:
+        _load_environment_state_dict(env, checkpoint.get("environment"))
+    metadata = dict(checkpoint["training"])
+    if fork_overrides:
+        metadata["preonline_fork_overrides"] = fork_overrides
+    return metadata
+
+
+def _validate_preonline_fork(
+    checkpoint: dict[str, Any],
+    *,
+    config: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    allowed = tuple(
+        str(path)
+        for path in config.get("preonline_fork_allowed_overrides", ())
+    )
+    if not allowed:
         raise ValueError(
             "Training-state scientific contract does not match the current config"
         )
-    _load_agent_state_dict(agent, checkpoint["agent"])
-    _load_environment_state_dict(env, checkpoint.get("environment"))
-    return dict(checkpoint["training"])
+    unsupported = sorted(
+        set(allowed) - _PREONLINE_FORKABLE_CONFIG_PATHS
+    )
+    if unsupported:
+        raise ValueError(
+            "Unsupported pre-online fork override paths: "
+            + ", ".join(unsupported)
+        )
+    training = dict(checkpoint.get("training", {}))
+    if int(training.get("next_episode", -1)) != 0:
+        raise ValueError(
+            "Training-state scientific contract may be forked only at "
+            "the pre-online episode-0 boundary"
+        )
+    checkpoint_contract = checkpoint.get("training_contract")
+    if not isinstance(checkpoint_contract, dict):
+        raise ValueError(
+            "Training-state scientific contract lacks forkable contract metadata"
+        )
+    current_contract = _scientific_training_contract(config)
+    differences = _contract_differences(
+        checkpoint_contract,
+        current_contract,
+    )
+    disallowed = sorted(set(differences) - set(allowed))
+    if not differences or disallowed:
+        detail = ", ".join(disallowed) if disallowed else "none"
+        raise ValueError(
+            "Training-state scientific contract has disallowed pre-online "
+            f"fork differences: {detail}"
+        )
+    return differences
+
+
+def _contract_differences(
+    checkpoint_value: Any,
+    current_value: Any,
+    path: str = "",
+) -> dict[str, dict[str, Any]]:
+    if isinstance(checkpoint_value, dict) and isinstance(current_value, dict):
+        differences: dict[str, dict[str, Any]] = {}
+        for key in sorted(set(checkpoint_value) | set(current_value)):
+            child_path = f"{path}.{key}" if path else str(key)
+            if key not in checkpoint_value or key not in current_value:
+                differences[child_path] = {
+                    "checkpoint": checkpoint_value.get(key),
+                    "current": current_value.get(key),
+                }
+                continue
+            differences.update(
+                _contract_differences(
+                    checkpoint_value[key],
+                    current_value[key],
+                    child_path,
+                )
+            )
+        return differences
+    if checkpoint_value == current_value:
+        return {}
+    return {
+        path: {
+            "checkpoint": checkpoint_value,
+            "current": current_value,
+        }
+    }
 
 
 def _environment_state_dict(env: Any | None) -> dict[str, Any] | None:
@@ -188,6 +323,11 @@ def _agent_state_dict(agent: Any) -> dict[str, Any]:
         "noise": agent.noise.state_dict(),
         "imitation_tensors": imitation_tensors,
         "imitation_rng_state": agent.imitation_rng.bit_generator.state,
+        "critic_teacher_advantage_rng_state": (
+            None
+            if getattr(agent, "critic_teacher_advantage_rng", None) is None
+            else agent.critic_teacher_advantage_rng.bit_generator.state
+        ),
         "python_rng_state": random.getstate(),
         "numpy_rng_state": np.random.get_state(),
         "torch_rng_state": torch.get_rng_state().cpu(),
@@ -195,7 +335,12 @@ def _agent_state_dict(agent: Any) -> dict[str, Any]:
     }
 
 
-def _load_agent_state_dict(agent: Any, state: dict[str, Any]) -> None:
+def _load_agent_state_dict(
+    agent: Any,
+    state: dict[str, Any],
+    *,
+    fork_overrides: dict[str, dict[str, Any]] | None = None,
+) -> None:
     modules = dict(state["modules"])
     for name, module_state in modules.items():
         module = getattr(agent, name, None)
@@ -214,7 +359,17 @@ def _load_agent_state_dict(agent: Any, state: dict[str, Any]) -> None:
         _move_optimizer_state(optimizer, agent.device)
     agent.total_updates = int(state["total_updates"])
     agent.replay_buffer.load_state_dict(state["replay_buffer"])
-    agent.noise.load_state_dict(state["noise"])
+    noise_state = dict(state["noise"])
+    if "exploration_noise.sigma" in (fork_overrides or {}):
+        saved_noise = np.asarray(noise_state["state"], dtype=np.float32)
+        saved_mean = np.asarray(noise_state["mu"], dtype=np.float32)
+        if not np.array_equal(saved_noise, saved_mean):
+            raise ValueError(
+                "Exploration sigma may be forked only from a reset "
+                "episode-0 OU-noise state"
+            )
+        noise_state["sigma"] = float(agent.noise.sigma)
+    agent.noise.load_state_dict(noise_state)
     for name, value in dict(state["imitation_tensors"]).items():
         setattr(
             agent,
@@ -222,6 +377,21 @@ def _load_agent_state_dict(agent: Any, state: dict[str, Any]) -> None:
             None if value is None else value.to(agent.device),
         )
     agent.imitation_rng.bit_generator.state = state["imitation_rng_state"]
+    critic_advantage_rng_state = state.get(
+        "critic_teacher_advantage_rng_state"
+    )
+    critic_advantage_rng = getattr(
+        agent,
+        "critic_teacher_advantage_rng",
+        None,
+    )
+    if (
+        critic_advantage_rng_state is not None
+        and critic_advantage_rng is not None
+    ):
+        critic_advantage_rng.bit_generator.state = (
+            critic_advantage_rng_state
+        )
     random.setstate(state["python_rng_state"])
     np.random.set_state(state["numpy_rng_state"])
     torch.set_rng_state(state["torch_rng_state"].cpu())

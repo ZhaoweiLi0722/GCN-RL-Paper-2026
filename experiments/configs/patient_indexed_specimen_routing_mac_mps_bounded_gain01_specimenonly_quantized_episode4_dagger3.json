@@ -1,0 +1,52 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_specimenonly_quantized_episode4_dagger3",
+  "experimental_role": "critic-data coverage screen using three independent causal trajectories per scenario from the selected quantized DDPG episode-4 policy",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/specimenonly_ddpg_sharedpreonline_quantizedspecimenste_balancedcycle8_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_specimenonly_ddpg_sharedpreonline_quantizedspecimenste_balancedcycle8/training_manifest.json",
+  "selection_summary": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/specimenonly_ddpg_quantized_specimen_screen/candidate_quantizedspecimenste_validation950_evaluation/summary.json",
+  "base_teacher_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_screen/teacher_train.npz",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "training_seeds": [0],
+  "checkpoint_variant": "episode4",
+  "behavior_checkpoints": {
+    "0": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/specimenonly_ddpg_sharedpreonline_quantizedspecimenste_balancedcycle8_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_specimenonly_ddpg_sharedpreonline_quantizedspecimenste_balancedcycle8/gcn_residual_mdl2_network_ddpg_afd/seed0/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed0_episode4.pt"
+  },
+  "behavior_deployment_candidate": {
+    "scale": 1.0,
+    "group_thresholds": [0.575],
+    "endpoint_projection": {
+      "enabled": false,
+      "groups": []
+    }
+  },
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "teacher_configs": {
+    "routing_nominal_history": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_nominal_history/scenario_config.json",
+    "routing_abrupt_regime_shift": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_abrupt_regime_shift/scenario_config.json",
+    "routing_regional_drift": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_regional_drift/scenario_config.json",
+    "routing_compound_regional_stress": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_compound_regional_stress/scenario_config.json"
+  },
+  "teacher_overrides": {
+    "candidate_groups": ["specimen_transfer"],
+    "explicit_options": [
+      {"group": "specimen_transfer", "epsilon": 0.05, "sign": 1.0},
+      {"group": "specimen_transfer", "epsilon": 0.05, "sign": -1.0},
+      {"group": "specimen_transfer", "epsilon": 0.1, "sign": 1.0},
+      {"group": "specimen_transfer", "epsilon": 0.1, "sign": -1.0}
+    ]
+  },
+  "rollouts_per_policy": 3,
+  "max_steps": 52,
+  "collection_seed": 9755000,
+  "detection_delay": 4,
+  "filter_base_cache_causally": false,
+  "teacher_behavior_probability": 0.0,
+  "include_base_cache": false,
+  "balance_scenarios": true,
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_specimenonly_quantized_episode4_dagger3"
+}

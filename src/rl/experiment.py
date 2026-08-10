@@ -84,6 +84,7 @@ def train_off_policy_agent(
     config: dict[str, Any],
     *,
     post_imitation_pretrain: Callable[[Any, CapacityPlanningEnv], dict[str, Any]] | None = None,
+    preonline_setup: Callable[[Any, CapacityPlanningEnv], dict[str, Any]] | None = None,
     pretrain_report_out: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     seed = int(config.get("seed", 0))
@@ -147,6 +148,13 @@ def train_off_policy_agent(
         advantage_distillation_summary = dict(
             resume_metadata.get("advantage_distillation_summary", {})
         )
+        preonline_fork_overrides = dict(
+            resume_metadata.get("preonline_fork_overrides", {})
+        )
+        if preonline_fork_overrides:
+            advantage_distillation_summary["preonline_fork_overrides"] = (
+                preonline_fork_overrides
+            )
         pretrain_checkpoint_path = str(
             resume_metadata.get("pretrain_checkpoint_path", "")
         )
@@ -165,6 +173,31 @@ def train_off_policy_agent(
             )
         if callable(episode_seeker):
             episode_seeker(start_episode)
+        if start_episode == 0 and preonline_setup is not None:
+            advantage_distillation_summary.update(
+                dict(preonline_setup(agent, env) or {})
+            )
+        advantage_distillation_summary.update(
+            _prepare_online_finetuning(
+                agent,
+                start_episode=start_episode,
+            )
+        )
+        if (
+            start_episode == 0
+            and bool(config.get("save_pretrain_checkpoint", False))
+            and (pretrain_summary or advantage_distillation_summary)
+        ):
+            resumed_pretrain_checkpoint = (
+                checkpoint_dir / f"{algorithm}_seed{seed}_pretrain.pt"
+            )
+            if resumed_pretrain_checkpoint.exists():
+                raise FileExistsError(
+                    "Resumed pretrain checkpoint already exists: "
+                    f"{resumed_pretrain_checkpoint}"
+                )
+            agent.save(resumed_pretrain_checkpoint)
+            pretrain_checkpoint_path = str(resumed_pretrain_checkpoint)
         print(
             f"Resuming {algorithm} seed={seed} at episode "
             f"{start_episode + 1}/{num_episodes}",
@@ -177,6 +210,16 @@ def train_off_policy_agent(
             if post_imitation_pretrain is not None
             else {}
         )
+        if preonline_setup is not None:
+            advantage_distillation_summary.update(
+                dict(preonline_setup(agent, env) or {})
+            )
+        advantage_distillation_summary.update(
+            _prepare_online_finetuning(
+                agent,
+                start_episode=0,
+            )
+        )
         if bool(config.get("save_pretrain_checkpoint", False)) and (
             pretrain_summary or advantage_distillation_summary
         ):
@@ -185,6 +228,33 @@ def train_off_policy_agent(
             )
             agent.save(pretrain_checkpoint)
             pretrain_checkpoint_path = str(pretrain_checkpoint)
+        preonline_path_value = config.get("preonline_training_state_path")
+        if preonline_path_value not in (None, ""):
+            preonline_path = Path(str(preonline_path_value))
+            if preonline_path.exists():
+                raise FileExistsError(
+                    "Pre-online training state already exists: "
+                    f"{preonline_path}"
+                )
+            save_off_policy_training_state(
+                agent,
+                preonline_path,
+                config=config,
+                env=env,
+                training={
+                    "next_episode": 0,
+                    "global_step": 0,
+                    "rows": [],
+                    "pretrain_summary": pretrain_summary,
+                    "advantage_distillation_summary": (
+                        advantage_distillation_summary
+                    ),
+                    "pretrain_checkpoint_path": pretrain_checkpoint_path,
+                    "elapsed_runtime_seconds": (
+                        time.perf_counter() - checkpoint_runtime_start
+                    ),
+                },
+            )
     if pretrain_report_out is not None:
         pretrain_report_out.update(advantage_distillation_summary)
     start_time = checkpoint_runtime_start - elapsed_runtime_seconds
@@ -266,6 +336,10 @@ def train_off_policy_agent(
             state = next_state
             if done:
                 break
+
+        episode_finalizer = getattr(agent, "finalize_training_episode", None)
+        if callable(episode_finalizer):
+            episode_finalizer()
 
         elite_summary = _maybe_fit_elite_episode(
             agent,
@@ -425,6 +499,24 @@ def train_off_policy_agent(
             )
 
     return rows
+
+
+def _prepare_online_finetuning(
+    agent: Any,
+    *,
+    start_episode: int,
+) -> dict[str, Any]:
+    prepare = getattr(agent, "prepare_online_finetuning", None)
+    if not callable(prepare):
+        return {}
+    summary = prepare(start_episode=int(start_episode))
+    if summary is None:
+        return {}
+    if not isinstance(summary, dict):
+        raise TypeError(
+            "prepare_online_finetuning must return a mapping or None"
+        )
+    return dict(summary)
 
 
 def train_offline_replay_updates(

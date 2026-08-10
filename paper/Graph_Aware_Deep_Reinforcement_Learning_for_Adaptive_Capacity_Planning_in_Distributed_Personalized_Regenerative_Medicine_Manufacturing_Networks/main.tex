@@ -723,6 +723,57 @@ and common-random-number (CRN) holdout episodes. The graph policy replaces the
 flat encoder with message passing over the clinic graph; the remaining
 actor--critic and deployment components are held fixed or parameter matched.
 
+\paragraph{Routing-primary hyperparameter development}
+The routing-primary DDPG settings were obtained through sequential,
+development-only sensitivity screens rather than an exhaustive automated HPO
+search. The screens first bounded the residual correction and then varied the
+online update schedule, actor learning rate, exploration noise, imitation and
+frozen-reference regularization, and deployment gate. Mechanism-development
+screens separately examined integer-lot straight-through specimen actions,
+anchor-relative rewards, return horizon, and evidence required to release the
+frozen-pretraining reference. Table~\ref{tab:routing_hyperparameters}
+summarizes the principal ranges and the current candidate. All screens used
+development seeds and CRN streams; none is included in a confirmatory estimate.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Routing-primary DDPG development screens. The selected values define
+the current candidate but are not themselves confirmatory results.}
+\label{tab:routing_hyperparameters}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.26\textwidth}
+  >{\raggedright\arraybackslash}p{0.41\textwidth}
+  >{\raggedright\arraybackslash}X}
+\toprule
+Component & Development values or variants & Selected value \\
+\midrule
+Residual deployment magnitude & Anchor-only; 0.10, 0.25, and 0.50 & 0.10 for specimen transfer \\
+Environment update frequency & Every 1 or 4 simulator steps & 1 \\
+Actor update frequency & Every 2, 4, or 8 critic updates & 2 \\
+Online actor learning rate & $1\times10^{-5}$ or $3\times10^{-5}$ & $1\times10^{-5}$ \\
+OU exploration standard deviation & 0.005, 0.02, or 0.05 & 0.005 \\
+Imitation/reference regularization & Imitation 1 or 2; reference 0, 250, or 500 & 1 and 500, respectively \\
+Pretraining/critic warm start & Short smoke or 300 epochs; 0 or 500 critic updates & 300 epochs and 500 updates \\
+Online return evidence & Immediate or four-step anchor-relative return; unfiltered, positive, or dual confirmation & Four-step dual confirmation \\
+Material improvement threshold & Zero or one patient-loss-equivalent scaled cost & 0.0005 \\
+Deployment gate & Fixed development validation grid with anchor fallback & 0.575 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The selected candidate uses batch size 64, critic learning rate
+$3\times10^{-4}$, integer specimen-lot execution with a straight-through actor
+gradient, and specimen-only residual corrections; reagent, capacity, and
+replenishment residual groups remain zero in this screen. The most informative
+warning against single-seed selection came from the update-frequency study:
+the frequency-4 candidate passed its seed-0 screen but did not generalize in
+the subsequent three-seed confirmation. Seed 0 and the earlier routing seeds
+1--2 are therefore treated as development evidence, not untouched
+confirmation seeds.
+
 The replenishment-residual DDPG and TD3 confirmation uses 300 training episodes
 for each of five seeds, checkpoint candidates between episodes 50 and 300, and
 100 independent paired holdout replications per seed. Reported confidence
@@ -750,18 +801,28 @@ The routing-primary campaign is prospectively separated from those earlier
 no-routing results. It holds patient-indexed specimen routing enabled for every
 primary policy and compares GCN residual DDPG, a parameter-matched flat
 residual DDPG controller, and the MDL-2 routing anchor. One fresh
-routing-enabled teacher is shared across the learned architectures. After two
-five-episode seed-0 smoke runs pass identity, CUDA, update, finite-loss,
-checkpoint, parameter-gap, and nonzero-route gates, the locked pilot runs six
-independent 100-episode jobs in the order GCN seeds 0--2 followed by flat seeds
-0--2. Final and frozen-pretraining checkpoints are evaluated on four routing
-scenarios with 100 paired CRN replications per training seed; lead-zero
-specimen transit and one-epoch product return are prespecified sensitivities.
-The primary attribution is GCN versus matched flat, GCN versus MDL-2, and final
-versus frozen pretraining. No-routing is retained only for deterministic
-mechanics regression or a separately approved supplementary ablation, not as a
-default formal training arm. No numerical result from this routing campaign is
-reported until its locked outputs pass the preregistered gates.
+routing-enabled teacher is shared across the learned architectures. After the
+development screens are frozen, confirmatory training uses five untouched
+seeds (10--14) for each learned architecture. Every run first
+receives 100 episodes, or approximately 5,200 online transitions, with complete
+state saved every five episodes. Prespecified development learning curves at
+episodes 25, 50, 75, and 100 determine one global budget decision before the
+final holdout is opened: if either architecture has not plateaued, all ten runs
+are extended to 200 episodes. Extension to the common maximum of 300 is allowed
+only if the 100--200 curves show continuing multi-seed improvement without
+clinical-guardrail deterioration. A method- or seed-specific extension is not
+permitted.
+
+Final and frozen-pretraining checkpoints are evaluated on four routing
+scenarios with at least 100 paired CRN replications per training seed;
+additional evaluation replication may narrow uncertainty without changing the
+trained policies. Lead-zero specimen transit and one-epoch product return are
+prespecified sensitivities. The primary attribution is GCN versus matched
+flat, GCN versus MDL-2, and final versus frozen pretraining. No-routing is
+retained only for deterministic mechanics regression or a separately approved
+supplementary ablation, not as a default formal training arm. Development
+screens are reported as tuning evidence only, and no routing-primary headline
+claim is made until the untouched-seed outputs pass the locked gates.
 \subsection{distributed manufacturing simulation}
 % Algorithm for state normalization with changed variables
 \begin{algorithm}
@@ -1231,9 +1292,11 @@ interpreting objective differences as realized monetary savings. External
 clinical data will also be needed to validate patient-risk, demand,
 disruption, and transfer-time assumptions before operational use.
 The routing-capable environment has passed implementation-level identity,
-conservation, lifecycle, and CRN tests, but the locked routing-primary teacher,
-smoke, pilot, and holdout stages have not yet produced results. Accordingly,
-this draft makes no empirical claim about the value of routing and does not
+conservation, lifecycle, and CRN tests, and routing-enabled teacher and
+development screens have been completed. The untouched-seed routing-primary
+GCN/flat confirmation and final holdout remain pending. Accordingly, this
+draft treats the current routing screens as development evidence, makes no
+confirmatory empirical claim about the value of routing, and does not
 reinterpret any legacy no-routing checkpoint as routing-enabled evidence.
 
 \textbf{Future Work}
@@ -1241,17 +1304,19 @@ This study motivates several extensions. Patient condition can be represented
 with longitudinal clinical covariates rather than the current eligibility and
 survival-risk summary. Raw-material quality, product quality, process failures,
 machine breakdowns, and operator availability can be added to the simulator.
-The immediate empirical priority is the locked routing-primary campaign:
-generate a fresh routing teacher, pass the two routing smoke runs, complete the
-six three-seed routing pilot runs, and evaluate GCN, matched flat, MDL-2, and
-frozen-pretraining controls under the same CRN protocol. No-routing training is
-reserved for a separately justified supplementary ablation rather than the
-default experiment. If online-learning attribution remains inconclusive, future
-training should use multi-scenario replay and a conservative, explicitly
-anchor-relative actor objective rather than merely increasing the episode
-budget. Longer-term experiments should test unseen clinic networks and transfer
-disruptions and should integrate production scheduling, product preparation
-and distribution, and treatment operations.
+The immediate empirical priority is to freeze the current routing-primary DDPG
+candidate, complete matched GCN and flat confirmation on five untouched seeds,
+and evaluate both final and frozen-pretraining controls against routing MDL-2
+under the same CRN protocol. Training begins with 100 episodes and is extended
+uniformly to 200 or, only when justified by the still-sealed development
+learning curves, 300 episodes. No-routing training is reserved for a separately
+justified supplementary ablation rather than the default experiment. If
+online-learning attribution remains inconclusive after this independent
+confirmation, the next candidate should change the actor--critic mechanism
+(for example, a matched TD3 study) rather than repeatedly tuning DDPG on the
+same development stream. Longer-term experiments should test unseen clinic
+networks and transfer disruptions and should integrate production scheduling,
+product preparation and distribution, and treatment operations.
 
 \section*{Data Availability}
 The data used in this study are generated from a simulation model. The simulation parameters and experimental settings are described in the manuscript. Code and additional materials are available from the corresponding author upon reasonable request.

@@ -7,7 +7,16 @@ import unittest
 import numpy as np
 
 from evaluation.aggregate_stats import stability_report
-from src.rl.action_projection import project_action, projection_repair_magnitude
+from src.rl.action_projection import (
+    project_action,
+    projection_repair_magnitude,
+    quantize_facility_net_specimen_actions_tensor,
+)
+
+try:
+    import torch
+except ModuleNotFoundError:  # pragma: no cover
+    torch = None
 
 
 class ProjectionRepairTests(unittest.TestCase):
@@ -27,6 +36,59 @@ class ProjectionRepairTests(unittest.TestCase):
         result2 = project_action([0.3, -0.3], action_space_info=2)
         self.assertFalse(result2.clipped)
         self.assertEqual(result2.repair_magnitude, 0.0)
+
+
+@unittest.skipIf(torch is None, "PyTorch is not installed")
+class SpecimenActionQuantizationTests(unittest.TestCase):
+    def test_forward_matches_half_away_from_zero_patient_lots(self) -> None:
+        actions = torch.tensor(
+            [
+                [0.049, 0.05, 0.25, -0.4],
+                [-0.05, -0.149, -0.2, 0.8],
+            ],
+            dtype=torch.float64,
+        )
+
+        quantized = quantize_facility_net_specimen_actions_tensor(
+            actions,
+            num_facilities=2,
+            max_specimen_transfer=10.0,
+        )
+
+        expected = torch.tensor(
+            [
+                [0.0, 0.1, 0.25, -0.4],
+                [-0.1, -0.1, -0.2, 0.8],
+            ],
+            dtype=torch.float64,
+        )
+        torch.testing.assert_close(quantized, expected)
+
+    def test_straight_through_keeps_quantized_forward_and_identity_gradient(
+        self,
+    ) -> None:
+        actions = torch.tensor(
+            [[0.049, -0.149, 0.25, -0.4]],
+            dtype=torch.float64,
+            requires_grad=True,
+        )
+
+        quantized = quantize_facility_net_specimen_actions_tensor(
+            actions,
+            num_facilities=2,
+            max_specimen_transfer=10.0,
+            straight_through=True,
+        )
+        torch.testing.assert_close(
+            quantized,
+            torch.tensor(
+                [[0.0, -0.1, 0.25, -0.4]],
+                dtype=torch.float64,
+            ),
+        )
+
+        quantized.sum().backward()
+        torch.testing.assert_close(actions.grad, torch.ones_like(actions))
 
 
 class StabilityReportTests(unittest.TestCase):

@@ -714,6 +714,959 @@ class GraphStateConversionTests(unittest.TestCase):
             self.assertEqual(actor_and_critic["actor_updated"], 1.0)
             self.assertIn("actor_loss", actor_and_critic)
 
+    def test_ddpg_pretrain_reference_actor_is_frozen_and_reported(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=3),
+            seed=15,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "reward_scale": 1e-9,
+                "env": asdict(env.config),
+                "pretrain_reference_actor_loss": {
+                    "enabled": True,
+                    "weight": 25.0,
+                },
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            self.assertTrue(agent.capture_pretrain_reference_policy())
+            reference_before = {
+                name: parameter.detach().clone()
+                for name, parameter in (
+                    agent.pretrain_reference_actor.named_parameters()
+                )
+            }
+            self.assertTrue(
+                all(
+                    not parameter.requires_grad
+                    for parameter in (
+                        agent.pretrain_reference_actor.parameters()
+                    )
+                )
+            )
+            with torch.no_grad():
+                next(iter(agent.actor.parameters())).add_(0.01)
+
+            state = env.reset(seed=15)
+            for _step in range(2):
+                action = agent.select_action(
+                    state,
+                    explore=False,
+                    env=env,
+                )
+                next_state, reward, done, _info = env.step(action)
+                agent.observe(
+                    state,
+                    action,
+                    reward,
+                    next_state,
+                    done,
+                )
+                state = next_state
+
+            metrics = agent.update()
+
+            self.assertGreater(
+                metrics["pretrain_reference_action_mse"],
+                0.0,
+            )
+            self.assertAlmostEqual(
+                metrics["pretrain_reference_weighted_loss"],
+                25.0 * metrics["pretrain_reference_action_mse"],
+            )
+            self.assertGreater(
+                metrics["pretrain_reference_parameter_drift_rms"],
+                0.0,
+            )
+            for name, expected in reference_before.items():
+                torch.testing.assert_close(
+                    agent.pretrain_reference_actor.state_dict()[name],
+                    expected,
+                )
+
+            self.assertTrue(agent.capture_pretrain_reference_policy())
+            for name, parameter in agent.actor.named_parameters():
+                torch.testing.assert_close(
+                    agent.pretrain_reference_actor.state_dict()[name],
+                    parameter,
+                )
+
+    def test_executed_lot_reference_loss_ignores_same_patient_cell(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=151,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.1,
+                },
+                "specimen_action_quantization": {
+                    "enabled": True,
+                    "actor_gradient": "straight_through",
+                },
+                "pretrain_reference_actor_loss": {
+                    "enabled": True,
+                    "weight": 500.0,
+                    "action_space": "executed_specimen_lots",
+                },
+            }
+        )
+        state = torch.as_tensor(
+            env.reset(seed=151),
+            dtype=torch.float32,
+        ).unsqueeze(0)
+        reference = torch.zeros(
+            (1, env.action_size),
+            dtype=torch.float32,
+        )
+
+        for agent_cls in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_cls(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            same_cell = reference.clone()
+            same_cell[0, 0] = 0.04
+            same_cell.requires_grad_(True)
+            same_cell_loss = agent._pretrain_reference_action_loss(
+                state,
+                same_cell,
+                reference,
+            )
+            self.assertEqual(float(same_cell_loss.detach()), 0.0)
+
+            next_cell = reference.clone()
+            next_cell[0, 0] = 0.06
+            next_cell.requires_grad_(True)
+            next_cell_loss = agent._pretrain_reference_action_loss(
+                state,
+                next_cell,
+                reference,
+            )
+            self.assertGreater(float(next_cell_loss.detach()), 0.0)
+            next_cell_loss.backward()
+            self.assertNotEqual(float(next_cell.grad[0, 0]), 0.0)
+            self.assertEqual(
+                agent.prepare_online_finetuning()[
+                    "online_pretrain_reference_action_space"
+                ],
+                "executed_specimen_lots",
+            )
+
+    def test_q_filtered_pretrain_reference_loss_is_auditable(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=3),
+            seed=152,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "reward_scale": 1e-9,
+                "env": asdict(env.config),
+                "pretrain_reference_actor_loss": {
+                    "enabled": True,
+                    "weight": 500.0,
+                    "mode": "critic_q_filter",
+                    "q_filter_margin": 0.0,
+                },
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            self.assertTrue(agent.capture_pretrain_reference_policy())
+            with torch.no_grad():
+                next(iter(agent.actor.parameters())).add_(0.01)
+            state = env.reset(seed=152)
+            for _step in range(2):
+                action = agent.select_action(state, explore=False, env=env)
+                next_state, reward, done, _info = env.step(action)
+                agent.observe(state, action, reward, next_state, done)
+                state = next_state
+
+            metrics = agent.update()
+
+            self.assertIn(
+                "pretrain_reference_q_filter_active_fraction",
+                metrics,
+            )
+            self.assertIn(
+                "pretrain_reference_q_filter_advantage_mean",
+                metrics,
+            )
+            self.assertGreaterEqual(
+                metrics["pretrain_reference_q_filter_active_fraction"],
+                0.0,
+            )
+            self.assertLessEqual(
+                metrics["pretrain_reference_q_filter_active_fraction"],
+                1.0,
+            )
+            self.assertEqual(
+                agent.prepare_online_finetuning()[
+                    "online_pretrain_reference_loss_mode"
+                ],
+                "critic_q_filter",
+            )
+            masked = agent._masked_reference_loss(
+                torch.tensor([1.0, 9.0]),
+                torch.tensor([1.0, 0.0]),
+            )
+            self.assertEqual(float(masked), 1.0)
+
+    def test_pretrain_reference_loss_rejects_unknown_mode(self) -> None:
+        config = _config_dict()
+        config["pretrain_reference_actor_loss"] = {
+            "enabled": True,
+            "mode": "unknown",
+        }
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            with self.assertRaisesRegex(ValueError, "mode must be"):
+                agent_class(140, 80, config)
+
+    def test_online_advantage_self_imitation_uses_only_positive_full_horizon_online_samples(
+        self,
+    ) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=4),
+            seed=153,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.1,
+                    "online_reward_mode": "n_step_anchor_relative",
+                    "online_reward_n_step_horizon": 4,
+                },
+                "online_advantage_self_imitation": {
+                    "enabled": True,
+                    "weight": 1.0,
+                    "release_pretrain_reference": True,
+                },
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            summary = agent.prepare_online_finetuning()
+            self.assertTrue(agent.replay_buffer.collecting_online)
+            self.assertEqual(
+                summary["online_advantage_self_imitation"],
+                "positive_full_horizon_anchor_return|specimen_behavior_action",
+            )
+            actor_actions = torch.zeros(
+                (4, env.action_size),
+                dtype=torch.float32,
+                requires_grad=True,
+            )
+            behavior_actions = torch.zeros_like(actor_actions)
+            specimen_slice = agent._facility_net_group_slices(20)[
+                "specimen_transfer"
+            ]
+            behavior_actions[:, specimen_slice] = 1.0
+            rewards = torch.tensor(
+                [[1.0], [2.0], [-1.0], [3.0]],
+                dtype=torch.float32,
+            )
+            one_step_rewards = torch.ones_like(rewards)
+            online_masks = torch.tensor(
+                [[1.0], [0.0], [1.0], [1.0]],
+                dtype=torch.float32,
+            )
+            discount_multipliers = torch.tensor(
+                [
+                    [agent.gamma**3],
+                    [agent.gamma**3],
+                    [agent.gamma**3],
+                    [agent.gamma**2],
+                ],
+                dtype=torch.float32,
+            )
+
+            loss, active_mask, metrics = (
+                agent._online_advantage_self_imitation_loss(
+                    actor_actions,
+                    behavior_actions,
+                    rewards,
+                    one_step_rewards,
+                    online_masks,
+                    discount_multipliers,
+                )
+            )
+
+            torch.testing.assert_close(
+                active_mask,
+                torch.tensor([1.0, 0.0, 0.0, 0.0]),
+            )
+            self.assertAlmostEqual(float(loss.detach()), 1.0)
+            self.assertAlmostEqual(
+                metrics[
+                    "online_advantage_self_imitation_active_fraction"
+                ],
+                0.25,
+            )
+            self.assertAlmostEqual(
+                metrics[
+                    "online_advantage_self_imitation_eligible_fraction"
+                ],
+                0.5,
+            )
+            self.assertAlmostEqual(
+                metrics[
+                    "online_advantage_self_imitation_positive_return_mean"
+                ],
+                1.0,
+            )
+            retained_reference_loss = agent._masked_reference_loss(
+                torch.tensor([100.0, 1.0, 2.0, 3.0]),
+                1.0 - active_mask,
+            )
+            self.assertAlmostEqual(float(retained_reference_loss), 2.0)
+            loss.backward()
+            self.assertTrue(
+                torch.all(actor_actions.grad[0, specimen_slice] != 0.0)
+            )
+            self.assertEqual(
+                int(torch.count_nonzero(actor_actions.grad[1:])),
+                0,
+            )
+
+    def test_online_advantage_self_imitation_can_require_one_step_confirmation(
+        self,
+    ) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=4),
+            seed=154,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "myo",
+                    "scale": 0.1,
+                    "online_reward_mode": "n_step_anchor_relative",
+                    "online_reward_n_step_horizon": 4,
+                },
+                "online_advantage_self_imitation": {
+                    "enabled": True,
+                    "weight": 1.0,
+                    "release_pretrain_reference": True,
+                    "require_positive_one_step_return": True,
+                    "minimum_return": 0.5,
+                },
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            actor_actions = torch.zeros(
+                (4, env.action_size),
+                dtype=torch.float32,
+                requires_grad=True,
+            )
+            behavior_actions = torch.ones_like(actor_actions)
+            rewards = torch.tensor(
+                [[1.0], [1.0], [0.4], [1.0]],
+                dtype=torch.float32,
+            )
+            one_step_rewards = torch.tensor(
+                [[1.0], [0.4], [1.0], [1.0]],
+                dtype=torch.float32,
+            )
+            online_masks = torch.ones_like(rewards)
+            discount_multipliers = torch.tensor(
+                [
+                    [agent.gamma**3],
+                    [agent.gamma**3],
+                    [agent.gamma**3],
+                    [agent.gamma**2],
+                ],
+                dtype=torch.float32,
+            )
+
+            loss, active_mask, metrics = (
+                agent._online_advantage_self_imitation_loss(
+                    actor_actions,
+                    behavior_actions,
+                    rewards,
+                    one_step_rewards,
+                    online_masks,
+                    discount_multipliers,
+                )
+            )
+
+            torch.testing.assert_close(
+                active_mask,
+                torch.tensor([1.0, 0.0, 0.0, 0.0]),
+            )
+            self.assertAlmostEqual(float(loss.detach()), 1.0)
+            self.assertAlmostEqual(
+                metrics[
+                    "online_advantage_self_imitation_one_step_confirmed_fraction"
+                ],
+                0.25,
+            )
+            loss.backward()
+            specimen_slice = agent._facility_net_group_slices(20)[
+                "specimen_transfer"
+            ]
+            self.assertTrue(
+                torch.all(actor_actions.grad[0, specimen_slice] != 0.0)
+            )
+            self.assertEqual(
+                int(torch.count_nonzero(actor_actions.grad[1:])),
+                0,
+            )
+
+    def test_online_advantage_self_imitation_requires_n_step_anchor_returns(
+        self,
+    ) -> None:
+        config = _config_dict()
+        config["residual_action"] = {
+            "enabled": True,
+            "online_reward_mode": "one_step_anchor_relative",
+        }
+        config["online_advantage_self_imitation"] = {
+            "enabled": True,
+            "weight": 1.0,
+        }
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            with self.assertRaisesRegex(
+                ValueError,
+                "requires residual_action.online_reward_mode",
+            ):
+                agent_class(140, 80, config)
+
+    def test_ddpg_applies_online_critic_lr_after_offline_phase(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=16,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "critic_lr": 3e-4,
+                "online_critic_lr": 1e-4,
+                "env": asdict(env.config),
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            self.assertEqual(
+                [
+                    float(group["lr"])
+                    for group in agent.critic_optimizer.param_groups
+                ],
+                [3e-4],
+            )
+
+            summary = agent.prepare_online_finetuning()
+
+            self.assertEqual(summary["online_critic_lr"], 1e-4)
+            self.assertEqual(summary["offline_critic_lrs"], "0.0003")
+            self.assertEqual(
+                [
+                    float(group["lr"])
+                    for group in agent.critic_optimizer.param_groups
+                ],
+                [1e-4],
+            )
+
+    def test_ddpg_applies_online_actor_lr_after_offline_phase(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=165,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "actor_lr": 1e-5,
+                "online_actor_lr": 3e-5,
+                "env": asdict(env.config),
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            self.assertEqual(
+                [
+                    float(group["lr"])
+                    for group in agent.actor_optimizer.param_groups
+                ],
+                [1e-5],
+            )
+
+            summary = agent.prepare_online_finetuning()
+
+            self.assertEqual(summary["online_actor_lr"], 3e-5)
+            self.assertEqual(summary["offline_actor_lrs"], "1e-05")
+            self.assertEqual(
+                [
+                    float(group["lr"])
+                    for group in agent.actor_optimizer.param_groups
+                ],
+                [3e-5],
+            )
+
+    def test_ddpg_can_align_online_actions_with_deployment_gate(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=161,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "actor_update_frequency": 1,
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "correction_gate": {
+                        "enabled": True,
+                        "groups": ["replenishment"],
+                        "threshold": 0.5,
+                        "align_online_policy": True,
+                    },
+                },
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            self.assertEqual(
+                agent.prepare_online_finetuning()[
+                    "online_correction_gate_alignment"
+                ],
+                "hard_behavior_target|soft_actor",
+            )
+            for parameter in agent.correction_gate.parameters():
+                parameter.data.zero_()
+            output_layer = next(
+                module
+                for module in reversed(
+                    tuple(agent.correction_gate.modules())
+                )
+                if isinstance(module, torch.nn.Linear)
+            )
+            output_layer.bias.data.fill_(-10.0)
+            agent.noise.sample = lambda: np.zeros(
+                env.action_size,
+                dtype=np.float32,
+            )
+
+            state = env.reset(seed=161)
+            anchor = agent._base_action_from_state_np(state)
+            action = agent.select_action(state, explore=True, env=env)
+            np.testing.assert_allclose(action, anchor, atol=1e-6)
+
+            compose_calls = []
+            original_compose = agent._compose_actions_tensor
+
+            def capture_compose(states, actions, **kwargs):
+                compose_calls.append(dict(kwargs))
+                return original_compose(states, actions, **kwargs)
+
+            agent._compose_actions_tensor = capture_compose
+            for _ in range(2):
+                agent.observe(state, anchor, -1.0, state, False)
+
+            metrics = agent.update()
+
+            self.assertEqual(metrics["actor_updated"], 1.0)
+            self.assertEqual(len(compose_calls), 2)
+            self.assertEqual(
+                compose_calls[0],
+                {
+                    "apply_correction_gate": True,
+                    "hard_correction_gate": True,
+                },
+            )
+            self.assertTrue(
+                compose_calls[1]["apply_correction_gate"]
+            )
+            self.assertFalse(
+                compose_calls[1]["hard_correction_gate"]
+            )
+            self.assertFalse(
+                compose_calls[1].get(
+                    "differentiate_correction_gate",
+                    False,
+                )
+            )
+
+    def test_ddpg_can_optimize_the_hard_deployment_gate(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=164,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "actor_update_frequency": 1,
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "correction_gate": {
+                        "enabled": True,
+                        "groups": ["replenishment"],
+                        "threshold": 0.5,
+                        "align_online_policy": True,
+                        "hard_actor_policy": True,
+                    },
+                },
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            self.assertEqual(
+                agent.prepare_online_finetuning()[
+                    "online_correction_gate_alignment"
+                ],
+                "hard_behavior_target|hard_actor",
+            )
+            for parameter in agent.correction_gate.parameters():
+                parameter.data.zero_()
+            output_layer = next(
+                module
+                for module in reversed(
+                    tuple(agent.correction_gate.modules())
+                )
+                if isinstance(module, torch.nn.Linear)
+            )
+            output_layer.bias.data.fill_(-10.0)
+
+            state = env.reset(seed=164)
+            anchor = agent._base_action_from_state_np(state)
+            compose_calls = []
+            original_compose = agent._compose_actions_tensor
+
+            def capture_compose(states, actions, **kwargs):
+                compose_calls.append(dict(kwargs))
+                return original_compose(states, actions, **kwargs)
+
+            agent._compose_actions_tensor = capture_compose
+            for _ in range(2):
+                agent.observe(state, anchor, -1.0, state, False)
+
+            metrics = agent.update()
+
+            self.assertEqual(metrics["actor_updated"], 1.0)
+            self.assertGreaterEqual(len(compose_calls), 2)
+            self.assertTrue(
+                compose_calls[-1]["apply_correction_gate"]
+            )
+            self.assertTrue(
+                compose_calls[-1]["hard_correction_gate"]
+            )
+
+    def test_ddpg_can_calibrate_critic_from_teacher_advantages(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=162,
+        )
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            config = _config_dict()
+            config.update(
+                {
+                    "batch_size": 8,
+                    "env": asdict(env.config),
+                    "critic_teacher_advantage_calibration": {
+                        "enabled": True,
+                        "updates": 100,
+                        "target_scale": 1.0,
+                        "ranking_weight": 10.0,
+                        "online_ranking_weight": 10.0,
+                        "positive_margin": 0.002,
+                        "positive_margin_weight": 1.0,
+                        "pairwise_difference_weight": 1.0,
+                    },
+                    "residual_action": {
+                        "enabled": True,
+                        "base_policy": "mdl2",
+                        "scale": 0.1,
+                    },
+                }
+            )
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            states = []
+            actions = []
+            for index in range(16):
+                state = env.reset(seed=162 + index)
+                teacher_action = agent._base_action_from_state_np(
+                    state
+                ).copy()
+                teacher_action[: env.config.num_facilities] = np.clip(
+                    teacher_action[: env.config.num_facilities] + 0.4,
+                    -1.0,
+                    1.0,
+                )
+                states.append(state)
+                actions.append(teacher_action)
+                agent.observe(
+                    state,
+                    teacher_action,
+                    0.0,
+                    state,
+                    True,
+                )
+            demonstrations = {
+                "states": np.asarray(states, dtype=np.float32),
+                "actions": np.asarray(actions, dtype=np.float32),
+                "option_advantages": np.tile(
+                    np.asarray([[0.0, 1.0e7]], dtype=np.float32),
+                    (16, 1),
+                ),
+                "option_feasible": np.ones((16, 2), dtype=bool),
+            }
+            actor_before = {
+                name: value.detach().clone()
+                for name, value in agent.actor.state_dict().items()
+            }
+            critic_target_before = {
+                name: value.detach().clone()
+                for name, value in agent.critic_target.state_dict().items()
+            }
+            configured = (
+                agent.configure_critic_teacher_advantage_calibration(
+                    demonstrations
+                )
+            )
+
+            summary = agent.prepare_online_finetuning(
+                start_episode=0
+            )
+
+            self.assertEqual(
+                configured["critic_teacher_advantage_samples"],
+                16.0,
+            )
+            self.assertLess(
+                summary["critic_teacher_advantage_mse_after"],
+                summary["critic_teacher_advantage_mse_before"],
+            )
+            self.assertGreater(
+                summary[
+                    "critic_teacher_advantage_positive_fraction_after"
+                ],
+                0.5,
+            )
+            self.assertEqual(
+                summary["critic_teacher_advantage_positive_margin"],
+                0.002,
+            )
+            self.assertGreaterEqual(
+                summary[
+                    "critic_teacher_advantage_positive_margin_loss_final"
+                ],
+                0.0,
+            )
+            self.assertEqual(
+                summary[
+                    "critic_teacher_advantage_pairwise_difference_weight"
+                ],
+                1.0,
+            )
+            self.assertGreaterEqual(
+                summary[
+                    "critic_teacher_advantage_pairwise_difference_loss_final"
+                ],
+                0.0,
+            )
+            self.assertTrue(
+                np.isfinite(
+                    summary[
+                        "critic_teacher_advantage_bellman_mse_after"
+                    ]
+                )
+            )
+            for name, value in agent.actor.state_dict().items():
+                torch.testing.assert_close(value, actor_before[name])
+            for name, value in agent.critic_target.state_dict().items():
+                torch.testing.assert_close(
+                    value,
+                    critic_target_before[name],
+                )
+            online_metrics = agent.update()
+            self.assertTrue(
+                np.isfinite(
+                    online_metrics[
+                        "critic_teacher_advantage_ranking_loss"
+                    ]
+                )
+            )
+            self.assertGreater(
+                online_metrics[
+                    "critic_teacher_advantage_weighted_ranking_loss"
+                ],
+                0.0,
+            )
+
+    def test_gcn_actor_can_follow_frozen_proposal_conditioned_gate(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=163,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "batch_size": 2,
+                "env": asdict(env.config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "correction_gate": {
+                        "enabled": True,
+                        "groups": ["specimen_transfer"],
+                        "threshold": 0.5,
+                        "include_proposed_residual_features": True,
+                        "proposed_residual_feature_mode": "raw_scaled",
+                        "align_online_policy": True,
+                        "differentiate_actor_proposal": True,
+                    },
+                },
+            }
+        )
+        agent = GCNDDPGAgent(
+            env.observation_size,
+            env.action_size,
+            config,
+        )
+
+        summary = agent.prepare_online_finetuning()
+
+        self.assertEqual(
+            summary["online_correction_gate_actor_gradient"],
+            "frozen_gate|proposal_conditioned_soft_path",
+        )
+        self.assertTrue(
+            all(
+                not parameter.requires_grad
+                for parameter in agent.correction_gate.parameters()
+            )
+        )
+
+        class ProposalAwareGate(torch.nn.Module):
+            def __init__(self, num_facilities: int) -> None:
+                super().__init__()
+                self.num_facilities = num_facilities
+
+            def forward(self, node_features):
+                specimen_proposal = node_features[
+                    :, : self.num_facilities, -4
+                ]
+                return 5.0 * specimen_proposal.mean(
+                    dim=1,
+                    keepdim=True,
+                )
+
+        agent.correction_gate = ProposalAwareGate(
+            env.config.num_facilities
+        )
+        agent._ungated_policy_residuals_tensor = (
+            lambda states, actions: actions
+        )
+        state_tensor = torch.as_tensor(
+            env.reset(seed=163),
+            dtype=torch.float32,
+            device=agent.device,
+        ).unsqueeze(0)
+        proposal = torch.full(
+            (1, env.action_size),
+            0.2,
+            dtype=torch.float32,
+            device=agent.device,
+        )
+
+        def proposal_gradient(differentiate_gate: bool):
+            actions = proposal.clone().requires_grad_(True)
+            residuals = agent._policy_residuals_tensor(
+                state_tensor,
+                actions,
+                apply_correction_gate=True,
+                hard_correction_gate=False,
+                differentiate_correction_gate=differentiate_gate,
+            )
+            return torch.autograd.grad(
+                residuals[:, : env.config.num_facilities].sum(),
+                actions,
+            )[0]
+
+        detached_gradient = proposal_gradient(False)
+        conditioned_gradient = proposal_gradient(True)
+        self.assertTrue(torch.isfinite(conditioned_gradient).all())
+        self.assertFalse(
+            torch.allclose(
+                detached_gradient,
+                conditioned_gradient,
+                atol=1e-8,
+                rtol=1e-6,
+            )
+        )
+
     def test_residual_action_zero_network_output_returns_heuristic_base(self) -> None:
         env = CapacityPlanningEnv(make_20_clinic_config(episode_horizon=2), seed=13)
         state = env.reset(seed=13)
@@ -820,6 +1773,58 @@ class GraphStateConversionTests(unittest.TestCase):
             np.testing.assert_allclose(
                 transformed[3 * n : 4 * n],
                 np.maximum(residual[3 * n : 4 * n], 0.0),
+            )
+
+    def test_specimen_action_quantization_is_matched_for_graph_and_flat(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=25,
+        )
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(env.config),
+                "specimen_action_quantization": {
+                    "enabled": True,
+                    "actor_gradient": "straight_through",
+                },
+            }
+        )
+        n = env.config.num_facilities
+        action_data = torch.zeros(
+            (1, env.action_size),
+            dtype=torch.float32,
+        )
+        action_data[0, 0] = 0.004
+        action_data[0, 1] = 0.006
+        action_data[0, n] = 0.123
+
+        for agent_cls in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_cls(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            actions = action_data.clone().requires_grad_(True)
+            quantized = agent._critic_actions_tensor(
+                actions,
+                straight_through=True,
+            )
+
+            forward = quantized.detach()
+            self.assertAlmostEqual(float(forward[0, 0]), 0.0)
+            self.assertAlmostEqual(float(forward[0, 1]), 0.01)
+            self.assertAlmostEqual(float(forward[0, n]), 0.123)
+            quantized.sum().backward()
+            torch.testing.assert_close(
+                actions.grad,
+                torch.ones_like(actions),
+            )
+            self.assertEqual(
+                agent.prepare_online_finetuning()[
+                    "online_specimen_action_quantization"
+                ],
+                "critic_integer_patient_lots|actor_straight_through",
             )
 
     def test_state_gate_limits_replenishment_residual_to_pressure_facilities(self) -> None:
@@ -1750,6 +2755,234 @@ class GraphStateConversionTests(unittest.TestCase):
             np.zeros(2 * n),
         )
         self.assertEqual(float(gated[1, 3 * n]), 0.5)
+
+    def test_online_imitation_batch_replacement_does_not_update_networks(self) -> None:
+        env = CapacityPlanningEnv(
+            make_20_clinic_config(episode_horizon=2),
+            seed=44,
+        )
+        config = _config_dict()
+        config["env"] = asdict(env.config)
+        states = np.stack(
+            [env.reset(seed=440 + index) for index in range(3)]
+        )
+        actions = np.zeros((3, env.action_size), dtype=np.float32)
+        weights = np.asarray([1.0, 2.0, 3.0], dtype=np.float32)
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            before = {
+                name: {
+                    key: value.detach().clone()
+                    for key, value in getattr(agent, name).state_dict().items()
+                }
+                for name in ("actor", "actor_target", "critic", "critic_target")
+            }
+
+            summary = agent.configure_online_imitation_regularization(
+                states,
+                actions,
+                weights=weights,
+                seed=1234,
+            )
+
+            self.assertEqual(
+                summary,
+                {"samples": 3, "weighted": True, "seed": 1234},
+            )
+            self.assertEqual(tuple(agent.imitation_states.shape), states.shape)
+            self.assertEqual(tuple(agent.imitation_actions.shape), actions.shape)
+            self.assertAlmostEqual(
+                float(agent.imitation_weights.mean().item()),
+                1.0,
+            )
+            for name, state in before.items():
+                for key, expected in state.items():
+                    self.assertTrue(
+                        torch.equal(
+                            getattr(agent, name).state_dict()[key],
+                            expected,
+                        )
+                    )
+
+    def test_one_step_anchor_relative_reward_uses_exact_crn(self) -> None:
+        base_env_config = make_20_clinic_config(episode_horizon=2)
+        config = _config_dict()
+        config.update(
+            {
+                "env": asdict(base_env_config),
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "online_reward_mode": "one_step_anchor_relative",
+                },
+            }
+        )
+
+        for index, agent_class in enumerate((GCNDDPGAgent, FlatDDPGAgent)):
+            env = CapacityPlanningEnv(base_env_config, seed=450 + index)
+            agent = agent_class(
+                env.observation_size,
+                env.action_size,
+                config,
+            )
+            state = env.reset(seed=450 + index)
+            context = agent.capture_training_reward_context(
+                state,
+                np.zeros(env.action_size, dtype=np.float32),
+                env,
+            )
+            anchor_action = context["anchor_action"]
+            next_state, reward, done, info = env.step(anchor_action)
+
+            relative_reward = agent.transform_training_reward(
+                state,
+                anchor_action,
+                reward,
+                next_state,
+                done,
+                info,
+                context,
+            )
+
+            self.assertAlmostEqual(relative_reward, 0.0)
+            self.assertEqual(
+                agent._anchor_relative_reward_metrics(),
+                {
+                    "anchor_relative_reward_mean": 0.0,
+                    "anchor_relative_reward_mean_abs": 0.0,
+                    "anchor_relative_reward_positive_rate": 0.0,
+                    "anchor_relative_reward_count": 1.0,
+                },
+            )
+
+            state = env.reset(seed=460 + index)
+            context = agent.capture_training_reward_context(
+                state,
+                np.zeros(env.action_size, dtype=np.float32),
+                env,
+            )
+            anchor_action = context["anchor_action"]
+            next_state, reward, done, info = env.step(anchor_action)
+            relative_reward = agent.transform_training_reward(
+                state,
+                anchor_action,
+                reward + 123.0,
+                next_state,
+                done,
+                info,
+                context,
+            )
+
+            self.assertAlmostEqual(relative_reward, 123.0)
+            metrics = agent._anchor_relative_reward_metrics()
+            self.assertEqual(metrics["anchor_relative_reward_count"], 2.0)
+            self.assertAlmostEqual(
+                metrics["anchor_relative_reward_mean"],
+                61.5,
+            )
+            self.assertAlmostEqual(
+                metrics["anchor_relative_reward_mean_abs"],
+                61.5,
+            )
+            self.assertAlmostEqual(
+                metrics["anchor_relative_reward_positive_rate"],
+                0.5,
+            )
+
+    def test_anchor_relative_reward_requires_residual_policy(self) -> None:
+        for reward_mode in (
+            "one_step_anchor_relative",
+            "n_step_anchor_relative",
+        ):
+            config = _config_dict()
+            config["residual_action"] = {
+                "enabled": False,
+                "online_reward_mode": reward_mode,
+                "online_reward_n_step_horizon": 4,
+            }
+
+            for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+                with self.assertRaisesRegex(
+                    ValueError,
+                    "requires residual_action.enabled",
+                ):
+                    agent_class(140, 80, config)
+
+    def test_n_step_anchor_relative_reward_uses_correct_return_and_discount(
+        self,
+    ) -> None:
+        config = _config_dict()
+        config.update(
+            {
+                "gamma": 0.5,
+                "residual_action": {
+                    "enabled": True,
+                    "base_policy": "mdl2",
+                    "scale": 0.1,
+                    "online_reward_mode": "n_step_anchor_relative",
+                    "online_reward_n_step_horizon": 4,
+                },
+            }
+        )
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            agent = agent_class(140, 80, config)
+            for index, reward in enumerate((1.0, 2.0, 3.0, 4.0)):
+                state = np.full(140, index, dtype=np.float32)
+                next_state = np.full(140, index + 1, dtype=np.float32)
+                action = np.full(80, index, dtype=np.float32)
+                agent.observe(state, action, reward, next_state, False)
+
+            self.assertEqual(len(agent.replay_buffer), 1)
+            self.assertAlmostEqual(
+                float(agent.replay_buffer.rewards[0, 0]),
+                3.25,
+            )
+            self.assertAlmostEqual(
+                float(agent.replay_buffer.discount_multipliers[0, 0]),
+                0.125,
+            )
+            np.testing.assert_array_equal(
+                agent.replay_buffer.next_states[0],
+                np.full(140, 4, dtype=np.float32),
+            )
+
+            agent.finalize_training_episode()
+
+            self.assertEqual(len(agent.replay_buffer), 4)
+            self.assertEqual(len(agent._n_step_reward_queue), 0)
+            np.testing.assert_allclose(
+                agent.replay_buffer.discount_multipliers[:4, 0],
+                np.array([0.125, 0.25, 0.5, 1.0], dtype=np.float32),
+            )
+            np.testing.assert_allclose(
+                agent.replay_buffer.one_step_rewards[:4, 0],
+                np.array([1.0, 2.0, 3.0, 4.0], dtype=np.float32),
+            )
+            self.assertEqual(
+                agent._anchor_relative_reward_metrics()[
+                    "anchor_relative_reward_n_step_horizon"
+                ],
+                4.0,
+            )
+
+    def test_n_step_anchor_relative_reward_requires_multistep_horizon(self) -> None:
+        config = _config_dict()
+        config["residual_action"] = {
+            "enabled": True,
+            "online_reward_mode": "n_step_anchor_relative",
+            "online_reward_n_step_horizon": 1,
+        }
+
+        for agent_class in (GCNDDPGAgent, FlatDDPGAgent):
+            with self.assertRaisesRegex(ValueError, "must be at least 2"):
+                agent_class(140, 80, config)
 
 
 if __name__ == "__main__":

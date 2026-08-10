@@ -1,0 +1,34 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_screen_cache",
+  "experimental_role": "screening-only four-scenario teacher cache for scale-aligned DDPG smoke",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "base_policy": "mdl2",
+  "restrict_options": false,
+  "validation_fraction": 0.0,
+  "split_seed": 8670000,
+  "balance_scenarios": true,
+  "sources": [
+    {
+      "scenario": "routing_nominal_history",
+      "cache": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_nominal_history/teacher_cache.npz",
+      "trajectory_length": 52
+    },
+    {
+      "scenario": "routing_abrupt_regime_shift",
+      "cache": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_abrupt_regime_shift/teacher_cache.npz",
+      "trajectory_length": 52
+    },
+    {
+      "scenario": "routing_regional_drift",
+      "cache": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_regional_drift/teacher_cache.npz",
+      "trajectory_length": 52
+    },
+    {
+      "scenario": "routing_compound_regional_stress",
+      "cache": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_bounded_teacher_audit_v1/teacher_holdout/routing_compound_regional_stress/teacher_cache.npz",
+      "trajectory_length": 52
+    }
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_screen"
+}

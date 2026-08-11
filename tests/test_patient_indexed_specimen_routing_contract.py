@@ -149,6 +149,81 @@ class RoutingExperimentContractTests(unittest.TestCase):
             0.0005,
         )
 
+    def test_ddpg_confirmation_evaluation_is_fixed_and_paired(self) -> None:
+        config_root = Path("experiments/configs")
+        manifest = (
+            "results/patient_indexed_specimen_routing_mac_mps_primary/"
+            "confirmation/ddpg_routing_primary_100/"
+            "patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/"
+            "training_manifest.json"
+        )
+        filenames = {
+            "final": (
+                "patient_indexed_specimen_routing_mac_mps_"
+                "ddpg_confirmation_100_final_eval.json"
+            ),
+            "pretrain": (
+                "patient_indexed_specimen_routing_mac_mps_"
+                "ddpg_confirmation_100_pretrain_eval.json"
+            ),
+        }
+        evaluations = {
+            variant: json.loads((config_root / filename).read_text())
+            for variant, filename in filenames.items()
+        }
+        for variant, evaluation in evaluations.items():
+            self.assertEqual(evaluation["training_manifest"], manifest)
+            self.assertEqual(evaluation["algorithms"], [GCN, FLAT])
+            self.assertEqual(
+                evaluation["training_seeds"],
+                [10, 11, 12, 13, 14],
+            )
+            self.assertEqual(evaluation["checkpoint_variants"], [variant])
+            self.assertEqual(
+                evaluation["fixed_checkpoint_variant"],
+                variant,
+            )
+            self.assertEqual(evaluation["validation_replications"], 1)
+            self.assertEqual(evaluation["holdout_replications"], 100)
+            self.assertEqual(
+                evaluation["fixed_deployment_candidate"],
+                {
+                    "scale": 1.0,
+                    "use_checkpoint_group_thresholds": True,
+                },
+            )
+            self.assertEqual(
+                [item["scale"] for item in evaluation["deployment_candidates"]],
+                [0.0, 1.0],
+            )
+        self.assertEqual(
+            evaluations["final"]["validation_seed"],
+            evaluations["pretrain"]["validation_seed"],
+        )
+        self.assertEqual(
+            evaluations["final"]["holdout_seed"],
+            evaluations["pretrain"]["holdout_seed"],
+        )
+
+        smoke = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "ddpg_confirmation_100_eval_smoke.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(smoke["training_manifest"], manifest)
+        self.assertEqual(smoke["training_seeds"], [10])
+        self.assertEqual(smoke["checkpoint_variants"], ["pretrain", "final"])
+        self.assertEqual(smoke["validation_replications"], 1)
+        self.assertEqual(smoke["holdout_replications"], 1)
+        self.assertNotEqual(
+            smoke["holdout_seed"],
+            evaluations["final"]["holdout_seed"],
+        )
+
     def test_mac_mps_campaign_is_matched_and_routing_primary(self) -> None:
         config_root = Path("experiments/configs")
         smoke = json.loads(

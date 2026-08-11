@@ -113,8 +113,10 @@ an "avoidable-cost percentage" without a defensible oracle or lower bound.
 
 ### Stage A: transport-availability sensitivity
 
-Status: active; configs and execution smoke are complete, formal evaluation is
-not yet launched.
+Status: completed and audited on 2026-08-11. The frozen-policy lead-0 and
+return-1 evaluations each completed all 10 algorithm-by-seed runs with 100
+paired CRN replications per run. See
+`docs/patient_indexed_specimen_routing_stage_a_review.md`.
 
 Run two frozen-final-policy sensitivities with no retraining, checkpoint
 selection, or deployment retuning:
@@ -129,6 +131,8 @@ hashes. These tests are transport-timing sensitivities, not geography
 sensitivities.
 
 ### Stage B: DDPG online-attribution diagnostic
+
+Status: active; protocol preparation is in progress.
 
 Do not tune on formal holdout seed `91100000`. On a newly locked development
 CRN stream, evaluate the existing frozen-pretrain and episode 25, 50, 75, and

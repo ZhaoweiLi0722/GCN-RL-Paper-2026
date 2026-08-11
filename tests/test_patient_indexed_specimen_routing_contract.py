@@ -224,6 +224,126 @@ class RoutingExperimentContractTests(unittest.TestCase):
             evaluations["final"]["holdout_seed"],
         )
 
+    def test_ddpg_confirmation_sensitivity_is_fixed_policy_and_paired(
+        self,
+    ) -> None:
+        config_root = Path("experiments/configs")
+        final = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "ddpg_confirmation_100_final_eval.json"
+                )
+            ).read_text()
+        )
+        manifest = final["training_manifest"]
+        plan = json.loads(Path(final["plan"]).read_text())
+        scenarios = {
+            scenario["name"]: scenario
+            for scenario in plan["scenarios"]
+        }
+        nominal_overrides = scenarios["routing_nominal_history"][
+            "env_overrides"
+        ]
+        filenames = {
+            "routing_nominal_lead0_sensitivity": (
+                "patient_indexed_specimen_routing_mac_mps_"
+                "lead0_sensitivity_eval.json"
+            ),
+            "routing_nominal_return1_sensitivity": (
+                "patient_indexed_specimen_routing_mac_mps_"
+                "return1_sensitivity_eval.json"
+            ),
+        }
+        timing_changes = {
+            "routing_nominal_lead0_sensitivity": (
+                "specimen_routing_lead_time_epochs",
+                0,
+            ),
+            "routing_nominal_return1_sensitivity": (
+                "finished_product_return_lead_time_epochs",
+                1,
+            ),
+        }
+        for scenario, filename in filenames.items():
+            sensitivity = json.loads((config_root / filename).read_text())
+            timing_field, timing_value = timing_changes[scenario]
+            expected_overrides = dict(nominal_overrides)
+            expected_overrides["scenario_name"] = scenario
+            expected_overrides[timing_field] = timing_value
+            self.assertEqual(
+                scenarios[scenario]["env_config"],
+                scenarios["routing_nominal_history"]["env_config"],
+            )
+            self.assertEqual(
+                scenarios[scenario]["env_overrides"],
+                expected_overrides,
+            )
+            self.assertEqual(sensitivity["training_manifest"], manifest)
+            self.assertEqual(sensitivity["algorithms"], [GCN, FLAT])
+            self.assertEqual(
+                sensitivity["training_seeds"],
+                [10, 11, 12, 13, 14],
+            )
+            self.assertEqual(sensitivity["checkpoint_variants"], ["final"])
+            self.assertEqual(
+                sensitivity["fixed_checkpoint_variant"],
+                "final",
+            )
+            self.assertEqual(sensitivity["scenarios"], [scenario])
+            self.assertEqual(
+                sensitivity["deployment_candidates"],
+                final["deployment_candidates"],
+            )
+            self.assertEqual(
+                sensitivity["fixed_deployment_candidate"],
+                final["fixed_deployment_candidate"],
+            )
+            self.assertEqual(
+                sensitivity["validation_replications"],
+                final["validation_replications"],
+            )
+            self.assertEqual(
+                sensitivity["validation_seed"],
+                final["validation_seed"],
+            )
+            self.assertEqual(
+                sensitivity["holdout_replications"],
+                final["holdout_replications"],
+            )
+            self.assertEqual(
+                sensitivity["holdout_seed"],
+                final["holdout_seed"],
+            )
+            self.assertEqual(
+                sensitivity["clinical_noninferiority"],
+                final["clinical_noninferiority"],
+            )
+            self.assertNotIn("config_overrides", sensitivity)
+
+        smoke = json.loads(
+            (
+                config_root
+                / (
+                    "patient_indexed_specimen_routing_mac_mps_"
+                    "ddpg_confirmation_100_sensitivity_eval_smoke.json"
+                )
+            ).read_text()
+        )
+        self.assertEqual(smoke["training_manifest"], manifest)
+        self.assertEqual(smoke["algorithms"], [GCN, FLAT])
+        self.assertEqual(smoke["training_seeds"], [10])
+        self.assertEqual(smoke["checkpoint_variants"], ["final"])
+        self.assertEqual(smoke["scenarios"], list(filenames))
+        self.assertEqual(
+            smoke["fixed_deployment_candidate"],
+            final["fixed_deployment_candidate"],
+        )
+        self.assertEqual(smoke["validation_replications"], 1)
+        self.assertEqual(smoke["holdout_replications"], 1)
+        self.assertNotEqual(smoke["holdout_seed"], final["holdout_seed"])
+
     def test_mac_mps_campaign_is_matched_and_routing_primary(self) -> None:
         config_root = Path("experiments/configs")
         smoke = json.loads(

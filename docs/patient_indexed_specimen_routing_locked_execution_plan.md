@@ -14,24 +14,20 @@ of truth for the routing-primary publication campaign.
 - Current publication gate: Stage C matched TD3 development screen.
 - Independent execution owner: Howard, on Mac MPS, using the locked Stage C
   assets at commit `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
-- Parallel core-team work: one user-approved, single-factor DDPG
-  support-alignment development experiment on a separate Mac MPS worktree,
-  continued through Recovery 2 implementation commit
-  `17ad3bc00a799a18424c7f7ab28616b09fcd407c`. Recovery 1's six complete
-  controls are immutable inputs; Recovery 2 may run only the six previously
-  unstarted candidates and the paired evaluations. It may not change or
-  interfere with Howard's Stage C protocol.
+- Parallel core-team work: the single-factor DDPG support-alignment
+  development experiment is complete. All 12 training runs and 24 evaluation
+  runs were recovered and audited, but support alignment did not improve the
+  control or establish positive online gain. This DDPG refinement path is
+  closed and did not interfere with Howard's Stage C protocol.
 - Verified diagnosis: DDPG online replay ranking improves early and then
   erodes while critic advantage scale becomes severely miscalibrated. The
   teacher ranking regularizer also includes 41.72% of rows whose winning option
   is outside the specimen-only residual policy support.
-- The support-alignment experiment is the only concurrent DDPG training
-  authorized while Stage C is unresolved. Do not reuse the formal holdout,
-  reopen broad HPO, add another DDPG factor, or alter its frozen protocol.
-- Immediate next gate: jointly review Howard's matched TD3 result and the
-  paired DDPG support-alignment result. At most one revised protocol may proceed
-  to fresh independent confirmation; neither may be selected from a point
-  estimate alone.
+- No further DDPG factor, broad HPO, formal-holdout reuse, or selective
+  extension is authorized from the support-alignment result.
+- Immediate next gate: complete and audit Howard's independently locked matched
+  TD3 screen, then perform the planned joint review. The support-aligned DDPG
+  candidate is not eligible for fresh formal confirmation.
 
 ## 1. Purpose and change control
 
@@ -496,3 +492,50 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   no-trajectory Recovery 2 preflight, then issue exactly one detached launch.
   After six candidate runs and four evaluation phases complete, review the
   paired support effect jointly with Howard's Stage C result.
+
+### 2026-08-12: Recovery 2 evidence completed; support alignment did not pass
+
+- Recovery 2 execution commit:
+  `0a7cd1ef2edf305be9327cc947557766d68a1858` on
+  `rl-attribution-refinement`.
+- Completed scientific boundary: six immutable Recovery 1 controls and six
+  support-aligned candidates each contain 100 online episodes, for 12 runs and
+  1,200 episodes total. Candidate evidence contains 120 five-episode policy
+  checkpoints, six atomic states, 262,080 specimen-routing decisions, 31,200
+  online updates, finite persisted losses, and a 0.9699% GCN/flat parameter
+  gap. All four evaluation phases completed 24 runs and exactly 4,800 learned
+  plus 4,800 MDL-2 anchor rows.
+- Terminal launcher boundary: training and evaluation exited successfully, but
+  the comparison reader used Python's default 131,072-byte CSV field limit and
+  failed on `specimen_route_events_json`. This was a post-processing defect;
+  it did not invalidate or alter any trajectory, checkpoint, or evaluation.
+  Immutable failed status SHA256:
+  `52938af461f7e8336bad742f6367a0cbe5bb64a1510a4b402051d0f22996c73f`.
+- Post-processing-only fix commit:
+  `e08ba5a8ec84cc19a34d12e459d58fde9a595c29`. The comparator now raises the
+  supported CSV field limit before reading, and a regression test exercises a
+  200,000-byte serialized metric field. The focused support-alignment suite
+  passed 11/11, repository-wide `compileall` passed, and the full real-data
+  comparison completed with 20,000 bootstrap resamples. No training or
+  evaluation process was relaunched.
+- Recovered evidence: comparison SHA256
+  `56f405e5975a54a5e532805ca3a8e261f47cdcdbafb668945e2725b126f7fa63`,
+  76-file evaluation-input tree SHA256
+  `b50888d0ea6373c0bc4e0ce9cb9da876310a7e9626b275fa79fc44f1f65e8d9a`,
+  and post-processing inventory SHA256
+  `e430b542c65083b036a5112581c7efae97ce0b6089eb8fc7fb0973ce0f9171f1`.
+- Result: support alignment failed the preregistered advancement gate for both
+  matched flat and GCN DDPG. Candidate-final cost was 0.00138% higher than
+  control for flat (95% CI for absolute difference
+  `[-304685, 398625]`) and 0.00175% higher for GCN
+  (`[-130336, 203526]`). Final-versus-pretrain cost also increased by 0.00665%
+  for flat and 0.01017% for GCN, with both confidence intervals spanning zero.
+  GCN preserved clinical noninferiority, but neither architecture established
+  lower cost or positive online attribution.
+- Decision: do not promote support-aligned DDPG, add another DDPG factor, or
+  selectively extend seeds. Await Howard's unchanged matched TD3 result and
+  perform the locked joint review.
+- Execution safeguard: every expensive campaign must run every downstream
+  parser, comparator, and inventory writer end-to-end during preflight using a
+  synthetic CSV field larger than 131,072 bytes. Post-processing phases must
+  remain recoverable from immutable upstream artifacts without retraining.

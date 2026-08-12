@@ -16,8 +16,11 @@ of truth for the routing-primary publication campaign.
   assets at commit `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
 - Parallel core-team work: one user-approved, single-factor DDPG
   support-alignment development experiment on a separate Mac MPS worktree,
-  locked at commit `470b56b0422704d09b4cfe36bdc01be0bb711fc1`.
-  It may not change or interfere with Howard's Stage C protocol.
+  continued through Recovery 2 implementation commit
+  `17ad3bc00a799a18424c7f7ab28616b09fcd407c`. Recovery 1's six complete
+  controls are immutable inputs; Recovery 2 may run only the six previously
+  unstarted candidates and the paired evaluations. It may not change or
+  interfere with Howard's Stage C protocol.
 - Verified diagnosis: DDPG online replay ranking improves early and then
   erodes while critic advantage scale becomes severely miscalibrated. The
   teacher ranking regularizer also includes 41.72% of rows whose winning option
@@ -449,3 +452,47 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   hyperparameters remain locked.
 - Next gate: focused and full tests, compile validation, no-trajectory MPS
   preflight, then one detached Recovery 1 launch and five-episode monitoring.
+
+### 2026-08-12: Recovery 1 controls completed; Recovery 2 continuation locked
+
+- Recovery 1 execution commit:
+  `c14bf379735a7d88bcea35e6f9adfb6e07e8a185` on
+  `rl-attribution-refinement`.
+- Completed scientific boundary: all six control runs (GCN and matched flat,
+  seeds 30-32) completed 100 online episodes, for 600 total episodes. The
+  audited outputs contain 262,016 specimen-routing decisions, 31,200 online
+  RL updates, finite persisted metrics, all 120 five-episode policy
+  checkpoints, and six final atomic training states. The GCN/flat parameter
+  gap is 0.9699%, below the locked 1% maximum.
+- Terminal launcher boundary: after the sixth control process exited 0, the
+  runner's post-training audit raised Python `_csv.Error` because one
+  serialized metric field exceeded the default 131,072-byte CSV field limit.
+  No candidate training or evaluation process was started. This is an audit
+  implementation failure, not a DDPG, routing, MPS, or numerical failure.
+- Immutable Recovery 1 evidence: status SHA256
+  `076511140f57ec1f2c0ae6e067c9f759a35a229ce119f26dd32a789c2b33f22e`,
+  detached stderr SHA256
+  `a779b412d142b2caffa08d29043b283dd086ab08e684c84a7626f1ad5fcb78e6`,
+  control manifest SHA256
+  `5a67ef4d139b1ec3b1e48692db3eba232de58098d415820be0fbfc34521dd2c4`,
+  151-file control tree SHA256
+  `99c6ef49705c8e00343401f1f97ddbf93ca8253545c2fc1d1353d14e5570c3a0`,
+  and 13-file paired-state tree SHA256
+  `ed7dabff2cc2124a2807cfc99fd94dce4b1073ac41c9c52a1e07991caa109cf3`.
+- Recovery 2 implementation commit:
+  `17ad3bc00a799a18424c7f7ab28616b09fcd407c`. It raises the CSV parser limit,
+  revalidates every immutable Recovery 1 control and paired-state artifact,
+  reads the completed control manifest without modification, and writes all
+  candidate/evaluation/comparison outputs under a fresh `recovery2` root.
+- Scientific design remains unchanged. Recovery 2 reuses the exact six
+  never-consumed candidate episode-0 contract clones and runs only the six
+  support-aligned candidates. It does not retrain controls, reuse candidate
+  trajectories, change a hyperparameter, or access a forbidden CRN stream.
+- Verification: compileall passed; the locked focused gate passed 59/59; the
+  full repository suite ran 634 tests with 632 passing and only the two known,
+  unrelated MPS/CPU fixture and PPO-threshold failures. Howard's Stage C files
+  remained byte-identical to their handoff commit.
+- Next gate: commit this append-only ledger update, run one clean-commit
+  no-trajectory Recovery 2 preflight, then issue exactly one detached launch.
+  After six candidate runs and four evaluation phases complete, review the
+  paired support effect jointly with Howard's Stage C result.

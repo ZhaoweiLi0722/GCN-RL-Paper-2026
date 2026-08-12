@@ -1,13 +1,32 @@
 # Patient-Indexed Specimen Routing: Locked Publication Execution Plan
 
-Plan version: 1.0
+Plan version: 1.1
 
-Status date: 2026-08-11
+Status date: 2026-08-12
 
 Branch: `patient-indexed-specimen-routing`
 
 Authority: the committed version of this document is the cross-session source
 of truth for the routing-primary publication campaign.
+
+## Current verified position
+
+- Current publication gate: Stage C matched TD3 development screen.
+- Independent execution owner: Howard, on Mac MPS, using the locked Stage C
+  assets at commit `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
+- Parallel core-team work: retrospective diagnosis of the completed Stage B
+  DDPG checkpoint curve, now completed in
+  `docs/patient_indexed_specimen_routing_rl_attribution_diagnosis.md`. This
+  work may not change or interfere with Howard's Stage C protocol.
+- Verified diagnosis: DDPG online replay ranking improves early and then
+  erodes while critic advantage scale becomes severely miscalibrated. The
+  teacher ranking regularizer also includes 41.72% of rows whose winning option
+  is outside the specimen-only residual policy support.
+- Do not launch new DDPG training, reuse the formal holdout stream, or reopen
+  broad hyperparameter search while Stage C is unresolved.
+- Immediate next gate: use Howard's locked Stage C result to decide between
+  TD3 promotion and one conditional support-aligned DDPG fallback. Only one may
+  proceed; neither decision may be made from a point estimate alone.
 
 ## 1. Purpose and change control
 
@@ -285,3 +304,63 @@ control requirements in Section 1.
   locked for Mac MPS. The screen uses fresh seeds 20-22, six serial 100-episode
   runs, matched parameter budgets, and fresh development CRNs. Howard may
   launch from the supplied commit without a separate approval round.
+- Status update, 2026-08-12: The read-only Stage B mechanism diagnosis was
+  completed. It identified online replay-ranking erosion, critic scale
+  miscalibration, and a teacher-policy support mismatch. This did not amend
+  Stage C or authorize a new DDPG experiment.
+
+## 9. Append-only progress ledger
+
+This ledger is the compact-safe recovery point for future tasks. Add one entry
+after every material stage result, terminal failure, protocol decision, or
+publication-scope decision. Never edit or delete an older entry. Each new entry
+must record the date, stage, exact commit, immutable evidence, decision, and
+next gate. Detailed reports may live elsewhere, but must be linked here.
+
+### 2026-08-12: Stage B diagnosis opened in parallel with Stage C execution
+
+- Stage: post-Stage-B DDPG online-attribution mechanism diagnosis.
+- Source branch/commit: `patient-indexed-specimen-routing` at
+  `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
+- Diagnostic branch: `rl-attribution-refinement`.
+- Immutable evidence: Stage B checkpoint-curve summary SHA256
+  `0016e3bb8fa779984de1a21015bcade6f377d72a231b7581adc14ffc5a652ecf`,
+  training manifest SHA256
+  `0311c648fc1570843daf659f5e45ad27cceb967a9265710d03bd45c60a5e31e2`,
+  and teacher SHA256
+  `9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92`.
+- Verified starting result: GCN improves weakly through episode 50 on the
+  development checkpoint curve, then loses that point-estimate gain by episode
+  100; the late segment remains statistically inconclusive. Online updates and
+  learned residual use are nonzero, so this is not an inactive-policy failure.
+- Decision: Howard proceeds independently with the already locked matched TD3
+  Stage C screen. The core team performs read-only critic/credit-assignment
+  diagnosis only; no new training or formal-holdout evaluation is authorized.
+- Next gate: commit a reproducible diagnostic report and use it together with
+  the Stage C outcome to decide whether one bounded DDPG refinement is
+  scientifically justified.
+
+### 2026-08-12: Stage B DDPG mechanism diagnosis completed
+
+- Stage: read-only critic, replay, teacher-support, and cost-component audit.
+- Diagnostic implementation:
+  `evaluation/diagnose_ddpg_online_attribution.py`.
+- Detailed report:
+  `docs/patient_indexed_specimen_routing_rl_attribution_diagnosis.md`.
+- Deterministic diagnostic JSON SHA256:
+  `15e8f726f3266c9b5fbbb223e1dc261c0e09e082c6c1dd106912ff099b192420`.
+- Verified result: GCN replay-ranking Spearman rises from 0.191 at pretrain to
+  0.381 at episode 25, then declines to 0.159 at episode 100. Its critic
+  calibration slope falls from 0.371 to 0.023 while prediction scale expands
+  far beyond the stored replay-return scale. Flat ranking approaches chance.
+- Support audit: 131 of 314 teacher rows, or 41.72%, have a globally winning
+  option outside the specimen-only policy support. This is a contributing
+  mismatch, not a complete explanation of replay-ranking erosion.
+- Decision: Stage C remains unchanged because twin critics and clipped double-Q
+  targets directly test the leading instability mechanism. No new DDPG run is
+  authorized while Howard's matched TD3 screen is unresolved.
+- Conditional fallback: only if Stage C fails, prepare one matched
+  support-aligned DDPG candidate with `allowed_option_groups` restricted to
+  `specimen_transfer`, fresh development seeds/CRNs, and no broad HPO.
+- Next gate: audit the completed Stage C result and choose exactly one path:
+  TD3 promotion or the single bounded DDPG fallback.

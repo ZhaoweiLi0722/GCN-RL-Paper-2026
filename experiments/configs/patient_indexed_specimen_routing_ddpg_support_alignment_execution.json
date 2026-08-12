@@ -154,7 +154,7 @@
     },
     {
       "path": "tests/test_ddpg_support_alignment.py",
-      "sha256": "c4bbb3483b29702ebae6b2a77de353e9026e639790bef73871d7644e6541cf55"
+      "sha256": "24b2eea95b4cb55d92e7f9e18638aa88e4c435257cbbe50eba94e242b7ba1991"
     },
     {
       "path": "evaluation/prepare_ddpg_support_alignment_preonline.py",
@@ -166,7 +166,7 @@
     },
     {
       "path": "evaluation/compare_ddpg_support_alignment.py",
-      "sha256": "565d59f52b47f88f4e439c56576d4aa6d9cf780daa93c915d266af96fc3c805c"
+      "sha256": "76c659066eeef057b4c450ae8e6efb7d3b4491437b519a4fe8936d7d7ae34b13"
     },
     {
       "path": "evaluation/train_multiscenario_network_residual.py",

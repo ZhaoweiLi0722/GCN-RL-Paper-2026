@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import sys
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -23,6 +24,18 @@ METRICS = (
     "patients_lost",
     "patient_ineligibility_during_manufacturing_rate",
 )
+
+
+def _enable_large_csv_fields() -> None:
+    """Raise the parser limit for serialized event payloads in metric CSVs."""
+
+    limit = sys.maxsize
+    while True:
+        try:
+            csv.field_size_limit(limit)
+            return
+        except OverflowError:
+            limit //= 10
 
 
 def main() -> None:
@@ -220,6 +233,7 @@ def _load_learned_rows(
     summary_path: Path,
     summary: dict[str, Any],
 ) -> dict[tuple[str, int], list[dict[str, str]]]:
+    _enable_large_csv_fields()
     result: dict[tuple[str, int], list[dict[str, str]]] = {}
     for run in summary["runs"]:
         algorithm = str(run["algorithm"])

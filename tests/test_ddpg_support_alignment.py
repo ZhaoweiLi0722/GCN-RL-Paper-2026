@@ -173,6 +173,49 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
             "pass",
         )
 
+    def test_comparator_accepts_large_serialized_metric_fields(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "control_pretrain": self._write_stage(
+                    root / "control_pretrain",
+                    variant="pretrain",
+                    total_cost=100.0,
+                    serialized_metric_size=200_000,
+                ),
+                "control_final": self._write_stage(
+                    root / "control_final",
+                    variant="final",
+                    total_cost=98.0,
+                    serialized_metric_size=200_000,
+                ),
+                "candidate_pretrain": self._write_stage(
+                    root / "candidate_pretrain",
+                    variant="pretrain",
+                    total_cost=100.0,
+                    serialized_metric_size=200_000,
+                ),
+                "candidate_final": self._write_stage(
+                    root / "candidate_final",
+                    variant="final",
+                    total_cost=94.0,
+                    serialized_metric_size=200_000,
+                ),
+            }
+            result = compare_support_alignment(
+                control_final_path=paths["control_final"],
+                control_pretrain_path=paths["control_pretrain"],
+                candidate_final_path=paths["candidate_final"],
+                candidate_pretrain_path=paths["candidate_pretrain"],
+                bootstrap_resamples=10,
+                bootstrap_seed=123,
+            )
+
+        self.assertEqual(
+            result["classifications"][GRAPH]["classification"],
+            "pass",
+        )
+
     @unittest.skipIf(torch is None, "PyTorch is required")
     def test_contract_clones_preserve_state_payload(self) -> None:
         with TemporaryDirectory() as directory:
@@ -501,6 +544,7 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
         *,
         variant: str,
         total_cost: float,
+        serialized_metric_size: int = 0,
     ) -> Path:
         runs = []
         for algorithm in (GRAPH, FLAT):
@@ -523,6 +567,13 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
                             ),
                             "patient_ineligibility_during_manufacturing_rate": (
                                 0.049 if total_cost < 98.0 else 0.05
+                            ),
+                            "specimen_route_events_json": (
+                                "x" * serialized_metric_size
+                                if algorithm == GRAPH
+                                and seed == 30
+                                and replication == 0
+                                else "[]"
                             ),
                         }
                     )

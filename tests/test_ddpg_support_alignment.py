@@ -13,6 +13,8 @@ from evaluation.run_patient_indexed_specimen_routing_ddpg_support_alignment impo
     ALGORITHMS,
     SEEDS,
     clone_paired_preonline_states,
+    materialize_runtime_configs,
+    verify_reused_preonline_source,
     validate_scientific_contract,
     verify_locked_assets,
 )
@@ -145,6 +147,10 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
             source_contract = {
                 "algorithm": "stub",
                 "num_episodes": 0,
+                "history_screen": {
+                    "online_episodes": 0,
+                    "pretrain_only": True,
+                },
                 "critic_teacher_advantage_calibration": {
                     "enabled": False,
                     "updates": 100,
@@ -242,6 +248,18 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
             )
         )
         self.assertEqual(control["training_contract"]["num_episodes"], 100)
+        self.assertEqual(
+            control["training_contract"]["history_screen"],
+            {"online_episodes": 100, "pretrain_only": False},
+        )
+        self.assertEqual(
+            candidate["training_contract"]["history_screen"],
+            {"online_episodes": 100, "pretrain_only": False},
+        )
+        self.assertEqual(
+            control["training_contract_sha256"],
+            training_contract_sha256(control["training_contract"]),
+        )
         self.assertNotIn(
             "allowed_option_groups",
             control["training_contract"][
@@ -254,6 +272,123 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
             ]["allowed_option_groups"],
             ["specimen_transfer"],
         )
+
+    def test_runtime_recovery_configs_change_only_output_paths(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            source_prefix = "results/original"
+            target_prefix = "results/recovery1"
+            training = root / "training.json"
+            evaluation = root / "evaluation.json"
+            training.write_text(
+                json.dumps(
+                    {
+                        "online_episodes": 100,
+                        "output_root": f"{source_prefix}/training",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            evaluation.write_text(
+                json.dumps(
+                    {
+                        "holdout_replications": 50,
+                        "training_manifest": f"{source_prefix}/manifest.json",
+                        "output_root": f"{source_prefix}/evaluation",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            spec = {
+                "runtime_config_path_rewrite": {
+                    "source_prefix": source_prefix,
+                    "target_prefix": target_prefix,
+                }
+            }
+            for key in (
+                "control_training_config",
+                "candidate_training_config",
+            ):
+                spec[key] = str(training)
+            for key in (
+                "control_final_evaluation_config",
+                "control_pretrain_evaluation_config",
+                "candidate_final_evaluation_config",
+                "candidate_pretrain_evaluation_config",
+            ):
+                spec[key] = str(evaluation)
+            resolved, provenance = materialize_runtime_configs(
+                spec,
+                root / "launcher",
+            )
+            runtime_training = load_json(
+                Path(resolved["control_training_config"])
+            )
+            runtime_evaluation = load_json(
+                Path(resolved["control_final_evaluation_config"])
+            )
+
+        self.assertTrue(provenance["enabled"])
+        self.assertFalse(provenance["scientific_values_modified"])
+        self.assertEqual(runtime_training["online_episodes"], 100)
+        self.assertEqual(
+            runtime_training["output_root"],
+            f"{target_prefix}/training",
+        )
+        self.assertEqual(runtime_evaluation["holdout_replications"], 50)
+        self.assertEqual(
+            runtime_evaluation["training_manifest"],
+            f"{target_prefix}/manifest.json",
+        )
+
+    def test_reused_preonline_tree_verifies_every_named_artifact(self) -> None:
+        import hashlib
+
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            state = root / "state.pt"
+            pretrain = root / "pretrain.pt"
+            state.write_bytes(b"episode-zero-state")
+            pretrain.write_bytes(b"pretrain-checkpoint")
+            manifest = root / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "runs": [
+                            {
+                                "preonline_training_state": str(state),
+                                "pretrain_checkpoint": str(pretrain),
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            inventory = {
+                str(path): hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in sorted((manifest, state, pretrain), key=str)
+            }
+            tree_sha = hashlib.sha256(
+                json.dumps(
+                    inventory,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ).encode("utf-8")
+            ).hexdigest()
+            result = verify_reused_preonline_source(
+                manifest,
+                expected_manifest_sha256=inventory[str(manifest)],
+                expected_tree_sha256=tree_sha,
+            )
+            state.write_bytes(b"changed")
+            with self.assertRaisesRegex(ValueError, "artifact tree"):
+                verify_reused_preonline_source(
+                    manifest,
+                    expected_manifest_sha256=inventory[str(manifest)],
+                    expected_tree_sha256=tree_sha,
+                )
+
+        self.assertEqual(result["artifact_count"], 3)
 
     def _write_stage(
         self,

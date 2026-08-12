@@ -28,6 +28,14 @@ ALGORITHMS = (
     "flat_residual_mdl2_network_ddpg_afd",
 )
 SEEDS = (30, 31, 32)
+RUNTIME_CONFIG_KEYS = (
+    "control_training_config",
+    "candidate_training_config",
+    "control_final_evaluation_config",
+    "control_pretrain_evaluation_config",
+    "candidate_final_evaluation_config",
+    "candidate_pretrain_evaluation_config",
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -52,6 +60,80 @@ def atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
     os.replace(temporary, path)
 
 
+def _rewrite_path_prefix(value: Any, source: str, target: str) -> Any:
+    if isinstance(value, dict):
+        return {
+            key: _rewrite_path_prefix(child, source, target)
+            for key, child in value.items()
+        }
+    if isinstance(value, list):
+        return [
+            _rewrite_path_prefix(child, source, target)
+            for child in value
+        ]
+    if isinstance(value, str) and value.startswith(source):
+        return target + value[len(source):]
+    return value
+
+
+def materialize_runtime_configs(
+    spec: dict[str, Any],
+    launcher_root: Path,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Create path-only recovery configs from the locked scientific assets."""
+
+    rewrite = spec.get("runtime_config_path_rewrite")
+    if not isinstance(rewrite, dict):
+        return copy.deepcopy(spec), {"enabled": False, "configs": []}
+    source = str(rewrite["source_prefix"])
+    target = str(rewrite["target_prefix"])
+    if not source or not target or source == target:
+        raise ValueError("Runtime config path rewrite must use distinct prefixes")
+    runtime_root = launcher_root / "runtime-configs"
+    runtime_root.mkdir(parents=True, exist_ok=False)
+    resolved = copy.deepcopy(spec)
+    provenance = {
+        "enabled": True,
+        "source_prefix": source,
+        "target_prefix": target,
+        "scientific_values_modified": False,
+        "configs": [],
+    }
+    for key in RUNTIME_CONFIG_KEYS:
+        source_path = Path(str(spec[key]))
+        source_config = read_json(source_path)
+        runtime_config = _rewrite_path_prefix(source_config, source, target)
+        differences = sorted(
+            path
+            for path in set(_flatten(source_config)) | set(_flatten(runtime_config))
+            if _flatten(source_config).get(path) != _flatten(runtime_config).get(path)
+        )
+        expected = (
+            ["output_root"]
+            if key.endswith("training_config")
+            else ["output_root", "training_manifest"]
+        )
+        if differences != expected:
+            raise ValueError(
+                f"Unexpected runtime config rewrite for {key}: "
+                + ", ".join(differences)
+            )
+        runtime_path = runtime_root / source_path.name
+        atomic_write_json(runtime_path, runtime_config)
+        resolved[key] = str(runtime_path)
+        provenance["configs"].append(
+            {
+                "key": key,
+                "source": str(source_path),
+                "source_sha256": sha256_file(source_path),
+                "runtime": str(runtime_path),
+                "runtime_sha256": sha256_file(runtime_path),
+                "changed_paths": differences,
+            }
+        )
+    return resolved, provenance
+
+
 def git_output(*args: str) -> str:
     return subprocess.check_output(
         ("git", *args),
@@ -74,6 +156,49 @@ def verify_locked_assets(spec: dict[str, Any]) -> dict[str, str]:
             )
         verified[str(path)] = actual
     return verified
+
+
+def verify_reused_preonline_source(
+    manifest_path: Path,
+    *,
+    expected_manifest_sha256: str,
+    expected_tree_sha256: str,
+) -> dict[str, Any]:
+    """Verify the immutable manifest and every episode-0 artifact it names."""
+
+    actual_manifest_sha256 = sha256_file(manifest_path)
+    if actual_manifest_sha256 != expected_manifest_sha256.lower():
+        raise ValueError(
+            "Reused pre-online manifest SHA256 mismatch: expected "
+            f"{expected_manifest_sha256}, got {actual_manifest_sha256}"
+        )
+    manifest = read_json(manifest_path)
+    paths = {manifest_path}
+    for run in manifest.get("runs", ()):
+        paths.add(Path(str(run["preonline_training_state"])))
+        paths.add(Path(str(run["pretrain_checkpoint"])))
+    inventory = {
+        str(path): sha256_file(path)
+        for path in sorted(paths, key=lambda value: str(value))
+    }
+    tree_payload = json.dumps(
+        inventory,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    tree_sha256 = hashlib.sha256(tree_payload).hexdigest()
+    if tree_sha256 != expected_tree_sha256.lower():
+        raise ValueError(
+            "Reused pre-online artifact tree SHA256 mismatch: expected "
+            f"{expected_tree_sha256}, got {tree_sha256}"
+        )
+    return {
+        "manifest": str(manifest_path),
+        "manifest_sha256": actual_manifest_sha256,
+        "artifact_tree_sha256": tree_sha256,
+        "artifact_count": len(inventory),
+        "artifacts": inventory,
+    }
 
 
 def _flatten(value: Any, prefix: str = "") -> dict[str, Any]:
@@ -192,10 +317,22 @@ def preflight(spec_path: Path, expected_commit: str) -> dict[str, Any]:
         raise ValueError("Worktree must be clean before execution")
     hashes = verify_locked_assets(spec)
     validate_scientific_contract(spec)
+    source_manifest = spec.get("reuse_preonline_manifest")
+    reused_preonline = None
+    if source_manifest not in (None, ""):
+        reused_preonline = verify_reused_preonline_source(
+            Path(str(source_manifest)),
+            expected_manifest_sha256=str(
+                spec["reuse_preonline_manifest_sha256"]
+            ),
+            expected_tree_sha256=str(
+                spec["reuse_preonline_artifact_tree_sha256"]
+            ),
+        )
     for raw in spec["fresh_output_roots"]:
         if Path(raw).exists():
             raise FileExistsError(f"Fresh output already exists: {raw}")
-    return {
+    result = {
         "status": "passed",
         "commit": actual_commit,
         "spec": str(spec_path),
@@ -203,6 +340,9 @@ def preflight(spec_path: Path, expected_commit: str) -> dict[str, Any]:
         "locked_files": hashes,
         "environment": environment_fingerprint(),
     }
+    if reused_preonline is not None:
+        result["reused_preonline"] = reused_preonline
+    return result
 
 
 def claim_execution(
@@ -381,6 +521,8 @@ def clone_paired_preonline_states(
         ),
         "changed_scientific_paths": [
             "num_episodes",
+            "history_screen.online_episodes",
+            "history_screen.pretrain_only",
             "critic_teacher_advantage_calibration.enabled",
             "critic_teacher_advantage_calibration.online_ranking_weight",
             "critic_teacher_advantage_calibration.allowed_option_groups",
@@ -407,6 +549,10 @@ def clone_paired_preonline_states(
                 cloned = copy.deepcopy(checkpoint)
                 contract = copy.deepcopy(dict(cloned["training_contract"]))
                 contract["num_episodes"] = 100
+                history_screen = dict(contract["history_screen"])
+                history_screen["online_episodes"] = 100
+                history_screen["pretrain_only"] = False
+                contract["history_screen"] = history_screen
                 calibration = dict(
                     contract["critic_teacher_advantage_calibration"]
                 )
@@ -791,30 +937,41 @@ def run_experiment(spec_path: Path, expected_commit: str) -> None:
     }
     atomic_write_json(launcher_root / "status.json", status)
     try:
+        spec, runtime_config_provenance = materialize_runtime_configs(
+            spec,
+            launcher_root,
+        )
+        status["runtime_config_provenance"] = runtime_config_provenance
+        atomic_write_json(launcher_root / "status.json", status)
         run_phase(
             launcher_root,
             "focused_tests",
             [sys.executable, "-m", "unittest", *spec["focused_tests"]],
             status,
         )
-        run_phase(
-            launcher_root,
-            "prepare_preonline_states",
-            [
-                sys.executable,
-                "-m",
-                "evaluation.prepare_ddpg_support_alignment_preonline",
-                "--config",
-                str(spec["control_training_config"]),
-                "--output-root",
-                str(spec["preonline_output_root"]),
-            ],
-            status,
-        )
-        preonline_manifest = Path(spec["preonline_manifest"])
+        reuse_manifest = spec.get("reuse_preonline_manifest")
+        if reuse_manifest in (None, ""):
+            run_phase(
+                launcher_root,
+                "prepare_preonline_states",
+                [
+                    sys.executable,
+                    "-m",
+                    "evaluation.prepare_ddpg_support_alignment_preonline",
+                    "--config",
+                    str(spec["control_training_config"]),
+                    "--output-root",
+                    str(spec["preonline_output_root"]),
+                ],
+                status,
+            )
+            preonline_manifest = Path(spec["preonline_manifest"])
+        else:
+            preonline_manifest = Path(str(reuse_manifest))
         status["preonline_audit"] = audit_preonline_preparation(
             preonline_manifest
         )
+        status["preonline_reused_read_only"] = reuse_manifest not in (None, "")
         clone_provenance = clone_paired_preonline_states(
             preonline_manifest,
             control_config_path=Path(spec["control_training_config"]),

@@ -416,3 +416,36 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   joint review with the independently executed TD3 screen.
 - Next gate: perform one no-trajectory MPS preflight, launch the one-claim
   detached campaign, audit completion, then review it together with Stage C.
+
+### 2026-08-12: Support-alignment launcher failure and Recovery 1
+
+- Superseded execution commit:
+  `8688500e8899dda1ec91cc16af147cc859b0ed62` on
+  `rl-attribution-refinement`.
+- Failure boundary: all six calibration-free episode-0 states completed, but
+  the first control GCN seed-30 process exited before episode 0 was executed.
+  Training and evaluation consumed zero trajectories and produced no online
+  checkpoint.
+- Root cause: the metadata-only contract clone changed `num_episodes` from 0
+  to 100 but did not synchronize the mechanically derived
+  `history_screen.online_episodes` and `history_screen.pretrain_only` fields.
+  The full-state safety validator correctly rejected that inconsistent clone;
+  this is not evidence of a DDPG, routing, MPS, or numerical failure.
+- Immutable failure evidence: status SHA256
+  `1984a0b5270e3eb2c84a3b2578f2c9f37471d9bc330d12e3f5190b601d0b58f7`,
+  detached stderr SHA256
+  `37cd88457b7c66e24c4847c8cdea7d44904e6efddba481e43e7394efef834732`,
+  and phase stderr SHA256
+  `b2dd7989f34197c9dc20b149997957952225cae9b2c1d6645f2e5a9b5fb7652f`.
+- Recovery 1 rule: preserve the superseded root; reuse only its six immutable
+  zero-trajectory states and matched pretrain checkpoints. Their 13-file tree
+  SHA256 is
+  `abcc3a3a831bd46d62f1a826a87b39b2fa1c8e72d85f92152b89f70d2b020c2f`.
+  Generate fresh contract clones and every online/evaluation artifact under
+  `patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1`.
+- Scientific design remains unchanged. The repair synchronizes only the two
+  budget-derived contract fields and rewrites output paths; actor, critic,
+  optimizer, replay, environment, RNG, teacher, seeds, CRNs, and all training
+  hyperparameters remain locked.
+- Next gate: focused and full tests, compile validation, no-trajectory MPS
+  preflight, then one detached Recovery 1 launch and five-episode monitoring.

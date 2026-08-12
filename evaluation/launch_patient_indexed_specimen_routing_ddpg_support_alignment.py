@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-LAUNCHER_ROOT = Path(
+DEFAULT_LAUNCHER_ROOT = Path(
     "results/patient_indexed_specimen_routing_ddpg_support_alignment_"
     "development/launcher"
 )
@@ -20,17 +20,30 @@ LAUNCHER_ROOT = Path(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--expected-commit", required=True)
+    parser.add_argument(
+        "--spec",
+        default=(
+            "experiments/configs/"
+            "patient_indexed_specimen_routing_ddpg_support_alignment_"
+            "execution.json"
+        ),
+    )
     args = parser.parse_args()
 
-    LAUNCHER_ROOT.mkdir(parents=True, exist_ok=False)
-    stdout_path = LAUNCHER_ROOT / "detached.stdout.log"
-    stderr_path = LAUNCHER_ROOT / "detached.stderr.log"
+    spec_path = Path(args.spec)
+    spec = json.loads(spec_path.read_text(encoding="utf-8-sig"))
+    launcher_root = Path(spec.get("launcher_root", DEFAULT_LAUNCHER_ROOT))
+    launcher_root.mkdir(parents=True, exist_ok=False)
+    stdout_path = launcher_root / "detached.stdout.log"
+    stderr_path = launcher_root / "detached.stderr.log"
     command = [
         sys.executable,
         "-m",
         "evaluation.run_patient_indexed_specimen_routing_ddpg_support_alignment",
         "--expected-commit",
         str(args.expected_commit),
+        "--spec",
+        str(spec_path),
     ]
     environment = os.environ.copy()
     environment["PYTHONPATH"] = "."
@@ -67,7 +80,7 @@ def main() -> None:
         "stdout": str(stdout_path),
         "stderr": str(stderr_path),
     }
-    (LAUNCHER_ROOT / "launch.json").write_text(
+    (launcher_root / "launch.json").write_text(
         json.dumps(launch, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )

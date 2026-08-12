@@ -1,36 +1,65 @@
 {
-  "name": "patient_indexed_specimen_routing_ddpg_support_alignment_recovery1_execution",
-  "experimental_role": "single-claim Apple MPS Recovery 1 execution lock for the paired DDPG teacher-support development experiment; reuses only immutable zero-trajectory episode-0 states from the superseded launcher-contract failure",
+  "name": "patient_indexed_specimen_routing_ddpg_support_alignment_recovery2_execution",
+  "experimental_role": "single-claim Apple MPS Recovery 2 continuation lock for the paired DDPG teacher-support development experiment; reuses six complete immutable Recovery 1 control runs and the never-consumed paired candidate episode-0 clones after a post-control CSV audit failure",
   "required_accelerator": "mps",
-  "campaign_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1",
-  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/launcher",
+  "campaign_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2",
+  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/launcher",
   "control_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_100.json",
   "candidate_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100.json",
-  "preonline_output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/preonline",
+  "preonline_output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/preonline",
   "preonline_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/preonline/patient_indexed_specimen_routing_ddpg_support_alignment_preonline/training_manifest.json",
   "reuse_preonline_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/preonline/patient_indexed_specimen_routing_ddpg_support_alignment_preonline/training_manifest.json",
   "reuse_preonline_manifest_sha256": "68ec996778baf163cfbb46ae0e3c6987396ee7b5ea53f077d6cbb8b8d3795010",
   "reuse_preonline_artifact_tree_sha256": "abcc3a3a831bd46d62f1a826a87b39b2fa1c8e72d85f92152b89f70d2b020c2f",
-  "superseded_execution_commit": "8688500e8899dda1ec91cc16af147cc859b0ed62",
-  "superseded_campaign_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development",
-  "superseded_failure_classification": "launcher scientific-contract metadata mismatch before the first online trajectory",
-  "superseded_outputs_reused": "six immutable episode-0 training states and their matched pretrain checkpoints only",
-  "runtime_config_path_rewrite": {
-    "source_prefix": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development",
-    "target_prefix": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1"
+  "superseded_execution_commit": "c14bf379735a7d88bcea35e6f9adfb6e07e8a185",
+  "superseded_campaign_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1",
+  "superseded_failure_classification": "post-control launcher audit failed on Python CSV field-size limit after all six control runs completed successfully",
+  "superseded_outputs_reused": "six complete immutable 100-episode control runs and the six never-consumed candidate episode-0 contract clones; no candidate trajectory or evaluation output is reused",
+  "reuse_control_status": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/launcher/status.json",
+  "reuse_control_status_sha256": "076511140f57ec1f2c0ae6e067c9f759a35a229ce119f26dd32a789c2b33f22e",
+  "reuse_control_stderr": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/launcher/detached.stderr.log",
+  "reuse_control_stderr_sha256": "a779b412d142b2caffa08d29043b283dd086ab08e684c84a7626f1ad5fcb78e6",
+  "reuse_control_training_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/training",
+  "reuse_control_training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/training/patient_indexed_specimen_routing_ddpg_support_alignment_control_100/training_manifest.json",
+  "reuse_control_training_manifest_sha256": "5a67ef4d139b1ec3b1e48692db3eba232de58098d415820be0fbfc34521dd2c4",
+  "reuse_control_training_artifact_tree_sha256": "99c6ef49705c8e00343401f1f97ddbf93ca8253545c2fc1d1353d14e5570c3a0",
+  "reuse_paired_state_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/paired_states",
+  "reuse_paired_state_provenance": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/paired_states/provenance.json",
+  "reuse_paired_state_provenance_sha256": "9e8a0a5f940885ff33bbb23f101ad600a6e9975e9bc033d035edeab294ab69b4",
+  "reuse_paired_state_artifact_tree_sha256": "ed7dabff2cc2124a2807cfc99fd94dce4b1073ac41c9c52a1e07991caa109cf3",
+  "runtime_config_overrides": {
+    "candidate_training_config": {
+      "output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/training"
+    },
+    "control_final_evaluation_config": {
+      "output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/control/evaluation/final",
+      "training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/training/patient_indexed_specimen_routing_ddpg_support_alignment_control_100/training_manifest.json"
+    },
+    "control_pretrain_evaluation_config": {
+      "output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/control/evaluation/pretrain",
+      "training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/training/patient_indexed_specimen_routing_ddpg_support_alignment_control_100/training_manifest.json"
+    },
+    "candidate_final_evaluation_config": {
+      "output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/evaluation/final",
+      "training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/training/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100/training_manifest.json"
+    },
+    "candidate_pretrain_evaluation_config": {
+      "output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/evaluation/pretrain",
+      "training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/training/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100/training_manifest.json"
+    }
   },
   "paired_state_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/paired_states",
   "control_training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/training/patient_indexed_specimen_routing_ddpg_support_alignment_control_100/training_manifest.json",
-  "candidate_training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/support_aligned/training/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100/training_manifest.json",
+  "candidate_training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/training/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100/training_manifest.json",
   "control_final_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_final_eval.json",
   "control_pretrain_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_pretrain_eval.json",
   "candidate_final_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_final_eval.json",
   "candidate_pretrain_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_pretrain_eval.json",
-  "control_final_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/evaluation/final/summary.json",
-  "control_pretrain_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/evaluation/pretrain/summary.json",
-  "candidate_final_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/support_aligned/evaluation/final/summary.json",
-  "candidate_pretrain_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/support_aligned/evaluation/pretrain/summary.json",
-  "comparison_output": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/comparison/support_alignment_summary.json",
+  "control_final_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/control/evaluation/final/summary.json",
+  "control_pretrain_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/control/evaluation/pretrain/summary.json",
+  "candidate_final_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/evaluation/final/summary.json",
+  "candidate_pretrain_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/evaluation/pretrain/summary.json",
+  "comparison_output": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/comparison/support_alignment_summary.json",
   "algorithms": [
     "gcn_residual_mdl2_network_ddpg_afd",
     "flat_residual_mdl2_network_ddpg_afd"
@@ -59,21 +88,17 @@
   ],
   "maximum_parameter_relative_gap": 0.01,
   "fresh_output_roots": [
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/paired_states",
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/training",
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/support_aligned/training",
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/evaluation/final",
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/control/evaluation/pretrain",
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/support_aligned/evaluation/final",
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/support_aligned/evaluation/pretrain",
-    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1/comparison"
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/training",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/control/evaluation/final",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/control/evaluation/pretrain",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/evaluation/final",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/support_aligned/evaluation/pretrain",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery2/comparison"
   ],
   "phase_order": [
     "focused_tests",
     "audit_reused_preonline_states",
-    "clone_paired_state_contracts",
-    "training_control_gcn_seeds_30_31_32",
-    "training_control_flat_seeds_30_31_32",
+    "audit_recovery1_control_and_paired_states",
     "training_candidate_gcn_seeds_30_31_32",
     "training_candidate_flat_seeds_30_31_32",
     "paired_fork_audit",
@@ -125,7 +150,11 @@
     },
     {
       "path": "evaluation/run_patient_indexed_specimen_routing_ddpg_support_alignment.py",
-      "sha256": "5cd2d5b3030280dcd7da6118345cd580eae5b0dabd65f62ca4cfdfe98d14b74f"
+      "sha256": "ff1ec7701d0e9c548b89ff81b2bf85b5edfbeff87ceb6299f6b94c1e24737a56"
+    },
+    {
+      "path": "tests/test_ddpg_support_alignment.py",
+      "sha256": "c4bbb3483b29702ebae6b2a77de353e9026e639790bef73871d7644e6541cf55"
     },
     {
       "path": "evaluation/prepare_ddpg_support_alignment_preonline.py",

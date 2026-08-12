@@ -83,42 +83,76 @@ def materialize_runtime_configs(
     """Create path-only recovery configs from the locked scientific assets."""
 
     rewrite = spec.get("runtime_config_path_rewrite")
-    if not isinstance(rewrite, dict):
+    explicit = spec.get("runtime_config_overrides")
+    if rewrite is not None and explicit is not None:
+        raise ValueError("Choose one runtime config path mechanism")
+    if rewrite is None and explicit is None:
         return copy.deepcopy(spec), {"enabled": False, "configs": []}
-    source = str(rewrite["source_prefix"])
-    target = str(rewrite["target_prefix"])
-    if not source or not target or source == target:
-        raise ValueError("Runtime config path rewrite must use distinct prefixes")
+    if rewrite is not None and not isinstance(rewrite, dict):
+        raise ValueError("Runtime config path rewrite must be an object")
+    if explicit is not None and not isinstance(explicit, dict):
+        raise ValueError("Runtime config overrides must be an object")
     runtime_root = launcher_root / "runtime-configs"
     runtime_root.mkdir(parents=True, exist_ok=False)
     resolved = copy.deepcopy(spec)
     provenance = {
         "enabled": True,
-        "source_prefix": source,
-        "target_prefix": target,
+        "mode": "prefix_rewrite" if rewrite is not None else "explicit",
         "scientific_values_modified": False,
         "configs": [],
     }
+    if rewrite is not None:
+        source = str(rewrite["source_prefix"])
+        target = str(rewrite["target_prefix"])
+        if not source or not target or source == target:
+            raise ValueError(
+                "Runtime config path rewrite must use distinct prefixes"
+            )
+        provenance["source_prefix"] = source
+        provenance["target_prefix"] = target
     for key in RUNTIME_CONFIG_KEYS:
         source_path = Path(str(spec[key]))
         source_config = read_json(source_path)
-        runtime_config = _rewrite_path_prefix(source_config, source, target)
+        if rewrite is not None:
+            runtime_config = _rewrite_path_prefix(
+                source_config,
+                source,
+                target,
+            )
+            expected = (
+                ["output_root"]
+                if key.endswith("training_config")
+                else ["output_root", "training_manifest"]
+            )
+        else:
+            overrides = explicit.get(key, {})
+            if not isinstance(overrides, dict):
+                raise ValueError(f"Runtime overrides for {key} must be an object")
+            allowed = (
+                {"output_root"}
+                if key.endswith("training_config")
+                else {"output_root", "training_manifest"}
+            )
+            unexpected = set(overrides) - allowed
+            if unexpected:
+                raise ValueError(
+                    f"Scientific runtime override for {key}: "
+                    + ", ".join(sorted(unexpected))
+                )
+            runtime_config = copy.deepcopy(source_config)
+            runtime_config.update(overrides)
+            expected = sorted(overrides)
         differences = sorted(
             path
             for path in set(_flatten(source_config)) | set(_flatten(runtime_config))
             if _flatten(source_config).get(path) != _flatten(runtime_config).get(path)
-        )
-        expected = (
-            ["output_root"]
-            if key.endswith("training_config")
-            else ["output_root", "training_manifest"]
         )
         if differences != expected:
             raise ValueError(
                 f"Unexpected runtime config rewrite for {key}: "
                 + ", ".join(differences)
             )
-        runtime_path = runtime_root / source_path.name
+        runtime_path = runtime_root / f"{key}__{source_path.name}"
         atomic_write_json(runtime_path, runtime_config)
         resolved[key] = str(runtime_path)
         provenance["configs"].append(
@@ -198,6 +232,128 @@ def verify_reused_preonline_source(
         "artifact_tree_sha256": tree_sha256,
         "artifact_count": len(inventory),
         "artifacts": inventory,
+    }
+
+
+def verify_immutable_artifact_tree(
+    root: Path,
+    *,
+    expected_tree_sha256: str,
+) -> dict[str, Any]:
+    if not root.is_dir():
+        raise FileNotFoundError(root)
+    inventory = {
+        str(path): sha256_file(path)
+        for path in sorted(root.rglob("*"), key=lambda value: str(value))
+        if path.is_file()
+    }
+    tree_payload = json.dumps(
+        inventory,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    tree_sha256 = hashlib.sha256(tree_payload).hexdigest()
+    if tree_sha256 != expected_tree_sha256.lower():
+        raise ValueError(
+            f"Immutable artifact tree SHA256 mismatch for {root}: "
+            f"expected {expected_tree_sha256}, got {tree_sha256}"
+        )
+    return {
+        "root": str(root),
+        "artifact_tree_sha256": tree_sha256,
+        "artifact_count": len(inventory),
+        "artifacts": inventory,
+    }
+
+
+def verify_reused_control_recovery(spec: dict[str, Any]) -> dict[str, Any]:
+    status_path = Path(str(spec["reuse_control_status"]))
+    stderr_path = Path(str(spec["reuse_control_stderr"]))
+    manifest_path = Path(str(spec["reuse_control_training_manifest"]))
+    provenance_path = Path(str(spec["reuse_paired_state_provenance"]))
+    locked_files = (
+        (
+            status_path,
+            str(spec["reuse_control_status_sha256"]),
+        ),
+        (
+            stderr_path,
+            str(spec["reuse_control_stderr_sha256"]),
+        ),
+        (
+            manifest_path,
+            str(spec["reuse_control_training_manifest_sha256"]),
+        ),
+        (
+            provenance_path,
+            str(spec["reuse_paired_state_provenance_sha256"]),
+        ),
+    )
+    verified_files = {}
+    for path, expected in locked_files:
+        actual = sha256_file(path)
+        if actual != expected.lower():
+            raise ValueError(
+                f"Reused Recovery 1 SHA256 mismatch for {path}: "
+                f"expected {expected}, got {actual}"
+            )
+        verified_files[str(path)] = actual
+
+    status = read_json(status_path)
+    expected_phases = [
+        "focused_tests",
+        *(
+            f"training_control_{algorithm}_seed{seed}"
+            for algorithm in ALGORITHMS
+            for seed in SEEDS
+        ),
+    ]
+    phases = list(status.get("phases", ()))
+    if [str(phase.get("name")) for phase in phases] != expected_phases:
+        raise ValueError("Recovery 1 did not stop after exactly six controls")
+    if any(int(phase.get("exit_code", -1)) != 0 for phase in phases):
+        raise ValueError("A reused Recovery 1 phase did not exit cleanly")
+    if (
+        status.get("status") != "failed"
+        or status.get("phase")
+        != "training_control_flat_residual_mdl2_network_ddpg_afd_seed32"
+        or status.get("error_type") != "Error"
+        or "field larger than field limit" not in str(status.get("error"))
+    ):
+        raise ValueError("Recovery 1 failure classification does not match")
+    if any("candidate" in str(phase.get("name")) for phase in phases):
+        raise ValueError("Recovery 1 unexpectedly consumed a candidate run")
+
+    control_tree = verify_immutable_artifact_tree(
+        Path(str(spec["reuse_control_training_root"])),
+        expected_tree_sha256=str(
+            spec["reuse_control_training_artifact_tree_sha256"]
+        ),
+    )
+    paired_tree = verify_immutable_artifact_tree(
+        Path(str(spec["reuse_paired_state_root"])),
+        expected_tree_sha256=str(
+            spec["reuse_paired_state_artifact_tree_sha256"]
+        ),
+    )
+    provenance = read_json(provenance_path)
+    runs = list(provenance.get("runs", ()))
+    if len(runs) != len(ALGORITHMS) * len(SEEDS):
+        raise ValueError("Recovery 1 paired-state provenance is incomplete")
+    for run in runs:
+        candidate = Path(str(run["candidate_clone"]))
+        if not candidate.is_file():
+            raise FileNotFoundError(candidate)
+        if sha256_file(candidate) != str(run["candidate_clone_sha256"]):
+            raise ValueError(f"Recovery 1 candidate clone changed: {candidate}")
+    return {
+        "failure_classification": "post-control CSV audit field-size limit",
+        "scientific_training_failure": False,
+        "candidate_runs_consumed": 0,
+        "control_runs_reused": len(ALGORITHMS) * len(SEEDS),
+        "verified_files": verified_files,
+        "control_training_tree": control_tree,
+        "paired_state_tree": paired_tree,
     }
 
 
@@ -329,6 +485,9 @@ def preflight(spec_path: Path, expected_commit: str) -> dict[str, Any]:
                 spec["reuse_preonline_artifact_tree_sha256"]
             ),
         )
+    reused_control = None
+    if spec.get("reuse_control_training_manifest") not in (None, ""):
+        reused_control = verify_reused_control_recovery(spec)
     for raw in spec["fresh_output_roots"]:
         if Path(raw).exists():
             raise FileExistsError(f"Fresh output already exists: {raw}")
@@ -342,6 +501,8 @@ def preflight(spec_path: Path, expected_commit: str) -> dict[str, Any]:
     }
     if reused_preonline is not None:
         result["reused_preonline"] = reused_preonline
+    if reused_control is not None:
+        result["reused_control_recovery"] = reused_control
     return result
 
 
@@ -415,6 +576,13 @@ def run_phase(
 
 
 def read_csv_rows(path: Path) -> list[dict[str, str]]:
+    limit = sys.maxsize
+    while True:
+        try:
+            csv.field_size_limit(limit)
+            break
+        except OverflowError:
+            limit //= 10
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
 
@@ -972,39 +1140,61 @@ def run_experiment(spec_path: Path, expected_commit: str) -> None:
             preonline_manifest
         )
         status["preonline_reused_read_only"] = reuse_manifest not in (None, "")
-        clone_provenance = clone_paired_preonline_states(
-            preonline_manifest,
-            control_config_path=Path(spec["control_training_config"]),
-            candidate_config_path=Path(spec["candidate_training_config"]),
-            output_root=Path(spec["paired_state_root"]),
-        )
+        reused_control_manifest = spec.get("reuse_control_training_manifest")
+        if reused_control_manifest in (None, ""):
+            clone_provenance = clone_paired_preonline_states(
+                preonline_manifest,
+                control_config_path=Path(spec["control_training_config"]),
+                candidate_config_path=Path(spec["candidate_training_config"]),
+                output_root=Path(spec["paired_state_root"]),
+            )
+            control_manifest = Path(spec["control_training_manifest"])
+            status["control_training_reused_read_only"] = False
+        else:
+            provenance_path = Path(
+                str(spec["reuse_paired_state_provenance"])
+            )
+            clone_provenance = read_json(provenance_path)
+            clone_provenance["provenance"] = str(provenance_path)
+            clone_provenance["provenance_sha256"] = sha256_file(
+                provenance_path
+            )
+            control_manifest = Path(str(reused_control_manifest))
+            status["control_training_reused_read_only"] = True
+            status["reused_control_recovery"] = preflight_result[
+                "reused_control_recovery"
+            ]
         status["contract_clone_provenance"] = clone_provenance
         atomic_write_json(launcher_root / "status.json", status)
         clone_runs = {
             (str(run["algorithm"]), int(run["seed"])): run
             for run in clone_provenance["runs"]
         }
-        for algorithm in ALGORITHMS:
-            for seed in SEEDS:
-                run_phase(
-                    launcher_root,
-                    f"training_control_{algorithm}_seed{seed}",
-                    [
-                        sys.executable,
-                        "-m",
-                        "evaluation.train_multiscenario_network_residual",
-                        "--config",
-                        str(spec["control_training_config"]),
-                        "--algorithm",
-                        algorithm,
-                        "--seed",
-                        str(seed),
-                        "--resume-training-state",
-                        str(clone_runs[(algorithm, seed)]["control_clone"]),
-                    ],
-                    status,
-                )
-        control_manifest = Path(spec["control_training_manifest"])
+        if reused_control_manifest in (None, ""):
+            for algorithm in ALGORITHMS:
+                for seed in SEEDS:
+                    run_phase(
+                        launcher_root,
+                        f"training_control_{algorithm}_seed{seed}",
+                        [
+                            sys.executable,
+                            "-m",
+                            "evaluation.train_multiscenario_network_residual",
+                            "--config",
+                            str(spec["control_training_config"]),
+                            "--algorithm",
+                            algorithm,
+                            "--seed",
+                            str(seed),
+                            "--resume-training-state",
+                            str(
+                                clone_runs[(algorithm, seed)][
+                                    "control_clone"
+                                ]
+                            ),
+                        ],
+                        status,
+                    )
         status["control_training_audit"] = audit_training(
             control_manifest,
             require_preonline_state=False,

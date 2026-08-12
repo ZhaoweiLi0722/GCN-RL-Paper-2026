@@ -14,6 +14,7 @@ from evaluation.run_patient_indexed_specimen_routing_ddpg_support_alignment impo
     SEEDS,
     clone_paired_preonline_states,
     materialize_runtime_configs,
+    read_csv_rows,
     verify_reused_preonline_source,
     validate_scientific_contract,
     verify_locked_assets,
@@ -86,6 +87,38 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
         )
         self.assertIn(91100000, spec["forbidden_crn_seeds"])
         self.assertIn(93100000, spec["forbidden_crn_seeds"])
+
+    def test_recovery2_reuses_only_completed_control_and_episode0_clones(
+        self,
+    ) -> None:
+        spec = load_json(SPEC)
+        self.assertIn("recovery2", spec["campaign_root"])
+        self.assertIn("recovery1", spec["reuse_control_training_manifest"])
+        self.assertIn("recovery1", spec["reuse_paired_state_provenance"])
+        self.assertNotIn(
+            "training_control_gcn_seeds_30_31_32",
+            spec["phase_order"],
+        )
+        self.assertNotIn(
+            "training_control_flat_seeds_30_31_32",
+            spec["phase_order"],
+        )
+        self.assertIn(
+            "training_candidate_gcn_seeds_30_31_32",
+            spec["phase_order"],
+        )
+
+    def test_csv_reader_accepts_large_serialized_metric_fields(self) -> None:
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "training.csv"
+            payload = "x" * 200_000
+            self._write_csv(
+                path,
+                [{"episode": 0, "serialized_metric": payload}],
+            )
+            rows = read_csv_rows(path)
+
+        self.assertEqual(rows[0]["serialized_metric"], payload)
 
     def test_comparator_detects_support_and_online_gain(self) -> None:
         with TemporaryDirectory() as directory:
@@ -339,6 +372,78 @@ class DDPGSupportAlignmentTests(unittest.TestCase):
         self.assertEqual(
             runtime_evaluation["training_manifest"],
             f"{target_prefix}/manifest.json",
+        )
+
+    def test_runtime_continuation_configs_support_split_manifests(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            training = root / "training.json"
+            evaluation = root / "evaluation.json"
+            training.write_text(
+                json.dumps(
+                    {
+                        "online_episodes": 100,
+                        "output_root": "results/original/training",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            evaluation.write_text(
+                json.dumps(
+                    {
+                        "holdout_replications": 50,
+                        "training_manifest": "results/original/manifest.json",
+                        "output_root": "results/original/evaluation",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            spec = {"runtime_config_overrides": {}}
+            for key in (
+                "control_training_config",
+                "candidate_training_config",
+            ):
+                spec[key] = str(training)
+            for key in (
+                "control_final_evaluation_config",
+                "control_pretrain_evaluation_config",
+                "candidate_final_evaluation_config",
+                "candidate_pretrain_evaluation_config",
+            ):
+                spec[key] = str(evaluation)
+            spec["runtime_config_overrides"] = {
+                "candidate_training_config": {
+                    "output_root": "results/recovery2/candidate/training",
+                },
+                "control_final_evaluation_config": {
+                    "output_root": "results/recovery2/control/final",
+                    "training_manifest": "results/recovery1/control.json",
+                },
+                "candidate_final_evaluation_config": {
+                    "output_root": "results/recovery2/candidate/final",
+                    "training_manifest": "results/recovery2/candidate.json",
+                },
+            }
+            resolved, provenance = materialize_runtime_configs(
+                spec,
+                root / "launcher",
+            )
+            control = load_json(
+                Path(resolved["control_final_evaluation_config"])
+            )
+            candidate = load_json(
+                Path(resolved["candidate_final_evaluation_config"])
+            )
+
+        self.assertEqual(provenance["mode"], "explicit")
+        self.assertFalse(provenance["scientific_values_modified"])
+        self.assertEqual(
+            control["training_manifest"],
+            "results/recovery1/control.json",
+        )
+        self.assertEqual(
+            candidate["training_manifest"],
+            "results/recovery2/candidate.json",
         )
 
     def test_reused_preonline_tree_verifies_every_named_artifact(self) -> None:

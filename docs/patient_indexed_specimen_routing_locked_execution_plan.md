@@ -132,7 +132,26 @@ sensitivities.
 
 ### Stage B: DDPG online-attribution diagnostic
 
-Status: active; protocol preparation is in progress.
+Status: completed and audited on 2026-08-11.
+
+The locked checkpoint-curve evaluation completed pretraining and episodes 25,
+50, 75, and 100 for both routing GCN and matched flat DDPG. It used five
+training seeds, four routing scenarios, 50 paired development CRN replications
+per scenario, and produced 50 valid run summaries, 10,000 learned-policy rows,
+and 10,000 MDL-2 anchor rows. The formal holdout stream was not reused.
+
+The late GCN segment from episode 75 to episode 100 changed mean total cost by
++68,613 cost units (+0.00256%), with a two-level 95% interval of approximately
+[-344,648, +501,630]. Three of five seeds improved and clinical
+noninferiority passed, but the cost interval did not exclude zero. The locked
+classification is therefore `plateaued_or_inconclusive`, and the next step is
+the matched 100-episode, three-development-seed TD3 screen in Stage C. This is
+the prespecified decision-tree outcome, not a post-hoc protocol amendment.
+
+- Stage B execution commit:
+  `2ba1b3e01cb684fc3580273d1cbac02e17ab8dfb`.
+- Checkpoint-curve summary SHA256:
+  `0016e3bb8fa779984de1a21015bcade6f377d72a231b7581adc14ffc5a652ecf`.
 
 Do not tune on formal holdout seed `91100000`. On a newly locked development
 CRN stream, evaluate the existing frozen-pretrain and episode 25, 50, 75, and
@@ -143,6 +162,12 @@ This diagnostic decides whether the DDPG online curve is improving, plateaued,
 or deteriorating. It is mechanism evidence, not a new independent confirmation.
 
 ### Stage C: bounded post-formal algorithm development
+
+Status: active preparation. The matched TD3 screen has been selected but has
+not been launched. Howard is the intended independent execution owner after a
+separate Stage C execution-lock commit records the exact configs, launcher,
+hashes, development streams, and output root. The orientation handoff is in
+`docs/howard_stage_c_td3_handoff.md`.
 
 The completed seeds 10-14 and their formal holdout cannot regain untouched
 status. Any changed training protocol uses a fresh development output root,
@@ -251,3 +276,7 @@ control requirements in Section 1.
   sensitivity classified as optional; lead/return timing sensitivity retained
   as required. DDPG checkpoint attribution precedes the conditional DDPG
   extension or matched TD3 screen.
+- Status update, 2026-08-11: Stage B completed with the locked
+  `plateaued_or_inconclusive` decision. The existing Stage C decision tree
+  therefore selects a matched three-seed TD3 development screen. No scientific
+  protocol amendment was made.

@@ -19,25 +19,20 @@ Do not use `main`, `codex/patient-indexed-specimen-routing`,
 `codex/rtx4090-matched-ablation`, or
 `howard-patient-condition-robustness` for this Stage C task.
 
-The current orientation commit is:
-
-```text
-75dfcd72a32a241b4ac6675b3d0bb3d6431e84df
-```
-
-Howard may read the handoff now by checking out that exact commit:
+Howard may read the latest handoff now by checking out the current remote
+branch tip in detached-HEAD mode:
 
 ```bash
 git fetch origin patient-indexed-specimen-routing
-git switch --detach 75dfcd72a32a241b4ac6675b3d0bb3d6431e84df
+git switch --detach origin/patient-indexed-specimen-routing
 git rev-parse HEAD
 ```
 
-This commit is for orientation only and does not authorize training. The
-project team will later push the Stage C execution-lock commit to the same
-`patient-indexed-specimen-routing` branch. Howard must then fetch that branch
-again and check out the newly supplied exact commit in detached-HEAD mode
-before running the one-time launcher.
+The current branch tip is for orientation only and does not authorize
+training. The project team will later push the Stage C execution-lock commit to
+the same `patient-indexed-specimen-routing` branch. Howard must then fetch that
+branch again and check out the newly supplied exact commit in detached-HEAD
+mode before running the one-time launcher.
 
 ## 1. Short version
 

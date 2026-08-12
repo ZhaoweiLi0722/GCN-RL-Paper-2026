@@ -27,7 +27,9 @@
   ],
   "learned_config_paths": {
     "gcn_residual_mdl2_network_ddpg_afd": "configs/gcn_residual_20_clinic.yaml",
-    "flat_residual_mdl2_network_ddpg_afd": "configs/flat_residual_20_clinic.yaml"
+    "flat_residual_mdl2_network_ddpg_afd": "configs/flat_residual_20_clinic.yaml",
+    "gcn_residual_mdl2_network_td3_bc": "configs/gcn_residual_20_clinic.yaml",
+    "flat_residual_mdl2_network_td3_bc": "configs/flat_residual_20_clinic.yaml"
   },
   "heuristic_env_reference_algorithm": "gcn_residual_mdl2_network_ddpg_afd",
   "algorithm_settings": {
@@ -149,6 +151,21 @@
       "local_search": {
         "enabled": false
       }
+    },
+    "gcn_residual_mdl2_network_td3_bc": {
+      "inherits": "gcn_residual_mdl2_network_ddpg_afd",
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "flat_residual_mdl2_network_td3_bc": {
+      "inherits": "flat_residual_mdl2_network_ddpg_afd",
+      "config_overrides": {
+        "hidden_sizes": [284, 200, 132]
+      },
+      "local_search": {
+        "enabled": false
+      }
     }
   },
   "parameter_matching": {
@@ -157,6 +174,14 @@
     "flat_count": 564137,
     "relative_gap": 0.0013117381061692461,
     "maximum_relative_gap": 0.01
+  },
+  "stage_c_td3_parameter_matching": {
+    "definition": "unique trainable actor, twin critics, and correction gate parameters",
+    "gcn_count": 851719,
+    "flat_count": 851687,
+    "relative_gap": 0.00003757107684576721,
+    "maximum_relative_gap": 0.01,
+    "flat_hidden_sizes": [284, 200, 132]
   },
   "scenarios": [
     {

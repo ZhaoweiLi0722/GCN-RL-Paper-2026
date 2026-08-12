@@ -1,0 +1,146 @@
+{
+  "aggregate_rows": 314,
+  "aggregate_train_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_dagger1/teacher_train_dagger.npz",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "base_rows": 157,
+  "base_rows_in_aggregate": 157,
+  "base_teacher_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_screen/teacher_train.npz",
+  "behavior_deployment_candidate": {
+    "endpoint_projection": {
+      "enabled": false,
+      "groups": []
+    },
+    "group_thresholds": [
+      0.1,
+      0.1,
+      0.2
+    ],
+    "scale": 1.0
+  },
+  "behavior_deployment_source": "validation_candidate_override",
+  "checkpoint_variant": "final",
+  "collection_seed": 8750000,
+  "collections": [
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "checkpoint": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen/gcn_residual_mdl2_network_ddpg_afd/seed0/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed0_episode5.pt",
+      "deployment": {
+        "endpoint_projection": {
+          "enabled": false,
+          "groups": []
+        },
+        "group_thresholds": [
+          0.1,
+          0.1,
+          0.2
+        ],
+        "scale": 1.0
+      },
+      "query_start_step": 0,
+      "rollouts": 1,
+      "scenario": "routing_nominal_history",
+      "teacher_behavior_steps": 0,
+      "teacher_correction_rate": 0.9423076923076923,
+      "teacher_corrections": 49,
+      "teacher_labels": 52,
+      "total_steps": 52,
+      "training_seed": 0
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "checkpoint": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen/gcn_residual_mdl2_network_ddpg_afd/seed0/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed0_episode5.pt",
+      "deployment": {
+        "endpoint_projection": {
+          "enabled": false,
+          "groups": []
+        },
+        "group_thresholds": [
+          0.1,
+          0.1,
+          0.2
+        ],
+        "scale": 1.0
+      },
+      "query_start_step": 30,
+      "rollouts": 1,
+      "scenario": "routing_abrupt_regime_shift",
+      "teacher_behavior_steps": 0,
+      "teacher_correction_rate": 1.0,
+      "teacher_corrections": 22,
+      "teacher_labels": 22,
+      "total_steps": 52,
+      "training_seed": 0
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "checkpoint": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen/gcn_residual_mdl2_network_ddpg_afd/seed0/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed0_episode5.pt",
+      "deployment": {
+        "endpoint_projection": {
+          "enabled": false,
+          "groups": []
+        },
+        "group_thresholds": [
+          0.1,
+          0.1,
+          0.2
+        ],
+        "scale": 1.0
+      },
+      "query_start_step": 4,
+      "rollouts": 1,
+      "scenario": "routing_regional_drift",
+      "teacher_behavior_steps": 0,
+      "teacher_correction_rate": 0.8333333333333334,
+      "teacher_corrections": 40,
+      "teacher_labels": 48,
+      "total_steps": 52,
+      "training_seed": 0
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "checkpoint": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen/gcn_residual_mdl2_network_ddpg_afd/seed0/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed0_episode5.pt",
+      "deployment": {
+        "endpoint_projection": {
+          "enabled": false,
+          "groups": []
+        },
+        "group_thresholds": [
+          0.1,
+          0.1,
+          0.2
+        ],
+        "scale": 1.0
+      },
+      "query_start_step": 17,
+      "rollouts": 1,
+      "scenario": "routing_compound_regional_stress",
+      "teacher_behavior_steps": 0,
+      "teacher_correction_rate": 0.8571428571428571,
+      "teacher_corrections": 30,
+      "teacher_labels": 35,
+      "total_steps": 52,
+      "training_seed": 0
+    }
+  ],
+  "dagger_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_dagger1/teacher_dagger_only.npz",
+  "dagger_rows": 157,
+  "detection_delay": 4,
+  "filter_base_cache_causally": true,
+  "include_base_cache": true,
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_groupgate_broad_dagger1",
+  "raw_base_rows": 208,
+  "rollouts_per_policy": 1,
+  "scenario_names": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "selection_summary": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_threshold_calibration_final_evaluation/summary.json",
+  "teacher_behavior_probability": 0.0,
+  "teacher_overrides": {},
+  "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen_training_mps/patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_pretrainlr1e4_onlinelr1e5_groupgate_screen/training_manifest.json",
+  "training_seeds": [
+    0
+  ]
+}

@@ -45,6 +45,9 @@ GCN = "gcn_residual_mdl2_network_ddpg_afd"
 FLAT = "flat_residual_mdl2_network_ddpg_afd"
 RESULT_ROOT = "results/patient_indexed_specimen_routing_recovery7/"
 MAC_RESULT_ROOT = "results/patient_indexed_specimen_routing_mac_mps_primary/"
+STAGE_C_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_stage_c_td3_development"
+)
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -1281,10 +1284,20 @@ class RoutingExperimentContractTests(unittest.TestCase):
                         )
                         and value.startswith(MAC_RESULT_ROOT)
                     )
+                    stage_c_reference = (
+                        path.name.startswith(
+                            "patient_indexed_specimen_routing_stage_c_td3_"
+                        )
+                        and (
+                            value == STAGE_C_RESULT_ROOT
+                            or value.startswith(f"{STAGE_C_RESULT_ROOT}/")
+                        )
+                    )
                     self.assertTrue(
                         value.startswith(RESULT_ROOT)
                         or frozen_teacher_reference
-                        or mac_primary_reference,
+                        or mac_primary_reference
+                        or stage_c_reference,
                         f"{path}: {value}",
                     )
 

@@ -223,6 +223,64 @@ class ConservativeGCNResidualTD3Tests(unittest.TestCase):
         for name, parameter in agent.actor.named_parameters():
             self.torch.testing.assert_close(parameter, before[name])
 
+    def test_routing_primary_online_contract_is_active(self) -> None:
+        config = _config(seed=7)
+        config["critic_warmup_updates"] = 0
+        config["online_replay_fraction"] = 1.0
+        config["residual_action"].update(
+            {
+                "online_reward_mode": "n_step_anchor_relative",
+                "online_reward_n_step_horizon": 4,
+            }
+        )
+        config["pretrain_reference_actor_loss"] = {
+            "enabled": True,
+            "weight": 5.0,
+        }
+        config["online_advantage_self_imitation"] = {
+            "enabled": True,
+            "weight": 1.0,
+            "release_pretrain_reference": True,
+            "require_positive_one_step_return": True,
+            "minimum_return": 0.0,
+        }
+        agent = self.agent_cls(
+            self.env.observation_size,
+            self.env.action_size,
+            config,
+        )
+        agent.capture_pretrain_reference_policy()
+        agent.replay_buffer.begin_online_collection()
+        state = self.env.reset(seed=7)
+        for step in range(3):
+            action = agent.select_action(state, explore=False, env=self.env)
+            next_state, _reward, done, _info = self.env.step(action)
+            agent.replay_buffer.add(
+                state,
+                action,
+                0.1,
+                next_state,
+                done,
+                discount_multiplier=agent.gamma**3,
+                one_step_reward=0.1,
+            )
+            state = next_state
+        metrics = agent.update()
+
+        self.assertEqual(metrics["replay_online_fraction"], 1.0)
+        self.assertIn(
+            "online_advantage_self_imitation_active_fraction",
+            metrics,
+        )
+        self.assertIn("pretrain_reference_action_mse", metrics)
+        self.assertIn("pretrain_reference_parameter_drift_rms", metrics)
+        self.assertGreater(
+            metrics["online_advantage_self_imitation_active_fraction"],
+            0.0,
+        )
+        for value in metrics.values():
+            self.assertTrue(math.isfinite(float(value)))
+
 
 if __name__ == "__main__":
     unittest.main()

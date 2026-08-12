@@ -78,6 +78,18 @@ class _OnlinePreparationStubAgent(_StubAgent):
         return {"online_critic_lr": 1e-4}
 
 
+class _TwinCriticStubAgent(_StubAgent):
+    def __init__(self) -> None:
+        super().__init__()
+        self.actor_reference = copy.deepcopy(self.actor)
+        self.critic2 = torch.nn.Linear(3, 1)
+        self.critic2_target = copy.deepcopy(self.critic2)
+        self.critic2_optimizer = torch.optim.Adam(
+            self.critic2.parameters(),
+            lr=2e-3,
+        )
+
+
 class _StatefulStubEnv:
     def __init__(self) -> None:
         self.value = 3
@@ -205,6 +217,48 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
             agent.imitation_states,
             torch.tensor([[1.0, 2.0]]),
         )
+
+    def test_round_trip_restores_twin_critic_state(self):
+        agent = _TwinCriticStubAgent()
+        expected_critic2 = {
+            key: value.detach().clone()
+            for key, value in agent.critic2.state_dict().items()
+        }
+        expected_target = {
+            key: value.detach().clone()
+            for key, value in agent.critic2_target.state_dict().items()
+        }
+        config = {"algorithm": agent.algorithm, "seed": agent.seed}
+
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "twin-state.pt"
+            save_off_policy_training_state(
+                agent,
+                path,
+                config=config,
+                training={"next_episode": 5, "global_step": 260},
+            )
+            with torch.no_grad():
+                for parameter in agent.critic2.parameters():
+                    parameter.add_(10.0)
+                for parameter in agent.critic2_target.parameters():
+                    parameter.sub_(10.0)
+            load_off_policy_training_state(
+                agent,
+                path,
+                config=config,
+            )
+
+        for key, expected in expected_critic2.items():
+            torch.testing.assert_close(
+                agent.critic2.state_dict()[key],
+                expected,
+            )
+        for key, expected in expected_target.items():
+            torch.testing.assert_close(
+                agent.critic2_target.state_dict()[key],
+                expected,
+            )
 
     def test_scientific_contract_rejects_changed_hyperparameter(self):
         agent = _StubAgent()

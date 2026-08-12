@@ -163,10 +163,11 @@ or deteriorating. It is mechanism evidence, not a new independent confirmation.
 
 ### Stage C: bounded post-formal algorithm development
 
-Status: active preparation. The matched TD3 screen has been selected but has
-not been launched. Howard is the intended independent execution owner after a
-separate Stage C execution-lock commit records the exact configs, launcher,
-hashes, development streams, and output root. The orientation handoff is in
+Status: execution ready. The matched TD3 screen has been selected and its Mac
+MPS training/evaluation assets, frozen teacher, fresh development streams,
+parameter match, tests, hashes, and output roots are recorded in
+`experiments/configs/patient_indexed_specimen_routing_stage_c_td3_execution.json`.
+Howard is the independent execution owner. The handoff is in
 `docs/howard_stage_c_td3_handoff.md`.
 
 The completed seeds 10-14 and their formal holdout cannot regain untouched
@@ -280,3 +281,7 @@ control requirements in Section 1.
   `plateaued_or_inconclusive` decision. The existing Stage C decision tree
   therefore selects a matched three-seed TD3 development screen. No scientific
   protocol amendment was made.
+- Status update, 2026-08-11: Stage C implementation and execution assets were
+  locked for Mac MPS. The screen uses fresh seeds 20-22, six serial 100-episode
+  runs, matched parameter budgets, and fresh development CRNs. Howard may
+  launch from the supplied commit without a separate approval round.

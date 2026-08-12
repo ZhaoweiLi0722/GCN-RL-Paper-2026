@@ -21,8 +21,11 @@ FORMAT_VERSION = 1
 _MODULE_NAMES = (
     "actor",
     "actor_target",
+    "actor_reference",
     "critic",
     "critic_target",
+    "critic2",
+    "critic2_target",
     "pretrain_reference_actor",
     "correction_gate",
     "correction_safety_gate",
@@ -30,6 +33,7 @@ _MODULE_NAMES = (
 _OPTIMIZER_NAMES = (
     "actor_optimizer",
     "critic_optimizer",
+    "critic2_optimizer",
     "correction_gate_optimizer",
     "correction_safety_gate_optimizer",
 )

@@ -722,6 +722,7 @@ def agent_parameter_count(agent: Any) -> int:
         for name in (
             "actor",
             "critic",
+            "critic2",
             "correction_gate",
             "q_network",
         )

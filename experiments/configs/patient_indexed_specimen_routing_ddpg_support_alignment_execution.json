@@ -1,0 +1,169 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_support_alignment_execution",
+  "experimental_role": "single-claim Apple MPS execution lock for a fresh-seed, single-factor DDPG teacher-support development experiment; not formal confirmation",
+  "required_accelerator": "mps",
+  "campaign_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development",
+  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/launcher",
+  "control_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_100.json",
+  "candidate_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100.json",
+  "preonline_output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/preonline",
+  "preonline_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/preonline/patient_indexed_specimen_routing_ddpg_support_alignment_preonline/training_manifest.json",
+  "paired_state_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/paired_states",
+  "control_training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/control/training/patient_indexed_specimen_routing_ddpg_support_alignment_control_100/training_manifest.json",
+  "candidate_training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/training/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100/training_manifest.json",
+  "control_final_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_final_eval.json",
+  "control_pretrain_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_pretrain_eval.json",
+  "candidate_final_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_final_eval.json",
+  "candidate_pretrain_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_pretrain_eval.json",
+  "control_final_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/control/evaluation/final/summary.json",
+  "control_pretrain_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/control/evaluation/pretrain/summary.json",
+  "candidate_final_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/evaluation/final/summary.json",
+  "candidate_pretrain_summary": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/evaluation/pretrain/summary.json",
+  "comparison_output": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/comparison/support_alignment_summary.json",
+  "algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd"
+  ],
+  "training_seeds": [
+    30,
+    31,
+    32
+  ],
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "development_crn_seeds": [
+    95000000,
+    95100000
+  ],
+  "forbidden_crn_seeds": [
+    91100000,
+    93100000,
+    94000000,
+    94100000,
+    94600000
+  ],
+  "maximum_parameter_relative_gap": 0.01,
+  "fresh_output_roots": [
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/preonline",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/paired_states",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/control/training",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/training",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/control/evaluation/final",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/control/evaluation/pretrain",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/evaluation/final",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/evaluation/pretrain",
+    "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/comparison"
+  ],
+  "phase_order": [
+    "focused_tests",
+    "prepare_preonline_states",
+    "clone_paired_state_contracts",
+    "training_control_gcn_seeds_30_31_32",
+    "training_control_flat_seeds_30_31_32",
+    "training_candidate_gcn_seeds_30_31_32",
+    "training_candidate_flat_seeds_30_31_32",
+    "paired_fork_audit",
+    "evaluation_control_final",
+    "evaluation_control_pretrain",
+    "evaluation_candidate_final",
+    "evaluation_candidate_pretrain",
+    "comparison",
+    "artifact_inventory"
+  ],
+  "focused_tests": [
+    "tests.test_critic_advantage",
+    "tests.test_off_policy_training_state",
+    "tests.test_train_multiscenario_network_residual",
+    "tests.test_ddpg_support_alignment"
+  ],
+  "locked_files": [
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_100.json",
+      "sha256": "d68112edfbfd9cb935479b9d34ef14303184ae8a50b205202b1414d5bbd14dd4"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100.json",
+      "sha256": "91b7b46b1b668c78867fdee7809e95aec6ac1401c7bbe1ed295e6fe106d5c791"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_final_eval.json",
+      "sha256": "c588b84c9dc878674ccee68e2b71aa0e8eaf5319ce1cec7c3f45e574e5fc7c05"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_control_pretrain_eval.json",
+      "sha256": "ec017a11543e989a2a8a1168d253c17783e4c3ff122d05188367743e2e23dc4f"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_final_eval.json",
+      "sha256": "d8a85395d44d07a0c6e43091dca403033b5ef3193e1ab7c0760bbde2a93d0e5b"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_pretrain_eval.json",
+      "sha256": "69ff588621a9179de02aeb29db161b820fd678d58f7d378f8deedd7e9dd5233c"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+      "sha256": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_manifest.json",
+      "sha256": "60428718eb3e5d6981408cd7f43044c0784eee89c87724958ea2bcd09abbadb5"
+    },
+    {
+      "path": "evaluation/run_patient_indexed_specimen_routing_ddpg_support_alignment.py",
+      "sha256": "16e1760b7e3ea7fe9bcb5518159b81d7de23a570453d50880d731d8ef3fed834"
+    },
+    {
+      "path": "evaluation/prepare_ddpg_support_alignment_preonline.py",
+      "sha256": "791791c094debb7c2c1b697ab212400868e1baa240022827e41ade3204f5d81d"
+    },
+    {
+      "path": "evaluation/launch_patient_indexed_specimen_routing_ddpg_support_alignment.py",
+      "sha256": "64ddbd0f157491feaff3eb0c32a4f7a2e71e088c56dca7738818bdaae85e6457"
+    },
+    {
+      "path": "evaluation/compare_ddpg_support_alignment.py",
+      "sha256": "565d59f52b47f88f4e439c56576d4aa6d9cf780daa93c915d266af96fc3c805c"
+    },
+    {
+      "path": "evaluation/train_multiscenario_network_residual.py",
+      "sha256": "cd33c64711b0e85e496e60a958a2ddfb1ed5db74fb668962d04cab7c24f6ddd1"
+    },
+    {
+      "path": "evaluation/evaluate_multiscenario_network_residual.py",
+      "sha256": "cbb4f432439676d62799085f5e220b0d2004d13570dc44ea2b43933283e02f2c"
+    },
+    {
+      "path": "src/rl/training_state.py",
+      "sha256": "db8c743dca046674633f452bbe4d3d379e7a9bdbf4f127284fd9467d7af80b33"
+    },
+    {
+      "path": "src/rl/critic_advantage.py",
+      "sha256": "e8a7d7ee3d7457378db3f0eacfb2f8b770b9fa98ae200cd469d92c951cdef3a8"
+    },
+    {
+      "path": "src/models/gcn_ddpg.py",
+      "sha256": "07f5bf086118dba0ada251cb99d9ae228882c270cc7abb950ae76dcd5ea9964b"
+    },
+    {
+      "path": "src/baselines/flat_ddpg.py",
+      "sha256": "16f2ffbaa452cb29b3770b62ae88d25d34e50e7256f380fa36990e5116879024"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+      "sha256": "35280f6ce357b42c0054110aa63795c652c58db6f4b5d994784be0e5f73c72ee"
+    },
+    {
+      "path": "configs/gcn_residual_20_clinic.yaml",
+      "sha256": "6f8a4f59b43f6527f879ab8d754e083517dd85fc5a6dac3eda9c2668247c679e"
+    },
+    {
+      "path": "configs/flat_residual_20_clinic.yaml",
+      "sha256": "3b667785e61ee9ca5e264d7a75c90e2832e7479834f28bb089c00ae9bc6d0ca4"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Patient-Indexed Specimen Routing: Locked Publication Execution Plan
 
-Plan version: 1.1
+Plan version: 1.2
 
 Status date: 2026-08-12
 
@@ -14,19 +14,21 @@ of truth for the routing-primary publication campaign.
 - Current publication gate: Stage C matched TD3 development screen.
 - Independent execution owner: Howard, on Mac MPS, using the locked Stage C
   assets at commit `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
-- Parallel core-team work: retrospective diagnosis of the completed Stage B
-  DDPG checkpoint curve, now completed in
-  `docs/patient_indexed_specimen_routing_rl_attribution_diagnosis.md`. This
-  work may not change or interfere with Howard's Stage C protocol.
+- Parallel core-team work: one user-approved, single-factor DDPG
+  support-alignment development experiment on a separate Mac MPS worktree,
+  locked at commit `470b56b0422704d09b4cfe36bdc01be0bb711fc1`.
+  It may not change or interfere with Howard's Stage C protocol.
 - Verified diagnosis: DDPG online replay ranking improves early and then
   erodes while critic advantage scale becomes severely miscalibrated. The
   teacher ranking regularizer also includes 41.72% of rows whose winning option
   is outside the specimen-only residual policy support.
-- Do not launch new DDPG training, reuse the formal holdout stream, or reopen
-  broad hyperparameter search while Stage C is unresolved.
-- Immediate next gate: use Howard's locked Stage C result to decide between
-  TD3 promotion and one conditional support-aligned DDPG fallback. Only one may
-  proceed; neither decision may be made from a point estimate alone.
+- The support-alignment experiment is the only concurrent DDPG training
+  authorized while Stage C is unresolved. Do not reuse the formal holdout,
+  reopen broad HPO, add another DDPG factor, or alter its frozen protocol.
+- Immediate next gate: jointly review Howard's matched TD3 result and the
+  paired DDPG support-alignment result. At most one revised protocol may proceed
+  to fresh independent confirmation; neither may be selected from a point
+  estimate alone.
 
 ## 1. Purpose and change control
 
@@ -189,6 +191,16 @@ parameter match, tests, hashes, and output roots are recorded in
 Howard is the independent execution owner. The handoff is in
 `docs/howard_stage_c_td3_handoff.md`.
 
+An explicit version-1.2 exception authorizes one concurrent core-team DDPG
+mechanism experiment because it uses separate compute, seeds, CRNs, output
+roots, and a single diagnosis-derived factor. It compares a fresh unfiltered
+DDPG control against a support-aligned candidate for both GCN and matched flat.
+Each candidate is forked from a byte-audited episode-0 state payload shared
+with its control; only the critic teacher-support contract differs. This is
+development evidence, not a second formal confirmation and not an invitation
+to parallel HPO. TD3 and support-aligned DDPG must be reviewed together before
+either can advance.
+
 The completed seeds 10-14 and their formal holdout cannot regain untouched
 status. Any changed training protocol uses a fresh development output root,
 fresh development training seeds, and a fresh development CRN stream locked in
@@ -308,6 +320,14 @@ control requirements in Section 1.
   completed. It identified online replay-ranking erosion, critic scale
   miscalibration, and a teacher-policy support mismatch. This did not amend
   Stage C or authorize a new DDPG experiment.
+- Version 1.2, 2026-08-12: The user explicitly approved one exception to the
+  sequential Stage C gate so independent Mac compute would not remain idle.
+  A paired support-aligned DDPG experiment is authorized concurrently with
+  Howard's unchanged TD3 screen. The amendment is limited to one teacher
+  support factor, fresh seeds 30-32, fresh development CRNs 95000000 and
+  95100000, and disjoint outputs. It does not authorize broad HPO, formal
+  holdout reuse, cross-campaign pooling, or automatic winner selection. Both
+  results feed one joint gate and at most one protocol may advance.
 
 ## 9. Append-only progress ledger
 
@@ -364,3 +384,35 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `specimen_transfer`, fresh development seeds/CRNs, and no broad HPO.
 - Next gate: audit the completed Stage C result and choose exactly one path:
   TD3 promotion or the single bounded DDPG fallback.
+
+### 2026-08-12: Paired DDPG support-alignment experiment locked
+
+- Stage: concurrent, single-factor post-Stage-B DDPG mechanism development.
+- Execution asset commit:
+  `470b56b0422704d09b4cfe36bdc01be0bb711fc1` on
+  `rl-attribution-refinement`.
+- Execution spec:
+  `experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_execution.json`,
+  SHA256
+  `bd69ad13ad83ccf4d21439fee4b58aa58117d12038d73ac73999ebfa437331c7`.
+- Design: GCN and matched-flat DDPG, seeds 30-32, 100 online episodes per
+  control and candidate run, checkpoint every five episodes, and a common
+  frozen routing teacher. The candidate differs only by restricting critic
+  teacher calibration to policy-supported anchor plus specimen-transfer rows.
+- Pairing: six calibration-free, zero-trajectory full states are generated
+  once. Control and candidate contract clones retain identical model,
+  optimizer, replay, environment, and RNG payloads. The runner audits these
+  payloads before accepting either branch.
+- Evaluation: final and frozen-pretrain policies use four routing scenarios,
+  50 paired replications per scenario, validation seed `95000000`, and
+  development holdout seed `95100000`. Formal seed `91100000`, Stage B seed
+  `93100000`, and Howard's Stage C streams are forbidden.
+- Verification before lock: `python -m compileall` passed; focused tests passed
+  74/74; the full repository suite passed 629/629; Howard's Stage C hashes
+  remained unchanged.
+- Decision: this is development evidence only. No further DDPG factor may be
+  introduced from this run. Advancement requires paired cost uncertainty,
+  clinical noninferiority, positive final-versus-pretrain attribution, and a
+  joint review with the independently executed TD3 screen.
+- Next gate: perform one no-trajectory MPS preflight, launch the one-claim
+  detached campaign, audit completion, then review it together with Stage C.

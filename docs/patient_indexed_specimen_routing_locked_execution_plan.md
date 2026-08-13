@@ -622,3 +622,63 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Next gate: implement and test Stage C2, commit the locked execution assets,
   run a no-trajectory end-to-end preflight, and only then launch one detached
   strictly serial development campaign.
+
+### 2026-08-13: Persistent-shift Stage C2 closed; action coverage is the next DDPG gate
+
+- Execution commit: `ccf7138688a62dbc0e28689f4dad3c1a127ed0e6` on
+  `rl-attribution-refinement`. The campaign completed 12/12 training runs,
+  1,200/1,200 online episodes, 240 policy checkpoints, 12 atomic states, and
+  72/72 checkpoint-curve evaluation runs with 3,600 learned plus 3,600 anchor
+  rows. Status SHA256 is
+  `378348e7912e3a6b60be4661b9f18f067694ff60d52f76c543dafe392e013c91`;
+  comparison SHA256 is
+  `ec479ff6d2abb31740070729db4ca9c8763422c91c65fb20117765df94f2e3be`;
+  the 824-file inventory SHA256 is
+  `e79f783566878fd1ca533fcf4e92d7a63846ff7ecd12a89eab9fe8d332f2f151`.
+- Locked result: the persistent-shift realignment candidate did not pass.
+  GCN episode 10 improved on frozen pretrain by `258348` cost units
+  (`0.01273%`), but its 95% CI `[-837548, 249208]` crossed zero. At episode
+  100 it was `507246` cost units (`0.02498%`) worse than frozen, with 95% CI
+  `[-445243, 1538629]`; only one of three seeds was favorable and the patient
+  loss noninferiority check failed. The locked classification is
+  `close_persistent_shift_ddpg_candidate`; no formal confirmation was launched.
+- Frozen-policy context: the same 150 paired persistent-shift rows show that
+  frozen GCN pretrain is already `10871216` cost units (`0.53262%`) better than
+  MDL-2, with 95% CI `[-14795906, -6489364]` and all three seeds favorable.
+  The reduction is dominated by `19.77` fewer patients lost and `2129333`
+  lower expiry cost, not by direct transport-cost savings. Online attribution
+  is therefore an incremental-gain problem above a strong frozen policy, not
+  evidence that the learned routing policy itself is ineffective.
+- Development diagnosis: a no-training route-only oracle probe used one frozen
+  GCN trajectory for each persistent hotspot, legal candidates MDL-2 and
+  specimen residuals `+/-0.05` and `+/-0.10`, discovery CRN `95500000`, and an
+  independent five-replication validation CRN `95600000`. Of 156 frozen-policy
+  states, 61 (`39.10%`) retained a lower-cost clinically noninferior action on
+  independent validation; 49 were specimen-transfer corrections. Those 49
+  validated corrections had median future-cost advantage `2718118` and 43/49
+  exceeded one million. This is a single-decision development probe, not a
+  cumulative episode estimate or publication result, and its temporary outputs
+  must be converted into a committed reproducible audit before citation.
+- Mechanistic conclusion: the current OU exploration has network-output
+  `sigma=0.005`; after the specimen residual scale `0.1`, its initial normalized
+  action perturbation is about `0.0005`. The environment's 120-patient routing
+  scale produces a one-patient action grid of `1/120 = 0.00833`, while the
+  independently validated useful alternatives are `0.05` or `0.10`. The
+  correction gate also remains active during exploration. Online replay thus
+  receives little behaviorally distinct specimen-action coverage, explaining
+  the collapsed critic action slope, very small actor drift, transient episode
+  10 gain, and later regression despite genuine route-only headroom.
+- Decision: preserve DDPG as the intended primary method, close critic
+  realignment and support alignment, and do not tune actor/critic learning rates
+  or expose the formal holdout. The only authorized next DDPG mechanism screen
+  is support-matched structured specimen-option exploration: during online
+  collection, explore the fixed legal set `{MDL-2, +/-0.05, +/-0.10}` for the
+  specimen group while retaining the existing DDPG critic, deterministic actor,
+  reward, self-imitation rule, gate, residual scale, and all other scientific
+  settings.
+- Next gate: implement a reproducible frozen-route-headroom audit and the
+  single-factor structured-exploration mechanism with unit tests and a
+  zero-trajectory MPS preflight. Then lock fresh development seeds and CRNs for
+  one paired control/candidate screen. Advancement requires positive
+  final-versus-frozen attribution, at least two favorable seeds, clinical
+  noninferiority, and no regression relative to the unchanged DDPG control.

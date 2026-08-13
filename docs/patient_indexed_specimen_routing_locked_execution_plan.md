@@ -682,3 +682,62 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   one paired control/candidate screen. Advancement requires positive
   final-versus-frozen attribution, at least two favorable seeds, clinical
   noninferiority, and no regression relative to the unchanged DDPG control.
+
+### 2026-08-13: Structured specimen exploration Stage C3 locked for execution
+
+- Scientific question: does behaviorally distinct, support-matched online
+  coverage let the existing DDPG critic and actor learn incremental routing
+  value that ordinary sub-grid OU exploration misses? This is a mechanism
+  screen above the already strong frozen DDPG policy, not a new deployment
+  policy, geography calibration, or hyperparameter sweep.
+- Before training, rerun the committed frozen-route-headroom audit on the
+  immutable Stage C2 control pretrain checkpoints for GCN seeds 40-42. It must
+  reproduce 156 persistent-hotspot states with disjoint discovery and
+  validation streams 95500000 and 95600000 and retain at least one independently
+  validated clinically noninferior specimen correction. These rows are
+  mechanistic development evidence only; state-level advantages must never be
+  summed into an episode or publication performance claim.
+- Fresh paired training uses seeds 50, 51, and 52, assigned once to persistent
+  hotspot clusters 1, 2, and 3. Six zero-trajectory episode-0 states are
+  created, then metadata-only cloned for GCN and matched-flat control/candidate
+  arms. Actor, critic, optimizers, replay, environment, ordinary OU state, all
+  RNG state, reward, self-imitation, gate, residual scale, update schedule, and
+  every other scientific field remain identical at the fork.
+- The only arm difference is
+  `residual_action.structured_exploration.enabled`. The control leaves it off.
+  During candidate online data collection, after actor output, ordinary OU,
+  correction gating, and policy projection, each decision has fixed probability
+  0.20 of replacing only the specimen-transfer slice by one uniformly sampled
+  legal option from `{MDL-2, -0.05, +0.05, -0.10, +0.10}` around the current
+  MDL-2 anchor. Thus the preregistered expected rates are 4% anchor replacement
+  and 16% non-anchor specimen correction. Other action groups are untouched,
+  and evaluation always uses the deterministic frozen checkpoint policy with
+  structured exploration disabled by `explore=False`.
+- Train controls first and candidates second, strictly serial, for 100 online
+  episodes each: 12 runs, 1,200 online episodes, policy and atomic state every
+  five episodes. Require MPS with fallback disabled, nonzero routing and online
+  updates, finite persisted metrics, GCN/flat parameter gap at most 1%, exact
+  explorer RNG resumption, all five options observed in each candidate run, and
+  behaviorally distinct specimen actions. The forced-probability two-step CPU
+  smoke is execution validation only and is not evidence.
+- Evaluate both arms at pretrain, episode 10, 25, 50, 75, and 100. Each of the
+  72 fixed checkpoint runs uses its seed-assigned persistent hotspot and 50
+  paired development replications, producing 3,600 learned and 3,600 MDL-2
+  anchor rows per arm. Seed 95700000 with one replication is execution-only;
+  seed 95800000 is the development evaluation stream; bootstrap seed 95850000
+  is fixed. Formal holdout 91100000 and every prior training/evaluation stream
+  remain forbidden.
+- Candidate advancement requires final GCN cost improvement versus its own
+  frozen pretrain of at least 0.02% or a paired 95% cost CI wholly below zero,
+  at least two of three favorable training seeds, all preregistered clinical
+  noninferiority checks, and no mean-cost or clinical regression versus the
+  unchanged fresh-seed control. The checkpoint curve and adaptation AUC are
+  supporting diagnostics, never checkpoint-selection devices. Failure closes
+  this structured-exploration candidate; success authorizes a separately
+  reviewed fresh confirmation only. No formal confirmation launches
+  automatically.
+- Implementation gate: unit and integration tests, full relevant regression
+  tests, compile-all, reproducible asset hashes, clean-worktree preflight, and a
+  zero-trajectory host MPS probe must all pass before the single detached run is
+  launched. Howard's TD3 campaign and all prior support-alignment and Stage C2
+  evidence remain untouched and must not be pooled into this comparison.

@@ -568,6 +568,15 @@ def train_one_multiscenario_agent(
         "pretrain": pretrain_report,
         "parameter_count": agent_parameter_count(agent),
     }
+    structured_exploration_getter = getattr(
+        agent,
+        "structured_exploration_summary",
+        None,
+    )
+    if callable(structured_exploration_getter):
+        summary["structured_specimen_exploration"] = dict(
+            structured_exploration_getter()
+        )
     pretrain_checkpoint = Path(summary["pretrain_checkpoint"])
     if pretrain_checkpoint.is_file():
         summary["actor_drift_from_pretrain"] = actor_checkpoint_drift(

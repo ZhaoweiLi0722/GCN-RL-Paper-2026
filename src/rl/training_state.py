@@ -92,6 +92,7 @@ _PREONLINE_FORKABLE_CONFIG_PATHS = frozenset(
         "residual_action.correction_gate.differentiate_actor_proposal",
         "residual_action.online_reward_mode",
         "residual_action.online_reward_n_step_horizon",
+        "residual_action.structured_exploration.enabled",
         "specimen_action_quantization",
         "updates_per_update",
     }
@@ -322,6 +323,11 @@ def _agent_state_dict(agent: Any) -> dict[str, Any]:
     cuda_rng_states = []
     if torch.cuda.is_available():
         cuda_rng_states = [state.cpu() for state in torch.cuda.get_rng_state_all()]
+    structured_explorer = getattr(
+        agent,
+        "structured_specimen_explorer",
+        None,
+    )
     return {
         "modules": modules,
         "module_modes": module_modes,
@@ -338,6 +344,11 @@ def _agent_state_dict(agent: Any) -> dict[str, Any]:
         ),
         "replay_buffer": agent.replay_buffer.state_dict(),
         "noise": agent.noise.state_dict(),
+        "structured_specimen_explorer": (
+            None
+            if structured_explorer is None
+            else structured_explorer.state_dict()
+        ),
         "imitation_tensors": imitation_tensors,
         "imitation_rng_state": agent.imitation_rng.bit_generator.state,
         "critic_teacher_advantage_rng_state": (
@@ -399,6 +410,33 @@ def _load_agent_state_dict(
             )
         noise_state["sigma"] = float(agent.noise.sigma)
     agent.noise.load_state_dict(noise_state)
+    structured_explorer = getattr(
+        agent,
+        "structured_specimen_explorer",
+        None,
+    )
+    structured_state = state.get("structured_specimen_explorer")
+    if structured_state is not None:
+        if structured_explorer is None:
+            raise ValueError(
+                "Training state contains structured specimen exploration "
+                "state but the agent does not support it"
+            )
+        structured_explorer.load_state_dict(
+            structured_state,
+            allow_enabled_mismatch=(
+                "residual_action.structured_exploration.enabled"
+                in (fork_overrides or {})
+            ),
+        )
+    elif (
+        structured_explorer is not None
+        and structured_explorer.enabled
+    ):
+        raise ValueError(
+            "Enabled structured specimen exploration is missing from the "
+            "training state"
+        )
     for name, value in dict(state["imitation_tensors"]).items():
         setattr(
             agent,

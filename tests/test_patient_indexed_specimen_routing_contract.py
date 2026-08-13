@@ -56,6 +56,10 @@ DDPG_PERSISTENT_SHIFT_RESULT_ROOT = (
     "results/patient_indexed_specimen_routing_ddpg_persistent_shift_"
     "development"
 )
+DDPG_STRUCTURED_EXPLORATION_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_structured_exploration_"
+    "development"
+)
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -1325,13 +1329,42 @@ class RoutingExperimentContractTests(unittest.TestCase):
                             )
                         )
                     )
+                    ddpg_structured_reference = (
+                        path.name.startswith(
+                            "patient_indexed_specimen_routing_ddpg_"
+                            "structured_exploration_"
+                        )
+                        and (
+                            value == DDPG_STRUCTURED_EXPLORATION_RESULT_ROOT
+                            or value.startswith(
+                                f"{DDPG_STRUCTURED_EXPLORATION_RESULT_ROOT}/"
+                            )
+                        )
+                    )
+                    frozen_route_headroom_reference = (
+                        path.name
+                        == (
+                            "patient_indexed_specimen_routing_ddpg_frozen_"
+                            "route_headroom_audit.json"
+                        )
+                        and (
+                            value.startswith(
+                                f"{DDPG_STRUCTURED_EXPLORATION_RESULT_ROOT}/"
+                            )
+                            or value.startswith(
+                                f"{DDPG_PERSISTENT_SHIFT_RESULT_ROOT}/"
+                            )
+                        )
+                    )
                     self.assertTrue(
                         value.startswith(RESULT_ROOT)
                         or frozen_teacher_reference
                         or mac_primary_reference
                         or stage_c_reference
                         or ddpg_support_reference
-                        or ddpg_persistent_shift_reference,
+                        or ddpg_persistent_shift_reference
+                        or ddpg_structured_reference
+                        or frozen_route_headroom_reference,
                         f"{path}: {value}",
                     )
 

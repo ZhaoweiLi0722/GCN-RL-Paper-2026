@@ -31,6 +31,7 @@ from src.rl.critic_advantage import (
     teacher_advantage_loss,
     teacher_advantage_support_mask,
 )
+from src.rl.critic_realignment import zero_critic_action_input
 from src.rl.networks import require_torch, resolve_torch_device, torch
 from src.rl.noise import OUNoise
 from src.rl.preprocessing import (
@@ -101,6 +102,34 @@ class GCNDDPGAgent:
                 "online_critic_lr must be finite and positive"
             )
         self.total_updates = 0
+        realignment_config = dict(
+            config.get("online_critic_realignment", {})
+        )
+        self.online_critic_realignment_enabled = bool(
+            realignment_config.get("enabled", False)
+        )
+        self.online_critic_realignment_mode = str(
+            realignment_config.get("mode", "zero_action_columns")
+        ).lower()
+        if self.online_critic_realignment_mode != "zero_action_columns":
+            raise ValueError(
+                "online_critic_realignment.mode must be "
+                "'zero_action_columns'"
+            )
+        self.online_actor_warmup_updates = max(
+            int(realignment_config.get("actor_warmup_updates", 0)),
+            0,
+        )
+        if (
+            not self.online_critic_realignment_enabled
+            and self.online_actor_warmup_updates
+        ):
+            raise ValueError(
+                "online critic actor warmup requires realignment to be enabled"
+            )
+        self.online_updates_since_prepare = 0
+        self.online_finetuning_prepared = False
+        self.online_critic_realignment_applied = False
         self.reward_scale = reward_scale_from_config(config)
         residual_config = dict(config.get("residual_action", {}))
         self.residual_action_enabled = bool(residual_config.get("enabled", False))
@@ -1783,6 +1812,34 @@ class GCNDDPGAgent:
                     ),
                 }
             )
+        if int(start_episode) == 0:
+            self.online_updates_since_prepare = 0
+            if (
+                self.online_critic_realignment_enabled
+                and not self.online_critic_realignment_applied
+            ):
+                summary.update(
+                    zero_critic_action_input(
+                        self.critic,
+                        self.critic_target,
+                        self.critic_optimizer,
+                        action_dim=self.action_dim,
+                    )
+                )
+                self.online_critic_realignment_applied = True
+        elif (
+            self.online_critic_realignment_enabled
+            and not self.online_critic_realignment_applied
+        ):
+            raise ValueError(
+                "Resumed realigned DDPG state lacks the episode-0 critic "
+                "realignment marker"
+            )
+        self.online_finetuning_prepared = True
+        if self.online_critic_realignment_enabled:
+            summary["online_actor_warmup_updates"] = float(
+                self.online_actor_warmup_updates
+            )
         return summary
 
     def _pretrain_reference_drift_metrics(self) -> dict[str, float]:
@@ -1818,6 +1875,8 @@ class GCNDDPGAgent:
             return {}
 
         self.total_updates += 1
+        if self.online_finetuning_prepared:
+            self.online_updates_since_prepare += 1
         batch = self.replay_buffer.sample(
             self.batch_size,
             online_fraction=self.online_replay_fraction,
@@ -1889,6 +1948,11 @@ class GCNDDPGAgent:
         actor_update_due = (
             self.total_updates > self.critic_warmup_updates
             and (
+                not self.online_finetuning_prepared
+                or self.online_updates_since_prepare
+                > self.online_actor_warmup_updates
+            )
+            and (
                 self.total_updates - self.critic_warmup_updates
             )
             % self.actor_update_frequency
@@ -1897,6 +1961,14 @@ class GCNDDPGAgent:
         metrics = {
             "critic_loss": float(critic_loss.item()),
             "actor_updated": float(actor_update_due),
+            "online_updates_since_prepare": float(
+                self.online_updates_since_prepare
+            ),
+            "online_actor_warmup_active": float(
+                self.online_finetuning_prepared
+                and self.online_updates_since_prepare
+                <= self.online_actor_warmup_updates
+            ),
         }
         metrics.update(self._anchor_relative_reward_metrics())
         if self.online_replay_fraction is not None:

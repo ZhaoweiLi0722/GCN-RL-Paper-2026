@@ -1,6 +1,6 @@
 # Patient-Indexed Specimen Routing: Locked Publication Execution Plan
 
-Plan version: 1.2
+Plan version: 1.3
 
 Status date: 2026-08-12
 
@@ -11,7 +11,9 @@ of truth for the routing-primary publication campaign.
 
 ## Current verified position
 
-- Current publication gate: Stage C matched TD3 development screen.
+- Current publication gate: two independent, bounded development screens:
+  Howard's unchanged matched TD3 Stage C screen and the core team's newly
+  authorized persistent-shift DDPG Stage C2 screen.
 - Independent execution owner: Howard, on Mac MPS, using the locked Stage C
   assets at commit `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
 - Parallel core-team work: the single-factor DDPG support-alignment
@@ -23,11 +25,13 @@ of truth for the routing-primary publication campaign.
   erodes while critic advantage scale becomes severely miscalibrated. The
   teacher ranking regularizer also includes 41.72% of rows whose winning option
   is outside the specimen-only residual policy support.
-- No further DDPG factor, broad HPO, formal-holdout reuse, or selective
-  extension is authorized from the support-alignment result.
-- Immediate next gate: complete and audit Howard's independently locked matched
-  TD3 screen, then perform the planned joint review. The support-aligned DDPG
-  candidate is not eligible for fresh formal confirmation.
+- The failed support-alignment candidate remains closed. Version 1.3 authorizes
+  one different, diagnosis-driven DDPG experiment: a persistent geographic
+  demand shift paired with online-boundary critic realignment and an online-only
+  actor warmup. It is not an extension of the failed support candidate.
+- Broad HPO, formal-holdout reuse, selective seed extension, and automatic
+  promotion remain forbidden. Howard's TD3 work is independent and is not a
+  prerequisite for running or auditing Stage C2.
 
 ## 1. Purpose and change control
 
@@ -224,6 +228,57 @@ No broad automated HPO is allowed. A new experiment must be mechanism-driven,
 single-factor or explicitly matched, use a separate development stream, and
 give graph and flat architectures the same budget.
 
+### Stage C2: persistent-shift DDPG online-attribution screen
+
+Status: authorized for implementation by version 1.3. No trajectory may be
+launched until the implementation, tests, smoke evidence, hashes, and execution
+spec are committed.
+
+The mechanism hypothesis is that the original episode-round-robin curriculum
+suppressed online attribution: a frozen actor could react to observable demand
+history, while online updates repeatedly mixed alternating regimes. Stage C2
+therefore tests adaptation to a persistent, geographically redistributed demand
+regime. This is a geography-of-demand experiment, not a transport-speed sweep.
+
+The protocol is locked as follows:
+
+1. Use fresh development seeds 40, 41, and 42. Assign each seed before launch to
+   one persistent hotspot map (clusters 1, 2, and 3 respectively). Every map
+   preserves network-wide expected demand and changes only its geographic
+   distribution. The three seed-map pairs are development replicates, not
+   evidence for map-specific claims.
+2. Train matched GCN and flat DDPG for 100 online episodes. Fork each standard
+   control and realigned candidate from the same audited episode-0 state. The
+   frozen comparator is that tensor-matched episode-0 actor.
+3. The candidate may differ from control only at the online boundary: zero the
+   action-input columns of the critic's first linear layer, copy critic to target
+   critic, clear critic optimizer state, and withhold actor updates for the first
+   500 online critic updates. Preserve actor tensors, replay, environment, RNG,
+   teacher, residual scale 0.1, gate threshold 0.5, and every other parameter.
+4. Audit fixed checkpoints at episodes 0, 10, 25, 50, 75, and 100. Episode 100
+   is the deployment checkpoint; intermediate checkpoints diagnose adaptation
+   and cannot be selected post hoc.
+5. Use fresh execution-only validation CRN seed 95200000 and development CRN
+   seed 95300000. Formal seed 91100000 and all earlier development streams are
+   forbidden. Evaluate with paired CRNs and report absolute cost first, percent
+   cost second, clinical guardrails, residual use, actor drift, and cumulative
+   adaptation regret.
+6. Advancement requires episode-100 final-versus-frozen improvement of at
+   least 0.02% in pooled mean cost or a two-level 95% interval wholly below
+   zero, favorable direction in at least two of three seed-map pairs, no
+   material clinical deterioration, and nonzero routing, residual use, and
+   online updates. The realigned candidate must also be no worse than standard
+   DDPG in pooled point estimate to be selected over it.
+7. Promote at most one DDPG protocol. A favorable development result requires
+   fresh five-seed confirmation and a new holdout stream under Stage D. A failed
+   result closes this candidate; a second DDPG mechanism requires another
+   explicit amendment. Howard's outputs must not be pooled with Stage C2.
+
+Every preflight must exercise training-state save/restore, scenario assignment,
+all downstream parsers, comparator and inventory generation, including a
+synthetic CSV field larger than 131,072 bytes. Expensive execution remains
+strictly serial on Mac MPS with CPU fallback disabled.
+
 ### Stage D: independent confirmation of a revised candidate
 
 If Stage C changes the backbone, update rule, or episode budget, lock that
@@ -327,6 +382,14 @@ control requirements in Section 1.
   95100000, and disjoint outputs. It does not authorize broad HPO, formal
   holdout reuse, cross-campaign pooling, or automatic winner selection. Both
   results feed one joint gate and at most one protocol may advance.
+- Version 1.3, 2026-08-12: After the support-alignment experiment reached an
+  audited terminal negative result, the user explicitly approved continued
+  work on DDPG without waiting for Howard's independent TD3 screen. One bounded
+  Stage C2 experiment is authorized to test persistent geographic demand shift
+  plus online-boundary critic realignment. It uses fresh seeds 40-42, fresh CRNs
+  95200000/95300000, fixed episode-100 deployment, a preregistered 0.02% or
+  interval-based advancement gate, and disjoint outputs. It does not reopen
+  support alignment, authorize HPO, or expose the formal holdout.
 
 ## 9. Append-only progress ledger
 
@@ -539,3 +602,23 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   parser, comparator, and inventory writer end-to-end during preflight using a
   synthetic CSV field larger than 131,072 bytes. Post-processing phases must
   remain recoverable from immutable upstream artifacts without retraining.
+
+### 2026-08-12: Persistent-shift DDPG Stage C2 authorized
+
+- Starting branch/commit: `rl-attribution-refinement` at
+  `fbbdbc627bfc93d3671d40e1ad0f8412d1d11254`.
+- Evidence basis: the original DDPG checkpoint curve was
+  `plateaued_or_inconclusive`; support alignment subsequently failed without
+  improving control. Code audit showed the original online phase alternated
+  four regimes and its 500-update actor warmup had already been consumed by
+  offline pretraining, leaving no online-only critic adaptation interval.
+- Decision: preserve DDPG as the intended primary method and test exactly one
+  mechanism-matched alternative in which an observable but persistent
+  geographic demand redistribution creates a genuine adaptation problem, while
+  critic action dependence is reset at the online boundary before actor updates.
+- Contamination boundary: seeds 40-42 and CRNs 95200000/95300000 are fresh;
+  formal holdout 91100000, Howard's Stage C streams, prior support streams, and
+  all immutable training/evaluation artifacts remain untouched.
+- Next gate: implement and test Stage C2, commit the locked execution assets,
+  run a no-trajectory end-to-end preflight, and only then launch one detached
+  strictly serial development campaign.

@@ -52,6 +52,10 @@ DDPG_SUPPORT_RESULT_ROOT = (
     "results/patient_indexed_specimen_routing_ddpg_support_alignment_"
     "development"
 )
+DDPG_PERSISTENT_SHIFT_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_"
+    "development"
+)
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -1309,12 +1313,25 @@ class RoutingExperimentContractTests(unittest.TestCase):
                             )
                         )
                     )
+                    ddpg_persistent_shift_reference = (
+                        path.name.startswith(
+                            "patient_indexed_specimen_routing_ddpg_"
+                            "persistent_shift_"
+                        )
+                        and (
+                            value == DDPG_PERSISTENT_SHIFT_RESULT_ROOT
+                            or value.startswith(
+                                f"{DDPG_PERSISTENT_SHIFT_RESULT_ROOT}/"
+                            )
+                        )
+                    )
                     self.assertTrue(
                         value.startswith(RESULT_ROOT)
                         or frozen_teacher_reference
                         or mac_primary_reference
                         or stage_c_reference
-                        or ddpg_support_reference,
+                        or ddpg_support_reference
+                        or ddpg_persistent_shift_reference,
                         f"{path}: {value}",
                     )
 

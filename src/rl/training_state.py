@@ -77,6 +77,10 @@ _PREONLINE_FORKABLE_CONFIG_PATHS = frozenset(
         "online_advantage_self_imitation.require_positive_one_step_return",
         "online_advantage_self_imitation.weight",
         "online_critic_lr",
+        "online_critic_realignment",
+        "online_critic_realignment.enabled",
+        "online_critic_realignment.mode",
+        "online_critic_realignment.actor_warmup_updates",
         "online_imitation_regularization",
         "online_replay_fraction",
         "pretrain_reference_actor_loss.action_space",
@@ -323,6 +327,15 @@ def _agent_state_dict(agent: Any) -> dict[str, Any]:
         "module_modes": module_modes,
         "optimizers": optimizers,
         "total_updates": int(getattr(agent, "total_updates", 0)),
+        "online_updates_since_prepare": int(
+            getattr(agent, "online_updates_since_prepare", 0)
+        ),
+        "online_finetuning_prepared": bool(
+            getattr(agent, "online_finetuning_prepared", False)
+        ),
+        "online_critic_realignment_applied": bool(
+            getattr(agent, "online_critic_realignment_applied", False)
+        ),
         "replay_buffer": agent.replay_buffer.state_dict(),
         "noise": agent.noise.state_dict(),
         "imitation_tensors": imitation_tensors,
@@ -362,6 +375,18 @@ def _load_agent_state_dict(
         optimizer.load_state_dict(optimizer_state)
         _move_optimizer_state(optimizer, agent.device)
     agent.total_updates = int(state["total_updates"])
+    if hasattr(agent, "online_updates_since_prepare"):
+        agent.online_updates_since_prepare = int(
+            state.get("online_updates_since_prepare", 0)
+        )
+    if hasattr(agent, "online_finetuning_prepared"):
+        agent.online_finetuning_prepared = bool(
+            state.get("online_finetuning_prepared", False)
+        )
+    if hasattr(agent, "online_critic_realignment_applied"):
+        agent.online_critic_realignment_applied = bool(
+            state.get("online_critic_realignment_applied", False)
+        )
     agent.replay_buffer.load_state_dict(state["replay_buffer"])
     noise_state = dict(state["noise"])
     if "exploration_noise.sigma" in (fork_overrides or {}):

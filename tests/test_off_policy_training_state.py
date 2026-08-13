@@ -51,6 +51,9 @@ class _StubAgent:
         self.correction_gate_optimizer = None
         self.correction_safety_gate_optimizer = None
         self.total_updates = 13
+        self.online_updates_since_prepare = 9
+        self.online_finetuning_prepared = True
+        self.online_critic_realignment_applied = True
         self.replay_buffer = ReplayBuffer(2, 1, capacity=8, seed=11)
         self.noise = OUNoise(1, seed=12, sigma=0.05)
         self.imitation_states = torch.tensor([[1.0, 2.0]])
@@ -169,6 +172,9 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
                 ):
                     parameter.add_(20.0)
             agent.total_updates = 0
+            agent.online_updates_since_prepare = 0
+            agent.online_finetuning_prepared = False
+            agent.online_critic_realignment_applied = False
             agent.replay_buffer = ReplayBuffer(2, 1, capacity=8, seed=99)
             agent.noise = OUNoise(1, seed=99, sigma=0.05)
             agent.imitation_states = None
@@ -187,6 +193,9 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
         self.assertEqual(metadata["next_episode"], 5)
         self.assertEqual(metadata["global_step"], 260)
         self.assertEqual(agent.total_updates, 13)
+        self.assertEqual(agent.online_updates_since_prepare, 9)
+        self.assertTrue(agent.online_finetuning_prepared)
+        self.assertTrue(agent.online_critic_realignment_applied)
         for key, expected in actor_before.items():
             torch.testing.assert_close(agent.actor.state_dict()[key], expected)
         for key, expected in reference_before.items():
@@ -816,6 +825,37 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
             {
                 "critic_teacher_advantage_calibration",
             },
+        )
+
+    def test_episode_zero_state_allows_critic_realignment_fork(self):
+        agent = _StubAgent()
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "state.pt"
+            save_off_policy_training_state(
+                agent,
+                path,
+                config={"algorithm": agent.algorithm},
+                training={"next_episode": 0, "global_step": 0},
+            )
+            metadata = load_off_policy_training_state(
+                agent,
+                path,
+                config={
+                    "algorithm": agent.algorithm,
+                    "online_critic_realignment": {
+                        "enabled": True,
+                        "mode": "zero_action_columns",
+                        "actor_warmup_updates": 500,
+                    },
+                    "preonline_fork_allowed_overrides": [
+                        "online_critic_realignment",
+                    ],
+                },
+            )
+
+        self.assertEqual(
+            set(metadata["preonline_fork_overrides"]),
+            {"online_critic_realignment"},
         )
 
     def test_episode_zero_state_allows_online_imitation_cache_fork(self):

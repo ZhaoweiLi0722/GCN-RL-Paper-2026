@@ -1,0 +1,735 @@
+{
+  "actor_advantage_baseline": "anchor",
+  "actor_gradient_clip": 5.0,
+  "actor_hidden_sizes": [
+    256,
+    128,
+    64
+  ],
+  "actor_lr": 1e-05,
+  "actor_readout_mode": "network_residual",
+  "actor_update_frequency": 2,
+  "advantage_distillation_pretrain": {
+    "actor_lr": 0.0001,
+    "anchor_keep_on_improved": false,
+    "anchor_keep_probability": 1.0,
+    "anchor_keep_weight": 1.0,
+    "balance_label_weights": true,
+    "baseline_policy": "mdl2",
+    "batch_size": 256,
+    "candidate_groups": [
+      "specimen_transfer",
+      "reagent_transfer",
+      "capacity_transfer",
+      "combined_routing_network"
+    ],
+    "candidate_signs": [
+      -1.0,
+      1.0
+    ],
+    "demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+    "enabled": true,
+    "epochs": 300,
+    "epsilons": [
+      0.32,
+      0.48,
+      0.64,
+      0.8,
+      1.0
+    ],
+    "lookahead": 52,
+    "lookahead_replications": 3,
+    "lookahead_seed": 5971000,
+    "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+    "max_patients_lost_delta": 0.0,
+    "max_steps": 52,
+    "min_completion_service_level_delta": 0.0,
+    "min_improvement": 0.0,
+    "populate_replay_buffer": true,
+    "retain_for_regularization": true,
+    "rollouts": 10,
+    "seed": 971000
+  },
+  "algorithm": "gcn_residual_mdl2_network_td3_bc",
+  "anchor_fallback": {
+    "enabled": false,
+    "min_improvement": 0.0,
+    "validation_replications": 5,
+    "validation_seed_offset": 250000
+  },
+  "batch_size": 64,
+  "checkpoint_dir": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/checkpoints",
+  "checkpoint_interval": 5,
+  "config_snapshot_path": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/config.json",
+  "critic_gradient_clip": 10.0,
+  "critic_hidden_sizes": [
+    256,
+    128,
+    64
+  ],
+  "critic_lr": 0.0003,
+  "critic_teacher_advantage_calibration": {
+    "enabled": true,
+    "online_ranking_weight": 3.0,
+    "ranking_weight": 10.0,
+    "target_scale": 1.0,
+    "updates": 100
+  },
+  "critic_warmup_updates": 500,
+  "device": "mps",
+  "elite_imitation": {
+    "batch_size": 64,
+    "enabled": false,
+    "epochs": 4,
+    "max_episodes": 5,
+    "min_improvement": 0.0,
+    "warmup_episodes": 10
+  },
+  "env": {
+    "action_mode": "facility_net",
+    "clinic_coordinates": [
+      [
+        47.6263,
+        -122.3308
+      ],
+      [
+        45.4993,
+        -122.6867
+      ],
+      [
+        37.4336,
+        -122.175
+      ],
+      [
+        34.0485,
+        -118.2577
+      ],
+      [
+        32.753,
+        -117.165
+      ],
+      [
+        33.6584,
+        -111.9565
+      ],
+      [
+        39.7477,
+        -104.967
+      ],
+      [
+        32.7899,
+        -96.7794
+      ],
+      [
+        44.0227,
+        -92.4669
+      ],
+      [
+        38.6368,
+        -90.263
+      ],
+      [
+        38.2986,
+        -85.5768
+      ],
+      [
+        42.4461,
+        -87.8329
+      ],
+      [
+        42.3632,
+        -71.0689
+      ],
+      [
+        40.7644,
+        -73.9566
+      ],
+      [
+        40.2645,
+        -76.674
+      ],
+      [
+        38.9121,
+        -77.0753
+      ],
+      [
+        35.2121,
+        -80.8392
+      ],
+      [
+        33.7926,
+        -84.3219
+      ],
+      [
+        30.2641,
+        -81.4393
+      ],
+      [
+        25.6863,
+        -80.3407
+      ]
+    ],
+    "demand_forecast_error": 0.0,
+    "demand_forecast_horizon": 2,
+    "demand_history_window": 12,
+    "demand_rates": [
+      7.5,
+      7.5,
+      7.5,
+      7.5,
+      7.5,
+      3.2,
+      3.2,
+      3.2,
+      3.2,
+      3.2,
+      6.0,
+      6.0,
+      6.0,
+      6.0,
+      6.0,
+      3.5,
+      3.5,
+      3.5,
+      3.5,
+      3.5
+    ],
+    "demand_shock_cluster_size": 4,
+    "demand_shock_duration": 4,
+    "demand_shock_multiplier": 2.4,
+    "demand_shock_probability": 0.12,
+    "enable_specimen_routing": true,
+    "enable_viability_hook": false,
+    "env_type": "patient_condition",
+    "episode_horizon": 52,
+    "expiry_warning_margin": 1,
+    "finished_product_return_assumption": "return_to_collection_facility",
+    "finished_product_return_lead_time_epochs": 0,
+    "finished_shelf_life": 2,
+    "geographic_neighbor_k": 3,
+    "geographic_transfer_cost_scale": 0.25,
+    "geographic_transfer_fixed_hours": 0.5,
+    "geographic_transfer_speed_mph": 500.0,
+    "geographic_transfer_time_cost_scale": 0.05,
+    "graph_ablation": "full_graph",
+    "include_central_capacity_hub": true,
+    "include_demand_forecast_state": true,
+    "include_demand_history_state": true,
+    "include_specimen_routing_state": true,
+    "include_supplier_state": true,
+    "include_time_state": true,
+    "include_transfer_pipeline_state": true,
+    "initial_idle_bioreactors": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      16,
+      16,
+      16,
+      16,
+      16,
+      7,
+      7,
+      7,
+      7,
+      7,
+      14,
+      14,
+      14,
+      14,
+      14
+    ],
+    "initial_reagents": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      170,
+      170,
+      170,
+      170,
+      170,
+      80,
+      80,
+      80,
+      80,
+      80,
+      150,
+      150,
+      150,
+      150,
+      150
+    ],
+    "initial_specimens": 0,
+    "material_shelf_life": 6,
+    "max_bioreactor_transfer": 18,
+    "max_idle_bioreactors": [
+      9,
+      9,
+      9,
+      9,
+      9,
+      24,
+      24,
+      24,
+      24,
+      24,
+      11,
+      11,
+      11,
+      11,
+      11,
+      22,
+      22,
+      22,
+      22,
+      22
+    ],
+    "max_reagent_replenishment": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      115,
+      115,
+      115,
+      115,
+      115,
+      50,
+      50,
+      50,
+      50,
+      50,
+      105,
+      105,
+      105,
+      105,
+      105
+    ],
+    "max_reagent_transfer": 110,
+    "max_reagents": [
+      130,
+      130,
+      130,
+      130,
+      130,
+      240,
+      240,
+      240,
+      240,
+      240,
+      150,
+      150,
+      150,
+      150,
+      150,
+      220,
+      220,
+      220,
+      220,
+      220
+    ],
+    "max_specimen_transfer": 120,
+    "max_specimen_transfers_per_patient": 1,
+    "max_specimens": 160,
+    "num_facilities": 20,
+    "patient": {
+      "eligibility_threshold": 0.8,
+      "frail_decay_rate": 0.0156,
+      "healthy_decay_rate": 0.0013,
+      "post_shock_multiplier": 3.0,
+      "risk_decay_multipliers": [
+        0.8,
+        1.0,
+        1.35
+      ],
+      "risk_type_probabilities": [
+        0.45,
+        0.35,
+        0.2
+      ],
+      "waiting_time_decay_power": 1.0,
+      "waiting_time_decay_rate": 0.0013,
+      "weibull_scale": 4.0,
+      "weibull_shape": 1.5
+    },
+    "production_lead_time": 3,
+    "regional_supplier_disruption_cluster_size": 4,
+    "regional_supplier_disruption_duration": 2,
+    "regional_supplier_disruption_probability": 0.08,
+    "scenario_name": "routing_nominal_history",
+    "specimen_edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        6,
+        8
+      ],
+      [
+        7,
+        9
+      ],
+      [
+        7,
+        17
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        8,
+        10
+      ],
+      [
+        8,
+        11
+      ],
+      [
+        9,
+        10
+      ],
+      [
+        9,
+        11
+      ],
+      [
+        10,
+        11
+      ],
+      [
+        10,
+        16
+      ],
+      [
+        10,
+        17
+      ],
+      [
+        12,
+        13
+      ],
+      [
+        12,
+        14
+      ],
+      [
+        12,
+        15
+      ],
+      [
+        13,
+        14
+      ],
+      [
+        13,
+        15
+      ],
+      [
+        14,
+        15
+      ],
+      [
+        15,
+        16
+      ],
+      [
+        16,
+        17
+      ],
+      [
+        16,
+        18
+      ],
+      [
+        16,
+        19
+      ],
+      [
+        17,
+        18
+      ],
+      [
+        17,
+        19
+      ],
+      [
+        18,
+        19
+      ]
+    ],
+    "specimen_routing_lead_time_epochs": 1,
+    "specimen_transit_loss_probability": 0.0,
+    "supplier_disruption_rate": [
+      0.45,
+      0.45,
+      0.45,
+      0.45,
+      0.45,
+      0.12,
+      0.12,
+      0.12,
+      0.12,
+      0.12,
+      0.35,
+      0.35,
+      0.35,
+      0.35,
+      0.35,
+      0.12,
+      0.12,
+      0.12,
+      0.12,
+      0.12
+    ],
+    "survival_bucket_edges": [
+      0.85,
+      0.9,
+      0.97
+    ],
+    "transfer_lead_time": 3,
+    "transfer_lead_time_distance_thresholds": [
+      500.0,
+      1500.0
+    ],
+    "urgency_margin": 0.1,
+    "weight_expiry": 100000,
+    "weight_patient_lost": 500000,
+    "weight_urgency": 25000
+  },
+  "evaluation_replications": 500,
+  "exploration_noise": {
+    "sigma": 0.005,
+    "theta": 0.15
+  },
+  "gamma": 0.99,
+  "gcn_hidden_sizes": [
+    64,
+    32
+  ],
+  "history_screen": {
+    "actor_hidden_sizes": [
+      256,
+      128,
+      64
+    ],
+    "base_policy": "mdl2",
+    "correction_gate_target_mode": "any_improving",
+    "correction_gate_threshold": 0.0,
+    "correction_selection_mode": "q_value",
+    "demand_history_window": 12,
+    "distillation_objective": "advantage_regression",
+    "gate_hidden_sizes": [],
+    "gcn_hidden_sizes": [
+      64,
+      32
+    ],
+    "hidden_sizes": [],
+    "imitation_policy": "mdl2",
+    "imitation_regularization_weight": 0.0,
+    "offline_updates": 0,
+    "online_episodes": 100,
+    "online_reward_mode": "environment",
+    "option_advantage_scale": 0.0,
+    "option_hidden_sizes": [],
+    "option_ranking_loss_weight": 0.0,
+    "pretrain_epochs": 300,
+    "pretrain_only": false,
+    "teacher_advantage_weight_cap": 10.0,
+    "teacher_advantage_weight_scale": null,
+    "teacher_cache": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+    "teacher_option_count": null
+  },
+  "imitation_pretrain": {
+    "batch_size": 256,
+    "enabled": true,
+    "episodes": 20,
+    "epochs": 20,
+    "max_steps_per_episode": 52,
+    "policy": "mdl2",
+    "populate_replay_buffer": true,
+    "regularization_batch_size": 128,
+    "regularization_weight": 1.0,
+    "seed": 970000
+  },
+  "include_adaptive_demand_features": true,
+  "include_global_context": true,
+  "max_steps_per_episode": 52,
+  "multi_scenario_training": {
+    "env_overrides": {
+      "demand_history_window": 12,
+      "include_demand_history_state": true
+    },
+    "scenario_label_in_observation": false,
+    "scenario_schedule": "episode_round_robin",
+    "scenario_start_index": 0,
+    "scenarios": [
+      "routing_nominal_history",
+      "routing_abrupt_regime_shift",
+      "routing_regional_drift",
+      "routing_compound_regional_stress"
+    ],
+    "teacher_cache": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz"
+  },
+  "noise_clip": 0.02,
+  "normalize_observations": false,
+  "num_episodes": 100,
+  "observation_clip": 10.0,
+  "online_advantage_self_imitation": {
+    "enabled": true,
+    "minimum_return": 0.0005,
+    "release_pretrain_reference": true,
+    "require_positive_one_step_return": true,
+    "weight": 1.0
+  },
+  "policy_delay": 2,
+  "policy_noise": 0.01,
+  "preonline_fork_allowed_overrides": [
+    "critic_teacher_advantage_calibration",
+    "imitation_pretrain.regularization_weight",
+    "online_advantage_self_imitation",
+    "online_advantage_self_imitation.enabled",
+    "online_advantage_self_imitation.minimum_return",
+    "online_advantage_self_imitation.release_pretrain_reference",
+    "online_advantage_self_imitation.require_positive_one_step_return",
+    "online_advantage_self_imitation.weight",
+    "pretrain_reference_actor_loss.weight",
+    "residual_action.correction_gate.align_online_policy",
+    "residual_action.online_reward_mode",
+    "residual_action.online_reward_n_step_horizon",
+    "specimen_action_quantization"
+  ],
+  "pretrain_reference_actor_loss": {
+    "enabled": true,
+    "weight": 500.0
+  },
+  "progress_interval": 5,
+  "reference_policy_regularization_weight": 0.0,
+  "replay_buffer_size": 1000000,
+  "residual_action": {
+    "base_policy": "mdl2",
+    "center_groups": [
+      "specimen_transfer",
+      "reagent_transfer",
+      "capacity_transfer"
+    ],
+    "correction_gate": {
+      "align_online_policy": true,
+      "enabled": true,
+      "groups": [
+        "specimen_transfer"
+      ],
+      "include_proposed_residual_features": true,
+      "loss_weight": 1.0,
+      "lr": 0.0003,
+      "mode": "classification",
+      "proposed_residual_feature_mode": "clipped_action_delta",
+      "target_delta": 0.04,
+      "threshold": 0.5
+    },
+    "enabled": true,
+    "endpoint_projection": {
+      "enabled": false,
+      "groups": [
+        "specimen_transfer",
+        "reagent_transfer",
+        "capacity_transfer"
+      ],
+      "max_endpoints_per_side": 1,
+      "min_abs": 0.04,
+      "straight_through_gradient": true
+    },
+    "group_scales": {
+      "capacity_transfer": 0.0,
+      "reagent_transfer": 0.0,
+      "replenishment": 0.0,
+      "specimen_transfer": 0.1
+    },
+    "include_base_action_features": true,
+    "l2_weight": 0.05,
+    "online_reward_mode": "n_step_anchor_relative",
+    "online_reward_n_step_horizon": 4,
+    "positive_only_groups": [],
+    "pressure_projection": {
+      "enabled": false,
+      "groups": []
+    },
+    "scale": 0.1,
+    "zero_init_actor": true
+  },
+  "result_csv_path": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/training.csv",
+  "reward_scale": 1e-09,
+  "save_pretrain_checkpoint": true,
+  "seed": 20,
+  "specimen_action_quantization": {
+    "actor_gradient": "straight_through",
+    "enabled": true
+  },
+  "specimen_routing_head_enabled": true,
+  "tau": 0.005,
+  "train_randomization": {
+    "demand_rate_multiplier_range": [
+      0.9,
+      1.1
+    ],
+    "enabled": true,
+    "forecast_error_range": [
+      0.0,
+      0.2
+    ]
+  },
+  "training_state_checkpoint_interval": 5,
+  "training_state_checkpoint_path": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/checkpoints/gcn_residual_mdl2_network_td3_bc_seed20_training_state.pt",
+  "update_frequency": 1,
+  "updates_per_update": 1
+}

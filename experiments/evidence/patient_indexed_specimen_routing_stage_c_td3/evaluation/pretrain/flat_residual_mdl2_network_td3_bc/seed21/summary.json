@@ -1,0 +1,1286 @@
+{
+  "algorithm": "flat_residual_mdl2_network_td3_bc",
+  "checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed21/checkpoints/flat_residual_mdl2_network_td3_bc_seed21_pretrain.pt",
+  "checkpoint_variants": {
+    "pretrain": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed21/checkpoints/flat_residual_mdl2_network_td3_bc_seed21_pretrain.pt"
+  },
+  "holdout": {
+    "aggregate": {
+      "anchor_cost_mean": 2674612059.5928555,
+      "candidate_cost_mean": 2666641740.694264,
+      "clinical_metric_intervals": {
+        "completion_service_level": {
+          "ci_high": 0.0004784811756253177,
+          "ci_low": -0.0004487802167857613,
+          "direction": "higher",
+          "margin": 0.001,
+          "mean_difference": 1.4850479419778184e-05,
+          "noninferior": true,
+          "noninferiority_bound": -0.0004487802167857613,
+          "sem": 0.00023654627357425485
+        },
+        "patient_ineligibility_during_manufacturing_rate": {
+          "ci_high": -0.002232609660778999,
+          "ci_low": -0.003574273992970541,
+          "direction": "lower",
+          "margin": 0.001,
+          "mean_difference": -0.00290344182687477,
+          "noninferior": true,
+          "noninferiority_bound": -0.002232609660778999,
+          "sem": 0.0003422613092325361
+        },
+        "patients_lost": {
+          "ci_high": 0.5675303592492797,
+          "ci_low": -5.917530359249279,
+          "direction": "lower",
+          "margin": 1.0,
+          "mean_difference": -2.675,
+          "noninferior": true,
+          "noninferiority_bound": 0.5675303592492797,
+          "sem": 1.6543522241067754
+        }
+      },
+      "clinical_noninferiority_margins": {
+        "completion_service_level": 0.001,
+        "patient_ineligibility_during_manufacturing_rate": 0.001,
+        "patients_lost": 1.0
+      },
+      "clinical_noninferiority_mode": "paired_ci",
+      "clinical_noninferiority_z_value": 1.96,
+      "clinically_noninferior": true,
+      "completion_service_level_delta": 1.4850479419778184e-05,
+      "cost_difference_ci_high": -5935285.0114977285,
+      "cost_difference_ci_low": -10005352.785684906,
+      "cost_difference_mean": -7970318.898591317,
+      "cost_gap_pct": -0.2979990638270211,
+      "manufacturing_ineligibility_rate_delta": -0.00290344182687477,
+      "paired_win_rate": 0.73,
+      "patients_lost_delta": -2.675,
+      "residual_usage": {
+        "applied_residual_l1": 2150.0549300331622,
+        "capacity_action_effect": {
+          "amplification_l1": 0.0,
+          "anchor_l1": 1209.80002535921,
+          "damping_l1": 0.0,
+          "delta_l1": 0.0,
+          "final_l1": 1209.80002535921,
+          "new_flow_l1": 0.0,
+          "reversal_l1": 0.0
+        },
+        "corrected_decisions": 7196,
+        "correction_rate": 0.691923076923077,
+        "group_correction_rates": {
+          "capacity_transfer": 0.0,
+          "reagent_transfer": 0.0,
+          "replenishment": 0.0,
+          "specimen_transfer": 0.691923076923077
+        },
+        "raw_residual_l1": 2150.0549300331622,
+        "temporal_suppression_rate": 0.0,
+        "temporally_suppressed_decisions": 0,
+        "temporally_suppressed_l1": 0.0,
+        "total_decisions": 10400
+      }
+    },
+    "all_scenarios_clinically_noninferior": false,
+    "candidate": {
+      "group_thresholds": [],
+      "scale": 1.0,
+      "use_checkpoint_group_thresholds": true
+    },
+    "per_scenario": {
+      "routing_abrupt_regime_shift": {
+        "anchor_cost_mean": 2159316446.0828433,
+        "candidate_cost_mean": 2158390875.31701,
+        "clinical_metric_intervals": {
+          "completion_service_level": {
+            "ci_high": -0.00016310077751898096,
+            "ci_low": -0.0015892287173412665,
+            "direction": "higher",
+            "margin": 0.001,
+            "mean_difference": -0.0008761647474301238,
+            "noninferior": false,
+            "noninferiority_bound": -0.0015892287173412665,
+            "sem": 0.0003638081479138484
+          },
+          "patient_ineligibility_during_manufacturing_rate": {
+            "ci_high": 0.0013065136436797664,
+            "ci_low": -0.0002938341394906213,
+            "direction": "lower",
+            "margin": 0.001,
+            "mean_difference": 0.0005063397520945726,
+            "noninferior": false,
+            "noninferiority_bound": 0.0013065136436797664,
+            "sem": 0.0004082519855026499
+          },
+          "patients_lost": {
+            "ci_high": 12.188639533479437,
+            "ci_low": 4.451360466520564,
+            "direction": "lower",
+            "margin": 1.0,
+            "mean_difference": 8.32,
+            "noninferior": false,
+            "noninferiority_bound": 12.188639533479437,
+            "sem": 1.9737956803466516
+          }
+        },
+        "clinical_noninferiority_margins": {
+          "completion_service_level": 0.001,
+          "patient_ineligibility_during_manufacturing_rate": 0.001,
+          "patients_lost": 1.0
+        },
+        "clinical_noninferiority_mode": "paired_ci",
+        "clinical_noninferiority_z_value": 1.96,
+        "clinically_noninferior": false,
+        "completion_service_level_delta": -0.0008761647474301238,
+        "cost_difference_ci_high": 1907349.4159474254,
+        "cost_difference_ci_low": -3758490.9476138856,
+        "cost_difference_mean": -925570.76583323,
+        "cost_gap_pct": -0.04286406318593472,
+        "manufacturing_ineligibility_rate_delta": 0.0005063397520945726,
+        "paired_win_rate": 0.6,
+        "patients_lost_delta": 8.32,
+        "residual_usage": {
+          "applied_residual_l1": 389.1865903623402,
+          "capacity_action_effect": {
+            "amplification_l1": 0.0,
+            "anchor_l1": 320.85556346674764,
+            "damping_l1": 0.0,
+            "delta_l1": 0.0,
+            "final_l1": 320.85556346674764,
+            "new_flow_l1": 0.0,
+            "reversal_l1": 0.0
+          },
+          "corrected_decisions": 1717,
+          "correction_rate": 0.6603846153846153,
+          "group_correction_rates": {
+            "capacity_transfer": 0.0,
+            "reagent_transfer": 0.0,
+            "replenishment": 0.0,
+            "specimen_transfer": 0.6603846153846153
+          },
+          "raw_residual_l1": 389.1865903623402,
+          "temporal_suppression_rate": 0.0,
+          "temporally_suppressed_decisions": 0,
+          "temporally_suppressed_l1": 0.0,
+          "total_decisions": 2600
+        }
+      },
+      "routing_compound_regional_stress": {
+        "anchor_cost_mean": 3580733141.7571692,
+        "candidate_cost_mean": 3568853261.582987,
+        "clinical_metric_intervals": {
+          "completion_service_level": {
+            "ci_high": 0.0016560968246829477,
+            "ci_low": -0.0004554750323169487,
+            "direction": "higher",
+            "margin": 0.001,
+            "mean_difference": 0.0006003108961829995,
+            "noninferior": true,
+            "noninferiority_bound": -0.0004554750323169487,
+            "sem": 0.000538666290050994
+          },
+          "patient_ineligibility_during_manufacturing_rate": {
+            "ci_high": -0.004417712041737808,
+            "ci_low": -0.007692855015591589,
+            "direction": "lower",
+            "margin": 0.001,
+            "mean_difference": -0.006055283528664699,
+            "noninferior": true,
+            "noninferiority_bound": -0.004417712041737808,
+            "sem": 0.0008354956565953522
+          },
+          "patients_lost": {
+            "ci_high": 1.5685633159244832,
+            "ci_low": -15.128563315924485,
+            "direction": "lower",
+            "margin": 1.0,
+            "mean_difference": -6.78,
+            "noninferior": false,
+            "noninferiority_bound": 1.5685633159244832,
+            "sem": 4.2594710795533075
+          }
+        },
+        "clinical_noninferiority_margins": {
+          "completion_service_level": 0.001,
+          "patient_ineligibility_during_manufacturing_rate": 0.001,
+          "patients_lost": 1.0
+        },
+        "clinical_noninferiority_mode": "paired_ci",
+        "clinical_noninferiority_z_value": 1.96,
+        "clinically_noninferior": false,
+        "completion_service_level_delta": 0.0006003108961829995,
+        "cost_difference_ci_high": -7304264.077693912,
+        "cost_difference_ci_low": -16455496.270671032,
+        "cost_difference_mean": -11879880.174182473,
+        "cost_gap_pct": -0.3317722852798986,
+        "manufacturing_ineligibility_rate_delta": -0.006055283528664699,
+        "paired_win_rate": 0.74,
+        "patients_lost_delta": -6.78,
+        "residual_usage": {
+          "applied_residual_l1": 676.127672970295,
+          "capacity_action_effect": {
+            "amplification_l1": 0.0,
+            "anchor_l1": 310.16667382087974,
+            "damping_l1": 0.0,
+            "delta_l1": 0.0,
+            "final_l1": 310.16667382087974,
+            "new_flow_l1": 0.0,
+            "reversal_l1": 0.0
+          },
+          "corrected_decisions": 1888,
+          "correction_rate": 0.7261538461538461,
+          "group_correction_rates": {
+            "capacity_transfer": 0.0,
+            "reagent_transfer": 0.0,
+            "replenishment": 0.0,
+            "specimen_transfer": 0.7261538461538461
+          },
+          "raw_residual_l1": 676.127672970295,
+          "temporal_suppression_rate": 0.0,
+          "temporally_suppressed_decisions": 0,
+          "temporally_suppressed_l1": 0.0,
+          "total_decisions": 2600
+        }
+      },
+      "routing_nominal_history": {
+        "anchor_cost_mean": 2598841596.3797503,
+        "candidate_cost_mean": 2586738891.210375,
+        "clinical_metric_intervals": {
+          "completion_service_level": {
+            "ci_high": 0.0008614035485305171,
+            "ci_low": -0.0012260806783372246,
+            "direction": "higher",
+            "margin": 0.001,
+            "mean_difference": -0.00018233856490335376,
+            "noninferior": false,
+            "noninferiority_bound": -0.0012260806783372246,
+            "sem": 0.0005325214864458525
+          },
+          "patient_ineligibility_during_manufacturing_rate": {
+            "ci_high": -0.0019269551860279029,
+            "ci_low": -0.004580381873843841,
+            "direction": "lower",
+            "margin": 0.001,
+            "mean_difference": -0.0032536685299358716,
+            "noninferior": true,
+            "noninferiority_bound": -0.0019269551860279029,
+            "sem": 0.0006768945632183513
+          },
+          "patients_lost": {
+            "ci_high": 2.903813330604208,
+            "ci_low": -9.863813330604208,
+            "direction": "lower",
+            "margin": 1.0,
+            "mean_difference": -3.48,
+            "noninferior": false,
+            "noninferiority_bound": 2.903813330604208,
+            "sem": 3.2570476176552083
+          }
+        },
+        "clinical_noninferiority_margins": {
+          "completion_service_level": 0.001,
+          "patient_ineligibility_during_manufacturing_rate": 0.001,
+          "patients_lost": 1.0
+        },
+        "clinical_noninferiority_mode": "paired_ci",
+        "clinical_noninferiority_z_value": 1.96,
+        "clinically_noninferior": false,
+        "completion_service_level_delta": -0.00018233856490335376,
+        "cost_difference_ci_high": -7678025.306065173,
+        "cost_difference_ci_low": -16527385.03268518,
+        "cost_difference_mean": -12102705.169375176,
+        "cost_gap_pct": -0.4656961465537007,
+        "manufacturing_ineligibility_rate_delta": -0.0032536685299358716,
+        "paired_win_rate": 0.8,
+        "patients_lost_delta": -3.48,
+        "residual_usage": {
+          "applied_residual_l1": 630.4016840718687,
+          "capacity_action_effect": {
+            "amplification_l1": 0.0,
+            "anchor_l1": 281.50000754743814,
+            "damping_l1": 0.0,
+            "delta_l1": 0.0,
+            "final_l1": 281.50000754743814,
+            "new_flow_l1": 0.0,
+            "reversal_l1": 0.0
+          },
+          "corrected_decisions": 1960,
+          "correction_rate": 0.7538461538461538,
+          "group_correction_rates": {
+            "capacity_transfer": 0.0,
+            "reagent_transfer": 0.0,
+            "replenishment": 0.0,
+            "specimen_transfer": 0.7538461538461538
+          },
+          "raw_residual_l1": 630.4016840718687,
+          "temporal_suppression_rate": 0.0,
+          "temporally_suppressed_decisions": 0,
+          "temporally_suppressed_l1": 0.0,
+          "total_decisions": 2600
+        }
+      },
+      "routing_regional_drift": {
+        "anchor_cost_mean": 2359557054.1516585,
+        "candidate_cost_mean": 2352583934.666684,
+        "clinical_metric_intervals": {
+          "completion_service_level": {
+            "ci_high": 0.0013345248074505883,
+            "ci_low": -0.00029933613979140684,
+            "direction": "higher",
+            "margin": 0.001,
+            "mean_difference": 0.0005175943338295907,
+            "noninferior": true,
+            "noninferiority_bound": -0.00029933613979140684,
+            "sem": 0.00041680126205152936
+          },
+          "patient_ineligibility_during_manufacturing_rate": {
+            "ci_high": -0.002084705140814537,
+            "ci_low": -0.0035376048611716277,
+            "direction": "lower",
+            "margin": 0.001,
+            "mean_difference": -0.0028111550009930824,
+            "noninferior": true,
+            "noninferiority_bound": -0.002084705140814537,
+            "sem": 0.000370637683764564
+          },
+          "patients_lost": {
+            "ci_high": -3.1360942255404023,
+            "ci_low": -14.383905774459597,
+            "direction": "lower",
+            "margin": 1.0,
+            "mean_difference": -8.76,
+            "noninferior": true,
+            "noninferiority_bound": -3.1360942255404023,
+            "sem": 2.8693396808467333
+          }
+        },
+        "clinical_noninferiority_margins": {
+          "completion_service_level": 0.001,
+          "patient_ineligibility_during_manufacturing_rate": 0.001,
+          "patients_lost": 1.0
+        },
+        "clinical_noninferiority_mode": "paired_ci",
+        "clinical_noninferiority_z_value": 1.96,
+        "clinically_noninferior": true,
+        "completion_service_level_delta": 0.0005175943338295907,
+        "cost_difference_ci_high": -3475896.5945695797,
+        "cost_difference_ci_low": -10470342.375379197,
+        "cost_difference_mean": -6973119.484974389,
+        "cost_gap_pct": -0.2955266316915343,
+        "manufacturing_ineligibility_rate_delta": -0.0028111550009930824,
+        "paired_win_rate": 0.78,
+        "patients_lost_delta": -8.76,
+        "residual_usage": {
+          "applied_residual_l1": 454.3389826286584,
+          "capacity_action_effect": {
+            "amplification_l1": 0.0,
+            "anchor_l1": 297.27778052414453,
+            "damping_l1": 0.0,
+            "delta_l1": 0.0,
+            "final_l1": 297.27778052414453,
+            "new_flow_l1": 0.0,
+            "reversal_l1": 0.0
+          },
+          "corrected_decisions": 1631,
+          "correction_rate": 0.6273076923076923,
+          "group_correction_rates": {
+            "capacity_transfer": 0.0,
+            "reagent_transfer": 0.0,
+            "replenishment": 0.0,
+            "specimen_transfer": 0.6273076923076923
+          },
+          "raw_residual_l1": 454.3389826286584,
+          "temporal_suppression_rate": 0.0,
+          "temporally_suppressed_decisions": 0,
+          "temporally_suppressed_l1": 0.0,
+          "total_decisions": 2600
+        }
+      }
+    }
+  },
+  "selected_deployment": {
+    "all_scenarios_clinically_noninferior": false,
+    "candidate": {
+      "group_thresholds": [],
+      "scale": 1.0,
+      "use_checkpoint_group_thresholds": true
+    },
+    "checkpoint_variant": "pretrain",
+    "selection_guardrails": {},
+    "selection_source": "pre_registered_fixed",
+    "validation_aggregate": {
+      "anchor_cost_mean": 2702410641.069723,
+      "candidate_cost_mean": 2674362850.924105,
+      "clinical_metric_intervals": {
+        "completion_service_level": {
+          "ci_high": 0.011112263519821773,
+          "ci_low": -0.0014489035985061557,
+          "direction": "higher",
+          "margin": 0.001,
+          "mean_difference": 0.004831679960657809,
+          "noninferior": false,
+          "noninferiority_bound": -0.0014489035985061557,
+          "sem": 0.00320437936692039
+        },
+        "patient_ineligibility_during_manufacturing_rate": {
+          "ci_high": -0.001381816746902311,
+          "ci_low": -0.009899632575140739,
+          "direction": "lower",
+          "margin": 0.001,
+          "mean_difference": -0.0056407246610215254,
+          "noninferior": true,
+          "noninferiority_bound": -0.001381816746902311,
+          "sem": 0.002172912201081232
+        },
+        "patients_lost": {
+          "ci_high": 13.85963991626624,
+          "ci_low": -76.85963991626625,
+          "direction": "lower",
+          "margin": 1.0,
+          "mean_difference": -31.5,
+          "noninferior": false,
+          "noninferiority_bound": 13.85963991626624,
+          "sem": 23.142673426666448
+        }
+      },
+      "clinical_noninferiority_margins": {
+        "completion_service_level": 0.001,
+        "patient_ineligibility_during_manufacturing_rate": 0.001,
+        "patients_lost": 1.0
+      },
+      "clinical_noninferiority_mode": "paired_ci",
+      "clinical_noninferiority_z_value": 1.96,
+      "clinically_noninferior": false,
+      "completion_service_level_delta": 0.004831679960657809,
+      "cost_difference_ci_high": -3755494.333230097,
+      "cost_difference_ci_low": -52340085.95800583,
+      "cost_difference_mean": -28047790.145617962,
+      "cost_gap_pct": -1.0378803916534134,
+      "manufacturing_ineligibility_rate_delta": -0.0056407246610215254,
+      "paired_win_rate": 0.75,
+      "patients_lost_delta": -31.5,
+      "residual_usage": {
+        "applied_residual_l1": 55.00384699366987,
+        "capacity_action_effect": {
+          "amplification_l1": 0.0,
+          "anchor_l1": 24.3333350064026,
+          "damping_l1": 0.0,
+          "delta_l1": 0.0,
+          "final_l1": 24.3333350064026,
+          "new_flow_l1": 0.0,
+          "reversal_l1": 0.0
+        },
+        "corrected_decisions": 161,
+        "correction_rate": 0.7740384615384616,
+        "group_correction_rates": {
+          "capacity_transfer": 0.0,
+          "reagent_transfer": 0.0,
+          "replenishment": 0.0,
+          "specimen_transfer": 0.7740384615384616
+        },
+        "raw_residual_l1": 55.00384699366987,
+        "temporal_suppression_rate": 0.0,
+        "temporally_suppressed_decisions": 0,
+        "temporally_suppressed_l1": 0.0,
+        "total_decisions": 208
+      }
+    }
+  },
+  "training_seed": 21,
+  "validation": [
+    {
+      "aggregate": {
+        "anchor_cost_mean": 2702410641.069723,
+        "candidate_cost_mean": 2702410641.069723,
+        "clinical_metric_intervals": {
+          "completion_service_level": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "direction": "higher",
+            "margin": 0.001,
+            "mean_difference": 0.0,
+            "noninferior": true,
+            "noninferiority_bound": 0.0,
+            "sem": 0.0
+          },
+          "patient_ineligibility_during_manufacturing_rate": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "direction": "lower",
+            "margin": 0.001,
+            "mean_difference": 0.0,
+            "noninferior": true,
+            "noninferiority_bound": 0.0,
+            "sem": 0.0
+          },
+          "patients_lost": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "direction": "lower",
+            "margin": 1.0,
+            "mean_difference": 0.0,
+            "noninferior": true,
+            "noninferiority_bound": 0.0,
+            "sem": 0.0
+          }
+        },
+        "clinical_noninferiority_margins": {
+          "completion_service_level": 0.001,
+          "patient_ineligibility_during_manufacturing_rate": 0.001,
+          "patients_lost": 1.0
+        },
+        "clinical_noninferiority_mode": "paired_ci",
+        "clinical_noninferiority_z_value": 1.96,
+        "clinically_noninferior": true,
+        "completion_service_level_delta": 0.0,
+        "cost_difference_ci_high": 0.0,
+        "cost_difference_ci_low": 0.0,
+        "cost_difference_mean": 0.0,
+        "cost_gap_pct": 0.0,
+        "manufacturing_ineligibility_rate_delta": 0.0,
+        "paired_win_rate": 0.0,
+        "patients_lost_delta": 0.0,
+        "residual_usage": {
+          "applied_residual_l1": 0.0,
+          "capacity_action_effect": {
+            "amplification_l1": 0.0,
+            "anchor_l1": 24.111112797425854,
+            "damping_l1": 0.0,
+            "delta_l1": 0.0,
+            "final_l1": 24.111112797425854,
+            "new_flow_l1": 0.0,
+            "reversal_l1": 0.0
+          },
+          "corrected_decisions": 0,
+          "correction_rate": 0.0,
+          "group_correction_rates": {
+            "capacity_transfer": 0.0,
+            "reagent_transfer": 0.0,
+            "replenishment": 0.0,
+            "specimen_transfer": 0.0
+          },
+          "raw_residual_l1": 0.0,
+          "temporal_suppression_rate": 0.0,
+          "temporally_suppressed_decisions": 0,
+          "temporally_suppressed_l1": 0.0,
+          "total_decisions": 208
+        }
+      },
+      "all_scenarios_clinically_noninferior": true,
+      "candidate": {
+        "group_thresholds": [
+          1.0
+        ],
+        "scale": 0.0
+      },
+      "checkpoint_variant": "pretrain",
+      "per_scenario": {
+        "routing_abrupt_regime_shift": {
+          "anchor_cost_mean": 2194233217.139019,
+          "candidate_cost_mean": 2194233217.139019,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": true,
+          "completion_service_level_delta": 0.0,
+          "cost_difference_ci_high": 0.0,
+          "cost_difference_ci_low": 0.0,
+          "cost_difference_mean": 0.0,
+          "cost_gap_pct": 0.0,
+          "manufacturing_ineligibility_rate_delta": 0.0,
+          "paired_win_rate": 0.0,
+          "patients_lost_delta": 0.0,
+          "residual_usage": {
+            "applied_residual_l1": 0.0,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 6.500000134110451,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 6.500000134110451,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 0,
+            "correction_rate": 0.0,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.0
+            },
+            "raw_residual_l1": 0.0,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        },
+        "routing_compound_regional_stress": {
+          "anchor_cost_mean": 3751076206.332258,
+          "candidate_cost_mean": 3751076206.332258,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": true,
+          "completion_service_level_delta": 0.0,
+          "cost_difference_ci_high": 0.0,
+          "cost_difference_ci_low": 0.0,
+          "cost_difference_mean": 0.0,
+          "cost_gap_pct": 0.0,
+          "manufacturing_ineligibility_rate_delta": 0.0,
+          "paired_win_rate": 0.0,
+          "patients_lost_delta": 0.0,
+          "residual_usage": {
+            "applied_residual_l1": 0.0,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 6.500000582800972,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 6.500000582800972,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 0,
+            "correction_rate": 0.0,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.0
+            },
+            "raw_residual_l1": 0.0,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        },
+        "routing_nominal_history": {
+          "anchor_cost_mean": 2457351931.3163137,
+          "candidate_cost_mean": 2457351931.3163137,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": true,
+          "completion_service_level_delta": 0.0,
+          "cost_difference_ci_high": 0.0,
+          "cost_difference_ci_low": 0.0,
+          "cost_difference_mean": 0.0,
+          "cost_gap_pct": 0.0,
+          "manufacturing_ineligibility_rate_delta": 0.0,
+          "paired_win_rate": 0.0,
+          "patients_lost_delta": 0.0,
+          "residual_usage": {
+            "applied_residual_l1": 0.0,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 5.222222700715065,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 5.222222700715065,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 0,
+            "correction_rate": 0.0,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.0
+            },
+            "raw_residual_l1": 0.0,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        },
+        "routing_regional_drift": {
+          "anchor_cost_mean": 2406981209.491301,
+          "candidate_cost_mean": 2406981209.491301,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": 0.0,
+              "noninferior": true,
+              "noninferiority_bound": 0.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": true,
+          "completion_service_level_delta": 0.0,
+          "cost_difference_ci_high": 0.0,
+          "cost_difference_ci_low": 0.0,
+          "cost_difference_mean": 0.0,
+          "cost_gap_pct": 0.0,
+          "manufacturing_ineligibility_rate_delta": 0.0,
+          "paired_win_rate": 0.0,
+          "patients_lost_delta": 0.0,
+          "residual_usage": {
+            "applied_residual_l1": 0.0,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 5.888889379799366,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 5.888889379799366,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 0,
+            "correction_rate": 0.0,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.0
+            },
+            "raw_residual_l1": 0.0,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        }
+      }
+    },
+    {
+      "aggregate": {
+        "anchor_cost_mean": 2702410641.069723,
+        "candidate_cost_mean": 2674362850.924105,
+        "clinical_metric_intervals": {
+          "completion_service_level": {
+            "ci_high": 0.011112263519821773,
+            "ci_low": -0.0014489035985061557,
+            "direction": "higher",
+            "margin": 0.001,
+            "mean_difference": 0.004831679960657809,
+            "noninferior": false,
+            "noninferiority_bound": -0.0014489035985061557,
+            "sem": 0.00320437936692039
+          },
+          "patient_ineligibility_during_manufacturing_rate": {
+            "ci_high": -0.001381816746902311,
+            "ci_low": -0.009899632575140739,
+            "direction": "lower",
+            "margin": 0.001,
+            "mean_difference": -0.0056407246610215254,
+            "noninferior": true,
+            "noninferiority_bound": -0.001381816746902311,
+            "sem": 0.002172912201081232
+          },
+          "patients_lost": {
+            "ci_high": 13.85963991626624,
+            "ci_low": -76.85963991626625,
+            "direction": "lower",
+            "margin": 1.0,
+            "mean_difference": -31.5,
+            "noninferior": false,
+            "noninferiority_bound": 13.85963991626624,
+            "sem": 23.142673426666448
+          }
+        },
+        "clinical_noninferiority_margins": {
+          "completion_service_level": 0.001,
+          "patient_ineligibility_during_manufacturing_rate": 0.001,
+          "patients_lost": 1.0
+        },
+        "clinical_noninferiority_mode": "paired_ci",
+        "clinical_noninferiority_z_value": 1.96,
+        "clinically_noninferior": false,
+        "completion_service_level_delta": 0.004831679960657809,
+        "cost_difference_ci_high": -3755494.333230097,
+        "cost_difference_ci_low": -52340085.95800583,
+        "cost_difference_mean": -28047790.145617962,
+        "cost_gap_pct": -1.0378803916534134,
+        "manufacturing_ineligibility_rate_delta": -0.0056407246610215254,
+        "paired_win_rate": 0.75,
+        "patients_lost_delta": -31.5,
+        "residual_usage": {
+          "applied_residual_l1": 55.00384699366987,
+          "capacity_action_effect": {
+            "amplification_l1": 0.0,
+            "anchor_l1": 24.3333350064026,
+            "damping_l1": 0.0,
+            "delta_l1": 0.0,
+            "final_l1": 24.3333350064026,
+            "new_flow_l1": 0.0,
+            "reversal_l1": 0.0
+          },
+          "corrected_decisions": 161,
+          "correction_rate": 0.7740384615384616,
+          "group_correction_rates": {
+            "capacity_transfer": 0.0,
+            "reagent_transfer": 0.0,
+            "replenishment": 0.0,
+            "specimen_transfer": 0.7740384615384616
+          },
+          "raw_residual_l1": 55.00384699366987,
+          "temporal_suppression_rate": 0.0,
+          "temporally_suppressed_decisions": 0,
+          "temporally_suppressed_l1": 0.0,
+          "total_decisions": 208
+        }
+      },
+      "all_scenarios_clinically_noninferior": false,
+      "candidate": {
+        "group_thresholds": [],
+        "scale": 1.0,
+        "use_checkpoint_group_thresholds": true
+      },
+      "checkpoint_variant": "pretrain",
+      "per_scenario": {
+        "routing_abrupt_regime_shift": {
+          "anchor_cost_mean": 2194233217.139019,
+          "candidate_cost_mean": 2200475224.998573,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": -0.0035494115449280494,
+              "ci_low": -0.0035494115449280494,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": -0.0035494115449280494,
+              "noninferior": false,
+              "noninferiority_bound": -0.0035494115449280494,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": -0.0003833100824350011,
+              "ci_low": -0.0003833100824350011,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": -0.0003833100824350011,
+              "noninferior": true,
+              "noninferiority_bound": -0.0003833100824350011,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": 35.0,
+              "ci_low": 35.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": 35.0,
+              "noninferior": false,
+              "noninferiority_bound": 35.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": false,
+          "completion_service_level_delta": -0.0035494115449280494,
+          "cost_difference_ci_high": 6242007.859553814,
+          "cost_difference_ci_low": 6242007.859553814,
+          "cost_difference_mean": 6242007.859553814,
+          "cost_gap_pct": 0.2844733098923979,
+          "manufacturing_ineligibility_rate_delta": -0.0003833100824350011,
+          "paired_win_rate": 0.0,
+          "patients_lost_delta": 35.0,
+          "residual_usage": {
+            "applied_residual_l1": 12.87164743244648,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 6.833333417773247,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 6.833333417773247,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 44,
+            "correction_rate": 0.8461538461538461,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.8461538461538461
+            },
+            "raw_residual_l1": 12.87164743244648,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        },
+        "routing_compound_regional_stress": {
+          "anchor_cost_mean": 3751076206.332258,
+          "candidate_cost_mean": 3703707353.145315,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": 0.005787037037037035,
+              "ci_low": 0.005787037037037035,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": 0.005787037037037035,
+              "noninferior": true,
+              "noninferiority_bound": 0.005787037037037035,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": -0.010570129054533486,
+              "ci_low": -0.010570129054533486,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": -0.010570129054533486,
+              "noninferior": true,
+              "noninferiority_bound": -0.010570129054533486,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": -61.0,
+              "ci_low": -61.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": -61.0,
+              "noninferior": true,
+              "noninferiority_bound": -61.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": true,
+          "completion_service_level_delta": 0.005787037037037035,
+          "cost_difference_ci_high": -47368853.186943054,
+          "cost_difference_ci_low": -47368853.186943054,
+          "cost_difference_mean": -47368853.186943054,
+          "cost_gap_pct": -1.2628070074124023,
+          "manufacturing_ineligibility_rate_delta": -0.010570129054533486,
+          "paired_win_rate": 1.0,
+          "patients_lost_delta": -61.0,
+          "residual_usage": {
+            "applied_residual_l1": 19.401673642918468,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 6.500000582800972,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 6.500000582800972,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 42,
+            "correction_rate": 0.8076923076923077,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.8076923076923077
+            },
+            "raw_residual_l1": 19.401673642918468,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        },
+        "routing_nominal_history": {
+          "anchor_cost_mean": 2457351931.3163137,
+          "candidate_cost_mean": 2431364878.8424277,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": 0.005045233124565063,
+              "ci_low": 0.005045233124565063,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": 0.005045233124565063,
+              "noninferior": true,
+              "noninferiority_bound": 0.005045233124565063,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": -0.007332037537966837,
+              "ci_low": -0.007332037537966837,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": -0.007332037537966837,
+              "noninferior": true,
+              "noninferiority_bound": -0.007332037537966837,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": -35.0,
+              "ci_low": -35.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": -35.0,
+              "noninferior": true,
+              "noninferiority_bound": -35.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": true,
+          "completion_service_level_delta": 0.005045233124565063,
+          "cost_difference_ci_high": -25987052.473886013,
+          "cost_difference_ci_low": -25987052.473886013,
+          "cost_difference_mean": -25987052.473886013,
+          "cost_gap_pct": -1.0575226178517172,
+          "manufacturing_ineligibility_rate_delta": -0.007332037537966837,
+          "paired_win_rate": 1.0,
+          "patients_lost_delta": -35.0,
+          "residual_usage": {
+            "applied_residual_l1": 13.337357971817255,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 5.222222700715065,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 5.222222700715065,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 39,
+            "correction_rate": 0.75,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.75
+            },
+            "raw_residual_l1": 13.337357971817255,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        },
+        "routing_regional_drift": {
+          "anchor_cost_mean": 2406981209.491301,
+          "candidate_cost_mean": 2361903946.7101045,
+          "clinical_metric_intervals": {
+            "completion_service_level": {
+              "ci_high": 0.012043861225957186,
+              "ci_low": 0.012043861225957186,
+              "direction": "higher",
+              "margin": 0.001,
+              "mean_difference": 0.012043861225957186,
+              "noninferior": true,
+              "noninferiority_bound": 0.012043861225957186,
+              "sem": 0.0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "ci_high": -0.004277421969150777,
+              "ci_low": -0.004277421969150777,
+              "direction": "lower",
+              "margin": 0.001,
+              "mean_difference": -0.004277421969150777,
+              "noninferior": true,
+              "noninferiority_bound": -0.004277421969150777,
+              "sem": 0.0
+            },
+            "patients_lost": {
+              "ci_high": -65.0,
+              "ci_low": -65.0,
+              "direction": "lower",
+              "margin": 1.0,
+              "mean_difference": -65.0,
+              "noninferior": true,
+              "noninferiority_bound": -65.0,
+              "sem": 0.0
+            }
+          },
+          "clinical_noninferiority_margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "clinical_noninferiority_mode": "paired_ci",
+          "clinical_noninferiority_z_value": 1.96,
+          "clinically_noninferior": true,
+          "completion_service_level_delta": 0.012043861225957186,
+          "cost_difference_ci_high": -45077262.781196594,
+          "cost_difference_ci_low": -45077262.781196594,
+          "cost_difference_mean": -45077262.781196594,
+          "cost_gap_pct": -1.8727716944131594,
+          "manufacturing_ineligibility_rate_delta": -0.004277421969150777,
+          "paired_win_rate": 1.0,
+          "patients_lost_delta": -65.0,
+          "residual_usage": {
+            "applied_residual_l1": 9.393167946487665,
+            "capacity_action_effect": {
+              "amplification_l1": 0.0,
+              "anchor_l1": 5.777778305113316,
+              "damping_l1": 0.0,
+              "delta_l1": 0.0,
+              "final_l1": 5.777778305113316,
+              "new_flow_l1": 0.0,
+              "reversal_l1": 0.0
+            },
+            "corrected_decisions": 36,
+            "correction_rate": 0.6923076923076923,
+            "group_correction_rates": {
+              "capacity_transfer": 0.0,
+              "reagent_transfer": 0.0,
+              "replenishment": 0.0,
+              "specimen_transfer": 0.6923076923076923
+            },
+            "raw_residual_l1": 9.393167946487665,
+            "temporal_suppression_rate": 0.0,
+            "temporally_suppressed_decisions": 0,
+            "temporally_suppressed_l1": 0.0,
+            "total_decisions": 52
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1447 @@
+train_randomization disruption=fixed forecast_error=0|0.2 demand_rate_multiplier=0.9|1.1
+imitation_pretrain policy=mdl2 samples=1040 final_loss=0.000000
+local_search rollouts=10 samples=314 improved_steps=285 anchor_keep_steps=29 mean_step_improvement=3721792.750 loss=0.042636
+advantage_distillation algorithm=gcn_residual_mdl2_network_td3_bc samples=314 improved_steps=285 anchor_steps=29 improved_weight_fraction=0.500
+offline_rl updates=125/500 actor_loss=nan critic_loss=0.004399
+offline_rl updates=250/500 actor_loss=nan critic_loss=0.005109
+offline_rl updates=375/500 actor_loss=nan critic_loss=0.002958
+offline_rl updates=500/500 actor_loss=nan critic_loss=0.002968
+gcn_residual_mdl2_network_td3_bc seed=20 episode=1/100 reward=-2239872988.789 cost=2239872988.789
+gcn_residual_mdl2_network_td3_bc seed=20 episode=5/100 reward=-2503818919.418 cost=2503818919.418
+gcn_residual_mdl2_network_td3_bc seed=20 episode=10/100 reward=-2184149605.835 cost=2184149605.835
+gcn_residual_mdl2_network_td3_bc seed=20 episode=15/100 reward=-2548433178.897 cost=2548433178.897
+gcn_residual_mdl2_network_td3_bc seed=20 episode=20/100 reward=-3975368968.647 cost=3975368968.647
+gcn_residual_mdl2_network_td3_bc seed=20 episode=25/100 reward=-2417200310.767 cost=2417200310.767
+gcn_residual_mdl2_network_td3_bc seed=20 episode=30/100 reward=-2223090286.845 cost=2223090286.845
+gcn_residual_mdl2_network_td3_bc seed=20 episode=35/100 reward=-2393900328.761 cost=2393900328.761
+gcn_residual_mdl2_network_td3_bc seed=20 episode=40/100 reward=-4174084514.917 cost=4174084514.917
+gcn_residual_mdl2_network_td3_bc seed=20 episode=45/100 reward=-2697468148.796 cost=2697468148.796
+gcn_residual_mdl2_network_td3_bc seed=20 episode=50/100 reward=-2221990129.783 cost=2221990129.783
+gcn_residual_mdl2_network_td3_bc seed=20 episode=55/100 reward=-2387969990.324 cost=2387969990.324
+gcn_residual_mdl2_network_td3_bc seed=20 episode=60/100 reward=-2933191515.107 cost=2933191515.107
+gcn_residual_mdl2_network_td3_bc seed=20 episode=65/100 reward=-3601311909.870 cost=3601311909.870
+gcn_residual_mdl2_network_td3_bc seed=20 episode=70/100 reward=-2425600001.906 cost=2425600001.906
+gcn_residual_mdl2_network_td3_bc seed=20 episode=75/100 reward=-2593252519.961 cost=2593252519.961
+gcn_residual_mdl2_network_td3_bc seed=20 episode=80/100 reward=-4080339365.281 cost=4080339365.281
+gcn_residual_mdl2_network_td3_bc seed=20 episode=85/100 reward=-2760745737.545 cost=2760745737.545
+gcn_residual_mdl2_network_td3_bc seed=20 episode=90/100 reward=-2419009087.309 cost=2419009087.309
+gcn_residual_mdl2_network_td3_bc seed=20 episode=95/100 reward=-2106844126.093 cost=2106844126.093
+gcn_residual_mdl2_network_td3_bc seed=20 episode=100/100 reward=-3915590578.445 cost=3915590578.445
+train_randomization disruption=fixed forecast_error=0|0.2 demand_rate_multiplier=0.9|1.1
+imitation_pretrain policy=mdl2 samples=1040 final_loss=0.000000
+local_search rollouts=10 samples=314 improved_steps=285 anchor_keep_steps=29 mean_step_improvement=3721792.750 loss=0.050814
+advantage_distillation algorithm=gcn_residual_mdl2_network_td3_bc samples=314 improved_steps=285 anchor_steps=29 improved_weight_fraction=0.500
+offline_rl updates=125/500 actor_loss=nan critic_loss=0.005072
+offline_rl updates=250/500 actor_loss=nan critic_loss=0.007103
+offline_rl updates=375/500 actor_loss=nan critic_loss=0.002114
+offline_rl updates=500/500 actor_loss=nan critic_loss=0.004079
+gcn_residual_mdl2_network_td3_bc seed=21 episode=1/100 reward=-2311360271.986 cost=2311360271.986
+gcn_residual_mdl2_network_td3_bc seed=21 episode=5/100 reward=-1701706427.466 cost=1701706427.466
+gcn_residual_mdl2_network_td3_bc seed=21 episode=10/100 reward=-2253198771.145 cost=2253198771.145
+gcn_residual_mdl2_network_td3_bc seed=21 episode=15/100 reward=-3650584025.518 cost=3650584025.518
+gcn_residual_mdl2_network_td3_bc seed=21 episode=20/100 reward=-2924033756.796 cost=2924033756.796
+gcn_residual_mdl2_network_td3_bc seed=21 episode=25/100 reward=-2232165315.468 cost=2232165315.468
+gcn_residual_mdl2_network_td3_bc seed=21 episode=30/100 reward=-2700833762.354 cost=2700833762.354
+gcn_residual_mdl2_network_td3_bc seed=21 episode=35/100 reward=-3673693850.127 cost=3673693850.127
+gcn_residual_mdl2_network_td3_bc seed=21 episode=40/100 reward=-1781849945.399 cost=1781849945.399
+gcn_residual_mdl2_network_td3_bc seed=21 episode=45/100 reward=-2133354881.079 cost=2133354881.079
+gcn_residual_mdl2_network_td3_bc seed=21 episode=50/100 reward=-2541447172.641 cost=2541447172.641
+gcn_residual_mdl2_network_td3_bc seed=21 episode=55/100 reward=-3226051977.138 cost=3226051977.138
+gcn_residual_mdl2_network_td3_bc seed=21 episode=60/100 reward=-1841262013.321 cost=1841262013.321
+gcn_residual_mdl2_network_td3_bc seed=21 episode=65/100 reward=-2237091185.271 cost=2237091185.271
+gcn_residual_mdl2_network_td3_bc seed=21 episode=70/100 reward=-2516623643.537 cost=2516623643.537
+gcn_residual_mdl2_network_td3_bc seed=21 episode=75/100 reward=-4367023287.744 cost=4367023287.744
+gcn_residual_mdl2_network_td3_bc seed=21 episode=80/100 reward=-2603708212.261 cost=2603708212.261
+gcn_residual_mdl2_network_td3_bc seed=21 episode=85/100 reward=-2820947683.083 cost=2820947683.083
+gcn_residual_mdl2_network_td3_bc seed=21 episode=90/100 reward=-2432366461.264 cost=2432366461.264
+gcn_residual_mdl2_network_td3_bc seed=21 episode=95/100 reward=-2844733687.748 cost=2844733687.748
+gcn_residual_mdl2_network_td3_bc seed=21 episode=100/100 reward=-2329736158.327 cost=2329736158.327
+train_randomization disruption=fixed forecast_error=0|0.2 demand_rate_multiplier=0.9|1.1
+imitation_pretrain policy=mdl2 samples=1040 final_loss=0.000000
+local_search rollouts=10 samples=314 improved_steps=285 anchor_keep_steps=29 mean_step_improvement=3721792.750 loss=0.078804
+advantage_distillation algorithm=gcn_residual_mdl2_network_td3_bc samples=314 improved_steps=285 anchor_steps=29 improved_weight_fraction=0.500
+offline_rl updates=125/500 actor_loss=nan critic_loss=0.006326
+offline_rl updates=250/500 actor_loss=nan critic_loss=0.004140
+offline_rl updates=375/500 actor_loss=nan critic_loss=0.002035
+offline_rl updates=500/500 actor_loss=nan critic_loss=0.003967
+gcn_residual_mdl2_network_td3_bc seed=22 episode=1/100 reward=-2030767166.936 cost=2030767166.936
+gcn_residual_mdl2_network_td3_bc seed=22 episode=5/100 reward=-2186413979.131 cost=2186413979.131
+gcn_residual_mdl2_network_td3_bc seed=22 episode=10/100 reward=-2946971854.264 cost=2946971854.264
+gcn_residual_mdl2_network_td3_bc seed=22 episode=15/100 reward=-2449066617.846 cost=2449066617.846
+gcn_residual_mdl2_network_td3_bc seed=22 episode=20/100 reward=-2286238273.707 cost=2286238273.707
+gcn_residual_mdl2_network_td3_bc seed=22 episode=25/100 reward=-1744195528.249 cost=1744195528.249
+gcn_residual_mdl2_network_td3_bc seed=22 episode=30/100 reward=-3129477438.745 cost=3129477438.745
+gcn_residual_mdl2_network_td3_bc seed=22 episode=35/100 reward=-1691503852.957 cost=1691503852.957
+gcn_residual_mdl2_network_td3_bc seed=22 episode=40/100 reward=-2354921833.465 cost=2354921833.465
+gcn_residual_mdl2_network_td3_bc seed=22 episode=45/100 reward=-2613340130.862 cost=2613340130.862
+gcn_residual_mdl2_network_td3_bc seed=22 episode=50/100 reward=-3587642237.162 cost=3587642237.162
+gcn_residual_mdl2_network_td3_bc seed=22 episode=55/100 reward=-2927705489.616 cost=2927705489.616
+gcn_residual_mdl2_network_td3_bc seed=22 episode=60/100 reward=-1866783593.367 cost=1866783593.367
+gcn_residual_mdl2_network_td3_bc seed=22 episode=65/100 reward=-2125801692.473 cost=2125801692.473
+gcn_residual_mdl2_network_td3_bc seed=22 episode=70/100 reward=-4105269131.565 cost=4105269131.565
+gcn_residual_mdl2_network_td3_bc seed=22 episode=75/100 reward=-3110120343.652 cost=3110120343.652
+gcn_residual_mdl2_network_td3_bc seed=22 episode=80/100 reward=-2019782533.352 cost=2019782533.352
+gcn_residual_mdl2_network_td3_bc seed=22 episode=85/100 reward=-1831585431.433 cost=1831585431.433
+gcn_residual_mdl2_network_td3_bc seed=22 episode=90/100 reward=-3278275021.448 cost=3278275021.448
+gcn_residual_mdl2_network_td3_bc seed=22 episode=95/100 reward=-3290895485.980 cost=3290895485.980
+gcn_residual_mdl2_network_td3_bc seed=22 episode=100/100 reward=-2082749085.355 cost=2082749085.355
+train_randomization disruption=fixed forecast_error=0|0.2 demand_rate_multiplier=0.9|1.1
+imitation_pretrain policy=mdl2 samples=1040 final_loss=0.000000
+local_search rollouts=10 samples=314 improved_steps=285 anchor_keep_steps=29 mean_step_improvement=3721792.750 loss=0.010889
+advantage_distillation algorithm=flat_residual_mdl2_network_td3_bc samples=314 improved_steps=285 anchor_steps=29 improved_weight_fraction=0.500
+offline_rl updates=125/500 actor_loss=nan critic_loss=0.004322
+offline_rl updates=250/500 actor_loss=nan critic_loss=0.002346
+offline_rl updates=375/500 actor_loss=nan critic_loss=0.001757
+offline_rl updates=500/500 actor_loss=nan critic_loss=0.001481
+flat_residual_mdl2_network_td3_bc seed=20 episode=1/100 reward=-2246478476.760 cost=2246478476.760
+flat_residual_mdl2_network_td3_bc seed=20 episode=5/100 reward=-2484516533.921 cost=2484516533.921
+flat_residual_mdl2_network_td3_bc seed=20 episode=10/100 reward=-2204267444.188 cost=2204267444.188
+flat_residual_mdl2_network_td3_bc seed=20 episode=15/100 reward=-2579992070.011 cost=2579992070.011
+flat_residual_mdl2_network_td3_bc seed=20 episode=20/100 reward=-4016267641.162 cost=4016267641.162
+flat_residual_mdl2_network_td3_bc seed=20 episode=25/100 reward=-2403420461.793 cost=2403420461.793
+flat_residual_mdl2_network_td3_bc seed=20 episode=30/100 reward=-2232321526.327 cost=2232321526.327
+flat_residual_mdl2_network_td3_bc seed=20 episode=35/100 reward=-2385523772.504 cost=2385523772.504
+flat_residual_mdl2_network_td3_bc seed=20 episode=40/100 reward=-4207803275.381 cost=4207803275.381
+flat_residual_mdl2_network_td3_bc seed=20 episode=45/100 reward=-2691758026.150 cost=2691758026.150
+flat_residual_mdl2_network_td3_bc seed=20 episode=50/100 reward=-2223894963.660 cost=2223894963.660
+flat_residual_mdl2_network_td3_bc seed=20 episode=55/100 reward=-2384316394.340 cost=2384316394.340
+flat_residual_mdl2_network_td3_bc seed=20 episode=60/100 reward=-2933487341.780 cost=2933487341.780
+flat_residual_mdl2_network_td3_bc seed=20 episode=65/100 reward=-3569053394.595 cost=3569053394.595
+flat_residual_mdl2_network_td3_bc seed=20 episode=70/100 reward=-2403973754.567 cost=2403973754.567
+flat_residual_mdl2_network_td3_bc seed=20 episode=75/100 reward=-2604562199.833 cost=2604562199.833
+flat_residual_mdl2_network_td3_bc seed=20 episode=80/100 reward=-4106280976.084 cost=4106280976.084
+flat_residual_mdl2_network_td3_bc seed=20 episode=85/100 reward=-2766644454.283 cost=2766644454.283
+flat_residual_mdl2_network_td3_bc seed=20 episode=90/100 reward=-2409939895.561 cost=2409939895.561
+flat_residual_mdl2_network_td3_bc seed=20 episode=95/100 reward=-2156887567.127 cost=2156887567.127
+flat_residual_mdl2_network_td3_bc seed=20 episode=100/100 reward=-3881025593.899 cost=3881025593.899
+train_randomization disruption=fixed forecast_error=0|0.2 demand_rate_multiplier=0.9|1.1
+imitation_pretrain policy=mdl2 samples=1040 final_loss=0.000000
+local_search rollouts=10 samples=314 improved_steps=285 anchor_keep_steps=29 mean_step_improvement=3721792.750 loss=0.014351
+advantage_distillation algorithm=flat_residual_mdl2_network_td3_bc samples=314 improved_steps=285 anchor_steps=29 improved_weight_fraction=0.500
+offline_rl updates=125/500 actor_loss=nan critic_loss=0.004032
+offline_rl updates=250/500 actor_loss=nan critic_loss=0.003727
+offline_rl updates=375/500 actor_loss=nan critic_loss=0.001493
+offline_rl updates=500/500 actor_loss=nan critic_loss=0.001606
+flat_residual_mdl2_network_td3_bc seed=21 episode=1/100 reward=-2275234118.132 cost=2275234118.132
+flat_residual_mdl2_network_td3_bc seed=21 episode=5/100 reward=-1726189674.996 cost=1726189674.996
+flat_residual_mdl2_network_td3_bc seed=21 episode=10/100 reward=-2297580767.626 cost=2297580767.626
+flat_residual_mdl2_network_td3_bc seed=21 episode=15/100 reward=-3671955240.186 cost=3671955240.186
+flat_residual_mdl2_network_td3_bc seed=21 episode=20/100 reward=-2902448280.038 cost=2902448280.038
+flat_residual_mdl2_network_td3_bc seed=21 episode=25/100 reward=-2251128569.433 cost=2251128569.433
+flat_residual_mdl2_network_td3_bc seed=21 episode=30/100 reward=-2730265735.797 cost=2730265735.797
+flat_residual_mdl2_network_td3_bc seed=21 episode=35/100 reward=-3737852946.335 cost=3737852946.335
+flat_residual_mdl2_network_td3_bc seed=21 episode=40/100 reward=-1816038460.420 cost=1816038460.420
+flat_residual_mdl2_network_td3_bc seed=21 episode=45/100 reward=-2120692242.628 cost=2120692242.628
+flat_residual_mdl2_network_td3_bc seed=21 episode=50/100 reward=-2552793808.082 cost=2552793808.082
+flat_residual_mdl2_network_td3_bc seed=21 episode=55/100 reward=-3249162056.063 cost=3249162056.063
+flat_residual_mdl2_network_td3_bc seed=21 episode=60/100 reward=-1897153924.277 cost=1897153924.277
+flat_residual_mdl2_network_td3_bc seed=21 episode=65/100 reward=-2222105711.915 cost=2222105711.915
+flat_residual_mdl2_network_td3_bc seed=21 episode=70/100 reward=-2513222545.861 cost=2513222545.861
+flat_residual_mdl2_network_td3_bc seed=21 episode=75/100 reward=-4351179038.195 cost=4351179038.195
+flat_residual_mdl2_network_td3_bc seed=21 episode=80/100 reward=-2596613880.933 cost=2596613880.933
+flat_residual_mdl2_network_td3_bc seed=21 episode=85/100 reward=-2796630544.806 cost=2796630544.806
+flat_residual_mdl2_network_td3_bc seed=21 episode=90/100 reward=-2462611128.213 cost=2462611128.213
+flat_residual_mdl2_network_td3_bc seed=21 episode=95/100 reward=-2871417243.691 cost=2871417243.691
+flat_residual_mdl2_network_td3_bc seed=21 episode=100/100 reward=-2348762256.089 cost=2348762256.089
+train_randomization disruption=fixed forecast_error=0|0.2 demand_rate_multiplier=0.9|1.1
+imitation_pretrain policy=mdl2 samples=1040 final_loss=0.000000
+local_search rollouts=10 samples=314 improved_steps=285 anchor_keep_steps=29 mean_step_improvement=3721792.750 loss=0.014167
+advantage_distillation algorithm=flat_residual_mdl2_network_td3_bc samples=314 improved_steps=285 anchor_steps=29 improved_weight_fraction=0.500
+offline_rl updates=125/500 actor_loss=nan critic_loss=0.007812
+offline_rl updates=250/500 actor_loss=nan critic_loss=0.009283
+offline_rl updates=375/500 actor_loss=nan critic_loss=0.002173
+offline_rl updates=500/500 actor_loss=nan critic_loss=0.001636
+flat_residual_mdl2_network_td3_bc seed=22 episode=1/100 reward=-2037398128.777 cost=2037398128.777
+flat_residual_mdl2_network_td3_bc seed=22 episode=5/100 reward=-2194822995.665 cost=2194822995.665
+flat_residual_mdl2_network_td3_bc seed=22 episode=10/100 reward=-2968040291.827 cost=2968040291.827
+flat_residual_mdl2_network_td3_bc seed=22 episode=15/100 reward=-2429076930.020 cost=2429076930.020
+flat_residual_mdl2_network_td3_bc seed=22 episode=20/100 reward=-2296407861.290 cost=2296407861.290
+flat_residual_mdl2_network_td3_bc seed=22 episode=25/100 reward=-1774170234.526 cost=1774170234.526
+flat_residual_mdl2_network_td3_bc seed=22 episode=30/100 reward=-3153628873.612 cost=3153628873.612
+flat_residual_mdl2_network_td3_bc seed=22 episode=35/100 reward=-1698462907.143 cost=1698462907.143
+flat_residual_mdl2_network_td3_bc seed=22 episode=40/100 reward=-2347261082.697 cost=2347261082.697
+flat_residual_mdl2_network_td3_bc seed=22 episode=45/100 reward=-2595000324.370 cost=2595000324.370
+flat_residual_mdl2_network_td3_bc seed=22 episode=50/100 reward=-3582925328.737 cost=3582925328.737
+flat_residual_mdl2_network_td3_bc seed=22 episode=55/100 reward=-2948815561.002 cost=2948815561.002
+flat_residual_mdl2_network_td3_bc seed=22 episode=60/100 reward=-1874951965.394 cost=1874951965.394
+flat_residual_mdl2_network_td3_bc seed=22 episode=65/100 reward=-2130257627.653 cost=2130257627.653
+flat_residual_mdl2_network_td3_bc seed=22 episode=70/100 reward=-4140972827.152 cost=4140972827.152
+flat_residual_mdl2_network_td3_bc seed=22 episode=75/100 reward=-3108750701.778 cost=3108750701.778
+flat_residual_mdl2_network_td3_bc seed=22 episode=80/100 reward=-2025546040.625 cost=2025546040.625
+flat_residual_mdl2_network_td3_bc seed=22 episode=85/100 reward=-1833237497.523 cost=1833237497.523
+flat_residual_mdl2_network_td3_bc seed=22 episode=90/100 reward=-3295326216.664 cost=3295326216.664
+flat_residual_mdl2_network_td3_bc seed=22 episode=95/100 reward=-3340262679.111 cost=3340262679.111
+flat_residual_mdl2_network_td3_bc seed=22 episode=100/100 reward=-2102872174.802 cost=2102872174.802
+{
+  "budget": "routing_pilot",
+  "demand_history_window": 12,
+  "name": "patient_indexed_specimen_routing_stage_c_td3_100",
+  "offline_updates": 500,
+  "online_episodes": 100,
+  "pretrain_epochs": 300,
+  "reference_scenario": "routing_nominal_history",
+  "runs": [
+    {
+      "actor_drift_from_pretrain": {
+        "max_abs": 0.02294609695672989,
+        "parameter_count": 324964.0,
+        "rms": 0.0006420360884480912
+      },
+      "algorithm": "gcn_residual_mdl2_network_td3_bc",
+      "checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/checkpoints/gcn_residual_mdl2_network_td3_bc_seed20_episode100.pt",
+      "config": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/config.json",
+      "environments": [
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_nominal_history"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_abrupt_regime_shift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_regional_drift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_compound_regional_stress"
+        }
+      ],
+      "initial_checkpoint": null,
+      "online_episodes": 100,
+      "parameter_count": 851719,
+      "preonline_training_state": null,
+      "pretrain": {
+        "advantage_distillation_actor_lr": 0.0001,
+        "advantage_distillation_anchor_keep_on_improved": false,
+        "advantage_distillation_anchor_keep_probability": 1.0,
+        "advantage_distillation_anchor_keep_steps": 29,
+        "advantage_distillation_anchor_keep_weight": 1.0,
+        "advantage_distillation_anchor_prediction_fraction": "",
+        "advantage_distillation_at_risk_unserved_weight": 0.0,
+        "advantage_distillation_balance_label_weights": true,
+        "advantage_distillation_best_epoch": "",
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_candidate_signs": "-1|1",
+        "advantage_distillation_changed_fraction": "",
+        "advantage_distillation_completion_service_level_weight": 0.0,
+        "advantage_distillation_correction_accuracy": "",
+        "advantage_distillation_correction_gate_accuracy": 0.6242038011550903,
+        "advantage_distillation_correction_gate_group_label_rates": "0.6242038",
+        "advantage_distillation_correction_gate_group_positive_weights": "1",
+        "advantage_distillation_correction_gate_group_prediction_rates": "0.67515922",
+        "advantage_distillation_correction_gate_groups": "specimen_transfer",
+        "advantage_distillation_correction_gate_precision": 0.6839622641509434,
+        "advantage_distillation_correction_gate_prediction_fraction": 0.675159215927124,
+        "advantage_distillation_correction_gate_recall": 0.7397959183673469,
+        "advantage_distillation_correction_gate_threshold": 0.5,
+        "advantage_distillation_correction_recall": "",
+        "advantage_distillation_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "advantage_distillation_demonstration_source": "cache",
+        "advantage_distillation_dense_advantage_weight_cap": 10.0,
+        "advantage_distillation_dense_advantage_weight_scale": "",
+        "advantage_distillation_early_stopping_gate_loss_weight": "",
+        "advantage_distillation_eligibility_rate_weight": 0.0,
+        "advantage_distillation_epochs": 300,
+        "advantage_distillation_epochs_completed": "",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_improved_steps": 285,
+        "advantage_distillation_improved_weight_fraction": 0.5,
+        "advantage_distillation_lookahead": 52,
+        "advantage_distillation_lookahead_replications": 3,
+        "advantage_distillation_loss": 0.042635880410671234,
+        "advantage_distillation_max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "advantage_distillation_max_patients_lost_delta": 0.0,
+        "advantage_distillation_mean_advantage_regret": "",
+        "advantage_distillation_mean_best_advantage": "",
+        "advantage_distillation_mean_predicted_advantage": "",
+        "advantage_distillation_mean_step_improvement": 3721792.75,
+        "advantage_distillation_min_completion_service_level_delta": 0.0,
+        "advantage_distillation_min_service_level_delta": "",
+        "advantage_distillation_observed_option_count": "",
+        "advantage_distillation_online_actor_lrs": "1e-05",
+        "advantage_distillation_option_count": "",
+        "advantage_distillation_patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+        "advantage_distillation_patients_lost_weight": 0.0,
+        "advantage_distillation_predicted_feasible_fraction": "",
+        "advantage_distillation_predicted_material_improvement_fraction": "",
+        "advantage_distillation_replay_transitions": 314,
+        "advantage_distillation_retain_for_regularization": true,
+        "advantage_distillation_rollouts": 10,
+        "advantage_distillation_samples": 314,
+        "advantage_distillation_service_level_weight": 0.0,
+        "advantage_distillation_service_rejected_steps": 0,
+        "advantage_distillation_target_mode": "residual",
+        "advantage_distillation_train_accuracy": "",
+        "advantage_distillation_train_samples": 314,
+        "advantage_distillation_train_trajectory_ids": "",
+        "advantage_distillation_trajectory_validation_enabled": false,
+        "advantage_distillation_validation_actor_loss": "",
+        "advantage_distillation_validation_correction_gate_loss": "",
+        "advantage_distillation_validation_correction_gate_precision": "",
+        "advantage_distillation_validation_correction_gate_recall": "",
+        "advantage_distillation_validation_demonstration_path": "",
+        "advantage_distillation_validation_loss": "",
+        "advantage_distillation_validation_samples": 0,
+        "advantage_distillation_validation_trajectory_ids": "",
+        "critic2_critic_teacher_advantage_bellman_loss_final": 0.004247716628015041,
+        "critic2_critic_teacher_advantage_bellman_mse_after": 0.0027113710530102253,
+        "critic2_critic_teacher_advantage_bellman_mse_before": 0.0033652603160589933,
+        "critic2_critic_teacher_advantage_calibration_loss_final": 0.004344049841165543,
+        "critic2_critic_teacher_advantage_calibration_updates": 100.0,
+        "critic2_critic_teacher_advantage_mse_after": 2.1410205590655096e-05,
+        "critic2_critic_teacher_advantage_mse_before": 3.3906275348272175e-05,
+        "critic2_critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic2_critic_teacher_advantage_positive_fraction_after": 0.5254777073860168,
+        "critic2_critic_teacher_advantage_positive_margin": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic2_critic_teacher_advantage_prediction_mean_after": 0.0004328318464104086,
+        "critic2_critic_teacher_advantage_prediction_mean_before": -0.000956044823396951,
+        "critic2_critic_teacher_advantage_ranking_loss_final": 9.633332410885487e-06,
+        "critic2_critic_teacher_advantage_ranking_weight": 10.0,
+        "critic2_critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_allowed_option_groups": "",
+        "critic_teacher_advantage_bellman_loss_final": 0.0035378271713852882,
+        "critic_teacher_advantage_bellman_mse_after": 0.0043143900111317635,
+        "critic_teacher_advantage_bellman_mse_before": 0.002968818647786975,
+        "critic_teacher_advantage_calibration_loss_final": 0.0036333007737994194,
+        "critic_teacher_advantage_calibration_updates": 100.0,
+        "critic_teacher_advantage_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "critic_teacher_advantage_excluded_samples": 0.0,
+        "critic_teacher_advantage_mse_after": 2.1308898794814013e-05,
+        "critic_teacher_advantage_mse_before": 3.261828169343062e-05,
+        "critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic_teacher_advantage_positive_fraction_after": 0.5382165312767029,
+        "critic_teacher_advantage_positive_margin": 0.0,
+        "critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic_teacher_advantage_prediction_mean_after": 0.00043115048902109265,
+        "critic_teacher_advantage_prediction_mean_before": -0.000884847657289356,
+        "critic_teacher_advantage_ranking_loss_final": 9.547348781779874e-06,
+        "critic_teacher_advantage_ranking_weight": 10.0,
+        "critic_teacher_advantage_samples": 314.0,
+        "critic_teacher_advantage_source_samples": 314.0,
+        "critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_target_positive_fraction": 0.9076433121019108,
+        "offline_rl_actor_updated_final": 0.0,
+        "offline_rl_actor_updated_mean": 0.0,
+        "offline_rl_actor_warmup_final": 1.0,
+        "offline_rl_actor_warmup_mean": 1.0,
+        "offline_rl_anchor_relative_reward_count_final": 0.0,
+        "offline_rl_anchor_relative_reward_count_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_mean": 0.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_final": 4.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_mean": 4.0,
+        "offline_rl_anchor_relative_reward_positive_rate_final": 0.0,
+        "offline_rl_anchor_relative_reward_positive_rate_mean": 0.0,
+        "offline_rl_critic1_bellman_loss_final": 0.00291149178519845,
+        "offline_rl_critic1_bellman_loss_mean": 0.0039952330635860565,
+        "offline_rl_critic1_loss_final": 0.002967836568132043,
+        "offline_rl_critic1_loss_mean": 0.004101852022344247,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_final": 1.8781629478326067e-05,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_mean": 3.5539652260922594e-05,
+        "offline_rl_critic2_bellman_loss_final": 0.002943645231425762,
+        "offline_rl_critic2_bellman_loss_mean": 0.003723213263321668,
+        "offline_rl_critic2_loss_final": 0.0030064915772527456,
+        "offline_rl_critic2_loss_mean": 0.003828744824975729,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_final": 2.094879346259404e-05,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_mean": 3.517718541843351e-05,
+        "offline_rl_critic_disagreement_mean_final": 0.01475560199469328,
+        "offline_rl_critic_disagreement_mean_mean": 0.01743513117078692,
+        "offline_rl_critic_q1_mean_final": -0.22138480842113495,
+        "offline_rl_critic_q1_mean_mean": -0.1487715830206871,
+        "offline_rl_critic_q2_mean_final": -0.2175591140985489,
+        "offline_rl_critic_q2_mean_mean": -0.14875707672163843,
+        "offline_rl_critic_target_mean_final": -0.2418612241744995,
+        "offline_rl_critic_target_mean_mean": -0.14895710598677397,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_final": 5.959563441138016e-05,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_mean": 0.00010607525651903415,
+        "offline_rl_updates": 500,
+        "online_advantage_self_imitation": "positive_full_horizon_anchor_return|specimen_behavior_action",
+        "online_advantage_self_imitation_minimum_return": 0.0005,
+        "online_advantage_self_imitation_release_reference": "true",
+        "online_advantage_self_imitation_require_positive_one_step_return": "true",
+        "online_advantage_self_imitation_weight": 1.0,
+        "online_correction_gate_alignment": "hard_behavior_target|soft_actor",
+        "online_pretrain_reference_action_space": "network",
+        "online_pretrain_reference_loss_mode": "uniform",
+        "online_specimen_action_quantization": "critic_integer_patient_lots|actor_straight_through",
+        "pretrain_reference_actor_captured": true
+      },
+      "pretrain_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/checkpoints/gcn_residual_mdl2_network_td3_bc_seed20_pretrain.pt",
+      "resumed_training_state": null,
+      "scenario_episode_counts": {
+        "routing_abrupt_regime_shift": 25,
+        "routing_compound_regional_stress": 25,
+        "routing_nominal_history": 25,
+        "routing_regional_drift": 25
+      },
+      "seed": 20,
+      "training_state_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed20/checkpoints/gcn_residual_mdl2_network_td3_bc_seed20_training_state.pt"
+    },
+    {
+      "actor_drift_from_pretrain": {
+        "max_abs": 0.018524780869483948,
+        "parameter_count": 324964.0,
+        "rms": 0.000618681248331889
+      },
+      "algorithm": "gcn_residual_mdl2_network_td3_bc",
+      "checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed21/checkpoints/gcn_residual_mdl2_network_td3_bc_seed21_episode100.pt",
+      "config": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed21/config.json",
+      "environments": [
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_nominal_history"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_abrupt_regime_shift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_regional_drift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_compound_regional_stress"
+        }
+      ],
+      "initial_checkpoint": null,
+      "online_episodes": 100,
+      "parameter_count": 851719,
+      "preonline_training_state": null,
+      "pretrain": {
+        "advantage_distillation_actor_lr": 0.0001,
+        "advantage_distillation_anchor_keep_on_improved": false,
+        "advantage_distillation_anchor_keep_probability": 1.0,
+        "advantage_distillation_anchor_keep_steps": 29,
+        "advantage_distillation_anchor_keep_weight": 1.0,
+        "advantage_distillation_anchor_prediction_fraction": "",
+        "advantage_distillation_at_risk_unserved_weight": 0.0,
+        "advantage_distillation_balance_label_weights": true,
+        "advantage_distillation_best_epoch": "",
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_candidate_signs": "-1|1",
+        "advantage_distillation_changed_fraction": "",
+        "advantage_distillation_completion_service_level_weight": 0.0,
+        "advantage_distillation_correction_accuracy": "",
+        "advantage_distillation_correction_gate_accuracy": 0.6114649772644043,
+        "advantage_distillation_correction_gate_group_label_rates": "0.6242038",
+        "advantage_distillation_correction_gate_group_positive_weights": "1",
+        "advantage_distillation_correction_gate_group_prediction_rates": "0.64968151",
+        "advantage_distillation_correction_gate_groups": "specimen_transfer",
+        "advantage_distillation_correction_gate_precision": 0.6813725490196079,
+        "advantage_distillation_correction_gate_prediction_fraction": 0.6496815085411072,
+        "advantage_distillation_correction_gate_recall": 0.7091836734693877,
+        "advantage_distillation_correction_gate_threshold": 0.5,
+        "advantage_distillation_correction_recall": "",
+        "advantage_distillation_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "advantage_distillation_demonstration_source": "cache",
+        "advantage_distillation_dense_advantage_weight_cap": 10.0,
+        "advantage_distillation_dense_advantage_weight_scale": "",
+        "advantage_distillation_early_stopping_gate_loss_weight": "",
+        "advantage_distillation_eligibility_rate_weight": 0.0,
+        "advantage_distillation_epochs": 300,
+        "advantage_distillation_epochs_completed": "",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_improved_steps": 285,
+        "advantage_distillation_improved_weight_fraction": 0.5,
+        "advantage_distillation_lookahead": 52,
+        "advantage_distillation_lookahead_replications": 3,
+        "advantage_distillation_loss": 0.05081424117088318,
+        "advantage_distillation_max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "advantage_distillation_max_patients_lost_delta": 0.0,
+        "advantage_distillation_mean_advantage_regret": "",
+        "advantage_distillation_mean_best_advantage": "",
+        "advantage_distillation_mean_predicted_advantage": "",
+        "advantage_distillation_mean_step_improvement": 3721792.75,
+        "advantage_distillation_min_completion_service_level_delta": 0.0,
+        "advantage_distillation_min_service_level_delta": "",
+        "advantage_distillation_observed_option_count": "",
+        "advantage_distillation_online_actor_lrs": "1e-05",
+        "advantage_distillation_option_count": "",
+        "advantage_distillation_patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+        "advantage_distillation_patients_lost_weight": 0.0,
+        "advantage_distillation_predicted_feasible_fraction": "",
+        "advantage_distillation_predicted_material_improvement_fraction": "",
+        "advantage_distillation_replay_transitions": 314,
+        "advantage_distillation_retain_for_regularization": true,
+        "advantage_distillation_rollouts": 10,
+        "advantage_distillation_samples": 314,
+        "advantage_distillation_service_level_weight": 0.0,
+        "advantage_distillation_service_rejected_steps": 0,
+        "advantage_distillation_target_mode": "residual",
+        "advantage_distillation_train_accuracy": "",
+        "advantage_distillation_train_samples": 314,
+        "advantage_distillation_train_trajectory_ids": "",
+        "advantage_distillation_trajectory_validation_enabled": false,
+        "advantage_distillation_validation_actor_loss": "",
+        "advantage_distillation_validation_correction_gate_loss": "",
+        "advantage_distillation_validation_correction_gate_precision": "",
+        "advantage_distillation_validation_correction_gate_recall": "",
+        "advantage_distillation_validation_demonstration_path": "",
+        "advantage_distillation_validation_loss": "",
+        "advantage_distillation_validation_samples": 0,
+        "advantage_distillation_validation_trajectory_ids": "",
+        "critic2_critic_teacher_advantage_bellman_loss_final": 0.0036509125493466854,
+        "critic2_critic_teacher_advantage_bellman_mse_after": 0.0036490533966571093,
+        "critic2_critic_teacher_advantage_bellman_mse_before": 0.005005847662687302,
+        "critic2_critic_teacher_advantage_calibration_loss_final": 0.004159502685070038,
+        "critic2_critic_teacher_advantage_calibration_updates": 100.0,
+        "critic2_critic_teacher_advantage_mse_after": 2.256736479466781e-05,
+        "critic2_critic_teacher_advantage_mse_before": 3.1615698389941826e-05,
+        "critic2_critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic2_critic_teacher_advantage_positive_fraction_after": 0.5541401505470276,
+        "critic2_critic_teacher_advantage_positive_margin": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic2_critic_teacher_advantage_prediction_mean_after": 0.00035022676456719637,
+        "critic2_critic_teacher_advantage_prediction_mean_before": -0.0007650185725651681,
+        "critic2_critic_teacher_advantage_ranking_loss_final": 5.0858994654845446e-05,
+        "critic2_critic_teacher_advantage_ranking_weight": 10.0,
+        "critic2_critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_allowed_option_groups": "",
+        "critic_teacher_advantage_bellman_loss_final": 0.004327881149947643,
+        "critic_teacher_advantage_bellman_mse_after": 0.003060758113861084,
+        "critic_teacher_advantage_bellman_mse_before": 0.0046025472693145275,
+        "critic_teacher_advantage_calibration_loss_final": 0.004827730357646942,
+        "critic_teacher_advantage_calibration_updates": 100.0,
+        "critic_teacher_advantage_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "critic_teacher_advantage_excluded_samples": 0.0,
+        "critic_teacher_advantage_mse_after": 2.095206218655221e-05,
+        "critic_teacher_advantage_mse_before": 3.0795872589806095e-05,
+        "critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic_teacher_advantage_positive_fraction_after": 0.5254777073860168,
+        "critic_teacher_advantage_positive_margin": 0.0,
+        "critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic_teacher_advantage_prediction_mean_after": 0.0004962851526215672,
+        "critic_teacher_advantage_prediction_mean_before": -0.0006545425276271999,
+        "critic_teacher_advantage_ranking_loss_final": 4.998490840080194e-05,
+        "critic_teacher_advantage_ranking_weight": 10.0,
+        "critic_teacher_advantage_samples": 314.0,
+        "critic_teacher_advantage_source_samples": 314.0,
+        "critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_target_positive_fraction": 0.9076433121019108,
+        "offline_rl_actor_updated_final": 0.0,
+        "offline_rl_actor_updated_mean": 0.0,
+        "offline_rl_actor_warmup_final": 1.0,
+        "offline_rl_actor_warmup_mean": 1.0,
+        "offline_rl_anchor_relative_reward_count_final": 0.0,
+        "offline_rl_anchor_relative_reward_count_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_mean": 0.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_final": 4.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_mean": 4.0,
+        "offline_rl_anchor_relative_reward_positive_rate_final": 0.0,
+        "offline_rl_anchor_relative_reward_positive_rate_mean": 0.0,
+        "offline_rl_critic1_bellman_loss_final": 0.004003753885626793,
+        "offline_rl_critic1_bellman_loss_mean": 0.004296437020180747,
+        "offline_rl_critic1_loss_final": 0.004078742582350969,
+        "offline_rl_critic1_loss_mean": 0.004405474552419036,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_final": 2.4996268621180207e-05,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_mean": 3.634584257088136e-05,
+        "offline_rl_critic2_bellman_loss_final": 0.003991091623902321,
+        "offline_rl_critic2_bellman_loss_mean": 0.005165100064128637,
+        "offline_rl_critic2_loss_final": 0.00406682351604104,
+        "offline_rl_critic2_loss_mean": 0.005274062220705673,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_final": 2.524392584746238e-05,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_mean": 3.63207188238448e-05,
+        "offline_rl_critic_disagreement_mean_final": 0.022068984806537628,
+        "offline_rl_critic_disagreement_mean_mean": 0.02290112383849919,
+        "offline_rl_critic_q1_mean_final": -0.3850160837173462,
+        "offline_rl_critic_q1_mean_mean": -0.25539386937022207,
+        "offline_rl_critic_q2_mean_final": -0.3774383068084717,
+        "offline_rl_critic_q2_mean_mean": -0.25506061643362044,
+        "offline_rl_critic_target_mean_final": -0.3730599284172058,
+        "offline_rl_critic_target_mean_mean": -0.25559454372525214,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_final": 7.536029170296388e-05,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_mean": 0.00010899984209208923,
+        "offline_rl_updates": 500,
+        "online_advantage_self_imitation": "positive_full_horizon_anchor_return|specimen_behavior_action",
+        "online_advantage_self_imitation_minimum_return": 0.0005,
+        "online_advantage_self_imitation_release_reference": "true",
+        "online_advantage_self_imitation_require_positive_one_step_return": "true",
+        "online_advantage_self_imitation_weight": 1.0,
+        "online_correction_gate_alignment": "hard_behavior_target|soft_actor",
+        "online_pretrain_reference_action_space": "network",
+        "online_pretrain_reference_loss_mode": "uniform",
+        "online_specimen_action_quantization": "critic_integer_patient_lots|actor_straight_through",
+        "pretrain_reference_actor_captured": true
+      },
+      "pretrain_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed21/checkpoints/gcn_residual_mdl2_network_td3_bc_seed21_pretrain.pt",
+      "resumed_training_state": null,
+      "scenario_episode_counts": {
+        "routing_abrupt_regime_shift": 25,
+        "routing_compound_regional_stress": 25,
+        "routing_nominal_history": 25,
+        "routing_regional_drift": 25
+      },
+      "seed": 21,
+      "training_state_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed21/checkpoints/gcn_residual_mdl2_network_td3_bc_seed21_training_state.pt"
+    },
+    {
+      "actor_drift_from_pretrain": {
+        "max_abs": 0.017574306577444077,
+        "parameter_count": 324964.0,
+        "rms": 0.0006519443045689967
+      },
+      "algorithm": "gcn_residual_mdl2_network_td3_bc",
+      "checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed22/checkpoints/gcn_residual_mdl2_network_td3_bc_seed22_episode100.pt",
+      "config": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed22/config.json",
+      "environments": [
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_nominal_history"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_abrupt_regime_shift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_regional_drift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_compound_regional_stress"
+        }
+      ],
+      "initial_checkpoint": null,
+      "online_episodes": 100,
+      "parameter_count": 851719,
+      "preonline_training_state": null,
+      "pretrain": {
+        "advantage_distillation_actor_lr": 0.0001,
+        "advantage_distillation_anchor_keep_on_improved": false,
+        "advantage_distillation_anchor_keep_probability": 1.0,
+        "advantage_distillation_anchor_keep_steps": 29,
+        "advantage_distillation_anchor_keep_weight": 1.0,
+        "advantage_distillation_anchor_prediction_fraction": "",
+        "advantage_distillation_at_risk_unserved_weight": 0.0,
+        "advantage_distillation_balance_label_weights": true,
+        "advantage_distillation_best_epoch": "",
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_candidate_signs": "-1|1",
+        "advantage_distillation_changed_fraction": "",
+        "advantage_distillation_completion_service_level_weight": 0.0,
+        "advantage_distillation_correction_accuracy": "",
+        "advantage_distillation_correction_gate_accuracy": 0.6114649772644043,
+        "advantage_distillation_correction_gate_group_label_rates": "0.6242038",
+        "advantage_distillation_correction_gate_group_positive_weights": "1",
+        "advantage_distillation_correction_gate_group_prediction_rates": "0.65605098",
+        "advantage_distillation_correction_gate_groups": "specimen_transfer",
+        "advantage_distillation_correction_gate_precision": 0.6796116504854369,
+        "advantage_distillation_correction_gate_prediction_fraction": 0.656050980091095,
+        "advantage_distillation_correction_gate_recall": 0.7142857142857143,
+        "advantage_distillation_correction_gate_threshold": 0.5,
+        "advantage_distillation_correction_recall": "",
+        "advantage_distillation_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "advantage_distillation_demonstration_source": "cache",
+        "advantage_distillation_dense_advantage_weight_cap": 10.0,
+        "advantage_distillation_dense_advantage_weight_scale": "",
+        "advantage_distillation_early_stopping_gate_loss_weight": "",
+        "advantage_distillation_eligibility_rate_weight": 0.0,
+        "advantage_distillation_epochs": 300,
+        "advantage_distillation_epochs_completed": "",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_improved_steps": 285,
+        "advantage_distillation_improved_weight_fraction": 0.5,
+        "advantage_distillation_lookahead": 52,
+        "advantage_distillation_lookahead_replications": 3,
+        "advantage_distillation_loss": 0.07880432903766632,
+        "advantage_distillation_max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "advantage_distillation_max_patients_lost_delta": 0.0,
+        "advantage_distillation_mean_advantage_regret": "",
+        "advantage_distillation_mean_best_advantage": "",
+        "advantage_distillation_mean_predicted_advantage": "",
+        "advantage_distillation_mean_step_improvement": 3721792.75,
+        "advantage_distillation_min_completion_service_level_delta": 0.0,
+        "advantage_distillation_min_service_level_delta": "",
+        "advantage_distillation_observed_option_count": "",
+        "advantage_distillation_online_actor_lrs": "1e-05",
+        "advantage_distillation_option_count": "",
+        "advantage_distillation_patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+        "advantage_distillation_patients_lost_weight": 0.0,
+        "advantage_distillation_predicted_feasible_fraction": "",
+        "advantage_distillation_predicted_material_improvement_fraction": "",
+        "advantage_distillation_replay_transitions": 314,
+        "advantage_distillation_retain_for_regularization": true,
+        "advantage_distillation_rollouts": 10,
+        "advantage_distillation_samples": 314,
+        "advantage_distillation_service_level_weight": 0.0,
+        "advantage_distillation_service_rejected_steps": 0,
+        "advantage_distillation_target_mode": "residual",
+        "advantage_distillation_train_accuracy": "",
+        "advantage_distillation_train_samples": 314,
+        "advantage_distillation_train_trajectory_ids": "",
+        "advantage_distillation_trajectory_validation_enabled": false,
+        "advantage_distillation_validation_actor_loss": "",
+        "advantage_distillation_validation_correction_gate_loss": "",
+        "advantage_distillation_validation_correction_gate_precision": "",
+        "advantage_distillation_validation_correction_gate_recall": "",
+        "advantage_distillation_validation_demonstration_path": "",
+        "advantage_distillation_validation_loss": "",
+        "advantage_distillation_validation_samples": 0,
+        "advantage_distillation_validation_trajectory_ids": "",
+        "critic2_critic_teacher_advantage_bellman_loss_final": 0.0027473685331642628,
+        "critic2_critic_teacher_advantage_bellman_mse_after": 0.0019409776432439685,
+        "critic2_critic_teacher_advantage_bellman_mse_before": 0.005781665910035372,
+        "critic2_critic_teacher_advantage_calibration_loss_final": 0.002840096363797784,
+        "critic2_critic_teacher_advantage_calibration_updates": 100.0,
+        "critic2_critic_teacher_advantage_mse_after": 2.2693484424962662e-05,
+        "critic2_critic_teacher_advantage_mse_before": 3.06383881252259e-05,
+        "critic2_critic_teacher_advantage_pairwise_difference_loss_final": -0.0,
+        "critic2_critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic2_critic_teacher_advantage_positive_fraction_after": 0.41719746589660645,
+        "critic2_critic_teacher_advantage_positive_margin": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_loss_final": -0.0,
+        "critic2_critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic2_critic_teacher_advantage_prediction_mean_after": 7.436832675011829e-05,
+        "critic2_critic_teacher_advantage_prediction_mean_before": -0.0007177070947363973,
+        "critic2_critic_teacher_advantage_ranking_loss_final": 9.272787792724557e-06,
+        "critic2_critic_teacher_advantage_ranking_weight": 10.0,
+        "critic2_critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_allowed_option_groups": "",
+        "critic_teacher_advantage_bellman_loss_final": 0.0045731766149401665,
+        "critic_teacher_advantage_bellman_mse_after": 0.003043560544028878,
+        "critic_teacher_advantage_bellman_mse_before": 0.003754081204533577,
+        "critic_teacher_advantage_calibration_loss_final": 0.004666860681027174,
+        "critic_teacher_advantage_calibration_updates": 100.0,
+        "critic_teacher_advantage_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "critic_teacher_advantage_excluded_samples": 0.0,
+        "critic_teacher_advantage_mse_after": 2.2201598767424002e-05,
+        "critic_teacher_advantage_mse_before": 2.9763177735731006e-05,
+        "critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic_teacher_advantage_positive_fraction_after": 0.506369411945343,
+        "critic_teacher_advantage_positive_margin": 0.0,
+        "critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic_teacher_advantage_prediction_mean_after": 0.00017172496882267296,
+        "critic_teacher_advantage_prediction_mean_before": -0.000675855262670666,
+        "critic_teacher_advantage_ranking_loss_final": 9.368397513753735e-06,
+        "critic_teacher_advantage_ranking_weight": 10.0,
+        "critic_teacher_advantage_samples": 314.0,
+        "critic_teacher_advantage_source_samples": 314.0,
+        "critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_target_positive_fraction": 0.9076433121019108,
+        "offline_rl_actor_updated_final": 0.0,
+        "offline_rl_actor_updated_mean": 0.0,
+        "offline_rl_actor_warmup_final": 1.0,
+        "offline_rl_actor_warmup_mean": 1.0,
+        "offline_rl_anchor_relative_reward_count_final": 0.0,
+        "offline_rl_anchor_relative_reward_count_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_mean": 0.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_final": 4.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_mean": 4.0,
+        "offline_rl_anchor_relative_reward_positive_rate_final": 0.0,
+        "offline_rl_anchor_relative_reward_positive_rate_mean": 0.0,
+        "offline_rl_critic1_bellman_loss_final": 0.003910664469003677,
+        "offline_rl_critic1_bellman_loss_mean": 0.004090327293379232,
+        "offline_rl_critic1_loss_final": 0.003967068158090115,
+        "offline_rl_critic1_loss_mean": 0.004194355581421405,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_final": 1.8801174519467168e-05,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_mean": 3.4676093536290866e-05,
+        "offline_rl_critic2_bellman_loss_final": 0.003162004053592682,
+        "offline_rl_critic2_bellman_loss_mean": 0.004486541450489313,
+        "offline_rl_critic2_loss_final": 0.003224543761461973,
+        "offline_rl_critic2_loss_mean": 0.004597556276945397,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_final": 2.0846557163167745e-05,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_mean": 3.7004938880272674e-05,
+        "offline_rl_critic_disagreement_mean_final": 0.015039241872727871,
+        "offline_rl_critic_disagreement_mean_mean": 0.020759269934147596,
+        "offline_rl_critic_q1_mean_final": -0.2604948580265045,
+        "offline_rl_critic_q1_mean_mean": -0.21110178683395497,
+        "offline_rl_critic_q2_mean_final": -0.26594096422195435,
+        "offline_rl_critic_q2_mean_mean": -0.21042733235657216,
+        "offline_rl_critic_target_mean_final": -0.28153955936431885,
+        "offline_rl_critic_target_mean_mean": -0.2112058979123831,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_final": 5.947159752395237e-05,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_mean": 0.0001075215486248453,
+        "offline_rl_updates": 500,
+        "online_advantage_self_imitation": "positive_full_horizon_anchor_return|specimen_behavior_action",
+        "online_advantage_self_imitation_minimum_return": 0.0005,
+        "online_advantage_self_imitation_release_reference": "true",
+        "online_advantage_self_imitation_require_positive_one_step_return": "true",
+        "online_advantage_self_imitation_weight": 1.0,
+        "online_correction_gate_alignment": "hard_behavior_target|soft_actor",
+        "online_pretrain_reference_action_space": "network",
+        "online_pretrain_reference_loss_mode": "uniform",
+        "online_specimen_action_quantization": "critic_integer_patient_lots|actor_straight_through",
+        "pretrain_reference_actor_captured": true
+      },
+      "pretrain_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed22/checkpoints/gcn_residual_mdl2_network_td3_bc_seed22_pretrain.pt",
+      "resumed_training_state": null,
+      "scenario_episode_counts": {
+        "routing_abrupt_regime_shift": 25,
+        "routing_compound_regional_stress": 25,
+        "routing_nominal_history": 25,
+        "routing_regional_drift": 25
+      },
+      "seed": 22,
+      "training_state_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/gcn_residual_mdl2_network_td3_bc/seed22/checkpoints/gcn_residual_mdl2_network_td3_bc_seed22_training_state.pt"
+    },
+    {
+      "actor_drift_from_pretrain": {
+        "max_abs": 0.01171569898724556,
+        "parameter_count": 276500.0,
+        "rms": 0.00048384558299231095
+      },
+      "algorithm": "flat_residual_mdl2_network_td3_bc",
+      "checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed20/checkpoints/flat_residual_mdl2_network_td3_bc_seed20_episode100.pt",
+      "config": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed20/config.json",
+      "environments": [
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_nominal_history"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_abrupt_regime_shift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_regional_drift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_compound_regional_stress"
+        }
+      ],
+      "initial_checkpoint": null,
+      "online_episodes": 100,
+      "parameter_count": 851687,
+      "preonline_training_state": null,
+      "pretrain": {
+        "advantage_distillation_actor_lr": 0.0001,
+        "advantage_distillation_anchor_keep_on_improved": false,
+        "advantage_distillation_anchor_keep_probability": 1.0,
+        "advantage_distillation_anchor_keep_steps": 29,
+        "advantage_distillation_anchor_keep_weight": 1.0,
+        "advantage_distillation_anchor_prediction_fraction": "",
+        "advantage_distillation_at_risk_unserved_weight": 0.0,
+        "advantage_distillation_balance_label_weights": true,
+        "advantage_distillation_best_epoch": "",
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_candidate_signs": "-1|1",
+        "advantage_distillation_changed_fraction": "",
+        "advantage_distillation_completion_service_level_weight": 0.0,
+        "advantage_distillation_correction_accuracy": "",
+        "advantage_distillation_correction_gate_accuracy": 0.7611464858055115,
+        "advantage_distillation_correction_gate_group_label_rates": "0.6242038",
+        "advantage_distillation_correction_gate_group_positive_weights": "1",
+        "advantage_distillation_correction_gate_group_prediction_rates": "0.74203819",
+        "advantage_distillation_correction_gate_groups": "specimen_transfer",
+        "advantage_distillation_correction_gate_precision": 0.759656652360515,
+        "advantage_distillation_correction_gate_prediction_fraction": 0.7420381903648376,
+        "advantage_distillation_correction_gate_recall": 0.9030612244897959,
+        "advantage_distillation_correction_gate_threshold": 0.5,
+        "advantage_distillation_correction_recall": "",
+        "advantage_distillation_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "advantage_distillation_demonstration_source": "cache",
+        "advantage_distillation_dense_advantage_weight_cap": 10.0,
+        "advantage_distillation_dense_advantage_weight_scale": "",
+        "advantage_distillation_early_stopping_gate_loss_weight": "",
+        "advantage_distillation_eligibility_rate_weight": 0.0,
+        "advantage_distillation_epochs": 300,
+        "advantage_distillation_epochs_completed": "",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_improved_steps": 285,
+        "advantage_distillation_improved_weight_fraction": 0.5,
+        "advantage_distillation_lookahead": 52,
+        "advantage_distillation_lookahead_replications": 3,
+        "advantage_distillation_loss": 0.01088942214846611,
+        "advantage_distillation_max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "advantage_distillation_max_patients_lost_delta": 0.0,
+        "advantage_distillation_mean_advantage_regret": "",
+        "advantage_distillation_mean_best_advantage": "",
+        "advantage_distillation_mean_predicted_advantage": "",
+        "advantage_distillation_mean_step_improvement": 3721792.75,
+        "advantage_distillation_min_completion_service_level_delta": 0.0,
+        "advantage_distillation_min_service_level_delta": "",
+        "advantage_distillation_observed_option_count": "",
+        "advantage_distillation_online_actor_lrs": "1e-05",
+        "advantage_distillation_option_count": "",
+        "advantage_distillation_patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+        "advantage_distillation_patients_lost_weight": 0.0,
+        "advantage_distillation_predicted_feasible_fraction": "",
+        "advantage_distillation_predicted_material_improvement_fraction": "",
+        "advantage_distillation_replay_transitions": 314,
+        "advantage_distillation_retain_for_regularization": true,
+        "advantage_distillation_rollouts": 10,
+        "advantage_distillation_samples": 314,
+        "advantage_distillation_service_level_weight": 0.0,
+        "advantage_distillation_service_rejected_steps": 0,
+        "advantage_distillation_target_mode": "residual",
+        "advantage_distillation_train_accuracy": "",
+        "advantage_distillation_train_samples": 314,
+        "advantage_distillation_train_trajectory_ids": "",
+        "advantage_distillation_trajectory_validation_enabled": false,
+        "advantage_distillation_validation_actor_loss": "",
+        "advantage_distillation_validation_correction_gate_loss": "",
+        "advantage_distillation_validation_correction_gate_precision": "",
+        "advantage_distillation_validation_correction_gate_recall": "",
+        "advantage_distillation_validation_demonstration_path": "",
+        "advantage_distillation_validation_loss": "",
+        "advantage_distillation_validation_samples": 0,
+        "advantage_distillation_validation_trajectory_ids": "",
+        "critic2_critic_teacher_advantage_bellman_loss_final": 0.0009471358498558402,
+        "critic2_critic_teacher_advantage_bellman_mse_after": 0.001181494677439332,
+        "critic2_critic_teacher_advantage_bellman_mse_before": 0.0023515664506703615,
+        "critic2_critic_teacher_advantage_calibration_loss_final": 0.0010317058768123388,
+        "critic2_critic_teacher_advantage_calibration_updates": 100.0,
+        "critic2_critic_teacher_advantage_mse_after": 2.03938197955722e-05,
+        "critic2_critic_teacher_advantage_mse_before": 2.3015003534965217e-05,
+        "critic2_critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic2_critic_teacher_advantage_positive_fraction_after": 0.5859872698783875,
+        "critic2_critic_teacher_advantage_positive_margin": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic2_critic_teacher_advantage_prediction_mean_after": 0.0006318196537904441,
+        "critic2_critic_teacher_advantage_prediction_mean_before": 0.00024935571127571166,
+        "critic2_critic_teacher_advantage_ranking_loss_final": 8.456997420580592e-06,
+        "critic2_critic_teacher_advantage_ranking_weight": 10.0,
+        "critic2_critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_allowed_option_groups": "",
+        "critic_teacher_advantage_bellman_loss_final": 0.001317834947258234,
+        "critic_teacher_advantage_bellman_mse_after": 0.001229716814123094,
+        "critic_teacher_advantage_bellman_mse_before": 0.01584724709391594,
+        "critic_teacher_advantage_calibration_loss_final": 0.00140151206869632,
+        "critic_teacher_advantage_calibration_updates": 100.0,
+        "critic_teacher_advantage_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "critic_teacher_advantage_excluded_samples": 0.0,
+        "critic_teacher_advantage_mse_after": 2.0886698621325195e-05,
+        "critic_teacher_advantage_mse_before": 2.2484653527499177e-05,
+        "critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic_teacher_advantage_positive_fraction_after": 0.5923566818237305,
+        "critic_teacher_advantage_positive_margin": 0.0,
+        "critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic_teacher_advantage_prediction_mean_after": 0.0005637090071104467,
+        "critic_teacher_advantage_prediction_mean_before": 0.0002919367980211973,
+        "critic_teacher_advantage_ranking_loss_final": 8.367715054191649e-06,
+        "critic_teacher_advantage_ranking_weight": 10.0,
+        "critic_teacher_advantage_samples": 314.0,
+        "critic_teacher_advantage_source_samples": 314.0,
+        "critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_target_positive_fraction": 0.9076433121019108,
+        "offline_rl_actor_updated_final": 0.0,
+        "offline_rl_actor_updated_mean": 0.0,
+        "offline_rl_actor_warmup_final": 1.0,
+        "offline_rl_actor_warmup_mean": 1.0,
+        "offline_rl_anchor_relative_reward_count_final": 0.0,
+        "offline_rl_anchor_relative_reward_count_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_mean": 0.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_final": 4.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_mean": 4.0,
+        "offline_rl_anchor_relative_reward_positive_rate_final": 0.0,
+        "offline_rl_anchor_relative_reward_positive_rate_mean": 0.0,
+        "offline_rl_critic1_bellman_loss_final": 0.0014615652617067099,
+        "offline_rl_critic1_bellman_loss_mean": 0.009884078795206733,
+        "offline_rl_critic1_loss_final": 0.0014806992840021849,
+        "offline_rl_critic1_loss_mean": 0.009961870686500333,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_final": 6.378021225827979e-06,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_mean": 2.5930631143637584e-05,
+        "offline_rl_critic2_bellman_loss_final": 0.003954963758587837,
+        "offline_rl_critic2_bellman_loss_mean": 0.01249858348723501,
+        "offline_rl_critic2_loss_final": 0.003974185325205326,
+        "offline_rl_critic2_loss_mean": 0.012575462552485988,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_final": 6.407219188986346e-06,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_mean": 2.562631312139274e-05,
+        "offline_rl_critic_disagreement_mean_final": 0.05877947062253952,
+        "offline_rl_critic_disagreement_mean_mean": 0.04639051994308829,
+        "offline_rl_critic_q1_mean_final": -0.36284688115119934,
+        "offline_rl_critic_q1_mean_mean": -0.27094004124403,
+        "offline_rl_critic_q2_mean_final": -0.3066118359565735,
+        "offline_rl_critic_q2_mean_mean": -0.2739752931669354,
+        "offline_rl_critic_target_mean_final": -0.3542596995830536,
+        "offline_rl_critic_target_mean_mean": -0.2695664840340614,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_final": 1.9177860622221488e-05,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_mean": 7.733541639754549e-05,
+        "offline_rl_updates": 500,
+        "online_advantage_self_imitation": "positive_full_horizon_anchor_return|specimen_behavior_action",
+        "online_advantage_self_imitation_minimum_return": 0.0005,
+        "online_advantage_self_imitation_release_reference": "true",
+        "online_advantage_self_imitation_require_positive_one_step_return": "true",
+        "online_advantage_self_imitation_weight": 1.0,
+        "online_correction_gate_alignment": "hard_behavior_target|soft_actor",
+        "online_pretrain_reference_action_space": "network",
+        "online_pretrain_reference_loss_mode": "uniform",
+        "online_specimen_action_quantization": "critic_integer_patient_lots|actor_straight_through",
+        "pretrain_reference_actor_captured": true
+      },
+      "pretrain_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed20/checkpoints/flat_residual_mdl2_network_td3_bc_seed20_pretrain.pt",
+      "resumed_training_state": null,
+      "scenario_episode_counts": {
+        "routing_abrupt_regime_shift": 25,
+        "routing_compound_regional_stress": 25,
+        "routing_nominal_history": 25,
+        "routing_regional_drift": 25
+      },
+      "seed": 20,
+      "training_state_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed20/checkpoints/flat_residual_mdl2_network_td3_bc_seed20_training_state.pt"
+    },
+    {
+      "actor_drift_from_pretrain": {
+        "max_abs": 0.01278417557477951,
+        "parameter_count": 276500.0,
+        "rms": 0.0005055038596045015
+      },
+      "algorithm": "flat_residual_mdl2_network_td3_bc",
+      "checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed21/checkpoints/flat_residual_mdl2_network_td3_bc_seed21_episode100.pt",
+      "config": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed21/config.json",
+      "environments": [
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_nominal_history"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_abrupt_regime_shift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_regional_drift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_compound_regional_stress"
+        }
+      ],
+      "initial_checkpoint": null,
+      "online_episodes": 100,
+      "parameter_count": 851687,
+      "preonline_training_state": null,
+      "pretrain": {
+        "advantage_distillation_actor_lr": 0.0001,
+        "advantage_distillation_anchor_keep_on_improved": false,
+        "advantage_distillation_anchor_keep_probability": 1.0,
+        "advantage_distillation_anchor_keep_steps": 29,
+        "advantage_distillation_anchor_keep_weight": 1.0,
+        "advantage_distillation_anchor_prediction_fraction": "",
+        "advantage_distillation_at_risk_unserved_weight": 0.0,
+        "advantage_distillation_balance_label_weights": true,
+        "advantage_distillation_best_epoch": "",
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_candidate_signs": "-1|1",
+        "advantage_distillation_changed_fraction": "",
+        "advantage_distillation_completion_service_level_weight": 0.0,
+        "advantage_distillation_correction_accuracy": "",
+        "advantage_distillation_correction_gate_accuracy": 0.7738853693008423,
+        "advantage_distillation_correction_gate_group_label_rates": "0.6242038",
+        "advantage_distillation_correction_gate_group_positive_weights": "1",
+        "advantage_distillation_correction_gate_group_prediction_rates": "0.73566878",
+        "advantage_distillation_correction_gate_groups": "specimen_transfer",
+        "advantage_distillation_correction_gate_precision": 0.7705627705627706,
+        "advantage_distillation_correction_gate_prediction_fraction": 0.7356687784194946,
+        "advantage_distillation_correction_gate_recall": 0.9081632653061225,
+        "advantage_distillation_correction_gate_threshold": 0.5,
+        "advantage_distillation_correction_recall": "",
+        "advantage_distillation_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "advantage_distillation_demonstration_source": "cache",
+        "advantage_distillation_dense_advantage_weight_cap": 10.0,
+        "advantage_distillation_dense_advantage_weight_scale": "",
+        "advantage_distillation_early_stopping_gate_loss_weight": "",
+        "advantage_distillation_eligibility_rate_weight": 0.0,
+        "advantage_distillation_epochs": 300,
+        "advantage_distillation_epochs_completed": "",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_improved_steps": 285,
+        "advantage_distillation_improved_weight_fraction": 0.5,
+        "advantage_distillation_lookahead": 52,
+        "advantage_distillation_lookahead_replications": 3,
+        "advantage_distillation_loss": 0.014350678771734238,
+        "advantage_distillation_max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "advantage_distillation_max_patients_lost_delta": 0.0,
+        "advantage_distillation_mean_advantage_regret": "",
+        "advantage_distillation_mean_best_advantage": "",
+        "advantage_distillation_mean_predicted_advantage": "",
+        "advantage_distillation_mean_step_improvement": 3721792.75,
+        "advantage_distillation_min_completion_service_level_delta": 0.0,
+        "advantage_distillation_min_service_level_delta": "",
+        "advantage_distillation_observed_option_count": "",
+        "advantage_distillation_online_actor_lrs": "1e-05",
+        "advantage_distillation_option_count": "",
+        "advantage_distillation_patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+        "advantage_distillation_patients_lost_weight": 0.0,
+        "advantage_distillation_predicted_feasible_fraction": "",
+        "advantage_distillation_predicted_material_improvement_fraction": "",
+        "advantage_distillation_replay_transitions": 314,
+        "advantage_distillation_retain_for_regularization": true,
+        "advantage_distillation_rollouts": 10,
+        "advantage_distillation_samples": 314,
+        "advantage_distillation_service_level_weight": 0.0,
+        "advantage_distillation_service_rejected_steps": 0,
+        "advantage_distillation_target_mode": "residual",
+        "advantage_distillation_train_accuracy": "",
+        "advantage_distillation_train_samples": 314,
+        "advantage_distillation_train_trajectory_ids": "",
+        "advantage_distillation_trajectory_validation_enabled": false,
+        "advantage_distillation_validation_actor_loss": "",
+        "advantage_distillation_validation_correction_gate_loss": "",
+        "advantage_distillation_validation_correction_gate_precision": "",
+        "advantage_distillation_validation_correction_gate_recall": "",
+        "advantage_distillation_validation_demonstration_path": "",
+        "advantage_distillation_validation_loss": "",
+        "advantage_distillation_validation_samples": 0,
+        "advantage_distillation_validation_trajectory_ids": "",
+        "critic2_critic_teacher_advantage_bellman_loss_final": 0.0019280703272670507,
+        "critic2_critic_teacher_advantage_bellman_mse_after": 0.0016715158708393574,
+        "critic2_critic_teacher_advantage_bellman_mse_before": 0.008512069471180439,
+        "critic2_critic_teacher_advantage_calibration_loss_final": 0.002405810635536909,
+        "critic2_critic_teacher_advantage_calibration_updates": 100.0,
+        "critic2_critic_teacher_advantage_mse_after": 2.0745830624946393e-05,
+        "critic2_critic_teacher_advantage_mse_before": 2.2792237359681167e-05,
+        "critic2_critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic2_critic_teacher_advantage_positive_fraction_after": 0.5573248267173767,
+        "critic2_critic_teacher_advantage_positive_margin": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic2_critic_teacher_advantage_prediction_mean_after": 0.0005034943460486829,
+        "critic2_critic_teacher_advantage_prediction_mean_before": 0.000165898134582676,
+        "critic2_critic_teacher_advantage_ranking_loss_final": 4.777402136824094e-05,
+        "critic2_critic_teacher_advantage_ranking_weight": 10.0,
+        "critic2_critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_allowed_option_groups": "",
+        "critic_teacher_advantage_bellman_loss_final": 0.0016251737251877785,
+        "critic_teacher_advantage_bellman_mse_after": 0.0012041053269058466,
+        "critic_teacher_advantage_bellman_mse_before": 0.001785311265848577,
+        "critic_teacher_advantage_calibration_loss_final": 0.0020892235916107893,
+        "critic_teacher_advantage_calibration_updates": 100.0,
+        "critic_teacher_advantage_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "critic_teacher_advantage_excluded_samples": 0.0,
+        "critic_teacher_advantage_mse_after": 2.0898149159620516e-05,
+        "critic_teacher_advantage_mse_before": 2.3158050680649467e-05,
+        "critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic_teacher_advantage_positive_fraction_after": 0.5509554147720337,
+        "critic_teacher_advantage_positive_margin": 0.0,
+        "critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic_teacher_advantage_prediction_mean_after": 0.00047302644816227257,
+        "critic_teacher_advantage_prediction_mean_before": 0.0001663381844991818,
+        "critic_teacher_advantage_ranking_loss_final": 4.6404988097492605e-05,
+        "critic_teacher_advantage_ranking_weight": 10.0,
+        "critic_teacher_advantage_samples": 314.0,
+        "critic_teacher_advantage_source_samples": 314.0,
+        "critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_target_positive_fraction": 0.9076433121019108,
+        "offline_rl_actor_updated_final": 0.0,
+        "offline_rl_actor_updated_mean": 0.0,
+        "offline_rl_actor_warmup_final": 1.0,
+        "offline_rl_actor_warmup_mean": 1.0,
+        "offline_rl_anchor_relative_reward_count_final": 0.0,
+        "offline_rl_anchor_relative_reward_count_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_mean": 0.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_final": 4.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_mean": 4.0,
+        "offline_rl_anchor_relative_reward_positive_rate_final": 0.0,
+        "offline_rl_anchor_relative_reward_positive_rate_mean": 0.0,
+        "offline_rl_critic1_bellman_loss_final": 0.0015505139017477632,
+        "offline_rl_critic1_bellman_loss_mean": 0.011523922689259052,
+        "offline_rl_critic1_loss_final": 0.0016060841735452414,
+        "offline_rl_critic1_loss_mean": 0.011599699774524196,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_final": 1.852343302743975e-05,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_mean": 2.525901808166964e-05,
+        "offline_rl_critic2_bellman_loss_final": 0.003143404144793749,
+        "offline_rl_critic2_bellman_loss_mean": 0.010582663154578767,
+        "offline_rl_critic2_loss_final": 0.0031987223774194717,
+        "offline_rl_critic2_loss_mean": 0.010657676793285645,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_final": 1.8439375708112493e-05,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_mean": 2.5004567324685924e-05,
+        "offline_rl_critic_disagreement_mean_final": 0.036259979009628296,
+        "offline_rl_critic_disagreement_mean_mean": 0.04389251342043281,
+        "offline_rl_critic_q1_mean_final": -0.2622782588005066,
+        "offline_rl_critic_q1_mean_mean": -0.09118569873459637,
+        "offline_rl_critic_q2_mean_final": -0.23455530405044556,
+        "offline_rl_critic_q2_mean_mean": -0.08960433781705797,
+        "offline_rl_critic_target_mean_final": -0.26521265506744385,
+        "offline_rl_critic_target_mean_mean": -0.0889125873404555,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_final": 5.5444213103328366e-05,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_mean": 7.539537810953334e-05,
+        "offline_rl_updates": 500,
+        "online_advantage_self_imitation": "positive_full_horizon_anchor_return|specimen_behavior_action",
+        "online_advantage_self_imitation_minimum_return": 0.0005,
+        "online_advantage_self_imitation_release_reference": "true",
+        "online_advantage_self_imitation_require_positive_one_step_return": "true",
+        "online_advantage_self_imitation_weight": 1.0,
+        "online_correction_gate_alignment": "hard_behavior_target|soft_actor",
+        "online_pretrain_reference_action_space": "network",
+        "online_pretrain_reference_loss_mode": "uniform",
+        "online_specimen_action_quantization": "critic_integer_patient_lots|actor_straight_through",
+        "pretrain_reference_actor_captured": true
+      },
+      "pretrain_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed21/checkpoints/flat_residual_mdl2_network_td3_bc_seed21_pretrain.pt",
+      "resumed_training_state": null,
+      "scenario_episode_counts": {
+        "routing_abrupt_regime_shift": 25,
+        "routing_compound_regional_stress": 25,
+        "routing_nominal_history": 25,
+        "routing_regional_drift": 25
+      },
+      "seed": 21,
+      "training_state_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed21/checkpoints/flat_residual_mdl2_network_td3_bc_seed21_training_state.pt"
+    },
+    {
+      "actor_drift_from_pretrain": {
+        "max_abs": 0.012501619756221771,
+        "parameter_count": 276500.0,
+        "rms": 0.0004996755486793932
+      },
+      "algorithm": "flat_residual_mdl2_network_td3_bc",
+      "checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed22/checkpoints/flat_residual_mdl2_network_td3_bc_seed22_episode100.pt",
+      "config": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed22/config.json",
+      "environments": [
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_nominal_history"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_abrupt_regime_shift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_regional_drift"
+        },
+        {
+          "action_size": 80,
+          "observation_size": 561,
+          "scenario": "routing_compound_regional_stress"
+        }
+      ],
+      "initial_checkpoint": null,
+      "online_episodes": 100,
+      "parameter_count": 851687,
+      "preonline_training_state": null,
+      "pretrain": {
+        "advantage_distillation_actor_lr": 0.0001,
+        "advantage_distillation_anchor_keep_on_improved": false,
+        "advantage_distillation_anchor_keep_probability": 1.0,
+        "advantage_distillation_anchor_keep_steps": 29,
+        "advantage_distillation_anchor_keep_weight": 1.0,
+        "advantage_distillation_anchor_prediction_fraction": "",
+        "advantage_distillation_at_risk_unserved_weight": 0.0,
+        "advantage_distillation_balance_label_weights": true,
+        "advantage_distillation_best_epoch": "",
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_candidate_signs": "-1|1",
+        "advantage_distillation_changed_fraction": "",
+        "advantage_distillation_completion_service_level_weight": 0.0,
+        "advantage_distillation_correction_accuracy": "",
+        "advantage_distillation_correction_gate_accuracy": 0.7738853693008423,
+        "advantage_distillation_correction_gate_group_label_rates": "0.6242038",
+        "advantage_distillation_correction_gate_group_positive_weights": "1",
+        "advantage_distillation_correction_gate_group_prediction_rates": "0.69745225",
+        "advantage_distillation_correction_gate_groups": "specimen_transfer",
+        "advantage_distillation_correction_gate_precision": 0.7853881278538812,
+        "advantage_distillation_correction_gate_prediction_fraction": 0.6974522471427917,
+        "advantage_distillation_correction_gate_recall": 0.8775510204081632,
+        "advantage_distillation_correction_gate_threshold": 0.5,
+        "advantage_distillation_correction_recall": "",
+        "advantage_distillation_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "advantage_distillation_demonstration_source": "cache",
+        "advantage_distillation_dense_advantage_weight_cap": 10.0,
+        "advantage_distillation_dense_advantage_weight_scale": "",
+        "advantage_distillation_early_stopping_gate_loss_weight": "",
+        "advantage_distillation_eligibility_rate_weight": 0.0,
+        "advantage_distillation_epochs": 300,
+        "advantage_distillation_epochs_completed": "",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_improved_steps": 285,
+        "advantage_distillation_improved_weight_fraction": 0.5,
+        "advantage_distillation_lookahead": 52,
+        "advantage_distillation_lookahead_replications": 3,
+        "advantage_distillation_loss": 0.014166862703859806,
+        "advantage_distillation_max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+        "advantage_distillation_max_patients_lost_delta": 0.0,
+        "advantage_distillation_mean_advantage_regret": "",
+        "advantage_distillation_mean_best_advantage": "",
+        "advantage_distillation_mean_predicted_advantage": "",
+        "advantage_distillation_mean_step_improvement": 3721792.75,
+        "advantage_distillation_min_completion_service_level_delta": 0.0,
+        "advantage_distillation_min_service_level_delta": "",
+        "advantage_distillation_observed_option_count": "",
+        "advantage_distillation_online_actor_lrs": "1e-05",
+        "advantage_distillation_option_count": "",
+        "advantage_distillation_patient_ineligibility_during_manufacturing_rate_weight": 0.0,
+        "advantage_distillation_patients_lost_weight": 0.0,
+        "advantage_distillation_predicted_feasible_fraction": "",
+        "advantage_distillation_predicted_material_improvement_fraction": "",
+        "advantage_distillation_replay_transitions": 314,
+        "advantage_distillation_retain_for_regularization": true,
+        "advantage_distillation_rollouts": 10,
+        "advantage_distillation_samples": 314,
+        "advantage_distillation_service_level_weight": 0.0,
+        "advantage_distillation_service_rejected_steps": 0,
+        "advantage_distillation_target_mode": "residual",
+        "advantage_distillation_train_accuracy": "",
+        "advantage_distillation_train_samples": 314,
+        "advantage_distillation_train_trajectory_ids": "",
+        "advantage_distillation_trajectory_validation_enabled": false,
+        "advantage_distillation_validation_actor_loss": "",
+        "advantage_distillation_validation_correction_gate_loss": "",
+        "advantage_distillation_validation_correction_gate_precision": "",
+        "advantage_distillation_validation_correction_gate_recall": "",
+        "advantage_distillation_validation_demonstration_path": "",
+        "advantage_distillation_validation_loss": "",
+        "advantage_distillation_validation_samples": 0,
+        "advantage_distillation_validation_trajectory_ids": "",
+        "critic2_critic_teacher_advantage_bellman_loss_final": 0.0023115151561796665,
+        "critic2_critic_teacher_advantage_bellman_mse_after": 0.0034417181741446257,
+        "critic2_critic_teacher_advantage_bellman_mse_before": 0.007188842631876469,
+        "critic2_critic_teacher_advantage_calibration_loss_final": 0.002403575461357832,
+        "critic2_critic_teacher_advantage_calibration_updates": 100.0,
+        "critic2_critic_teacher_advantage_mse_after": 2.1362431652960368e-05,
+        "critic2_critic_teacher_advantage_mse_before": 2.3615497411810793e-05,
+        "critic2_critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic2_critic_teacher_advantage_positive_fraction_after": 0.5700637102127075,
+        "critic2_critic_teacher_advantage_positive_margin": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic2_critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic2_critic_teacher_advantage_prediction_mean_after": 0.00048183283070102334,
+        "critic2_critic_teacher_advantage_prediction_mean_before": 8.066532609518617e-05,
+        "critic2_critic_teacher_advantage_ranking_loss_final": 9.206025424646214e-06,
+        "critic2_critic_teacher_advantage_ranking_weight": 10.0,
+        "critic2_critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_allowed_option_groups": "",
+        "critic_teacher_advantage_bellman_loss_final": 0.0016044999938458204,
+        "critic_teacher_advantage_bellman_mse_after": 0.002195898210629821,
+        "critic_teacher_advantage_bellman_mse_before": 0.0030489671044051647,
+        "critic_teacher_advantage_calibration_loss_final": 0.0016798792639747262,
+        "critic_teacher_advantage_calibration_updates": 100.0,
+        "critic_teacher_advantage_demonstration_path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+        "critic_teacher_advantage_excluded_samples": 0.0,
+        "critic_teacher_advantage_mse_after": 2.0565901650115848e-05,
+        "critic_teacher_advantage_mse_before": 2.3000566216069274e-05,
+        "critic_teacher_advantage_pairwise_difference_loss_final": 0.0,
+        "critic_teacher_advantage_pairwise_difference_weight": 0.0,
+        "critic_teacher_advantage_positive_fraction_after": 0.5828025341033936,
+        "critic_teacher_advantage_positive_margin": 0.0,
+        "critic_teacher_advantage_positive_margin_loss_final": 0.0,
+        "critic_teacher_advantage_positive_margin_weight": 0.0,
+        "critic_teacher_advantage_prediction_mean_after": 0.0006268230499699712,
+        "critic_teacher_advantage_prediction_mean_before": 0.00012053686805302277,
+        "critic_teacher_advantage_ranking_loss_final": 7.53792346586124e-06,
+        "critic_teacher_advantage_ranking_weight": 10.0,
+        "critic_teacher_advantage_samples": 314.0,
+        "critic_teacher_advantage_source_samples": 314.0,
+        "critic_teacher_advantage_target_mean": 0.0026234732940793037,
+        "critic_teacher_advantage_target_positive_fraction": 0.9076433121019108,
+        "offline_rl_actor_updated_final": 0.0,
+        "offline_rl_actor_updated_mean": 0.0,
+        "offline_rl_actor_warmup_final": 1.0,
+        "offline_rl_actor_warmup_mean": 1.0,
+        "offline_rl_anchor_relative_reward_count_final": 0.0,
+        "offline_rl_anchor_relative_reward_count_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_abs_mean": 0.0,
+        "offline_rl_anchor_relative_reward_mean_final": 0.0,
+        "offline_rl_anchor_relative_reward_mean_mean": 0.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_final": 4.0,
+        "offline_rl_anchor_relative_reward_n_step_horizon_mean": 4.0,
+        "offline_rl_anchor_relative_reward_positive_rate_final": 0.0,
+        "offline_rl_anchor_relative_reward_positive_rate_mean": 0.0,
+        "offline_rl_critic1_bellman_loss_final": 0.0015966868959367275,
+        "offline_rl_critic1_bellman_loss_mean": 0.01481068587047048,
+        "offline_rl_critic1_loss_final": 0.0016359718283638358,
+        "offline_rl_critic1_loss_mean": 0.014890969306929036,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_final": 1.3094968380755745e-05,
+        "offline_rl_critic1_teacher_advantage_ranking_loss_mean": 2.676112735844072e-05,
+        "offline_rl_critic2_bellman_loss_final": 0.006095108110457659,
+        "offline_rl_critic2_bellman_loss_mean": 0.012707512420136482,
+        "offline_rl_critic2_loss_final": 0.00613878108561039,
+        "offline_rl_critic2_loss_mean": 0.012788011207478122,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_final": 1.4557636859535705e-05,
+        "offline_rl_critic2_teacher_advantage_ranking_loss_mean": 2.6832875842956127e-05,
+        "offline_rl_critic_disagreement_mean_final": 0.06297174096107483,
+        "offline_rl_critic_disagreement_mean_mean": 0.045272184129804376,
+        "offline_rl_critic_q1_mean_final": -0.25364139676094055,
+        "offline_rl_critic_q1_mean_mean": -0.19748370614647864,
+        "offline_rl_critic_q2_mean_final": -0.19447946548461914,
+        "offline_rl_critic_q2_mean_mean": -0.19732950284332038,
+        "offline_rl_critic_target_mean_final": -0.25070104002952576,
+        "offline_rl_critic_target_mean_mean": -0.19373356410861015,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_final": 4.1478907860437175e-05,
+        "offline_rl_critic_teacher_advantage_weighted_ranking_loss_mean": 8.039100480209527e-05,
+        "offline_rl_updates": 500,
+        "online_advantage_self_imitation": "positive_full_horizon_anchor_return|specimen_behavior_action",
+        "online_advantage_self_imitation_minimum_return": 0.0005,
+        "online_advantage_self_imitation_release_reference": "true",
+        "online_advantage_self_imitation_require_positive_one_step_return": "true",
+        "online_advantage_self_imitation_weight": 1.0,
+        "online_correction_gate_alignment": "hard_behavior_target|soft_actor",
+        "online_pretrain_reference_action_space": "network",
+        "online_pretrain_reference_loss_mode": "uniform",
+        "online_specimen_action_quantization": "critic_integer_patient_lots|actor_straight_through",
+        "pretrain_reference_actor_captured": true
+      },
+      "pretrain_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed22/checkpoints/flat_residual_mdl2_network_td3_bc_seed22_pretrain.pt",
+      "resumed_training_state": null,
+      "scenario_episode_counts": {
+        "routing_abrupt_regime_shift": 25,
+        "routing_compound_regional_stress": 25,
+        "routing_nominal_history": 25,
+        "routing_regional_drift": 25
+      },
+      "seed": 22,
+      "training_state_checkpoint": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/flat_residual_mdl2_network_td3_bc/seed22/checkpoints/flat_residual_mdl2_network_td3_bc_seed22_training_state.pt"
+    }
+  ],
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "teacher_cache": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+  "teacher_cache_sha256": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92"
+}

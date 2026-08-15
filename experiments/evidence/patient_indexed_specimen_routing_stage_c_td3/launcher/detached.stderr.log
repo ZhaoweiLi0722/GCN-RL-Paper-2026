@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py", line 545, in <module>
+    main()
+  File "/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py", line 541, in main
+    run_stage(Path(args.spec), str(args.expected_commit))
+  File "/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py", line 483, in run_stage
+    status["training_audit"] = audit_training(spec)
+                               ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py", line 269, in audit_training
+    rows = read_csv_rows(run_root / "training.csv")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py", line 236, in read_csv_rows
+    return list(csv.DictReader(handle))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/envs/gcn-rl/lib/python3.11/csv.py", line 111, in __next__
+    row = next(self.reader)
+          ^^^^^^^^^^^^^^^^^
+_csv.Error: field larger than field limit (131072)

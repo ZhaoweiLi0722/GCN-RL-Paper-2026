@@ -1,0 +1,42 @@
+{
+  "argv": [
+    "/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py",
+    "--expected-commit",
+    "8a7768e3495be6d63e2091445ac6a7aa28ec0558"
+  ],
+  "claimed_at": "2026-08-14T05:06:30.632417+00:00",
+  "cwd": "/Users/cytseng/Code/GCN-RL-Paper-2026-HT",
+  "environment": {
+    "hostname": "Howards-MacBook-Pro.local",
+    "machine": "arm64",
+    "mps_available": true,
+    "mps_built": true,
+    "mps_probe_device": "mps:0",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.11.15 (main, Jun 11 2026, 15:14:57) [Clang 20.1.8 ]",
+    "python_executable": "/opt/anaconda3/envs/gcn-rl/bin/python",
+    "pytorch_enable_mps_fallback": "",
+    "torch": "2.13.0"
+  },
+  "expected_commit": "8a7768e3495be6d63e2091445ac6a7aa28ec0558",
+  "pid": 3010,
+  "ppid": 1,
+  "stage_spec": "experiments/configs/patient_indexed_specimen_routing_stage_c_td3_execution.json",
+  "stage_spec_sha256": "f35d2c2df1d3ba214e8846257168b4ba97bb368f5a748fa73659db47adf109f6",
+  "verified_hashes": {
+    "evaluation/evaluate_multiscenario_network_residual.py": "cbb4f432439676d62799085f5e220b0d2004d13570dc44ea2b43933283e02f2c",
+    "evaluation/launch_patient_indexed_specimen_routing_stage_c_td3.py": "4a9f43a7bd8b3fb89f985b6c531bf396b054d6a6eeb77d107531df53fbe75cbd",
+    "evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py": "e23efa01f5aa14fdabed078864af9dcee03a81f96c97a755e7c300fbe5e0b2fb",
+    "evaluation/train_multiscenario_network_residual.py": "cd33c64711b0e85e496e60a958a2ddfb1ed5db74fb668962d04cab7c24f6ddd1",
+    "experiments/configs/patient_indexed_specimen_routing_benchmark.json": "35280f6ce357b42c0054110aa63795c652c58db6f4b5d994784be0e5f73c72ee",
+    "experiments/configs/patient_indexed_specimen_routing_stage_c_td3_100.json": "0afe07d29b38002d46101a34c6310e571a6ee414d8f44857514a00679ce21edd",
+    "experiments/configs/patient_indexed_specimen_routing_stage_c_td3_100_final_dev_eval.json": "4f7754c509ad2f94501c9598fddbfc68e964cd02d8ebc71c78c6ecf33ca7fbe9",
+    "experiments/configs/patient_indexed_specimen_routing_stage_c_td3_100_pretrain_dev_eval.json": "4781b2c1480b7f79b49287e1283169261bc231f069fc46f992922c0f54c792ab",
+    "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_manifest.json": "60428718eb3e5d6981408cd7f43044c0784eee89c87724958ea2bcd09abbadb5",
+    "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92",
+    "src/models/conservative_flat_td3.py": "d87be615ef88a287709d10f511c725d277cefd3a0637bc23429d9976b1678e74",
+    "src/models/conservative_gcn_td3.py": "ed77982a6c7b1c50f46ab91ee6d986d1c757996ee6329ade4b606fbb9881eb60",
+    "src/rl/matched_residual_td3.py": "7305141fb2ffea8da0ef20fc7f712db0cb2a70dfaaf0b41b5755b1307f91af50",
+    "src/rl/training_state.py": "db8c743dca046674633f452bbe4d3d379e7a9bdbf4f127284fd9467d7af80b33"
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "artifact_count": 245,
+  "artifact_inventory": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/artifact_sha256.json",
+  "claim": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/claim.json",
+  "commit": "8373f1bf4cf509c9ac3189753b1759e1f7adaa0a",
+  "completed_at": "2026-08-15T07:19:59.225425+00:00",
+  "evaluation_final_audit": {
+    "runs": [
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 12329.0,
+        "learned_rows": 200,
+        "seed": 20
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 12860.0,
+        "learned_rows": 200,
+        "seed": 21
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 11695.0,
+        "learned_rows": 200,
+        "seed": 22
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 14794.0,
+        "learned_rows": 200,
+        "seed": 20
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 14898.0,
+        "learned_rows": 200,
+        "seed": 21
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 14292.0,
+        "learned_rows": 200,
+        "seed": 22
+      }
+    ],
+    "summary": "results/patient_indexed_specimen_routing_stage_c_td3_development/evaluation/final/summary.json",
+    "summary_sha256": "91e830a27c1f2b045074bb6eddb88d59b6778c39dc036adacd3664a3b86e4120",
+    "variant": "final"
+  },
+  "evaluation_pretrain_audit": {
+    "runs": [
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 12315.0,
+        "learned_rows": 200,
+        "seed": 20
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 12870.0,
+        "learned_rows": 200,
+        "seed": 21
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 11681.0,
+        "learned_rows": 200,
+        "seed": 22
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 14801.0,
+        "learned_rows": 200,
+        "seed": 20
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 14875.0,
+        "learned_rows": 200,
+        "seed": 21
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "anchor_rows": 200,
+        "corrected_decisions": 14274.0,
+        "learned_rows": 200,
+        "seed": 22
+      }
+    ],
+    "summary": "results/patient_indexed_specimen_routing_stage_c_td3_development/evaluation/pretrain/summary.json",
+    "summary_sha256": "86d02cd94746a88e676b43e49525de84512086c3bb2e47b61e1284fbc4ed9982",
+    "variant": "pretrain"
+  },
+  "exit_code": 0,
+  "mode": "recovery",
+  "phase": "completed",
+  "phases": [
+    {
+      "command": [
+        "/opt/anaconda3/envs/gcn-rl/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_conservative_gcn_td3",
+        "tests.test_conservative_flat_td3",
+        "tests.test_off_policy_training_state",
+        "tests.test_patient_indexed_specimen_routing_stage_c_td3"
+      ],
+      "completed_at": "2026-08-15T06:47:00.970745+00:00",
+      "exit_code": 0,
+      "name": "focused_tests",
+      "started_at": "2026-08-15T06:46:58.413403+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/focused_tests.stderr.log",
+      "stderr_sha256": "8dc22feffb2a1654be49d46c6a73f70d9d30455813c38201805f476059010301",
+      "stdout": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/focused_tests.stdout.log",
+      "stdout_sha256": "e76caa7fbf9daf4b610499c8d26b385cf4d8dc1fa6084aac075a75fa614dec07"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/envs/gcn-rl/bin/python",
+        "-m",
+        "evaluation.evaluate_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_stage_c_td3_100_final_dev_eval.json"
+      ],
+      "completed_at": "2026-08-15T07:03:20.094605+00:00",
+      "exit_code": 0,
+      "name": "evaluation_final",
+      "started_at": "2026-08-15T06:47:01.597055+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/evaluation_final.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/evaluation_final.stdout.log",
+      "stdout_sha256": "0c9360c95b3c0452ae73dcc452f089be27f776270f6c5c8705268bdb7103ec11"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/envs/gcn-rl/bin/python",
+        "-m",
+        "evaluation.evaluate_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_stage_c_td3_100_pretrain_dev_eval.json"
+      ],
+      "completed_at": "2026-08-15T07:19:56.770321+00:00",
+      "exit_code": 0,
+      "name": "evaluation_pretrain",
+      "started_at": "2026-08-15T07:03:21.467752+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/evaluation_pretrain.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/recovery/evaluation_pretrain.stdout.log",
+      "stdout_sha256": "8fcaf5790ce5296016fe108c5dea3ce2ce7c4acbe14186d2bbb8ab660ba29510"
+    }
+  ],
+  "pid": 55128,
+  "ppid": 1,
+  "started_at": "2026-08-15T06:46:58.413154+00:00",
+  "status": "completed",
+  "training_audit": {
+    "manifest": "results/patient_indexed_specimen_routing_stage_c_td3_development/training/patient_indexed_specimen_routing_stage_c_td3_100/training_manifest.json",
+    "manifest_sha256": "be101e562f7fa05fdb8eee2cde3667c56ce5589dfe1b4425c2cc920a84cf77bf",
+    "parameter_counts": {
+      "flat_residual_mdl2_network_td3_bc": 851687,
+      "gcn_residual_mdl2_network_td3_bc": 851719
+    },
+    "parameter_relative_gap": 3.757107684576721e-05,
+    "runs": [
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "seed": 20,
+        "specimen_route_count": 42395.0,
+        "training_state_sha256": "a1849da3caab42a32d2fea5e895855e53acbacd60d7bb522504a098e95eb1ff4"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "seed": 21,
+        "specimen_route_count": 40390.0,
+        "training_state_sha256": "6640ccbc2e0206bb3e972725507c165a5143e214326a7db6bd0198a2aca05ad2"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_td3_bc",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "seed": 22,
+        "specimen_route_count": 39926.0,
+        "training_state_sha256": "f9f0daab81a2a2c08f2a8a817645ca348da36b4563bd54071479cf5eecccf12d"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "seed": 20,
+        "specimen_route_count": 51716.0,
+        "training_state_sha256": "7844725df2282466f9d0f1ce403d46ab1bface24c8ab15bd52aa29f2b0cb1930"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "seed": 21,
+        "specimen_route_count": 48866.0,
+        "training_state_sha256": "3b1bcca34d6f4558568fe781a4a8be93001babfe13edabbf564109562e15ec53"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_td3_bc",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "seed": 22,
+        "specimen_route_count": 49518.0,
+        "training_state_sha256": "882d780aa35bddc40707904d9ab2819eb80082c52c290f5dd03e4329f102ed3c"
+      }
+    ]
+  }
+}

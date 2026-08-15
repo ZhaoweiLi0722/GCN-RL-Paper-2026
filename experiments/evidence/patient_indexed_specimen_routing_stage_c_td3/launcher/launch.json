@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/anaconda3/envs/gcn-rl/bin/python",
+    "-m",
+    "evaluation.run_patient_indexed_specimen_routing_stage_c_td3",
+    "--expected-commit",
+    "8a7768e3495be6d63e2091445ac6a7aa28ec0558"
+  ],
+  "cwd": "/Users/cytseng/Code/GCN-RL-Paper-2026-HT",
+  "detached_pid": 3010,
+  "expected_commit": "8a7768e3495be6d63e2091445ac6a7aa28ec0558",
+  "launched_at": "2026-08-14T05:06:29.556494+00:00",
+  "launcher_pid": 3009,
+  "python": "/opt/anaconda3/envs/gcn-rl/bin/python",
+  "stderr": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/detached.stderr.log",
+  "stdout": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/detached.stdout.log"
+}

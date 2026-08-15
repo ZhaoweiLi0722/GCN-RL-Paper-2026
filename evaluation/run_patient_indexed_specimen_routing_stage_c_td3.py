@@ -232,6 +232,7 @@ def run_phase(
 
 
 def read_csv_rows(path: Path) -> list[dict[str, str]]:
+    csv.field_size_limit(sys.maxsize)
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
 
@@ -425,7 +426,12 @@ def artifact_inventory(root: Path) -> dict[str, str]:
     }
 
 
-def run_stage(spec_path: Path, expected_commit: str) -> None:
+def run_stage(
+    spec_path: Path,
+    expected_commit: str,
+    *,
+    recover: bool = False,
+) -> None:
     spec = read_json(spec_path)
     actual_commit = git_output("rev-parse", "HEAD")
     if actual_commit != expected_commit:
@@ -437,13 +443,22 @@ def run_stage(spec_path: Path, expected_commit: str) -> None:
         raise ValueError("Tracked worktree must be clean before Stage C")
     verify_locked_assets(spec)
     validate_scientific_contract(spec)
+    training_root = Path(spec["campaign_root"]) / "training"
     for raw_path in spec["fresh_output_roots"]:
         path = Path(raw_path)
+        if recover and path == training_root:
+            if not path.exists():
+                raise FileNotFoundError(
+                    f"Recovery requires existing training output: {path}"
+                )
+            continue
         if path.exists():
             raise FileExistsError(f"Stage C output already exists: {path}")
     fingerprint = environment_fingerprint()
     verified_hashes = verify_locked_assets(spec)
     launcher_root = Path(spec["launcher_root"])
+    if recover:
+        launcher_root = launcher_root / "recovery"
     claim_path = claim_execution(
         launcher_root,
         expected_commit=expected_commit,
@@ -453,6 +468,7 @@ def run_stage(spec_path: Path, expected_commit: str) -> None:
     )
     status: dict[str, Any] = {
         "status": "running",
+        "mode": "recovery" if recover else "initial",
         "started_at": datetime.now(timezone.utc).isoformat(),
         "commit": actual_commit,
         "pid": os.getpid(),
@@ -468,18 +484,19 @@ def run_stage(spec_path: Path, expected_commit: str) -> None:
             [sys.executable, "-m", "unittest", *spec["focused_tests"]],
             status,
         )
-        run_phase(
-            launcher_root,
-            "training",
-            [
-                sys.executable,
-                "-m",
-                "evaluation.train_multiscenario_network_residual",
-                "--config",
-                str(spec["training_config"]),
-            ],
-            status,
-        )
+        if not recover:
+            run_phase(
+                launcher_root,
+                "training",
+                [
+                    sys.executable,
+                    "-m",
+                    "evaluation.train_multiscenario_network_residual",
+                    "--config",
+                    str(spec["training_config"]),
+                ],
+                status,
+            )
         status["training_audit"] = audit_training(spec)
         atomic_write_json(launcher_root / "status.json", status)
         for variant in ("final", "pretrain"):
@@ -537,8 +554,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--expected-commit", required=True)
     parser.add_argument("--spec", default=str(DEFAULT_SPEC))
+    parser.add_argument("--recover", action="store_true")
     args = parser.parse_args()
-    run_stage(Path(args.spec), str(args.expected_commit))
+    run_stage(
+        Path(args.spec),
+        str(args.expected_commit),
+        recover=bool(args.recover),
+    )
 
 
 if __name__ == "__main__":

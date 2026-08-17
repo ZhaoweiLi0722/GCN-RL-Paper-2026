@@ -60,6 +60,14 @@ DDPG_STRUCTURED_EXPLORATION_RESULT_ROOT = (
     "results/patient_indexed_specimen_routing_ddpg_structured_exploration_"
     "development"
 )
+DDPG_ONLINE_IDENTIFIABILITY_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_online_identifiability_"
+    "f0_development"
+)
+DDPG_ONLINE_PAIRED_ADVANTAGE_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_"
+    "development"
+)
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -1356,6 +1364,38 @@ class RoutingExperimentContractTests(unittest.TestCase):
                             )
                         )
                     )
+                    ddpg_identifiability_reference = (
+                        path.name
+                        == (
+                            "patient_indexed_specimen_routing_ddpg_online_"
+                            "identifiability_f0.json"
+                        )
+                        and (
+                            value
+                            == DDPG_ONLINE_IDENTIFIABILITY_RESULT_ROOT
+                            or value.startswith(
+                                f"{DDPG_ONLINE_IDENTIFIABILITY_RESULT_ROOT}/"
+                            )
+                            or value.startswith(
+                                f"{DDPG_STRUCTURED_EXPLORATION_RESULT_ROOT}/"
+                            )
+                        )
+                    )
+                    ddpg_online_paired_reference = (
+                        path.name.startswith(
+                            "patient_indexed_specimen_routing_ddpg_online_"
+                            "paired_advantage_"
+                        )
+                        and (
+                            value == DDPG_ONLINE_PAIRED_ADVANTAGE_RESULT_ROOT
+                            or value.startswith(
+                                f"{DDPG_ONLINE_PAIRED_ADVANTAGE_RESULT_ROOT}/"
+                            )
+                            or value.startswith(
+                                f"{DDPG_ONLINE_IDENTIFIABILITY_RESULT_ROOT}/"
+                            )
+                        )
+                    )
                     self.assertTrue(
                         value.startswith(RESULT_ROOT)
                         or frozen_teacher_reference
@@ -1364,7 +1404,9 @@ class RoutingExperimentContractTests(unittest.TestCase):
                         or ddpg_support_reference
                         or ddpg_persistent_shift_reference
                         or ddpg_structured_reference
-                        or frozen_route_headroom_reference,
+                        or frozen_route_headroom_reference
+                        or ddpg_identifiability_reference
+                        or ddpg_online_paired_reference,
                         f"{path}: {value}",
                     )
 

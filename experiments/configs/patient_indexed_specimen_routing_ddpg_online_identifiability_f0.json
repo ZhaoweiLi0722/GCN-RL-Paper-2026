@@ -1,0 +1,75 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_online_identifiability_f0",
+  "experimental_role": "read-only development diagnosis of online DDPG temporal targets, legal-action critic ranking, and straight-through gradient validity; not training, checkpoint selection, formal confirmation, or deployment evidence",
+  "artifact_inventory": "experiments/evidence/patient_indexed_specimen_routing_ddpg_structured_exploration/launcher/artifact_sha256.json",
+  "artifact_inventory_sha256": "f07f69c82ce37bdc5f687389f80c5860c2c9df4483db190cff9bded499001834",
+  "training_manifest": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/control/training/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100/training_manifest.json",
+  "comparison_evidence": "experiments/evidence/patient_indexed_specimen_routing_ddpg_structured_exploration/comparison/structured_exploration_summary.json",
+  "comparison_evidence_sha256": "30d1a39785a8e4bc9f17d68e6cf615f4e29ab5b2a64284e1105601bc87fecda4",
+  "algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd"
+  ],
+  "primary_algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "training_seeds": [50, 51, 52],
+  "scenario_by_training_seed": {
+    "50": "routing_persistent_hotspot_cluster1",
+    "51": "routing_persistent_hotspot_cluster2",
+    "52": "routing_persistent_hotspot_cluster3"
+  },
+  "replay": {
+    "max_steps_per_episode": 52,
+    "n_step_horizon": 4,
+    "self_imitation_minimum_return": 0.0005,
+    "sign_tolerance": 1e-12
+  },
+  "manifold": {
+    "device": "cpu",
+    "checkpoint_variants": ["pretrain", "episode25", "final"],
+    "checkpoint_suffixes": {
+      "pretrain": "pretrain",
+      "episode25": "episode25",
+      "final": "episode100"
+    },
+    "decision_steps": [0, 6, 12, 18, 25, 31, 37, 43, 51],
+    "horizons": [1, 4, "remaining"],
+    "rollout_replications": 3,
+    "live_seed": 95900000,
+    "rollout_seed": 96200000,
+    "material_improvement": 1000000.0,
+    "explicit_options": [
+      {"group": "specimen_transfer", "epsilon": 0.05, "sign": 1.0},
+      {"group": "specimen_transfer", "epsilon": 0.05, "sign": -1.0},
+      {"group": "specimen_transfer", "epsilon": 0.10, "sign": 1.0},
+      {"group": "specimen_transfer", "epsilon": 0.10, "sign": -1.0}
+    ]
+  },
+  "stage_f0_gate": {
+    "minimum_reproducible_seed_count": 2,
+    "minimum_active_remainder_conflict_rate": 0.25,
+    "maximum_critic_pairwise_accuracy": 0.60,
+    "maximum_gradient_top1_accuracy": 0.40,
+    "minimum_headroom_state_fraction": 0.10
+  },
+  "forbidden_crn_seeds": [
+    91000000,
+    91100000,
+    93000000,
+    93100000,
+    94000000,
+    94100000,
+    94600000,
+    95000000,
+    95100000,
+    95200000,
+    95300000,
+    95400000,
+    95500000,
+    95600000,
+    95700000,
+    95800000,
+    95850000
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_ddpg_online_identifiability_f0_development",
+  "smoke_output_root": "/private/tmp/patient_indexed_specimen_routing_ddpg_online_identifiability_f0_smoke"
+}

@@ -18,6 +18,8 @@ class ReplayBatch:
     dones: np.ndarray
     discount_multipliers: np.ndarray
     online_masks: np.ndarray
+    paired_advantages: np.ndarray
+    paired_advantage_masks: np.ndarray
     online_fraction: float = 0.0
 
 
@@ -37,6 +39,8 @@ class ReplayBuffer:
         self.dones = np.zeros((capacity, 1), dtype=np.float32)
         self.discount_multipliers = np.ones((capacity, 1), dtype=np.float32)
         self.online_mask = np.zeros(capacity, dtype=np.bool_)
+        self.paired_advantages = np.zeros((capacity, 1), dtype=np.float32)
+        self.paired_advantage_mask = np.zeros(capacity, dtype=np.bool_)
         self.collecting_online = False
         self.position = 0
         self.size = 0
@@ -51,6 +55,7 @@ class ReplayBuffer:
         *,
         discount_multiplier: float = 1.0,
         one_step_reward: float | None = None,
+        paired_advantage: float | None = None,
     ) -> None:
         self.states[self.position] = np.asarray(state, dtype=np.float32)
         self.actions[self.position] = np.asarray(action, dtype=np.float32)
@@ -62,6 +67,10 @@ class ReplayBuffer:
         self.dones[self.position] = float(done)
         self.discount_multipliers[self.position] = float(discount_multiplier)
         self.online_mask[self.position] = bool(self.collecting_online)
+        self.paired_advantages[self.position] = float(
+            0.0 if paired_advantage is None else paired_advantage
+        )
+        self.paired_advantage_mask[self.position] = paired_advantage is not None
         self.position = (self.position + 1) % self.capacity
         self.size = min(self.size + 1, self.capacity)
 
@@ -143,6 +152,10 @@ class ReplayBuffer:
             dones=self.dones[indices],
             discount_multipliers=self.discount_multipliers[indices],
             online_masks=self.online_mask[indices].reshape(-1, 1).copy(),
+            paired_advantages=self.paired_advantages[indices],
+            paired_advantage_masks=(
+                self.paired_advantage_mask[indices].reshape(-1, 1).copy()
+            ),
             online_fraction=sampled_online_fraction,
         )
 
@@ -167,6 +180,8 @@ class ReplayBuffer:
             "dones": self.dones[:size].copy(),
             "discount_multipliers": self.discount_multipliers[:size].copy(),
             "online_mask": self.online_mask[:size].copy(),
+            "paired_advantages": self.paired_advantages[:size].copy(),
+            "paired_advantage_mask": self.paired_advantage_mask[:size].copy(),
             "collecting_online": bool(self.collecting_online),
             "rng_state": self.rng.bit_generator.state,
         }
@@ -203,12 +218,15 @@ class ReplayBuffer:
             "next_states": self.next_states,
             "dones": self.dones,
             "discount_multipliers": self.discount_multipliers,
+            "paired_advantages": self.paired_advantages,
         }
         for name, target in arrays.items():
             if name == "discount_multipliers":
                 default = np.ones((size, 1), dtype=np.float32)
             elif name == "one_step_rewards":
                 default = state["rewards"]
+            elif name == "paired_advantages":
+                default = np.zeros((size, 1), dtype=np.float32)
             else:
                 default = None
             values = np.asarray(state.get(name, default), dtype=np.float32)
@@ -231,6 +249,21 @@ class ReplayBuffer:
             )
         self.online_mask.fill(False)
         self.online_mask[:size] = online_mask
+        paired_advantage_mask = np.asarray(
+            state.get(
+                "paired_advantage_mask",
+                np.zeros(size, dtype=np.bool_),
+            ),
+            dtype=np.bool_,
+        )
+        if paired_advantage_mask.shape != self.paired_advantage_mask[:size].shape:
+            raise ValueError(
+                "Replay-buffer paired_advantage_mask shape mismatch: "
+                f"checkpoint={paired_advantage_mask.shape}, "
+                f"current={self.paired_advantage_mask[:size].shape}"
+            )
+        self.paired_advantage_mask.fill(False)
+        self.paired_advantage_mask[:size] = paired_advantage_mask
         self.collecting_online = bool(
             state.get("collecting_online", False)
         )

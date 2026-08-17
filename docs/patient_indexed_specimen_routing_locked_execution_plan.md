@@ -321,6 +321,31 @@ After the final experiment decision:
 6. Freeze source, configs, manifests, checkpoints, hashes, provenance, archive,
    and the exact manuscript evidence map.
 
+### Stage F: post-freeze online DDPG identifiability
+
+Status: Stage F0 completed on 2026-08-17. The user authorized the single Stage
+F1 paired-advantage development experiment, conditional on its locked tests,
+CPU smoke, MPS probe, episode-0 clone, and hash preflight. Formal confirmation
+remains unauthorized.
+
+Stage F is an optional post-freeze extension. It does not delay or invalidate
+the Stage E publication path. Its objective is to determine whether one
+mechanistically identified correction could make final online DDPG improve on
+its own tensor-matched frozen pretraining checkpoint.
+
+Stage F0 uses immutable Stage C3 replay buffers and checkpoints plus fresh
+development-only paired-CRN rollouts. It tests temporal target consistency,
+critic ranking on legal integer patient-lot specimen actions, and the validity
+of the actor's straight-through critic gradient. Formal seed 91100000 and all
+prior CRN streams are forbidden. No training or checkpoint selection is
+permitted.
+
+The locked Stage F0 protocol is
+`docs/patient_indexed_specimen_routing_stage_f0_protocol.md`. A passing F0 gate
+may justify review of one paired Stage F1 protocol. It never launches Stage F1
+automatically. A failed F0 gate closes this online-DDPG extension and preserves
+the Stage E manuscript decision unchanged.
+
 ## 6. Geography sensitivity decision
 
 A broad formal sensitivity over transport speed or handling time is not part of
@@ -412,6 +437,13 @@ control requirements in Section 1.
   double-count risk: `specimen_transfer_cost` is inside `base_cost`, so it is
   shown as a base-cost detail but not added again to the top-level objective
   decomposition. No scientific result, protocol, or stage decision changed.
+- Version 1.6, 2026-08-17: The user authorized a post-freeze, read-only Stage
+  F0 identifiability audit because a verified online-DDPG contribution would
+  strengthen the paper. The audit is limited to immutable Stage C3 replay and
+  checkpoints, fresh diagnostic CRNs beginning at 95900000, and prespecified
+  target-sign, legal-action-ranking, gradient, and headroom gates. It does not
+  authorize training, formal holdout access, checkpoint selection, broad HPO,
+  or delay of the Stage E publication path.
 
 ## 9. Append-only progress ledger
 
@@ -854,3 +886,84 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `experiments/evidence/patient_indexed_specimen_routing_publication_evidence_map.json`.
 - Next gate: complete tests and manuscript compilation, review the Stage E PR,
   and merge only after the evidence and paper diff are accepted.
+
+### 2026-08-17: Stage F0 online DDPG identifiability audit opened
+
+- Stage: post-freeze read-only target, critic-ranking, and quantized-gradient
+  diagnosis. No new training or formal evaluation is authorized.
+- Source branch: `codex/stage-f-ddpg-identifiability-audit`, based on Stage E
+  evidence commit `c3b8d8a53e09b9208d86757bab3a87fd3e286a01`.
+- Immutable inputs: Stage C3 828-file inventory SHA256
+  `f07f69c82ce37bdc5f687389f80c5860c2c9df4483db190cff9bded499001834`
+  and comparison SHA256
+  `30d1a39785a8e4bc9f17d68e6cf615f4e29ab5b2a64284e1105601bc87fecda4`.
+- Fresh diagnostic streams: trajectory base 95900000 and paired-rollout base
+  96200000. Formal 91100000 and all previous streams remain forbidden.
+- Locked question: determine whether short-horizon target sign, critic ranking
+  on executed legal specimen actions, or the straight-through action gradient
+  provides a reproducible mechanism linked to final-versus-frozen degradation.
+- Next gate: complete the full three-seed audit. Only a passing prespecified F0
+  gate can justify design review for one direct counterfactual-advantage critic
+  candidate; F1 remains unauthorized.
+
+### 2026-08-17: Stage F0 legal-action ranking branch passed
+
+- Stage: completed read-only audit of six control replay buffers and the GCN
+  legal specimen-action manifold at pretrain, episode 25, and final.
+- Replay integrity: 31,200 online transitions were finite, and every persisted
+  n-step target and discount multiplier reconstructed within `1e-6`. Among the
+  positive one-step plus positive four-step GCN self-imitation samples, only
+  0.74%, 1.05%, and 0.39% had a negative behavior-trajectory remainder for
+  seeds 50-52. The temporal-sign branch did not pass.
+- Ranking result: remaining-horizon critic pairwise accuracy declined from
+  0.575/0.575/0.650 at pretrain to 0.475/0.4625/0.5125 at final. Final critic
+  versus rollout Spearman correlation was 0.101/-0.012/-0.021. All five legal
+  executed actions remained distinct, and at least 55.6% of frozen states in
+  every seed retained material headroom.
+- Behavioral link: all three seeds passed the legal-ranking mismatch threshold;
+  seed 51 also had locked final-minus-frozen cost degradation of +715,787.
+- Immutable F0 evidence: config SHA256
+  `2b7d44556cf10bb0632b6ccb26ddea8d89b42bf3c6e060f6893d4194da23248c`,
+  summary SHA256
+  `1ed22e07109a8fa93e0130ee527cedffd7bb832c32a42cb22b9940c4a6cc4008`,
+  and 1,215-row manifold SHA256
+  `980b547034ba8999bb233401a1b5ab01e0db9a21aced74fda02e049c75ff5094`.
+- Decision: the legal-action ranking branch passes the Stage F0 design gate.
+  Stage F1 training remains unauthorized. Freeze and review exactly one paired
+  direct counterfactual-advantage critic protocol; do not change actor,
+  exploration, gate, scale, scenario distribution, or episode budget.
+- Detailed report:
+  `docs/patient_indexed_specimen_routing_stage_f0_results.md`.
+
+### 2026-08-17: Stage F1 single paired-advantage candidate frozen
+
+- Scientific question: can direct within-state supervision of the online DDPG
+  critic convert already verified legal-action coverage into a favorable final
+  policy relative to its own frozen pretraining checkpoint?
+- Both arms share the locked Stage C3 structured specimen exploration support.
+  The only episode-0 fork difference is
+  `online_paired_advantage_critic.enabled`. The candidate fits
+  `Q(s,a_behavior)-Q(s,a_MDL2)` to an exact-CRN four-step return difference;
+  both branches use MDL-2 after the first action. The fixed loss weight is 3.0,
+  matching the existing online teacher-ranking weight and not selected from a
+  result.
+- Fresh development seeds 60-62 map to persistent hotspot clusters 1-3. The
+  execution-only, development, and bootstrap streams are 96600000, 96700000,
+  and 96750000. Formal holdout 91100000 and all prior streams remain forbidden.
+- Primary advancement requires a pooled GCN final-minus-frozen paired 95% cost
+  interval wholly below zero, at least two favorable seeds, clinical
+  noninferiority, and no regression versus the tensor-matched control. Curves,
+  candidate-minus-control, and flat difference-in-differences are supporting
+  diagnostics only.
+- Full training remains gated on focused tests, CPU smoke, zero-trajectory MPS
+  construction, exact episode-0 clone audit, and locked hashes. No formal
+  confirmation launches automatically.
+- Protocol:
+  `docs/patient_indexed_specimen_routing_stage_f1_protocol.md`.
+- Implementation status: the replay schema, finite-horizon paired rollout,
+  GCN/flat critic loss, strict episode-0 fork, prospective comparator, and
+  serial executor are implemented on the isolated Stage F branch. The real
+  ten-step candidate smoke produced six finite paired targets, a nonzero
+  sampled paired loss, zero cloned first-step reward error, and no persisted
+  non-finite metrics. The matched control smoke is part of the final locked
+  preflight and must persist zero paired targets.

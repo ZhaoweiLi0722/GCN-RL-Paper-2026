@@ -1183,6 +1183,47 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
             },
         )
 
+    def test_episode_zero_state_allows_online_paired_advantage_fork(self):
+        source_agent = _StubAgent()
+        source_config = {
+            "algorithm": source_agent.algorithm,
+            "online_paired_advantage_critic": {
+                "enabled": False,
+                "horizon": 4,
+                "loss_weight": 3.0,
+                "followup_policy": "mdl2",
+            },
+        }
+        target_config = copy.deepcopy(source_config)
+        target_config["online_paired_advantage_critic"]["enabled"] = True
+        target_config["preonline_fork_allowed_overrides"] = [
+            "online_paired_advantage_critic.enabled"
+        ]
+
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "state.pt"
+            save_off_policy_training_state(
+                source_agent,
+                path,
+                config=source_config,
+                training={"next_episode": 0, "global_step": 0},
+            )
+            metadata = load_off_policy_training_state(
+                _StubAgent(),
+                path,
+                config=target_config,
+            )
+
+        self.assertEqual(
+            metadata["preonline_fork_overrides"],
+            {
+                "online_paired_advantage_critic.enabled": {
+                    "checkpoint": False,
+                    "current": True,
+                }
+            },
+        )
+
     def test_episode_zero_state_allows_online_replay_fraction_fork(self):
         source_agent = _StubAgent()
         with TemporaryDirectory() as directory:

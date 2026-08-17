@@ -81,6 +81,7 @@ _PREONLINE_FORKABLE_CONFIG_PATHS = frozenset(
         "online_critic_realignment.enabled",
         "online_critic_realignment.mode",
         "online_critic_realignment.actor_warmup_updates",
+        "online_paired_advantage_critic.enabled",
         "online_imitation_regularization",
         "online_replay_fraction",
         "pretrain_reference_actor_loss.action_space",

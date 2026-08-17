@@ -35,6 +35,12 @@ from src.rl.networks import (
     torch,
 )
 from src.rl.noise import OUNoise
+from src.rl.paired_advantage import (
+    online_paired_advantage_settings,
+    paired_advantage_critic_loss,
+    rollout_paired_anchor_advantage,
+    specimen_actions_are_distinct,
+)
 from src.rl.preprocessing import (
     FixedObservationScaler,
     facility_state_width,
@@ -163,7 +169,14 @@ class FlatDDPGAgent:
                 "residual_action.online_reward_n_step_horizon must be at least 2"
             )
         self._n_step_reward_queue: deque[
-            tuple[np.ndarray, np.ndarray, float, np.ndarray, bool]
+            tuple[
+                np.ndarray,
+                np.ndarray,
+                float,
+                np.ndarray,
+                bool,
+                float | None,
+            ]
         ] = deque()
         self.anchor_relative_reward_sum = 0.0
         self.anchor_relative_reward_abs_sum = 0.0
@@ -643,6 +656,25 @@ class FlatDDPGAgent:
                 "online_advantage_self_imitation requires a facility-net "
                 "action layout"
             )
+        self.online_paired_advantage = online_paired_advantage_settings(
+            config,
+            residual_action_enabled=self.residual_action_enabled,
+            online_reward_mode=self.online_reward_mode,
+            online_reward_n_step_horizon=self.online_reward_n_step_horizon,
+            specimen_action_quantization_enabled=(
+                self.specimen_action_quantization_enabled
+            ),
+            action_mode=str(self.env_config.get("action_mode", "")),
+            action_dim=self.action_dim,
+            num_facilities=int(self.env_config.get("num_facilities", 0)),
+        )
+        self._pending_online_paired_advantage: dict[str, Any] | None = None
+        self.online_paired_advantage_context_count = 0
+        self.online_paired_advantage_distinct_count = 0
+        self.online_paired_advantage_sum = 0.0
+        self.online_paired_advantage_abs_sum = 0.0
+        self.online_paired_advantage_positive_count = 0
+        self.online_paired_advantage_reward_error_max = 0.0
         critic_calibration_config = dict(
             config.get("critic_teacher_advantage_calibration", {})
         )
@@ -984,18 +1016,40 @@ class FlatDDPGAgent:
     ) -> dict[str, Any]:
         """Snapshot an exact-CRN one-step MDL-2 counterfactual."""
 
-        del action
         if self.online_reward_mode == "environment":
             return {}
+        if (
+            self.online_paired_advantage.enabled
+            and self._pending_online_paired_advantage is not None
+        ):
+            raise RuntimeError(
+                "Previous online paired advantage was not consumed by observe"
+            )
         anchor_action = project_action(
             self._base_action_from_state_np(state),
             env_state=env,
             action_space_info=self.action_dim,
         ).action
-        return {
+        context = {
             "anchor_env": copy.deepcopy(env),
             "anchor_action": np.asarray(anchor_action, dtype=np.float32).copy(),
         }
+        if self.online_paired_advantage.enabled:
+            self._pending_online_paired_advantage = {
+                "state": np.asarray(state, dtype=np.float32).copy(),
+                "action": np.asarray(action, dtype=np.float32).copy(),
+                "target": None,
+                "ready": False,
+            }
+            context["paired_specimen_distinct"] = specimen_actions_are_distinct(
+                action,
+                anchor_action,
+                num_facilities=int(self.env_config["num_facilities"]),
+                max_specimen_transfer=(
+                    self.specimen_action_quantization_max_transfer
+                ),
+            )
+        return context
 
     def transform_training_reward(
         self,
@@ -1011,20 +1065,122 @@ class FlatDDPGAgent:
 
         if self.online_reward_mode == "environment":
             return float(reward)
-        del state, action, next_state, done, info
+        del next_state, done, info
         if context is None:
             raise ValueError("Anchor-relative reward context is required")
         anchor_env = context["anchor_env"]
         anchor_action = np.asarray(context["anchor_action"], dtype=np.float32)
-        _anchor_state, anchor_reward, _anchor_done, _anchor_info = anchor_env.step(
-            anchor_action
-        )
+        paired_advantage = None
+        if self.online_paired_advantage.enabled and bool(
+            context.get("paired_specimen_distinct", False)
+        ):
+            paired = rollout_paired_anchor_advantage(
+                anchor_env=anchor_env,
+                behavior_action=np.asarray(action, dtype=np.float32),
+                anchor_action=anchor_action,
+                observed_behavior_reward=float(reward),
+                gamma=self.gamma,
+                horizon=self.online_paired_advantage.horizon,
+                action_dim=self.action_dim,
+                base_action=self._base_action_from_state_np,
+                reward_consistency_atol=(
+                    self.online_paired_advantage.reward_consistency_atol
+                ),
+            )
+            anchor_reward = paired.anchor_first_reward
+            paired_advantage = float(paired.advantage) * self.reward_scale
+            self.online_paired_advantage_distinct_count += 1
+            self.online_paired_advantage_sum += float(paired.advantage)
+            self.online_paired_advantage_abs_sum += abs(float(paired.advantage))
+            self.online_paired_advantage_positive_count += int(
+                paired.advantage > 0.0
+            )
+            self.online_paired_advantage_reward_error_max = max(
+                self.online_paired_advantage_reward_error_max,
+                float(paired.behavior_reward_error),
+            )
+        else:
+            _anchor_state, anchor_reward, _anchor_done, _anchor_info = (
+                anchor_env.step(anchor_action)
+            )
+        if self.online_paired_advantage.enabled:
+            pending = self._pending_online_paired_advantage
+            if pending is None:
+                raise RuntimeError(
+                    "Online paired advantage requires captured reward context"
+                )
+            if not np.array_equal(
+                np.asarray(state, dtype=np.float32),
+                pending["state"],
+            ) or not np.array_equal(
+                np.asarray(action, dtype=np.float32),
+                pending["action"],
+            ):
+                raise RuntimeError(
+                    "Online paired advantage context does not match reward transform"
+                )
+            self.online_paired_advantage_context_count += 1
+            pending["target"] = paired_advantage
+            pending["ready"] = True
         relative_reward = float(reward) - float(anchor_reward)
         self.anchor_relative_reward_sum += relative_reward
         self.anchor_relative_reward_abs_sum += abs(relative_reward)
         self.anchor_relative_reward_positive_count += int(relative_reward > 0.0)
         self.anchor_relative_reward_count += 1
         return relative_reward
+
+    def _consume_online_paired_advantage(
+        self,
+        state: np.ndarray,
+        action: np.ndarray,
+    ) -> float | None:
+        if not self.online_paired_advantage.enabled:
+            return None
+        pending = self._pending_online_paired_advantage
+        if pending is None:
+            return None
+        if not bool(pending.get("ready", False)):
+            raise RuntimeError(
+                "Online paired advantage context was not transformed before observe"
+            )
+        if not np.array_equal(
+            np.asarray(state, dtype=np.float32),
+            pending["state"],
+        ) or not np.array_equal(
+            np.asarray(action, dtype=np.float32),
+            pending["action"],
+        ):
+            raise RuntimeError(
+                "Online paired advantage does not match the observed transition"
+            )
+        self._pending_online_paired_advantage = None
+        target = pending["target"]
+        return None if target is None else float(target)
+
+    def _online_paired_advantage_metrics(self) -> dict[str, float]:
+        if not self.online_paired_advantage.enabled:
+            return {}
+        contexts = self.online_paired_advantage_context_count
+        distinct = self.online_paired_advantage_distinct_count
+        return {
+            "online_paired_advantage_context_count": float(contexts),
+            "online_paired_advantage_distinct_count": float(distinct),
+            "online_paired_advantage_distinct_fraction": float(
+                distinct / max(contexts, 1)
+            ),
+            "online_paired_advantage_mean": float(
+                self.online_paired_advantage_sum / max(distinct, 1)
+            ),
+            "online_paired_advantage_mean_abs": float(
+                self.online_paired_advantage_abs_sum / max(distinct, 1)
+            ),
+            "online_paired_advantage_positive_fraction": float(
+                self.online_paired_advantage_positive_count / max(distinct, 1)
+            ),
+            "online_paired_advantage_reward_error_max": float(
+                self.online_paired_advantage_reward_error_max
+            ),
+        }
 
     def _anchor_relative_reward_metrics(self) -> dict[str, float]:
         if self.online_reward_mode == "environment":
@@ -1061,8 +1217,15 @@ class FlatDDPGAgent:
             (self.gamma**offset) * transition[2]
             for offset, transition in enumerate(transitions)
         )
-        state, action, _reward, _next_state, _done = transitions[0]
-        _last_state, _last_action, _last_reward, next_state, done = transitions[-1]
+        state, action, _reward, _next_state, _done, paired_advantage = transitions[0]
+        (
+            _last_state,
+            _last_action,
+            _last_reward,
+            next_state,
+            done,
+            _last_paired_advantage,
+        ) = transitions[-1]
         self.replay_buffer.add(
             state,
             action,
@@ -1071,6 +1234,7 @@ class FlatDDPGAgent:
             done,
             discount_multiplier=self.gamma ** (horizon - 1),
             one_step_reward=float(transitions[0][2]) * self.reward_scale,
+            paired_advantage=paired_advantage,
         )
         self._n_step_reward_queue.popleft()
 
@@ -1090,6 +1254,7 @@ class FlatDDPGAgent:
         next_state: np.ndarray,
         done: bool,
     ) -> None:
+        paired_advantage = self._consume_online_paired_advantage(state, action)
         if self.online_reward_mode != "n_step_anchor_relative":
             self.replay_buffer.add(
                 state,
@@ -1097,6 +1262,7 @@ class FlatDDPGAgent:
                 float(reward) * self.reward_scale,
                 next_state,
                 done,
+                paired_advantage=paired_advantage,
             )
             return
         self._n_step_reward_queue.append(
@@ -1106,6 +1272,7 @@ class FlatDDPGAgent:
                 float(reward),
                 np.asarray(next_state, dtype=np.float32).copy(),
                 bool(done),
+                paired_advantage,
             )
         )
         if len(self._n_step_reward_queue) >= self.online_reward_n_step_horizon:
@@ -1519,6 +1686,7 @@ class FlatDDPGAgent:
         if (
             self.online_replay_fraction is not None
             or self.online_advantage_self_imitation_enabled
+            or self.online_paired_advantage.enabled
         ):
             if int(start_episode) == 0:
                 self.replay_buffer.begin_online_collection()
@@ -1551,6 +1719,23 @@ class FlatDDPGAgent:
                 "online_advantage_self_imitation_minimum_return"
             ] = float(
                 self.online_advantage_self_imitation_minimum_return
+            )
+        summary["online_paired_advantage_critic_enabled"] = str(
+            self.online_paired_advantage.enabled
+        ).lower()
+        if self.online_paired_advantage.enabled:
+            summary.update(
+                {
+                    "online_paired_advantage_critic_horizon": float(
+                        self.online_paired_advantage.horizon
+                    ),
+                    "online_paired_advantage_critic_loss_weight": float(
+                        self.online_paired_advantage.loss_weight
+                    ),
+                    "online_paired_advantage_critic_followup_policy": (
+                        self.online_paired_advantage.followup_policy
+                    ),
+                }
             )
         if self.correction_gate_align_online_policy:
             summary["online_correction_gate_alignment"] = (
@@ -1693,6 +1878,16 @@ class FlatDDPGAgent:
             dtype=torch.float32,
             device=self.device,
         )
+        paired_advantages = torch.as_tensor(
+            batch.paired_advantages,
+            dtype=torch.float32,
+            device=self.device,
+        )
+        paired_advantage_masks = torch.as_tensor(
+            batch.paired_advantage_masks,
+            dtype=torch.float32,
+            device=self.device,
+        )
         states = (
             raw_states
             if self.temporal_demand_encoder_enabled
@@ -1738,6 +1933,28 @@ class FlatDDPGAgent:
             q_targets,
         )
         critic_loss = bellman_critic_loss
+        paired_advantage_loss = None
+        paired_advantage_metrics: dict[str, float] = {}
+        if self.online_paired_advantage.enabled:
+            anchor_actions = self._base_actions_from_states_tensor(raw_states)
+            (
+                paired_advantage_loss,
+                paired_advantage_metrics,
+            ) = paired_advantage_critic_loss(
+                critic=self.critic,
+                critic_states=states,
+                behavior_q=q_expected,
+                anchor_actions=anchor_actions,
+                targets=paired_advantages,
+                masks=paired_advantage_masks,
+                critic_action_transform=self._critic_actions_tensor,
+                sign_tolerance=self.online_paired_advantage.sign_tolerance,
+            )
+            critic_loss = (
+                critic_loss
+                + self.online_paired_advantage.loss_weight
+                * paired_advantage_loss
+            )
         ranking_loss = None
         if self.critic_teacher_advantage_online_ranking_weight > 0.0:
             ranking_loss = self._sample_critic_teacher_advantage_loss()
@@ -1776,6 +1993,13 @@ class FlatDDPGAgent:
             ),
         }
         metrics.update(self._anchor_relative_reward_metrics())
+        metrics.update(self._online_paired_advantage_metrics())
+        metrics.update(paired_advantage_metrics)
+        if paired_advantage_loss is not None:
+            metrics["critic_online_paired_advantage_weighted_loss"] = float(
+                self.online_paired_advantage.loss_weight
+                * paired_advantage_loss.item()
+            )
         if self.online_replay_fraction is not None:
             metrics["replay_online_fraction"] = float(
                 batch.online_fraction

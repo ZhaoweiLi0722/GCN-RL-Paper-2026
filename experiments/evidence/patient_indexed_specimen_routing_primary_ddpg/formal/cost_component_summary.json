@@ -1,0 +1,213 @@
+{
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "audit": {
+    "anchor": {
+      "max_base_reconciliation_error": 9.5367431640625e-07,
+      "max_total_reconciliation_error": 2.384185791015625e-06,
+      "rows": 2000,
+      "scenarios": [
+        "routing_abrupt_regime_shift",
+        "routing_compound_regional_stress",
+        "routing_nominal_history",
+        "routing_regional_drift"
+      ],
+      "training_seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "unique_crn_keys": 2000
+    },
+    "learned": {
+      "max_base_reconciliation_error": 1.430511474609375e-06,
+      "max_total_reconciliation_error": 2.384185791015625e-06,
+      "rows": 2000,
+      "scenarios": [
+        "routing_abrupt_regime_shift",
+        "routing_compound_regional_stress",
+        "routing_nominal_history",
+        "routing_regional_drift"
+      ],
+      "training_seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "unique_crn_keys": 2000
+    }
+  },
+  "comparator": "routing_mdl2_anchor",
+  "components": {
+    "base_cost": {
+      "additive_to_total": true,
+      "anchor_mean": 1231890934.2765617,
+      "anchor_share_of_total_pct": 45.85582679981598,
+      "difference": -2100102.7142214775,
+      "learned_mean": 1229790831.5623403,
+      "parent_component": null
+    },
+    "bioreactor_holding_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 5103.129394262421,
+      "anchor_share_of_total_pct": 0.00018995855162922415,
+      "difference": -179.61549318196649,
+      "learned_mean": 4923.513901080454,
+      "parent_component": "base_cost"
+    },
+    "bioreactor_shortage_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 1130647986.6188455,
+      "anchor_share_of_total_pct": 42.087166000943014,
+      "difference": -1487082.9161088467,
+      "learned_mean": 1129160903.7027366,
+      "parent_component": "base_cost"
+    },
+    "capacity_transfer_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 65612.63374690457,
+      "anchor_share_of_total_pct": 0.002442360346409006,
+      "difference": 207.86384260267369,
+      "learned_mean": 65820.49758950724,
+      "parent_component": "base_cost"
+    },
+    "expiry_cost": {
+      "additive_to_total": true,
+      "anchor_mean": 240859750.0,
+      "anchor_share_of_total_pct": 8.965747430825232,
+      "difference": -2806300.0,
+      "learned_mean": 238053450.0,
+      "parent_component": null
+    },
+    "patient_loss_cost": {
+      "additive_to_total": true,
+      "anchor_mean": 1204627500.0,
+      "anchor_share_of_total_pct": 44.84097452241988,
+      "difference": -12631250.0,
+      "learned_mean": 1191996250.0,
+      "parent_component": null
+    },
+    "reagent_holding_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 5173945.284947214,
+      "anchor_share_of_total_pct": 0.1925945976683352,
+      "difference": 7985.859583740123,
+      "learned_mean": 5181931.144530954,
+      "parent_component": "base_cost"
+    },
+    "reagent_purchase_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 77650789.8658581,
+      "anchor_share_of_total_pct": 2.890467874941194,
+      "difference": -77553.78640468419,
+      "learned_mean": 77573236.07945341,
+      "parent_component": "base_cost"
+    },
+    "reagent_shortage_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 18024164.210531875,
+      "anchor_share_of_total_pct": 0.670930298496732,
+      "difference": -718099.806756448,
+      "learned_mean": 17306064.403775427,
+      "parent_component": "base_cost"
+    },
+    "reagent_transfer_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 158238.6518921572,
+      "anchor_share_of_total_pct": 0.005890265130057457,
+      "difference": 1047.5633765028324,
+      "learned_mean": 159286.21526866005,
+      "parent_component": "base_cost"
+    },
+    "specimen_transfer_cost": {
+      "additive_to_total": false,
+      "anchor_mean": 165093.88134847314,
+      "anchor_share_of_total_pct": 0.006145443738711173,
+      "difference": 173572.12373303354,
+      "learned_mean": 338666.0050815067,
+      "parent_component": "base_cost"
+    },
+    "urgency_cost": {
+      "additive_to_total": true,
+      "anchor_mean": 9065437.5,
+      "anchor_share_of_total_pct": 0.33745124693906603,
+      "difference": -151887.5,
+      "learned_mean": 8913550.0,
+      "parent_component": null
+    }
+  },
+  "evidence_scope": "formal_holdout",
+  "formal_holdout_seed": 91100000,
+  "reporting_note": "base_cost is additive to total_cost. Its operating subcomponents, including specimen_transfer_cost, must not be added again.",
+  "schema_version": 1,
+  "source_files": [
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed10/holdout_rows.csv",
+      "role": "learned",
+      "rows": 400,
+      "sha256": "019176b6f49cb5ac70207d741ef30772de6ae03a9cd92a3bca567962e4f78e64"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed11/holdout_rows.csv",
+      "role": "learned",
+      "rows": 400,
+      "sha256": "0f5b3c381ac823397884c3a14b52e865c76b169f1a77a3cbf11871ea18741a0a"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed12/holdout_rows.csv",
+      "role": "learned",
+      "rows": 400,
+      "sha256": "c0f0c50e77037fcc0d8bb64fd20ba7da3585598ebab5ce191f883520d6df646f"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed13/holdout_rows.csv",
+      "role": "learned",
+      "rows": 400,
+      "sha256": "3af8fb8abeda02c016839663eae250aeb9f3db34dcd63b6579e8129fcffd109b"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed14/holdout_rows.csv",
+      "role": "learned",
+      "rows": 400,
+      "sha256": "73e093af7297d23425743b4948931c294d4be18991a9002a35454213ccc72a9c"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed10/holdout_anchor_rows.csv",
+      "role": "anchor",
+      "rows": 400,
+      "sha256": "09c6ed1ad5e0494ef172ee240105f49eb04a533cd54663cdc4511ec633480beb"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed11/holdout_anchor_rows.csv",
+      "role": "anchor",
+      "rows": 400,
+      "sha256": "650fdd73950bbaa778e93a152c6b28bb334a51822fc4ebd0edb8e7f2ea13ac19"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed12/holdout_anchor_rows.csv",
+      "role": "anchor",
+      "rows": 400,
+      "sha256": "c4215d52f411abbf61615299ce8d3966da6e57b73ec19875fc716bb140579588"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed13/holdout_anchor_rows.csv",
+      "role": "anchor",
+      "rows": 400,
+      "sha256": "e5fb0465b9ed838b3f3fc9a9e944bd47ceeee1c7a495c6e81c4410f0a87400f1"
+    },
+    {
+      "path": "gcn_residual_mdl2_network_ddpg_afd/seed14/holdout_anchor_rows.csv",
+      "role": "anchor",
+      "rows": 400,
+      "sha256": "3a82d459395c04ea2990bafd839251d21b2dfc5845303568760e564f10bd418c"
+    }
+  ],
+  "total_cost": {
+    "anchor_mean": 2686443621.7765574,
+    "difference": -17689540.214220524,
+    "learned_mean": 2668754081.562337
+  }
+}

@@ -1,8 +1,8 @@
 # Patient-Indexed Specimen Routing: Locked Publication Execution Plan
 
-Plan version: 1.3
+Plan version: 1.5
 
-Status date: 2026-08-12
+Status date: 2026-08-17
 
 Branch: `patient-indexed-specimen-routing`
 
@@ -11,27 +11,23 @@ of truth for the routing-primary publication campaign.
 
 ## Current verified position
 
-- Current publication gate: two independent, bounded development screens:
-  Howard's unchanged matched TD3 Stage C screen and the core team's newly
-  authorized persistent-shift DDPG Stage C2 screen.
-- Independent execution owner: Howard, on Mac MPS, using the locked Stage C
-  assets at commit `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
-- Parallel core-team work: the single-factor DDPG support-alignment
-  development experiment is complete. All 12 training runs and 24 evaluation
-  runs were recovered and audited, but support alignment did not improve the
-  control or establish positive online gain. This DDPG refinement path is
-  closed and did not interfere with Howard's Stage C protocol.
-- Verified diagnosis: DDPG online replay ranking improves early and then
-  erodes while critic advantage scale becomes severely miscalibrated. The
-  teacher ranking regularizer also includes 41.72% of rows whose winning option
-  is outside the specimen-only residual policy support.
-- The failed support-alignment candidate remains closed. Version 1.3 authorizes
-  one different, diagnosis-driven DDPG experiment: a persistent geographic
-  demand shift paired with online-boundary critic realignment and an online-only
-  actor warmup. It is not an extension of the failed support candidate.
-- Broad HPO, formal-holdout reuse, selective seed extension, and automatic
-  promotion remain forbidden. Howard's TD3 work is independent and is not a
-  prerequisite for running or auditing Stage C2.
+- Current publication gate: Stage E manuscript and reproducibility freeze.
+- The completed five-seed 100-episode AFR-GCN-DDPG protocol remains the primary
+  method. Its formal evidence supports graph attribution and improvement over
+  routing MDL-2, but not a separate online final-versus-frozen gain.
+- Howard's matched three-seed TD3 development screen completed successfully
+  after a post-training CSV-audit recovery. GCN-TD3 beat matched flat TD3 and
+  MDL-2, while final and frozen-pretrain performance were indistinguishable.
+  TD3 is retained as a controlled backbone ablation, not a replacement primary
+  method and not formal holdout evidence.
+- The bounded DDPG support-alignment, persistent-shift critic-realignment, and
+  structured-exploration candidates all reached audited terminal negative
+  decisions. Structured exploration produced the intended behaviorally
+  distinct action coverage but still did not establish online gain.
+- No revised candidate passed into Stage D. Additional HPO, selective seed
+  extension, another online mechanism screen, and formal-holdout reuse are
+  closed. The remaining work is evidence integration, manuscript reporting,
+  reproducibility packaging, and final branch freeze.
 
 ## 1. Purpose and change control
 
@@ -120,13 +116,18 @@ exogenous demand, not a conventional accounting fixed cost. The manuscript
 must not call `base_cost` a fixed cost: in the implementation it is the sum of
 operating-cost components and can respond to actions.
 
-The GCN-minus-MDL-2 savings decompose approximately as follows:
+The GCN-minus-MDL-2 savings decompose approximately into the following
+additive top-level objective components:
 
 - Patient-loss cost: -12.631 million.
 - Expiry cost: -2.806 million.
-- Operating and shortage cost: -2.100 million.
+- Base operating cost: -2.100 million.
 - Urgency cost: -0.152 million.
-- Specimen-transfer cost: +0.174 million.
+
+Within base operating cost, specimen-transfer cost increases by 0.174 million,
+while the other operating and shortage subcomponents decrease by 2.275
+million. The specimen-transfer amount is a subcomponent of `base_cost` and
+must not be added to the four top-level values a second time.
 
 The manuscript must report absolute and relative effects together, followed by
 clinical outcomes and the component decomposition. It must not report only an
@@ -187,12 +188,15 @@ or deteriorating. It is mechanism evidence, not a new independent confirmation.
 
 ### Stage C: bounded post-formal algorithm development
 
-Status: execution ready. The matched TD3 screen has been selected and its Mac
-MPS training/evaluation assets, frozen teacher, fresh development streams,
-parameter match, tests, hashes, and output roots are recorded in
-`experiments/configs/patient_indexed_specimen_routing_stage_c_td3_execution.json`.
-Howard is the independent execution owner. The handoff is in
-`docs/howard_stage_c_td3_handoff.md`.
+Status: completed and audited. Howard's matched TD3 screen completed six
+100-episode Mac MPS runs and paired final/frozen-pretrain development
+evaluation. Its recovery status is `completed` with exit code 0, all 54 focused
+tests passed, and all 245 inventoried artifacts were independently reconciled.
+GCN-TD3 improved on MDL-2 by approximately 0.735% and outperformed matched flat
+TD3, but final and frozen-pretrain checkpoints were statistically
+indistinguishable. The handoff remains in `docs/howard_stage_c_td3_handoff.md`;
+curated evidence is in
+`experiments/evidence/patient_indexed_specimen_routing_stage_c_td3/`.
 
 An explicit version-1.2 exception authorizes one concurrent core-team DDPG
 mechanism experiment because it uses separate compute, seeds, CRNs, output
@@ -230,9 +234,9 @@ give graph and flat architectures the same budget.
 
 ### Stage C2: persistent-shift DDPG online-attribution screen
 
-Status: authorized for implementation by version 1.3. No trajectory may be
-launched until the implementation, tests, smoke evidence, hashes, and execution
-spec are committed.
+Status: completed and closed. The persistent-shift candidate failed its locked
+advancement gate; the terminal result and hashes are recorded in the progress
+ledger below. The historical protocol remains here for provenance.
 
 The mechanism hypothesis is that the original episode-round-robin curriculum
 suppressed online attribution: a frozen actor could react to observable demand
@@ -281,6 +285,9 @@ strictly serial on Mac MPS with CPU fallback disabled.
 
 ### Stage D: independent confirmation of a revised candidate
 
+Status: not triggered. No Stage C, C2, or C3 revised candidate passed its
+preregistered development gate. No new holdout stream was opened.
+
 If Stage C changes the backbone, update rule, or episode budget, lock that
 candidate before confirmation. Use at least five fresh training seeds and a
 fresh holdout CRN stream that has never been used for development. Compare:
@@ -300,6 +307,8 @@ and narrow the manuscript claim to graph-aware advantage-filtered residual
 control. Do not continue open-ended algorithm search.
 
 ### Stage E: manuscript and reproducibility freeze
+
+Status: current stage as of 2026-08-17.
 
 After the final experiment decision:
 
@@ -390,6 +399,19 @@ control requirements in Section 1.
   95200000/95300000, fixed episode-100 deployment, a preregistered 0.02% or
   interval-based advancement gate, and disjoint outputs. It does not reopen
   support alignment, authorize HPO, or expose the formal holdout.
+- Version 1.4, 2026-08-17: Howard's matched TD3 screen and the core team's
+  persistent-shift and structured-exploration DDPG screens all reached audited
+  terminal decisions. No revised candidate passed the Stage D gate. The user
+  approved proceeding to Stage E: retain the completed five-seed DDPG protocol
+  as primary, retain TD3 as a development-only backbone ablation, report online
+  attribution as not established, stop algorithm search, and freeze the
+  manuscript evidence package before any merge to `main`.
+- Version 1.5, 2026-08-17: Stage E compact evidence, publication tables,
+  source-backed figure, claim map, and manuscript synthesis were assembled on
+  `stage-e-publication-freeze`. A component audit corrected a reporting-only
+  double-count risk: `specimen_transfer_cost` is inside `base_cost`, so it is
+  shown as a base-cost detail but not added again to the top-level objective
+  decomposition. No scientific result, protocol, or stage decision changed.
 
 ## 9. Append-only progress ledger
 
@@ -741,3 +763,94 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   zero-trajectory host MPS probe must all pass before the single detached run is
   launched. Howard's TD3 campaign and all prior support-alignment and Stage C2
   evidence remain untouched and must not be pooled into this comparison.
+
+### 2026-08-15: Howard matched TD3 Stage C completed; retain as backbone ablation
+
+- Recovery execution commit:
+  `8373f1bf4cf509c9ac3189753b1759e1f7adaa0a`. The original executor completed
+  all six training runs but failed its post-training CSV reader at Python's
+  default 131,072-byte field limit. Recovery raised the supported field limit,
+  reused the immutable training root, and reran only focused tests and fresh
+  final/pretrain evaluation.
+- Completed evidence: six runs, 600 episodes, 120 five-episode checkpoints,
+  31,200 critic updates, 15,600 delayed actor updates, 2,400 final plus 2,400
+  frozen-pretrain learned rows, and matching MDL-2 anchor rows. Recovery status
+  SHA256 is
+  `2d0c87a09b63478bcbf94181bf210aaf9e454d649a57c9ce719c7056ad8c05e3`;
+  the 245-file inventory SHA256 is
+  `1b7afaba19d5b1f8a668caffc0cf7b3ef5885f466a7bdad4fa9dcfd5c6247042`.
+- Result: final GCN-TD3 improved total cost versus MDL-2 by approximately
+  `0.735%`, with the 95% interval wholly favorable, and improved on matched flat
+  TD3 by approximately `0.414%`. Frozen-pretrain GCN was approximately `0.736%`
+  better than MDL-2. Final-minus-frozen GCN was approximately `+0.0008%` worse,
+  with its paired interval crossing zero; graph-specific online difference-in-
+  differences also crossed zero.
+- Decision: TD3 corroborates graph and anchor value but does not establish
+  online-learning attribution. Retain it as a development-only controlled
+  backbone ablation. Do not promote it to formal confirmation or replace the
+  completed DDPG primary protocol.
+- Curated evidence:
+  `experiments/evidence/patient_indexed_specimen_routing_stage_c_td3/`.
+
+### 2026-08-17: Structured exploration Stage C3 closed; enter Stage E
+
+- Execution commit: `ac313052b702f4956ed725daf400b81de1f17e91` on
+  `rl-attribution-refinement`. The campaign completed the reproducible
+  156-state headroom audit, 12/12 training runs, 1,200/1,200 online episodes,
+  240 policy checkpoints, 12 atomic states, and both 36-run checkpoint curves
+  with 1,800 learned and 1,800 anchor rows per role.
+- Mechanism validation: all candidate runs observed every legal exploration
+  option. Candidate selection rates were approximately 19%, and approximately
+  17% of decisions were behaviorally distinct. The headroom audit independently
+  validated 58/156 lower-cost clinically noninferior local actions, including
+  51 specimen corrections. Exploration coverage and local action headroom were
+  therefore present.
+- Result: GCN candidate final-minus-frozen cost was `+84,712` (`+0.00416%`),
+  with paired 95% CI `[-563,653, +833,767]`. Two of three seeds were favorable
+  and clinical noninferiority passed, but the effect gate failed. Candidate
+  minus unchanged GCN control was `-18,204` (`-0.00089%`), with paired 95% CI
+  `[-278,652, +271,812]`. The locked classification is
+  `close_structured_exploration_ddpg_candidate`.
+- Immutable compact evidence: comparison SHA256
+  `30d1a39785a8e4bc9f17d68e6cf615f4e29ab5b2a64284e1105601bc87fecda4`,
+  status SHA256
+  `b42cd665a0d8a8eb012a2cc26e1d513fc1d0700141c564663324e76156bd4eae`,
+  and 828-file inventory SHA256
+  `f07f69c82ce37bdc5f687389f80c5860c2c9df4483db190cff9bded499001834`.
+- Decision: no revised candidate enters Stage D, no new formal stream is
+  opened, and open-ended algorithm search ends. Retain the completed five-seed
+  DDPG result as primary, report online attribution as not established, and
+  proceed to Stage E manuscript and reproducibility freeze.
+- Curated evidence:
+  `experiments/evidence/patient_indexed_specimen_routing_ddpg_structured_exploration/`.
+
+### 2026-08-17: Stage E publication evidence package assembled
+
+- Integration branch: `stage-e-publication-freeze`, based on
+  `patient-indexed-specimen-routing` with the completed
+  `rl-attribution-refinement` branch and Howard's Stage C TD3 evidence commits.
+- Primary formal summary SHA256:
+  `7f762fd1ab16f95e908b56c3925a0f6bed2bf68f12fa6fd609c13dbb18b6f3a4`.
+  Recomputed component-summary SHA256:
+  `3f72c363ef75e84fcb220947799e273a8a804b3777ab5e16ec51196a62ac0c31`.
+  Publication evidence-map SHA256:
+  `efca2fc354a7667326f0e90ecf90aa75cb9c88510f34910703ee9ae93cd748b4`.
+- Component audit: 2,000 learned and 2,000 anchor formal rows reconciled across
+  five training seeds and four scenarios. Every row satisfied
+  `total_cost = base_cost + patient_loss_cost + expiry_cost + urgency_cost`,
+  and every base-cost row reconciled to its operating subcomponents.
+- Reporting correction: the additive GCN-minus-MDL-2 decomposition is base
+  operating cost `-2.100M`, patient-loss cost `-12.631M`, expiry cost
+  `-2.806M`, and urgency cost `-0.152M`, totaling `-17.690M`.
+  Specimen-transfer cost `+0.174M` is reported within base cost, not added
+  separately.
+- Decision: retain AFR-GCN-DDPG as the formal primary method; retain TD3 as a
+  development-only backbone ablation; state that online learning attribution
+  is not established and transport-timing robustness is asymmetric. No new
+  experiment or formal holdout use is authorized.
+- Artifacts: `docs/patient_indexed_specimen_routing_stage_e_evidence_synthesis.md`,
+  `reports/patient_indexed_specimen_routing/`, the routing-primary cost-effect
+  and cost-component figures, and
+  `experiments/evidence/patient_indexed_specimen_routing_publication_evidence_map.json`.
+- Next gate: complete tests and manuscript compilation, review the Stage E PR,
+  and merge only after the evidence and paper diff are accepted.

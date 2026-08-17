@@ -1,0 +1,46 @@
+{
+  "checkpoint_variants": [
+    "pretrain",
+    "episode10",
+    "episode25",
+    "episode50",
+    "episode75",
+    "final"
+  ],
+  "config": "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_curve_eval.json",
+  "holdout_replications": 50,
+  "holdout_seed": 95800000,
+  "summaries": [
+    {
+      "checkpoint_variant": "pretrain",
+      "summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/evaluation/pretrain/summary.json",
+      "summary_sha256": "f21ed2688219d4f52ac660f2a74c3aa3f4256e9b9569551ab49f4b0ed2ae91fc"
+    },
+    {
+      "checkpoint_variant": "episode10",
+      "summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/evaluation/episode10/summary.json",
+      "summary_sha256": "570454e8648170d8d5a99c52cbf56fd645d69efeb0c5aad5b3694df05440a416"
+    },
+    {
+      "checkpoint_variant": "episode25",
+      "summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/evaluation/episode25/summary.json",
+      "summary_sha256": "035107943a8a3b6d3b39bfc797348b64a8bf540061ff9d18de34152762e23e63"
+    },
+    {
+      "checkpoint_variant": "episode50",
+      "summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/evaluation/episode50/summary.json",
+      "summary_sha256": "72d1f5424ab60cd0aad077f3c58a23845133433d0b8da62c7cc196d7e1fc040b"
+    },
+    {
+      "checkpoint_variant": "episode75",
+      "summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/evaluation/episode75/summary.json",
+      "summary_sha256": "e91e7616e01536b8c2eec7b15cb74bc61f8801073b880b7d389f8a22ffaf8f6e"
+    },
+    {
+      "checkpoint_variant": "final",
+      "summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/evaluation/final/summary.json",
+      "summary_sha256": "e2a6b2436d018204c0eba90cc7ed14a3361dc85d281a9a0b632b76408e5c49c0"
+    }
+  ],
+  "validation_seed": 95700000
+}

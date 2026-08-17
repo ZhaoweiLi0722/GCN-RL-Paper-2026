@@ -1,0 +1,129 @@
+{
+  "argv": [
+    "/Users/lizhaowei/gcnrl-rl-attribution-refinement/evaluation/run_patient_indexed_specimen_routing_ddpg_structured_exploration.py",
+    "--expected-commit",
+    "ac313052b702f4956ed725daf400b81de1f17e91",
+    "--spec",
+    "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_execution.json"
+  ],
+  "claimed_at": "2026-08-13T15:31:22.387198+00:00",
+  "commit": "ac313052b702f4956ed725daf400b81de1f17e91",
+  "cwd": "/Users/lizhaowei/gcnrl-rl-attribution-refinement",
+  "environment": {
+    "hostname": "lis-MacBook-Pro.local",
+    "machine": "arm64",
+    "mps_available": true,
+    "mps_built": true,
+    "mps_probe_device": "mps:0",
+    "platform": "macOS-26.3-arm64-arm-64bit",
+    "python": "3.9.6 (default, Jan  9 2026, 11:03:41) \n[Clang 17.0.0 (clang-1700.6.4.2)]",
+    "python_executable": "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+    "pytorch_enable_mps_fallback": "0",
+    "torch": "2.8.0"
+  },
+  "pid": 86418,
+  "ppid": 1,
+  "preflight_tests": {
+    "command": [
+      "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_ddpg_structured_exploration",
+      "tests.test_ddpg_frozen_route_headroom_audit",
+      "tests.test_ddpg_structured_exploration_stage_c3",
+      "tests.test_off_policy_training_state",
+      "tests.test_train_multiscenario_network_residual",
+      "tests.test_multiscenario_residual_evaluation",
+      "tests.test_patient_indexed_specimen_routing_contract"
+    ],
+    "exit_code": 0,
+    "modules": [
+      "tests.test_ddpg_structured_exploration",
+      "tests.test_ddpg_frozen_route_headroom_audit",
+      "tests.test_ddpg_structured_exploration_stage_c3",
+      "tests.test_off_policy_training_state",
+      "tests.test_train_multiscenario_network_residual",
+      "tests.test_multiscenario_residual_evaluation",
+      "tests.test_patient_indexed_specimen_routing_contract"
+    ],
+    "output_tail": ".............Resuming stub_ddpg seed=7 at episode 1/0\n.Resuming stub_ddpg seed=7 at episode 1/0\n........................................online_imitation_regularization samples=2 improved_steps=1 path=/var/folders/9s/z2c5bksd7mz3nz2fwl629h_40000gn/T/tmpwqit7ajh/teacher.npz\n..................................................\n----------------------------------------------------------------------\nRan 104 tests in 0.844s\n\nOK\n"
+  },
+  "spec": "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_execution.json",
+  "spec_sha256": "f969b06ac1fe84cc721ce98d3d3cd9a150d2701cce057a6d64f6f4bf77f37080",
+  "verified_hashes": {
+    "configs/flat_residual_20_clinic.yaml": "3b667785e61ee9ca5e264d7a75c90e2832e7479834f28bb089c00ae9bc6d0ca4",
+    "configs/gcn_residual_20_clinic.yaml": "6f8a4f59b43f6527f879ab8d754e083517dd85fc5a6dac3eda9c2668247c679e",
+    "docs/patient_indexed_specimen_routing_locked_execution_plan.md": "1604a1174af05e6522c143ac70ed121f33c7294d4e5b3442c6c32d50104b915c",
+    "evaluation/aggregate_stats.py": "c280c0d676059e3d68cac1b6f7c3d793bb5b7986952feb1c9ef85378d908e0ec",
+    "evaluation/audit_frozen_specimen_route_headroom.py": "750ececb3ab9ce9cb1f649296a09b525e0c635b7d193afa876b29c6eff14bf4e",
+    "evaluation/compare_ddpg_persistent_shift.py": "00625c7628d8d913fb4f84b6c9de0b7666ee525a74f13fdb8af3e38e238cd01d",
+    "evaluation/compare_ddpg_structured_exploration.py": "a08812dccaa100708b2bf064eaa570f1210c0e30d1273467eb1287e2f239970e",
+    "evaluation/evaluate_fixed_checkpoint_curve.py": "fd948be8e428ffd21315c1733f64c38c385f450566c9bbe46998542645a91d5d",
+    "evaluation/evaluate_multiscenario_network_residual.py": "a58e4a9d43115477271b7cafbe0c05c1e6eb79e478239b137bd10dba1faf05f3",
+    "evaluation/launch_patient_indexed_specimen_routing_ddpg_structured_exploration.py": "c1ce7f0425ff3d99d99ba2cffea155c9f380c8bee3dc83624540e70208142123",
+    "evaluation/network_residual_headroom.py": "b9db472a6274146632a71df60e8e2e0e014758ec8b76def90dfdc43704de6e57",
+    "evaluation/prepare_ddpg_structured_exploration_preonline.py": "c98c1388d28645658425cb92397be9e9638461bce78716fb86d4579997460156",
+    "evaluation/run_full_benchmark.py": "f5f2743b5333a4f052db84367095a552668855e67dfe2a813b4bc072be60e0a4",
+    "evaluation/run_patient_indexed_specimen_routing_ddpg_structured_exploration.py": "6e7e687e955594219a8ab52f84ae00f938b58ac008478a68c922d8abca0a0342",
+    "evaluation/scenario_assignment.py": "f240549cde74a15907af96c6ebd3cb10d0fcedc063d1e0c4862705a8ecd40e81",
+    "evaluation/train_multiscenario_network_residual.py": "253f7e981644156ef15bc2b170361758665d7327efc0af20356af9e04eb30f37",
+    "evaluation/train_network_residual_history_screen.py": "ba80630ac57fdc7ff423dc611bdf698f00943d403566318858bf43122b134e8e",
+    "experiments/configs/20_clinic_patient_condition_geo_regional_drift.json": "a5807e64cc1d1d5f5ab932c453ca614f08e541fc4c62bb506c36ecd0b09b4bd2",
+    "experiments/configs/patient_indexed_specimen_routing_benchmark.json": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709",
+    "experiments/configs/patient_indexed_specimen_routing_ddpg_frozen_route_headroom_audit.json": "ec6ede31ef9b4632c189a637fc93966364ac0ac2eba3d53950074fcd5f71c7b3",
+    "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100.json": "23b0002f657374597812bca5cfeb0440a22b897f26a3ba68c9f863c94f1e3fe9",
+    "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_curve_eval.json": "e85a64975e5a627d8230d3a829444b7884d32a4462e9d252d6053548827c93ee",
+    "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json": "44d0ca83c28f28a637272d4ceadf09390f4162add5104b38b7e7b35b41d68ea1",
+    "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_curve_eval.json": "618bde022c219fbc411f320743344398ef7308c92a825e713a3e2fc2f705eea8",
+    "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_smoke.json": "93ae79ca0efdbb4ff3a896ebf9f60bbacfe6ccb482366353758e43f0814aa73d",
+    "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92",
+    "src/baselines/flat_ddpg.py": "4837130b38aa350f1465a91801d33b9e54242cf03e4a545b460b070ff6ab66fb",
+    "src/models/gcn_ddpg.py": "d814c98c6f4589c1252d3aa76255da50764f328d9a93e16efbf571e0ae286fae",
+    "src/rl/action_projection.py": "7022e16c8187a23a0cf11bd3ed0a3830d9c67b0ca267d31bda0e082b95766b0e",
+    "src/rl/agents.py": "0c03ff5b5ab3604f238ff32055ca635997ed32a071306e06cd6554a633781386",
+    "src/rl/experiment.py": "97cefd581b89261320576c7eb9f2605f8ae586a2abe61579063381738fc961f2",
+    "src/rl/residual_options.py": "69602213544dbe7c691294d3c96a052168963fc1747b607ee0d0238ea21b322a",
+    "src/rl/structured_exploration.py": "9b42739d7d8d21583e5c5e78cf5cfdcda7917707892c531b453d55cd81c0edbe",
+    "src/rl/training_state.py": "ac43ee232fda95c7d467c869965ea08ab57ef82e26ea0b5865764a2e1daa948a",
+    "tests/test_ddpg_frozen_route_headroom_audit.py": "2c57f5e990b0e20bf998e9bfd03b7872b78f3d51c591f5fdcf22b362c48f1790",
+    "tests/test_ddpg_structured_exploration.py": "77aac1bbaadaf50c365979f0616d9b211f3ec74698518396afc92f4eddf71eaf",
+    "tests/test_ddpg_structured_exploration_stage_c3.py": "62115be393179eca6ab2d7e3c5a8d61f5c42dd636a33d6767bbedab7e16417a9",
+    "tests/test_multiscenario_residual_evaluation.py": "a943b21856ca5d61cc2aa6a3aaf4d888204ca70bd2738a1ed6a5c6c41ca99c9e",
+    "tests/test_off_policy_training_state.py": "866b235bdf3c8e5dd940c5c265004e8a0152e0819353f54551b52169c6e67be3",
+    "tests/test_patient_indexed_specimen_routing_contract.py": "3b1fe0c1fc07b43ed8930774795a15c565aacf9b793747e8295ed1bd4c035fc4",
+    "tests/test_train_multiscenario_network_residual.py": "86d15891c09c4f5173cafb96af46fbc4300ae7b5eebe856064f6ad2e26791a18"
+  },
+  "zero_trajectory_mps_probe": {
+    "runs": [
+      {
+        "action_dim": 80,
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "device": "mps",
+        "environment_steps": 0,
+        "finite_action": true,
+        "structured_options": [
+          "mdl2",
+          "specimen_transfer:-0.05",
+          "specimen_transfer:+0.05",
+          "specimen_transfer:-0.10",
+          "specimen_transfer:+0.10"
+        ]
+      },
+      {
+        "action_dim": 80,
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "device": "mps",
+        "environment_steps": 0,
+        "finite_action": true,
+        "structured_options": [
+          "mdl2",
+          "specimen_transfer:-0.05",
+          "specimen_transfer:+0.05",
+          "specimen_transfer:-0.10",
+          "specimen_transfer:+0.10"
+        ]
+      }
+    ],
+    "trajectory_steps": 0
+  }
+}

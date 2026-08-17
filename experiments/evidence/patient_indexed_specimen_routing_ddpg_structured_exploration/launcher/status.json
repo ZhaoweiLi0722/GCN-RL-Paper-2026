@@ -1,0 +1,2012 @@
+{
+  "artifact_count": 828,
+  "artifact_inventory": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/artifact_sha256.json",
+  "claim": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/claim.json",
+  "commit": "ac313052b702f4956ed725daf400b81de1f17e91",
+  "completed_at": "2026-08-13T20:28:58.594797+00:00",
+  "decision": {
+    "candidate_final_vs_frozen_gate_passed": false,
+    "candidate_gate_passed": false,
+    "candidate_no_regression_vs_control": true,
+    "classification": "close_structured_exploration_ddpg_candidate",
+    "control_gate_passed": false,
+    "formal_confirmation_launched": false,
+    "primary_algorithm": "gcn_residual_mdl2_network_ddpg_afd"
+  },
+  "evaluation_candidate_audit": {
+    "anchor_rows": 1800,
+    "checkpoint_curve_summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/evaluation/checkpoint_curve_summary.json",
+    "checkpoint_curve_summary_sha256": "cfce4b79ff1382df91509a6633390c405dfe7c32cf8fcc8313539f6cfb8db01c",
+    "config": "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_curve_eval.json",
+    "learned_rows": 1800,
+    "runs": [
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3681.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2072.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3702.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2562.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2248.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2221.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3685.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2068.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3708.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2566.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2258.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2221.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3687.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2076.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3702.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2574.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2258.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2219.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3675.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2070.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3710.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2570.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2254.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2219.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3675.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2078.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3700.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2572.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2256.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2223.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3681.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "final"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2074.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "final"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3708.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "final"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2574.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "final"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2260.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "final"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2221.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "final"
+      }
+    ]
+  },
+  "evaluation_control_audit": {
+    "anchor_rows": 1800,
+    "checkpoint_curve_summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/control/evaluation/checkpoint_curve_summary.json",
+    "checkpoint_curve_summary_sha256": "ed062008edf06ec1e4f21c759e25d2724aa51496637e418a2666f8fab8718317",
+    "config": "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_curve_eval.json",
+    "learned_rows": 1800,
+    "runs": [
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3681.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2072.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3702.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2562.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2248.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2221.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "pretrain"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3687.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2066.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3704.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2566.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2260.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2221.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode10"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3697.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2078.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3702.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2578.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2258.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2219.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode25"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3679.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2078.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3704.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2570.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2250.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2219.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode50"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3680.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2070.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3708.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2572.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2258.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2223.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "episode75"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3695.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "final"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2061.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "final"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 3716.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "final"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2574.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "variant": "final"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2258.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "variant": "final"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "anchor_rows": 50,
+        "corrected_decisions": 2223.0,
+        "learned_rows": 50,
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "variant": "final"
+      }
+    ]
+  },
+  "exit_code": 0,
+  "headroom_audit": {
+    "rows": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/headroom_audit/headroom_rows.csv",
+    "rows_sha256": "d162ed78a080b1fec8fd90a7054d8e8d3f72767abd262cdd11cbe52748c9fb1a",
+    "states": 156,
+    "summary": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/headroom_audit/summary.json",
+    "summary_sha256": "cbdfe0bb57e924d1576ff0c758cffc0d08a87f4581835c734ac5cf4bd51dc369",
+    "validated_opportunities": 58,
+    "validated_specimen_opportunities": 51
+  },
+  "paired_state_provenance": {
+    "candidate_enabled_by_declared_preonline_fork": true,
+    "changed_contract_paths": [
+      "num_episodes",
+      "history_screen.online_episodes",
+      "history_screen.pretrain_only",
+      "critic_teacher_advantage_calibration.updates"
+    ],
+    "created_at": "2026-08-13T15:54:14.530300+00:00",
+    "experimental_role": "metadata-only paired Stage C3 episode-0 forks",
+    "model_optimizer_replay_environment_rng_payload_modified": false,
+    "provenance": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/provenance.json",
+    "provenance_sha256": "bfef4972303295abc0b9724b46ab6ef5e279463c11027987a5ad70e9e5d09d69",
+    "runs": [
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "candidate_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/gcn_residual_mdl2_network_ddpg_afd_seed50_candidate_preonline.pt",
+        "candidate_clone_sha256": "d8b232fda67d3dc7c87fe1afba6a9c5fa62cb6048ed5790f83d3739cee08ed85",
+        "control_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/gcn_residual_mdl2_network_ddpg_afd_seed50_control_preonline.pt",
+        "control_clone_sha256": "a63bd90920cfc035a1a3d8d5d44370a12d3fd4d3405e97d0d97fef43958672e7",
+        "seed": 50,
+        "source": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/gcn_residual_mdl2_network_ddpg_afd/seed50/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed50_preonline_training_state.pt",
+        "source_sha256": "001afacd5ea4fe773b29aa2368124ba598269ffe4ecb5e4b2ce2602fc4da8c5d"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "candidate_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/gcn_residual_mdl2_network_ddpg_afd_seed51_candidate_preonline.pt",
+        "candidate_clone_sha256": "578f9ba8a9406dff1983588bf4c64b45891a5d5f03af47e093f0311ae830d035",
+        "control_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/gcn_residual_mdl2_network_ddpg_afd_seed51_control_preonline.pt",
+        "control_clone_sha256": "191994600990534c315c200086955b5597593007131d0e512ae4734129ecf0ab",
+        "seed": 51,
+        "source": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/gcn_residual_mdl2_network_ddpg_afd/seed51/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed51_preonline_training_state.pt",
+        "source_sha256": "50466ec8dcaa0cef65c03bf70360438d2954655f4e3f320793cd3b0240e3587b"
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "candidate_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/gcn_residual_mdl2_network_ddpg_afd_seed52_candidate_preonline.pt",
+        "candidate_clone_sha256": "61122c3161c55edb749fc427cd74dbf4c54d30879dc2040f0b4133330404aa05",
+        "control_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/gcn_residual_mdl2_network_ddpg_afd_seed52_control_preonline.pt",
+        "control_clone_sha256": "11e48d057ff8edd55119cefe95b0d4b87dccce3fc329174b35f245aca3eafadd",
+        "seed": 52,
+        "source": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/gcn_residual_mdl2_network_ddpg_afd/seed52/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed52_preonline_training_state.pt",
+        "source_sha256": "ca4b7c973f8e176fefa5b9dc05fddc0d0b3f322831ff183a9c8cb59a51ae9e61"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "candidate_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/flat_residual_mdl2_network_ddpg_afd_seed50_candidate_preonline.pt",
+        "candidate_clone_sha256": "d61d85810857357f23a86b1fb9de336af85ad3c52f4c90f31cc898eb12b2a8cb",
+        "control_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/flat_residual_mdl2_network_ddpg_afd_seed50_control_preonline.pt",
+        "control_clone_sha256": "119c21884479ba344ac34141e8dd59618744ed24886d22108afef0643eedf7fa",
+        "seed": 50,
+        "source": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/flat_residual_mdl2_network_ddpg_afd/seed50/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed50_preonline_training_state.pt",
+        "source_sha256": "66e31e9a011878bb165270b3563482cca9dc369ff604bc57b8a6447a0e8f1f51"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "candidate_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/flat_residual_mdl2_network_ddpg_afd_seed51_candidate_preonline.pt",
+        "candidate_clone_sha256": "3abf9101b3b9a8503641e0f4288cafe402b29cb8ad073f7eefdfadfd6d5cdb6a",
+        "control_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/flat_residual_mdl2_network_ddpg_afd_seed51_control_preonline.pt",
+        "control_clone_sha256": "7d27992ad37b41edd5feb3f8b8135c58936724e5b207a6bd0310efb3783789f3",
+        "seed": 51,
+        "source": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/flat_residual_mdl2_network_ddpg_afd/seed51/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed51_preonline_training_state.pt",
+        "source_sha256": "ef0be39c1a34bf1674a4b0f3f96f147f67d32b4e903573795ace93d982b316c5"
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "candidate_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/flat_residual_mdl2_network_ddpg_afd_seed52_candidate_preonline.pt",
+        "candidate_clone_sha256": "07ecfee155fdf288b7b3ff1d140b31e27a202ef59623e8f8c534a213353a67f5",
+        "control_clone": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/flat_residual_mdl2_network_ddpg_afd_seed52_control_preonline.pt",
+        "control_clone_sha256": "ad43a8ef995fa949da97c31d51b35a38f21a6ca76c8f37150ae74de5a9ba12b0",
+        "seed": 52,
+        "source": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/flat_residual_mdl2_network_ddpg_afd/seed52/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed52_preonline_training_state.pt",
+        "source_sha256": "d7856d607379771f3fccece67e8e2c06b15b3b7b9fb21bcdf4a5a6fb50f9750f"
+      }
+    ]
+  },
+  "phase": "completed",
+  "phases": [
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.audit_frozen_specimen_route_headroom",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_frozen_route_headroom_audit.json"
+      ],
+      "completed_at": "2026-08-13T15:45:21.314512+00:00",
+      "exit_code": 0,
+      "name": "frozen_route_headroom_audit",
+      "started_at": "2026-08-13T15:31:22.387936+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/frozen_route_headroom_audit.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/frozen_route_headroom_audit.stdout.log",
+      "stdout_sha256": "b3b3d474acc3157695eae37d27ccbecc74f68315b21ff5076bef399d3e8af490"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.prepare_ddpg_structured_exploration_preonline",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json",
+        "--output-root",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline"
+      ],
+      "completed_at": "2026-08-13T15:54:14.317113+00:00",
+      "exit_code": 0,
+      "name": "prepare_preonline",
+      "started_at": "2026-08-13T15:45:21.315667+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/prepare_preonline.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/prepare_preonline.stdout.log",
+      "stdout_sha256": "d9a6cd3d2bdcc453b496ba56ca4b5414d9bf10054b41b8e391dd512623710839"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json",
+        "--algorithm",
+        "gcn_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "50",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/gcn_residual_mdl2_network_ddpg_afd_seed50_control_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T16:15:39.911445+00:00",
+      "exit_code": 0,
+      "name": "training_control_gcn_residual_mdl2_network_ddpg_afd_seed50",
+      "started_at": "2026-08-13T15:54:16.509164+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_gcn_residual_mdl2_network_ddpg_afd_seed50.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_gcn_residual_mdl2_network_ddpg_afd_seed50.stdout.log",
+      "stdout_sha256": "991ef2aef7fb5f8ab37dddd54e49876d5a6b565e99401673c5aff3db33c19f6c"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json",
+        "--algorithm",
+        "gcn_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "51",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/gcn_residual_mdl2_network_ddpg_afd_seed51_control_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T16:36:48.890249+00:00",
+      "exit_code": 0,
+      "name": "training_control_gcn_residual_mdl2_network_ddpg_afd_seed51",
+      "started_at": "2026-08-13T16:15:39.912548+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_gcn_residual_mdl2_network_ddpg_afd_seed51.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_gcn_residual_mdl2_network_ddpg_afd_seed51.stdout.log",
+      "stdout_sha256": "80deef0029648563a810fbd5ccd8ba6102dccce7414228b1f04e595d0afc9476"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json",
+        "--algorithm",
+        "gcn_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "52",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/gcn_residual_mdl2_network_ddpg_afd_seed52_control_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T16:57:56.833625+00:00",
+      "exit_code": 0,
+      "name": "training_control_gcn_residual_mdl2_network_ddpg_afd_seed52",
+      "started_at": "2026-08-13T16:36:48.891162+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_gcn_residual_mdl2_network_ddpg_afd_seed52.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_gcn_residual_mdl2_network_ddpg_afd_seed52.stdout.log",
+      "stdout_sha256": "4d79112ebf1b7eed44fb106260d133083a84a00d15436d3e72f6ef6c299cb82c"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json",
+        "--algorithm",
+        "flat_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "50",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/flat_residual_mdl2_network_ddpg_afd_seed50_control_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T17:13:14.788444+00:00",
+      "exit_code": 0,
+      "name": "training_control_flat_residual_mdl2_network_ddpg_afd_seed50",
+      "started_at": "2026-08-13T16:57:56.835881+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_flat_residual_mdl2_network_ddpg_afd_seed50.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_flat_residual_mdl2_network_ddpg_afd_seed50.stdout.log",
+      "stdout_sha256": "fb7dfa6cba349829fc748c39440c618ee822b68fa213d2d9d9e167d2225abe1d"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json",
+        "--algorithm",
+        "flat_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "51",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/flat_residual_mdl2_network_ddpg_afd_seed51_control_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T17:28:45.644830+00:00",
+      "exit_code": 0,
+      "name": "training_control_flat_residual_mdl2_network_ddpg_afd_seed51",
+      "started_at": "2026-08-13T17:13:14.789308+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_flat_residual_mdl2_network_ddpg_afd_seed51.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_flat_residual_mdl2_network_ddpg_afd_seed51.stdout.log",
+      "stdout_sha256": "77968175aa09985f239a39a0597ef599ebc49da9966453dff240635793e71380"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100.json",
+        "--algorithm",
+        "flat_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "52",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/control/flat_residual_mdl2_network_ddpg_afd_seed52_control_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T17:44:03.881387+00:00",
+      "exit_code": 0,
+      "name": "training_control_flat_residual_mdl2_network_ddpg_afd_seed52",
+      "started_at": "2026-08-13T17:28:45.645746+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_flat_residual_mdl2_network_ddpg_afd_seed52.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_control_flat_residual_mdl2_network_ddpg_afd_seed52.stdout.log",
+      "stdout_sha256": "bbe6b45ea405ec701c6464a287f5c32d928bb7da18eead3d9bd66b33d336e3a6"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100.json",
+        "--algorithm",
+        "gcn_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "50",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/gcn_residual_mdl2_network_ddpg_afd_seed50_candidate_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T18:05:08.518428+00:00",
+      "exit_code": 0,
+      "name": "training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed50",
+      "started_at": "2026-08-13T17:44:04.960610+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed50.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed50.stdout.log",
+      "stdout_sha256": "e41eb1011ae3ca0b0c1151e6eca3c70c44baa106c88bd195793351fea2ab446b"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100.json",
+        "--algorithm",
+        "gcn_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "51",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/gcn_residual_mdl2_network_ddpg_afd_seed51_candidate_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T18:26:16.668543+00:00",
+      "exit_code": 0,
+      "name": "training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed51",
+      "started_at": "2026-08-13T18:05:08.520028+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed51.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed51.stdout.log",
+      "stdout_sha256": "f0b7270a4c380b1c603480f8c253854cdfa33452c0e9f0aed8d94d1806548109"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100.json",
+        "--algorithm",
+        "gcn_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "52",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/gcn_residual_mdl2_network_ddpg_afd_seed52_candidate_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T18:47:17.377751+00:00",
+      "exit_code": 0,
+      "name": "training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed52",
+      "started_at": "2026-08-13T18:26:16.670458+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed52.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_gcn_residual_mdl2_network_ddpg_afd_seed52.stdout.log",
+      "stdout_sha256": "c15baac7a313ede862ba156d563cfe9f691f016ec4834b6f00d2293a78d067bc"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100.json",
+        "--algorithm",
+        "flat_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "50",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/flat_residual_mdl2_network_ddpg_afd_seed50_candidate_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T19:02:43.070516+00:00",
+      "exit_code": 0,
+      "name": "training_candidate_flat_residual_mdl2_network_ddpg_afd_seed50",
+      "started_at": "2026-08-13T18:47:17.379317+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_flat_residual_mdl2_network_ddpg_afd_seed50.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_flat_residual_mdl2_network_ddpg_afd_seed50.stdout.log",
+      "stdout_sha256": "c38eedb765e936bb31ae37a3d24f8d2964fee6c2ca6c7978e9d09110548494c5"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100.json",
+        "--algorithm",
+        "flat_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "51",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/flat_residual_mdl2_network_ddpg_afd_seed51_candidate_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T19:18:05.900865+00:00",
+      "exit_code": 0,
+      "name": "training_candidate_flat_residual_mdl2_network_ddpg_afd_seed51",
+      "started_at": "2026-08-13T19:02:43.071886+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_flat_residual_mdl2_network_ddpg_afd_seed51.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_flat_residual_mdl2_network_ddpg_afd_seed51.stdout.log",
+      "stdout_sha256": "f9bd3ba056f71dac7bb8cb0a26c52b972c639612a4c38c7eab57a64b6c060c76"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100.json",
+        "--algorithm",
+        "flat_residual_mdl2_network_ddpg_afd",
+        "--seed",
+        "52",
+        "--resume-training-state",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/paired_states/candidate/flat_residual_mdl2_network_ddpg_afd_seed52_candidate_preonline.pt"
+      ],
+      "completed_at": "2026-08-13T19:33:31.599694+00:00",
+      "exit_code": 0,
+      "name": "training_candidate_flat_residual_mdl2_network_ddpg_afd_seed52",
+      "started_at": "2026-08-13T19:18:05.902367+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_flat_residual_mdl2_network_ddpg_afd_seed52.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/training_candidate_flat_residual_mdl2_network_ddpg_afd_seed52.stdout.log",
+      "stdout_sha256": "5a489d4f6d3c5dead20dfd867b02003d0ac46c0aa7edba506d58286c97e15ec7"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.evaluate_fixed_checkpoint_curve",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_curve_eval.json"
+      ],
+      "completed_at": "2026-08-13T20:00:40.138920+00:00",
+      "exit_code": 0,
+      "name": "evaluation_control_checkpoint_curve",
+      "started_at": "2026-08-13T19:33:32.780375+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/evaluation_control_checkpoint_curve.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/evaluation_control_checkpoint_curve.stdout.log",
+      "stdout_sha256": "148d64435133d5389fe5fff9c57d8fbcf8a4d60ef9aec8b17b35c3aa8ce70e83"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.evaluate_fixed_checkpoint_curve",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_curve_eval.json"
+      ],
+      "completed_at": "2026-08-13T20:28:09.139574+00:00",
+      "exit_code": 0,
+      "name": "evaluation_candidate_checkpoint_curve",
+      "started_at": "2026-08-13T20:00:42.559037+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/evaluation_candidate_checkpoint_curve.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/evaluation_candidate_checkpoint_curve.stdout.log",
+      "stdout_sha256": "f233f4430f62598f3d5c37c8c56cfa1bc5fe7c50d881fe4d37aab87e8b8257f6"
+    },
+    {
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "evaluation.compare_ddpg_structured_exploration",
+        "--control-config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_control_curve_eval.json",
+        "--candidate-config",
+        "experiments/configs/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_curve_eval.json",
+        "--output",
+        "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/comparison/structured_exploration_summary.json",
+        "--resamples",
+        "20000",
+        "--bootstrap-seed",
+        "95850000",
+        "--minimum-improvement-pct",
+        "0.02"
+      ],
+      "completed_at": "2026-08-13T20:28:57.309318+00:00",
+      "exit_code": 0,
+      "name": "comparison",
+      "started_at": "2026-08-13T20:28:11.621798+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/comparison.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/launcher/comparison.stdout.log",
+      "stdout_sha256": "fee8c1b22b8644a14b4bcb85dbf4a7792f4f66064509e418664a62719818591c"
+    }
+  ],
+  "pid": 86418,
+  "ppid": 1,
+  "preonline_audit": {
+    "manifest": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/training_manifest.json",
+    "manifest_sha256": "1ee7fb18deb4314dba290fb8a7230509835abdd1423f0e7b8d281eff0c98c589",
+    "runs": [
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "seed": 50,
+        "state": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/flat_residual_mdl2_network_ddpg_afd/seed50/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed50_preonline_training_state.pt",
+        "state_sha256": "66e31e9a011878bb165270b3563482cca9dc369ff604bc57b8a6447a0e8f1f51",
+        "total_offline_updates": 500
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "seed": 51,
+        "state": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/flat_residual_mdl2_network_ddpg_afd/seed51/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed51_preonline_training_state.pt",
+        "state_sha256": "ef0be39c1a34bf1674a4b0f3f96f147f67d32b4e903573795ace93d982b316c5",
+        "total_offline_updates": 500
+      },
+      {
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "seed": 52,
+        "state": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/flat_residual_mdl2_network_ddpg_afd/seed52/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed52_preonline_training_state.pt",
+        "state_sha256": "d7856d607379771f3fccece67e8e2c06b15b3b7b9fb21bcdf4a5a6fb50f9750f",
+        "total_offline_updates": 500
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "seed": 50,
+        "state": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/gcn_residual_mdl2_network_ddpg_afd/seed50/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed50_preonline_training_state.pt",
+        "state_sha256": "001afacd5ea4fe773b29aa2368124ba598269ffe4ecb5e4b2ce2602fc4da8c5d",
+        "total_offline_updates": 500
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "seed": 51,
+        "state": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/gcn_residual_mdl2_network_ddpg_afd/seed51/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed51_preonline_training_state.pt",
+        "state_sha256": "50466ec8dcaa0cef65c03bf70360438d2954655f4e3f320793cd3b0240e3587b",
+        "total_offline_updates": 500
+      },
+      {
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "seed": 52,
+        "state": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/preonline/patient_indexed_specimen_routing_ddpg_structured_exploration_preonline/gcn_residual_mdl2_network_ddpg_afd/seed52/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed52_preonline_training_state.pt",
+        "state_sha256": "ca4b7c973f8e176fefa5b9dc05fddc0d0b3f322831ff183a9c8cb59a51ae9e61",
+        "total_offline_updates": 500
+      }
+    ]
+  },
+  "started_at": "2026-08-13T15:31:22.387741+00:00",
+  "status": "completed",
+  "training_candidate_audit": {
+    "manifest": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/candidate/training/patient_indexed_specimen_routing_ddpg_structured_exploration_candidate_100/training_manifest.json",
+    "manifest_sha256": "7065e85bd01717ee06985880d3a37310674c05eeb9d54af40e680e4a9cd92835",
+    "parameter_counts": {
+      "flat_residual_mdl2_network_ddpg_afd": 607338,
+      "gcn_residual_mdl2_network_ddpg_afd": 613286
+    },
+    "parameter_relative_gap": 0.009698574563906562,
+    "role": "candidate",
+    "runs": [
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.01454985048621893,
+          "parameter_count": 287164.0,
+          "rms": 0.0005137196930362877
+        },
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "candidate",
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "specimen_route_count": 42095.0,
+        "structured_specimen_exploration": {
+          "enabled": true,
+          "episode_behaviorally_distinct": 10,
+          "episode_correction_selections": 7,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.16170048713684082,
+          "episode_mean_selected_specimen_linf_delta": 0.06180099567229098,
+          "episode_option_counts": {
+            "mdl2": 4,
+            "specimen_transfer:+0.05": 1,
+            "specimen_transfer:+0.10": 2,
+            "specimen_transfer:-0.05": 3,
+            "specimen_transfer:-0.10": 1
+          },
+          "episode_selection_rate": 0.21153846153846154,
+          "episode_selections": 11,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.16170048713684082,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 991,
+          "total_behaviorally_distinct_rate": 0.1905769230769231,
+          "total_correction_selections": 831,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.06735247222153484,
+          "total_option_counts": {
+            "mdl2": 233,
+            "specimen_transfer:+0.05": 181,
+            "specimen_transfer:+0.10": 238,
+            "specimen_transfer:-0.05": 205,
+            "specimen_transfer:-0.10": 207
+          },
+          "total_selection_rate": 0.20461538461538462,
+          "total_selections": 1064
+        },
+        "training_state_sha256": "baf0e6d9a91cf25e1a168d5cab18b18a3f7a408a0951e090838e6262b782b09a"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.015351318754255772,
+          "parameter_count": 287164.0,
+          "rms": 0.0005475297375982315
+        },
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "candidate",
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "specimen_route_count": 50002.0,
+        "structured_specimen_exploration": {
+          "enabled": true,
+          "episode_behaviorally_distinct": 6,
+          "episode_correction_selections": 5,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.1376400589942932,
+          "episode_mean_selected_specimen_linf_delta": 0.06813517425741468,
+          "episode_option_counts": {
+            "mdl2": 2,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 2,
+            "specimen_transfer:-0.05": 2,
+            "specimen_transfer:-0.10": 1
+          },
+          "episode_selection_rate": 0.1346153846153846,
+          "episode_selections": 7,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.15054398775100708,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 871,
+          "total_behaviorally_distinct_rate": 0.1675,
+          "total_correction_selections": 798,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.06263716475990291,
+          "total_option_counts": {
+            "mdl2": 215,
+            "specimen_transfer:+0.05": 182,
+            "specimen_transfer:+0.10": 192,
+            "specimen_transfer:-0.05": 219,
+            "specimen_transfer:-0.10": 205
+          },
+          "total_selection_rate": 0.19480769230769232,
+          "total_selections": 1013
+        },
+        "training_state_sha256": "3ae49da59322a14341b1ca050f3e63b0c4f04cccfc132e3c147ce5b40a1ddb18"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.012208223342895508,
+          "parameter_count": 287164.0,
+          "rms": 0.0005229661770261405
+        },
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "candidate",
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "specimen_route_count": 37593.0,
+        "structured_specimen_exploration": {
+          "enabled": true,
+          "episode_behaviorally_distinct": 8,
+          "episode_correction_selections": 6,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.12259125709533691,
+          "episode_mean_selected_specimen_linf_delta": 0.06897466153734261,
+          "episode_option_counts": {
+            "mdl2": 3,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 2,
+            "specimen_transfer:-0.05": 2,
+            "specimen_transfer:-0.10": 2
+          },
+          "episode_selection_rate": 0.17307692307692307,
+          "episode_selections": 9,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.1518530547618866,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 927,
+          "total_behaviorally_distinct_rate": 0.17826923076923076,
+          "total_correction_selections": 803,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.06614191461635399,
+          "total_option_counts": {
+            "mdl2": 185,
+            "specimen_transfer:+0.05": 194,
+            "specimen_transfer:+0.10": 212,
+            "specimen_transfer:-0.05": 206,
+            "specimen_transfer:-0.10": 191
+          },
+          "total_selection_rate": 0.19,
+          "total_selections": 988
+        },
+        "training_state_sha256": "39a84797f31cc38fb731b3c417b4c9dfe130f79ab4b7c930200bc38871b7dc59"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.019142180681228638,
+          "parameter_count": 324964.0,
+          "rms": 0.0006806379287948738
+        },
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "candidate",
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "specimen_route_count": 42640.0,
+        "structured_specimen_exploration": {
+          "enabled": true,
+          "episode_behaviorally_distinct": 8,
+          "episode_correction_selections": 7,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.1287887543439865,
+          "episode_mean_selected_specimen_linf_delta": 0.0575925504619425,
+          "episode_option_counts": {
+            "mdl2": 4,
+            "specimen_transfer:+0.05": 1,
+            "specimen_transfer:+0.10": 2,
+            "specimen_transfer:-0.05": 3,
+            "specimen_transfer:-0.10": 1
+          },
+          "episode_selection_rate": 0.21153846153846154,
+          "episode_selections": 11,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.17394527792930603,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 940,
+          "total_behaviorally_distinct_rate": 0.18076923076923077,
+          "total_correction_selections": 831,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.06700445566881322,
+          "total_option_counts": {
+            "mdl2": 233,
+            "specimen_transfer:+0.05": 181,
+            "specimen_transfer:+0.10": 238,
+            "specimen_transfer:-0.05": 205,
+            "specimen_transfer:-0.10": 207
+          },
+          "total_selection_rate": 0.20461538461538462,
+          "total_selections": 1064
+        },
+        "training_state_sha256": "a51ade16bc3a42d9f1e21a4f9b23d612ddc1160da1107a26c2b6b99d514e500d"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.0208047553896904,
+          "parameter_count": 324964.0,
+          "rms": 0.0006703686077797973
+        },
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "candidate",
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "specimen_route_count": 57404.0,
+        "structured_specimen_exploration": {
+          "enabled": true,
+          "episode_behaviorally_distinct": 5,
+          "episode_correction_selections": 5,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.1460067182779312,
+          "episode_mean_selected_specimen_linf_delta": 0.06190495193004608,
+          "episode_option_counts": {
+            "mdl2": 2,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 2,
+            "specimen_transfer:-0.05": 2,
+            "specimen_transfer:-0.10": 1
+          },
+          "episode_selection_rate": 0.1346153846153846,
+          "episode_selections": 7,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.17480143904685974,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 878,
+          "total_behaviorally_distinct_rate": 0.16884615384615384,
+          "total_correction_selections": 798,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.06739213598776252,
+          "total_option_counts": {
+            "mdl2": 215,
+            "specimen_transfer:+0.05": 182,
+            "specimen_transfer:+0.10": 192,
+            "specimen_transfer:-0.05": 219,
+            "specimen_transfer:-0.10": 205
+          },
+          "total_selection_rate": 0.19480769230769232,
+          "total_selections": 1013
+        },
+        "training_state_sha256": "c5778a0f4ac2077284ff6d745de365abcd9bdfe57acd0f80627f29cc270f3d2f"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.018578602001070976,
+          "parameter_count": 324964.0,
+          "rms": 0.0006624983362323113
+        },
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "candidate",
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "specimen_route_count": 44529.0,
+        "structured_specimen_exploration": {
+          "enabled": true,
+          "episode_behaviorally_distinct": 6,
+          "episode_correction_selections": 6,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.10112602263689041,
+          "episode_mean_selected_specimen_linf_delta": 0.06344282047616111,
+          "episode_option_counts": {
+            "mdl2": 3,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 2,
+            "specimen_transfer:-0.05": 2,
+            "specimen_transfer:-0.10": 2
+          },
+          "episode_selection_rate": 0.17307692307692307,
+          "episode_selections": 9,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.17789480090141296,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 881,
+          "total_behaviorally_distinct_rate": 0.16942307692307693,
+          "total_correction_selections": 803,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.0681419614424386,
+          "total_option_counts": {
+            "mdl2": 185,
+            "specimen_transfer:+0.05": 194,
+            "specimen_transfer:+0.10": 212,
+            "specimen_transfer:-0.05": 206,
+            "specimen_transfer:-0.10": 191
+          },
+          "total_selection_rate": 0.19,
+          "total_selections": 988
+        },
+        "training_state_sha256": "57ba220b0125d0cdc807f3f1a7ac995c6361e6386911614f5eba01ed76026937"
+      }
+    ]
+  },
+  "training_control_audit": {
+    "manifest": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/control/training/patient_indexed_specimen_routing_ddpg_structured_exploration_control_100/training_manifest.json",
+    "manifest_sha256": "89ed8b55160fc6d37cf91fb017af451082da95d361231866f2813c3c0b9fee03",
+    "parameter_counts": {
+      "flat_residual_mdl2_network_ddpg_afd": 607338,
+      "gcn_residual_mdl2_network_ddpg_afd": 613286
+    },
+    "parameter_relative_gap": 0.009698574563906562,
+    "role": "control",
+    "runs": [
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.014030253514647484,
+          "parameter_count": 287164.0,
+          "rms": 0.0005269121301064882
+        },
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "control",
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "specimen_route_count": 34970.0,
+        "structured_specimen_exploration": {
+          "enabled": false,
+          "episode_behaviorally_distinct": 0,
+          "episode_correction_selections": 0,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.0,
+          "episode_mean_selected_specimen_linf_delta": 0.0,
+          "episode_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "episode_selection_rate": 0.0,
+          "episode_selections": 0,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.0,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 0,
+          "total_behaviorally_distinct_rate": 0.0,
+          "total_correction_selections": 0,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.0,
+          "total_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "total_selection_rate": 0.0,
+          "total_selections": 0
+        },
+        "training_state_sha256": "b088caf801756b37bf239d1de79158f5887b61e14963b906f8f0c465c5fd42d3"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.015587090514600277,
+          "parameter_count": 287164.0,
+          "rms": 0.0005611843135784441
+        },
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "control",
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "specimen_route_count": 40473.0,
+        "structured_specimen_exploration": {
+          "enabled": false,
+          "episode_behaviorally_distinct": 0,
+          "episode_correction_selections": 0,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.0,
+          "episode_mean_selected_specimen_linf_delta": 0.0,
+          "episode_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "episode_selection_rate": 0.0,
+          "episode_selections": 0,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.0,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 0,
+          "total_behaviorally_distinct_rate": 0.0,
+          "total_correction_selections": 0,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.0,
+          "total_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "total_selection_rate": 0.0,
+          "total_selections": 0
+        },
+        "training_state_sha256": "ff91734e144d668ceb567ef8e0a7038ba9d8f5455f80f008dae6735ad010134b"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.013036085292696953,
+          "parameter_count": 287164.0,
+          "rms": 0.0005342925342986665
+        },
+        "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "control",
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "specimen_route_count": 28805.0,
+        "structured_specimen_exploration": {
+          "enabled": false,
+          "episode_behaviorally_distinct": 0,
+          "episode_correction_selections": 0,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.0,
+          "episode_mean_selected_specimen_linf_delta": 0.0,
+          "episode_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "episode_selection_rate": 0.0,
+          "episode_selections": 0,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.0,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 0,
+          "total_behaviorally_distinct_rate": 0.0,
+          "total_correction_selections": 0,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.0,
+          "total_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "total_selection_rate": 0.0,
+          "total_selections": 0
+        },
+        "training_state_sha256": "16e1495e374648b78310d92aa1a1ac3cbb7d0d02eadfc0504c18781d83857d26"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.01961396634578705,
+          "parameter_count": 324964.0,
+          "rms": 0.0006898376574443287
+        },
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "control",
+        "scenario": "routing_persistent_hotspot_cluster1",
+        "seed": 50,
+        "specimen_route_count": 35251.0,
+        "structured_specimen_exploration": {
+          "enabled": false,
+          "episode_behaviorally_distinct": 0,
+          "episode_correction_selections": 0,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.0,
+          "episode_mean_selected_specimen_linf_delta": 0.0,
+          "episode_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "episode_selection_rate": 0.0,
+          "episode_selections": 0,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.0,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 0,
+          "total_behaviorally_distinct_rate": 0.0,
+          "total_correction_selections": 0,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.0,
+          "total_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "total_selection_rate": 0.0,
+          "total_selections": 0
+        },
+        "training_state_sha256": "6305091b853fdfa5e604386e8ea75c8ac50c4c079ef7ca63b2547bdfa759f012"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.020750895142555237,
+          "parameter_count": 324964.0,
+          "rms": 0.000681214718107216
+        },
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "control",
+        "scenario": "routing_persistent_hotspot_cluster2",
+        "seed": 51,
+        "specimen_route_count": 48886.0,
+        "structured_specimen_exploration": {
+          "enabled": false,
+          "episode_behaviorally_distinct": 0,
+          "episode_correction_selections": 0,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.0,
+          "episode_mean_selected_specimen_linf_delta": 0.0,
+          "episode_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "episode_selection_rate": 0.0,
+          "episode_selections": 0,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.0,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 0,
+          "total_behaviorally_distinct_rate": 0.0,
+          "total_correction_selections": 0,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.0,
+          "total_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "total_selection_rate": 0.0,
+          "total_selections": 0
+        },
+        "training_state_sha256": "1c99745b77d4db1228f911367cf6f8e182dea1df0c3c0af2fa898352efbb4cb7"
+      },
+      {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.01829001121222973,
+          "parameter_count": 324964.0,
+          "rms": 0.0006741895688724563
+        },
+        "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+        "checkpoint_count": 20,
+        "episodes": 100,
+        "online_rl_updates": 5200.0,
+        "role": "control",
+        "scenario": "routing_persistent_hotspot_cluster3",
+        "seed": 52,
+        "specimen_route_count": 37352.0,
+        "structured_specimen_exploration": {
+          "enabled": false,
+          "episode_behaviorally_distinct": 0,
+          "episode_correction_selections": 0,
+          "episode_decisions": 52,
+          "episode_max_specimen_linf_delta": 0.0,
+          "episode_mean_selected_specimen_linf_delta": 0.0,
+          "episode_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "episode_selection_rate": 0.0,
+          "episode_selections": 0,
+          "last_decision": {
+            "behaviorally_distinct": false,
+            "is_anchor": false,
+            "option_index": -1,
+            "option_label": "",
+            "recorded": false,
+            "selected": false,
+            "specimen_linf_delta": 0.0
+          },
+          "max_specimen_linf_delta": 0.0,
+          "option_labels": [
+            "mdl2",
+            "specimen_transfer:-0.05",
+            "specimen_transfer:+0.05",
+            "specimen_transfer:-0.10",
+            "specimen_transfer:+0.10"
+          ],
+          "selection_mode": "uniform",
+          "selection_probability": 0.2,
+          "total_behaviorally_distinct": 0,
+          "total_behaviorally_distinct_rate": 0.0,
+          "total_correction_selections": 0,
+          "total_decisions": 5200,
+          "total_mean_selected_specimen_linf_delta": 0.0,
+          "total_option_counts": {
+            "mdl2": 0,
+            "specimen_transfer:+0.05": 0,
+            "specimen_transfer:+0.10": 0,
+            "specimen_transfer:-0.05": 0,
+            "specimen_transfer:-0.10": 0
+          },
+          "total_selection_rate": 0.0,
+          "total_selections": 0
+        },
+        "training_state_sha256": "83086b9d06e0e2d9442345740b5024c465d5689d71394db3828e5da36adb98e4"
+      }
+    ]
+  }
+}

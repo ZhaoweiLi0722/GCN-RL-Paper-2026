@@ -18,6 +18,7 @@ from src.env.patient_condition import PatientConditionConfig
 from src.rl.noise import OUNoise
 from src.rl.experiment import train_off_policy_agent
 from src.rl.replay_buffer import ReplayBuffer
+from src.rl.structured_exploration import StructuredSpecimenExplorer
 from src.rl.training_state import (
     load_off_policy_training_state,
     save_off_policy_training_state,
@@ -51,6 +52,9 @@ class _StubAgent:
         self.correction_gate_optimizer = None
         self.correction_safety_gate_optimizer = None
         self.total_updates = 13
+        self.online_updates_since_prepare = 9
+        self.online_finetuning_prepared = True
+        self.online_critic_realignment_applied = True
         self.replay_buffer = ReplayBuffer(2, 1, capacity=8, seed=11)
         self.noise = OUNoise(1, seed=12, sigma=0.05)
         self.imitation_states = torch.tensor([[1.0, 2.0]])
@@ -87,6 +91,21 @@ class _TwinCriticStubAgent(_StubAgent):
         self.critic2_optimizer = torch.optim.Adam(
             self.critic2.parameters(),
             lr=2e-3,
+        )
+
+
+class _StructuredExplorationStubAgent(_StubAgent):
+    def __init__(self, *, enabled: bool) -> None:
+        super().__init__()
+        self.structured_specimen_explorer = StructuredSpecimenExplorer(
+            action_dim=4,
+            num_facilities=1,
+            seed=self.seed,
+            settings={
+                "enabled": enabled,
+                "selection_probability": 1.0,
+                "seed_offset": 19,
+            },
         )
 
 
@@ -169,6 +188,9 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
                 ):
                     parameter.add_(20.0)
             agent.total_updates = 0
+            agent.online_updates_since_prepare = 0
+            agent.online_finetuning_prepared = False
+            agent.online_critic_realignment_applied = False
             agent.replay_buffer = ReplayBuffer(2, 1, capacity=8, seed=99)
             agent.noise = OUNoise(1, seed=99, sigma=0.05)
             agent.imitation_states = None
@@ -187,6 +209,9 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
         self.assertEqual(metadata["next_episode"], 5)
         self.assertEqual(metadata["global_step"], 260)
         self.assertEqual(agent.total_updates, 13)
+        self.assertEqual(agent.online_updates_since_prepare, 9)
+        self.assertTrue(agent.online_finetuning_prepared)
+        self.assertTrue(agent.online_critic_realignment_applied)
         for key, expected in actor_before.items():
             torch.testing.assert_close(agent.actor.state_dict()[key], expected)
         for key, expected in reference_before.items():
@@ -818,6 +843,37 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
             },
         )
 
+    def test_episode_zero_state_allows_critic_realignment_fork(self):
+        agent = _StubAgent()
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "state.pt"
+            save_off_policy_training_state(
+                agent,
+                path,
+                config={"algorithm": agent.algorithm},
+                training={"next_episode": 0, "global_step": 0},
+            )
+            metadata = load_off_policy_training_state(
+                agent,
+                path,
+                config={
+                    "algorithm": agent.algorithm,
+                    "online_critic_realignment": {
+                        "enabled": True,
+                        "mode": "zero_action_columns",
+                        "actor_warmup_updates": 500,
+                    },
+                    "preonline_fork_allowed_overrides": [
+                        "online_critic_realignment",
+                    ],
+                },
+            )
+
+        self.assertEqual(
+            set(metadata["preonline_fork_overrides"]),
+            {"online_critic_realignment"},
+        )
+
     def test_episode_zero_state_allows_online_imitation_cache_fork(self):
         agent = _StubAgent()
         with TemporaryDirectory() as directory:
@@ -1038,6 +1094,91 @@ class OffPolicyTrainingStateTests(unittest.TestCase):
                 "exploration_noise.sigma": {
                     "checkpoint": 0.05,
                     "current": 0.2,
+                }
+            },
+        )
+
+    def test_episode_zero_state_allows_structured_exploration_fork(self):
+        source_agent = _StructuredExplorationStubAgent(enabled=False)
+        saved_explorer_state = copy.deepcopy(
+            source_agent.structured_specimen_explorer.state_dict()
+        )
+        source_config = {
+            "algorithm": source_agent.algorithm,
+            "residual_action": {
+                "structured_exploration": {
+                    "enabled": False,
+                    "selection_probability": 1.0,
+                    "seed_offset": 19,
+                }
+            },
+        }
+        target_config = copy.deepcopy(source_config)
+        target_config["residual_action"]["structured_exploration"][
+            "enabled"
+        ] = True
+        target_config["preonline_fork_allowed_overrides"] = [
+            "residual_action.structured_exploration.enabled"
+        ]
+
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "state.pt"
+            save_off_policy_training_state(
+                source_agent,
+                path,
+                config=source_config,
+                training={"next_episode": 0, "global_step": 0},
+            )
+            forked_agent = _StructuredExplorationStubAgent(enabled=True)
+            metadata = load_off_policy_training_state(
+                forked_agent,
+                path,
+                config=target_config,
+            )
+
+        expected = StructuredSpecimenExplorer(
+            action_dim=4,
+            num_facilities=1,
+            seed=999,
+            settings={
+                "enabled": True,
+                "selection_probability": 1.0,
+                "seed_offset": 19,
+            },
+        )
+        expected.load_state_dict(
+            saved_explorer_state,
+            allow_enabled_mismatch=True,
+        )
+        env = SimpleNamespace(
+            config=SimpleNamespace(num_facilities=1),
+            demand=np.asarray([1.0]),
+            demand_forecast=np.asarray([1.0]),
+            specimens=np.asarray([0.0]),
+            reagents=np.asarray([1.0]),
+            bioreactors=np.asarray([[1.0, 0.0]]),
+            at_risk_counts=np.asarray([0.0]),
+            near_expiry_counts=np.asarray([0.0]),
+        )
+        policy = np.zeros(4, dtype=np.float32)
+        forked_action = forked_agent.structured_specimen_explorer.apply(
+            policy,
+            policy,
+            env=env,
+        )
+        expected_action = expected.apply(policy, policy, env=env)
+
+        np.testing.assert_array_equal(forked_action, expected_action)
+        self.assertEqual(
+            forked_agent.structured_specimen_explorer.last_decision,
+            expected.last_decision,
+        )
+        self.assertEqual(
+            metadata["preonline_fork_overrides"],
+            {
+                "residual_action.structured_exploration.enabled": {
+                    "checkpoint": False,
+                    "current": True,
                 }
             },
         )

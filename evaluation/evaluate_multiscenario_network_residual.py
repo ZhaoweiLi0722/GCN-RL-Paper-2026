@@ -21,6 +21,10 @@ from evaluation.run_full_benchmark import (
     make_scenario_env_config,
     select_scenarios,
 )
+from evaluation.scenario_assignment import (
+    normalize_scenario_by_seed,
+    serialized_scenario_by_seed,
+)
 from src.baselines.heuristics import get_heuristic_class
 from src.rl.agents import get_agent_class
 from src.rl.config import load_config
@@ -374,6 +378,22 @@ def evaluate_multiscenario_agents(
         raise ValueError(
             "Evaluation algorithm/seed filters selected no training runs"
         )
+    selected_training_seeds = sorted(
+        {int(run["seed"]) for run in selected_runs}
+    )
+    raw_scenario_by_seed = evaluation_config.get(
+        "scenario_by_training_seed",
+        training_manifest.get("scenario_by_seed"),
+    )
+    scenario_by_training_seed = normalize_scenario_by_seed(
+        raw_scenario_by_seed,
+        available_scenarios=scenario_names,
+        required_seeds=(
+            selected_training_seeds
+            if raw_scenario_by_seed
+            else ()
+        ),
+    )
 
     run_results = []
     holdout_rows_by_run: dict[tuple[str, int], list[dict[str, Any]]] = {}
@@ -388,6 +408,15 @@ def evaluate_multiscenario_agents(
     for run in selected_runs:
         algorithm = str(run["algorithm"])
         training_seed = int(run["seed"])
+        run_scenario_names = (
+            (scenario_by_training_seed[training_seed],)
+            if scenario_by_training_seed
+            else scenario_names
+        )
+        run_scenarios = [
+            scenarios_by_name[name]
+            for name in run_scenario_names
+        ]
         checkpoint_variants = resolve_checkpoint_variants(
             run,
             requested_checkpoint_variants,
@@ -405,8 +434,8 @@ def evaluate_multiscenario_agents(
             for candidate in candidates:
                 result, candidate_rows, anchor_rows = evaluate_deployment_candidate(
                     plan=plan,
-                    scenarios=scenarios,
-                    scenario_names=scenario_names,
+                    scenarios=run_scenarios,
+                    scenario_names=run_scenario_names,
                     algorithm=algorithm,
                     training_seed=training_seed,
                     checkpoint=checkpoint,
@@ -474,8 +503,8 @@ def evaluate_multiscenario_agents(
         holdout_result, holdout_rows, holdout_anchor_rows = (
             evaluate_deployment_candidate(
                 plan=plan,
-                scenarios=scenarios,
-                scenario_names=scenario_names,
+                scenarios=run_scenarios,
+                scenario_names=run_scenario_names,
                 algorithm=algorithm,
                 training_seed=training_seed,
                 checkpoint=selected_checkpoint,
@@ -507,6 +536,7 @@ def evaluate_multiscenario_agents(
         run_result = {
             "algorithm": algorithm,
             "training_seed": training_seed,
+            "scenarios": list(run_scenario_names),
             "checkpoint": str(selected_checkpoint),
             "checkpoint_variants": {
                 name: str(path)
@@ -530,6 +560,9 @@ def evaluate_multiscenario_agents(
     payload = {
         "training_manifest": str(training_manifest_path),
         "scenarios": list(scenario_names),
+        "scenario_by_training_seed": serialized_scenario_by_seed(
+            scenario_by_training_seed
+        ),
         "validation_replications": validation_replications,
         "validation_seed": validation_seed,
         "holdout_replications": holdout_replications,

@@ -1,0 +1,4252 @@
+{
+  "algorithms": {
+    "flat_residual_mdl2_network_ddpg_afd": {
+      "checkpoints": {
+        "episode100": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.016319260001182556,
+                "parameter_count": 287164,
+                "rms": 0.0005719640844093354
+              },
+              "11": {
+                "max_abs": 0.01988235116004944,
+                "parameter_count": 287164,
+                "rms": 0.0006168941130633403
+              },
+              "12": {
+                "max_abs": 0.014021657407283783,
+                "parameter_count": 287164,
+                "rms": 0.0005164909973702226
+              },
+              "13": {
+                "max_abs": 0.014501422643661499,
+                "parameter_count": 287164,
+                "rms": 0.00047549576322638356
+              },
+              "14": {
+                "max_abs": 0.01361046265810728,
+                "parameter_count": 287164,
+                "rms": 0.0005436653326532801
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2577.61378175579,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1207.6889068840278,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1207.6889068840278,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 8157,
+                "correction_rate": 0.7843269230769231,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.7843269230769231
+                },
+                "raw_residual_l1": 2577.61378175579,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2211.3443718776107,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1205.57779642774,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1205.57779642774,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6836,
+                "correction_rate": 0.6573076923076923,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6573076923076923
+                },
+                "raw_residual_l1": 2211.3443718776107,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2354.0672474931926,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1201.3555735357934,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1201.3555735357934,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7057,
+                "correction_rate": 0.6785576923076924,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6785576923076924
+                },
+                "raw_residual_l1": 2354.0672474931926,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2673.020115731284,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1203.0222404135598,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1203.0222404135598,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6779,
+                "correction_rate": 0.651826923076923,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.651826923076923
+                },
+                "raw_residual_l1": 2673.020115731284,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2607.0714969765395,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1204.1333519452148,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1204.1333519452148,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6993,
+                "correction_rate": 0.6724038461538462,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6724038461538462
+                },
+                "raw_residual_l1": 2607.0714969765395,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4854656913572369,
+              "ci_high": 0.001178629233196569,
+              "ci_low": -0.00016203302183689244,
+              "mean_difference": 0.0005786436190644006,
+              "mean_gap_pct": 0.1193357549482028,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0007928843886575452,
+                "11": 0.0009038003957143956,
+                "12": 0.0013751033675670397,
+                "13": 0.0009278899955287054,
+                "14": 0.00047930872516958656
+              },
+              "ties": 22,
+              "wins": 419
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07288154318663674,
+              "ci_high": -0.0028850867470018512,
+              "ci_low": -0.003911673116697453,
+              "mean_difference": -0.0034061208069128684,
+              "mean_gap_pct": -4.4648382564196325,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.002717658151794009,
+                "11": -0.0036754444994785674,
+                "12": -0.004016870013481778,
+                "13": -0.003599740183885746,
+                "14": -0.0030208911859242616
+              },
+              "ties": 0,
+              "wins": 723
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2414.717,
+              "ci_high": -3.499875000000011,
+              "ci_low": -11.90005,
+              "mean_difference": -8.29300000000012,
+              "mean_gap_pct": -0.3422602465528462,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.72,
+                "11": -10.465,
+                "12": -12.63,
+                "13": -10.315,
+                "14": -8.775
+              },
+              "ties": 16,
+              "wins": 622
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2690281764.587888,
+              "ci_high": -7287232.779286121,
+              "ci_low": -10585450.547697127,
+              "mean_difference": -8929422.583660126,
+              "mean_gap_pct": -0.33081600380506343,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -6817018.065996656,
+                "11": -9401177.242971128,
+                "12": -11429013.973900389,
+                "13": -8563395.824317846,
+                "14": -8436507.811114972
+              },
+              "ties": 0,
+              "wins": 721
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4855112785056548,
+              "candidate_mean": 0.4854656913572369,
+              "ci_high": 4.059861662398129e-05,
+              "ci_low": -0.00012665462025757108,
+              "mean_difference": -4.558714841790268e-05,
+              "mean_gap_pct": -0.009389513783946365,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -8.401835233011218e-05,
+                "11": -7.487762891176752e-05,
+                "12": -6.619897997234364e-05,
+                "13": 8.280013777141326e-05,
+                "14": -8.564091864668527e-05
+              },
+              "ties": 230,
+              "wins": 382
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07287999637508591,
+              "candidate_mean": 0.07288154318663674,
+              "ci_high": 0.00010036481022105721,
+              "ci_low": -9.916721299036499e-05,
+              "mean_difference": 1.5468115508315838e-06,
+              "mean_gap_pct": 0.0021224089294279423,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 7.4775868905212e-05,
+                "11": 2.60218185889511e-05,
+                "12": -1.823508103303468e-05,
+                "13": -0.00010013693697855122,
+                "14": 2.5308388271554904e-05
+              },
+              "ties": 157,
+              "wins": 423
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.571,
+              "candidate_mean": 2414.717,
+              "ci_high": 0.628,
+              "ci_low": -0.34,
+              "mean_difference": 0.14600000000018554,
+              "mean_gap_pct": 0.006046622774819442,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.445,
+                "11": 0.065,
+                "12": 0.07,
+                "13": -0.385,
+                "14": 0.535
+              },
+              "ties": 196,
+              "wins": 395
+            },
+            "total_cost": {
+              "baseline_mean": 2690022275.031991,
+              "candidate_mean": 2690281764.587888,
+              "ci_high": 659515.1804733819,
+              "ci_low": -147290.72576494384,
+              "mean_difference": 259489.55589675903,
+              "mean_gap_pct": 0.009646372013543012,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 670419.9039588809,
+                "11": 182748.51143542767,
+                "12": 415979.20153321745,
+                "13": -344753.81378944276,
+                "14": 373053.97634568927
+              },
+              "ties": 59,
+              "wins": 458
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "episode25": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.005546770989894867,
+                "parameter_count": 287164,
+                "rms": 0.00018517329622304952
+              },
+              "11": {
+                "max_abs": 0.006426006555557251,
+                "parameter_count": 287164,
+                "rms": 0.00018208007461034987
+              },
+              "12": {
+                "max_abs": 0.004366151988506317,
+                "parameter_count": 287164,
+                "rms": 0.000150543292848345
+              },
+              "13": {
+                "max_abs": 0.003951571125071496,
+                "parameter_count": 287164,
+                "rms": 0.00012491783313859576
+              },
+              "14": {
+                "max_abs": 0.00408637709915638,
+                "parameter_count": 287164,
+                "rms": 0.0001688177108607197
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2568.937857568264,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1207.2444627119437,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1207.2444627119437,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 8138,
+                "correction_rate": 0.7825,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.7825
+                },
+                "raw_residual_l1": 2568.937857568264,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2215.9242854509503,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1204.022241006295,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1204.022241006295,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6859,
+                "correction_rate": 0.6595192307692308,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6595192307692308
+                },
+                "raw_residual_l1": 2215.9242854509503,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2344.1186050828546,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1200.8000178063908,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1200.8000178063908,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7045,
+                "correction_rate": 0.6774038461538462,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6774038461538462
+                },
+                "raw_residual_l1": 2344.1186050828546,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2667.451760066673,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1201.6889071679777,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1201.6889071679777,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6781,
+                "correction_rate": 0.6520192307692307,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6520192307692307
+                },
+                "raw_residual_l1": 2667.451760066673,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2603.8756815344095,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1203.355573748549,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1203.355573748549,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6985,
+                "correction_rate": 0.6716346153846153,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6716346153846153
+                },
+                "raw_residual_l1": 2603.8756815344095,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4854837853207352,
+              "ci_high": 0.0011891345146660024,
+              "ci_low": -0.00016335560102401963,
+              "mean_difference": 0.0005967375825627341,
+              "mean_gap_pct": 0.12306733812468389,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0007937786647625844,
+                "11": 0.0009324477863741329,
+                "12": 0.0014012417323250104,
+                "13": 0.0008550007178098745,
+                "14": 0.0005887763410672029
+              },
+              "ties": 10,
+              "wins": 429
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07287658097293734,
+              "ci_high": -0.0029089480270150657,
+              "ci_low": -0.0038851737073535494,
+              "mean_difference": -0.003411083020612271,
+              "mean_gap_pct": -4.471342864687389,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0027196810505780568,
+                "11": -0.003657799084670502,
+                "12": -0.003997564212787207,
+                "13": -0.003458550369110669,
+                "14": -0.0032218203859149495
+              },
+              "ties": 2,
+              "wins": 716
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2414.807,
+              "ci_high": -3.492975000000002,
+              "ci_low": -11.798025,
+              "mean_difference": -8.20300000000043,
+              "mean_gap_pct": -0.3385458582507059,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.705,
+                "11": -10.115,
+                "12": -12.595,
+                "13": -9.785,
+                "14": -9.225
+              },
+              "ties": 12,
+              "wins": 627
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2690188190.3824716,
+              "ci_high": -7386813.763130633,
+              "ci_low": -10749697.304475686,
+              "mean_difference": -9022996.789076328,
+              "mean_gap_pct": -0.33428272793027936,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7028818.312795619,
+                "11": -9296582.478381146,
+                "12": -11690300.223779088,
+                "13": -8285863.911602613,
+                "14": -8813419.018821076
+              },
+              "ties": 0,
+              "wins": 709
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4855112785056548,
+              "candidate_mean": 0.4854837853207352,
+              "ci_high": 2.8476733302218216e-05,
+              "ci_low": -9.085280116421347e-05,
+              "mean_difference": -2.7493184919569202e-05,
+              "mean_gap_pct": -0.005662728372488053,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -8.491262843515145e-05,
+                "11": -4.623023825203021e-05,
+                "12": -4.006061521437287e-05,
+                "13": 9.910860052582404e-06,
+                "14": 2.3826697250931005e-05
+              },
+              "ties": 456,
+              "wins": 278
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07287999637508591,
+              "candidate_mean": 0.07287658097293734,
+              "ci_high": 9.815718201502002e-05,
+              "ci_low": -0.00011521048713864495,
+              "mean_difference": -3.415402148571056e-06,
+              "mean_gap_pct": -0.004686336880415398,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 7.27529701211644e-05,
+                "11": 4.366723339701555e-05,
+                "12": 1.0707196615367815e-06,
+                "13": 4.1052877796525706e-05,
+                "14": -0.00017562081171913272
+              },
+              "ties": 404,
+              "wins": 299
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.571,
+              "candidate_mean": 2414.807,
+              "ci_high": 0.577,
+              "ci_low": -0.077,
+              "mean_difference": 0.2359999999998763,
+              "mean_gap_pct": 0.009773992978457718,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.43,
+                "11": 0.415,
+                "12": 0.105,
+                "13": 0.145,
+                "14": 0.085
+              },
+              "ties": 406,
+              "wins": 285
+            },
+            "total_cost": {
+              "baseline_mean": 2690022275.031991,
+              "candidate_mean": 2690188190.3824716,
+              "ci_high": 457522.6010635693,
+              "ci_low": -90439.43356720946,
+              "mean_difference": 165915.3504805565,
+              "mean_gap_pct": 0.006167805821555264,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 458619.65715991857,
+                "11": 287343.27602540853,
+                "12": 154692.95165452003,
+                "13": -67221.9010742092,
+                "14": -3857.2313604152205
+              },
+              "ties": 238,
+              "wins": 362
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "episode50": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.009509831666946411,
+                "parameter_count": 287164,
+                "rms": 0.00033331409594857344
+              },
+              "11": {
+                "max_abs": 0.012586936354637146,
+                "parameter_count": 287164,
+                "rms": 0.0003301290416059513
+              },
+              "12": {
+                "max_abs": 0.00740254670381546,
+                "parameter_count": 287164,
+                "rms": 0.0002761165426087466
+              },
+              "13": {
+                "max_abs": 0.0071440692991018295,
+                "parameter_count": 287164,
+                "rms": 0.0002178316750283108
+              },
+              "14": {
+                "max_abs": 0.007487323135137558,
+                "parameter_count": 287164,
+                "rms": 0.00030348589368856964
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2565.9011653047055,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1206.688907103406,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1206.688907103406,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 8142,
+                "correction_rate": 0.7828846153846154,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.7828846153846154
+                },
+                "raw_residual_l1": 2565.9011653047055,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2215.284300820902,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1204.6889076696502,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1204.6889076696502,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6854,
+                "correction_rate": 0.6590384615384616,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6590384615384616
+                },
+                "raw_residual_l1": 2215.284300820902,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2352.9906804477796,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1200.9111290822427,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1200.9111290822427,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7049,
+                "correction_rate": 0.6777884615384615,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6777884615384615
+                },
+                "raw_residual_l1": 2352.9906804477796,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2676.5812371000648,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1201.9111293314231,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1201.9111293314231,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6791,
+                "correction_rate": 0.6529807692307692,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6529807692307692
+                },
+                "raw_residual_l1": 2676.5812371000648,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2602.689668789506,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1204.244463317924,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1204.244463317924,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6995,
+                "correction_rate": 0.6725961538461539,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6725961538461539
+                },
+                "raw_residual_l1": 2602.689668789506,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4854603882481089,
+              "ci_high": 0.0011587087257031831,
+              "ci_low": -0.00016847135906168968,
+              "mean_difference": 0.0005733405099364042,
+              "mean_gap_pct": 0.11824207567738425,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0007791870286871155,
+                "11": 0.0009564507993459512,
+                "12": 0.0013457388263830852,
+                "13": 0.0007888642289079181,
+                "14": 0.0005548357237321988
+              },
+              "ties": 12,
+              "wins": 426
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07293682238190348,
+              "ci_high": -0.0028564857181452956,
+              "ci_low": -0.003811987332629509,
+              "mean_difference": -0.00335084161164613,
+              "mean_gap_pct": -4.392376743806778,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.002727227897515503,
+                "11": -0.0036297786576634434,
+                "12": -0.0038896004513497896,
+                "13": -0.0034582869029111934,
+                "14": -0.003049314148790733
+              },
+              "ties": 2,
+              "wins": 704
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2414.868,
+              "ci_high": -3.384850000000013,
+              "ci_low": -11.78,
+              "mean_difference": -8.14200000000028,
+              "mean_gap_pct": -0.33602832840146263,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.88,
+                "11": -10.035,
+                "12": -12.79,
+                "13": -9.52,
+                "14": -9.245
+              },
+              "ties": 17,
+              "wins": 626
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2690238583.0517545,
+              "ci_high": -7364432.819209539,
+              "ci_low": -10675630.943917012,
+              "mean_difference": -8972604.119793415,
+              "mean_gap_pct": -0.3324157873395463,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7075617.156488784,
+                "11": -9259993.196975093,
+                "12": -11528533.879972702,
+                "13": -8173196.151557736,
+                "14": -8825680.21397217
+              },
+              "ties": 0,
+              "wins": 719
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4855112785056548,
+              "candidate_mean": 0.4854603882481089,
+              "ci_high": 5.6311446165608385e-06,
+              "ci_low": -0.00010913211819427128,
+              "mean_difference": -5.0890257545899154e-05,
+              "mean_gap_pct": -0.01048178689124035,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7.032099235968259e-05,
+                "11": -2.2227225280211927e-05,
+                "12": -9.556352115629801e-05,
+                "13": -5.6225628849373986e-05,
+                "14": -1.0113920084073026e-05
+              },
+              "ties": 366,
+              "wins": 343
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07287999637508591,
+              "candidate_mean": 0.07293682238190348,
+              "ci_high": 0.00013495526103468041,
+              "ci_low": -2.2476159586214343e-05,
+              "mean_difference": 5.682600681757022e-05,
+              "mean_gap_pct": 0.07797202201425499,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 6.520612318371842e-05,
+                "11": 7.168766040407445e-05,
+                "12": 0.00010903448109895356,
+                "13": 4.1316343996001676e-05,
+                "14": -3.1145745949159172e-06
+              },
+              "ties": 303,
+              "wins": 315
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.571,
+              "candidate_mean": 2414.868,
+              "ci_high": 0.686,
+              "ci_low": -0.087,
+              "mean_difference": 0.29700000000002547,
+              "mean_gap_pct": 0.01230032167204963,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.605,
+                "11": 0.495,
+                "12": -0.09,
+                "13": 0.41,
+                "14": 0.065
+              },
+              "ties": 324,
+              "wins": 308
+            },
+            "total_cost": {
+              "baseline_mean": 2690022275.031991,
+              "candidate_mean": 2690238583.0517545,
+              "ci_high": 490604.8005083731,
+              "ci_low": -52793.19498818733,
+              "mean_difference": 216308.0197634697,
+              "mean_gap_pct": 0.00804112373979867,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 411820.813466754,
+                "11": 323932.5574314606,
+                "12": 316459.29546090605,
+                "13": 45445.85897066713,
+                "14": -16118.426511508227
+              },
+              "ties": 154,
+              "wins": 381
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "episode75": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.012760229408740997,
+                "parameter_count": 287164,
+                "rms": 0.00046140393691380943
+              },
+              "11": {
+                "max_abs": 0.01745760068297386,
+                "parameter_count": 287164,
+                "rms": 0.0004845905563496395
+              },
+              "12": {
+                "max_abs": 0.010765309445559978,
+                "parameter_count": 287164,
+                "rms": 0.0003981383135904292
+              },
+              "13": {
+                "max_abs": 0.010350657626986504,
+                "parameter_count": 287164,
+                "rms": 0.00034318949319467193
+              },
+              "14": {
+                "max_abs": 0.010848384350538254,
+                "parameter_count": 287164,
+                "rms": 0.00043200966280340354
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2579.0317157693207,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1206.6889073260954,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1206.6889073260954,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 8151,
+                "correction_rate": 0.78375,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.78375
+                },
+                "raw_residual_l1": 2579.0317157693207,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2219.672303684056,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1205.0222411263321,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1205.0222411263321,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6847,
+                "correction_rate": 0.6583653846153846,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6583653846153846
+                },
+                "raw_residual_l1": 2219.672303684056,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2350.4897977663204,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1199.9111291708218,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1199.9111291708218,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7041,
+                "correction_rate": 0.6770192307692308,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6770192307692308
+                },
+                "raw_residual_l1": 2350.4897977663204,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2663.519800711423,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1201.4666850765545,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1201.4666850765545,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6778,
+                "correction_rate": 0.6517307692307692,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6517307692307692
+                },
+                "raw_residual_l1": 2663.519800711423,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2597.5502503328025,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1203.5777958954372,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1203.5777958954372,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6985,
+                "correction_rate": 0.6716346153846153,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6716346153846153
+                },
+                "raw_residual_l1": 2597.5502503328025,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4854780854551879,
+              "ci_high": 0.0011867495053468264,
+              "ci_low": -0.00011476015645535542,
+              "mean_difference": 0.000591037717015408,
+              "mean_gap_pct": 0.12189183435036903,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0007060651630542841,
+                "11": 0.0008682940523105231,
+                "12": 0.0014142707960271845,
+                "13": 0.0008648727375577242,
+                "14": 0.0005138161622358781
+              },
+              "ties": 11,
+              "wins": 427
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07285256057628821,
+              "ci_high": -0.002920837068317095,
+              "ci_low": -0.00394806902467224,
+              "mean_difference": -0.003435103417261401,
+              "mean_gap_pct": -4.50282947129152,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0027906692434330623,
+                "11": -0.0037135791086594008,
+                "12": -0.004076703357272628,
+                "13": -0.003485471498733545,
+                "14": -0.0031090938782083392
+              },
+              "ties": 1,
+              "wins": 733
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2414.647,
+              "ci_high": -3.6189750000000025,
+              "ci_low": -11.912,
+              "mean_difference": -8.363000000000284,
+              "mean_gap_pct": -0.3451492152323054,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.275,
+                "11": -9.92,
+                "12": -12.97,
+                "13": -9.905,
+                "14": -9.295
+              },
+              "ties": 20,
+              "wins": 621
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2690213794.1046495,
+              "ci_high": -7379827.203247251,
+              "ci_low": -10736636.618577734,
+              "mean_difference": -8997393.066898346,
+              "mean_gap_pct": -0.3333341647982181,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7135162.089437489,
+                "11": -9072207.554939635,
+                "12": -11760479.654197864,
+                "13": -8250544.514881176,
+                "14": -8768571.5210364
+              },
+              "ties": 0,
+              "wins": 717
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4855112785056548,
+              "candidate_mean": 0.4854780854551879,
+              "ci_high": 3.9528577640074965e-05,
+              "ci_low": -0.00010514229316861805,
+              "mean_difference": -3.319305046689536e-05,
+              "mean_gap_pct": -0.006836720780011449,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 2.8008732731488183e-06,
+                "11": -0.00011038397231563995,
+                "12": -2.7031551512198827e-05,
+                "13": 1.9782879800432084e-05,
+                "14": -5.113348158039377e-05
+              },
+              "ties": 256,
+              "wins": 366
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07287999637508591,
+              "candidate_mean": 0.07285256057628821,
+              "ci_high": 6.171592009998149e-05,
+              "ci_low": -0.00011582695424667719,
+              "mean_difference": -2.743579879770086e-05,
+              "mean_gap_pct": -0.03764517036540333,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 1.764777266158625e-06,
+                "11": -1.2112790591882437e-05,
+                "12": -7.806842482388488e-05,
+                "13": 1.413174817365019e-05,
+                "14": -6.289430401252252e-05
+              },
+              "ties": 182,
+              "wins": 424
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.571,
+              "candidate_mean": 2414.647,
+              "ci_high": 0.521,
+              "ci_low": -0.364025,
+              "mean_difference": 0.07600000000002183,
+              "mean_gap_pct": 0.003147557060861819,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.61,
+                "12": -0.27,
+                "13": 0.025,
+                "14": 0.015
+              },
+              "ties": 212,
+              "wins": 391
+            },
+            "total_cost": {
+              "baseline_mean": 2690022275.031991,
+              "candidate_mean": 2690213794.1046495,
+              "ci_high": 530874.4519646115,
+              "ci_low": -123861.7135527477,
+              "mean_difference": 191519.07265853882,
+              "mean_gap_pct": 0.00711960917335754,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 352275.88051804784,
+                "11": 511718.1994669199,
+                "12": 84513.52123574138,
+                "13": -31902.504352772237,
+                "14": 40990.26642426133
+              },
+              "ties": 79,
+              "wins": 465
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "pretrain": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.0,
+                "parameter_count": 287164,
+                "rms": 0.0
+              },
+              "11": {
+                "max_abs": 0.0,
+                "parameter_count": 287164,
+                "rms": 0.0
+              },
+              "12": {
+                "max_abs": 0.0,
+                "parameter_count": 287164,
+                "rms": 0.0
+              },
+              "13": {
+                "max_abs": 0.0,
+                "parameter_count": 287164,
+                "rms": 0.0
+              },
+              "14": {
+                "max_abs": 0.0,
+                "parameter_count": 287164,
+                "rms": 0.0
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2570.0749702807516,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1207.9111294705008,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1207.9111294705008,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 8143,
+                "correction_rate": 0.7829807692307692,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.7829807692307692
+                },
+                "raw_residual_l1": 2570.0749702807516,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2222.7042186558247,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1205.0222407264841,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1205.0222407264841,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6857,
+                "correction_rate": 0.6593269230769231,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6593269230769231
+                },
+                "raw_residual_l1": 2222.7042186558247,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2350.279119791463,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1201.8000180290805,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1201.8000180290805,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7053,
+                "correction_rate": 0.6781730769230769,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6781730769230769
+                },
+                "raw_residual_l1": 2350.279119791463,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2670.273478373885,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1201.3555738594796,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1201.3555738594796,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6793,
+                "correction_rate": 0.6531730769230769,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6531730769230769
+                },
+                "raw_residual_l1": 2670.273478373885,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2602.6690754406154,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1203.5777961413064,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1203.5777961413064,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7004,
+                "correction_rate": 0.6734615384615384,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6734615384615384
+                },
+                "raw_residual_l1": 2602.6690754406154,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4855112785056548,
+              "ci_high": 0.0012208010761213018,
+              "ci_low": -9.622579098348285e-05,
+              "mean_difference": 0.0006242307674823033,
+              "mean_gap_pct": 0.12873735654398696,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.000708866036327433,
+                "11": 0.000978678024626163,
+                "12": 0.0014413023475393833,
+                "13": 0.0008450898577572921,
+                "14": 0.0005649496438162718
+              },
+              "ties": 11,
+              "wins": 419
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07287999637508591,
+              "ci_high": -0.0029117392433521483,
+              "ci_low": -0.0038993517292319015,
+              "mean_difference": -0.0034076676184637,
+              "mean_gap_pct": -4.466865860189179,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.002792434020699221,
+                "11": -0.0037014663180675177,
+                "12": -0.003998634932448743,
+                "13": -0.003499603246907195,
+                "14": -0.003046199574195817
+              },
+              "ties": 2,
+              "wins": 720
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2414.571,
+              "ci_high": -3.739,
+              "ci_low": -11.976,
+              "mean_difference": -8.439000000000306,
+              "mean_gap_pct": -0.34828580979856893,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.275,
+                "11": -10.53,
+                "12": -12.7,
+                "13": -9.93,
+                "14": -9.31
+              },
+              "ties": 23,
+              "wins": 619
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2690022275.031991,
+              "ci_high": -7586627.319879798,
+              "ci_low": -10895498.408241846,
+              "mean_difference": -9188912.139556885,
+              "mean_gap_pct": -0.3404295367190505,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7487437.9699555375,
+                "11": -9583925.754406555,
+                "12": -11844993.175433608,
+                "13": -8218642.010528403,
+                "14": -8809561.78746066
+              },
+              "ties": 0,
+              "wins": 727
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4855112785056548,
+              "candidate_mean": 0.4855112785056548,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07287999637508591,
+              "candidate_mean": 0.07287999637508591,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.571,
+              "candidate_mean": 2414.571,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            },
+            "total_cost": {
+              "baseline_mean": 2690022275.031991,
+              "candidate_mean": 2690022275.031991,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        }
+      },
+      "segments": {
+        "episode25_to_episode50": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.4854837853207352,
+              "candidate_mean": 0.4854603882481089,
+              "ci_high": 3.762805369348272e-05,
+              "ci_low": -8.173177765226669e-05,
+              "mean_difference": -2.339707262632995e-05,
+              "mean_gap_pct": -0.004819331424400232,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 1.4591636075468872e-05,
+                "11": 2.400301297181828e-05,
+                "12": -5.550290594192514e-05,
+                "13": -6.613648890195639e-05,
+                "14": -3.394061733500403e-05
+              },
+              "ties": 459,
+              "wins": 289
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07287658097293734,
+              "candidate_mean": 0.07293682238190348,
+              "ci_high": 0.00015697770887285672,
+              "ci_low": -3.359296101675939e-05,
+              "mean_difference": 6.0241408966141274e-05,
+              "mean_gap_pct": 0.08266223272536877,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7.546846937445985e-06,
+                "11": 2.8020427007058902e-05,
+                "12": 0.00010796376143741678,
+                "13": 2.634661994759674e-07,
+                "14": 0.0001725062371242168
+              },
+              "ties": 402,
+              "wins": 274
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.807,
+              "candidate_mean": 2414.868,
+              "ci_high": 0.404,
+              "ci_low": -0.284,
+              "mean_difference": 0.06100000000014916,
+              "mean_gap_pct": 0.002526081794534684,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.175,
+                "11": 0.08,
+                "12": -0.195,
+                "13": 0.265,
+                "14": -0.02
+              },
+              "ties": 401,
+              "wins": 286
+            },
+            "total_cost": {
+              "baseline_mean": 2690188190.3824716,
+              "candidate_mean": 2690238583.0517545,
+              "ci_high": 280936.17672894034,
+              "ci_low": -191663.53600650185,
+              "mean_difference": 50392.66928291321,
+              "mean_gap_pct": 0.001873202382757793,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -46798.843693164585,
+                "11": 36589.28140605211,
+                "12": 161766.343806386,
+                "13": 112667.76004487634,
+                "14": -12261.195151093007
+              },
+              "ties": 249,
+              "wins": 370
+            }
+          }
+        },
+        "episode50_to_episode75": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.4854603882481089,
+              "candidate_mean": 0.4854780854551879,
+              "ci_high": 9.974269568835674e-05,
+              "ci_low": -6.47496779960715e-05,
+              "mean_difference": 1.7697207079003796e-05,
+              "mean_gap_pct": 0.003645448219342484,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 7.312186563283141e-05,
+                "11": -8.815674703542802e-05,
+                "12": 6.853196964409918e-05,
+                "13": 7.600850864980607e-05,
+                "14": -4.101956149632075e-05
+              },
+              "ties": 322,
+              "wins": 327
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07293682238190348,
+              "candidate_mean": 0.07285256057628821,
+              "ci_high": 7.326754294367486e-06,
+              "ci_low": -0.0001808467946731147,
+              "mean_difference": -8.426180561527108e-05,
+              "mean_gap_pct": -0.11552711355324614,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -6.344134591755979e-05,
+                "11": -8.380045099595688e-05,
+                "12": -0.00018710290592283845,
+                "13": -2.7184595822351485e-05,
+                "14": -5.977972941760661e-05
+              },
+              "ties": 242,
+              "wins": 413
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.868,
+              "candidate_mean": 2414.647,
+              "ci_high": 0.176,
+              "ci_low": -0.664025,
+              "mean_difference": -0.22100000000000364,
+              "mean_gap_pct": -0.009151638930161137,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.605,
+                "11": 0.115,
+                "12": -0.18,
+                "13": -0.385,
+                "14": -0.05
+              },
+              "ties": 269,
+              "wins": 401
+            },
+            "total_cost": {
+              "baseline_mean": 2690238583.0517545,
+              "candidate_mean": 2690213794.1046495,
+              "ci_high": 256803.79765535644,
+              "ci_low": -315394.05578452256,
+              "mean_difference": -24788.947104930878,
+              "mean_gap_pct": -0.0009214404722725661,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -59544.93294870615,
+                "11": 187785.64203545928,
+                "12": -231945.77422516464,
+                "13": -77348.36332343936,
+                "14": 57108.692935769555
+              },
+              "ties": 133,
+              "wins": 467
+            }
+          }
+        },
+        "episode75_to_episode100": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.4854780854551879,
+              "candidate_mean": 0.4854656913572369,
+              "ci_high": 6.696460520210237e-05,
+              "ci_low": -9.351380438082899e-05,
+              "mean_difference": -1.2394097951007321e-05,
+              "mean_gap_pct": -0.002552967543197449,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -8.681922560326099e-05,
+                "11": 3.550634340387243e-05,
+                "12": -3.916742846014482e-05,
+                "13": 6.301725797098118e-05,
+                "14": -3.4507437066291504e-05
+              },
+              "ties": 230,
+              "wins": 390
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07285256057628821,
+              "candidate_mean": 0.07288154318663674,
+              "ci_high": 0.00013781168559309423,
+              "ci_low": -8.372154496091406e-05,
+              "mean_difference": 2.8982610348532445e-05,
+              "mean_gap_pct": 0.03978255550562707,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 7.301109163905337e-05,
+                "11": 3.8134609180833535e-05,
+                "12": 5.98333437908502e-05,
+                "13": -0.00011426868515220141,
+                "14": 8.820269228407743e-05
+              },
+              "ties": 168,
+              "wins": 421
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.647,
+              "candidate_mean": 2414.717,
+              "ci_high": 0.611,
+              "ci_low": -0.498,
+              "mean_difference": 0.07000000000016371,
+              "mean_gap_pct": 0.0028989744670820917,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.445,
+                "11": -0.545,
+                "12": 0.34,
+                "13": -0.41,
+                "14": 0.52
+              },
+              "ties": 212,
+              "wins": 390
+            },
+            "total_cost": {
+              "baseline_mean": 2690213794.1046495,
+              "candidate_mean": 2690281764.587888,
+              "ci_high": 452238.3117375415,
+              "ci_low": -338082.8720356511,
+              "mean_difference": 67970.48323822021,
+              "mean_gap_pct": 0.002526582957353469,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 318144.0234408331,
+                "11": -328969.68803149223,
+                "12": 331465.68029747606,
+                "13": -312851.30943667056,
+                "14": 332063.70992142794
+              },
+              "ties": 77,
+              "wins": 459
+            }
+          }
+        },
+        "pretrain_to_episode25": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.4855112785056548,
+              "candidate_mean": 0.4854837853207352,
+              "ci_high": 3.0231780781431563e-05,
+              "ci_low": -9.063565606774922e-05,
+              "mean_difference": -2.7493184919569202e-05,
+              "mean_gap_pct": -0.005662728372488053,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -8.491262843515145e-05,
+                "11": -4.623023825203021e-05,
+                "12": -4.006061521437287e-05,
+                "13": 9.910860052582404e-06,
+                "14": 2.3826697250931005e-05
+              },
+              "ties": 456,
+              "wins": 278
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07287999637508591,
+              "candidate_mean": 0.07287658097293734,
+              "ci_high": 9.815642387466487e-05,
+              "ci_low": -0.00011251326691731304,
+              "mean_difference": -3.415402148571056e-06,
+              "mean_gap_pct": -0.004686336880415398,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 7.27529701211644e-05,
+                "11": 4.366723339701555e-05,
+                "12": 1.0707196615367815e-06,
+                "13": 4.1052877796525706e-05,
+                "14": -0.00017562081171913272
+              },
+              "ties": 404,
+              "wins": 299
+            },
+            "patients_lost": {
+              "baseline_mean": 2414.571,
+              "candidate_mean": 2414.807,
+              "ci_high": 0.582,
+              "ci_low": -0.08,
+              "mean_difference": 0.2359999999998763,
+              "mean_gap_pct": 0.009773992978457718,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.43,
+                "11": 0.415,
+                "12": 0.105,
+                "13": 0.145,
+                "14": 0.085
+              },
+              "ties": 406,
+              "wins": 285
+            },
+            "total_cost": {
+              "baseline_mean": 2690022275.031991,
+              "candidate_mean": 2690188190.3824716,
+              "ci_high": 459128.0649134557,
+              "ci_low": -91965.37977796653,
+              "mean_difference": 165915.3504805565,
+              "mean_gap_pct": 0.006167805821555264,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 458619.65715991857,
+                "11": 287343.27602540853,
+                "12": 154692.95165452003,
+                "13": -67221.9010742092,
+                "14": -3857.2313604152205
+              },
+              "ties": 238,
+              "wins": 362
+            }
+          }
+        }
+      }
+    },
+    "gcn_residual_mdl2_network_ddpg_afd": {
+      "checkpoints": {
+        "episode100": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.018514699768275023,
+                "parameter_count": 326453,
+                "rms": 0.0006046620432535711
+              },
+              "11": {
+                "max_abs": 0.019765853881835938,
+                "parameter_count": 326453,
+                "rms": 0.0006429812877866674
+              },
+              "12": {
+                "max_abs": 0.020041201263666153,
+                "parameter_count": 326453,
+                "rms": 0.000591566146508821
+              },
+              "13": {
+                "max_abs": 0.019993364810943604,
+                "parameter_count": 326453,
+                "rms": 0.0006487261528823475
+              },
+              "14": {
+                "max_abs": 0.0203770250082016,
+                "parameter_count": 326453,
+                "rms": 0.0006627892832133834
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2271.7202207986265,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1198.5777970800796,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1198.5777970800796,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7239,
+                "correction_rate": 0.6960576923076923,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6960576923076923
+                },
+                "raw_residual_l1": 2271.7202207986265,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2232.5207525864244,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.1333527755405,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.1333527755405,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 5571,
+                "correction_rate": 0.535673076923077,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.535673076923077
+                },
+                "raw_residual_l1": 2232.5207525864244,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2333.9208808857948,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.5777958457668,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.5777958457668,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7072,
+                "correction_rate": 0.68,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.68
+                },
+                "raw_residual_l1": 2333.9208808857948,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2279.9643153361976,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.4666850840051,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.4666850840051,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6827,
+                "correction_rate": 0.6564423076923077,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6564423076923077
+                },
+                "raw_residual_l1": 2279.9643153361976,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2007.2951058894396,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1198.0222412538196,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1198.0222412538196,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6384,
+                "correction_rate": 0.6138461538461538,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6138461538461538
+                },
+                "raw_residual_l1": 2007.2951058894396,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.48682561837208355,
+              "ci_high": 0.00234288938535562,
+              "ci_low": 0.00147745750473487,
+              "mean_difference": 0.001938570633911063,
+              "mean_gap_pct": 0.39979839489502,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0022661734302067134,
+                "11": 0.0022506273335280856,
+                "12": 0.002188775803930882,
+                "13": 0.0017909256935269757,
+                "14": 0.0011963509083629262
+              },
+              "ties": 12,
+              "wins": 299
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07171269837640355,
+              "ci_high": -0.003969784532576502,
+              "ci_low": -0.005155490099621121,
+              "mean_difference": -0.004574965617146057,
+              "mean_gap_pct": -5.9969926691330935,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0052263881959288905,
+                "11": -0.004761677530307844,
+                "12": -0.004399546270818734,
+                "13": -0.004842943890094863,
+                "14": -0.003644272198579913
+              },
+              "ties": 1,
+              "wins": 766
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2396.889,
+              "ci_high": -22.532,
+              "ci_low": -29.268025,
+              "mean_difference": -26.121000000000095,
+              "mean_gap_pct": -1.0780392982282405,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -27.85,
+                "11": -30.035,
+                "12": -27.875,
+                "13": -24.935,
+                "14": -19.91
+              },
+              "ties": 8,
+              "wins": 868
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2680403108.045904,
+              "ci_high": -17110983.731995575,
+              "ci_low": -20597275.565969992,
+              "mean_difference": -18808079.12564373,
+              "mean_gap_pct": -0.6967990950479261,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -20948758.08362391,
+                "11": -19493424.3839256,
+                "12": -19582348.146035545,
+                "13": -17103709.89400232,
+                "14": -16912155.12062987
+              },
+              "ties": 0,
+              "wins": 866
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868352155783153,
+              "candidate_mean": 0.48682561837208355,
+              "ci_high": 6.50226895545569e-05,
+              "ci_low": -8.886569571162443e-05,
+              "mean_difference": -9.597206231726219e-06,
+              "mean_gap_pct": -0.0019713459348509998,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -1.3761698457495641e-05,
+                "11": 3.279405722427881e-05,
+                "12": 6.038610457905103e-05,
+                "13": -1.5163029560651409e-05,
+                "14": -0.00011224146494381248
+              },
+              "ties": 183,
+              "wins": 392
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07171278013212867,
+              "candidate_mean": 0.07171269837640355,
+              "ci_high": 0.00012348022421352408,
+              "ci_low": -0.00011539911858753623,
+              "mean_difference": -8.175572512036933e-08,
+              "mean_gap_pct": -0.00011400440056812304,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -2.9871244114674407e-05,
+                "11": -7.652376342502585e-05,
+                "12": -0.00012432848320074842,
+                "13": 5.7009649406989246e-05,
+                "14": 0.00017330506270799424
+              },
+              "ties": 127,
+              "wins": 444
+            },
+            "patients_lost": {
+              "baseline_mean": 2397.034,
+              "candidate_mean": 2396.889,
+              "ci_high": 0.417,
+              "ci_low": -0.738,
+              "mean_difference": -0.1449999999999818,
+              "mean_gap_pct": -0.00604914239848003,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.19,
+                "11": -0.555,
+                "12": -0.955,
+                "13": 0.135,
+                "14": 0.46
+              },
+              "ties": 160,
+              "wins": 432
+            },
+            "total_cost": {
+              "baseline_mean": 2680397670.180905,
+              "candidate_mean": 2680403108.045904,
+              "ci_high": 410890.78542076785,
+              "ci_low": -407157.2418257611,
+              "mean_difference": 5437.864999294281,
+              "mean_gap_pct": 0.00020287530689158038,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 58540.49099862456,
+                "11": -198637.02558373808,
+                "12": -512240.9494150198,
+                "13": 76557.26287136316,
+                "14": 602969.5461269128
+              },
+              "ties": 17,
+              "wins": 492
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "episode25": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.006294485181570053,
+                "parameter_count": 326453,
+                "rms": 0.00021240875277694606
+              },
+              "11": {
+                "max_abs": 0.006511246785521507,
+                "parameter_count": 326453,
+                "rms": 0.00024203600582470283
+              },
+              "12": {
+                "max_abs": 0.006673015188425779,
+                "parameter_count": 326453,
+                "rms": 0.00021710730098309817
+              },
+              "13": {
+                "max_abs": 0.006633944809436798,
+                "parameter_count": 326453,
+                "rms": 0.0002330897875057995
+              },
+              "14": {
+                "max_abs": 0.007814232259988785,
+                "parameter_count": 326453,
+                "rms": 0.0002490771281475882
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2271.797439897433,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1198.6889082243044,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1198.6889082243044,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7244,
+                "correction_rate": 0.6965384615384616,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6965384615384616
+                },
+                "raw_residual_l1": 2271.797439897433,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2231.2810317240655,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.355574686494,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.355574686494,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 5574,
+                "correction_rate": 0.5359615384615385,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.5359615384615385
+                },
+                "raw_residual_l1": 2231.2810317240655,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2329.564034981653,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1196.6889072954655,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1196.6889072954655,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7070,
+                "correction_rate": 0.6798076923076923,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6798076923076923
+                },
+                "raw_residual_l1": 2329.564034981653,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2278.0635117664933,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1196.9111297147142,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1196.9111297147142,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6823,
+                "correction_rate": 0.6560576923076923,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6560576923076923
+                },
+                "raw_residual_l1": 2278.0635117664933,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2009.8874681144953,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1196.2444639412893,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1196.2444639412893,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6380,
+                "correction_rate": 0.6134615384615385,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6134615384615385
+                },
+                "raw_residual_l1": 2009.8874681144953,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.48686331053469295,
+              "ci_high": 0.002356001366843561,
+              "ci_low": 0.0015738171988394977,
+              "mean_difference": 0.001976262796520467,
+              "mean_gap_pct": 0.4075717851691518,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0023694741974033735,
+                "11": 0.0021632194885134164,
+                "12": 0.0022217546651158025,
+                "13": 0.0017389292164567082,
+                "14": 0.0013879364151130843
+              },
+              "ties": 15,
+              "wins": 289
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07168346697145839,
+              "ci_high": -0.004037605996673595,
+              "ci_low": -0.005164799591063464,
+              "mean_difference": -0.004604197022091222,
+              "mean_gap_pct": -6.035310010908871,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.005262683879889529,
+                "11": -0.004664105791600567,
+                "12": -0.004474232223601357,
+                "13": -0.004810623769983247,
+                "14": -0.0038093394453814337
+              },
+              "ties": 0,
+              "wins": 768
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2396.702,
+              "ci_high": -22.992975,
+              "ci_low": -29.304025,
+              "mean_difference": -26.307999999999993,
+              "mean_gap_pct": -1.0857569717004878,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -28.7,
+                "11": -29.44,
+                "12": -27.945,
+                "13": -24.635,
+                "14": -20.82
+              },
+              "ties": 10,
+              "wins": 875
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2680235455.4994903,
+              "ci_high": -17231461.99648901,
+              "ci_low": -20802185.04476045,
+              "mean_difference": -18975731.67205763,
+              "mean_gap_pct": -0.7030102632296044,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -21416426.195655778,
+                "11": -19243042.84890984,
+                "12": -19770088.139051486,
+                "13": -16867488.373509556,
+                "14": -17581612.80316149
+              },
+              "ties": 0,
+              "wins": 869
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868352155783153,
+              "candidate_mean": 0.48686331053469295,
+              "ci_high": 0.00011065401002445712,
+              "ci_low": -5.444219851612761e-05,
+              "mean_difference": 2.8094956377677782e-05,
+              "mean_gap_pct": 0.00577093757367235,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 8.953906873916479e-05,
+                "11": -5.4613787790390445e-05,
+                "12": 9.33649657639718e-05,
+                "13": -6.715950663091886e-05,
+                "14": 7.934404180634569e-05
+              },
+              "ties": 265,
+              "wins": 365
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07171278013212867,
+              "candidate_mean": 0.07168346697145839,
+              "ci_high": 7.444207312693604e-05,
+              "ci_low": -0.00014151836623197968,
+              "mean_difference": -2.9313160670285665e-05,
+              "mean_gap_pct": -0.040875783390738774,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -6.616692807531327e-05,
+                "11": 2.1047975282250803e-05,
+                "12": -0.00019901443598337103,
+                "13": 8.932976951860492e-05,
+                "14": 8.23781590647301e-06
+              },
+              "ties": 193,
+              "wins": 392
+            },
+            "patients_lost": {
+              "baseline_mean": 2397.034,
+              "candidate_mean": 2396.702,
+              "ci_high": 0.22,
+              "ci_low": -0.885,
+              "mean_difference": -0.33199999999987995,
+              "mean_gap_pct": -0.013850450181344108,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.66,
+                "11": 0.04,
+                "12": -1.025,
+                "13": 0.435,
+                "14": -0.45
+              },
+              "ties": 227,
+              "wins": 387
+            },
+            "total_cost": {
+              "baseline_mean": 2680397670.180905,
+              "candidate_mean": 2680235455.4994903,
+              "ci_high": 215074.51115162316,
+              "ci_low": -565566.2851619333,
+              "mean_difference": -162214.6814146042,
+              "mean_gap_pct": -0.006051888614112101,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -409127.62103324535,
+                "11": 51744.509432019,
+                "12": -699980.9424309599,
+                "13": 312778.7833641243,
+                "14": -66488.13640470862
+              },
+              "ties": 57,
+              "wins": 460
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "episode50": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.01063700020313263,
+                "parameter_count": 326453,
+                "rms": 0.0003641010028853769
+              },
+              "11": {
+                "max_abs": 0.010573156177997589,
+                "parameter_count": 326453,
+                "rms": 0.0004010289430692767
+              },
+              "12": {
+                "max_abs": 0.010804003104567528,
+                "parameter_count": 326453,
+                "rms": 0.00036691965404823696
+              },
+              "13": {
+                "max_abs": 0.011176986619830132,
+                "parameter_count": 326453,
+                "rms": 0.0003970950773293133
+              },
+              "14": {
+                "max_abs": 0.011874508112668991,
+                "parameter_count": 326453,
+                "rms": 0.0004108289890125335
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2276.6362706366926,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1199.2444635315073,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1199.2444635315073,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7245,
+                "correction_rate": 0.6966346153846154,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6966346153846154
+                },
+                "raw_residual_l1": 2276.6362706366926,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2235.4165536016226,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.3555746682816,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.3555746682816,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 5575,
+                "correction_rate": 0.5360576923076923,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.5360576923076923
+                },
+                "raw_residual_l1": 2235.4165536016226,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2336.0782472267747,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1196.244462893241,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1196.244462893241,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7071,
+                "correction_rate": 0.6799038461538461,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6799038461538461
+                },
+                "raw_residual_l1": 2336.0782472267747,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2280.3756065201014,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.3555741732318,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.3555741732318,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6820,
+                "correction_rate": 0.6557692307692308,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6557692307692308
+                },
+                "raw_residual_l1": 2280.3756065201014,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2004.405531765893,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.6889078186618,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.6889078186618,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6387,
+                "correction_rate": 0.6141346153846153,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6141346153846153
+                },
+                "raw_residual_l1": 2004.405531765893,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4868915750145693,
+              "ci_high": 0.0024201520736688207,
+              "ci_low": 0.0015280415808589728,
+              "mean_difference": 0.002004527276396828,
+              "mean_gap_pct": 0.41340087052175195,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.002499139746905644,
+                "11": 0.0022343228281450946,
+                "12": 0.0021766730631987527,
+                "13": 0.0018891949089552252,
+                "14": 0.0012233058347795036
+              },
+              "ties": 17,
+              "wins": 297
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07170690303055184,
+              "ci_high": -0.003949570429614881,
+              "ci_low": -0.005200691404265515,
+              "mean_difference": -0.004580760962997768,
+              "mean_gap_pct": -6.004589370288081,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.005363917220874723,
+                "11": -0.0047099485774762685,
+                "12": -0.004257361974349861,
+                "13": -0.004888826597244738,
+                "14": -0.003683750445043279
+              },
+              "ties": 0,
+              "wins": 768
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2396.655,
+              "ci_high": -22.791,
+              "ci_low": -29.501075,
+              "mean_difference": -26.355000000000018,
+              "mean_gap_pct": -1.0876967078138355,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -29.14,
+                "11": -29.7,
+                "12": -27.645,
+                "13": -25.285,
+                "14": -20.005
+              },
+              "ties": 9,
+              "wins": 874
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2680181006.575485,
+              "ci_high": -17233844.442651134,
+              "ci_low": -20975844.070670158,
+              "mean_difference": -19030180.59606266,
+              "mean_gap_pct": -0.7050274793801528,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -21888353.331545573,
+                "11": -19469412.75024705,
+                "12": -19367916.439751774,
+                "13": -17449576.384949256,
+                "14": -16975644.07381829
+              },
+              "ties": 0,
+              "wins": 870
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868352155783153,
+              "candidate_mean": 0.4868915750145693,
+              "ci_high": 0.00016457394141843287,
+              "ci_low": -4.663013360321269e-05,
+              "mean_difference": 5.635943625403872e-05,
+              "mean_gap_pct": 0.011576696683104347,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.00021920461824143534,
+                "11": 1.648955184128803e-05,
+                "12": 4.8283363846921835e-05,
+                "13": 8.310618586759799e-05,
+                "14": -8.5286538527235e-05
+              },
+              "ties": 216,
+              "wins": 377
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07171278013212867,
+              "candidate_mean": 0.07170690303055184,
+              "ci_high": 0.00010365256364082568,
+              "ci_low": -0.0001227959023403879,
+              "mean_difference": -5.877101576831634e-06,
+              "mean_gap_pct": -0.008195333615574864,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.00016740026906050663,
+                "11": -2.4794810593451177e-05,
+                "12": 1.785581326812436e-05,
+                "13": 1.1126942257114261e-05,
+                "14": 0.0001338268162446278
+              },
+              "ties": 137,
+              "wins": 431
+            },
+            "patients_lost": {
+              "baseline_mean": 2397.034,
+              "candidate_mean": 2396.655,
+              "ci_high": 0.181,
+              "ci_low": -0.9390249999999999,
+              "mean_difference": -0.3789999999999054,
+              "mean_gap_pct": -0.015811206682921703,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -1.1,
+                "11": -0.22,
+                "12": -0.725,
+                "13": -0.215,
+                "14": 0.365
+              },
+              "ties": 166,
+              "wins": 435
+            },
+            "total_cost": {
+              "baseline_mean": 2680397670.180905,
+              "candidate_mean": 2680181006.575485,
+              "ci_high": 274760.3908105091,
+              "ci_low": -695212.5971054537,
+              "mean_difference": -216663.60541963577,
+              "mean_gap_pct": -0.008083263458627494,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -881054.7569230354,
+                "11": -174625.39190518737,
+                "12": -297809.243131249,
+                "13": -269309.22807557584,
+                "14": 539480.5929384946
+              },
+              "ties": 29,
+              "wins": 500
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "episode75": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.014711726922541857,
+                "parameter_count": 326453,
+                "rms": 0.0004919957220506928
+              },
+              "11": {
+                "max_abs": 0.015247456729412079,
+                "parameter_count": 326453,
+                "rms": 0.0005306718540271146
+              },
+              "12": {
+                "max_abs": 0.015154484659433365,
+                "parameter_count": 326453,
+                "rms": 0.00048674969371636286
+              },
+              "13": {
+                "max_abs": 0.01582719385623932,
+                "parameter_count": 326453,
+                "rms": 0.0005292364265317822
+              },
+              "14": {
+                "max_abs": 0.016245078295469284,
+                "parameter_count": 326453,
+                "rms": 0.0005458060809911079
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2271.5945793651044,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1198.8000190473263,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1198.8000190473263,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7243,
+                "correction_rate": 0.6964423076923076,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6964423076923076
+                },
+                "raw_residual_l1": 2271.5945793651044,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2230.6404254511,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.0222414226996,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.0222414226996,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 5578,
+                "correction_rate": 0.5363461538461538,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.5363461538461538
+                },
+                "raw_residual_l1": 2230.6404254511,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2332.0244392510504,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1196.8000181168318,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1196.8000181168318,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7073,
+                "correction_rate": 0.6800961538461539,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6800961538461539
+                },
+                "raw_residual_l1": 2332.0244392510504,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2278.9539171811193,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.1333520809808,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.1333520809808,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6826,
+                "correction_rate": 0.6563461538461538,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6563461538461538
+                },
+                "raw_residual_l1": 2278.9539171811193,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2004.2336422465742,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1198.2444632285171,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1198.2444632285171,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6382,
+                "correction_rate": 0.6136538461538461,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6136538461538461
+                },
+                "raw_residual_l1": 2004.2336422465742,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4868342429509487,
+              "ci_high": 0.0023513860704046084,
+              "ci_low": 0.0015131510021336972,
+              "mean_difference": 0.0019471952127761982,
+              "mean_gap_pct": 0.4015770728170981,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.002428511671175413,
+                "11": 0.002173177535144415,
+                "12": 0.0020930090693409282,
+                "13": 0.0017454707295163699,
+                "14": 0.001295807058703975
+              },
+              "ties": 10,
+              "wins": 294
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07169444620244243,
+              "ci_high": -0.003995582562448734,
+              "ci_low": -0.005209600829705344,
+              "mean_difference": -0.004593217791107176,
+              "mean_gap_pct": -6.020918128382525,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.005434674535022173,
+                "11": -0.004687674011497263,
+                "12": -0.004286482700826618,
+                "13": -0.0047717212759571855,
+                "14": -0.0037855364322326203
+              },
+              "ties": 0,
+              "wins": 770
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2396.954,
+              "ci_high": -22.68387500000001,
+              "ci_low": -29.045050000000003,
+              "mean_difference": -26.05600000000004,
+              "mean_gap_pct": -1.075356684454461,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -28.775,
+                "11": -29.41,
+                "12": -27.015,
+                "13": -24.63,
+                "14": -20.45
+              },
+              "ties": 5,
+              "wins": 865
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2680334495.2372823,
+              "ci_high": -17148858.45831577,
+              "ci_low": -20759922.33465821,
+              "mean_difference": -18876691.934265614,
+              "mean_gap_pct": -0.699341052822404,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -21643695.667783055,
+                "11": -19263182.667029146,
+                "12": -19172554.414135884,
+                "13": -16970251.72283603,
+                "14": -17333775.199542895
+              },
+              "ties": 0,
+              "wins": 867
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868352155783153,
+              "candidate_mean": 0.4868342429509487,
+              "ci_high": 9.413175554672417e-05,
+              "ci_low": -8.398880203785912e-05,
+              "mean_difference": -9.726273665910945e-07,
+              "mean_gap_pct": -0.00019978574586797362,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.000148576542511204,
+                "11": -4.4655741159391474e-05,
+                "12": -3.5380630010902744e-05,
+                "13": -6.061799357125724e-05,
+                "14": -1.278531460276372e-05
+              },
+              "ties": 210,
+              "wins": 388
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07171278013212867,
+              "candidate_mean": 0.07169444620244243,
+              "ci_high": 0.00010035816112951639,
+              "ci_low": -0.0001532030621592605,
+              "mean_difference": -1.8333929686240036e-05,
+              "mean_gap_pct": -0.02556577733070774,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.0002381575832079557,
+                "11": -2.5202446144469148e-06,
+                "12": -1.1264913208633327e-05,
+                "13": 0.00012823226354466695,
+                "14": 3.2040829055286456e-05
+              },
+              "ties": 130,
+              "wins": 440
+            },
+            "patients_lost": {
+              "baseline_mean": 2397.034,
+              "candidate_mean": 2396.954,
+              "ci_high": 0.37902499999999784,
+              "ci_low": -0.565,
+              "mean_difference": -0.07999999999992724,
+              "mean_gap_pct": -0.003337457875020848,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.735,
+                "11": 0.07,
+                "12": -0.095,
+                "13": 0.44,
+                "14": -0.08
+              },
+              "ties": 169,
+              "wins": 416
+            },
+            "total_cost": {
+              "baseline_mean": 2680397670.180905,
+              "candidate_mean": 2680334495.2372823,
+              "ci_high": 282208.07796014415,
+              "ci_low": -442931.8811027143,
+              "mean_difference": -63174.94362258911,
+              "mean_gap_pct": -0.0023569242849821354,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -636397.0931605196,
+                "11": 31604.69131271362,
+                "12": -102447.21751535892,
+                "13": 210015.4340376556,
+                "14": 181349.46721389054
+              },
+              "ties": 22,
+              "wins": 511
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        },
+        "pretrain": {
+          "actor_drift_from_pretrain": {
+            "available": true,
+            "per_seed": {
+              "10": {
+                "max_abs": 0.0,
+                "parameter_count": 326453,
+                "rms": 0.0
+              },
+              "11": {
+                "max_abs": 0.0,
+                "parameter_count": 326453,
+                "rms": 0.0
+              },
+              "12": {
+                "max_abs": 0.0,
+                "parameter_count": 326453,
+                "rms": 0.0
+              },
+              "13": {
+                "max_abs": 0.0,
+                "parameter_count": 326453,
+                "rms": 0.0
+              },
+              "14": {
+                "max_abs": 0.0,
+                "parameter_count": 326453,
+                "rms": 0.0
+              }
+            }
+          },
+          "residual_usage": {
+            "nonzero_residual_seeds": 5,
+            "per_seed": {
+              "10": {
+                "applied_residual_l1": 2272.571332121268,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1198.6889082574182,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1198.6889082574182,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7255,
+                "correction_rate": 0.6975961538461538,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6975961538461538
+                },
+                "raw_residual_l1": 2272.571332121268,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "11": {
+                "applied_residual_l1": 2231.1324037648737,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1196.800019427306,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1196.800019427306,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 5572,
+                "correction_rate": 0.5357692307692308,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.5357692307692308
+                },
+                "raw_residual_l1": 2231.1324037648737,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "12": {
+                "applied_residual_l1": 2328.635484430939,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1196.6889072433114,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1196.6889072433114,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 7068,
+                "correction_rate": 0.6796153846153846,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6796153846153846
+                },
+                "raw_residual_l1": 2328.635484430939,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "13": {
+                "applied_residual_l1": 2278.1482598725706,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1197.3555742030342,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1197.3555742030342,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6827,
+                "correction_rate": 0.6564423076923077,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6564423076923077
+                },
+                "raw_residual_l1": 2278.1482598725706,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              },
+              "14": {
+                "applied_residual_l1": 2005.2299990523607,
+                "capacity_action_effect": {
+                  "amplification_l1": 0.0,
+                  "anchor_l1": 1198.1333524253632,
+                  "damping_l1": 0.0,
+                  "delta_l1": 0.0,
+                  "final_l1": 1198.1333524253632,
+                  "new_flow_l1": 0.0,
+                  "reversal_l1": 0.0
+                },
+                "corrected_decisions": 6387,
+                "correction_rate": 0.6141346153846153,
+                "group_correction_rates": {
+                  "capacity_transfer": 0.0,
+                  "reagent_transfer": 0.0,
+                  "replenishment": 0.0,
+                  "specimen_transfer": 0.6141346153846153
+                },
+                "raw_residual_l1": 2005.2299990523607,
+                "temporal_suppression_rate": 0.0,
+                "temporally_suppressed_decisions": 0,
+                "temporally_suppressed_l1": 0.0,
+                "total_decisions": 10400
+              }
+            },
+            "seed_count": 5
+          },
+          "vs_anchor": {
+            "completion_service_level": {
+              "baseline_mean": 0.4848870477381725,
+              "candidate_mean": 0.4868352155783153,
+              "ci_high": 0.0023229308503107666,
+              "ci_low": 0.001528489719612927,
+              "mean_difference": 0.0019481678401427893,
+              "mean_gap_pct": 0.4017776612574634,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.002279935128664209,
+                "11": 0.002217833276303807,
+                "12": 0.002128389699351831,
+                "13": 0.001806088723087627,
+                "14": 0.0013085923733067387
+              },
+              "ties": 17,
+              "wins": 298
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07628766399354961,
+              "candidate_mean": 0.07171278013212867,
+              "ci_high": -0.004017482945037741,
+              "ci_low": -0.005145290432654659,
+              "mean_difference": -0.004574883861420936,
+              "mean_gap_pct": -5.996885501445894,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.005196516951814216,
+                "11": -0.004685153766882818,
+                "12": -0.004275217787617985,
+                "13": -0.004899953539501852,
+                "14": -0.0038175772612879066
+              },
+              "ties": 1,
+              "wins": 766
+            },
+            "patients_lost": {
+              "baseline_mean": 2423.01,
+              "candidate_mean": 2397.034,
+              "ci_high": -22.714925000000008,
+              "ci_low": -28.901025,
+              "mean_difference": -25.976000000000113,
+              "mean_gap_pct": -1.0720550059636613,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -28.04,
+                "11": -29.48,
+                "12": -26.92,
+                "13": -25.07,
+                "14": -20.37
+              },
+              "ties": 7,
+              "wins": 870
+            },
+            "total_cost": {
+              "baseline_mean": 2699211187.171548,
+              "candidate_mean": 2680397670.180905,
+              "ci_high": -17261575.0894977,
+              "ci_low": -20471781.832754135,
+              "mean_difference": -18813516.990643024,
+              "mean_gap_pct": -0.6970005563128001,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -21007298.574622534,
+                "11": -19294787.35834186,
+                "12": -19070107.196620528,
+                "13": -17180267.15687368,
+                "14": -17515124.666756783
+              },
+              "ties": 0,
+              "wins": 869
+            }
+          },
+          "vs_anchor_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "vs_pretrain": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868352155783153,
+              "candidate_mean": 0.4868352155783153,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07171278013212867,
+              "candidate_mean": 0.07171278013212867,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            },
+            "patients_lost": {
+              "baseline_mean": 2397.034,
+              "candidate_mean": 2397.034,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            },
+            "total_cost": {
+              "baseline_mean": 2680397670.180905,
+              "candidate_mean": 2680397670.180905,
+              "ci_high": 0.0,
+              "ci_low": 0.0,
+              "mean_difference": 0.0,
+              "mean_gap_pct": 0.0,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0,
+                "11": 0.0,
+                "12": 0.0,
+                "13": 0.0,
+                "14": 0.0
+              },
+              "ties": 1000,
+              "wins": 0
+            }
+          },
+          "vs_pretrain_clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          }
+        }
+      },
+      "segments": {
+        "episode25_to_episode50": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.48686331053469295,
+              "candidate_mean": 0.4868915750145693,
+              "ci_high": 0.000138224515632269,
+              "ci_low": -9.494102853470499e-05,
+              "mean_difference": 2.8264479876360937e-05,
+              "mean_gap_pct": 0.005805424082032336,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.00012966554950227056,
+                "11": 7.110333963167848e-05,
+                "12": -4.508160191704996e-05,
+                "13": 0.00015026569249851685,
+                "14": -0.0001646305803335807
+              },
+              "ties": 260,
+              "wins": 359
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07168346697145839,
+              "candidate_mean": 0.07170690303055184,
+              "ci_high": 0.00015861650604006498,
+              "ci_low": -0.00010377213157252713,
+              "mean_difference": 2.343605909345403e-05,
+              "mean_gap_pct": 0.0326938136276045,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.00010123334098519337,
+                "11": -4.5842785875701983e-05,
+                "12": 0.0002168702492514954,
+                "13": -7.820282726149065e-05,
+                "14": 0.0001255890003381548
+              },
+              "ties": 180,
+              "wins": 418
+            },
+            "patients_lost": {
+              "baseline_mean": 2396.702,
+              "candidate_mean": 2396.655,
+              "ci_high": 0.546,
+              "ci_low": -0.613,
+              "mean_difference": -0.047000000000025466,
+              "mean_gap_pct": -0.0019610281127993992,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.44,
+                "11": -0.26,
+                "12": 0.3,
+                "13": -0.65,
+                "14": 0.815
+              },
+              "ties": 209,
+              "wins": 395
+            },
+            "total_cost": {
+              "baseline_mean": 2680235455.4994903,
+              "candidate_mean": 2680181006.575485,
+              "ci_high": 437618.46447764785,
+              "ci_low": -529010.8442158572,
+              "mean_difference": -54448.924005031586,
+              "mean_gap_pct": -0.0020314977884987517,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -471927.1358897901,
+                "11": -226369.90133720636,
+                "12": 402171.699299711,
+                "13": -582088.0114397001,
+                "14": 605968.7293432034
+              },
+              "ties": 63,
+              "wins": 469
+            }
+          }
+        },
+        "episode50_to_episode75": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868915750145693,
+              "candidate_mean": 0.4868342429509487,
+              "ci_high": 2.5539434019611748e-05,
+              "ci_low": -0.00013508417445776025,
+              "mean_difference": -5.7332063620629814e-05,
+              "mean_gap_pct": -0.011775119259131616,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7.062807573023133e-05,
+                "11": -6.11452930006795e-05,
+                "12": -8.366399385782459e-05,
+                "13": -0.00014372417943885524,
+                "14": 7.250122392447128e-05
+              },
+              "ties": 318,
+              "wins": 367
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07170690303055184,
+              "candidate_mean": 0.07169444620244243,
+              "ci_high": 8.511648530371424e-05,
+              "ci_low": -0.00010637209532763311,
+              "mean_difference": -1.2456828109408402e-05,
+              "mean_gap_pct": -0.017371867397621366,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -7.075731414744906e-05,
+                "11": 2.227456597900426e-05,
+                "12": -2.912072647675769e-05,
+                "13": 0.0001171053212875527,
+                "14": -0.00010178598718934136
+              },
+              "ties": 247,
+              "wins": 383
+            },
+            "patients_lost": {
+              "baseline_mean": 2396.655,
+              "candidate_mean": 2396.954,
+              "ci_high": 0.746,
+              "ci_low": -0.186,
+              "mean_difference": 0.29899999999997817,
+              "mean_gap_pct": 0.012475721369991848,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.365,
+                "11": 0.29,
+                "12": 0.63,
+                "13": 0.655,
+                "14": -0.445
+              },
+              "ties": 281,
+              "wins": 337
+            },
+            "total_cost": {
+              "baseline_mean": 2680181006.575485,
+              "candidate_mean": 2680334495.2372823,
+              "ci_high": 469174.6260879713,
+              "ci_low": -186734.14543327698,
+              "mean_difference": 153488.66179704666,
+              "mean_gap_pct": 0.005726802086145736,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 244657.6637625158,
+                "11": 206230.083217901,
+                "12": 195362.02561589002,
+                "13": 479324.66211323143,
+                "14": -358131.1257246041
+              },
+              "ties": 92,
+              "wins": 442
+            }
+          }
+        },
+        "episode75_to_episode100": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868342429509487,
+              "candidate_mean": 0.48682561837208355,
+              "ci_high": 9.033594079765657e-05,
+              "ci_low": -0.00011429930863766082,
+              "mean_difference": -8.624578865135124e-06,
+              "mean_gap_pct": -0.001771563728314834,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.00016233824096869965,
+                "11": 7.744979838367027e-05,
+                "12": 9.576673458995377e-05,
+                "13": 4.5454964010605834e-05,
+                "14": -9.945615034104876e-05
+              },
+              "ties": 360,
+              "wins": 322
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07169444620244243,
+              "candidate_mean": 0.07171269837640355,
+              "ci_high": 0.00015173794674831374,
+              "ci_low": -0.00010789832560654046,
+              "mean_difference": 1.8252173961119667e-05,
+              "mean_gap_pct": 0.025458281537709772,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.0002082863390932813,
+                "11": -7.400351881057893e-05,
+                "12": -0.00011306356999211508,
+                "13": -7.122261413767771e-05,
+                "14": 0.00014126423365270777
+              },
+              "ties": 307,
+              "wins": 345
+            },
+            "patients_lost": {
+              "baseline_mean": 2396.954,
+              "candidate_mean": 2396.889,
+              "ci_high": 0.6190249999999978,
+              "ci_low": -0.723,
+              "mean_difference": -0.06500000000005457,
+              "mean_gap_pct": -0.0027117750278084,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 0.925,
+                "11": -0.625,
+                "12": -0.86,
+                "13": -0.305,
+                "14": 0.54
+              },
+              "ties": 327,
+              "wins": 353
+            },
+            "total_cost": {
+              "baseline_mean": 2680334495.2372823,
+              "candidate_mean": 2680403108.045904,
+              "ci_high": 501630.14928675763,
+              "ci_low": -344647.5025547681,
+              "mean_difference": 68612.80862188339,
+              "mean_gap_pct": 0.0025598599258339692,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 694937.5841591442,
+                "11": -230241.71689645172,
+                "12": -409793.73189966084,
+                "13": -133458.17116629242,
+                "14": 421620.0789130223
+              },
+              "ties": 143,
+              "wins": 428
+            }
+          }
+        },
+        "pretrain_to_episode25": {
+          "clinical_noninferiority": {
+            "checks": {
+              "completion_service_level": true,
+              "patient_ineligibility_during_manufacturing_rate": true,
+              "patients_lost": true
+            },
+            "passed": true
+          },
+          "metrics": {
+            "completion_service_level": {
+              "baseline_mean": 0.4868352155783153,
+              "candidate_mean": 0.48686331053469295,
+              "ci_high": 0.00011035621678654413,
+              "ci_low": -5.612090506407122e-05,
+              "mean_difference": 2.8094956377677782e-05,
+              "mean_gap_pct": 0.00577093757367235,
+              "metric": "completion_service_level",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": 8.953906873916479e-05,
+                "11": -5.4613787790390445e-05,
+                "12": 9.33649657639718e-05,
+                "13": -6.715950663091886e-05,
+                "14": 7.934404180634569e-05
+              },
+              "ties": 265,
+              "wins": 365
+            },
+            "patient_ineligibility_during_manufacturing_rate": {
+              "baseline_mean": 0.07171278013212867,
+              "candidate_mean": 0.07168346697145839,
+              "ci_high": 7.448714222359115e-05,
+              "ci_low": -0.00014128494742016615,
+              "mean_difference": -2.9313160670285665e-05,
+              "mean_gap_pct": -0.040875783390738774,
+              "metric": "patient_ineligibility_during_manufacturing_rate",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -6.616692807531327e-05,
+                "11": 2.1047975282250803e-05,
+                "12": -0.00019901443598337103,
+                "13": 8.932976951860492e-05,
+                "14": 8.23781590647301e-06
+              },
+              "ties": 193,
+              "wins": 392
+            },
+            "patients_lost": {
+              "baseline_mean": 2397.034,
+              "candidate_mean": 2396.702,
+              "ci_high": 0.223,
+              "ci_low": -0.891025,
+              "mean_difference": -0.33199999999987995,
+              "mean_gap_pct": -0.013850450181344108,
+              "metric": "patients_lost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -0.66,
+                "11": 0.04,
+                "12": -1.025,
+                "13": 0.435,
+                "14": -0.45
+              },
+              "ties": 227,
+              "wins": 387
+            },
+            "total_cost": {
+              "baseline_mean": 2680397670.180905,
+              "candidate_mean": 2680235455.4994903,
+              "ci_high": 212543.70662087263,
+              "ci_low": -563932.5188522931,
+              "mean_difference": -162214.6814146042,
+              "mean_gap_pct": -0.006051888614112101,
+              "metric": "total_cost",
+              "n_pairs": 1000,
+              "n_training_seeds": 5,
+              "per_seed_mean_difference": {
+                "10": -409127.62103324535,
+                "11": 51744.509432019,
+                "12": -699980.9424309599,
+                "13": 312778.7833641243,
+                "14": -66488.13640470862
+              },
+              "ties": 57,
+              "wins": 460
+            }
+          }
+        }
+      }
+    }
+  },
+  "crn_audit": {
+    "candidate_keys_matched": 10000,
+    "excluded_wall_clock_fields": [
+      "average_inference_ms"
+    ],
+    "passed": true,
+    "rows_per_run": 200,
+    "runs_per_variant": 10,
+    "scientific_anchor_field_values_matched": 590000,
+    "variant_count": 5
+  },
+  "decision": {
+    "checks": {
+      "clinical_noninferiority": true,
+      "minimum_improving_seeds": true,
+      "total_cost_ci_high_below_zero": false
+    },
+    "classification": "plateaued_or_inconclusive",
+    "improving_seed_count": 3,
+    "late_segment": "episode75_to_episode100",
+    "next_step": "matched_td3_100_episode_three_seed_development_screen",
+    "primary_algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+    "required_improving_seed_count": 3
+  },
+  "protocol": {
+    "algorithms": [
+      "gcn_residual_mdl2_network_ddpg_afd",
+      "flat_residual_mdl2_network_ddpg_afd"
+    ],
+    "clinical_noninferiority": {
+      "margins": {
+        "completion_service_level": 0.001,
+        "patient_ineligibility_during_manufacturing_rate": 0.001,
+        "patients_lost": 1.0
+      },
+      "mode": "paired_ci",
+      "z_value": 1.96
+    },
+    "fixed_deployment_candidate": {
+      "scale": 1.0,
+      "use_checkpoint_group_thresholds": true
+    },
+    "holdout_replications": 50,
+    "holdout_seed": 93100000,
+    "max_steps": 52,
+    "scenarios": [
+      "routing_nominal_history",
+      "routing_abrupt_regime_shift",
+      "routing_regional_drift",
+      "routing_compound_regional_stress"
+    ],
+    "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/training_manifest.json",
+    "training_seeds": [
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "validation_replications": 1,
+    "validation_seed": 93000000
+  },
+  "stage_spec": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_stage_b.json",
+  "summary_paths": {
+    "episode100": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100/episode100/summary.json",
+    "episode25": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100/episode25/summary.json",
+    "episode50": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100/episode50/summary.json",
+    "episode75": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100/episode75/summary.json",
+    "pretrain": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100/pretrain/summary.json"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_frozen_route_headroom_audit",
+  "experimental_role": "reproducible development-only single-decision route-headroom audit; not formal evidence",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "plan_sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709",
+  "training_manifest": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/training_manifest.json",
+  "training_manifest_sha256": "aeb5e4c53cb94c6d3421cf124b51bddf099b9383e04a8501c5eabe7b5b79c57f",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "training_seeds": [40, 41, 42],
+  "scenario_by_training_seed": {
+    "40": "routing_persistent_hotspot_cluster1",
+    "41": "routing_persistent_hotspot_cluster2",
+    "42": "routing_persistent_hotspot_cluster3"
+  },
+  "checkpoint_variant": "pretrain",
+  "device": "cpu",
+  "live_seed": 95400000,
+  "discovery_seed": 95500000,
+  "discovery_replications": 3,
+  "validation_seed": 95600000,
+  "validation_replications": 5,
+  "forbidden_crn_seeds": [
+    91000000,
+    91100000,
+    93000000,
+    93100000,
+    94000000,
+    94100000,
+    94600000,
+    95000000,
+    95100000,
+    95200000,
+    95300000
+  ],
+  "max_steps": 52,
+  "explicit_options": [
+    {"group": "specimen_transfer", "epsilon": 0.05, "sign": 1.0},
+    {"group": "specimen_transfer", "epsilon": 0.05, "sign": -1.0},
+    {"group": "specimen_transfer", "epsilon": 0.10, "sign": 1.0},
+    {"group": "specimen_transfer", "epsilon": 0.10, "sign": -1.0}
+  ],
+  "score_weights": {
+    "service_level": 0.0,
+    "completion_service_level": 0.0,
+    "eligibility_rate": 0.0,
+    "patient_ineligibility_during_manufacturing_rate": 0.0,
+    "at_risk_unserved": 0.0,
+    "patients_lost": 0.0
+  },
+  "guardrails": {
+    "min_completion_service_level_delta": 0.0,
+    "max_patients_lost_delta": 0.0,
+    "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+    "min_score_improvement": 0.0
+  },
+  "progress_interval": 5,
+  "output_root": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/headroom_audit",
+  "smoke_output_root": "/private/tmp/patient_indexed_specimen_routing_ddpg_frozen_route_headroom_audit_smoke"
+}

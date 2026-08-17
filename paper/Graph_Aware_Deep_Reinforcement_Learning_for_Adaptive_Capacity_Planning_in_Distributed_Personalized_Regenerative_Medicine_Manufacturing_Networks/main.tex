@@ -48,7 +48,32 @@
 
 \begin{abstract}
 
-Autologous cell therapy and other personalized regenerative medicine (PRM) products are manufactured on demand across distributed clinical networks, where each product is \emph{perishable}, \emph{identity-bound} to a single patient and non-fungible, and needed only while that patient remains clinically eligible. These characteristics couple capacity, inventory, patient-indexed logistics, and patient outcomes into one networked decision. We formulate distributed PRM capacity planning as a constrained graph Markov decision process and release a reusable simulation testbed with patient-condition dynamics, expiry-aware inventory, geographic transfer delays, identity-preserving pre-manufacturing routing of intact specimen lots between qualified facilities, deterministic return of finished product to the collection site, and sharing of fungible reagents and idle bioreactor capacity. To solve it, we develop an \emph{advantage-filtered residual graph convolutional network--deep deterministic policy gradient} controller (AFR-GCN--DDPG). The study-specific AFR label denotes the complete anchor-plus-residual controller, in which a graph convolutional state encoder learns bounded corrections to a transparent two-period look-ahead policy; it is not a new actor--critic backbone. The numerical results currently reported are from earlier configurations in which specimen routing was disabled; they compare controller architectures and are not estimates of the value of routing. In a five-seed demand-prior-drift experiment, with 300 training episodes and 100 paired holdout replications per seed, AFR-GCN--DDPG reduced the total weighted objective by 0.016360\% relative to MDL-2, with a two-level 95\% confidence interval fully below zero. A matched flat residual DDPG policy also improved on MDL-2, while the graph-versus-flat interval crossed zero, so this replenishment-only experiment supports residual learning but not a graph-specific gain. After extending the residual action to geographic reagent and idle-capacity transfers, a three-seed abrupt-regional-shift experiment reduced the objective by 1.1337\% relative to MDL-2 and by 1.1166\% relative to a parameter-matched flat policy while improving completion service. A separate conservative online-TD3 screen produced a final graph policy that improved on MDL-2 and matched flat TD3; however, its pooled final-versus-frozen-pretraining interval crossed zero. The evidence therefore supports graph-aware anchored control under geographically structured non-stationarity, while the incremental contribution of online actor--critic updates remains an open attribution question.
+Autologous cell therapy and other personalized regenerative medicine (PRM)
+products are manufactured on demand across distributed clinical networks, where
+each product is \emph{perishable}, \emph{identity-bound} to one patient and
+non-fungible, and useful only while that patient remains clinically eligible.
+These characteristics couple capacity, inventory, patient-indexed logistics,
+and patient outcomes into one networked decision. We formulate distributed PRM
+capacity planning as a constrained graph Markov decision process and develop an
+\emph{advantage-filtered residual graph convolutional network--deep deterministic
+policy gradient} controller (AFR-GCN--DDPG). The controller learns bounded
+corrections to a transparent two-period look-ahead policy while preserving
+identity and feasibility. In the routing-primary formal study, five independent
+training seeds were evaluated on four routing scenarios with 100 paired
+holdout replications per seed and scenario. AFR-GCN--DDPG reduced the total
+weighted objective by 0.658\% relative to routing MDL-2 (95\% interval
+$[-0.721,-0.585]\%$) and by 0.321\% relative to a parameter-matched flat DDPG
+controller (95\% interval $[-0.413,-0.240]\%$), while increasing completion
+service and reducing manufacturing ineligibility and patients lost. The savings
+were driven primarily by lower patient-loss, expiry, and operating-shortage costs, partly
+offset by higher specimen-transfer cost. A matched three-seed TD3 development
+ablation independently favored the graph controller over MDL-2 and flat TD3,
+but both DDPG and TD3 final checkpoints were statistically indistinguishable
+from their frozen-pretraining controls. Structured-exploration and critic
+realignment screens also failed their preregistered online-attribution gates.
+The evidence therefore supports graph-aware advantage-filtered residual control
+over matched routing comparators, while it does not establish that online
+actor--critic updates independently created the gain.
 \end{abstract}
 
 \begin{keyword}
@@ -70,9 +95,9 @@ Reinforcement learning (RL) is a natural fit because the problem is sequential. 
 
 What that literature does not model is the PRM problem itself. Prior graph-and-RL studies for networked operations concentrate on demand forecasting, inventory-only ordering, or generic enterprise resource allocation, and they represent demand as fungible, abstract requests~\cite{Kotecha2025GNNMARL, Ahn2024GSP, Mousa2023DecInvMARL, Bermudez2023DCPO, Eisenach2024NeuralCoordination}; none model a product that expires, production that must return to the same patient, or demand generated by patient deterioration while waiting. Reinforcement learning has been applied within cell-therapy manufacturing, but at the level of a single bioprocess rather than a network of clinics~\cite{Zheng2022HybridMBRL}, and recent evidence cautions that learned policies do not uniformly dominate well-tuned operational heuristics, particularly under perishability and non-stationarity~\cite{Stranieri2025PharmaDRL}. The gap we address is thus a problem gap rather than a method gap, namely perishable, identity-bound, patient-condition-driven capacity planning across a clinic network, together with a decision framework and simulation testbed built specifically for it. To the best of our knowledge no public benchmark exists for this setting, so the environment is itself a contribution.
 
-We organize the study around five research questions. \textbf{(RQ1)} With patient-indexed specimen routing held admissible across policies, does a graph representation of the clinic network improve coordinated specimen, capacity, reagent, and replenishment decisions over flat-state control, and under which supply-disruption and forecast-error conditions is any improvement largest? \textbf{(RQ2)} Which actor--critic backbone (DDPG, TD3, SAC, or PPO) is best suited to this constrained continuous-control problem, and is DDPG alone adequate? \textbf{(RQ3)} Does explicitly modeling patient condition and product expiry change the optimal policy and expose failures of condition-blind planners? \textbf{(RQ4)} Does a condition- and expiry-aware temporal encoder, which retains memory of deterioration trajectories, improve on a static graph encoder? \textbf{(RQ5)} Do learned policies outperform strong look-ahead heuristics, not only weak myopic rules, under supply disruption, demand forecast error, and patient-condition stress?
+We organize the study around five research questions. \textbf{(RQ1)} With patient-indexed specimen routing held admissible across policies, does a graph representation of the clinic network improve coordinated specimen, capacity, reagent, and replenishment decisions over flat-state control, and under which supply-disruption and forecast-error conditions is any improvement largest? \textbf{(RQ2)} Does the routing-primary graph advantage persist under a matched TD3 backbone ablation, and can any gain be attributed separately to online actor--critic updates rather than frozen advantage-filtered pretraining? \textbf{(RQ3)} Does explicitly modeling patient condition and product expiry change the optimal policy and expose failures of condition-blind planners? \textbf{(RQ4)} Does a condition- and expiry-aware temporal encoder, which retains memory of deterioration trajectories, improve on a static graph encoder? \textbf{(RQ5)} Do learned policies outperform strong look-ahead heuristics, not only weak myopic rules, under supply disruption, demand forecast error, and patient-condition stress?
 
-To study these questions we develop, first, a simulation of a multi-site autologous cell-therapy network in which patient health conditions, patient-indexed specimen routing, and product and material expiry are first-class drivers of demand and feasibility, and second, an advantage-filtered residual GCN--DDPG (AFR-GCN--DDPG) controller that coordinates specimen routing, capacity, reagent, and replenishment decisions across the network. AFR is our shorthand for the complete controller design: a transparent MDL-2 anchor, a graph-aware bounded residual actor, evidence-filtered teacher targets, and independently calibrated deployment safeguards. It does not replace or rename DDPG. The graph component encodes each facility's operational and patient-condition state together with information from connected facilities into network-aware embeddings. A deterministic policy-gradient actor then learns a bounded, state-dependent correction to the anchor policy, and a feasibility projection converts the corrected action into implementable controls. Advantage-filtered distillation retains a nonzero correction target only when common-random-number look-ahead predicts an improvement over the anchor; it is a teacher-data construction and regularization step, not a second algorithm or deployed policy. Checkpoint and residual-scale calibration provide a deployment safeguard. DDPG is the canonical proposed instantiation and provides continuity with prior PRM capacity-planning work; graph-aware TD3, SAC, and PPO variants serve as controlled stability and backbone comparisons. We adopt a statistically disciplined evaluation protocol (multiple random seeds, paired Monte Carlo outcomes, and two-level confidence intervals), because single-seed, mean-only reporting can make deep reinforcement learning results appear stronger and more stable than they are~\cite{Henderson2018DRLMatters, Agarwal2021RLiable}. Consistent with the clinical stakes of the problem, we report patient-service outcomes such as eligibility and waiting alongside operating cost, since a lower average cost can mask clinically unacceptable delay.
+To study these questions we develop, first, a simulation of a multi-site autologous cell-therapy network in which patient health conditions, patient-indexed specimen routing, and product and material expiry are first-class drivers of demand and feasibility, and second, an advantage-filtered residual GCN--DDPG (AFR-GCN--DDPG) controller that coordinates specimen routing, capacity, reagent, and replenishment decisions across the network. AFR is our shorthand for the complete controller design: a transparent MDL-2 anchor, a graph-aware bounded residual actor, evidence-filtered teacher targets, and independently calibrated deployment safeguards. It does not replace or rename DDPG. The graph component encodes each facility's operational and patient-condition state together with information from connected facilities into network-aware embeddings. A deterministic policy-gradient actor then learns a bounded, state-dependent correction to the anchor policy, and a feasibility projection converts the corrected action into implementable controls. Advantage-filtered distillation retains a nonzero correction target only when common-random-number look-ahead predicts an improvement over the anchor; it is a teacher-data construction and regularization step, not a second algorithm or deployed policy. Checkpoint and residual-scale calibration provide a deployment safeguard. DDPG is the canonical proposed instantiation and provides continuity with prior PRM capacity-planning work; a parameter-matched graph-aware TD3 study serves as a development-only backbone ablation, while SAC and PPO remain future common-budget routing-primary comparisons. We adopt a statistically disciplined evaluation protocol (multiple random seeds, paired Monte Carlo outcomes, and two-level confidence intervals), because single-seed, mean-only reporting can make deep reinforcement learning results appear stronger and more stable than they are~\cite{Henderson2018DRLMatters, Agarwal2021RLiable}. Consistent with the clinical stakes of the problem, we report patient-service outcomes such as eligibility and waiting alongside operating cost, since a lower average cost can mask clinically unacceptable delay.
 
 The main contributions of this study are as follows.
 \begin{itemize}
@@ -404,7 +429,7 @@ Structured residual RL & Heuristic-guided and baseline-relative learning~\cite{D
 \subsection{Research gap and design implications}
 Read together, these literatures imply five design choices for a distributed PRM capacity-planning controller. First, because the decisions are sequential and real-valued, the controller should use continuous-control actor--critic reinforcement learning rather than value-based or discretized methods. Second, because a facility's value depends on its network position and resources propagate along inter-facility links, its state should be encoded with a graph rather than a flat vector. Third, because strong operational rules already solve much of the nominal problem, the learned policy should target bounded, evidence-supported corrections to a transparent anchor rather than relearn the complete policy from scratch. Fourth, DDPG provides a natural canonical formulation and continuity with earlier PRM capacity-planning work, but its known instability requires controlled comparisons with TD3 and secondary SAC/PPO variants rather than an untested assumption that DDPG is always best. Fifth, because reinforcement learning results are sensitive to seeds and implementation details, evaluation should report multi-seed interquartile means with confidence intervals and, given the clinical stakes, patient-service outcomes such as eligibility and waiting.
 
-None of these streams, however, addresses the problem that defines our setting. PRM operations research motivates adaptive, networked capacity planning but does not learn relational policies. Supply-chain graph-and-reinforcement-learning research supplies the relational-control machinery but treats demand as fungible and abstract, targeting forecasting or inventory-only control. Cell-therapy reinforcement learning operates on a single bioprocess rather than a clinic network. As a result, no prior work models the three defining properties of PRM capacity planning (a perishable product with a hard viability deadline, an identity-bound product that cannot be pooled or substituted across patients, and demand driven by patient deterioration while waiting) within a single graph-aware continuous-control formulation. Our contribution closes this gap. We cast the problem as a constrained graph MDP, build a reusable simulation testbed that realizes it, and study a family of graph-aware actor--critic controllers, pairing a GCN state encoder with DDPG, TD3, SAC, and PPO, against strong flat-state and heuristic baselines.
+None of these streams, however, addresses the problem that defines our setting. PRM operations research motivates adaptive, networked capacity planning but does not learn relational policies. Supply-chain graph-and-reinforcement-learning research supplies the relational-control machinery but treats demand as fungible and abstract, targeting forecasting or inventory-only control. Cell-therapy reinforcement learning operates on a single bioprocess rather than a clinic network. As a result, no prior work models the three defining properties of PRM capacity planning (a perishable product with a hard viability deadline, an identity-bound product that cannot be pooled or substituted across patients, and demand driven by patient deterioration while waiting) within a single graph-aware continuous-control formulation. Our contribution closes this gap. We cast the problem as a constrained graph MDP, build a reusable simulation testbed that realizes it, and evaluate graph-aware DDPG against strong flat-state and heuristic baselines, with matched TD3 as a development backbone ablation. SAC and PPO remain implemented family extensions rather than routing-primary empirical claims.
 
 \section{Graph-Aware Deep Reinforcement Learning Framework}
 \label{sec:method}
@@ -414,7 +439,7 @@ Distributed manufacturing networks for personalized regenerative medicine (PRM) 
 
 \subsection*{Primary AFR-GCN--DDPG controller and backbone variants}
 
-The primary proposed controller is advantage-filtered residual GCN--DDPG, abbreviated AFR-GCN--DDPG. The acronym names the complete controller rather than a new actor--critic backbone: \emph{residual} means that the DDPG actor modifies, rather than replaces, the MDL-2 anchor; \emph{advantage-filtered} means that nonzero teacher corrections are retained only when paired common-random-number look-ahead estimates a positive improvement over that anchor. This filtering is a teacher-data construction and regularization step inside AFR-GCN--DDPG, not a separate deployed policy. The controller combines the relational inductive bias of a GCN with the deterministic continuous-control mechanism used in earlier PRM capacity-planning research, while reducing the burden of relearning a complete operational policy from scratch. Following residual and constrained-residual control~\cite{Johannink2019ResidualRL,Staessens2022ConstrainedResidual}, the actor learns only a bounded correction to a transparent look-ahead anchor. We also evaluate TD3, SAC, and PPO behind the same GCN encoder (Table~\ref{tab:backbone_family}) as controlled backbone variants: TD3 through clipped double-$Q$ learning, delayed policy updates, and target smoothing; SAC through entropy-regularized stochastic policies; and PPO through an on-policy clipped surrogate objective. All four share the graph representation, feasibility-projection layer, environment, and evaluation protocol, so backbone comparisons do not erase AFR-GCN--DDPG's role as the canonical proposed instantiation. A GCN encodes relational structure but has no temporal memory of its own; the actor--critic component supplies the sequential decision dynamics, and the two together encode spatial correlations and temporal trade-offs jointly.
+The primary proposed controller is advantage-filtered residual GCN--DDPG, abbreviated AFR-GCN--DDPG. The acronym names the complete controller rather than a new actor--critic backbone: \emph{residual} means that the DDPG actor modifies, rather than replaces, the MDL-2 anchor; \emph{advantage-filtered} means that nonzero teacher corrections are retained only when paired common-random-number look-ahead estimates a positive improvement over that anchor. This filtering is a teacher-data construction and regularization step inside AFR-GCN--DDPG, not a separate deployed policy. The controller combines the relational inductive bias of a GCN with the deterministic continuous-control mechanism used in earlier PRM capacity-planning research, while reducing the burden of relearning a complete operational policy from scratch. Following residual and constrained-residual control~\cite{Johannink2019ResidualRL,Staessens2022ConstrainedResidual}, the actor learns only a bounded correction to a transparent look-ahead anchor. The framework supports TD3, SAC, and PPO behind the same GCN encoder (Table~\ref{tab:backbone_family}), but the routing-primary evidence in this paper evaluates DDPG and one matched development-only TD3 ablation; SAC and PPO are not ranked. A GCN encodes relational structure but has no temporal memory of its own; the actor--critic component supplies the sequential decision dynamics, and the two together encode spatial correlations and temporal trade-offs jointly.
 
 \begin{table}[htbp]
 \centering
@@ -1233,9 +1258,103 @@ $-0.485$ million units, with interval $[-1.489,0.173]$ million. Both point
 estimates favor online TD3 updates, but both intervals include zero. Thus the
 final graph controller outperforms MDL-2 and matched flat TD3 in this regional
 screen, while the independent incremental benefit of online TD3 over frozen
-pretraining is not yet established. A five-scenario zero-shot evaluation and
-additional training seeds are reserved for confirmation rather than being
-reported as completed evidence here.
+pretraining is not established. This earlier regional screen is retained as
+development context; the matched routing-primary TD3 ablation reported below
+supersedes it for the current routing evidence package.
+
+\subsubsection{Routing-primary five-seed confirmation}
+\label{sec:routing_primary_confirmation}
+
+The final routing-primary experiment holds patient-indexed specimen routing
+admissible for every policy and therefore compares controllers rather than
+estimating a routing-versus-no-routing treatment effect. AFR-GCN--DDPG and a
+parameter-matched AFR-Flat-DDPG controller were each trained for 100 online
+episodes with five independent seeds. Their fixed final and frozen-pretraining
+checkpoints were evaluated on four prespecified routing scenarios with 100
+paired formal-holdout replications per training seed and scenario, yielding
+2,000 paired outcomes per comparison. Table~\ref{tab:routing_primary_pairs}
+reports candidate-minus-comparator effects.
+
+\begin{table}[htbp]
+\centering
+\caption{Formal routing-primary paired comparisons. Objective differences and
+intervals are in millions of modeled weighted-objective units. Negative cost,
+patients-lost, and manufacturing-ineligibility differences and positive
+completion differences favor the candidate.}
+\label{tab:routing_primary_pairs}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\hline
+Comparison & $\Delta J_{\mathrm{tot}}$ & Relative gap & Two-level 95\% CI & $\Delta$ completion & $\Delta$ lost & $\Delta$ mfg.\ inelig. \\
+\hline
+AFR-GCN--DDPG vs. MDL-2 & $-17.690$ & $-0.658\%$ & $[-19.361,-15.725]$ & $+0.001806$ & $-25.263$ & $-0.004705$ \\
+AFR-Flat-DDPG vs. MDL-2 & $-9.086$ & $-0.338\%$ & $[-10.587,-7.510]$ & $+0.000636$ & $-8.888$ & $-0.003773$ \\
+AFR-GCN--DDPG vs. AFR-Flat-DDPG & $-8.604$ & $-0.321\%$ & $[-11.065,-6.428]$ & $+0.001169$ & $-16.375$ & $-0.000932$ \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+AFR-GCN--DDPG is lower cost than MDL-2 in all 20 training-seed-by-scenario
+cells. Its two-level intervals are wholly favorable against both MDL-2 and the
+matched flat controller for total cost, completion service, patients lost, and
+manufacturing ineligibility. Figure~\ref{fig:routing_primary_cost_effects}
+places the formal comparisons beside the prespecified transport-timing
+sensitivity and the separately labeled TD3 development ablation.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{routing_primary_cost_effects.pdf}
+    \caption{Routing-primary paired total-cost effects. Negative values favor
+    the candidate, and bars are two-level paired 95\% bootstrap intervals.
+    The left panel is formal holdout evidence. The center panel is frozen-policy
+    transport-timing sensitivity. The right panel is a development-only TD3
+    backbone ablation and is not pooled with the formal result.}
+    \label{fig:routing_primary_cost_effects}
+\end{figure}
+
+The MDL-2 mean objective is 2,686.444 million units. Its additive components
+are base operating cost (45.856\%), patient-loss cost (44.841\%), expiry cost
+(8.966\%), and urgency cost (0.337\%). The GCN improvement decomposes into
+$-2.100$, $-12.631$, $-2.806$, and $-0.152$ million units for these four
+components, respectively. Within base operating cost, specimen-transfer cost
+increases by 0.174 million while the remaining operating and shortage
+subcomponents decrease by 2.275 million. Specimen transfer is therefore a
+mechanistic subcomponent of base cost and is not added to the four-component
+total a second time. The dominant benefit is lower modeled patient-loss cost,
+not direct transportation savings. Figure~\ref{fig:routing_primary_cost_components}
+keeps the additive objective decomposition separate from its base-cost detail.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{routing_primary_cost_components.pdf}
+    \caption{Formal AFR-GCN--DDPG minus MDL-2 cost decomposition. Negative
+    values are savings. Panel A contains the four components that add to total
+    cost. Panel B partitions panel A's base operating cost; it is shown for
+    mechanism interpretation and must not be added to panel A.}
+    \label{fig:routing_primary_cost_components}
+\end{figure}
+
+The transport-timing result is asymmetric rather than uniformly robust. When
+specimens become available immediately (lead 0 rather than lead 1), GCN cost is
+0.633\% higher than MDL-2 and 0.255\% higher than flat. With a one-epoch
+finished-product return delay, GCN is 1.050\% lower than MDL-2 and 0.303\%
+lower than flat. These are epoch-level availability assumptions, distinct from
+continuous geographic travel time, and the reversal precludes a blanket
+transport-timing robustness claim.
+
+Finally, the formal final-minus-frozen GCN point estimate is $+0.073$ million
+units ($+0.00273\%$), indicating no material online increment. On the separate
+paired development checkpoint curve, episode 100 minus episode 75 is $+0.069$
+million with interval $[-0.345,+0.502]$ million. Howard's matched three-seed
+TD3 development ablation corroborates graph and anchor value: final GCN--TD3 is
+0.735\% lower cost than MDL-2 and 0.414\% lower than flat TD3. However, final
+GCN--TD3 is 0.00080\% worse than its frozen-pretraining checkpoint, and its
+audited paired interval crosses zero. A subsequent structured specimen-option
+exploration screen achieved the intended action coverage but produced a GCN
+final-minus-frozen effect of $+0.00416\%$ with interval
+$[-0.02766,+0.04091]\%$. Thus neither actor--critic backbone establishes an
+independent online-learning gain at the tested budget.
 
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
@@ -1249,73 +1368,72 @@ deployed. This structure preserves the interpretability of the anchor while
 allowing the graph actor to respond to patient pressure, transfer pipelines,
 regional disruptions, and demand-prior drift.
 
-The numerical findings currently summarized below come from the earlier
-no-routing configurations and should be interpreted as controller evidence,
-not as evidence for or against specimen routing. The calibrated patient process places both ISO and MDL-2 inside a clinically
-interpretable manufacturing-period ineligibility band, and the weighted
-objective no longer rewards early patient loss. Under demand-prior drift, the
-formal five-seed result shows that AFR-GCN--DDPG improves on MDL-2 with a
-two-level confidence interval fully below zero while weakly improving all
-reported patient-facing metrics. The effect is small, and a matched flat
-residual policy also improves on MDL-2; consequently, this experiment supports
-anchored residual learning but not an independent graph advantage. The matched
-backbone comparison favors DDPG over TD3 for this replenishment-residual
-problem, which supports DDPG as the canonical proposed instantiation without
-implying that it is universally superior.
+The routing-primary formal result now supplies the main controller evidence.
+With routing held admissible for all policies, AFR-GCN--DDPG improves on both
+routing MDL-2 and a parameter-matched flat controller, and all reported
+patient-facing metrics move in the favorable direction. The graph-versus-flat
+interval is wholly below zero, so this matched experiment supports a
+graph-representation advantage rather than only generic residual learning.
+Routing itself is not the treatment in this comparison; estimating the value
+of making routing admissible would require a separately locked routing-versus-
+no-routing design.
 
-The graph-specific result emerges after the residual action is aligned with
-the network representation. Under an abrupt regional demand shift, Network
-AFR-GCN--DDPG significantly improves on both MDL-2 and a parameter-matched
-flat policy while improving completion service. The cost decomposition shows
-that the controller primarily reduces bioreactor-shortage penalties; reporting
-this component change alongside the full-objective percentage explains the
-mechanism without changing the headline denominator. A separate conservative
-online-TD3 screen likewise yields a final graph policy that outperforms MDL-2
-and matched flat TD3 while satisfying clinical noninferiority. However, the
-pooled final-versus-frozen and graph-minus-flat difference-in-differences
-intervals both cross zero. We therefore distinguish the supported claim that
-the deployed graph-aware AFR controller creates value from the unresolved
-claim that online actor--critic updates independently create that value.
+The component analysis also changes the interpretation of the result. Lower
+patient-loss cost accounts for most of the total reduction, followed by expiry
+and net operating cost. Specimen-transfer cost rises, as expected when a graph
+controller makes greater use of geographic reallocation, but this increase is
+more than offset by reductions elsewhere. Reporting the component changes
+alongside the full-objective percentage preserves the preregistered denominator
+and shows that the gain is patient- and shortage-facing rather than an artifact
+of inexpensive transport.
 
-Several limitations remain. The formal demand-prior-drift DDPG experiment has
-five training seeds, but the network-action DDPG and conservative TD3 studies
-currently have three. The abrupt-shift graph checkpoint is dominated by
-advantage-filtered teacher distillation, and cross-scenario zero-shot
-robustness is not yet established. The full disruption-rate, robust/rolling
-MDL-2, pure-policy, SAC, and PPO comparisons still require a common locked
-budget. The clinical calibration target is literature aligned but is not
-fitted to patient-level data from a single indication, so sensitivity bands
-remain necessary. The patient-loss, expiry, urgency, and shortage coefficients
-are modeled decision weights rather than a complete accounting valuation;
-cost-weight sensitivity and external economic calibration are required before
-interpreting objective differences as realized monetary savings. External
-clinical data will also be needed to validate patient-risk, demand,
-disruption, and transfer-time assumptions before operational use.
+The method attribution is narrower than the policy comparison. Frozen
+advantage-filtered pretraining already captures nearly all observed DDPG and
+TD3 value; final-minus-frozen intervals from the development diagnostics cross
+zero, and three mechanism-driven DDPG refinements fail their advancement gates.
+We therefore distinguish two questions: graph-aware advantage-filtered
+residual control is supported, whereas an independent contribution from online
+actor--critic updates is not established. DDPG remains the canonical proposed
+backbone because it is the prespecified five-seed formal method. The matched
+TD3 result is a useful development ablation, not evidence that DDPG generally
+dominates TD3 or that TD3 has formal-holdout status.
+
+Several limitations remain. The routing-primary DDPG comparison has five
+training seeds, but the matched TD3 and mechanism-diagnostic screens have only
+three and use development streams. The formal comparison isolates graph versus
+flat representation and policy versus MDL-2, but it does not isolate routing
+availability or the incremental contribution of online updates. Transport
+timing is not uniformly robust, and continuous travel-time viability is not
+coupled to the epoch-level availability sensitivity. Pure-policy, SAC, and PPO
+controllers have not been evaluated under the same locked routing-primary
+budget and should not be ranked from these data. The clinical calibration
+target is literature aligned but is not fitted to patient-level data from a
+single indication, so sensitivity bands remain necessary. Patient-loss,
+expiry, urgency, and shortage coefficients are modeled decision weights rather
+than a complete accounting valuation; external economic and clinical
+calibration is required before interpreting objective differences as realized
+monetary savings or deploying the controller operationally.
 The routing-capable environment has passed implementation-level identity,
-conservation, lifecycle, and CRN tests, and routing-enabled teacher and
-development screens have been completed. The untouched-seed routing-primary
-GCN/flat confirmation and final holdout remain pending. Accordingly, this
-draft treats the current routing screens as development evidence, makes no
-confirmatory empirical claim about the value of routing, and does not
-reinterpret any legacy no-routing checkpoint as routing-enabled evidence.
+conservation, lifecycle, and CRN tests, and the five-seed routing-primary
+GCN/flat confirmation is complete. Its formal claim is about controllers under
+a common routing-capable environment, not about the causal value of routing.
+Transport-timing sensitivity is asymmetric, with the primary advantage
+reversing under immediate specimen availability, so general timing robustness
+is not claimed. Development-only TD3 and DDPG mechanism screens remain labeled
+and archived separately from formal holdout evidence.
 
 \textbf{Future Work}
 This study motivates several extensions. Patient condition can be represented
 with longitudinal clinical covariates rather than the current eligibility and
 survival-risk summary. Raw-material quality, product quality, process failures,
 machine breakdowns, and operator availability can be added to the simulator.
-The immediate empirical priority is to freeze the current routing-primary DDPG
-candidate, complete matched GCN and flat confirmation on five untouched seeds,
-and evaluate both final and frozen-pretraining controls against routing MDL-2
-under the same CRN protocol. Training begins with 100 episodes and is extended
-uniformly to 200 or, only when justified by the still-sealed development
-learning curves, 300 episodes. No-routing training is reserved for a separately
-justified supplementary ablation rather than the default experiment. If
-online-learning attribution remains inconclusive after this independent
-confirmation, the next candidate should change the actor--critic mechanism
-(for example, a matched TD3 study) rather than repeatedly tuning DDPG on the
-same development stream. Longer-term experiments should test unseen clinic
-networks and transfer disruptions and should integrate production scheduling,
+The completed routing-primary protocol and its evidence map should now remain
+frozen. Future empirical work should use new research questions and independent
+streams rather than repeatedly tuning online attribution on the existing
+development evidence. Valuable extensions include unseen clinic networks,
+continuous transport-viability coupling, transfer disruptions, externally
+calibrated economic weights, and a separately prespecified routing-versus-no-
+routing study. Longer-term models should integrate production scheduling,
 product preparation and distribution, and treatment operations.
 
 \section*{Data Availability}

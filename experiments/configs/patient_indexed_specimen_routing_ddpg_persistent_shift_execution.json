@@ -1,0 +1,191 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_persistent_shift_stage_c2",
+  "experimental_role": "locked development-only persistent geographic shift DDPG attribution screen",
+  "plan": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+  "campaign_root": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development",
+  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/launcher",
+  "preonline_output_root": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/preonline",
+  "preonline_manifest": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/preonline/patient_indexed_specimen_routing_ddpg_persistent_shift_preonline/training_manifest.json",
+  "paired_state_root": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/paired_states",
+  "control_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100.json",
+  "realigned_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_realigned_100.json",
+  "control_training_manifest": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/training_manifest.json",
+  "realigned_training_manifest": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/realigned/training/patient_indexed_specimen_routing_ddpg_persistent_shift_realigned_100/training_manifest.json",
+  "control_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_control_curve_eval.json",
+  "realigned_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_realigned_curve_eval.json",
+  "comparison_output": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/comparison/persistent_shift_summary.json",
+  "scenario_by_seed": {
+    "40": "routing_persistent_hotspot_cluster1",
+    "41": "routing_persistent_hotspot_cluster2",
+    "42": "routing_persistent_hotspot_cluster3"
+  },
+  "development_crn_seeds": [95200000, 95300000],
+  "forbidden_crn_seeds": [
+    91000000,
+    91100000,
+    93000000,
+    93100000,
+    94000000,
+    94100000,
+    94600000,
+    95000000,
+    95100000,
+    95400000,
+    95410000
+  ],
+  "maximum_parameter_relative_gap": 0.01,
+  "minimum_final_improvement_pct": 0.02,
+  "bootstrap_resamples": 20000,
+  "bootstrap_seed": 95350000,
+  "focused_tests": [
+    "tests.test_ddpg_online_critic_realignment",
+    "tests.test_ddpg_persistent_shift",
+    "tests.test_off_policy_training_state",
+    "tests.test_train_multiscenario_network_residual",
+    "tests.test_multiscenario_residual_evaluation",
+    "tests.test_patient_indexed_specimen_routing_contract"
+  ],
+  "fresh_output_roots": [
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/preonline",
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/paired_states",
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training",
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/realigned/training",
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/evaluation",
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/realigned/evaluation",
+    "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/comparison"
+  ],
+  "locked_files": [
+    {
+      "path": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+      "sha256": "2473157e7a2b941b2d0140f837ddda71e2d7779c931aea3ff091b36f45555b79"
+    },
+    {
+      "path": "evaluation/aggregate_stats.py",
+      "sha256": "c280c0d676059e3d68cac1b6f7c3d793bb5b7986952feb1c9ef85378d908e0ec"
+    },
+    {
+      "path": "evaluation/compare_ddpg_persistent_shift.py",
+      "sha256": "00625c7628d8d913fb4f84b6c9de0b7666ee525a74f13fdb8af3e38e238cd01d"
+    },
+    {
+      "path": "evaluation/evaluate_fixed_checkpoint_curve.py",
+      "sha256": "fd948be8e428ffd21315c1733f64c38c385f450566c9bbe46998542645a91d5d"
+    },
+    {
+      "path": "evaluation/evaluate_multiscenario_network_residual.py",
+      "sha256": "a58e4a9d43115477271b7cafbe0c05c1e6eb79e478239b137bd10dba1faf05f3"
+    },
+    {
+      "path": "evaluation/launch_patient_indexed_specimen_routing_ddpg_persistent_shift.py",
+      "sha256": "7bbb941cab480378d90761ad51171992521a1a74aae3bc3af92a91ecc79dbd8d"
+    },
+    {
+      "path": "evaluation/prepare_ddpg_persistent_shift_preonline.py",
+      "sha256": "e2e47d553613aeedd2e2bde0a1a157bab670096ab81879ef85cd669c9d93ef8f"
+    },
+    {
+      "path": "evaluation/run_patient_indexed_specimen_routing_ddpg_persistent_shift.py",
+      "sha256": "4be546be528d73d5635b6d04b530192003263a92a4bc0cecc623c66a72d3305c"
+    },
+    {
+      "path": "evaluation/scenario_assignment.py",
+      "sha256": "f240549cde74a15907af96c6ebd3cb10d0fcedc063d1e0c4862705a8ecd40e81"
+    },
+    {
+      "path": "evaluation/train_multiscenario_network_residual.py",
+      "sha256": "de1d1506cb3f4d173aaf96a8a809a8b29c83f877121d3c64a0d91dbbfd2cf493"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+      "sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100.json",
+      "sha256": "3871100c08a85095a0e57590f8e450d5648ebdf05c74732cf6860df0c966338b"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_control_curve_eval.json",
+      "sha256": "e57d4e145affd59c2dabe95f3f48e9d2dbf948f6de0d789e807f40a7416b87c9"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_realigned_100.json",
+      "sha256": "37ef3ef91ede765284bb664262c42d7b4172ea459e4a6b6573b802c71fa1bb7e"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_realigned_curve_eval.json",
+      "sha256": "358524c115135ea288a0825ef3a2f32c00c6236a60de1a1c2b481ece10a353fa"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_smoke.json",
+      "sha256": "1bcb4332d8fd7bd54c7330ce54a05329dc894e62bc314a0eeda83b7092a77d8f"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_persistent_shift_smoke_eval.json",
+      "sha256": "d0dd11d78bc9d1ebfb4f18658f09e4ab976185850eaecc34467caa687b8e20ef"
+    },
+    {
+      "path": "experiments/configs/20_clinic_patient_condition_geo_regional_drift.json",
+      "sha256": "a5807e64cc1d1d5f5ab932c453ca614f08e541fc4c62bb506c36ecd0b09b4bd2"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+      "sha256": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92"
+    },
+    {
+      "path": "configs/gcn_residual_20_clinic.yaml",
+      "sha256": "6f8a4f59b43f6527f879ab8d754e083517dd85fc5a6dac3eda9c2668247c679e"
+    },
+    {
+      "path": "configs/flat_residual_20_clinic.yaml",
+      "sha256": "3b667785e61ee9ca5e264d7a75c90e2832e7479834f28bb089c00ae9bc6d0ca4"
+    },
+    {
+      "path": "src/baselines/flat_ddpg.py",
+      "sha256": "3631c90e0c1935dd96b09e3e0db528acdb4c94e60e9d45b612e01324b2ed2978"
+    },
+    {
+      "path": "src/models/gcn_ddpg.py",
+      "sha256": "523b46ed795497b214ae474465d56d71b11fb00c4fbc1e95213135d819f4bdc6"
+    },
+    {
+      "path": "src/rl/critic_realignment.py",
+      "sha256": "267a0e62a083f02ba829e41ebeee842c5f2e9faab39057ead4fd6af9d737de78"
+    },
+    {
+      "path": "src/rl/experiment.py",
+      "sha256": "894ae1b1a441c5afc3e324e706a135abdfc5996e74856ce05e6a0c67bbd3bc94"
+    },
+    {
+      "path": "src/rl/networks.py",
+      "sha256": "d381a850f6aab53a089a4b6601c1f43aa53f0345f45756a9e68ae189530d33e9"
+    },
+    {
+      "path": "src/rl/training_state.py",
+      "sha256": "eca81b0d59d5a2288d8f957a33aa6165af9fbebd5797e81e81decee3e738360e"
+    },
+    {
+      "path": "tests/test_ddpg_online_critic_realignment.py",
+      "sha256": "a98bb2f2ce6153649174ec1d57c8ec390a952bb8b4c37c20963467b6c8035fb6"
+    },
+    {
+      "path": "tests/test_ddpg_persistent_shift.py",
+      "sha256": "c4ac1471a6e8b693d1c433dd8d33a8bb9cc344afbad9913c4efab71c8847cee5"
+    },
+    {
+      "path": "tests/test_multiscenario_residual_evaluation.py",
+      "sha256": "a943b21856ca5d61cc2aa6a3aaf4d888204ca70bd2738a1ed6a5c6c41ca99c9e"
+    },
+    {
+      "path": "tests/test_off_policy_training_state.py",
+      "sha256": "231bedd56bcda00e85f6bdd1b4ca3d3d96573128121778c5d6b975f5d61caa33"
+    },
+    {
+      "path": "tests/test_patient_indexed_specimen_routing_contract.py",
+      "sha256": "1d3c3eca44548469e4ab56549efaa692700d913e32ea57d07ebd3998ca56a2d0"
+    },
+    {
+      "path": "tests/test_train_multiscenario_network_residual.py",
+      "sha256": "86d15891c09c4f5173cafb96af46fbc4300ae7b5eebe856064f6ad2e26791a18"
+    }
+  ]
+}

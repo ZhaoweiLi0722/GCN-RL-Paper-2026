@@ -31,6 +31,7 @@ from src.rl.critic_advantage import (
     teacher_advantage_loss,
     teacher_advantage_support_mask,
 )
+from src.rl.critic_realignment import zero_critic_action_input
 from src.rl.networks import require_torch, resolve_torch_device, torch
 from src.rl.noise import OUNoise
 from src.rl.preprocessing import (
@@ -40,6 +41,7 @@ from src.rl.preprocessing import (
 from src.rl.replay_buffer import ReplayBuffer
 from src.rl.residual_endpoint_projection import ResidualEndpointProjection
 from src.rl.residual_temporal_guard import ResidualTemporalGuard
+from src.rl.structured_exploration import StructuredSpecimenExplorer
 from src.rl.tensor_conversion import independent_contiguous_numpy
 
 # Re-exported for backward compatibility (these used to live in this module).
@@ -101,6 +103,34 @@ class GCNDDPGAgent:
                 "online_critic_lr must be finite and positive"
             )
         self.total_updates = 0
+        realignment_config = dict(
+            config.get("online_critic_realignment", {})
+        )
+        self.online_critic_realignment_enabled = bool(
+            realignment_config.get("enabled", False)
+        )
+        self.online_critic_realignment_mode = str(
+            realignment_config.get("mode", "zero_action_columns")
+        ).lower()
+        if self.online_critic_realignment_mode != "zero_action_columns":
+            raise ValueError(
+                "online_critic_realignment.mode must be "
+                "'zero_action_columns'"
+            )
+        self.online_actor_warmup_updates = max(
+            int(realignment_config.get("actor_warmup_updates", 0)),
+            0,
+        )
+        if (
+            not self.online_critic_realignment_enabled
+            and self.online_actor_warmup_updates
+        ):
+            raise ValueError(
+                "online critic actor warmup requires realignment to be enabled"
+            )
+        self.online_updates_since_prepare = 0
+        self.online_finetuning_prepared = False
+        self.online_critic_realignment_applied = False
         self.reward_scale = reward_scale_from_config(config)
         residual_config = dict(config.get("residual_action", {}))
         self.residual_action_enabled = bool(residual_config.get("enabled", False))
@@ -588,6 +618,27 @@ class GCNDDPGAgent:
                 raise ValueError("residual_action requires env.action_mode='facility_net'")
             if self.action_dim != 4 * self.graph_spec.num_facilities:
                 raise ValueError("residual_action requires a facility-net action layout")
+        self.structured_specimen_explorer = StructuredSpecimenExplorer(
+            action_dim=self.action_dim,
+            num_facilities=self.graph_spec.num_facilities,
+            seed=self.seed,
+            settings=residual_config.get("structured_exploration", {}),
+        )
+        if (
+            self.structured_specimen_explorer.enabled
+            and not self.residual_action_enabled
+        ):
+            raise ValueError(
+                "structured specimen exploration requires residual_action.enabled"
+            )
+        if (
+            self.structured_specimen_explorer.enabled
+            and self.residual_temporal_guard.enabled
+        ):
+            raise ValueError(
+                "structured specimen exploration does not support a stateful "
+                "residual temporal guard"
+            )
         quantization_config = dict(
             config.get("specimen_action_quantization", {})
         )
@@ -1130,6 +1181,7 @@ class GCNDDPGAgent:
     def reset(self) -> None:
         self.finalize_training_episode()
         self.noise.reset()
+        self.structured_specimen_explorer.reset_episode()
         self.residual_temporal_guard.reset()
         self.last_residual_action = np.zeros(
             self.action_dim,
@@ -1159,7 +1211,42 @@ class GCNDDPGAgent:
                 or self.correction_gate_align_online_policy
             ),
         )
-        return project_action(action, env_state=env, action_space_info=self.action_dim).action
+        policy_action = project_action(
+            action,
+            env_state=env,
+            action_space_info=self.action_dim,
+        ).action
+        if not explore:
+            return policy_action
+        anchor_action = (
+            project_action(
+                self._base_action_from_state_np(state),
+                env_state=env,
+                action_space_info=self.action_dim,
+            ).action
+            if self.residual_action_enabled
+            else policy_action
+        )
+        behavior_action = self.structured_specimen_explorer.apply(
+            policy_action,
+            anchor_action,
+            env=env,
+        )
+        projected_behavior = project_action(
+            behavior_action,
+            env_state=env,
+            action_space_info=self.action_dim,
+        ).action
+        self.structured_specimen_explorer.record_projected_action(
+            policy_action,
+            projected_behavior,
+        )
+        return projected_behavior
+
+    def structured_exploration_summary(self) -> dict[str, Any]:
+        """Return auditable behavior-policy exploration diagnostics."""
+
+        return self.structured_specimen_explorer.summary()
 
     def capture_training_reward_context(
         self,
@@ -1783,6 +1870,34 @@ class GCNDDPGAgent:
                     ),
                 }
             )
+        if int(start_episode) == 0:
+            self.online_updates_since_prepare = 0
+            if (
+                self.online_critic_realignment_enabled
+                and not self.online_critic_realignment_applied
+            ):
+                summary.update(
+                    zero_critic_action_input(
+                        self.critic,
+                        self.critic_target,
+                        self.critic_optimizer,
+                        action_dim=self.action_dim,
+                    )
+                )
+                self.online_critic_realignment_applied = True
+        elif (
+            self.online_critic_realignment_enabled
+            and not self.online_critic_realignment_applied
+        ):
+            raise ValueError(
+                "Resumed realigned DDPG state lacks the episode-0 critic "
+                "realignment marker"
+            )
+        self.online_finetuning_prepared = True
+        if self.online_critic_realignment_enabled:
+            summary["online_actor_warmup_updates"] = float(
+                self.online_actor_warmup_updates
+            )
         return summary
 
     def _pretrain_reference_drift_metrics(self) -> dict[str, float]:
@@ -1818,6 +1933,8 @@ class GCNDDPGAgent:
             return {}
 
         self.total_updates += 1
+        if self.online_finetuning_prepared:
+            self.online_updates_since_prepare += 1
         batch = self.replay_buffer.sample(
             self.batch_size,
             online_fraction=self.online_replay_fraction,
@@ -1889,6 +2006,11 @@ class GCNDDPGAgent:
         actor_update_due = (
             self.total_updates > self.critic_warmup_updates
             and (
+                not self.online_finetuning_prepared
+                or self.online_updates_since_prepare
+                > self.online_actor_warmup_updates
+            )
+            and (
                 self.total_updates - self.critic_warmup_updates
             )
             % self.actor_update_frequency
@@ -1897,6 +2019,14 @@ class GCNDDPGAgent:
         metrics = {
             "critic_loss": float(critic_loss.item()),
             "actor_updated": float(actor_update_due),
+            "online_updates_since_prepare": float(
+                self.online_updates_since_prepare
+            ),
+            "online_actor_warmup_active": float(
+                self.online_finetuning_prepared
+                and self.online_updates_since_prepare
+                <= self.online_actor_warmup_updates
+            ),
         }
         metrics.update(self._anchor_relative_reward_metrics())
         if self.online_replay_fraction is not None:

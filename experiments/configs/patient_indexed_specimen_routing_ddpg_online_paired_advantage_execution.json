@@ -3,7 +3,13 @@
   "experimental_role": "locked development-only paired finite-horizon critic-supervision DDPG attribution experiment",
   "plan": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
   "campaign_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development",
-  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/launcher",
+  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery1/launcher",
+  "recovery": {
+    "superseded_execution_commit": "a8d5e9595edad27c8ddd0683824ba984f95a3de0",
+    "superseded_launcher_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/launcher",
+    "failure_scope": "host-MPS focused-test fixture device mismatch before claim, smoke, state preparation, or training",
+    "training_jobs_launched": 0
+  },
   "f0_summary": "experiments/evidence/patient_indexed_specimen_routing_ddpg_online_identifiability_f0/summary.json",
   "preonline_output_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline",
   "preonline_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline/patient_indexed_specimen_routing_ddpg_online_paired_advantage_preonline/training_manifest.json",
@@ -83,7 +89,7 @@
     },
     {
       "path": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
-      "sha256": "8f9bb263021ded277f985c8c3f8d9d92a75c2591f0c2e8e9999b6ad439081b81"
+      "sha256": "bb7b205f6fdd9009bac40e2d278d298ad278e8ab485b348aab7009b3ed14013e"
     },
     {
       "path": "docs/patient_indexed_specimen_routing_stage_f0_protocol.md",
@@ -379,7 +385,7 @@
     },
     {
       "path": "tests/test_gcn_ddpg_graph.py",
-      "sha256": "a4a741745442f7022a213cd915eb7e361114062eecb98899af888bb02017f8a5"
+      "sha256": "a4f916964441cedd5c7fc4dcd0f6b5aa33a5f894f12041c0682e9648b0e625ca"
     },
     {
       "path": "tests/test_off_policy_training_state.py",

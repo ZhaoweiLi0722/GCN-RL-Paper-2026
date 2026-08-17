@@ -967,3 +967,16 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   sampled paired loss, zero cloned first-step reward error, and no persisted
   non-finite metrics. The matched control smoke is part of the final locked
   preflight and must persist zero paired targets.
+
+### 2026-08-17: Stage F1 preflight recovery 1
+
+- Execution commit `a8d5e9595edad27c8ddd0683824ba984f95a3de0` stopped during
+  the host focused-test gate, before claim creation, smoke, pre-online state
+  preparation, or any training job.
+- Cause: one legacy unit-test fixture constructed CPU tensors while its agent
+  auto-selected an available MPS device. This was a test-device mismatch, not
+  an algorithm, numerical, fallback, or scientific-contract failure.
+- Recovery scope: preserve the original launcher logs, make that fixture
+  explicitly CPU-bound, refresh the locked hash manifest, and rerun the entire
+  preflight under a new recovery launcher root. No scientific configuration,
+  seed, option, loss, scenario, or budget may change.

@@ -808,6 +808,7 @@ class GraphStateConversionTests(unittest.TestCase):
         config = _config_dict()
         config.update(
             {
+                "device": "cpu",
                 "env": asdict(env.config),
                 "residual_action": {
                     "enabled": True,

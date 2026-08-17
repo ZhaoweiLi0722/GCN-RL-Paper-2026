@@ -22,6 +22,10 @@ from evaluation.run_gcn_residual_sweep import (
     balance_demonstration_label_weights,
     load_local_search_demonstrations,
 )
+from evaluation.scenario_assignment import (
+    normalize_scenario_by_seed,
+    serialized_scenario_by_seed,
+)
 from evaluation.train_network_residual_history_screen import (
     make_history_screen_config,
 )
@@ -151,6 +155,26 @@ def train_multiscenario_agents(
     algorithm_entries = tuple(run_config.get("algorithms", ()))
     if not algorithm_entries:
         raise ValueError("At least one learned algorithm is required")
+    configured_seeds = sorted(
+        {
+            int(seed)
+            for raw_entry in algorithm_entries
+            for seed in dict(raw_entry).get(
+                "seeds",
+                run_config.get("seeds", (0,)),
+            )
+        }
+    )
+    scenario_by_seed = normalize_scenario_by_seed(
+        run_config.get("scenario_by_seed"),
+        available_scenarios=scenario_names,
+        required_seeds=(
+            configured_seeds
+            if run_config.get("scenario_by_seed")
+            else ()
+        ),
+        reject_extra_seeds=True,
+    )
     results: list[dict[str, Any]] = []
     for raw_entry in algorithm_entries:
         entry = dict(raw_entry)
@@ -168,14 +192,23 @@ def train_multiscenario_agents(
                 continue
             seeds = (int(seed_filter),)
         for seed in seeds:
+            run_scenario_names = (
+                (scenario_by_seed[int(seed)],)
+                if scenario_by_seed
+                else scenario_names
+            )
+            run_scenarios = [
+                scenarios_by_name[name]
+                for name in run_scenario_names
+            ]
             result = train_one_multiscenario_agent(
                 plan=plan,
                 budget_name=budget_name,
                 budget=budget,
                 algorithm=algorithm,
-                scenarios=scenarios,
+                scenarios=run_scenarios,
                 reference_scenario=reference_scenario,
-                scenario_names=scenario_names,
+                scenario_names=run_scenario_names,
                 seed=seed,
                 teacher_cache=teacher_cache,
                 demand_history_window=demand_history_window,
@@ -211,6 +244,9 @@ def train_multiscenario_agents(
         "name": run_name,
         "budget": budget_name,
         "scenarios": list(scenario_names),
+        "scenario_by_seed": serialized_scenario_by_seed(
+            scenario_by_seed
+        ),
         "reference_scenario": reference_name,
         "teacher_cache": str(teacher_cache),
         "demand_history_window": demand_history_window,
@@ -297,7 +333,11 @@ def train_one_multiscenario_agent(
     ] = str(teacher_cache)
     config["multi_scenario_training"] = {
         "scenarios": list(scenario_names),
-        "scenario_schedule": "episode_round_robin",
+        "scenario_schedule": (
+            "persistent_single_scenario"
+            if len(scenarios) == 1
+            else "episode_round_robin"
+        ),
         "scenario_start_index": int(seed) % len(scenarios),
         "scenario_label_in_observation": False,
         "teacher_cache": str(teacher_cache),
@@ -528,6 +568,15 @@ def train_one_multiscenario_agent(
         "pretrain": pretrain_report,
         "parameter_count": agent_parameter_count(agent),
     }
+    structured_exploration_getter = getattr(
+        agent,
+        "structured_exploration_summary",
+        None,
+    )
+    if callable(structured_exploration_getter):
+        summary["structured_specimen_exploration"] = dict(
+            structured_exploration_getter()
+        )
     pretrain_checkpoint = Path(summary["pretrain_checkpoint"])
     if pretrain_checkpoint.is_file():
         summary["actor_drift_from_pretrain"] = actor_checkpoint_drift(

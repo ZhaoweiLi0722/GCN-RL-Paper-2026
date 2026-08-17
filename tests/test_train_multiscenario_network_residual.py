@@ -14,9 +14,30 @@ from evaluation.train_multiscenario_network_residual import (
     train_multiscenario_agents,
     verify_file_sha256,
 )
+from evaluation.scenario_assignment import normalize_scenario_by_seed
 
 
 class MultiscenarioEnvOverrideTests(unittest.TestCase):
+    def test_seed_locked_scenarios_require_complete_known_mapping(self):
+        assignment = normalize_scenario_by_seed(
+            {"40": "hotspot_a", "41": "hotspot_b"},
+            available_scenarios=("hotspot_a", "hotspot_b"),
+            required_seeds=(40, 41),
+            reject_extra_seeds=True,
+        )
+        self.assertEqual(assignment, {40: "hotspot_a", 41: "hotspot_b"})
+        with self.assertRaisesRegex(ValueError, "missing required seeds"):
+            normalize_scenario_by_seed(
+                {"40": "hotspot_a"},
+                available_scenarios=("hotspot_a", "hotspot_b"),
+                required_seeds=(40, 41),
+            )
+        with self.assertRaisesRegex(ValueError, "unknown scenario"):
+            normalize_scenario_by_seed(
+                {"40": "hotspot_c"},
+                available_scenarios=("hotspot_a", "hotspot_b"),
+            )
+
     def test_optional_file_sha256_lock_rejects_changed_teacher(self):
         with TemporaryDirectory() as directory:
             cache = Path(directory) / "teacher.npz"

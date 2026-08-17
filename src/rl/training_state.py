@@ -77,6 +77,10 @@ _PREONLINE_FORKABLE_CONFIG_PATHS = frozenset(
         "online_advantage_self_imitation.require_positive_one_step_return",
         "online_advantage_self_imitation.weight",
         "online_critic_lr",
+        "online_critic_realignment",
+        "online_critic_realignment.enabled",
+        "online_critic_realignment.mode",
+        "online_critic_realignment.actor_warmup_updates",
         "online_imitation_regularization",
         "online_replay_fraction",
         "pretrain_reference_actor_loss.action_space",
@@ -88,6 +92,7 @@ _PREONLINE_FORKABLE_CONFIG_PATHS = frozenset(
         "residual_action.correction_gate.differentiate_actor_proposal",
         "residual_action.online_reward_mode",
         "residual_action.online_reward_n_step_horizon",
+        "residual_action.structured_exploration.enabled",
         "specimen_action_quantization",
         "updates_per_update",
     }
@@ -318,13 +323,32 @@ def _agent_state_dict(agent: Any) -> dict[str, Any]:
     cuda_rng_states = []
     if torch.cuda.is_available():
         cuda_rng_states = [state.cpu() for state in torch.cuda.get_rng_state_all()]
+    structured_explorer = getattr(
+        agent,
+        "structured_specimen_explorer",
+        None,
+    )
     return {
         "modules": modules,
         "module_modes": module_modes,
         "optimizers": optimizers,
         "total_updates": int(getattr(agent, "total_updates", 0)),
+        "online_updates_since_prepare": int(
+            getattr(agent, "online_updates_since_prepare", 0)
+        ),
+        "online_finetuning_prepared": bool(
+            getattr(agent, "online_finetuning_prepared", False)
+        ),
+        "online_critic_realignment_applied": bool(
+            getattr(agent, "online_critic_realignment_applied", False)
+        ),
         "replay_buffer": agent.replay_buffer.state_dict(),
         "noise": agent.noise.state_dict(),
+        "structured_specimen_explorer": (
+            None
+            if structured_explorer is None
+            else structured_explorer.state_dict()
+        ),
         "imitation_tensors": imitation_tensors,
         "imitation_rng_state": agent.imitation_rng.bit_generator.state,
         "critic_teacher_advantage_rng_state": (
@@ -362,6 +386,18 @@ def _load_agent_state_dict(
         optimizer.load_state_dict(optimizer_state)
         _move_optimizer_state(optimizer, agent.device)
     agent.total_updates = int(state["total_updates"])
+    if hasattr(agent, "online_updates_since_prepare"):
+        agent.online_updates_since_prepare = int(
+            state.get("online_updates_since_prepare", 0)
+        )
+    if hasattr(agent, "online_finetuning_prepared"):
+        agent.online_finetuning_prepared = bool(
+            state.get("online_finetuning_prepared", False)
+        )
+    if hasattr(agent, "online_critic_realignment_applied"):
+        agent.online_critic_realignment_applied = bool(
+            state.get("online_critic_realignment_applied", False)
+        )
     agent.replay_buffer.load_state_dict(state["replay_buffer"])
     noise_state = dict(state["noise"])
     if "exploration_noise.sigma" in (fork_overrides or {}):
@@ -374,6 +410,33 @@ def _load_agent_state_dict(
             )
         noise_state["sigma"] = float(agent.noise.sigma)
     agent.noise.load_state_dict(noise_state)
+    structured_explorer = getattr(
+        agent,
+        "structured_specimen_explorer",
+        None,
+    )
+    structured_state = state.get("structured_specimen_explorer")
+    if structured_state is not None:
+        if structured_explorer is None:
+            raise ValueError(
+                "Training state contains structured specimen exploration "
+                "state but the agent does not support it"
+            )
+        structured_explorer.load_state_dict(
+            structured_state,
+            allow_enabled_mismatch=(
+                "residual_action.structured_exploration.enabled"
+                in (fork_overrides or {})
+            ),
+        )
+    elif (
+        structured_explorer is not None
+        and structured_explorer.enabled
+    ):
+        raise ValueError(
+            "Enabled structured specimen exploration is missing from the "
+            "training state"
+        )
     for name, value in dict(state["imitation_tensors"]).items():
         setattr(
             agent,

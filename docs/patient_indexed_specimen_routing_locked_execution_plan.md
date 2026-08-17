@@ -1,13 +1,37 @@
 # Patient-Indexed Specimen Routing: Locked Publication Execution Plan
 
-Plan version: 1.0
+Plan version: 1.3
 
-Status date: 2026-08-11
+Status date: 2026-08-12
 
 Branch: `patient-indexed-specimen-routing`
 
 Authority: the committed version of this document is the cross-session source
 of truth for the routing-primary publication campaign.
+
+## Current verified position
+
+- Current publication gate: two independent, bounded development screens:
+  Howard's unchanged matched TD3 Stage C screen and the core team's newly
+  authorized persistent-shift DDPG Stage C2 screen.
+- Independent execution owner: Howard, on Mac MPS, using the locked Stage C
+  assets at commit `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
+- Parallel core-team work: the single-factor DDPG support-alignment
+  development experiment is complete. All 12 training runs and 24 evaluation
+  runs were recovered and audited, but support alignment did not improve the
+  control or establish positive online gain. This DDPG refinement path is
+  closed and did not interfere with Howard's Stage C protocol.
+- Verified diagnosis: DDPG online replay ranking improves early and then
+  erodes while critic advantage scale becomes severely miscalibrated. The
+  teacher ranking regularizer also includes 41.72% of rows whose winning option
+  is outside the specimen-only residual policy support.
+- The failed support-alignment candidate remains closed. Version 1.3 authorizes
+  one different, diagnosis-driven DDPG experiment: a persistent geographic
+  demand shift paired with online-boundary critic realignment and an online-only
+  actor warmup. It is not an extension of the failed support candidate.
+- Broad HPO, formal-holdout reuse, selective seed extension, and automatic
+  promotion remain forbidden. Howard's TD3 work is independent and is not a
+  prerequisite for running or auditing Stage C2.
 
 ## 1. Purpose and change control
 
@@ -170,6 +194,16 @@ parameter match, tests, hashes, and output roots are recorded in
 Howard is the independent execution owner. The handoff is in
 `docs/howard_stage_c_td3_handoff.md`.
 
+An explicit version-1.2 exception authorizes one concurrent core-team DDPG
+mechanism experiment because it uses separate compute, seeds, CRNs, output
+roots, and a single diagnosis-derived factor. It compares a fresh unfiltered
+DDPG control against a support-aligned candidate for both GCN and matched flat.
+Each candidate is forked from a byte-audited episode-0 state payload shared
+with its control; only the critic teacher-support contract differs. This is
+development evidence, not a second formal confirmation and not an invitation
+to parallel HPO. TD3 and support-aligned DDPG must be reviewed together before
+either can advance.
+
 The completed seeds 10-14 and their formal holdout cannot regain untouched
 status. Any changed training protocol uses a fresh development output root,
 fresh development training seeds, and a fresh development CRN stream locked in
@@ -193,6 +227,57 @@ Apply this decision tree:
 No broad automated HPO is allowed. A new experiment must be mechanism-driven,
 single-factor or explicitly matched, use a separate development stream, and
 give graph and flat architectures the same budget.
+
+### Stage C2: persistent-shift DDPG online-attribution screen
+
+Status: authorized for implementation by version 1.3. No trajectory may be
+launched until the implementation, tests, smoke evidence, hashes, and execution
+spec are committed.
+
+The mechanism hypothesis is that the original episode-round-robin curriculum
+suppressed online attribution: a frozen actor could react to observable demand
+history, while online updates repeatedly mixed alternating regimes. Stage C2
+therefore tests adaptation to a persistent, geographically redistributed demand
+regime. This is a geography-of-demand experiment, not a transport-speed sweep.
+
+The protocol is locked as follows:
+
+1. Use fresh development seeds 40, 41, and 42. Assign each seed before launch to
+   one persistent hotspot map (clusters 1, 2, and 3 respectively). Every map
+   preserves network-wide expected demand and changes only its geographic
+   distribution. The three seed-map pairs are development replicates, not
+   evidence for map-specific claims.
+2. Train matched GCN and flat DDPG for 100 online episodes. Fork each standard
+   control and realigned candidate from the same audited episode-0 state. The
+   frozen comparator is that tensor-matched episode-0 actor.
+3. The candidate may differ from control only at the online boundary: zero the
+   action-input columns of the critic's first linear layer, copy critic to target
+   critic, clear critic optimizer state, and withhold actor updates for the first
+   500 online critic updates. Preserve actor tensors, replay, environment, RNG,
+   teacher, residual scale 0.1, gate threshold 0.5, and every other parameter.
+4. Audit fixed checkpoints at episodes 0, 10, 25, 50, 75, and 100. Episode 100
+   is the deployment checkpoint; intermediate checkpoints diagnose adaptation
+   and cannot be selected post hoc.
+5. Use fresh execution-only validation CRN seed 95200000 and development CRN
+   seed 95300000. Formal seed 91100000 and all earlier development streams are
+   forbidden. Evaluate with paired CRNs and report absolute cost first, percent
+   cost second, clinical guardrails, residual use, actor drift, and cumulative
+   adaptation regret.
+6. Advancement requires episode-100 final-versus-frozen improvement of at
+   least 0.02% in pooled mean cost or a two-level 95% interval wholly below
+   zero, favorable direction in at least two of three seed-map pairs, no
+   material clinical deterioration, and nonzero routing, residual use, and
+   online updates. The realigned candidate must also be no worse than standard
+   DDPG in pooled point estimate to be selected over it.
+7. Promote at most one DDPG protocol. A favorable development result requires
+   fresh five-seed confirmation and a new holdout stream under Stage D. A failed
+   result closes this candidate; a second DDPG mechanism requires another
+   explicit amendment. Howard's outputs must not be pooled with Stage C2.
+
+Every preflight must exercise training-state save/restore, scenario assignment,
+all downstream parsers, comparator and inventory generation, including a
+synthetic CSV field larger than 131,072 bytes. Expensive execution remains
+strictly serial on Mac MPS with CPU fallback disabled.
 
 ### Stage D: independent confirmation of a revised candidate
 
@@ -285,3 +370,374 @@ control requirements in Section 1.
   locked for Mac MPS. The screen uses fresh seeds 20-22, six serial 100-episode
   runs, matched parameter budgets, and fresh development CRNs. Howard may
   launch from the supplied commit without a separate approval round.
+- Status update, 2026-08-12: The read-only Stage B mechanism diagnosis was
+  completed. It identified online replay-ranking erosion, critic scale
+  miscalibration, and a teacher-policy support mismatch. This did not amend
+  Stage C or authorize a new DDPG experiment.
+- Version 1.2, 2026-08-12: The user explicitly approved one exception to the
+  sequential Stage C gate so independent Mac compute would not remain idle.
+  A paired support-aligned DDPG experiment is authorized concurrently with
+  Howard's unchanged TD3 screen. The amendment is limited to one teacher
+  support factor, fresh seeds 30-32, fresh development CRNs 95000000 and
+  95100000, and disjoint outputs. It does not authorize broad HPO, formal
+  holdout reuse, cross-campaign pooling, or automatic winner selection. Both
+  results feed one joint gate and at most one protocol may advance.
+- Version 1.3, 2026-08-12: After the support-alignment experiment reached an
+  audited terminal negative result, the user explicitly approved continued
+  work on DDPG without waiting for Howard's independent TD3 screen. One bounded
+  Stage C2 experiment is authorized to test persistent geographic demand shift
+  plus online-boundary critic realignment. It uses fresh seeds 40-42, fresh CRNs
+  95200000/95300000, fixed episode-100 deployment, a preregistered 0.02% or
+  interval-based advancement gate, and disjoint outputs. It does not reopen
+  support alignment, authorize HPO, or expose the formal holdout.
+
+## 9. Append-only progress ledger
+
+This ledger is the compact-safe recovery point for future tasks. Add one entry
+after every material stage result, terminal failure, protocol decision, or
+publication-scope decision. Never edit or delete an older entry. Each new entry
+must record the date, stage, exact commit, immutable evidence, decision, and
+next gate. Detailed reports may live elsewhere, but must be linked here.
+
+### 2026-08-12: Stage B diagnosis opened in parallel with Stage C execution
+
+- Stage: post-Stage-B DDPG online-attribution mechanism diagnosis.
+- Source branch/commit: `patient-indexed-specimen-routing` at
+  `8a7768e3495be6d63e2091445ac6a7aa28ec0558`.
+- Diagnostic branch: `rl-attribution-refinement`.
+- Immutable evidence: Stage B checkpoint-curve summary SHA256
+  `0016e3bb8fa779984de1a21015bcade6f377d72a231b7581adc14ffc5a652ecf`,
+  training manifest SHA256
+  `0311c648fc1570843daf659f5e45ad27cceb967a9265710d03bd45c60a5e31e2`,
+  and teacher SHA256
+  `9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92`.
+- Verified starting result: GCN improves weakly through episode 50 on the
+  development checkpoint curve, then loses that point-estimate gain by episode
+  100; the late segment remains statistically inconclusive. Online updates and
+  learned residual use are nonzero, so this is not an inactive-policy failure.
+- Decision: Howard proceeds independently with the already locked matched TD3
+  Stage C screen. The core team performs read-only critic/credit-assignment
+  diagnosis only; no new training or formal-holdout evaluation is authorized.
+- Next gate: commit a reproducible diagnostic report and use it together with
+  the Stage C outcome to decide whether one bounded DDPG refinement is
+  scientifically justified.
+
+### 2026-08-12: Stage B DDPG mechanism diagnosis completed
+
+- Stage: read-only critic, replay, teacher-support, and cost-component audit.
+- Diagnostic implementation:
+  `evaluation/diagnose_ddpg_online_attribution.py`.
+- Detailed report:
+  `docs/patient_indexed_specimen_routing_rl_attribution_diagnosis.md`.
+- Deterministic diagnostic JSON SHA256:
+  `15e8f726f3266c9b5fbbb223e1dc261c0e09e082c6c1dd106912ff099b192420`.
+- Verified result: GCN replay-ranking Spearman rises from 0.191 at pretrain to
+  0.381 at episode 25, then declines to 0.159 at episode 100. Its critic
+  calibration slope falls from 0.371 to 0.023 while prediction scale expands
+  far beyond the stored replay-return scale. Flat ranking approaches chance.
+- Support audit: 131 of 314 teacher rows, or 41.72%, have a globally winning
+  option outside the specimen-only policy support. This is a contributing
+  mismatch, not a complete explanation of replay-ranking erosion.
+- Decision: Stage C remains unchanged because twin critics and clipped double-Q
+  targets directly test the leading instability mechanism. No new DDPG run is
+  authorized while Howard's matched TD3 screen is unresolved.
+- Conditional fallback: only if Stage C fails, prepare one matched
+  support-aligned DDPG candidate with `allowed_option_groups` restricted to
+  `specimen_transfer`, fresh development seeds/CRNs, and no broad HPO.
+- Next gate: audit the completed Stage C result and choose exactly one path:
+  TD3 promotion or the single bounded DDPG fallback.
+
+### 2026-08-12: Paired DDPG support-alignment experiment locked
+
+- Stage: concurrent, single-factor post-Stage-B DDPG mechanism development.
+- Execution asset commit:
+  `470b56b0422704d09b4cfe36bdc01be0bb711fc1` on
+  `rl-attribution-refinement`.
+- Execution spec:
+  `experiments/configs/patient_indexed_specimen_routing_ddpg_support_alignment_execution.json`,
+  SHA256
+  `bd69ad13ad83ccf4d21439fee4b58aa58117d12038d73ac73999ebfa437331c7`.
+- Design: GCN and matched-flat DDPG, seeds 30-32, 100 online episodes per
+  control and candidate run, checkpoint every five episodes, and a common
+  frozen routing teacher. The candidate differs only by restricting critic
+  teacher calibration to policy-supported anchor plus specimen-transfer rows.
+- Pairing: six calibration-free, zero-trajectory full states are generated
+  once. Control and candidate contract clones retain identical model,
+  optimizer, replay, environment, and RNG payloads. The runner audits these
+  payloads before accepting either branch.
+- Evaluation: final and frozen-pretrain policies use four routing scenarios,
+  50 paired replications per scenario, validation seed `95000000`, and
+  development holdout seed `95100000`. Formal seed `91100000`, Stage B seed
+  `93100000`, and Howard's Stage C streams are forbidden.
+- Verification before lock: `python -m compileall` passed; focused tests passed
+  74/74; the full repository suite passed 629/629; Howard's Stage C hashes
+  remained unchanged.
+- Decision: this is development evidence only. No further DDPG factor may be
+  introduced from this run. Advancement requires paired cost uncertainty,
+  clinical noninferiority, positive final-versus-pretrain attribution, and a
+  joint review with the independently executed TD3 screen.
+- Next gate: perform one no-trajectory MPS preflight, launch the one-claim
+  detached campaign, audit completion, then review it together with Stage C.
+
+### 2026-08-12: Support-alignment launcher failure and Recovery 1
+
+- Superseded execution commit:
+  `8688500e8899dda1ec91cc16af147cc859b0ed62` on
+  `rl-attribution-refinement`.
+- Failure boundary: all six calibration-free episode-0 states completed, but
+  the first control GCN seed-30 process exited before episode 0 was executed.
+  Training and evaluation consumed zero trajectories and produced no online
+  checkpoint.
+- Root cause: the metadata-only contract clone changed `num_episodes` from 0
+  to 100 but did not synchronize the mechanically derived
+  `history_screen.online_episodes` and `history_screen.pretrain_only` fields.
+  The full-state safety validator correctly rejected that inconsistent clone;
+  this is not evidence of a DDPG, routing, MPS, or numerical failure.
+- Immutable failure evidence: status SHA256
+  `1984a0b5270e3eb2c84a3b2578f2c9f37471d9bc330d12e3f5190b601d0b58f7`,
+  detached stderr SHA256
+  `37cd88457b7c66e24c4847c8cdea7d44904e6efddba481e43e7394efef834732`,
+  and phase stderr SHA256
+  `b2dd7989f34197c9dc20b149997957952225cae9b2c1d6645f2e5a9b5fb7652f`.
+- Recovery 1 rule: preserve the superseded root; reuse only its six immutable
+  zero-trajectory states and matched pretrain checkpoints. Their 13-file tree
+  SHA256 is
+  `abcc3a3a831bd46d62f1a826a87b39b2fa1c8e72d85f92152b89f70d2b020c2f`.
+  Generate fresh contract clones and every online/evaluation artifact under
+  `patient_indexed_specimen_routing_ddpg_support_alignment_development/recovery1`.
+- Scientific design remains unchanged. The repair synchronizes only the two
+  budget-derived contract fields and rewrites output paths; actor, critic,
+  optimizer, replay, environment, RNG, teacher, seeds, CRNs, and all training
+  hyperparameters remain locked.
+- Next gate: focused and full tests, compile validation, no-trajectory MPS
+  preflight, then one detached Recovery 1 launch and five-episode monitoring.
+
+### 2026-08-12: Recovery 1 controls completed; Recovery 2 continuation locked
+
+- Recovery 1 execution commit:
+  `c14bf379735a7d88bcea35e6f9adfb6e07e8a185` on
+  `rl-attribution-refinement`.
+- Completed scientific boundary: all six control runs (GCN and matched flat,
+  seeds 30-32) completed 100 online episodes, for 600 total episodes. The
+  audited outputs contain 262,016 specimen-routing decisions, 31,200 online
+  RL updates, finite persisted metrics, all 120 five-episode policy
+  checkpoints, and six final atomic training states. The GCN/flat parameter
+  gap is 0.9699%, below the locked 1% maximum.
+- Terminal launcher boundary: after the sixth control process exited 0, the
+  runner's post-training audit raised Python `_csv.Error` because one
+  serialized metric field exceeded the default 131,072-byte CSV field limit.
+  No candidate training or evaluation process was started. This is an audit
+  implementation failure, not a DDPG, routing, MPS, or numerical failure.
+- Immutable Recovery 1 evidence: status SHA256
+  `076511140f57ec1f2c0ae6e067c9f759a35a229ce119f26dd32a789c2b33f22e`,
+  detached stderr SHA256
+  `a779b412d142b2caffa08d29043b283dd086ab08e684c84a7626f1ad5fcb78e6`,
+  control manifest SHA256
+  `5a67ef4d139b1ec3b1e48692db3eba232de58098d415820be0fbfc34521dd2c4`,
+  151-file control tree SHA256
+  `99c6ef49705c8e00343401f1f97ddbf93ca8253545c2fc1d1353d14e5570c3a0`,
+  and 13-file paired-state tree SHA256
+  `ed7dabff2cc2124a2807cfc99fd94dce4b1073ac41c9c52a1e07991caa109cf3`.
+- Recovery 2 implementation commit:
+  `17ad3bc00a799a18424c7f7ab28616b09fcd407c`. It raises the CSV parser limit,
+  revalidates every immutable Recovery 1 control and paired-state artifact,
+  reads the completed control manifest without modification, and writes all
+  candidate/evaluation/comparison outputs under a fresh `recovery2` root.
+- Scientific design remains unchanged. Recovery 2 reuses the exact six
+  never-consumed candidate episode-0 contract clones and runs only the six
+  support-aligned candidates. It does not retrain controls, reuse candidate
+  trajectories, change a hyperparameter, or access a forbidden CRN stream.
+- Verification: compileall passed; the locked focused gate passed 59/59; the
+  full repository suite ran 634 tests with 632 passing and only the two known,
+  unrelated MPS/CPU fixture and PPO-threshold failures. Howard's Stage C files
+  remained byte-identical to their handoff commit.
+- Next gate: commit this append-only ledger update, run one clean-commit
+  no-trajectory Recovery 2 preflight, then issue exactly one detached launch.
+  After six candidate runs and four evaluation phases complete, review the
+  paired support effect jointly with Howard's Stage C result.
+
+### 2026-08-12: Recovery 2 evidence completed; support alignment did not pass
+
+- Recovery 2 execution commit:
+  `0a7cd1ef2edf305be9327cc947557766d68a1858` on
+  `rl-attribution-refinement`.
+- Completed scientific boundary: six immutable Recovery 1 controls and six
+  support-aligned candidates each contain 100 online episodes, for 12 runs and
+  1,200 episodes total. Candidate evidence contains 120 five-episode policy
+  checkpoints, six atomic states, 262,080 specimen-routing decisions, 31,200
+  online updates, finite persisted losses, and a 0.9699% GCN/flat parameter
+  gap. All four evaluation phases completed 24 runs and exactly 4,800 learned
+  plus 4,800 MDL-2 anchor rows.
+- Terminal launcher boundary: training and evaluation exited successfully, but
+  the comparison reader used Python's default 131,072-byte CSV field limit and
+  failed on `specimen_route_events_json`. This was a post-processing defect;
+  it did not invalidate or alter any trajectory, checkpoint, or evaluation.
+  Immutable failed status SHA256:
+  `52938af461f7e8336bad742f6367a0cbe5bb64a1510a4b402051d0f22996c73f`.
+- Post-processing-only fix commit:
+  `e08ba5a8ec84cc19a34d12e459d58fde9a595c29`. The comparator now raises the
+  supported CSV field limit before reading, and a regression test exercises a
+  200,000-byte serialized metric field. The focused support-alignment suite
+  passed 11/11, repository-wide `compileall` passed, and the full real-data
+  comparison completed with 20,000 bootstrap resamples. No training or
+  evaluation process was relaunched.
+- Recovered evidence: comparison SHA256
+  `56f405e5975a54a5e532805ca3a8e261f47cdcdbafb668945e2725b126f7fa63`,
+  76-file evaluation-input tree SHA256
+  `b50888d0ea6373c0bc4e0ce9cb9da876310a7e9626b275fa79fc44f1f65e8d9a`,
+  and post-processing inventory SHA256
+  `e430b542c65083b036a5112581c7efae97ce0b6089eb8fc7fb0973ce0f9171f1`.
+- Result: support alignment failed the preregistered advancement gate for both
+  matched flat and GCN DDPG. Candidate-final cost was 0.00138% higher than
+  control for flat (95% CI for absolute difference
+  `[-304685, 398625]`) and 0.00175% higher for GCN
+  (`[-130336, 203526]`). Final-versus-pretrain cost also increased by 0.00665%
+  for flat and 0.01017% for GCN, with both confidence intervals spanning zero.
+  GCN preserved clinical noninferiority, but neither architecture established
+  lower cost or positive online attribution.
+- Decision: do not promote support-aligned DDPG, add another DDPG factor, or
+  selectively extend seeds. Await Howard's unchanged matched TD3 result and
+  perform the locked joint review.
+- Execution safeguard: every expensive campaign must run every downstream
+  parser, comparator, and inventory writer end-to-end during preflight using a
+  synthetic CSV field larger than 131,072 bytes. Post-processing phases must
+  remain recoverable from immutable upstream artifacts without retraining.
+
+### 2026-08-12: Persistent-shift DDPG Stage C2 authorized
+
+- Starting branch/commit: `rl-attribution-refinement` at
+  `fbbdbc627bfc93d3671d40e1ad0f8412d1d11254`.
+- Evidence basis: the original DDPG checkpoint curve was
+  `plateaued_or_inconclusive`; support alignment subsequently failed without
+  improving control. Code audit showed the original online phase alternated
+  four regimes and its 500-update actor warmup had already been consumed by
+  offline pretraining, leaving no online-only critic adaptation interval.
+- Decision: preserve DDPG as the intended primary method and test exactly one
+  mechanism-matched alternative in which an observable but persistent
+  geographic demand redistribution creates a genuine adaptation problem, while
+  critic action dependence is reset at the online boundary before actor updates.
+- Contamination boundary: seeds 40-42 and CRNs 95200000/95300000 are fresh;
+  formal holdout 91100000, Howard's Stage C streams, prior support streams, and
+  all immutable training/evaluation artifacts remain untouched.
+- Next gate: implement and test Stage C2, commit the locked execution assets,
+  run a no-trajectory end-to-end preflight, and only then launch one detached
+  strictly serial development campaign.
+
+### 2026-08-13: Persistent-shift Stage C2 closed; action coverage is the next DDPG gate
+
+- Execution commit: `ccf7138688a62dbc0e28689f4dad3c1a127ed0e6` on
+  `rl-attribution-refinement`. The campaign completed 12/12 training runs,
+  1,200/1,200 online episodes, 240 policy checkpoints, 12 atomic states, and
+  72/72 checkpoint-curve evaluation runs with 3,600 learned plus 3,600 anchor
+  rows. Status SHA256 is
+  `378348e7912e3a6b60be4661b9f18f067694ff60d52f76c543dafe392e013c91`;
+  comparison SHA256 is
+  `ec479ff6d2abb31740070729db4ca9c8763422c91c65fb20117765df94f2e3be`;
+  the 824-file inventory SHA256 is
+  `e79f783566878fd1ca533fcf4e92d7a63846ff7ecd12a89eab9fe8d332f2f151`.
+- Locked result: the persistent-shift realignment candidate did not pass.
+  GCN episode 10 improved on frozen pretrain by `258348` cost units
+  (`0.01273%`), but its 95% CI `[-837548, 249208]` crossed zero. At episode
+  100 it was `507246` cost units (`0.02498%`) worse than frozen, with 95% CI
+  `[-445243, 1538629]`; only one of three seeds was favorable and the patient
+  loss noninferiority check failed. The locked classification is
+  `close_persistent_shift_ddpg_candidate`; no formal confirmation was launched.
+- Frozen-policy context: the same 150 paired persistent-shift rows show that
+  frozen GCN pretrain is already `10871216` cost units (`0.53262%`) better than
+  MDL-2, with 95% CI `[-14795906, -6489364]` and all three seeds favorable.
+  The reduction is dominated by `19.77` fewer patients lost and `2129333`
+  lower expiry cost, not by direct transport-cost savings. Online attribution
+  is therefore an incremental-gain problem above a strong frozen policy, not
+  evidence that the learned routing policy itself is ineffective.
+- Development diagnosis: a no-training route-only oracle probe used one frozen
+  GCN trajectory for each persistent hotspot, legal candidates MDL-2 and
+  specimen residuals `+/-0.05` and `+/-0.10`, discovery CRN `95500000`, and an
+  independent five-replication validation CRN `95600000`. Of 156 frozen-policy
+  states, 61 (`39.10%`) retained a lower-cost clinically noninferior action on
+  independent validation; 49 were specimen-transfer corrections. Those 49
+  validated corrections had median future-cost advantage `2718118` and 43/49
+  exceeded one million. This is a single-decision development probe, not a
+  cumulative episode estimate or publication result, and its temporary outputs
+  must be converted into a committed reproducible audit before citation.
+- Mechanistic conclusion: the current OU exploration has network-output
+  `sigma=0.005`; after the specimen residual scale `0.1`, its initial normalized
+  action perturbation is about `0.0005`. The environment's 120-patient routing
+  scale produces a one-patient action grid of `1/120 = 0.00833`, while the
+  independently validated useful alternatives are `0.05` or `0.10`. The
+  correction gate also remains active during exploration. Online replay thus
+  receives little behaviorally distinct specimen-action coverage, explaining
+  the collapsed critic action slope, very small actor drift, transient episode
+  10 gain, and later regression despite genuine route-only headroom.
+- Decision: preserve DDPG as the intended primary method, close critic
+  realignment and support alignment, and do not tune actor/critic learning rates
+  or expose the formal holdout. The only authorized next DDPG mechanism screen
+  is support-matched structured specimen-option exploration: during online
+  collection, explore the fixed legal set `{MDL-2, +/-0.05, +/-0.10}` for the
+  specimen group while retaining the existing DDPG critic, deterministic actor,
+  reward, self-imitation rule, gate, residual scale, and all other scientific
+  settings.
+- Next gate: implement a reproducible frozen-route-headroom audit and the
+  single-factor structured-exploration mechanism with unit tests and a
+  zero-trajectory MPS preflight. Then lock fresh development seeds and CRNs for
+  one paired control/candidate screen. Advancement requires positive
+  final-versus-frozen attribution, at least two favorable seeds, clinical
+  noninferiority, and no regression relative to the unchanged DDPG control.
+
+### 2026-08-13: Structured specimen exploration Stage C3 locked for execution
+
+- Scientific question: does behaviorally distinct, support-matched online
+  coverage let the existing DDPG critic and actor learn incremental routing
+  value that ordinary sub-grid OU exploration misses? This is a mechanism
+  screen above the already strong frozen DDPG policy, not a new deployment
+  policy, geography calibration, or hyperparameter sweep.
+- Before training, rerun the committed frozen-route-headroom audit on the
+  immutable Stage C2 control pretrain checkpoints for GCN seeds 40-42. It must
+  reproduce 156 persistent-hotspot states with disjoint discovery and
+  validation streams 95500000 and 95600000 and retain at least one independently
+  validated clinically noninferior specimen correction. These rows are
+  mechanistic development evidence only; state-level advantages must never be
+  summed into an episode or publication performance claim.
+- Fresh paired training uses seeds 50, 51, and 52, assigned once to persistent
+  hotspot clusters 1, 2, and 3. Six zero-trajectory episode-0 states are
+  created, then metadata-only cloned for GCN and matched-flat control/candidate
+  arms. Actor, critic, optimizers, replay, environment, ordinary OU state, all
+  RNG state, reward, self-imitation, gate, residual scale, update schedule, and
+  every other scientific field remain identical at the fork.
+- The only arm difference is
+  `residual_action.structured_exploration.enabled`. The control leaves it off.
+  During candidate online data collection, after actor output, ordinary OU,
+  correction gating, and policy projection, each decision has fixed probability
+  0.20 of replacing only the specimen-transfer slice by one uniformly sampled
+  legal option from `{MDL-2, -0.05, +0.05, -0.10, +0.10}` around the current
+  MDL-2 anchor. Thus the preregistered expected rates are 4% anchor replacement
+  and 16% non-anchor specimen correction. Other action groups are untouched,
+  and evaluation always uses the deterministic frozen checkpoint policy with
+  structured exploration disabled by `explore=False`.
+- Train controls first and candidates second, strictly serial, for 100 online
+  episodes each: 12 runs, 1,200 online episodes, policy and atomic state every
+  five episodes. Require MPS with fallback disabled, nonzero routing and online
+  updates, finite persisted metrics, GCN/flat parameter gap at most 1%, exact
+  explorer RNG resumption, all five options observed in each candidate run, and
+  behaviorally distinct specimen actions. The forced-probability two-step CPU
+  smoke is execution validation only and is not evidence.
+- Evaluate both arms at pretrain, episode 10, 25, 50, 75, and 100. Each of the
+  72 fixed checkpoint runs uses its seed-assigned persistent hotspot and 50
+  paired development replications, producing 3,600 learned and 3,600 MDL-2
+  anchor rows per arm. Seed 95700000 with one replication is execution-only;
+  seed 95800000 is the development evaluation stream; bootstrap seed 95850000
+  is fixed. Formal holdout 91100000 and every prior training/evaluation stream
+  remain forbidden.
+- Candidate advancement requires final GCN cost improvement versus its own
+  frozen pretrain of at least 0.02% or a paired 95% cost CI wholly below zero,
+  at least two of three favorable training seeds, all preregistered clinical
+  noninferiority checks, and no mean-cost or clinical regression versus the
+  unchanged fresh-seed control. The checkpoint curve and adaptation AUC are
+  supporting diagnostics, never checkpoint-selection devices. Failure closes
+  this structured-exploration candidate; success authorizes a separately
+  reviewed fresh confirmation only. No formal confirmation launches
+  automatically.
+- Implementation gate: unit and integration tests, full relevant regression
+  tests, compile-all, reproducible asset hashes, clean-worktree preflight, and a
+  zero-trajectory host MPS probe must all pass before the single detached run is
+  launched. Howard's TD3 campaign and all prior support-alignment and Stage C2
+  evidence remain untouched and must not be pooled into this comparison.

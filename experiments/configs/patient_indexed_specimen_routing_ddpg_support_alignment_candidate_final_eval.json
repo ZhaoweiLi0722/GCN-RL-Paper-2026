@@ -1,0 +1,57 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_support_alignment_candidate_final_eval",
+  "experimental_role": "fixed final-checkpoint development evaluation of the support-aligned DDPG candidate; not formal holdout evidence",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "training_manifest": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/training/patient_indexed_specimen_routing_ddpg_support_alignment_candidate_100/training_manifest.json",
+  "algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd"
+  ],
+  "training_seeds": [
+    30,
+    31,
+    32
+  ],
+  "checkpoint_variants": [
+    "final"
+  ],
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "deployment_candidates": [
+    {
+      "scale": 0.0,
+      "group_thresholds": [
+        1.0
+      ]
+    },
+    {
+      "scale": 1.0,
+      "use_checkpoint_group_thresholds": true
+    }
+  ],
+  "fixed_deployment_candidate": {
+    "scale": 1.0,
+    "use_checkpoint_group_thresholds": true
+  },
+  "fixed_checkpoint_variant": "final",
+  "validation_replications": 1,
+  "validation_seed": 95000000,
+  "holdout_replications": 50,
+  "holdout_seed": 95100000,
+  "max_steps": 52,
+  "strict_scenario_clinical_noninferiority": false,
+  "clinical_noninferiority": {
+    "mode": "paired_ci",
+    "z_value": 1.96,
+    "margins": {
+      "completion_service_level": 0.001,
+      "patients_lost": 1.0,
+      "patient_ineligibility_during_manufacturing_rate": 0.001
+    }
+  },
+  "output_root": "results/patient_indexed_specimen_routing_ddpg_support_alignment_development/support_aligned/evaluation/final"
+}

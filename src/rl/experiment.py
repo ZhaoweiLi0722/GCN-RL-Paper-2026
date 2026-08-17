@@ -341,6 +341,17 @@ def train_off_policy_agent(
         if callable(episode_finalizer):
             episode_finalizer()
 
+        structured_exploration_getter = getattr(
+            agent,
+            "structured_exploration_summary",
+            None,
+        )
+        structured_exploration = (
+            dict(structured_exploration_getter())
+            if callable(structured_exploration_getter)
+            else {}
+        )
+
         elite_summary = _maybe_fit_elite_episode(
             agent,
             elite_config,
@@ -443,6 +454,54 @@ def train_off_policy_agent(
                 "online_rl_updates": max(
                     update_metric_counts.values(),
                     default=0,
+                ),
+                "structured_specimen_exploration_enabled": int(
+                    bool(structured_exploration.get("enabled", False))
+                ),
+                "structured_specimen_selection_probability": (
+                    structured_exploration.get(
+                        "selection_probability",
+                        0.0,
+                    )
+                ),
+                "structured_specimen_episode_decisions": (
+                    structured_exploration.get("episode_decisions", 0)
+                ),
+                "structured_specimen_episode_selections": (
+                    structured_exploration.get("episode_selections", 0)
+                ),
+                "structured_specimen_episode_correction_selections": (
+                    structured_exploration.get(
+                        "episode_correction_selections",
+                        0,
+                    )
+                ),
+                "structured_specimen_episode_behaviorally_distinct": (
+                    structured_exploration.get(
+                        "episode_behaviorally_distinct",
+                        0,
+                    )
+                ),
+                "structured_specimen_episode_mean_linf_delta": (
+                    structured_exploration.get(
+                        "episode_mean_selected_specimen_linf_delta",
+                        0.0,
+                    )
+                ),
+                "structured_specimen_episode_max_linf_delta": (
+                    structured_exploration.get(
+                        "episode_max_specimen_linf_delta",
+                        0.0,
+                    )
+                ),
+                "structured_specimen_episode_option_counts_json": (
+                    json.dumps(
+                        structured_exploration.get(
+                            "episode_option_counts",
+                            {},
+                        ),
+                        sort_keys=True,
+                    )
                 ),
             }
         if metrics.has_patient_metrics:

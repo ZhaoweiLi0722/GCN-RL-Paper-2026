@@ -1,5 +1,13 @@
 # Stage G1 Legal-Action-Aligned GCN-DDPG Design Review
 
+> **Scenario reconstruction correction (2026-08-18).** The executed G1 audit
+> used the stored nominal-history reference environment while labeling rows by
+> the intended persistent-hotspot assignment. Its numeric evidence is retained
+> for auditability but cannot support the original scenario-specific claim.
+> The proposed online extension remains unauthorized; see
+> `patient_indexed_specimen_routing_ddpg_problem_redefinition_review.md` for the
+> corrected action-geometry screen and current decision.
+
 ## Status
 
 This document records the final scientifically defensible route considered for

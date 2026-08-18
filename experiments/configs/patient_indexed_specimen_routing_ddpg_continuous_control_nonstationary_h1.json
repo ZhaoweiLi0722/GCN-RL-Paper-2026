@@ -1,0 +1,33 @@
+{
+  "base_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0.json",
+  "name": "patient_indexed_specimen_routing_ddpg_continuous_control_nonstationary_h1",
+  "experimental_role": "development-only frozen action-geometry and independently replicated long-horizon headroom screen for continuous resource control on the preregistered abrupt-shift, regional-drift, and compound-stress scenarios; not training, checkpoint selection, formal confirmation, or deployment evidence",
+  "scenario_by_training_seed": {
+    "60": "routing_abrupt_regime_shift",
+    "61": "routing_regional_drift",
+    "62": "routing_compound_regional_stress"
+  },
+  "audit": {
+    "allow_out_of_distribution_scenario_probe": true,
+    "live_seed": 125000000,
+    "discovery_rollout_seed": 127000000,
+    "validation_rollout_seed": 131000000,
+    "execution_seed": 135000000
+  },
+  "locked_files_append": [
+    {
+      "name": "stage_h0_corrected_persistent_summary",
+      "path": "results/patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0_development/recovery1/summary.json",
+      "sha256": "f533452b92d169796bceaa6966ad7925c67b59de5cfa6edf39ef6d29ec025f74"
+    }
+  ],
+  "forbidden_crn_ranges": [
+    {
+      "name": "all_prior_and_formal_streams",
+      "start": 91000000,
+      "end": 124999999
+    }
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_ddpg_continuous_control_nonstationary_h1_development",
+  "smoke_output_root": "/private/tmp/patient_indexed_specimen_routing_ddpg_continuous_control_nonstationary_h1_smoke"
+}

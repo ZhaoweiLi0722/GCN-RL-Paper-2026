@@ -1,0 +1,166 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0_recovery1",
+  "experimental_role": "development-only recovery of the frozen action-geometry and independently replicated long-horizon headroom screen with explicit benchmark-plan scenario reconstruction; not training, checkpoint selection, formal confirmation, or deployment evidence",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "primary_algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "training_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/training_manifest.json",
+  "training_seeds": [
+    60,
+    61,
+    62
+  ],
+  "scenario_by_training_seed": {
+    "60": "routing_persistent_hotspot_cluster1",
+    "61": "routing_persistent_hotspot_cluster2",
+    "62": "routing_persistent_hotspot_cluster3"
+  },
+  "locked_files": [
+    {
+      "name": "benchmark_plan",
+      "path": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+      "sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709"
+    },
+    {
+      "name": "superseded_nominal_scenario_h0_summary",
+      "path": "results/patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0_development/summary.json",
+      "sha256": "7b0e0c13b088a84a64fba5784b1abed7269727878b4f6349e34855cdbe7bcd44"
+    },
+    {
+      "name": "stage_f1_comparison",
+      "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison/online_paired_advantage_summary.json",
+      "sha256": "8f4967115c584900969a7dba93e29da5ab70dfc65caa27d81423805be85c010a"
+    },
+    {
+      "name": "stage_g0_summary",
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json",
+      "sha256": "738bf04c8f5716e284a2f3006fe0a102516e83ae81dc1b87bbd37c1513f82524"
+    },
+    {
+      "name": "stage_g1_summary",
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json",
+      "sha256": "9e96deec850d6033fb5a2fb9e2f5090f8a040468df9faf8634015a14875d1c41"
+    }
+  ],
+  "locked_trees": [
+    {
+      "name": "stage_f1_control_training",
+      "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training",
+      "artifact_count": 151,
+      "sha256": "eb276c4402d766124080f1eddbfa1c365ff5a32d8baedb0204ff39e23c5041e8"
+    },
+    {
+      "name": "stage_f1_candidate_training",
+      "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training",
+      "artifact_count": 151,
+      "sha256": "af861462f59e0917a7de4ad3311e02ccbf244e8ccbf6587ecfd0dac4e231cbb3"
+    }
+  ],
+  "audit": {
+    "device": "cpu",
+    "max_steps_per_episode": 52,
+    "decision_steps": [
+      0,
+      6,
+      12,
+      18,
+      25,
+      31,
+      37,
+      43,
+      51
+    ],
+    "horizon": "remaining",
+    "discovery_replications": 3,
+    "validation_replications": 5,
+    "live_seed": 111000000,
+    "discovery_rollout_seed": 113000000,
+    "validation_rollout_seed": 117000000,
+    "execution_seed": 121000000,
+    "material_improvement": 1000000.0,
+    "minimum_pairwise_cost_gap": 250000.0,
+    "execution_tolerance": 1e-07,
+    "guardrails": {
+      "min_completion_service_level_delta": 0.0,
+      "max_patients_lost_delta": 0.0,
+      "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0
+    },
+    "explicit_options": [
+      {
+        "group": "specimen_transfer",
+        "epsilon": 0.05,
+        "sign": 1.0
+      },
+      {
+        "group": "specimen_transfer",
+        "epsilon": 0.05,
+        "sign": -1.0
+      },
+      {
+        "group": "specimen_transfer",
+        "epsilon": 0.10,
+        "sign": 1.0
+      },
+      {
+        "group": "specimen_transfer",
+        "epsilon": 0.10,
+        "sign": -1.0
+      },
+      {
+        "group": "reagent_transfer",
+        "epsilon": 0.05,
+        "sign": 1.0
+      },
+      {
+        "group": "reagent_transfer",
+        "epsilon": 0.05,
+        "sign": -1.0
+      },
+      {
+        "group": "reagent_transfer",
+        "epsilon": 0.10,
+        "sign": 1.0
+      },
+      {
+        "group": "reagent_transfer",
+        "epsilon": 0.10,
+        "sign": -1.0
+      },
+      {
+        "group": "combined_transfer",
+        "epsilon": 0.05,
+        "sign": 1.0
+      },
+      {
+        "group": "combined_transfer",
+        "epsilon": 0.05,
+        "sign": -1.0
+      },
+      {
+        "group": "combined_transfer",
+        "epsilon": 0.10,
+        "sign": 1.0
+      },
+      {
+        "group": "combined_transfer",
+        "epsilon": 0.10,
+        "sign": -1.0
+      }
+    ]
+  },
+  "stage_h0_gate": {
+    "minimum_execution_survival_fraction": 0.75,
+    "minimum_best_action_agreement": 0.70,
+    "minimum_pairwise_sign_agreement": 0.80,
+    "minimum_validated_material_opportunity_fraction": 0.10,
+    "minimum_prospective_validation_success_fraction": 0.05
+  },
+  "forbidden_crn_ranges": [
+    {
+      "name": "all_prior_and_formal_streams",
+      "start": 91000000,
+      "end": 110999999
+    }
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0_development/recovery1",
+  "smoke_output_root": "/private/tmp/patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0_recovery1_smoke"
+}

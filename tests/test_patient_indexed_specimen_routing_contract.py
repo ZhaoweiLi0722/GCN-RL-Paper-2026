@@ -68,6 +68,46 @@ DDPG_ONLINE_PAIRED_ADVANTAGE_RESULT_ROOT = (
     "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_"
     "development"
 )
+DDPG_ACTOR_PROJECTION_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_"
+    "g0_development"
+)
+DDPG_LEGAL_ACTION_RANKER_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_legal_action_ranker_"
+    "g1_development"
+)
+DDPG_CONTINUOUS_HEADROOM_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_continuous_control_"
+    "headroom_h0_development"
+)
+DDPG_CONTINUOUS_NONSTATIONARY_RESULT_ROOT = (
+    "results/patient_indexed_specimen_routing_ddpg_continuous_control_"
+    "nonstationary_h1_development"
+)
+DDPG_POSTHOC_RESULT_ROOTS = {
+    "patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0.json": (
+        DDPG_ONLINE_PAIRED_ADVANTAGE_RESULT_ROOT,
+        DDPG_ACTOR_PROJECTION_RESULT_ROOT,
+    ),
+    "patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1.json": (
+        DDPG_ONLINE_PAIRED_ADVANTAGE_RESULT_ROOT,
+        DDPG_LEGAL_ACTION_RANKER_RESULT_ROOT,
+    ),
+    (
+        "patient_indexed_specimen_routing_ddpg_continuous_control_"
+        "headroom_h0.json"
+    ): (
+        DDPG_ONLINE_PAIRED_ADVANTAGE_RESULT_ROOT,
+        DDPG_CONTINUOUS_HEADROOM_RESULT_ROOT,
+    ),
+    (
+        "patient_indexed_specimen_routing_ddpg_continuous_control_"
+        "nonstationary_h1.json"
+    ): (
+        DDPG_CONTINUOUS_HEADROOM_RESULT_ROOT,
+        DDPG_CONTINUOUS_NONSTATIONARY_RESULT_ROOT,
+    ),
+}
 FROZEN_TEACHER_CONFIG = (
     "patient_indexed_specimen_routing_teacher_routing.json"
 )
@@ -1396,6 +1436,10 @@ class RoutingExperimentContractTests(unittest.TestCase):
                             )
                         )
                     )
+                    ddpg_posthoc_reference = any(
+                        value == root or value.startswith(f"{root}/")
+                        for root in DDPG_POSTHOC_RESULT_ROOTS.get(path.name, ())
+                    )
                     self.assertTrue(
                         value.startswith(RESULT_ROOT)
                         or frozen_teacher_reference
@@ -1406,7 +1450,8 @@ class RoutingExperimentContractTests(unittest.TestCase):
                         or ddpg_structured_reference
                         or frozen_route_headroom_reference
                         or ddpg_identifiability_reference
-                        or ddpg_online_paired_reference,
+                        or ddpg_online_paired_reference
+                        or ddpg_posthoc_reference,
                         f"{path}: {value}",
                     )
 

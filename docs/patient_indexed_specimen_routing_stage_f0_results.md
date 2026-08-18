@@ -1,5 +1,14 @@
 # Stage F0 Online DDPG Identifiability Results
 
+> **Scenario reconstruction correction (2026-08-18).** This post-hoc audit
+> reconstructed each run from the stored pretraining reference `env`
+> (`routing_nominal_history`) rather than its multiscenario online assignment.
+> The rows remain reproducible nominal-history diagnostics, but the former
+> persistent-hotspot interpretation is superseded. Stage E formal evaluation
+> and Stage F1 training/evaluation are unaffected because they reconstruct
+> scenarios from the benchmark plan. No corrected full F0 rerun has been
+> performed; see `patient_indexed_specimen_routing_ddpg_problem_redefinition_review.md`.
+
 Status date: 2026-08-17
 
 Status: completed read-only development diagnosis. The legal-action ranking

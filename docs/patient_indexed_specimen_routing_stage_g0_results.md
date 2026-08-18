@@ -1,5 +1,14 @@
 # Stage G0 DDPG Actor-Projection Transfer Results
 
+> **Scenario reconstruction correction (2026-08-18).** This post-hoc audit
+> reconstructed each run from the stored pretraining reference `env`
+> (`routing_nominal_history`) rather than its multiscenario online assignment.
+> The rows and hashes remain immutable nominal-history diagnostics, but the
+> former persistent-hotspot interpretation is superseded. Stage E formal
+> evaluation and Stage F1 training/evaluation are unaffected. No corrected full
+> G0 rerun has been performed; see
+> `patient_indexed_specimen_routing_ddpg_problem_redefinition_review.md`.
+
 ## Decision
 
 Stage G0 completed on the locked implementation commit `6031b21`. All 27 fixed

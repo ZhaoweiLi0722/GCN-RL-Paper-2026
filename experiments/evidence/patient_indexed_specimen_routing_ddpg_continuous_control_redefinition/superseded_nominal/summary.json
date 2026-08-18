@@ -1,0 +1,242 @@
+{
+  "actor_updated": false,
+  "checkpoint_selected": false,
+  "config": "experiments/configs/patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0.json",
+  "config_sha256": "0c36064a6a7ef7055abd21f4b553150c7f5d7241c13dd3f09e5bec601211ad08",
+  "decision": {
+    "classification": "continuous_control_geometry_not_supported",
+    "eligible_continuous_groups": [],
+    "formal_confirmation_authorized": false,
+    "full_156_state_frozen_audit_authorized": false,
+    "group_checks": {
+      "combined_transfer": {
+        "best_action_stability": true,
+        "execution_survival": true,
+        "pairwise_stability": true,
+        "prospective_success": false,
+        "validated_headroom": false
+      },
+      "reagent_transfer": {
+        "best_action_stability": false,
+        "execution_survival": true,
+        "pairwise_stability": false,
+        "prospective_success": false,
+        "validated_headroom": false
+      }
+    },
+    "online_training_authorized": false,
+    "selected_group": null
+  },
+  "experimental_role": "development-only frozen action-geometry and independently replicated long-horizon headroom screen for a hybrid discrete-routing plus continuous-resource DDPG redesign; not training, checkpoint selection, formal confirmation, or deployment evidence",
+  "formal_holdout_reused": false,
+  "fresh_crn_seed_count": 246,
+  "locked_inputs": {
+    "files": {
+      "stage_f1_comparison": {
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison/online_paired_advantage_summary.json",
+        "sha256": "8f4967115c584900969a7dba93e29da5ab70dfc65caa27d81423805be85c010a"
+      },
+      "stage_g0_summary": {
+        "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json",
+        "sha256": "738bf04c8f5716e284a2f3006fe0a102516e83ae81dc1b87bbd37c1513f82524"
+      },
+      "stage_g1_summary": {
+        "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json",
+        "sha256": "9e96deec850d6033fb5a2fb9e2f5090f8a040468df9faf8634015a14875d1c41"
+      }
+    },
+    "trees": {
+      "stage_f1_candidate_training": {
+        "artifact_count": 151,
+        "artifact_tree_sha256": "af861462f59e0917a7de4ad3311e02ccbf244e8ccbf6587ecfd0dac4e231cbb3",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training"
+      },
+      "stage_f1_control_training": {
+        "artifact_count": 151,
+        "artifact_tree_sha256": "eb276c4402d766124080f1eddbfa1c365ff5a32d8baedb0204ff39e23c5041e8",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training"
+      }
+    }
+  },
+  "metrics": {
+    "combined_transfer": {
+      "discovery_selected_validation_material_success_fraction": 0.0,
+      "discovery_validation_best_action_agreement": 0.8888888888888888,
+      "discovery_validation_pairwise_sign_agreement": 0.9291666666666667,
+      "fully_distinct_execution_state_fraction": 1.0,
+      "nonanchor_execution_survival_fraction": 1.0,
+      "nonanchor_options": 108,
+      "pairwise_comparisons": 240,
+      "per_seed": {
+        "60": {
+          "discovery_selected_validation_material_success_fraction": 0.0,
+          "discovery_validation_best_action_agreement": 1.0,
+          "discovery_validation_pairwise_sign_agreement": 0.9240506329113924,
+          "fully_distinct_execution_state_fraction": 1.0,
+          "nonanchor_execution_survival_fraction": 1.0,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 79,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.0,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 1.0,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.0
+        },
+        "61": {
+          "discovery_selected_validation_material_success_fraction": 0.0,
+          "discovery_validation_best_action_agreement": 0.7777777777777778,
+          "discovery_validation_pairwise_sign_agreement": 0.9146341463414634,
+          "fully_distinct_execution_state_fraction": 1.0,
+          "nonanchor_execution_survival_fraction": 1.0,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 82,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.0,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 1.0,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.0
+        },
+        "62": {
+          "discovery_selected_validation_material_success_fraction": 0.0,
+          "discovery_validation_best_action_agreement": 0.8888888888888888,
+          "discovery_validation_pairwise_sign_agreement": 0.9493670886075949,
+          "fully_distinct_execution_state_fraction": 1.0,
+          "nonanchor_execution_survival_fraction": 1.0,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 79,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.0,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 1.0,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.1111111111111111
+        }
+      },
+      "stable_material_best_action_fraction": 0.0,
+      "states": 27,
+      "states_with_any_distinct_execution_fraction": 1.0,
+      "validation_material_clinically_noninferior_opportunity_fraction": 0.037037037037037035
+    },
+    "reagent_transfer": {
+      "discovery_selected_validation_material_success_fraction": 0.0,
+      "discovery_validation_best_action_agreement": 0.2962962962962963,
+      "discovery_validation_pairwise_sign_agreement": 0.48717948717948717,
+      "fully_distinct_execution_state_fraction": 1.0,
+      "nonanchor_execution_survival_fraction": 1.0,
+      "nonanchor_options": 108,
+      "pairwise_comparisons": 39,
+      "per_seed": {
+        "60": {
+          "discovery_selected_validation_material_success_fraction": 0.0,
+          "discovery_validation_best_action_agreement": 0.3333333333333333,
+          "discovery_validation_pairwise_sign_agreement": 0.375,
+          "fully_distinct_execution_state_fraction": 1.0,
+          "nonanchor_execution_survival_fraction": 1.0,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 8,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.0,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 1.0,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.0
+        },
+        "61": {
+          "discovery_selected_validation_material_success_fraction": 0.0,
+          "discovery_validation_best_action_agreement": 0.3333333333333333,
+          "discovery_validation_pairwise_sign_agreement": 0.5,
+          "fully_distinct_execution_state_fraction": 1.0,
+          "nonanchor_execution_survival_fraction": 1.0,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 4,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.0,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 1.0,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.0
+        },
+        "62": {
+          "discovery_selected_validation_material_success_fraction": 0.0,
+          "discovery_validation_best_action_agreement": 0.2222222222222222,
+          "discovery_validation_pairwise_sign_agreement": 0.5185185185185185,
+          "fully_distinct_execution_state_fraction": 1.0,
+          "nonanchor_execution_survival_fraction": 1.0,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 27,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.0,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 1.0,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.1111111111111111
+        }
+      },
+      "stable_material_best_action_fraction": 0.0,
+      "states": 27,
+      "states_with_any_distinct_execution_fraction": 1.0,
+      "validation_material_clinically_noninferior_opportunity_fraction": 0.037037037037037035
+    },
+    "specimen_transfer": {
+      "discovery_selected_validation_material_success_fraction": 0.25925925925925924,
+      "discovery_validation_best_action_agreement": 0.7777777777777778,
+      "discovery_validation_pairwise_sign_agreement": 0.8402061855670103,
+      "fully_distinct_execution_state_fraction": 0.8888888888888888,
+      "nonanchor_execution_survival_fraction": 0.8888888888888888,
+      "nonanchor_options": 108,
+      "pairwise_comparisons": 194,
+      "per_seed": {
+        "60": {
+          "discovery_selected_validation_material_success_fraction": 0.4444444444444444,
+          "discovery_validation_best_action_agreement": 0.8888888888888888,
+          "discovery_validation_pairwise_sign_agreement": 0.9411764705882353,
+          "fully_distinct_execution_state_fraction": 0.8888888888888888,
+          "nonanchor_execution_survival_fraction": 0.8888888888888888,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 68,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.2222222222222222,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 0.8888888888888888,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.4444444444444444
+        },
+        "61": {
+          "discovery_selected_validation_material_success_fraction": 0.2222222222222222,
+          "discovery_validation_best_action_agreement": 0.7777777777777778,
+          "discovery_validation_pairwise_sign_agreement": 0.8070175438596491,
+          "fully_distinct_execution_state_fraction": 0.8888888888888888,
+          "nonanchor_execution_survival_fraction": 0.8888888888888888,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 57,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.2222222222222222,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 0.8888888888888888,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.3333333333333333
+        },
+        "62": {
+          "discovery_selected_validation_material_success_fraction": 0.1111111111111111,
+          "discovery_validation_best_action_agreement": 0.6666666666666666,
+          "discovery_validation_pairwise_sign_agreement": 0.7681159420289855,
+          "fully_distinct_execution_state_fraction": 0.8888888888888888,
+          "nonanchor_execution_survival_fraction": 0.8888888888888888,
+          "nonanchor_options": 36,
+          "pairwise_comparisons": 69,
+          "per_seed": {},
+          "stable_material_best_action_fraction": 0.1111111111111111,
+          "states": 9,
+          "states_with_any_distinct_execution_fraction": 0.8888888888888888,
+          "validation_material_clinically_noninferior_opportunity_fraction": 0.2222222222222222
+        }
+      },
+      "stable_material_best_action_fraction": 0.18518518518518517,
+      "states": 27,
+      "states_with_any_distinct_execution_fraction": 0.8888888888888888,
+      "validation_material_clinically_noninferior_opportunity_fraction": 0.3333333333333333
+    }
+  },
+  "name": "patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0",
+  "rows": {
+    "count": 351,
+    "path": "results/patient_indexed_specimen_routing_ddpg_continuous_control_headroom_h0_development/continuous_control_rows.csv",
+    "sha256": "a791d32680e1e377f09043ce2432a06460d130ceeb9b7d6df9fd0a18e223b3ad"
+  },
+  "smoke": false,
+  "training_performed": false
+}

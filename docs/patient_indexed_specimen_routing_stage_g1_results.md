@@ -1,5 +1,14 @@
 # Stage G1 Legal-Action Critic Feasibility Results
 
+> **Scenario reconstruction correction (2026-08-18).** This post-hoc audit
+> reconstructed each run from the stored pretraining reference `env`
+> (`routing_nominal_history`) rather than its multiscenario online assignment.
+> The fitted rows and hashes remain immutable nominal-history diagnostics, but
+> the former persistent-hotspot and per-cluster interpretation is superseded.
+> No corrected 156-state G1 rerun has been performed. A corrected 27-state
+> prospective screen independently failed to authorize escalation; see
+> `patient_indexed_specimen_routing_ddpg_problem_redefinition_review.md`.
+
 ## Decision
 
 Stage G1 completed on implementation commit `bffd2ae`. The audit covered all

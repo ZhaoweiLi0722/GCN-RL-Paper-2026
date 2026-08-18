@@ -125,3 +125,23 @@ cannot rescue a failed final-minus-frozen primary gate.
 If the gate passes, a separate fresh confirmation protocol may be reviewed. If
 it fails, online DDPG attribution is closed and the paper retains the existing
 transparent statement that online contribution is not established.
+
+## 7. Post-training audit recovery
+
+Recovery 1 completed all six episode-0 states, all 12 training jobs, all 1,200
+online episodes, 240 policy checkpoints, and 12 full training states before it
+stopped in the candidate post-training audit. No evaluation process had
+started. The failure was an audit-definition error: the executor compared the
+count of every executed action that differed from MDL-2 with the narrower
+count of differences introduced specifically by the structured explorer.
+
+The corrected invariant is prospective and mechanical. Candidate paired
+contexts must equal all online decisions; persisted replay paired targets must
+equal all behavior-versus-MDL-2 distinct actions; and the structured-explorer
+distinct count is retained as a separate support diagnostic. Recovery 2 may
+reuse the completed Recovery 1 artifacts only after exact file and artifact-
+tree hashes, phase history, replay targets, finite losses, reward reproduction,
+and both training manifests pass. Its command whitelist contains only the
+fixed-checkpoint evaluator and the prespecified comparator. It may not prepare
+states, train, resume training, alter checkpoints, or launch formal
+confirmation.

@@ -957,9 +957,7 @@ def audit_training(
             )
             if paired_contexts != row_decisions:
                 raise ValueError("Candidate paired context count mismatch")
-            if paired_distinct != row_distinct:
-                raise ValueError("Candidate paired distinct count mismatch")
-            if paired_replay_samples != row_distinct:
+            if paired_replay_samples != paired_distinct:
                 raise ValueError("Candidate paired replay count mismatch")
             if paired_reward_error_max > float(
                 contract_paired["reward_consistency_atol"]
@@ -994,6 +992,7 @@ def audit_training(
                     "enabled": role == "candidate",
                     "context_count": paired_contexts,
                     "distinct_count": paired_distinct,
+                    "structured_explorer_distinct_count": row_distinct,
                     "replay_samples": paired_replay_samples,
                     "loss_positive_episode_count": paired_loss_batches,
                     "reward_error_max": paired_reward_error_max,

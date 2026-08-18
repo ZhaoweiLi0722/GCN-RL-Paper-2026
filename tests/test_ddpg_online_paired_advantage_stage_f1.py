@@ -1,5 +1,6 @@
 import copy
 import csv
+import hashlib
 import json
 import unittest
 import numpy as np
@@ -21,12 +22,16 @@ from evaluation.run_patient_indexed_specimen_routing_ddpg_online_paired_advantag
     clone_paired_states,
     validate_lock_manifest,
     validate_scientific_contract,
-    verify_locked_assets,
+)
+from evaluation.run_patient_indexed_specimen_routing_ddpg_online_paired_advantage_recovery2 import (
+    ALLOWED_PHASE_MODULES,
+    build_phase_commands,
+    immutable_tree_snapshot,
 )
 
 
 class OnlinePairedAdvantageStageF1Tests(unittest.TestCase):
-    def test_execution_spec_has_complete_verified_lock_manifest(self) -> None:
+    def test_historical_execution_spec_remains_immutable(self) -> None:
         root = Path(__file__).resolve().parents[1]
         spec_path = Path(
             "experiments/configs/"
@@ -37,10 +42,57 @@ class OnlinePairedAdvantageStageF1Tests(unittest.TestCase):
 
         validate_scientific_contract(spec)
         validate_lock_manifest(spec_path, spec)
-        verified = verify_locked_assets(spec)
+        digest = hashlib.sha256((root / spec_path).read_bytes()).hexdigest()
+        self.assertEqual(
+            digest,
+            "119b681afccd40c348b7ab5e3622e8f8"
+            "efa7526fb925c8bad2c3d1b6471b0868",
+        )
+        self.assertGreaterEqual(len(spec["locked_files"]), 40)
+        self.assertNotIn(
+            str(spec_path),
+            {str(entry["path"]) for entry in spec["locked_files"]},
+        )
 
-        self.assertGreaterEqual(len(verified), 40)
-        self.assertNotIn(str(spec_path), verified)
+    def test_recovery2_phase_commands_are_evaluation_only(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        spec = json.loads(
+            (
+                root
+                / "experiments/configs/"
+                "patient_indexed_specimen_routing_ddpg_online_paired_"
+                "advantage_recovery2_execution.json"
+            ).read_text(encoding="utf-8")
+        )
+        phases = build_phase_commands(spec)
+        modules = {
+            command[command.index("-m") + 1]
+            for _name, command in phases
+        }
+        commands = "\n".join(" ".join(command) for _name, command in phases)
+
+        self.assertEqual(modules, ALLOWED_PHASE_MODULES)
+        self.assertNotIn("train_multiscenario_network_residual", commands)
+        self.assertNotIn("--resume-training-state", commands)
+        self.assertEqual(
+            spec["recovery1"]["training_jobs_completed"],
+            12,
+        )
+        self.assertEqual(spec["recovery1"]["evaluation_runs_launched"], 0)
+
+    def test_immutable_tree_snapshot_detects_artifact_changes(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "a.txt").write_text("alpha", encoding="utf-8")
+            first = immutable_tree_snapshot(root)
+            (root / "a.txt").write_text("beta", encoding="utf-8")
+            second = immutable_tree_snapshot(root)
+
+        self.assertEqual(first["artifact_count"], 1)
+        self.assertNotEqual(
+            first["artifact_tree_sha256"],
+            second["artifact_tree_sha256"],
+        )
 
     def test_locked_training_contract_is_single_factor(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -369,10 +421,10 @@ class OnlinePairedAdvantageStageF1Tests(unittest.TestCase):
                             (checkpoint_root / (
                                 f"{algorithm}_seed{seed}_episode{episode}.pt"
                             )).touch()
-                        paired_count = 100 if role == "candidate" else 0
-                        masks = np.zeros(120, dtype=bool)
+                        paired_count = 300 if role == "candidate" else 0
+                        masks = np.zeros(400, dtype=bool)
                         masks[:paired_count] = True
-                        targets = np.zeros((120, 1), dtype=np.float32)
+                        targets = np.zeros((400, 1), dtype=np.float32)
                         targets[:paired_count] = 0.001
                         state_path = checkpoint_root / "training_state.pt"
                         torch.save(
@@ -392,7 +444,7 @@ class OnlinePairedAdvantageStageF1Tests(unittest.TestCase):
                                         "enabled": True,
                                     },
                                     "replay_buffer": {
-                                        "size": 120,
+                                        "size": 400,
                                         "paired_advantage_mask": masks,
                                         "paired_advantages": targets,
                                     },
@@ -457,7 +509,7 @@ class OnlinePairedAdvantageStageF1Tests(unittest.TestCase):
                     minimum_behavior_delta=1.0 / 120.0,
                 )
                 self.assertEqual(len(result["runs"]), 6)
-                expected_pairs = 100 if role == "candidate" else 0
+                expected_pairs = 300 if role == "candidate" else 0
                 self.assertTrue(
                     all(
                         entry["paired_advantage"]["replay_samples"]
@@ -522,7 +574,7 @@ class OnlinePairedAdvantageStageF1Tests(unittest.TestCase):
                                 (episode + 1) * 10
                             ),
                             "online_rl_online_paired_advantage_distinct_count_final": (
-                                episode + 1
+                                (episode + 1) * 3
                             ),
                             "online_rl_online_paired_advantage_reward_error_max_final": 0.0,
                             "online_rl_critic_online_paired_advantage_samples_mean": 1.0,

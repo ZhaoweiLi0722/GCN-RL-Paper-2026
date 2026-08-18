@@ -980,3 +980,26 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   explicitly CPU-bound, refresh the locked hash manifest, and rerun the entire
   preflight under a new recovery launcher root. No scientific configuration,
   seed, option, loss, scenario, or budget may change.
+
+### 2026-08-17: Stage F1 post-training audit recovery 2 authorized
+
+- Recovery 1 completed all 12 control/candidate training jobs, 1,200/1,200
+  online episodes, 240 policy checkpoints, and 12 full states. Routing and
+  online updates were nonzero, persisted metrics and paired targets were
+  finite, cloned first-step reward error was zero, and the GCN/flat parameter
+  gap was 0.970%. No checkpoint-curve evaluation or comparison was launched.
+- The terminal error `Candidate paired distinct count mismatch` was caused by
+  a post-training audit comparing two different valid counters. The structured
+  explorer counter covers only explorer-selected behavior changes; the paired
+  critic counter covers every executed action distinct from MDL-2, including
+  ordinary policy/OU residuals. Across the six candidate runs, the latter
+  exactly matched the persisted paired replay-target count.
+- Corrected lock: paired contexts equal all online decisions, paired distinct
+  actions equal replay paired targets, and structured-explorer distinct actions
+  remain a separate support diagnostic. A regression fixture deliberately
+  makes these counts unequal so the old audit cannot return.
+- Recovery 2 is evaluation-only. It must hash-lock the immutable Recovery 1
+  status, claim, logs, manifests, pre-online states, paired forks, and both
+  complete training trees before running the two prespecified 36-run curves
+  and comparator. Its phase whitelist contains no preparation, training, or
+  resume command. Formal confirmation remains unauthorized.

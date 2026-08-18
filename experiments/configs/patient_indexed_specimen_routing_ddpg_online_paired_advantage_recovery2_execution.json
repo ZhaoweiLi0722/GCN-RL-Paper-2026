@@ -1,0 +1,185 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_online_paired_advantage_stage_f1_recovery2",
+  "experimental_role": "evaluation-only continuation from the fully completed immutable Recovery 1 Stage F1 training artifacts",
+  "plan": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+  "base_execution_spec": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_execution.json",
+  "base_lock_exceptions": [
+    "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+    "docs/patient_indexed_specimen_routing_stage_f1_protocol.md",
+    "evaluation/run_patient_indexed_specimen_routing_ddpg_online_paired_advantage.py",
+    "tests/test_ddpg_online_paired_advantage_stage_f1.py"
+  ],
+  "campaign_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2",
+  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/launcher",
+  "recovery1": {
+    "commit": "48292683152e5a29107cd2d6ad9451612d8b22a3",
+    "failure_scope": "post-training audit compared all behavior-versus-anchor paired targets with the narrower structured-explorer-only distinct count",
+    "training_jobs_completed": 12,
+    "evaluation_runs_launched": 0,
+    "files": [
+      {
+        "name": "status",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery1/launcher/status.json",
+        "sha256": "284380b82752cc7221fe4ffa355e349fe5fe5224aa6943b97f84c596c16779be"
+      },
+      {
+        "name": "claim",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery1/launcher/claim.json",
+        "sha256": "7632562c15fb8e571ef32006747317a09e9ba41920909f7e1a2479d6049752db"
+      },
+      {
+        "name": "launch",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery1/launcher/launch.json",
+        "sha256": "86b7aa1f074cefc804d466155640bcedf9c77a6afea17221e5fe4120ac4f6196"
+      },
+      {
+        "name": "detached_stdout",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery1/launcher/detached.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "detached_stderr",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery1/launcher/detached.stderr.log",
+        "sha256": "3380eaa030c695568591f6accce8c3d9b4e3e4ae7e45f26211930144abb8d8b4"
+      },
+      {
+        "name": "paired_provenance",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/paired_states/provenance.json",
+        "sha256": "d166fd82f53b9ab044d1fdcad344e81a73bdcc0e63dd41467caa1215837e972d"
+      },
+      {
+        "name": "preonline_manifest",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline/patient_indexed_specimen_routing_ddpg_online_paired_advantage_preonline/training_manifest.json",
+        "sha256": "dc9e75acb0dd025c336e8db3da5c40fa8eefe74d8989c624a9376f36b230e4e8"
+      },
+      {
+        "name": "control_training_manifest",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/training_manifest.json",
+        "sha256": "0d0640f112ff55580d50f5435c8dc4ed4dd9e17a590d3b96c324fd6ccef452ed"
+      },
+      {
+        "name": "candidate_training_manifest",
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_100/training_manifest.json",
+        "sha256": "d70c9f4d0c53bfd20173bc66e13f9014412a1db7a596e7b20c8c4710da26fdeb"
+      }
+    ],
+    "trees": [
+      {
+        "name": "preonline",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline",
+        "artifact_count": 25,
+        "sha256": "91736d2be9aa6ca9491821e6a0e246fc4a4d0001c03a9af6e1df5dee9b43226f"
+      },
+      {
+        "name": "paired_states",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/paired_states",
+        "artifact_count": 13,
+        "sha256": "27248c9766f1d2e784823cad0676f7c877ba39132fb9f3b0ba9e41fab2ca67ea"
+      },
+      {
+        "name": "control_training",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training",
+        "artifact_count": 151,
+        "sha256": "eb276c4402d766124080f1eddbfa1c365ff5a32d8baedb0204ff39e23c5041e8"
+      },
+      {
+        "name": "candidate_training",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training",
+        "artifact_count": 151,
+        "sha256": "af861462f59e0917a7de4ad3311e02ccbf244e8ccbf6587ecfd0dac4e231cbb3"
+      }
+    ]
+  },
+  "f0_summary": "experiments/evidence/patient_indexed_specimen_routing_ddpg_online_identifiability_f0/summary.json",
+  "preonline_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline/patient_indexed_specimen_routing_ddpg_online_paired_advantage_preonline/training_manifest.json",
+  "control_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100.json",
+  "candidate_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_100.json",
+  "control_training_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/training_manifest.json",
+  "candidate_training_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_100/training_manifest.json",
+  "control_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_recovery2_control_curve_eval.json",
+  "candidate_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_recovery2_candidate_curve_eval.json",
+  "control_smoke_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_smoke.json",
+  "candidate_smoke_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_smoke.json",
+  "comparison_output": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison/online_paired_advantage_summary.json",
+  "scenario_by_seed": {
+    "60": "routing_persistent_hotspot_cluster1",
+    "61": "routing_persistent_hotspot_cluster2",
+    "62": "routing_persistent_hotspot_cluster3"
+  },
+  "development_crn_seeds": [96600000, 96700000],
+  "forbidden_crn_seeds": [
+    91000000,
+    91100000,
+    93000000,
+    93100000,
+    94000000,
+    94100000,
+    94600000,
+    95000000,
+    95100000,
+    95200000,
+    95300000,
+    95400000,
+    95500000,
+    95600000,
+    95700000,
+    95800000,
+    95850000,
+    95900000,
+    96200000
+  ],
+  "maximum_parameter_relative_gap": 0.01,
+  "minimum_structured_behavior_linf_delta": 0.008333333333333333,
+  "bootstrap_resamples": 20000,
+  "bootstrap_seed": 96750000,
+  "focused_tests": [
+    "tests.test_ddpg_online_identifiability_f0",
+    "tests.test_ddpg_online_paired_advantage",
+    "tests.test_ddpg_online_paired_advantage_stage_f1",
+    "tests.test_ddpg_structured_exploration",
+    "tests.test_gcn_ddpg_graph",
+    "tests.test_off_policy_training_state",
+    "tests.test_train_multiscenario_network_residual",
+    "tests.test_multiscenario_residual_evaluation",
+    "tests.test_patient_indexed_specimen_routing_contract"
+  ],
+  "fresh_output_roots": [
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/control/evaluation",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/candidate/evaluation",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison"
+  ],
+  "locked_files": [
+    {
+      "path": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+      "sha256": "32074aa658104724f48a03ef9917ffc2c2d46979b8ba67971867d15bdbd9455f"
+    },
+    {
+      "path": "docs/patient_indexed_specimen_routing_stage_f1_protocol.md",
+      "sha256": "e685eda9b29190f349220f54f46bee17d89594ee304810bd9a9617be1b980de9"
+    },
+    {
+      "path": "evaluation/run_patient_indexed_specimen_routing_ddpg_online_paired_advantage.py",
+      "sha256": "bbbeb5d06cd145e5218d20c07f0a3a4ac64ddea28c2ab769fc0cdbfcc78c9b14"
+    },
+    {
+      "path": "tests/test_ddpg_online_paired_advantage_stage_f1.py",
+      "sha256": "34673870e8c7b74167f06e96e8fff83b816d3c0314c2a4fd59d3ebda2eed6e4b"
+    },
+    {
+      "path": "evaluation/launch_patient_indexed_specimen_routing_ddpg_online_paired_advantage_recovery2.py",
+      "sha256": "58e092afb301ddd6b23e821709c968a5924997e1ac4aa5b8a3ff9c7d522b47f1"
+    },
+    {
+      "path": "evaluation/run_patient_indexed_specimen_routing_ddpg_online_paired_advantage_recovery2.py",
+      "sha256": "98c0ded01f2cbd3ec88a94341a1b54ac827c81e8eeaf8296834e08f4b37c96b6"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_recovery2_control_curve_eval.json",
+      "sha256": "8a6ba1ce535e28e4702c5ade9dd01b5fbb55a9cf55c782cbc7a502d5ccdc1031"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_recovery2_candidate_curve_eval.json",
+      "sha256": "dfde7b879cd185803c06bdaabd305e7c2c0495578c0659ef7b3af828ee03aa3e"
+    }
+  ]
+}

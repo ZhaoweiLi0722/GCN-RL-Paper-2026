@@ -1040,3 +1040,29 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   attribution is not established.
 - Protocol:
   `docs/patient_indexed_specimen_routing_stage_g0_protocol.md`.
+
+### 2026-08-18: Stage G0 completed; actor redesign not authorized
+
+- The locked audit completed 27 fixed states, 270 independently valued legal
+  action rows, and 1,620 checkpoint-transfer rows. All rows were unique and
+  finite, all five actions remained behaviorally distinct, and immutable F1
+  training-tree hashes matched before and after execution.
+- Remaining-horizon material headroom was present in 17/27 states, but the
+  candidate final critic selected the best legal action in only 3/27 states,
+  versus 2/27 for control. The locked classification is
+  `paired_critic_did_not_generalize` and the action-aligned actor design gate
+  did not pass.
+- Candidate raw actor output differed at all 27 states, yet only 2/27 executed
+  integer-lot actions changed and 25/27 raw changes collapsed. This confirms a
+  downstream projection bottleneck but does not supersede the failed critic
+  gate.
+- Four-step and remaining-horizon best actions agreed in only 14/27 states.
+  The next permissible work is a critic-only design review for multi-horizon,
+  within-state-normalized, pairwise legal-action ranking. No online training or
+  formal confirmation is authorized.
+- Summary SHA256:
+  `738bf04c8f5716e284a2f3006fe0a102516e83ae81dc1b87bbd37c1513f82524`.
+  Detailed result:
+  `docs/patient_indexed_specimen_routing_stage_g0_results.md`.
+  Design review:
+  `docs/patient_indexed_specimen_routing_stage_g1_design_review.md`.

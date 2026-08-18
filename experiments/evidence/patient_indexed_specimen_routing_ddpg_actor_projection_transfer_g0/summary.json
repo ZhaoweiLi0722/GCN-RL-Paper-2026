@@ -1,0 +1,476 @@
+{
+  "config": "experiments/configs/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0.json",
+  "config_sha256": "bfa5aeb1a7248cf35ffbd67caaaa13bd8f259a6ecd9d9b4bdb72e3fa145920ed",
+  "cross_arm": {
+    "episode25": {
+      "critic_top1_difference_fraction": 0.07407407407407407,
+      "executed_action_difference_fraction": 0.037037037037037035,
+      "gradient_top1_difference_fraction": 0.07407407407407407,
+      "incremental_quantization_collapse_fraction": 0.9629629629629629,
+      "network_action_difference_fraction": 1.0,
+      "network_action_linf_max": 0.0002033710479736328,
+      "network_action_linf_mean": 7.586898627104583e-05,
+      "projected_policy_linf_max": 2.033635973930359e-05,
+      "projected_policy_linf_mean": 5.334305266539256e-06,
+      "states": 27
+    },
+    "final": {
+      "critic_top1_difference_fraction": 0.2222222222222222,
+      "executed_action_difference_fraction": 0.07407407407407407,
+      "gradient_top1_difference_fraction": 0.037037037037037035,
+      "incremental_quantization_collapse_fraction": 0.9259259259259259,
+      "network_action_difference_fraction": 1.0,
+      "network_action_linf_max": 0.00040391087532043457,
+      "network_action_linf_mean": 0.00013495278027322557,
+      "projected_policy_linf_max": 4.038959741592407e-05,
+      "projected_policy_linf_mean": 9.904736308036027e-06,
+      "states": 27
+    },
+    "pretrain": {
+      "critic_top1_difference_fraction": 0.0,
+      "executed_action_difference_fraction": 0.0,
+      "gradient_top1_difference_fraction": 0.0,
+      "incremental_quantization_collapse_fraction": 0.0,
+      "network_action_difference_fraction": 0.0,
+      "network_action_linf_max": 0.0,
+      "network_action_linf_mean": 0.0,
+      "projected_policy_linf_max": 0.0,
+      "projected_policy_linf_mean": 0.0,
+      "states": 27
+    }
+  },
+  "decision": {
+    "action_aligned_ddpg_design_justified": false,
+    "classification": "paired_critic_did_not_generalize",
+    "formal_confirmation_authorized": false,
+    "observed": {
+      "candidate_control_executed_action_difference_fraction": 0.07407407407407407,
+      "candidate_critic_top1_true_accuracy": 0.1111111111111111,
+      "candidate_gradient_top1_true_accuracy": 0.14814814814814814,
+      "candidate_minus_control_critic_top1_accuracy": 0.037037037037037035,
+      "critic_minus_gradient_accuracy": -0.037037037037037035,
+      "incremental_quantization_collapse_fraction": 0.9259259259259259,
+      "material_headroom_state_fraction": 0.6296296296296297
+    },
+    "primary_horizon": "remaining",
+    "recommended_intervention": "normalize_and_margin_rank_legal_actions_before_actor_change",
+    "training_authorized": false
+  },
+  "experimental_role": "read-only post-F1 development audit of legal-action critic ranking, straight-through actor gradients, and projection/quantization transfer; not training, checkpoint selection, formal confirmation, or deployment evidence",
+  "formal_holdout_reused": false,
+  "fresh_crn_seeds": [
+    96900000,
+    97000000,
+    97100000,
+    98000000,
+    98000001,
+    98000002,
+    98000010,
+    98000011,
+    98000012,
+    98000600,
+    98000601,
+    98000602,
+    98000610,
+    98000611,
+    98000612,
+    98001200,
+    98001201,
+    98001202,
+    98001210,
+    98001211,
+    98001212,
+    98001800,
+    98001801,
+    98001802,
+    98001810,
+    98001811,
+    98001812,
+    98002500,
+    98002501,
+    98002502,
+    98002510,
+    98002511,
+    98002512,
+    98003100,
+    98003101,
+    98003102,
+    98003110,
+    98003111,
+    98003112,
+    98003700,
+    98003701,
+    98003702,
+    98003710,
+    98003711,
+    98003712,
+    98004300,
+    98004301,
+    98004302,
+    98004310,
+    98004311,
+    98004312,
+    98005100,
+    98005101,
+    98005102,
+    98005110,
+    98005111,
+    98005112,
+    99000000,
+    99000001,
+    99000002,
+    99000010,
+    99000011,
+    99000012,
+    99000600,
+    99000601,
+    99000602,
+    99000610,
+    99000611,
+    99000612,
+    99001200,
+    99001201,
+    99001202,
+    99001210,
+    99001211,
+    99001212,
+    99001800,
+    99001801,
+    99001802,
+    99001810,
+    99001811,
+    99001812,
+    99002500,
+    99002501,
+    99002502,
+    99002510,
+    99002511,
+    99002512,
+    99003100,
+    99003101,
+    99003102,
+    99003110,
+    99003111,
+    99003112,
+    99003700,
+    99003701,
+    99003702,
+    99003710,
+    99003711,
+    99003712,
+    99004300,
+    99004301,
+    99004302,
+    99004310,
+    99004311,
+    99004312,
+    99005100,
+    99005101,
+    99005102,
+    99005110,
+    99005111,
+    99005112,
+    100000000,
+    100000001,
+    100000002,
+    100000010,
+    100000011,
+    100000012,
+    100000600,
+    100000601,
+    100000602,
+    100000610,
+    100000611,
+    100000612,
+    100001200,
+    100001201,
+    100001202,
+    100001210,
+    100001211,
+    100001212,
+    100001800,
+    100001801,
+    100001802,
+    100001810,
+    100001811,
+    100001812,
+    100002500,
+    100002501,
+    100002502,
+    100002510,
+    100002511,
+    100002512,
+    100003100,
+    100003101,
+    100003102,
+    100003110,
+    100003111,
+    100003112,
+    100003700,
+    100003701,
+    100003702,
+    100003710,
+    100003711,
+    100003712,
+    100004300,
+    100004301,
+    100004302,
+    100004310,
+    100004311,
+    100004312,
+    100005100,
+    100005101,
+    100005102,
+    100005110,
+    100005111,
+    100005112
+  ],
+  "locked_inputs": {
+    "files": {
+      "stage_f1_comparison": {
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison/online_paired_advantage_summary.json",
+        "sha256": "8f4967115c584900969a7dba93e29da5ab70dfc65caa27d81423805be85c010a"
+      },
+      "stage_f1_recovery2_status": {
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/launcher/status.json",
+        "sha256": "0097b4c84f9f9ab2403eccd670543b640109657eb03a86764d423c5a0496d380"
+      }
+    },
+    "trees": {
+      "stage_f1_candidate_training": {
+        "artifact_count": 151,
+        "artifact_tree_sha256": "af861462f59e0917a7de4ad3311e02ccbf244e8ccbf6587ecfd0dac4e231cbb3",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training"
+      },
+      "stage_f1_control_training": {
+        "artifact_count": 151,
+        "artifact_tree_sha256": "eb276c4402d766124080f1eddbfa1c365ff5a32d8baedb0204ff39e23c5041e8",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training"
+      }
+    }
+  },
+  "metrics": {
+    "candidate": {
+      "episode25": {
+        "4": {
+          "critic_gradient_top1_agreement": 1.0,
+          "critic_top1_true_accuracy": 0.4444444444444444,
+          "gradient_top1_true_accuracy": 0.4444444444444444,
+          "material_headroom_fraction": 0.5925925925925926,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.1111111111111111,
+          "states": 27
+        },
+        "remaining": {
+          "critic_gradient_top1_agreement": 1.0,
+          "critic_top1_true_accuracy": 0.18518518518518517,
+          "gradient_top1_true_accuracy": 0.18518518518518517,
+          "material_headroom_fraction": 0.6296296296296297,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.2962962962962963,
+          "states": 27
+        }
+      },
+      "final": {
+        "4": {
+          "critic_gradient_top1_agreement": 0.8148148148148148,
+          "critic_top1_true_accuracy": 0.37037037037037035,
+          "gradient_top1_true_accuracy": 0.48148148148148145,
+          "material_headroom_fraction": 0.5925925925925926,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.1111111111111111,
+          "states": 27
+        },
+        "remaining": {
+          "critic_gradient_top1_agreement": 0.8148148148148148,
+          "critic_top1_true_accuracy": 0.1111111111111111,
+          "gradient_top1_true_accuracy": 0.14814814814814814,
+          "material_headroom_fraction": 0.6296296296296297,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.2962962962962963,
+          "states": 27
+        }
+      },
+      "pretrain": {
+        "4": {
+          "critic_gradient_top1_agreement": 0.8518518518518519,
+          "critic_top1_true_accuracy": 0.2222222222222222,
+          "gradient_top1_true_accuracy": 0.2962962962962963,
+          "material_headroom_fraction": 0.5925925925925926,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.1111111111111111,
+          "states": 27
+        },
+        "remaining": {
+          "critic_gradient_top1_agreement": 0.8518518518518519,
+          "critic_top1_true_accuracy": 0.14814814814814814,
+          "gradient_top1_true_accuracy": 0.14814814814814814,
+          "material_headroom_fraction": 0.6296296296296297,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.2962962962962963,
+          "states": 27
+        }
+      }
+    },
+    "control": {
+      "episode25": {
+        "4": {
+          "critic_gradient_top1_agreement": 1.0,
+          "critic_top1_true_accuracy": 0.4074074074074074,
+          "gradient_top1_true_accuracy": 0.4074074074074074,
+          "material_headroom_fraction": 0.5925925925925926,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.1111111111111111,
+          "states": 27
+        },
+        "remaining": {
+          "critic_gradient_top1_agreement": 1.0,
+          "critic_top1_true_accuracy": 0.14814814814814814,
+          "gradient_top1_true_accuracy": 0.14814814814814814,
+          "material_headroom_fraction": 0.6296296296296297,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.2962962962962963,
+          "states": 27
+        }
+      },
+      "final": {
+        "4": {
+          "critic_gradient_top1_agreement": 0.8888888888888888,
+          "critic_top1_true_accuracy": 0.37037037037037035,
+          "gradient_top1_true_accuracy": 0.4444444444444444,
+          "material_headroom_fraction": 0.5925925925925926,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.1111111111111111,
+          "states": 27
+        },
+        "remaining": {
+          "critic_gradient_top1_agreement": 0.8888888888888888,
+          "critic_top1_true_accuracy": 0.07407407407407407,
+          "gradient_top1_true_accuracy": 0.1111111111111111,
+          "material_headroom_fraction": 0.6296296296296297,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.2962962962962963,
+          "states": 27
+        }
+      },
+      "pretrain": {
+        "4": {
+          "critic_gradient_top1_agreement": 0.8518518518518519,
+          "critic_top1_true_accuracy": 0.2222222222222222,
+          "gradient_top1_true_accuracy": 0.2962962962962963,
+          "material_headroom_fraction": 0.5925925925925926,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.1111111111111111,
+          "states": 27
+        },
+        "remaining": {
+          "critic_gradient_top1_agreement": 0.8518518518518519,
+          "critic_top1_true_accuracy": 0.14814814814814814,
+          "gradient_top1_true_accuracy": 0.14814814814814814,
+          "material_headroom_fraction": 0.6296296296296297,
+          "policy_legal_candidate_fraction": 0.48148148148148145,
+          "policy_top1_true_accuracy": 0.2962962962962963,
+          "states": 27
+        }
+      }
+    }
+  },
+  "name": "patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0",
+  "rollout_rows": "results/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0_development/rollout_rows.csv",
+  "rollout_rows_sha256": "8a8ef60b5de6e3dbf9952b3879a83a26dd6357bc501bc1872e5f0a8d1f6df989",
+  "smoke": false,
+  "stage_f1_decision": {
+    "candidate_final_vs_frozen_gate_passed": false,
+    "candidate_gate_passed": false,
+    "candidate_no_regression_vs_control": false,
+    "classification": "close_online_ddpg_attribution_extension",
+    "formal_confirmation_launched": false,
+    "primary_algorithm": "gcn_residual_mdl2_network_ddpg_afd"
+  },
+  "training_scale": {
+    "candidate": {
+      "60": {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.02336287498474121,
+          "parameter_count": 324964.0,
+          "rms": 0.0007538102689522765
+        },
+        "online_rl_actor_loss_mean": 0.3246482463410267,
+        "online_rl_critic_loss_mean": 0.005455426205343639,
+        "online_rl_critic_online_paired_advantage_sign_accuracy_mean": 0.7094782158961662,
+        "online_rl_critic_online_paired_advantage_weighted_loss_mean": 1.8713235020378472e-05,
+        "online_rl_pretrain_reference_action_mse_mean": 4.876836160778894e-07,
+        "paired_to_total_critic_loss_ratio": 0.003430205875032952
+      },
+      "61": {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.02014508843421936,
+          "parameter_count": 324964.0,
+          "rms": 0.0007476354600788695
+        },
+        "online_rl_actor_loss_mean": 0.3027268972906929,
+        "online_rl_critic_loss_mean": 0.003918862865007563,
+        "online_rl_critic_online_paired_advantage_sign_accuracy_mean": 0.7644393487819113,
+        "online_rl_critic_online_paired_advantage_weighted_loss_mean": 1.2933704771915218e-05,
+        "online_rl_pretrain_reference_action_mse_mean": 4.681524625464836e-07,
+        "paired_to_total_critic_loss_ratio": 0.0033003718725151806
+      },
+      "62": {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.02097010239958763,
+          "parameter_count": 324964.0,
+          "rms": 0.0006819349843398588
+        },
+        "online_rl_actor_loss_mean": 0.265084867345599,
+        "online_rl_critic_loss_mean": 0.004516815658616206,
+        "online_rl_critic_online_paired_advantage_sign_accuracy_mean": 0.7864819594787865,
+        "online_rl_critic_online_paired_advantage_weighted_loss_mean": 1.107554564401694e-05,
+        "online_rl_pretrain_reference_action_mse_mean": 4.2379833418456654e-07,
+        "paired_to_total_critic_loss_ratio": 0.0024520694403123147
+      }
+    },
+    "control": {
+      "60": {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.023359224200248718,
+          "parameter_count": 324964.0,
+          "rms": 0.0007531590971533428
+        },
+        "online_rl_actor_loss_mean": 0.31353266117377926,
+        "online_rl_critic_loss_mean": 0.005229277744757173,
+        "online_rl_critic_online_paired_advantage_sign_accuracy_mean": null,
+        "online_rl_critic_online_paired_advantage_weighted_loss_mean": null,
+        "online_rl_pretrain_reference_action_mse_mean": 4.908403786721206e-07,
+        "paired_to_total_critic_loss_ratio": null
+      },
+      "61": {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.02012450248003006,
+          "parameter_count": 324964.0,
+          "rms": 0.0007478762006202785
+        },
+        "online_rl_actor_loss_mean": 0.292540665707336,
+        "online_rl_critic_loss_mean": 0.0037398450920591137,
+        "online_rl_critic_online_paired_advantage_sign_accuracy_mean": null,
+        "online_rl_critic_online_paired_advantage_weighted_loss_mean": null,
+        "online_rl_pretrain_reference_action_mse_mean": 4.6972407642552046e-07,
+        "paired_to_total_critic_loss_ratio": null
+      },
+      "62": {
+        "actor_drift_from_pretrain": {
+          "max_abs": 0.020974956452846527,
+          "parameter_count": 324964.0,
+          "rms": 0.0006818757431345822
+        },
+        "online_rl_actor_loss_mean": 0.2661447688507346,
+        "online_rl_critic_loss_mean": 0.004549413467880535,
+        "online_rl_critic_online_paired_advantage_sign_accuracy_mean": null,
+        "online_rl_critic_online_paired_advantage_weighted_loss_mean": null,
+        "online_rl_pretrain_reference_action_mse_mean": 4.2445464659069704e-07,
+        "paired_to_total_critic_loss_ratio": null
+      }
+    }
+  },
+  "transfer_rows": "results/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0_development/transfer_rows.csv",
+  "transfer_rows_sha256": "f3873b8f0c7fb261453b804d37d226546d18281e65a8d43432095a3885af94b6"
+}

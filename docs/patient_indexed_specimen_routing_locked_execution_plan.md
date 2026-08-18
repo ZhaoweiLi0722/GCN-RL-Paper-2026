@@ -1003,3 +1003,40 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   complete training trees before running the two prespecified 36-run curves
   and comparator. Its phase whitelist contains no preparation, training, or
   resume command. Formal confirmation remains unauthorized.
+
+### 2026-08-18: Stage F1 completed and closed
+
+- Recovery 2 completed both prespecified 36-run curves using the immutable F1
+  training trees: 72 evaluation runs, 3,600 learned rows, and 3,600 MDL-2
+  anchor rows. No new training or formal confirmation was launched.
+- Candidate GCN final minus frozen pretrain was `-21,297.91`
+  (`-0.001067%`), with paired 95% CI `[-715,370.98, +527,374.97]`; only one
+  of three seeds was favorable. Candidate minus matched control was
+  `+4,080.57` (`+0.000205%`), with paired 95% CI
+  `[-95,056.15, +95,036.33]` and 131/150 exact ties.
+- Clinical noninferiority passed, but both the strict online-gain gate and the
+  no-regression-versus-control condition failed. The locked classification is
+  `close_online_ddpg_attribution_extension`.
+- Comparison SHA256:
+  `8f4967115c584900969a7dba93e29da5ab70dfc65caa27d81423805be85c010a`.
+  Recovery 2 status SHA256:
+  `0097b4c84f9f9ab2403eccd670543b640109657eb03a86764d423c5a0496d380`.
+- Detailed report:
+  `docs/patient_indexed_specimen_routing_stage_f1_results.md`.
+
+### 2026-08-18: Stage G0 actor-projection transfer audit opened
+
+- Stage G0 is the final read-only mechanism gate before considering any more
+  online DDPG development. No new training, tuning, checkpoint selection, or
+  formal stream is authorized.
+- It evaluates immutable F1 control/candidate GCN checkpoints on 27 fixed
+  frozen-pretrain trajectory states and five legal specimen actions using
+  fresh CRNs. It separately measures legal-action critic ranking,
+  straight-through gradient alignment, raw actor movement, and survival through
+  projection and integer-lot quantization.
+- Only a prespecified critic-to-gradient or actor-to-execution transfer failure
+  can justify review of one action-aligned DDPG design. Failure or ambiguity
+  ends the extension and preserves the Stage E conclusion that online learning
+  attribution is not established.
+- Protocol:
+  `docs/patient_indexed_specimen_routing_stage_g0_protocol.md`.

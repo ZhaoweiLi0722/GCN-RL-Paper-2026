@@ -1066,3 +1066,21 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `docs/patient_indexed_specimen_routing_stage_g0_results.md`.
   Design review:
   `docs/patient_indexed_specimen_routing_stage_g1_design_review.md`.
+
+### 2026-08-18: Stage G1 offline critic feasibility gate authorized
+
+- User authorization is limited to a development-only, leave-one-seed-out
+  critic audit. No online episode, actor update, formal stream, or fitted-model
+  deployment is authorized.
+- The audit expands the fixed diagnostic manifold to all 156 frozen-pretrain
+  states and evaluates all five executed legal specimen actions under separate
+  discovery and validation CRNs.
+- Each fold initializes the held-out seed's frozen-pretrain critic, fits only on
+  the other two seeds, and evaluates on the full unseen seed. The single locked
+  objective combines within-state normalized remaining-horizon regression with
+  pairwise legal-action margin ranking. No hyperparameter or epoch selection is
+  permitted.
+- A full prospective ranker gate must pass before an actor-transfer smoke can
+  even be designed. Online training remains unauthorized.
+- Protocol:
+  `docs/patient_indexed_specimen_routing_stage_g1_protocol.md`.

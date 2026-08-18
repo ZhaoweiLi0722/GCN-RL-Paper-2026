@@ -1084,3 +1084,24 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   even be designed. Online training remains unauthorized.
 - Protocol:
   `docs/patient_indexed_specimen_routing_stage_g1_protocol.md`.
+
+### 2026-08-18: Stage G1 completed; DDPG attribution extension closed
+
+- The full audit completed on implementation commit `bffd2ae`: 156 frozen
+  states, 1,560 legal-action label rows, and 1,560 leave-one-seed-out prediction
+  rows. All rows and arrays were unique where required and finite, every state
+  retained five distinct executed actions, and actor hashes were unchanged.
+- Discovery and validation agreed on the remaining-horizon best action in only
+  85/156 states (`54.49%`), below the locked `70%` label-stability gate.
+- The fitted critic reached 47/156 (`30.13%`) validation top-1 accuracy and
+  `57.74%` pairwise accuracy, below the `40%` and `65%` gates. Per-seed top-1
+  was `34.62%`, `26.92%`, and `28.85%`; no seed improved by the required five
+  percentage points over its frozen critic.
+- The locked classification is
+  `unstable_counterfactual_labels_close_extension`. Actor-transfer smoke,
+  online training, and formal confirmation are all unauthorized. The manuscript
+  must not attribute endpoint improvement to online DDPG updates.
+- Summary SHA256:
+  `9e96deec850d6033fb5a2fb9e2f5090f8a040468df9faf8634015a14875d1c41`.
+  Detailed report:
+  `docs/patient_indexed_specimen_routing_stage_g1_results.md`.

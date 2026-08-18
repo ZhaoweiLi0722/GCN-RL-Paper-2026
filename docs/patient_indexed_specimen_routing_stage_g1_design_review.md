@@ -2,10 +2,16 @@
 
 ## Status
 
-This document defines the only scientifically defensible route left for testing
-an online DDPG contribution. It is a design review, not an authorized training
-protocol. Stage G0 failed the critic-generalization gate, so no actor change,
-online campaign, or formal stream may start from this document alone.
+This document records the final scientifically defensible route considered for
+testing an online DDPG contribution. Stage G1 executed the required offline
+leave-one-seed-out feasibility gate and did not pass: validation top-1 accuracy
+was `30.13%`, pairwise accuracy was `57.74%`, and discovery-validation best
+action agreement was `54.49%`. The locked classification is
+`unstable_counterfactual_labels_close_extension`.
+
+The proposed actor-transfer gate and online comparison below are therefore not
+authorized. They are retained as prospective design documentation, not as work
+to execute. See `docs/patient_indexed_specimen_routing_stage_g1_results.md`.
 
 ## Proposed method boundary
 
@@ -92,4 +98,3 @@ scenarios, actor/critic width, and all evaluation CRNs would remain fixed.
 - Do not use the formal holdout for development.
 - Do not call an oracle-selected or simulator-planned action ordinary DDPG;
   report the auxiliary counterfactual policy-improvement mechanism explicitly.
-

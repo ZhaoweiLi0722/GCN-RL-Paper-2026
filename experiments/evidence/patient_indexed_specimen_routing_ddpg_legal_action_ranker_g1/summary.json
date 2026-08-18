@@ -1,0 +1,390 @@
+{
+  "actor_updated": false,
+  "aggregate": {
+    "discovery": {
+      "baseline": {
+        "material_headroom_fraction": 0.532051282051282,
+        "pairwise_accuracy": 0.576530612244898,
+        "pairwise_comparisons": 1372,
+        "selected_material_improvement_fraction": 0.3076923076923077,
+        "states": 156,
+        "top1_accuracy": 0.3141025641025641
+      },
+      "fitted": {
+        "material_headroom_fraction": 0.532051282051282,
+        "pairwise_accuracy": 0.5801749271137027,
+        "pairwise_comparisons": 1372,
+        "selected_material_improvement_fraction": 0.3141025641025641,
+        "states": 156,
+        "top1_accuracy": 0.28205128205128205
+      }
+    },
+    "validation": {
+      "baseline": {
+        "material_headroom_fraction": 0.5576923076923077,
+        "pairwise_accuracy": 0.5358166189111748,
+        "pairwise_comparisons": 1396,
+        "selected_material_improvement_fraction": 0.2692307692307692,
+        "states": 156,
+        "top1_accuracy": 0.2948717948717949
+      },
+      "fitted": {
+        "material_headroom_fraction": 0.5576923076923077,
+        "pairwise_accuracy": 0.5773638968481375,
+        "pairwise_comparisons": 1396,
+        "selected_material_improvement_fraction": 0.3141025641025641,
+        "states": 156,
+        "top1_accuracy": 0.30128205128205127
+      }
+    }
+  },
+  "config": "experiments/configs/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1.json",
+  "config_sha256": "556e5f5b58b7ce1b807f1d5890ccf85eda1d581391141af2020e8da828f1b9c0",
+  "dataset": {
+    "arrays_path": "results/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1_development/legal_action_dataset.npz",
+    "arrays_sha256": "837f010a323e90a115a0ddf8dbdf832b675dc30f8bcc04087eb76de6a7bbbb2b",
+    "path": "results/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1_development/legal_action_rows.csv",
+    "rows": 1560,
+    "sha256": "160450c7752d3097f37319635b0a8cb810a9ac95c0c985bd43a8aedbd41dfeb3",
+    "states": 156
+  },
+  "decision": {
+    "actor_transfer_smoke_design_authorized": false,
+    "checks": {
+      "actors_unchanged": true,
+      "aggregate_validation_pairwise": false,
+      "aggregate_validation_top1": false,
+      "every_seed_validation_top1": false,
+      "improved_seed_count": false,
+      "replication_stream_stability": true,
+      "stable_counterfactual_labels": false
+    },
+    "classification": "unstable_counterfactual_labels_close_extension",
+    "formal_confirmation_authorized": false,
+    "legal_action_ranker_feasibility_passed": false,
+    "observed": {
+      "discovery_to_validation_top1_drop": -0.019230769230769218,
+      "discovery_validation_best_action_agreement": 0.5448717948717948,
+      "improved_seeds": [],
+      "per_seed_validation_top1_accuracy": {
+        "60": 0.34615384615384615,
+        "61": 0.2692307692307692,
+        "62": 0.28846153846153844
+      },
+      "per_seed_validation_top1_gain": {
+        "60": 0.038461538461538436,
+        "61": 0.038461538461538436,
+        "62": -0.05769230769230771
+      },
+      "validation_pairwise_accuracy": 0.5773638968481375,
+      "validation_top1_accuracy": 0.30128205128205127
+    },
+    "online_training_authorized": false
+  },
+  "experimental_role": "offline development-only leave-one-seed-out feasibility audit of a long-horizon legal-action advantage critic; not online training, actor optimization, checkpoint selection, formal confirmation, or deployment evidence",
+  "fitted_checkpoint_saved": false,
+  "folds": {
+    "60": {
+      "actor_sha256_after": "91368bc77481ee048113589dbda7e4daefd645d1d7c68a25749004b50cf26a73",
+      "actor_sha256_before": "91368bc77481ee048113589dbda7e4daefd645d1d7c68a25749004b50cf26a73",
+      "actor_unchanged": true,
+      "checkpoint": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/gcn_residual_mdl2_network_ddpg_afd/seed60/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed60_pretrain.pt",
+      "critic_parameter_drift": {
+        "max_abs": 0.10230695456266403,
+        "parameter_count": 238874.0,
+        "rms": 0.009911686526035812
+      },
+      "held_out_seed": 60,
+      "metrics": {
+        "discovery": {
+          "baseline": {
+            "material_headroom_fraction": 0.6153846153846154,
+            "pairwise_accuracy": 0.540948275862069,
+            "pairwise_comparisons": 464,
+            "selected_material_improvement_fraction": 0.3076923076923077,
+            "states": 52,
+            "top1_accuracy": 0.3269230769230769
+          },
+          "fitted": {
+            "material_headroom_fraction": 0.6153846153846154,
+            "pairwise_accuracy": 0.5172413793103449,
+            "pairwise_comparisons": 464,
+            "selected_material_improvement_fraction": 0.3076923076923077,
+            "states": 52,
+            "top1_accuracy": 0.23076923076923078
+          }
+        },
+        "validation": {
+          "baseline": {
+            "material_headroom_fraction": 0.6153846153846154,
+            "pairwise_accuracy": 0.5,
+            "pairwise_comparisons": 464,
+            "selected_material_improvement_fraction": 0.2692307692307692,
+            "states": 52,
+            "top1_accuracy": 0.3076923076923077
+          },
+          "fitted": {
+            "material_headroom_fraction": 0.6153846153846154,
+            "pairwise_accuracy": 0.5517241379310345,
+            "pairwise_comparisons": 464,
+            "selected_material_improvement_fraction": 0.3269230769230769,
+            "states": 52,
+            "top1_accuracy": 0.34615384615384615
+          }
+        }
+      },
+      "training": {
+        "epochs": 200,
+        "final": {
+          "pair_count": 908.0,
+          "ranking": 0.6229998469352722,
+          "regression": 0.39935731887817383,
+          "total": 1.0223572254180908
+        },
+        "initial": {
+          "pair_count": 908.0,
+          "ranking": 0.7444170117378235,
+          "regression": 0.47578200697898865,
+          "total": 1.2201989889144897
+        },
+        "states": 104,
+        "target_scale": {
+          "maximum": 25685300.441450357,
+          "mean": 2611773.339704585,
+          "median": 1595791.0625129603,
+          "minimum": 1000000.0
+        }
+      },
+      "training_seeds": [
+        61,
+        62
+      ]
+    },
+    "61": {
+      "actor_sha256_after": "bce142e721446d9ae7a5d12dce38f8dca7097345a5d10fd5e2fe4cb18d52a3d6",
+      "actor_sha256_before": "bce142e721446d9ae7a5d12dce38f8dca7097345a5d10fd5e2fe4cb18d52a3d6",
+      "actor_unchanged": true,
+      "checkpoint": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/gcn_residual_mdl2_network_ddpg_afd/seed61/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed61_pretrain.pt",
+      "critic_parameter_drift": {
+        "max_abs": 0.09983249753713608,
+        "parameter_count": 238874.0,
+        "rms": 0.008896165546591414
+      },
+      "held_out_seed": 61,
+      "metrics": {
+        "discovery": {
+          "baseline": {
+            "material_headroom_fraction": 0.46153846153846156,
+            "pairwise_accuracy": 0.5943600867678959,
+            "pairwise_comparisons": 461,
+            "selected_material_improvement_fraction": 0.28846153846153844,
+            "states": 52,
+            "top1_accuracy": 0.3076923076923077
+          },
+          "fitted": {
+            "material_headroom_fraction": 0.46153846153846156,
+            "pairwise_accuracy": 0.6724511930585684,
+            "pairwise_comparisons": 461,
+            "selected_material_improvement_fraction": 0.3269230769230769,
+            "states": 52,
+            "top1_accuracy": 0.3269230769230769
+          }
+        },
+        "validation": {
+          "baseline": {
+            "material_headroom_fraction": 0.5,
+            "pairwise_accuracy": 0.5472103004291845,
+            "pairwise_comparisons": 466,
+            "selected_material_improvement_fraction": 0.17307692307692307,
+            "states": 52,
+            "top1_accuracy": 0.23076923076923078
+          },
+          "fitted": {
+            "material_headroom_fraction": 0.5,
+            "pairwise_accuracy": 0.6866952789699571,
+            "pairwise_comparisons": 466,
+            "selected_material_improvement_fraction": 0.3076923076923077,
+            "states": 52,
+            "top1_accuracy": 0.2692307692307692
+          }
+        }
+      },
+      "training": {
+        "epochs": 200,
+        "final": {
+          "pair_count": 911.0,
+          "ranking": 0.6637594103813171,
+          "regression": 0.5170376300811768,
+          "total": 1.1807971000671387
+        },
+        "initial": {
+          "pair_count": 911.0,
+          "ranking": 0.7443490624427795,
+          "regression": 0.5640005469322205,
+          "total": 1.308349609375
+        },
+        "states": 104,
+        "target_scale": {
+          "maximum": 30916320.690513134,
+          "mean": 3840620.0581549415,
+          "median": 1712956.978825286,
+          "minimum": 1000000.0
+        }
+      },
+      "training_seeds": [
+        60,
+        62
+      ]
+    },
+    "62": {
+      "actor_sha256_after": "49913cbd4bada31d01ef79a675343c0b9b145b45ee6664bfaa5df88ef5e518e2",
+      "actor_sha256_before": "49913cbd4bada31d01ef79a675343c0b9b145b45ee6664bfaa5df88ef5e518e2",
+      "actor_unchanged": true,
+      "checkpoint": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/gcn_residual_mdl2_network_ddpg_afd/seed62/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed62_pretrain.pt",
+      "critic_parameter_drift": {
+        "max_abs": 0.10244694352149963,
+        "parameter_count": 238874.0,
+        "rms": 0.009951597308816238
+      },
+      "held_out_seed": 62,
+      "metrics": {
+        "discovery": {
+          "baseline": {
+            "material_headroom_fraction": 0.5192307692307693,
+            "pairwise_accuracy": 0.5950782997762863,
+            "pairwise_comparisons": 447,
+            "selected_material_improvement_fraction": 0.3269230769230769,
+            "states": 52,
+            "top1_accuracy": 0.3076923076923077
+          },
+          "fitted": {
+            "material_headroom_fraction": 0.5192307692307693,
+            "pairwise_accuracy": 0.5503355704697986,
+            "pairwise_comparisons": 447,
+            "selected_material_improvement_fraction": 0.3076923076923077,
+            "states": 52,
+            "top1_accuracy": 0.28846153846153844
+          }
+        },
+        "validation": {
+          "baseline": {
+            "material_headroom_fraction": 0.5576923076923077,
+            "pairwise_accuracy": 0.5600858369098712,
+            "pairwise_comparisons": 466,
+            "selected_material_improvement_fraction": 0.36538461538461536,
+            "states": 52,
+            "top1_accuracy": 0.34615384615384615
+          },
+          "fitted": {
+            "material_headroom_fraction": 0.5576923076923077,
+            "pairwise_accuracy": 0.49356223175965663,
+            "pairwise_comparisons": 466,
+            "selected_material_improvement_fraction": 0.3076923076923077,
+            "states": 52,
+            "top1_accuracy": 0.28846153846153844
+          }
+        }
+      },
+      "training": {
+        "epochs": 200,
+        "final": {
+          "pair_count": 925.0,
+          "ranking": 0.5985091328620911,
+          "regression": 0.5053966641426086,
+          "total": 1.1039057970046997
+        },
+        "initial": {
+          "pair_count": 925.0,
+          "ranking": 0.7443066835403442,
+          "regression": 0.5932350158691406,
+          "total": 1.3375416994094849
+        },
+        "states": 104,
+        "target_scale": {
+          "maximum": 30916320.690513134,
+          "mean": 4271445.913856073,
+          "median": 2191092.0344641805,
+          "minimum": 1000000.0
+        }
+      },
+      "training_seeds": [
+        60,
+        61
+      ]
+    }
+  },
+  "formal_holdout_reused": false,
+  "fresh_crn_seed_count": 2499,
+  "label_stability": {
+    "best_action_agreement": 0.5448717948717948,
+    "pairwise_comparisons": 1287,
+    "pairwise_sign_agreement": 0.8251748251748252,
+    "per_seed": {
+      "60": {
+        "best_action_agreement": 0.6346153846153846,
+        "pairwise_comparisons": 439,
+        "pairwise_sign_agreement": 0.8656036446469249,
+        "per_seed": {},
+        "states": 52
+      },
+      "61": {
+        "best_action_agreement": 0.4807692307692308,
+        "pairwise_comparisons": 433,
+        "pairwise_sign_agreement": 0.7990762124711316,
+        "per_seed": {},
+        "states": 52
+      },
+      "62": {
+        "best_action_agreement": 0.5192307692307693,
+        "pairwise_comparisons": 415,
+        "pairwise_sign_agreement": 0.8096385542168675,
+        "per_seed": {},
+        "states": 52
+      }
+    },
+    "states": 156
+  },
+  "locked_inputs": {
+    "files": {
+      "stage_f1_comparison": {
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison/online_paired_advantage_summary.json",
+        "sha256": "8f4967115c584900969a7dba93e29da5ab70dfc65caa27d81423805be85c010a"
+      },
+      "stage_f1_recovery2_status": {
+        "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/launcher/status.json",
+        "sha256": "0097b4c84f9f9ab2403eccd670543b640109657eb03a86764d423c5a0496d380"
+      },
+      "stage_g0_rollout_rows": {
+        "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/rollout_rows.csv",
+        "sha256": "8a8ef60b5de6e3dbf9952b3879a83a26dd6357bc501bc1872e5f0a8d1f6df989"
+      },
+      "stage_g0_summary": {
+        "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json",
+        "sha256": "738bf04c8f5716e284a2f3006fe0a102516e83ae81dc1b87bbd37c1513f82524"
+      },
+      "stage_g0_transfer_rows": {
+        "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/transfer_rows.csv",
+        "sha256": "f3873b8f0c7fb261453b804d37d226546d18281e65a8d43432095a3885af94b6"
+      }
+    },
+    "trees": {
+      "stage_f1_candidate_training": {
+        "artifact_count": 151,
+        "artifact_tree_sha256": "af861462f59e0917a7de4ad3311e02ccbf244e8ccbf6587ecfd0dac4e231cbb3",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training"
+      },
+      "stage_f1_control_training": {
+        "artifact_count": 151,
+        "artifact_tree_sha256": "eb276c4402d766124080f1eddbfa1c365ff5a32d8baedb0204ff39e23c5041e8",
+        "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training"
+      }
+    }
+  },
+  "name": "patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1",
+  "prediction_rows": {
+    "path": "results/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1_development/fold_prediction_rows.csv",
+    "rows": 1560,
+    "sha256": "96d84e7a1f458227214690f1816388c142a207821373a8eea3d362d39ee47af9"
+  },
+  "smoke": false
+}

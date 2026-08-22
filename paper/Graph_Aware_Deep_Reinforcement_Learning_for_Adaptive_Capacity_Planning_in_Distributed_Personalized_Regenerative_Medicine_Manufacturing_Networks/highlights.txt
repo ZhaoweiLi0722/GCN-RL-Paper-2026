@@ -1,5 +1,5 @@
-- A graph-aware deep reinforcement learning framework is proposed.
-- GCN encodes inter-facility dependencies in distributed manufacturing.
-- DDPG learns adaptive capacity, inventory, and transshipment policies.
-- Experiments test robustness under disruption and demand uncertainty.
-- The framework supports intelligent PRM manufacturing decisions.
+- A constrained graph MDP models perishable, identity-bound PRM operations.
+- AFR-GCN-DDPG learns bounded residual corrections to a look-ahead anchor.
+- Five-seed holdout evidence favors GCN-DDPG over MDL-2 and flat DDPG.
+- A matched TD3 ablation corroborates graph and anchor value.
+- Online actor-critic updates add no independently established endpoint gain.

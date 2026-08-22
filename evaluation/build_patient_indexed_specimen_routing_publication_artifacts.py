@@ -674,11 +674,38 @@ def build_evidence_map(
     online_rows: list[dict[str, Any]],
     component_summary_path: Path,
 ) -> dict[str, Any]:
+    stage_f1_path = "docs/patient_indexed_specimen_routing_stage_f1_results.md"
+    stage_g0_path = (
+        "experiments/evidence/"
+        "patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json"
+    )
+    stage_g1_path = (
+        "experiments/evidence/"
+        "patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json"
+    )
+    stage_h0_path = (
+        "experiments/evidence/"
+        "patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/"
+        "h0_persistent/summary.json"
+    )
+    stage_h1_path = (
+        "experiments/evidence/"
+        "patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/"
+        "h1_nonstationary/summary.json"
+    )
+    attribution_diagnostic_paths = {
+        stage_f1_path,
+        stage_g0_path,
+        stage_g1_path,
+        stage_h0_path,
+        stage_h1_path,
+    }
     source_paths = {
         row["source"]
         for rows in (primary_rows, sensitivity_rows, td3_rows, online_rows)
         for row in rows
     }
+    source_paths.update(attribution_diagnostic_paths)
     source_paths.update(
         row["source_secondary"]
         for row in online_rows
@@ -695,7 +722,7 @@ def build_evidence_map(
     ]
     return {
         "schema_version": 1,
-        "frozen_on": "2026-08-17",
+        "frozen_on": "2026-08-22",
         "primary_method": "AFR-GCN-DDPG",
         "claims": [
             {
@@ -716,7 +743,22 @@ def build_evidence_map(
                 "id": "online_learning_attribution",
                 "status": "not_established",
                 "claim": "The evidence does not isolate a favorable incremental effect of online actor-critic updates over frozen pretraining.",
-                "sources": sorted({row["source"] for row in online_rows}),
+                "sources": sorted(
+                    {row["source"] for row in online_rows}
+                    | attribution_diagnostic_paths
+                ),
+            },
+            {
+                "id": "paired_online_ddpg_attribution",
+                "status": "not_established_development",
+                "claim": "Prospective paired critic supervision did not produce a favorable incremental final-versus-frozen or candidate-versus-control DDPG effect.",
+                "source": stage_f1_path,
+            },
+            {
+                "id": "continuous_action_geometry",
+                "status": "supported_development_diagnostic",
+                "claim": "Clinically useful local action headroom is concentrated in projected specimen-routing choices; continuous reagent and capacity channels did not pass prospective material-headroom gates.",
+                "sources": [stage_h0_path, stage_h1_path],
             },
             {
                 "id": "transport_timing_robustness",
@@ -734,6 +776,7 @@ def build_evidence_map(
         "prohibited_claims": [
             "Do not claim that online DDPG or TD3 updates independently created the observed gain.",
             "Do not present TD3 or Stage C3 development streams as formal holdout confirmation.",
+            "Do not claim that continuous reagent or capacity controls provide validated material headroom in the current simulator.",
             "Do not claim blanket transport-timing robustness.",
             "Do not call modeled weighted-objective units dollars without external calibration.",
             "Do not add specimen-transfer cost separately to base_cost; it is a base-cost subcomponent.",

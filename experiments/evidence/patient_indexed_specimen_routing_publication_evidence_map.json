@@ -18,12 +18,32 @@
       "claim": "The evidence does not isolate a favorable incremental effect of online actor-critic updates over frozen pretraining.",
       "id": "online_learning_attribution",
       "sources": [
+        "docs/patient_indexed_specimen_routing_stage_f1_results.md",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h0_persistent/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h1_nonstationary/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json",
         "experiments/evidence/patient_indexed_specimen_routing_ddpg_structured_exploration/comparison/structured_exploration_summary.json",
         "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/development/checkpoint_curve_summary.json",
         "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/final_summary.json",
         "experiments/evidence/patient_indexed_specimen_routing_stage_c_td3/evaluation/final/summary.json"
       ],
       "status": "not_established"
+    },
+    {
+      "claim": "Prospective paired critic supervision did not produce a favorable incremental final-versus-frozen or candidate-versus-control DDPG effect.",
+      "id": "paired_online_ddpg_attribution",
+      "source": "docs/patient_indexed_specimen_routing_stage_f1_results.md",
+      "status": "not_established_development"
+    },
+    {
+      "claim": "Clinically useful local action headroom is concentrated in projected specimen-routing choices; continuous reagent and capacity channels did not pass prospective material-headroom gates.",
+      "id": "continuous_action_geometry",
+      "sources": [
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h0_persistent/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h1_nonstationary/summary.json"
+      ],
+      "status": "supported_development_diagnostic"
     },
     {
       "claim": "The GCN advantage strengthens under return lead 1 but reverses under specimen availability lead 0.",
@@ -43,17 +63,38 @@
       "status": "supported_development_only"
     }
   ],
-  "frozen_on": "2026-08-17",
+  "frozen_on": "2026-08-22",
   "primary_method": "AFR-GCN-DDPG",
   "prohibited_claims": [
     "Do not claim that online DDPG or TD3 updates independently created the observed gain.",
     "Do not present TD3 or Stage C3 development streams as formal holdout confirmation.",
+    "Do not claim that continuous reagent or capacity controls provide validated material headroom in the current simulator.",
     "Do not claim blanket transport-timing robustness.",
     "Do not call modeled weighted-objective units dollars without external calibration.",
     "Do not add specimen-transfer cost separately to base_cost; it is a base-cost subcomponent."
   ],
   "schema_version": 1,
   "sources": [
+    {
+      "path": "docs/patient_indexed_specimen_routing_stage_f1_results.md",
+      "sha256": "dd585c78504444ed22a7fd67c51bd2759bc648762360074e4e67b5c70f6efbe6"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json",
+      "sha256": "738bf04c8f5716e284a2f3006fe0a102516e83ae81dc1b87bbd37c1513f82524"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h0_persistent/summary.json",
+      "sha256": "f533452b92d169796bceaa6966ad7925c67b59de5cfa6edf39ef6d29ec025f74"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h1_nonstationary/summary.json",
+      "sha256": "0dbb140148ae96755a94c24f2e74e2a1d644b6b909bbf78ffc31df370bef401e"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json",
+      "sha256": "9e96deec850d6033fb5a2fb9e2f5090f8a040468df9faf8634015a14875d1c41"
+    },
     {
       "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_structured_exploration/comparison/structured_exploration_summary.json",
       "sha256": "30d1a39785a8e4bc9f17d68e6cf615f4e29ab5b2a64284e1105601bc87fecda4"

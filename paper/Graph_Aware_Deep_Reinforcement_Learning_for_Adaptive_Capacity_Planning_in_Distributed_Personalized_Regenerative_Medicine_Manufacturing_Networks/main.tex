@@ -49,31 +49,30 @@
 \begin{abstract}
 
 Autologous cell therapy and other personalized regenerative medicine (PRM)
-products are manufactured on demand across distributed clinical networks, where
-each product is \emph{perishable}, \emph{identity-bound} to one patient and
-non-fungible, and useful only while that patient remains clinically eligible.
-These characteristics couple capacity, inventory, patient-indexed logistics,
-and patient outcomes into one networked decision. We formulate distributed PRM
-capacity planning as a constrained graph Markov decision process and develop an
+products are manufactured on demand across distributed clinics. Each product
+is perishable, identity-bound and non-fungible, and useful only while its
+patient remains clinically eligible, coupling capacity, inventory,
+patient-indexed logistics, and patient outcomes. We formulate this planning
+problem as a constrained graph Markov decision process and develop an
 \emph{advantage-filtered residual graph convolutional network--deep deterministic
-policy gradient} controller (AFR-GCN--DDPG). The controller learns bounded
-corrections to a transparent two-period look-ahead policy while preserving
-identity and feasibility. In the routing-primary formal study, five independent
-training seeds were evaluated on four routing scenarios with 100 paired
-holdout replications per seed and scenario. AFR-GCN--DDPG reduced the total
-weighted objective by 0.658\% relative to routing MDL-2 (95\% interval
-$[-0.721,-0.585]\%$) and by 0.321\% relative to a parameter-matched flat DDPG
-controller (95\% interval $[-0.413,-0.240]\%$), while increasing completion
-service and reducing manufacturing ineligibility and patients lost. The savings
-were driven primarily by lower patient-loss, expiry, and operating-shortage costs, partly
+policy gradient} controller (AFR-GCN--DDPG). It learns bounded corrections to a
+transparent two-period look-ahead policy while preserving identity and
+feasibility. In the routing-primary formal study, five training seeds were
+evaluated on four scenarios with 100 paired holdout replications per seed and
+scenario. AFR-GCN--DDPG reduced the total weighted objective by 0.658\% relative
+to routing MDL-2 (95\% interval $[-0.721,-0.585]\%$) and by 0.321\% relative to
+parameter-matched flat DDPG (95\% interval $[-0.413,-0.240]\%$), while improving
+completion service, manufacturing eligibility, and patient loss. Savings were
+driven primarily by lower patient-loss, expiry, and shortage costs, partly
 offset by higher specimen-transfer cost. A matched three-seed TD3 development
-ablation independently favored the graph controller over MDL-2 and flat TD3,
-but both DDPG and TD3 final checkpoints were statistically indistinguishable
-from their frozen-pretraining controls. Structured-exploration and critic
-realignment screens also failed their preregistered online-attribution gates.
-The evidence therefore supports graph-aware advantage-filtered residual control
-over matched routing comparators, while it does not establish that online
-actor--critic updates independently created the gain.
+ablation also favored the graph controller over MDL-2 and flat TD3. However,
+DDPG and TD3 final checkpoints were statistically indistinguishable from frozen
+pretraining, and a prospective paired-advantage DDPG experiment failed its
+online-gain gate. Frozen action-geometry screens found that useful local
+headroom concentrated in projected integer-lot specimen routing rather than
+continuous reagent and capacity channels. The evidence supports an
+offline-pretrained, graph-aware residual actor--critic policy, but not an
+independent endpoint benefit from the tested online updates.
 \end{abstract}
 
 \begin{keyword}
@@ -103,8 +102,9 @@ The main contributions of this study are as follows.
 \begin{itemize}
     \item We formulate distributed capacity planning for \emph{perishable, identity-bound, patient-condition-driven} PRM manufacturing as a constrained networked sequential decision problem, in which patient deterioration and product and material expiry are explicit determinants of demand, feasibility, and cost.
     \item We develop a simulation environment realizing this formulation for a multi-clinic autologous cell-therapy network, with patient-condition dynamics, expiry-aware inventory, patient-indexed and identity-preserving pre-manufacturing specimen routing, finished-product return, and fungible-resource sharing. Routing is an operational capability of the model rather than a claimed methodological contribution.
-    \item We propose AFR-GCN--DDPG, an advantage-filtered residual graph controller that learns bounded corrections to a transparent look-ahead anchor under demand and disruption uncertainty, with persistent teacher regularization and independently calibrated deployment safeguards.
-    \item We establish a paired multi-seed evaluation protocol for comparisons with strong look-ahead and isolated-facility heuristics, flat-state reinforcement learning, and graph-aware backbone variants, and report a five-seed DDPG confirmation, a parameter-matched graph-attribution study, and a conservative online-TD3 screen with two-level bootstrap confidence intervals.
+    \item We propose AFR-GCN--DDPG, a two-stage advantage-filtered residual graph controller that learns bounded corrections to a transparent look-ahead anchor, retains the filtered teacher signal during DDPG optimization, and applies independently calibrated deployment safeguards.
+    \item We establish a paired multi-seed evaluation protocol that separates policy-versus-anchor value, graph-versus-flat representation value, DDPG-versus-TD3 backbone robustness, and final-versus-frozen online attribution. The evidence includes a five-seed formal DDPG confirmation and a matched three-seed TD3 development ablation with two-level bootstrap confidence intervals.
+    \item We report prospective negative attribution tests rather than folding all learned-policy performance into an online-RL claim. Paired critic supervision, legal-action transfer diagnostics, and corrected action-geometry screens identify offline advantage-filtered pretraining and graph representation as the supported sources of value, while bounding the unsupported incremental online-update claim.
     \item We draw design implications for intelligent decision support in distributed, patient-specific healthcare manufacturing and related time-critical, make-to-order engineering systems.
 \end{itemize}
 
@@ -427,7 +427,7 @@ Structured residual RL & Heuristic-guided and baseline-relative learning~\cite{D
 \end{table}
 
 \subsection{Research gap and design implications}
-Read together, these literatures imply five design choices for a distributed PRM capacity-planning controller. First, because the decisions are sequential and real-valued, the controller should use continuous-control actor--critic reinforcement learning rather than value-based or discretized methods. Second, because a facility's value depends on its network position and resources propagate along inter-facility links, its state should be encoded with a graph rather than a flat vector. Third, because strong operational rules already solve much of the nominal problem, the learned policy should target bounded, evidence-supported corrections to a transparent anchor rather than relearn the complete policy from scratch. Fourth, DDPG provides a natural canonical formulation and continuity with earlier PRM capacity-planning work, but its known instability requires controlled comparisons with TD3 and secondary SAC/PPO variants rather than an untested assumption that DDPG is always best. Fifth, because reinforcement learning results are sensitive to seeds and implementation details, evaluation should report multi-seed interquartile means with confidence intervals and, given the clinical stakes, patient-service outcomes such as eligibility and waiting.
+Read together, these literatures imply five design choices for a distributed PRM capacity-planning controller. First, because the decisions are sequential and the feasible action is mixed (continuous resource quantities together with projected integer specimen lots), a continuous proto-action actor--critic must be coupled to explicit decoding and feasibility projection rather than treated as unconstrained real-valued control. Second, because a facility's value depends on its network position and resources propagate along inter-facility links, its state should be encoded with a graph rather than a flat vector. Third, because strong operational rules already solve much of the nominal problem, the learned policy should target bounded, evidence-supported corrections to a transparent anchor rather than relearn the complete policy from scratch. Fourth, DDPG provides a natural canonical formulation and continuity with earlier PRM capacity-planning work, but its known instability requires controlled comparison with TD3 rather than an untested assumption that DDPG is always best. Fifth, because reinforcement learning results are sensitive to seeds, implementation details, and the distinction between pretraining and online updates, evaluation should report paired multi-seed intervals, patient-service outcomes, and final-versus-frozen attribution checks.
 
 None of these streams, however, addresses the problem that defines our setting. PRM operations research motivates adaptive, networked capacity planning but does not learn relational policies. Supply-chain graph-and-reinforcement-learning research supplies the relational-control machinery but treats demand as fungible and abstract, targeting forecasting or inventory-only control. Cell-therapy reinforcement learning operates on a single bioprocess rather than a clinic network. As a result, no prior work models the three defining properties of PRM capacity planning (a perishable product with a hard viability deadline, an identity-bound product that cannot be pooled or substituted across patients, and demand driven by patient deterioration while waiting) within a single graph-aware continuous-control formulation. Our contribution closes this gap. We cast the problem as a constrained graph MDP, build a reusable simulation testbed that realizes it, and evaluate graph-aware DDPG against strong flat-state and heuristic baselines, with matched TD3 as a development backbone ablation. SAC and PPO remain implemented family extensions rather than routing-primary empirical claims.
 
@@ -435,7 +435,7 @@ None of these streams, however, addresses the problem that defines our setting. 
 \label{sec:method}
 \subsection*{Overview: a shared graph encoder with interchangeable actor--critic backbones}
 
-Distributed manufacturing networks for personalized regenerative medicine (PRM) comprise complex, interconnected facilities whose operating states are best represented as graphs rather than flat vectors. Classical reinforcement learning that treats each facility as independent cannot capture these spatial dependencies. We therefore adopt a two-part design shared by every method we study. A graph convolutional network (GCN) encoder maps the networked state to permutation-equivariant, neighborhood-aware node embeddings, composed with a continuous-control actor--critic backbone that maps those embeddings to feasibility-projected capacity, reagent, and replenishment actions. Writing the controller as \emph{encoder $\circ$ backbone} lets us hold the relational representation fixed while swapping the reinforcement-learning backbone, so that any performance difference between backbones is attributable to the learning algorithm rather than to the state representation.
+Distributed manufacturing networks for personalized regenerative medicine (PRM) comprise complex, interconnected facilities whose operating states are naturally represented as graphs. A flat controller can observe all facility features, but it must learn topology from position-dependent concatenation and lacks the permutation-equivariant neighborhood aggregation supplied by a GCN. We therefore adopt a two-part design. A graph convolutional network encoder maps the networked state to neighborhood-aware node embeddings, and a residual actor--critic maps those embeddings to proto-actions that are decoded and projected into feasible specimen, capacity, reagent, and replenishment decisions. Writing the controller as \emph{encoder $\circ$ backbone} lets matched experiments isolate graph-versus-flat representation and, separately, DDPG-versus-TD3 backbone effects while holding the anchor, action decoder, projection, training budget, and evaluation streams fixed.
 
 \subsection*{Primary AFR-GCN--DDPG controller and backbone variants}
 
@@ -504,11 +504,9 @@ and $c_{ij}$ is a degree-based normalization factor. The resulting embedding
 $H_t = \{h_i^{(L)}\}_{i=1}^{N}$ captures the current global state of the network.
 \subsection*{Overview of the graph-aware actor--critic workflow (DDPG instantiation)}
 
-The method initiates with a dual initialization of the actor and critic networks of the backbone and the GCN for graph state processing. Given an observed state \( X_t \), represented as raw graph data reflecting the current status of the manufacturing network, the GCN is used as a preprocessing unit. It transforms this raw graph into a condensed representation \( X'_t \), which retains the critical structural information of the original graph.
+Training has two explicit stages. First, common-random-number look-ahead constructs advantage-filtered residual targets relative to MDL-2 and initializes the graph encoder and actor on those targets. Second, DDPG interacts with the simulator, stores feasibility-projected actions and rewards in replay, and updates the critic, actor, and shared encoder while retaining the filtered teacher loss as an actor regularizer. At execution time, the observed node features change with queues, patient condition, inventories, disruptions, and transit pipelines; the configured clinic topology supplies the graph over which the same learned encoder aggregates those dynamic features. The GCN therefore processes a time-varying network state but does not infer a new physical network at every epoch.
 
-Following this transformation, the DDPG algorithm gets involved. Using the graph-processed state \( X'_t \), the actor-network selects an action, which is based on the actor--critic architecture. This action could range from decisions regarding resource allocation to inventory replenishments. Once executed within the manufacturing environment, the system provides a feedback loop in the form of a reward, essentially evaluating the decision's efficacy.
-
-The DDPG then uses this feedback, in tandem with the replay buffer, to refine both the actor and critic networks, ensuring better decision-making in subsequent iterations. The GCN, on its part, continuously updates its understanding of the graph structure as the manufacturing network evolves, ensuring it remains adaptive and accurate in its representations.
+This two-stage description is important for attribution. AFR-GCN--DDPG denotes the controller that results from the complete procedure, whereas final-versus-frozen comparisons separately test whether the online DDPG phase adds endpoint value beyond the advantage-filtered initialization.
 
 
 \subsection*{Initialization}
@@ -529,10 +527,10 @@ A_t^{\mathrm{raw}}=A_t^{\mathrm{anc}}+\rho\odot\Delta A_t.
 This residual parameterization preserves the anchor's basic inventory logic while allowing the GCN
 policy to adapt patient-indexed specimen routing, replenishment, and fungible resource-sharing decisions to network-wide
 patient pressure, geographic connectivity, disruptions, and demand-prior drift. The critic network
-$Q(H_t,A_t|\theta_Q)$ estimates the expected cumulative cost. The optimization follows the standard
-DDPG updates:
+$Q(H_t,A_t|\theta_Q)$ estimates expected discounted return, where reward is the negative modeled
+cost. The optimization follows the standard DDPG updates:
 \begin{align}
-y_i &= c_i(A_i;H_i) + \gamma Q'(H_{i+1},\mu'(H_{i+1}|\theta_{\mu'})|\theta_{Q'}),\\
+y_i &= r_i + \gamma Q'(H_{i+1},\mu'(H_{i+1}|\theta_{\mu'})|\theta_{Q'}),\\
 L_Q &= \frac{1}{N}\sum_i (y_i - Q(H_i,A_i|\theta_Q))^2,\\
 \nabla_{\theta_\mu} J &= \frac{1}{N}\sum_i \nabla_a Q(H_i,a|\theta_Q)|_{a=\mu(H_i)} 
 \nabla_{\theta_\mu} \mu(H_i|\theta_\mu).
@@ -1356,6 +1354,74 @@ final-minus-frozen effect of $+0.00416\%$ with interval
 $[-0.02766,+0.04091]\%$. Thus neither actor--critic backbone establishes an
 independent online-learning gain at the tested budget.
 
+\subsubsection{Prospective online-DDPG attribution and action-geometry audits}
+
+The final-versus-frozen comparisons above motivated a prospective DDPG
+attribution experiment rather than another unconstrained tuning cycle. Stage F1
+created tensor-identical control and candidate forks with the same structured
+specimen exploration. The sole candidate difference was an auxiliary
+counterfactual-advantage critic loss computed from exact within-state,
+four-step behavior-versus-MDL-2 rollouts. All 12 training jobs completed 100
+online episodes, and the two prespecified checkpoint curves contained 3,600
+learned and 3,600 anchor outcomes in total.
+
+For the primary GCN arm, candidate final minus its frozen pretraining
+checkpoint was $-21{,}298$ modeled objective units ($-0.001067\%$), with paired
+95\% interval $[-715{,}371,+527{,}375]$. Only one of three seeds was favorable,
+so the prospective two-seed and wholly-below-zero gate failed. Candidate final
+minus matched control final was $+4{,}081$ units ($+0.000205\%$), with interval
+$[-95{,}056,+95{,}036]$ and 131 exact ties among 150 pairs. The auxiliary
+target was sampled and partly learned (persisted sign accuracy 0.709--0.786),
+but contributed only 0.245--0.343\% of total critic loss and did not produce a
+materially different deployed policy.
+
+Read-only transfer audits then examined why additional critic structure did not
+reach execution. In the nominal-history G0 diagnostic, the candidate final
+critic selected the independently rolled-out best remaining-horizon legal
+action in 3/27 states, versus 2/27 for control; only 2/27 raw actor differences
+survived correction composition, projection, and integer-lot execution. An
+all-legal-action, remaining-horizon ranker in G1 reached 47/156 held-out-seed
+top-1 decisions, versus 46/156 for the frozen critic. The original F0/G0/G1
+scenario-specific labels were subsequently corrected because those post-hoc
+audits had reconstructed nominal history rather than the assigned online
+scenario. Their immutable rows remain useful mechanism diagnostics, but no
+persistent-hotspot or per-cluster inference is made from them.
+
+Corrected prospective action-geometry screens reconstructed the benchmark-plan
+scenarios directly. Table~\ref{tab:action_geometry} reports the
+fraction of audited states with an independently validated action saving at
+least one million modeled objective units without worsening completion,
+patients lost, or manufacturing ineligibility. Specimen routing retained local
+headroom, whereas neither continuous resource group produced a prospectively
+selected material improvement.
+
+\begin{table}[htbp]
+\centering
+\caption{Corrected frozen action-geometry screen. H0 is the persistent-shift
+screen and H1 is the nonstationary screen. ``Opp.'' is the fraction of 27
+audited states with a material clinically noninferior action; ``selected''
+applies the same test to the action chosen on an independent discovery stream.}
+\label{tab:action_geometry}
+\begin{tabular}{lrrrr}
+\hline
+Action group & H0 opp. & H0 selected & H1 opp. & H1 selected \\
+\hline
+Specimen transfer & 55.6\% & 40.7\% & 55.6\% & 37.0\% \\
+Reagent transfer & 3.7\% & 0.0\% & 3.7\% & 0.0\% \\
+Reagent plus capacity & 3.7\% & 0.0\% & 0.0\% & 0.0\% \\
+\hline
+\end{tabular}
+\end{table}
+
+Together, these audits narrow rather than erase the reinforcement-learning
+contribution. The learned graph residual policy is supported by the formal
+policy comparisons and the TD3 backbone ablation. What is not supported is a
+separate claim that the tested online Bellman and policy-gradient updates
+created the endpoint gain. In the current simulator, useful local control
+authority is concentrated in projected discrete specimen choices, while the
+channels that preserve continuous action geometry expose little clinically
+noninferior material headroom.
+
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
 This study develops a patient-condition and geography-aware simulation of a
@@ -1389,11 +1455,16 @@ of inexpensive transport.
 
 The method attribution is narrower than the policy comparison. Frozen
 advantage-filtered pretraining already captures nearly all observed DDPG and
-TD3 value; final-minus-frozen intervals from the development diagnostics cross
-zero, and three mechanism-driven DDPG refinements fail their advancement gates.
-We therefore distinguish two questions: graph-aware advantage-filtered
-residual control is supported, whereas an independent contribution from online
-actor--critic updates is not established. DDPG remains the canonical proposed
+TD3 value. The prospective F1 paired-critic experiment also failed its
+final-versus-frozen and candidate-versus-control gates. Mechanism audits found
+weak long-horizon legal-action ranking, severe attenuation through projection
+and integer-lot execution, and little clinically noninferior headroom in the
+simulator's genuinely continuous resource channels. We therefore distinguish
+three supported layers: the constrained graph-MDP formulation, the
+advantage-filtered graph residual policy class, and its calibrated execution
+pipeline. The formal evidence supports the complete learned controller and a
+graph-versus-flat advantage; it does not establish an independent contribution
+from the tested online actor--critic updates. DDPG remains the canonical
 backbone because it is the prespecified five-seed formal method. The matched
 TD3 result is a useful development ablation, not evidence that DDPG generally
 dominates TD3 or that TD3 has formal-holdout status.
@@ -1402,7 +1473,13 @@ Several limitations remain. The routing-primary DDPG comparison has five
 training seeds, but the matched TD3 and mechanism-diagnostic screens have only
 three and use development streams. The formal comparison isolates graph versus
 flat representation and policy versus MDL-2, but it does not isolate routing
-availability or the incremental contribution of online updates. Transport
+availability or the incremental contribution of online updates. F1 and the
+corrected H0/H1 action-geometry screens use three training seeds and bounded
+state samples; they reject their prespecified advancement gates but do not
+prove that every possible online algorithm or continuous action is ineffective.
+The original F0/G0/G1 post-hoc rows reconstruct nominal history, so their former
+scenario-specific labels are superseded and only their mechanism-level
+diagnostics are retained. Transport
 timing is not uniformly robust, and continuous travel-time viability is not
 coupled to the epoch-level availability sensitivity. Pure-policy, SAC, and PPO
 controllers have not been evaluated under the same locked routing-primary
@@ -1433,11 +1510,20 @@ streams rather than repeatedly tuning online attribution on the existing
 development evidence. Valuable extensions include unseen clinic networks,
 continuous transport-viability coupling, transfer disruptions, externally
 calibrated economic weights, and a separately prespecified routing-versus-no-
-routing study. Longer-term models should integrate production scheduling,
+routing study. If online deterministic policy gradients are to be made central,
+a new model should expose stable continuous operational authority through
+decisions such as overtime, staffing, production-rate, procurement, or
+continuous capacity reservation, with new comparators and independent streams.
+Longer-term models should integrate production scheduling,
 product preparation and distribution, and treatment operations.
 
 \section*{Data Availability}
-The data used in this study are generated from a simulation model. The simulation parameters and experimental settings are described in the manuscript. Code and additional materials are available from the corresponding author upon reasonable request.
+All study data are generated by the simulation model. The accompanying
+repository contains the source code, locked experiment configurations, curated
+summary outputs, training diagnostics, artifact hashes, and a claim-to-evidence
+map. Large checkpoint tensors and row-level Monte Carlo files are omitted from
+version control but are SHA256-inventoried and available from the corresponding
+author upon reasonable request.
 
 \section*{Declaration of Competing Interest}
 The author declares that there is no known competing financial interest or personal relationship that could have appeared to influence the work reported in this paper.

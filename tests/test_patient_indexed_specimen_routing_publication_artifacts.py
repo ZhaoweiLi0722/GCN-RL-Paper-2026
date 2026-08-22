@@ -46,12 +46,34 @@ class RoutingPublicationArtifactsTest(unittest.TestCase):
                 if claim["id"] == "online_learning_attribution"
             )
             self.assertEqual(online_claim["status"], "not_established")
+            self.assertIn(
+                "docs/patient_indexed_specimen_routing_stage_f1_results.md",
+                online_claim["sources"],
+            )
             self.assertTrue(
                 all(
                     not row["supports_online_gain"]
                     for row in result["online_rows"]
                 )
             )
+
+            paired_claim = next(
+                claim
+                for claim in result["evidence_map"]["claims"]
+                if claim["id"] == "paired_online_ddpg_attribution"
+            )
+            self.assertEqual(paired_claim["status"], "not_established_development")
+
+            geometry_claim = next(
+                claim
+                for claim in result["evidence_map"]["claims"]
+                if claim["id"] == "continuous_action_geometry"
+            )
+            self.assertEqual(
+                geometry_claim["status"],
+                "supported_development_diagnostic",
+            )
+            self.assertEqual(len(geometry_claim["sources"]), 2)
 
             component_path = (
                 repo_root

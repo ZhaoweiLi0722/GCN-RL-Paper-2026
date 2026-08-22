@@ -12,10 +12,12 @@ from src.baselines.heuristics import facility_net_action_from_state
 
 SUPPORTED_RESIDUAL_OPTION_GROUPS = (
     "replenishment_uniform",
+    "specimen_transfer",
     "reagent_transfer",
     "combined_transfer",
     "reagent_replenishment",
     "combined_network",
+    "combined_routing_network",
 )
 
 
@@ -116,11 +118,21 @@ def residual_option_actions_from_env(
         - idle_bioreactors
         + 0.5 * risk
     )
+    pending_specimens = np.zeros(n, dtype=float)
+    pending = getattr(env, "_pending_transfer_arrivals", None)
+    if callable(pending):
+        pending_specimens = np.asarray(pending()[0], dtype=float)
+    specimen_pattern = _centered_unit_pattern(
+        np.minimum(reagents, idle_bioreactors)
+        - specimens
+        - pending_specimens
+    )
     return residual_option_actions_from_patterns(
         anchor_action,
         resource_pattern,
         capacity_pattern,
         specs,
+        specimen_pattern=specimen_pattern,
     )
 
 
@@ -141,11 +153,16 @@ def residual_option_actions_from_state(
         state,
         env_config,
     )
+    specimen_pattern = specimen_pressure_pattern_from_state(
+        state,
+        env_config,
+    )
     return residual_option_actions_from_patterns(
         anchor_action,
         resource_pattern,
         capacity_pattern,
         specs,
+        specimen_pattern=specimen_pattern,
     )
 
 
@@ -154,6 +171,8 @@ def residual_option_actions_from_patterns(
     resource_pattern: np.ndarray,
     capacity_pattern: np.ndarray,
     specs: Sequence[ResidualOptionSpec],
+    *,
+    specimen_pattern: np.ndarray | None = None,
 ) -> list[np.ndarray]:
     """Apply each option specification to an anchor action."""
 
@@ -161,7 +180,16 @@ def residual_option_actions_from_patterns(
     resource = np.asarray(resource_pattern, dtype=np.float32).reshape(-1)
     capacity = np.asarray(capacity_pattern, dtype=np.float32).reshape(-1)
     n = int(resource.size)
-    if capacity.shape != (n,) or anchor.shape != (4 * n,):
+    specimen = (
+        np.zeros(n, dtype=np.float32)
+        if specimen_pattern is None
+        else np.asarray(specimen_pattern, dtype=np.float32).reshape(-1)
+    )
+    if (
+        capacity.shape != (n,)
+        or specimen.shape != (n,)
+        or anchor.shape != (4 * n,)
+    ):
         raise ValueError("Residual option patterns require a facility-net action layout")
     actions: list[np.ndarray] = []
     for spec in specs:
@@ -172,6 +200,8 @@ def residual_option_actions_from_patterns(
         delta = float(spec.sign) * float(spec.epsilon)
         if spec.group == "replenishment_uniform":
             action[3 * n : 4 * n] += delta
+        elif spec.group == "specimen_transfer":
+            action[:n] += delta * specimen
         elif spec.group == "reagent_transfer":
             action[n : 2 * n] += delta * resource
         elif spec.group == "combined_transfer":
@@ -181,6 +211,11 @@ def residual_option_actions_from_patterns(
             action[n : 2 * n] += delta * resource
             action[3 * n : 4 * n] += delta * resource
         elif spec.group == "combined_network":
+            action[n : 2 * n] += delta * resource
+            action[2 * n : 3 * n] += delta * capacity
+            action[3 * n : 4 * n] += delta * resource
+        elif spec.group == "combined_routing_network":
+            action[:n] += delta * specimen
             action[n : 2 * n] += delta * resource
             action[2 * n : 3 * n] += delta * capacity
             action[3 * n : 4 * n] += delta * resource
@@ -311,6 +346,56 @@ def residual_pressure_patterns_from_state(
     return _centered_unit_pattern(resource), _centered_unit_pattern(capacity)
 
 
+def specimen_pressure_pattern_from_state(
+    state: np.ndarray,
+    env_config: dict[str, Any],
+) -> np.ndarray:
+    """Recover the patient-lot donor/receiver pressure from a flat state."""
+
+    values = np.asarray(state, dtype=np.float32).reshape(-1)
+    n = int(env_config.get("num_facilities", 0))
+    lead_time = int(env_config.get("production_lead_time", 3))
+    include_supplier = int(bool(env_config.get("include_supplier_state", False)))
+    include_forecast = int(
+        bool(env_config.get("include_demand_forecast_state", False))
+    )
+    include_pipeline = int(
+        bool(env_config.get("include_transfer_pipeline_state", False))
+    )
+    include_history = int(
+        bool(env_config.get("include_demand_history_state", False))
+    )
+    include_sequence = int(
+        bool(env_config.get("include_demand_sequence_state", False))
+    )
+    sequence_length = int(env_config.get("demand_sequence_length", 12))
+    width = (
+        3
+        + lead_time
+        + include_supplier
+        + include_forecast
+        + 3 * include_pipeline
+        + 3 * include_history
+        + 3 * sequence_length * include_sequence
+    )
+    base_width = n * width
+    if n <= 0 or values.size < base_width:
+        raise ValueError("Observation is too short for specimen pressure features")
+    facility = values[:base_width].reshape(n, width)
+    specimens = facility[:, 1]
+    reagents = facility[:, 2]
+    idle_bioreactors = facility[:, 3]
+    pending_specimens = np.zeros(n, dtype=np.float32)
+    if include_pipeline:
+        pipeline_start = 3 + lead_time + include_supplier + include_forecast
+        pending_specimens = facility[:, pipeline_start]
+    return _centered_unit_pattern(
+        np.minimum(reagents, idle_bioreactors)
+        - specimens
+        - pending_specimens
+    )
+
+
 def _patient_waiting_risk_from_state(
     state: np.ndarray,
     env_config: dict[str, Any],
@@ -323,7 +408,12 @@ def _patient_waiting_risk_from_state(
         "survival_bucket_edges",
         (0.85, 0.90, 0.97),
     ))
-    summary_width = 6 + len(edges) + 1
+    summary_width = (
+        6
+        + len(edges)
+        + 1
+        + (4 if env_config.get("include_specimen_routing_state", False) else 0)
+    )
     base_width = n * int(features_per_facility)
     expected = base_width + n * summary_width
     if state.size < expected:

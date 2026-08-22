@@ -1,0 +1,71 @@
+{
+  "name": "patient_indexed_specimen_routing_teacher_no_routing",
+  "experimental_role": "optional_no_routing_supplement_only",
+  "requires_separate_approval": true,
+  "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
+  "env_overrides": {
+    "scenario_name": "no_routing_nominal_history",
+    "include_demand_history_state": true,
+    "demand_history_window": 12,
+    "enable_specimen_routing": false,
+    "include_specimen_routing_state": true,
+    "specimen_routing_lead_time_epochs": 1,
+    "max_specimen_transfers_per_patient": 1,
+    "specimen_transit_loss_probability": 0.0,
+    "finished_product_return_assumption": "return_to_collection_facility",
+    "finished_product_return_lead_time_epochs": 0,
+    "specimen_edges": [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[5,6],[6,7],[6,8],[7,9],[7,17],[8,9],[8,10],[8,11],[9,10],[9,11],[10,11],[10,16],[10,17],[12,13],[12,14],[12,15],[13,14],[13,15],[14,15],[15,16],[16,17],[16,18],[16,19],[17,18],[17,19],[18,19]]
+  },
+  "anchor_policy": "mdl2",
+  "seed": 7120000,
+  "max_steps": 52,
+  "state_probe_rollouts": 10,
+  "teacher_replications": 3,
+  "progress_interval_states": 25,
+  "progress_interval_decisions": 25,
+  "lookahead": 52,
+  "lookahead_replications": 3,
+  "lookahead_seed": 5712000,
+  "epsilons": [0.32, 0.48, 0.64, 0.8, 1.0],
+  "candidate_groups": [
+    "specimen_transfer",
+    "reagent_transfer",
+    "capacity_transfer",
+    "combined_routing_network"
+  ],
+  "candidate_signs": [-1.0, 1.0],
+  "store_option_advantages": true,
+  "demonstration_advantage_weight_scale": 500000.0,
+  "demonstration_advantage_weight_cap": 10.0,
+  "explicit_options": [
+    {"group": "specimen_transfer", "epsilon": 0.32, "sign": 1.0},
+    {"group": "specimen_transfer", "epsilon": 0.32, "sign": -1.0},
+    {"group": "specimen_transfer", "epsilon": 0.64, "sign": 1.0},
+    {"group": "specimen_transfer", "epsilon": 0.64, "sign": -1.0},
+    {"group": "combined_routing_network", "epsilon": 0.48, "sign": 1.0},
+    {"group": "combined_routing_network", "epsilon": 0.48, "sign": -1.0},
+    {"group": "reagent_transfer", "epsilon": 0.32, "sign": 1.0},
+    {"group": "reagent_transfer", "epsilon": 0.32, "sign": -1.0}
+  ],
+  "score_weights": {
+    "service_level": 0.0,
+    "completion_service_level": 0.0,
+    "eligibility_rate": 0.0,
+    "patient_ineligibility_during_manufacturing_rate": 0.0,
+    "at_risk_unserved": 0.0,
+    "patients_lost": 0.0
+  },
+  "guardrails": {
+    "min_completion_service_level_delta": 0.0,
+    "max_patients_lost_delta": 0.0,
+    "max_patient_ineligibility_during_manufacturing_rate_delta": 0.0,
+    "min_score_improvement": 0.0
+  },
+  "materiality": {
+    "minimum_episode_cost_improvement_pct": 0.0,
+    "minimum_opportunity_rate": 0.0,
+    "require_episode_clinical_noninferiority": true
+  },
+  "demonstration_path": "results/patient_indexed_specimen_routing_recovery7/teachers/no_routing/teacher_cache.npz",
+  "output_root": "results/patient_indexed_specimen_routing_recovery7/teachers/no_routing"
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "name": "patient_indexed_specimen_routing_mac_validation",
+  "status": "PASS",
+  "validated_branch": "codex/patient-indexed-specimen-routing",
+  "validated_commit": "4cc04d298417ae65d6a0c8f4c9ca6414a6da47ee",
+  "validated_on": "2026-08-08",
+  "host": {
+    "platform": "macOS-26.3-arm64-arm-64bit",
+    "model": "MacBook Pro",
+    "chip": "Apple M4 Pro",
+    "memory_gb": 48,
+    "python_version": "3.9.6",
+    "numpy_version": "2.0.2",
+    "torch_version": "2.8.0"
+  },
+  "focused_tests": {
+    "status": "PASS",
+    "total": 40,
+    "patterns": {
+      "test_patient_indexed_specimen_routing.py": 12,
+      "test_patient_indexed_specimen_routing_mechanics_gate.py": 2,
+      "test_patient_indexed_specimen_routing_contract.py": 8,
+      "test_gcn_facility_action.py": 13,
+      "test_off_policy_training_state.py": 5
+    }
+  },
+  "full_test_suite": {
+    "status": "PASS",
+    "total": 497
+  },
+  "compileall": {
+    "status": "PASS",
+    "targets": [
+      "scripts",
+      "evaluation",
+      "src",
+      "experiments",
+      "tests"
+    ]
+  },
+  "mechanics_gate": {
+    "status": "PASS",
+    "path": "experiments/evidence/patient_indexed_specimen_routing_mac_validation_mechanics.json",
+    "sha256": "1409c76ae01673b87108f311c91a941535796cfe0edd43f218ae8d344faa0260"
+  },
+  "teacher_artifacts": {
+    "teacher_cache.npz": "cf3cfba51d8c17ef07480b91d4d55c872ae57355c5f2b4f0388f06a962c9e15b",
+    "state_probe.csv": "f664f59f6274e6ebfe0568fc8032e826a2161ea43a2a137de922843200eb62d9",
+    "anchor.csv": "a236d6aacc84f8eec27c518e2a199cac7f402710754215e9a2f875903fd2842f",
+    "teacher.csv": "0506fc8cccac8f652f49b1bde3e04bfbde53bbf873a7897265359d78bf3587e0",
+    "summary.json": "266e298f6bddc9f6b062870084182493c240fca9bc04a7419bec532d0f3cf4f1"
+  }
+}

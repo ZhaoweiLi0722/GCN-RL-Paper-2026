@@ -1,0 +1,109 @@
+{
+  "checkpoint_variant": "pretrain",
+  "config": "experiments/configs/patient_indexed_specimen_routing_ddpg_frozen_route_headroom_audit.json",
+  "config_sha256": "ec6ede31ef9b4632c189a637fc93966364ac0ac2eba3d53950074fcd5f71c7b3",
+  "discovery_opportunities": 96,
+  "discovery_opportunity_rate": 0.6153846153846154,
+  "discovery_replications": 3,
+  "discovery_seed": 95500000,
+  "interpretation_limit": "This development audit estimates single-decision opportunities on frozen-policy state distributions. Per-state advantages are dependent and must not be summed into an episode-level gain or treated as publication evidence.",
+  "live_seed": 95400000,
+  "max_steps": 52,
+  "mean_validated_cost_improvement": 4100417.391617332,
+  "mean_validated_specimen_cost_improvement": 4320168.3366316175,
+  "median_validated_cost_improvement": 2122374.526124239,
+  "median_validated_specimen_cost_improvement": 2032360.865901649,
+  "name": "patient_indexed_specimen_routing_ddpg_frozen_route_headroom_audit",
+  "per_seed": [
+    {
+      "discovery_opportunities": 36,
+      "discovery_opportunity_rate": 0.6923076923076923,
+      "scenario": "routing_persistent_hotspot_cluster1",
+      "states": 52,
+      "training_seed": 40,
+      "validated_opportunities": 20,
+      "validated_opportunity_rate": 0.38461538461538464,
+      "validated_selected_group_counts": {
+        "mdl2": 6,
+        "specimen_transfer": 14
+      }
+    },
+    {
+      "discovery_opportunities": 26,
+      "discovery_opportunity_rate": 0.5,
+      "scenario": "routing_persistent_hotspot_cluster2",
+      "states": 52,
+      "training_seed": 41,
+      "validated_opportunities": 16,
+      "validated_opportunity_rate": 0.3076923076923077,
+      "validated_selected_group_counts": {
+        "specimen_transfer": 16
+      }
+    },
+    {
+      "discovery_opportunities": 34,
+      "discovery_opportunity_rate": 0.6538461538461539,
+      "scenario": "routing_persistent_hotspot_cluster3",
+      "states": 52,
+      "training_seed": 42,
+      "validated_opportunities": 22,
+      "validated_opportunity_rate": 0.4230769230769231,
+      "validated_selected_group_counts": {
+        "mdl2": 1,
+        "specimen_transfer": 21
+      }
+    }
+  ],
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "plan_sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709",
+  "provenance": [
+    {
+      "checkpoint": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/gcn_residual_mdl2_network_ddpg_afd/seed40/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed40_pretrain.pt",
+      "checkpoint_sha256": "b4f476e5e622d0df25f26b82f4fabca55f801bfdaad444178b9732a29599a553",
+      "config": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/gcn_residual_mdl2_network_ddpg_afd/seed40/config.json",
+      "config_sha256": "78db9a4865e898a9403281ca2161e221e3151749a626fad0d5100841797967ff",
+      "live_seed": 95400000,
+      "scenario": "routing_persistent_hotspot_cluster1",
+      "training_seed": 40
+    },
+    {
+      "checkpoint": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/gcn_residual_mdl2_network_ddpg_afd/seed41/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed41_pretrain.pt",
+      "checkpoint_sha256": "10d148c795b19e73b105b194927ec8280108c5ae8b95973735f22effb57359ba",
+      "config": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/gcn_residual_mdl2_network_ddpg_afd/seed41/config.json",
+      "config_sha256": "c9f5ae8d97a6d9ec6a55fc9822f214b12773eeb37bfe0d179a9a0c569d98767c",
+      "live_seed": 95500000,
+      "scenario": "routing_persistent_hotspot_cluster2",
+      "training_seed": 41
+    },
+    {
+      "checkpoint": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/gcn_residual_mdl2_network_ddpg_afd/seed42/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed42_pretrain.pt",
+      "checkpoint_sha256": "9ecacde6b51029055f0281774a6b1158178f2f7be59a0be65168c02d3d381ed9",
+      "config": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/gcn_residual_mdl2_network_ddpg_afd/seed42/config.json",
+      "config_sha256": "aaed3e008b3d0a0a9ac93d2465a2bfc3e257afa900e5e0844d4f8d943e142180",
+      "live_seed": 95600000,
+      "scenario": "routing_persistent_hotspot_cluster3",
+      "training_seed": 42
+    }
+  ],
+  "rows": "results/patient_indexed_specimen_routing_ddpg_structured_exploration_development/headroom_audit/headroom_rows.csv",
+  "rows_sha256": "d162ed78a080b1fec8fd90a7054d8e8d3f72767abd262cdd11cbe52748c9fb1a",
+  "scope": "single-decision route-only oracle around a frozen policy",
+  "states": 156,
+  "status": "completed",
+  "training_manifest": "results/patient_indexed_specimen_routing_ddpg_persistent_shift_development/control/training/patient_indexed_specimen_routing_ddpg_persistent_shift_control_100/training_manifest.json",
+  "training_manifest_sha256": "aeb5e4c53cb94c6d3421cf124b51bddf099b9383e04a8501c5eabe7b5b79c57f",
+  "validated_opportunities": 58,
+  "validated_opportunity_rate": 0.3717948717948718,
+  "validated_specimen_above_1m": 40,
+  "validated_specimen_above_2m": 27,
+  "validated_specimen_above_5m": 9,
+  "validated_specimen_opportunities": 51,
+  "validated_specimen_option_counts": {
+    "+1x0.05": 13,
+    "+1x0.1": 24,
+    "-1x0.05": 6,
+    "-1x0.1": 8
+  },
+  "validation_replications": 5,
+  "validation_seed": 95600000
+}

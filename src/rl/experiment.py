@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -12,6 +13,10 @@ import numpy as np
 
 from src.env.capacity_planning import CapacityPlanningConfig, CapacityPlanningEnv
 from src.graph.ablation import with_graph_ablation
+from src.rl.training_state import (
+    load_off_policy_training_state,
+    save_off_policy_training_state,
+)
 
 
 COST_COMPONENT_METRICS = (
@@ -79,35 +84,181 @@ def train_off_policy_agent(
     config: dict[str, Any],
     *,
     post_imitation_pretrain: Callable[[Any, CapacityPlanningEnv], dict[str, Any]] | None = None,
+    preonline_setup: Callable[[Any, CapacityPlanningEnv], dict[str, Any]] | None = None,
+    pretrain_report_out: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
     seed = int(config.get("seed", 0))
     num_episodes = int(config.get("num_episodes", 1))
     max_steps = int(config.get("max_steps_per_episode", env.config.episode_horizon))
     algorithm = str(config.get("algorithm", agent.algorithm))
     checkpoint_dir = Path(config.get("checkpoint_dir", f"checkpoints/{algorithm}"))
     checkpoint_interval = int(config.get("checkpoint_interval", max(num_episodes, 1)))
+    training_state_interval = int(
+        config.get("training_state_checkpoint_interval", 0)
+    )
+    training_state_path = Path(
+        config.get(
+            "training_state_checkpoint_path",
+            checkpoint_dir / f"{algorithm}_seed{seed}_training_state.pt",
+        )
+    )
+    resume_path_value = config.get("resume_training_state_path")
+    resume_path = (
+        None
+        if resume_path_value in (None, "")
+        else Path(str(resume_path_value))
+    )
     progress_interval = int(config.get("progress_interval", 0))
     update_frequency = max(int(config.get("update_frequency", 1)), 1)
     updates_per_update = max(int(config.get("updates_per_update", 1)), 1)
     train_randomization_summary = _maybe_enable_train_randomization(env, config)
-    global_step = 0
-    start_time = time.perf_counter()
-    pretrain_summary = _maybe_pretrain_agent(agent, env, config)
-    advantage_distillation_summary = (
-        dict(post_imitation_pretrain(agent, env) or {})
-        if post_imitation_pretrain is not None
-        else {}
-    )
-    pretrain_checkpoint_path = ""
-    if bool(config.get("save_pretrain_checkpoint", False)) and (
-        pretrain_summary or advantage_distillation_summary
-    ):
-        pretrain_checkpoint = checkpoint_dir / f"{algorithm}_seed{seed}_pretrain.pt"
-        agent.save(pretrain_checkpoint)
-        pretrain_checkpoint_path = str(pretrain_checkpoint)
     elite_config = dict(config.get("elite_imitation", {}))
     elite_enabled = bool(elite_config.get("enabled", False))
+    if training_state_interval < 0:
+        raise ValueError("training_state_checkpoint_interval cannot be negative")
+    if training_state_interval and elite_enabled:
+        raise ValueError(
+            "Full-state resumption does not support elite_imitation"
+        )
+
+    rows: list[dict[str, Any]] = []
+    global_step = 0
+    start_episode = 0
+    elapsed_runtime_seconds = 0.0
+    pretrain_summary: dict[str, Any] = {}
+    advantage_distillation_summary: dict[str, Any] = {}
+    pretrain_checkpoint_path = ""
+    checkpoint_runtime_start = time.perf_counter()
+    if resume_path is not None:
+        resume_metadata = load_off_policy_training_state(
+            agent,
+            resume_path,
+            config=config,
+            env=env,
+        )
+        rows = [dict(row) for row in resume_metadata.get("rows", ())]
+        global_step = int(resume_metadata["global_step"])
+        start_episode = int(resume_metadata["next_episode"])
+        elapsed_runtime_seconds = float(
+            resume_metadata.get("elapsed_runtime_seconds", 0.0)
+        )
+        pretrain_summary = dict(
+            resume_metadata.get("pretrain_summary", {})
+        )
+        advantage_distillation_summary = dict(
+            resume_metadata.get("advantage_distillation_summary", {})
+        )
+        preonline_fork_overrides = dict(
+            resume_metadata.get("preonline_fork_overrides", {})
+        )
+        if preonline_fork_overrides:
+            advantage_distillation_summary["preonline_fork_overrides"] = (
+                preonline_fork_overrides
+            )
+        pretrain_checkpoint_path = str(
+            resume_metadata.get("pretrain_checkpoint_path", "")
+        )
+        if not 0 <= start_episode <= num_episodes:
+            raise ValueError(
+                f"Invalid resumed episode boundary: {start_episode}"
+            )
+        if len(rows) != start_episode:
+            raise ValueError(
+                "Training-state row count does not match next_episode"
+            )
+        episode_seeker = getattr(env, "set_episode_index", None)
+        if start_episode and not callable(episode_seeker):
+            raise ValueError(
+                "Environment does not support episode-boundary resumption"
+            )
+        if callable(episode_seeker):
+            episode_seeker(start_episode)
+        if start_episode == 0 and preonline_setup is not None:
+            advantage_distillation_summary.update(
+                dict(preonline_setup(agent, env) or {})
+            )
+        advantage_distillation_summary.update(
+            _prepare_online_finetuning(
+                agent,
+                start_episode=start_episode,
+            )
+        )
+        if (
+            start_episode == 0
+            and bool(config.get("save_pretrain_checkpoint", False))
+            and (pretrain_summary or advantage_distillation_summary)
+        ):
+            resumed_pretrain_checkpoint = (
+                checkpoint_dir / f"{algorithm}_seed{seed}_pretrain.pt"
+            )
+            if resumed_pretrain_checkpoint.exists():
+                raise FileExistsError(
+                    "Resumed pretrain checkpoint already exists: "
+                    f"{resumed_pretrain_checkpoint}"
+                )
+            agent.save(resumed_pretrain_checkpoint)
+            pretrain_checkpoint_path = str(resumed_pretrain_checkpoint)
+        print(
+            f"Resuming {algorithm} seed={seed} at episode "
+            f"{start_episode + 1}/{num_episodes}",
+            flush=True,
+        )
+    else:
+        pretrain_summary = _maybe_pretrain_agent(agent, env, config)
+        advantage_distillation_summary = (
+            dict(post_imitation_pretrain(agent, env) or {})
+            if post_imitation_pretrain is not None
+            else {}
+        )
+        if preonline_setup is not None:
+            advantage_distillation_summary.update(
+                dict(preonline_setup(agent, env) or {})
+            )
+        advantage_distillation_summary.update(
+            _prepare_online_finetuning(
+                agent,
+                start_episode=0,
+            )
+        )
+        if bool(config.get("save_pretrain_checkpoint", False)) and (
+            pretrain_summary or advantage_distillation_summary
+        ):
+            pretrain_checkpoint = (
+                checkpoint_dir / f"{algorithm}_seed{seed}_pretrain.pt"
+            )
+            agent.save(pretrain_checkpoint)
+            pretrain_checkpoint_path = str(pretrain_checkpoint)
+        preonline_path_value = config.get("preonline_training_state_path")
+        if preonline_path_value not in (None, ""):
+            preonline_path = Path(str(preonline_path_value))
+            if preonline_path.exists():
+                raise FileExistsError(
+                    "Pre-online training state already exists: "
+                    f"{preonline_path}"
+                )
+            save_off_policy_training_state(
+                agent,
+                preonline_path,
+                config=config,
+                env=env,
+                training={
+                    "next_episode": 0,
+                    "global_step": 0,
+                    "rows": [],
+                    "pretrain_summary": pretrain_summary,
+                    "advantage_distillation_summary": (
+                        advantage_distillation_summary
+                    ),
+                    "pretrain_checkpoint_path": pretrain_checkpoint_path,
+                    "elapsed_runtime_seconds": (
+                        time.perf_counter() - checkpoint_runtime_start
+                    ),
+                },
+            )
+    if pretrain_report_out is not None:
+        pretrain_report_out.update(advantage_distillation_summary)
+    start_time = checkpoint_runtime_start - elapsed_runtime_seconds
+
     elite_warmup_episodes = int(elite_config.get("warmup_episodes", 0))
     elite_min_improvement = float(elite_config.get("min_improvement", 0.0))
     elite_max_episodes = int(elite_config.get("max_episodes", 5))
@@ -115,7 +266,7 @@ def train_off_policy_agent(
     elite_best_cost = float("inf")
     elite_update_count = 0
 
-    for episode in range(num_episodes):
+    for episode in range(start_episode, num_episodes):
         state = env.reset(seed=seed + episode)
         agent.reset()
         total_reward = 0.0
@@ -185,6 +336,21 @@ def train_off_policy_agent(
             state = next_state
             if done:
                 break
+
+        episode_finalizer = getattr(agent, "finalize_training_episode", None)
+        if callable(episode_finalizer):
+            episode_finalizer()
+
+        structured_exploration_getter = getattr(
+            agent,
+            "structured_exploration_summary",
+            None,
+        )
+        structured_exploration = (
+            dict(structured_exploration_getter())
+            if callable(structured_exploration_getter)
+            else {}
+        )
 
         elite_summary = _maybe_fit_elite_episode(
             agent,
@@ -289,7 +455,61 @@ def train_off_policy_agent(
                     update_metric_counts.values(),
                     default=0,
                 ),
+                "structured_specimen_exploration_enabled": int(
+                    bool(structured_exploration.get("enabled", False))
+                ),
+                "structured_specimen_selection_probability": (
+                    structured_exploration.get(
+                        "selection_probability",
+                        0.0,
+                    )
+                ),
+                "structured_specimen_episode_decisions": (
+                    structured_exploration.get("episode_decisions", 0)
+                ),
+                "structured_specimen_episode_selections": (
+                    structured_exploration.get("episode_selections", 0)
+                ),
+                "structured_specimen_episode_correction_selections": (
+                    structured_exploration.get(
+                        "episode_correction_selections",
+                        0,
+                    )
+                ),
+                "structured_specimen_episode_behaviorally_distinct": (
+                    structured_exploration.get(
+                        "episode_behaviorally_distinct",
+                        0,
+                    )
+                ),
+                "structured_specimen_episode_mean_linf_delta": (
+                    structured_exploration.get(
+                        "episode_mean_selected_specimen_linf_delta",
+                        0.0,
+                    )
+                ),
+                "structured_specimen_episode_max_linf_delta": (
+                    structured_exploration.get(
+                        "episode_max_specimen_linf_delta",
+                        0.0,
+                    )
+                ),
+                "structured_specimen_episode_option_counts_json": (
+                    json.dumps(
+                        structured_exploration.get(
+                            "episode_option_counts",
+                            {},
+                        ),
+                        sort_keys=True,
+                    )
+                ),
             }
+        if metrics.has_patient_metrics:
+            row.update(metrics.patient_row())
+        if metrics.has_routing_metrics:
+            row.update(metrics.routing_row())
+        if metrics.has_cost_breakdown:
+            row.update(metrics.cost_components)
         for key in sorted(update_metric_totals):
             row[f"online_rl_{key}_mean"] = (
                 update_metric_totals[key]
@@ -301,6 +521,33 @@ def train_off_policy_agent(
         if (episode + 1) % checkpoint_interval == 0:
             agent.save(checkpoint_dir / f"{algorithm}_seed{seed}_episode{episode + 1}.pt")
 
+        if training_state_interval and (
+            (episode + 1) % training_state_interval == 0
+            or episode + 1 == num_episodes
+        ):
+            save_off_policy_training_state(
+                agent,
+                training_state_path,
+                config=config,
+                env=env,
+                training={
+                    "next_episode": int(episode + 1),
+                    "global_step": int(global_step),
+                    "rows": rows,
+                    "pretrain_summary": pretrain_summary,
+                    "advantage_distillation_summary": (
+                        advantage_distillation_summary
+                    ),
+                    "pretrain_checkpoint_path": pretrain_checkpoint_path,
+                    "elapsed_runtime_seconds": (
+                        time.perf_counter() - start_time
+                    ),
+                },
+            )
+            result_csv_path = config.get("result_csv_path")
+            if result_csv_path:
+                write_rows(rows, result_csv_path)
+
         if progress_interval and (
             episode == 0 or (episode + 1) % progress_interval == 0 or episode + 1 == num_episodes
         ):
@@ -311,6 +558,24 @@ def train_off_policy_agent(
             )
 
     return rows
+
+
+def _prepare_online_finetuning(
+    agent: Any,
+    *,
+    start_episode: int,
+) -> dict[str, Any]:
+    prepare = getattr(agent, "prepare_online_finetuning", None)
+    if not callable(prepare):
+        return {}
+    summary = prepare(start_episode=int(start_episode))
+    if summary is None:
+        return {}
+    if not isinstance(summary, dict):
+        raise TypeError(
+            "prepare_online_finetuning must return a mapping or None"
+        )
+    return dict(summary)
 
 
 def train_offline_replay_updates(
@@ -544,6 +809,7 @@ class EpisodeMetrics:
         self.patients_lost_waiting_ineligible = 0.0
         self.patients_lost_manufacturing = 0.0
         self.patients_lost_expired = 0.0
+        self.patients_lost_waiting_expired = 0.0
         self.patients_started = 0.0
         self.patients_completed = 0.0
         self.therapies_discarded = 0.0
@@ -553,6 +819,20 @@ class EpisodeMetrics:
         self.patient_ineligibility_during_manufacturing_rate_last = 0.0
         self.manufacturing_loss_rate_last = 0.0
         self.average_turnaround_time_last = 0.0
+        self.risk_type_count_recoveries_last = 0.0
+        self.has_routing_metrics = False
+        self.specimen_route_count = 0.0
+        self.specimen_route_distance_miles = 0.0
+        self.specimen_route_time_hours = 0.0
+        self.specimen_route_cost = 0.0
+        self.blocked_specimen_requests = 0.0
+        self.transit_loss = 0.0
+        self.transit_expiry = 0.0
+        self.transit_ineligible = 0.0
+        self.transferred_patient_ids: list[str] = []
+        self.specimen_route_events: list[dict[str, Any]] = []
+        self.finished_product_return_assumption = ""
+        self.finished_product_return_lead_time_epochs = 0.0
 
     def update(self, info: dict[str, Any]) -> None:
         self.steps += 1
@@ -587,6 +867,7 @@ class EpisodeMetrics:
                 + 500.0 * float(np.abs(capacity_transfers).sum())
                 + 200.0 * float(np.abs(reagent_transfers).sum())
             )
+        self._update_routing_metrics(info)
 
     def _update_patient_metrics(self, info: dict[str, Any]) -> None:
         if "eligibility_rate" not in info:
@@ -605,6 +886,12 @@ class EpisodeMetrics:
             np.asarray(info.get("patients_lost_manufacturing", 0.0), dtype=float).sum()
         )
         self.patients_lost_expired += lost_expired
+        self.patients_lost_waiting_expired += float(
+            np.asarray(
+                info.get("patients_lost_waiting_expired", 0.0),
+                dtype=float,
+            ).sum()
+        )
         self.patients_lost += float(np.asarray(info.get("patients_lost", 0.0), dtype=float).sum())
         self.patients_started += float(
             np.asarray(info.get("patients_started", 0.0), dtype=float).sum()
@@ -637,6 +924,118 @@ class EpisodeMetrics:
         self.average_turnaround_time_last = float(
             info.get("average_turnaround_time", self.average_turnaround_time_last)
         )
+        self.risk_type_count_recoveries_last = float(
+            info.get(
+                "risk_type_count_recoveries",
+                self.risk_type_count_recoveries_last,
+            )
+        )
+
+    def _update_routing_metrics(self, info: dict[str, Any]) -> None:
+        if "specimen_route_count" not in info:
+            return
+        self.has_routing_metrics = True
+        self.specimen_route_count += float(info.get("specimen_route_count", 0.0))
+        self.specimen_route_distance_miles += float(
+            info.get("specimen_route_distance_miles", 0.0)
+        )
+        self.specimen_route_time_hours += float(
+            info.get("specimen_route_time_hours", 0.0)
+        )
+        self.specimen_route_cost += float(info.get("specimen_route_cost", 0.0))
+        self.blocked_specimen_requests += float(
+            info.get("blocked_specimen_requests", 0.0)
+        )
+        self.transit_loss += float(
+            np.asarray(info.get("transit_loss", 0.0), dtype=float).sum()
+        )
+        self.transit_expiry += float(
+            np.asarray(info.get("transit_expiry", 0.0), dtype=float).sum()
+        )
+        self.transit_ineligible += float(
+            np.asarray(
+                info.get("patients_lost_transit_ineligible", 0.0),
+                dtype=float,
+            ).sum()
+        )
+        self.transferred_patient_ids.extend(
+            str(patient_id)
+            for patient_id in info.get("transferred_patient_ids", ())
+        )
+        self.specimen_route_events.extend(
+            dict(event) for event in info.get("specimen_route_events", ())
+        )
+        self.finished_product_return_assumption = str(
+            info.get(
+                "finished_product_return_assumption",
+                self.finished_product_return_assumption,
+            )
+        )
+        self.finished_product_return_lead_time_epochs = float(
+            info.get(
+                "finished_product_return_lead_time_epochs",
+                self.finished_product_return_lead_time_epochs,
+            )
+        )
+
+    def patient_row(self) -> dict[str, float]:
+        """CSV-ready patient lifecycle aggregates for one episode."""
+
+        return {
+            "eligibility_rate": self.eligibility_rate_last,
+            "eligibility_rate_mean": self.eligibility_rate_mean,
+            "patients_lost": self.patients_lost,
+            "patients_lost_ineligible": self.patients_lost_ineligible,
+            "patients_lost_waiting_ineligible": (
+                self.patients_lost_waiting_ineligible
+            ),
+            "patients_lost_manufacturing": self.patients_lost_manufacturing,
+            "patients_lost_expired": self.patients_lost_expired,
+            "patients_lost_waiting_expired": (
+                self.patients_lost_waiting_expired
+            ),
+            "patients_started": self.patients_started,
+            "patients_completed": self.patients_completed,
+            "therapies_discarded": self.therapies_discarded,
+            "material_wasted": self.material_wasted,
+            "at_risk_unserved": self.at_risk_unserved,
+            "completion_service_level": self.completion_service_level_last,
+            "patient_ineligibility_during_manufacturing_rate": (
+                self.patient_ineligibility_during_manufacturing_rate_last
+            ),
+            "manufacturing_loss_rate": self.manufacturing_loss_rate_last,
+            "average_turnaround_time": self.average_turnaround_time_last,
+            "risk_type_count_recoveries": self.risk_type_count_recoveries_last,
+        }
+
+    def routing_row(self) -> dict[str, Any]:
+        """CSV-ready identity-preserving route diagnostics for one episode."""
+
+        return {
+            "specimen_route_count": self.specimen_route_count,
+            "specimen_route_distance_miles": self.specimen_route_distance_miles,
+            "specimen_route_time_hours": self.specimen_route_time_hours,
+            "specimen_route_cost": self.specimen_route_cost,
+            "blocked_specimen_requests": self.blocked_specimen_requests,
+            "transit_loss": self.transit_loss,
+            "transit_expiry": self.transit_expiry,
+            "transit_ineligible": self.transit_ineligible,
+            "transferred_patient_ids_json": json.dumps(
+                self.transferred_patient_ids,
+                separators=(",", ":"),
+            ),
+            "specimen_route_events_json": json.dumps(
+                self.specimen_route_events,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+            "finished_product_return_assumption": (
+                self.finished_product_return_assumption
+            ),
+            "finished_product_return_lead_time_epochs": (
+                self.finished_product_return_lead_time_epochs
+            ),
+        }
 
     @property
     def eligibility_rate_mean(self) -> float:

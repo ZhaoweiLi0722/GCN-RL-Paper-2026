@@ -71,6 +71,17 @@ class EpisodeScenarioEnv:
         self._reset_count += 1
         return self.current_env.reset(seed=seed)
 
+    def set_episode_index(self, episode_index: int) -> None:
+        """Position the next reset at an episode boundary for resumption."""
+
+        index = int(episode_index)
+        if index < 0:
+            raise ValueError("episode_index must be non-negative")
+        self._reset_count = index
+        self._current_index = (
+            self._start_index + index
+        ) % len(self._environments)
+
     def step(
         self,
         action: np.ndarray,
@@ -80,6 +91,41 @@ class EpisodeScenarioEnv:
     def enable_train_randomization(self, **settings: Any) -> None:
         for environment in self._environments:
             environment.enable_train_randomization(**settings)
+
+    def state_dict(self) -> dict[str, Any]:
+        """Snapshot scenario position and every stateful child environment."""
+
+        child_states = []
+        for environment in self._environments:
+            snapshot = getattr(environment, "state_dict", None)
+            child_states.append(None if not callable(snapshot) else snapshot())
+        return {
+            "format_version": 1,
+            "start_index": int(self._start_index),
+            "reset_count": int(self._reset_count),
+            "current_index": int(self._current_index),
+            "environments": child_states,
+        }
+
+    def load_state_dict(self, state: dict[str, Any]) -> None:
+        """Restore a snapshot produced by :meth:`state_dict`."""
+
+        if int(state.get("format_version", -1)) != 1:
+            raise ValueError("Unsupported multi-scenario environment state format")
+        if int(state.get("start_index", -1)) != self._start_index:
+            raise ValueError("Multi-scenario start index does not match")
+        child_states = tuple(state.get("environments", ()))
+        if len(child_states) != len(self._environments):
+            raise ValueError("Multi-scenario child environment count does not match")
+        for environment, child_state in zip(self._environments, child_states):
+            if child_state is None:
+                continue
+            restore = getattr(environment, "load_state_dict", None)
+            if not callable(restore):
+                raise ValueError("A child environment cannot restore its state")
+            restore(dict(child_state))
+        self._reset_count = int(state["reset_count"])
+        self._current_index = int(state["current_index"])
 
     def __getattr__(self, name: str) -> Any:
         try:

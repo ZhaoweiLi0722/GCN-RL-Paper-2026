@@ -630,7 +630,29 @@ def run_local_search_distillation(
         "train_trajectory_ids": "",
         "validation_trajectory_ids": "",
     }
-    if validation_demos is not None:
+    if epochs < 0:
+        raise ValueError("local-search distillation epochs must be non-negative")
+    if epochs == 0:
+        if validation_demos is not None:
+            split_summary = external_validation_summary(
+                demos,
+                validation_demos,
+            )
+        final_fit = agent.fit_action_batch(
+            demos["states"],
+            demos["actions"],
+            {
+                "epochs": 0,
+                "batch_size": batch_size,
+                "seed": seed + 1200000,
+                "retain_for_regularization": bool(
+                    retain_for_regularization
+                ),
+                "demonstrations": demos,
+            },
+            weights=demos["weights"],
+        )
+    elif validation_demos is not None:
         split_summary = external_validation_summary(
             demos,
             validation_demos,
@@ -2005,12 +2027,21 @@ def local_search_candidate_actions(
             + 0.5 * _env_vector(env, "at_risk_counts", n)
             + 0.5 * _env_vector(env, "near_expiry_counts", n)
         )
+    specimen_pressure = (
+        np.minimum(
+            np.asarray(env.reagents, dtype=float),
+            np.asarray(env.bioreactors[:, 0], dtype=float),
+        )
+        - np.asarray(env.specimens, dtype=float)
+        - _pending_specimens
+    )
     patient_risk_pressure = (
         _env_vector(env, "at_risk_counts", n)
         + _env_vector(env, "near_expiry_counts", n)
     )
     resource_pattern = _centered_unit_pattern(resource_pressure)
     capacity_pattern = _centered_unit_pattern(capacity_pressure)
+    specimen_pattern = _centered_unit_pattern(specimen_pressure)
     patient_risk_pattern = _positive_unit_pattern(patient_risk_pressure)
     patient_risk_resource_pattern = _positive_unit_pattern(
         np.maximum(patient_risk_pressure, 0.0)
@@ -2077,6 +2108,16 @@ def local_search_candidate_actions(
                 )
                 actions.append(reagent_transfer.astype(np.float32))
 
+            if "specimen_transfer" in groups:
+                specimen_transfer = baseline_action.copy()
+                specimen_transfer[:n] = np.clip(
+                    specimen_transfer[:n]
+                    + sign * epsilon * specimen_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(specimen_transfer.astype(np.float32))
+
             if "capacity_transfer" in groups:
                 capacity_transfer = baseline_action.copy()
                 capacity_transfer[2 * n : 3 * n] = np.clip(
@@ -2124,6 +2165,33 @@ def local_search_candidate_actions(
                 )
                 network_action[2 * n : 3 * n] = np.clip(
                     network_action[2 * n : 3 * n] + sign * epsilon * capacity_pattern,
+                    -1.0,
+                    1.0,
+                )
+                network_action[3 * n : 4 * n] = np.clip(
+                    network_action[3 * n : 4 * n]
+                    + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                actions.append(network_action.astype(np.float32))
+
+            if "combined_routing_network" in groups:
+                network_action = baseline_action.copy()
+                network_action[:n] = np.clip(
+                    network_action[:n] + sign * epsilon * specimen_pattern,
+                    -1.0,
+                    1.0,
+                )
+                network_action[n : 2 * n] = np.clip(
+                    network_action[n : 2 * n]
+                    + sign * epsilon * resource_pattern,
+                    -1.0,
+                    1.0,
+                )
+                network_action[2 * n : 3 * n] = np.clip(
+                    network_action[2 * n : 3 * n]
+                    + sign * epsilon * capacity_pattern,
                     -1.0,
                     1.0,
                 )

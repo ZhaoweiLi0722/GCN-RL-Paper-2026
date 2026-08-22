@@ -26,6 +26,7 @@ from src.rl.networks import require_torch, resolve_torch_device, torch
 from src.rl.noise import GaussianNoise
 from src.rl.preprocessing import reward_scale_from_config
 from src.rl.replay_buffer import ReplayBuffer
+from src.rl.tensor_conversion import independent_contiguous_numpy
 
 
 class GCNTD3Agent:
@@ -116,6 +117,12 @@ class GCNTD3Agent:
         head_hidden_sizes = tuple(config.get("hidden_sizes", [256, 256]))
         include_global_context = bool(config.get("include_global_context", True))
         readout_mode = str(config.get("actor_readout_mode", "global_flat"))
+        specimen_routing_head_enabled = bool(
+            config.get(
+                "specimen_routing_head_enabled",
+                self.env_config.get("enable_specimen_routing", False),
+            )
+        )
 
         def make_actor():
             return GCNActor(
@@ -129,8 +136,11 @@ class GCNTD3Agent:
                 include_global_context=include_global_context,
                 readout_mode=readout_mode,
                 edge_weights=self.graph_spec.edge_weights,
+                specimen_routing_enabled=specimen_routing_head_enabled,
+                specimen_edges=self.graph_spec.specimen_edge_index,
                 resource_edges=self.graph_spec.resource_edge_index,
                 capacity_edges=self.graph_spec.capacity_edge_index,
+                specimen_edge_features=self.graph_spec.specimen_edge_features,
                 resource_edge_features=self.graph_spec.resource_edge_features,
                 capacity_edge_features=self.graph_spec.capacity_edge_features,
             ).to(self.device)
@@ -846,7 +856,16 @@ class GCNTD3Agent:
             )
         n = self.graph_spec.num_facilities
         summary_edges = tuple(self.env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97)))
-        summary_width = 6 + len(summary_edges) + 1
+        summary_width = (
+            6
+            + len(summary_edges)
+            + 1
+            + (
+                4
+                if self.env_config.get("include_specimen_routing_state", False)
+                else 0
+            )
+        )
         base_width = n * int(features_per_facility)
         expected_width = base_width + n * summary_width
         if states.shape[1] < expected_width:
@@ -881,7 +900,7 @@ class GCNTD3Agent:
         )
 
     def _base_actions_from_states_tensor(self, states):
-        states_np = states.detach().cpu().numpy()
+        states_np = independent_contiguous_numpy(states)
         base_actions = np.stack(
             [self._base_action_from_state_np(state) for state in states_np],
             axis=0,

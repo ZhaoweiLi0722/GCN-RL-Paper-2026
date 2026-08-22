@@ -15,6 +15,20 @@ This is a research codebase for graph-aware deep reinforcement learning in distr
 - Keep scripts under `experiments/scripts/` thin: load config, set seeds, call library code, and write logs.
 - Do not fabricate experimental results. Tables, plots, and manuscript claims should be traceable to logged outputs.
 
+## Locked Routing-Primary Experiment Plan
+
+Before changing, launching, extending, or interpreting any patient-indexed
+specimen-routing experiment, read
+`docs/patient_indexed_specimen_routing_locked_execution_plan.md`. That file is
+the authoritative cross-session execution plan. Context compaction, a new
+Codex task, convenience, an isolated seed result, or available compute is not
+a reason to change the main sequence.
+
+Any scientific amendment requires a completed-stage evidence review, explicit
+user approval, an appended change-control entry, and a committed plan update
+before the amended experiment is launched. Existing result roots, checkpoints,
+teacher artifacts, CRN streams, and provenance remain immutable.
+
 ## Validation
 
 Before finishing any coding task, run at least:

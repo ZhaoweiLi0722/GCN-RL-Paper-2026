@@ -1,15 +1,131 @@
+import hashlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
+
+import numpy as np
 
 from evaluation.train_multiscenario_network_residual import (
+    configure_online_imitation_regularization,
     maybe_load_initial_checkpoint,
     merge_multiscenario_env_overrides,
     multiscenario_env_overrides,
+    train_multiscenario_agents,
+    verify_file_sha256,
 )
+from evaluation.scenario_assignment import normalize_scenario_by_seed
 
 
 class MultiscenarioEnvOverrideTests(unittest.TestCase):
+    def test_seed_locked_scenarios_require_complete_known_mapping(self):
+        assignment = normalize_scenario_by_seed(
+            {"40": "hotspot_a", "41": "hotspot_b"},
+            available_scenarios=("hotspot_a", "hotspot_b"),
+            required_seeds=(40, 41),
+            reject_extra_seeds=True,
+        )
+        self.assertEqual(assignment, {40: "hotspot_a", 41: "hotspot_b"})
+        with self.assertRaisesRegex(ValueError, "missing required seeds"):
+            normalize_scenario_by_seed(
+                {"40": "hotspot_a"},
+                available_scenarios=("hotspot_a", "hotspot_b"),
+                required_seeds=(40, 41),
+            )
+        with self.assertRaisesRegex(ValueError, "unknown scenario"):
+            normalize_scenario_by_seed(
+                {"40": "hotspot_c"},
+                available_scenarios=("hotspot_a", "hotspot_b"),
+            )
+
+    def test_optional_file_sha256_lock_rejects_changed_teacher(self):
+        with TemporaryDirectory() as directory:
+            cache = Path(directory) / "teacher.npz"
+            cache.write_bytes(b"locked teacher")
+            expected = hashlib.sha256(b"locked teacher").hexdigest()
+            self.assertEqual(verify_file_sha256(cache, expected), expected)
+            with self.assertRaisesRegex(ValueError, "File SHA256 mismatch"):
+                verify_file_sha256(cache, "0" * 64)
+
+    def test_online_imitation_cache_is_loaded_with_provenance(self):
+        class Agent:
+            algorithm = "test_ddpg"
+
+            def __init__(self):
+                self.received = None
+
+            def configure_online_imitation_regularization(
+                self,
+                states,
+                actions,
+                *,
+                weights,
+                seed,
+            ):
+                self.received = (states, actions, weights, seed)
+                return {
+                    "samples": int(states.shape[0]),
+                    "weighted": weights is not None,
+                    "seed": seed,
+                }
+
+        demonstrations = {
+            "states": np.zeros((2, 3), dtype=np.float32),
+            "actions": np.ones((2, 4), dtype=np.float32),
+            "weights": np.asarray([0.5, 1.5], dtype=np.float32),
+            "improved_steps": 1,
+            "anchor_keep_steps": 1,
+            "improved_weight_fraction": 0.75,
+        }
+        agent = Agent()
+        with TemporaryDirectory() as directory:
+            cache = Path(directory) / "teacher.npz"
+            cache.write_bytes(b"locked teacher")
+            with (
+                patch(
+                    "evaluation.train_multiscenario_network_residual."
+                    "load_local_search_demonstrations",
+                    return_value=demonstrations,
+                ),
+                patch(
+                    "evaluation.train_multiscenario_network_residual."
+                    "balance_demonstration_label_weights",
+                    side_effect=lambda value: value,
+                ) as balance,
+            ):
+                summary = configure_online_imitation_regularization(
+                    agent,
+                    {
+                        "seed": 7,
+                        "imitation_pretrain": {
+                            "regularization_weight": 1.0,
+                        },
+                        "online_imitation_regularization": {
+                            "enabled": True,
+                            "demonstration_path": str(cache),
+                            "balance_label_weights": True,
+                            "seed": 99,
+                        },
+                    },
+                )
+
+        balance.assert_called_once_with(demonstrations)
+        self.assertEqual(agent.received[3], 99)
+        self.assertEqual(summary["online_imitation_samples"], 2)
+        self.assertEqual(summary["online_imitation_improved_steps"], 1)
+        self.assertEqual(summary["online_imitation_anchor_keep_steps"], 1)
+        self.assertEqual(
+            summary["online_imitation_demonstration_sha256"],
+            hashlib.sha256(b"locked teacher").hexdigest(),
+        )
+
+    def test_resume_requires_single_algorithm_and_seed(self):
+        with self.assertRaisesRegex(ValueError, "one algorithm and one seed"):
+            train_multiscenario_agents(
+                {},
+                resume_training_state="partial.pt",
+            )
+
     def test_optional_initial_checkpoint_is_loaded(self):
         class Agent:
             def __init__(self):

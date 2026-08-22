@@ -10,9 +10,22 @@ from src.rl.config import load_config
 from src.rl.experiment import build_env
 from src.rl.networks import default_torch_device, resolve_torch_device
 from src.rl.preprocessing import FixedObservationScaler
+from src.rl.tensor_conversion import independent_contiguous_numpy
 
 
 class RLUtilsTest(unittest.TestCase):
+    def test_tensor_to_numpy_copy_is_owned_and_c_contiguous(self):
+        from src.rl.networks import torch
+
+        source = torch.arange(12, dtype=torch.float32).reshape(3, 4).transpose(0, 1)
+        converted = independent_contiguous_numpy(source)
+
+        self.assertTrue(converted.flags.c_contiguous)
+        self.assertTrue(converted.flags.owndata)
+        np.testing.assert_array_equal(converted, source.contiguous().numpy())
+        converted[0, 0] = -99.0
+        self.assertNotEqual(float(source[0, 0]), -99.0)
+
     def test_project_action_clips_normalized_bounds(self):
         projected = project_action(np.array([-2.0, 0.25, 3.0]), action_space_info=3)
 
@@ -112,6 +125,7 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIn("gcn_residual_pmyo_shield_td3", algorithms)
         self.assertIn("gcn_residual_pmyo_transfer_td3_bc", algorithms)
         self.assertIn("gcn_residual_pmyo_transfer_td3", algorithms)
+        self.assertIn("gcn_residual_mdl2_network_td3_bc", algorithms)
         self.assertIs(get_agent_class("gcn_residual_mdl2"), get_agent_class("gcn_ddpg"))
         self.assertIs(
             get_agent_class("gcn_residual_mdl2_network_ddpg_afd"),
@@ -120,6 +134,12 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIs(
             get_agent_class("gcn_residual_mdl2_network_td3_afd"),
             get_agent_class("gcn_td3"),
+        )
+        self.assertEqual(
+            get_agent_class(
+                "gcn_residual_mdl2_network_td3_bc"
+            ).__name__,
+            "ConservativeGCNResidualTD3Agent",
         )
         self.assertIs(
             get_agent_class("gcn_residual_mdl2_replenish_ddpg"),
@@ -153,6 +173,7 @@ class RLUtilsTest(unittest.TestCase):
 
         self.assertIn("flat_residual_mdl2", algorithms)
         self.assertIn("flat_residual_mdl2_network_ddpg_afd", algorithms)
+        self.assertIn("flat_residual_mdl2_network_td3_bc", algorithms)
         self.assertIn("flat_residual_mdl2_replenish_ddpg_afd", algorithms)
         self.assertIn("flat_residual_iso", algorithms)
         self.assertIn("flat_residual_myo", algorithms)
@@ -161,6 +182,12 @@ class RLUtilsTest(unittest.TestCase):
         self.assertIs(
             get_agent_class("flat_residual_mdl2_network_ddpg_afd"),
             get_agent_class("flat_ddpg"),
+        )
+        self.assertEqual(
+            get_agent_class(
+                "flat_residual_mdl2_network_td3_bc"
+            ).__name__,
+            "ConservativeFlatResidualTD3Agent",
         )
         self.assertIs(
             get_agent_class("flat_residual_mdl2_replenish_ddpg_afd"),

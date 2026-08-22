@@ -94,3 +94,33 @@ class ResidualEndpointProjectionTests(unittest.TestCase):
             numpy_result,
             atol=1e-7,
         )
+
+    @unittest.skipIf(torch is None, "PyTorch is not installed")
+    def test_straight_through_gradient_unblocks_zero_initialized_group(self) -> None:
+        projection = ResidualEndpointProjection(
+            num_facilities=4,
+            action_dim=16,
+            settings={
+                "enabled": True,
+                "groups": ["specimen_transfer"],
+                "max_endpoints_per_side": 1,
+                "min_abs": 0.5,
+                "straight_through_gradient": True,
+            },
+        )
+        actions = torch.zeros((1, 16), requires_grad=True)
+        weights = torch.asarray([1.0, 2.0, 3.0, 4.0])
+
+        projected = projection.apply_tensor(actions)
+        (projected[:, :4] * weights).sum().backward()
+
+        np.testing.assert_allclose(
+            projected.detach().numpy(),
+            projection.apply_numpy(actions.detach().numpy()),
+            atol=0.0,
+        )
+        np.testing.assert_allclose(
+            actions.grad[:, :4].numpy(),
+            weights.reshape(1, -1).numpy(),
+            atol=0.0,
+        )

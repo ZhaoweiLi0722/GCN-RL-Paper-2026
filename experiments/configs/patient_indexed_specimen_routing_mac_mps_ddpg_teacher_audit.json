@@ -1,0 +1,27 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_teacher_audit_v1",
+  "experimental_role": "diagnostic-only DDPG learnability and teacher-headroom screen; not an official holdout",
+  "benchmark_config": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "teacher_template_config": "experiments/configs/patient_indexed_specimen_routing_teacher_routing.json",
+  "teacher_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/routing/teacher_cache.npz",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "teacher_replications_per_scenario": 1,
+  "teacher_seed": 8610000,
+  "lookahead_seed": 5862000,
+  "bootstrap_seed": 8630000,
+  "bootstrap_resamples": 20000,
+  "residual_scale_multipliers": [
+    1.0,
+    0.5,
+    0.25,
+    0.1
+  ],
+  "target_residual_scale_multiplier": 0.1,
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/diagnostics/ddpg_teacher_audit_v1"
+}

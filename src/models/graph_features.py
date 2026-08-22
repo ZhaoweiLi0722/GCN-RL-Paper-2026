@@ -28,6 +28,7 @@ from src.rl.preprocessing import (
     facility_state_width,
     graph_node_feature_scale,
 )
+from src.rl.tensor_conversion import independent_contiguous_numpy
 
 
 @dataclass(frozen=True)
@@ -48,8 +49,10 @@ class GraphStateSpec:
     num_nodes: int
     edge_index: tuple[Edge, ...]
     edge_weights: tuple[float, ...] = ()
+    specimen_edge_index: tuple[Edge, ...] = ()
     resource_edge_index: tuple[Edge, ...] = ()
     capacity_edge_index: tuple[Edge, ...] = ()
+    specimen_edge_features: tuple[tuple[float, ...], ...] = ()
     resource_edge_features: tuple[tuple[float, ...], ...] = ()
     capacity_edge_features: tuple[tuple[float, ...], ...] = ()
     edge_feature_dim: int = 0
@@ -77,7 +80,8 @@ def _patient_summary_width(env_config: dict[str, Any]) -> int:
     if env_config.get("env_type") != "patient_condition":
         return 0
     edges = env_config.get("survival_bucket_edges", (0.85, 0.90, 0.97))
-    return 6 + len(tuple(edges)) + 1
+    routing_width = 4 if env_config.get("include_specimen_routing_state", False) else 0
+    return 6 + len(tuple(edges)) + 1 + routing_width
 
 
 def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
@@ -194,18 +198,27 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         resource_edges,
         num_facilities,
     )
+    specimen_edge_features = _network_edge_features(
+        env_config,
+        specimen_edges,
+        num_facilities,
+    )
     capacity_edge_features = _network_edge_features(
         env_config,
         capacity_edges,
         num_facilities,
     )
     edge_feature_dim = (
-        len(resource_edge_features[0])
-        if resource_edge_features
+        len(specimen_edge_features[0])
+        if specimen_edge_features
         else (
-            len(capacity_edge_features[0])
-            if capacity_edge_features
-            else 0
+            len(resource_edge_features[0])
+            if resource_edge_features
+            else (
+                len(capacity_edge_features[0])
+                if capacity_edge_features
+                else 0
+            )
         )
     )
 
@@ -254,8 +267,10 @@ def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:
         num_nodes=num_nodes,
         edge_index=tuple(graph_edges),
         edge_weights=edge_weights,
+        specimen_edge_index=tuple(specimen_edges),
         resource_edge_index=tuple(resource_edges),
         capacity_edge_index=tuple(capacity_edges),
+        specimen_edge_features=specimen_edge_features,
         resource_edge_features=resource_edge_features,
         capacity_edge_features=capacity_edge_features,
         edge_feature_dim=edge_feature_dim,
@@ -491,7 +506,7 @@ def _base_action_node_features(state, graph_spec: GraphStateSpec):
         graph_spec.base_action_policy_config or {},
     )
     n = graph_spec.num_facilities
-    state_np = state.detach().cpu().numpy()
+    state_np = independent_contiguous_numpy(state)
     base_actions = np.stack(
         [
             facility_net_action_from_state(row, graph_spec.env_config, settings=settings)

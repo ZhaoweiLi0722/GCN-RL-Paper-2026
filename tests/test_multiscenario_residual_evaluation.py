@@ -624,6 +624,30 @@ class MultiScenarioResidualEvaluationTests(unittest.TestCase):
 
         self.assertEqual(tuple(variants), ("pretrain",))
 
+    def test_checkpoint_variants_resolve_intermediate_episode(self) -> None:
+        with TemporaryDirectory() as directory:
+            checkpoint_dir = Path(directory) / "checkpoints"
+            checkpoint_dir.mkdir()
+            final = checkpoint_dir / "gcn_seed2_episode100.pt"
+            intermediate = checkpoint_dir / "gcn_seed2_episode40.pt"
+            final.write_bytes(b"final")
+            intermediate.write_bytes(b"intermediate")
+
+            variants = resolve_checkpoint_variants(
+                {
+                    "algorithm": "gcn",
+                    "seed": 2,
+                    "checkpoint": str(final),
+                },
+                ("episode40",),
+            )
+
+        self.assertEqual(variants, {"episode40": intermediate})
+
+    def test_checkpoint_variants_reject_episode_zero(self) -> None:
+        with self.assertRaisesRegex(ValueError, "Unsupported checkpoint"):
+            resolve_checkpoint_variants({}, ("episode0",))
+
     def test_anchor_rows_are_grouped_without_aliasing(self) -> None:
         rows = [
             {"scenario": "nominal", "total_cost": 1.0},

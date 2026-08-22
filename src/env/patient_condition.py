@@ -24,7 +24,9 @@ class PatientStatus(enum.Enum):
     """Lifecycle status of a patient in the network."""
 
     WAITING = "waiting"
+    IN_TRANSIT = "in_transit"
     IN_PRODUCTION = "in_production"
+    FINISHED = "finished"
     DELIVERED = "delivered"
     LOST = "lost"
 
@@ -42,11 +44,29 @@ class PatientState:
     health_index: float
     deterioration_epoch: float
     enrollment_epoch: int
+    patient_id: str = ""
+    specimen_id: str = ""
+    collection_facility: int | None = None
+    material_facility: int | None = None
+    manufacturing_facility: int | None = None
+    transfer_count: int = 0
     risk_type: int = 0
     risk_multiplier: float = 1.0
     age: int = 0
+    specimen_age: int = 0
     survival: float = 1.0
     status: PatientStatus = PatientStatus.WAITING
+
+    def __post_init__(self) -> None:
+        if self.patient_id and self.specimen_id != self.patient_id:
+            raise ValueError("patient_id and specimen_id must be identical")
+
+    def __setattr__(self, name: str, value: object) -> None:
+        if name in {"patient_id", "specimen_id"} and name in self.__dict__:
+            current = self.__dict__[name]
+            if current not in ("", value):
+                raise AttributeError(f"{name} is immutable once assigned")
+        super().__setattr__(name, value)
 
 
 @dataclass(frozen=True)
@@ -85,7 +105,14 @@ class PatientConditionModel:
         if self.config.waiting_time_decay_power < 0.0:
             raise ValueError("waiting_time_decay_power must be nonnegative")
 
-    def enroll(self, rng: np.random.Generator, epoch: int) -> PatientState:
+    def enroll(
+        self,
+        rng: np.random.Generator,
+        epoch: int,
+        *,
+        patient_id: str = "",
+        collection_facility: int | None = None,
+    ) -> PatientState:
         """Create a new waiting patient with a drawn health index and shock time."""
 
         health_index = float(rng.uniform(0.0, 1.0))
@@ -98,6 +125,18 @@ class PatientConditionModel:
             health_index=health_index,
             deterioration_epoch=deterioration_epoch,
             enrollment_epoch=int(epoch),
+            patient_id=str(patient_id),
+            specimen_id=str(patient_id),
+            collection_facility=(
+                None
+                if collection_facility is None
+                else int(collection_facility)
+            ),
+            material_facility=(
+                None
+                if collection_facility is None
+                else int(collection_facility)
+            ),
             risk_type=risk_type,
             risk_multiplier=risk_multiplier,
         )

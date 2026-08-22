@@ -1,0 +1,63 @@
+{
+  "name": "patient_indexed_specimen_routing_mechanics_gate",
+  "seed": 7100000,
+  "max_steps": 6,
+  "forced_route": {
+    "donor": 0,
+    "receiver": 1,
+    "lots": 1
+  },
+  "requirements": {
+    "minimum_routes": 1,
+    "minimum_completion_gain": 1
+  },
+  "output_path": "results/patient_indexed_specimen_routing_recovery7/mechanics_gate/report.json",
+  "env": {
+    "env_type": "patient_condition",
+    "scenario_name": "patient_indexed_specimen_routing_regional_bottleneck",
+    "num_facilities": 3,
+    "production_lead_time": 2,
+    "episode_horizon": 6,
+    "demand_rates": [0.0, 0.0, 0.0],
+    "initial_specimens": [4.0, 0.0, 0.0],
+    "initial_reagents": [0.0, 8.0, 0.0],
+    "initial_idle_bioreactors": [0.0, 4.0, 0.0],
+    "max_specimens": [20.0, 20.0, 20.0],
+    "max_reagents": [20.0, 20.0, 20.0],
+    "max_idle_bioreactors": [8.0, 8.0, 8.0],
+    "max_reagent_replenishment": [0.0, 0.0, 0.0],
+    "max_specimen_transfer": 4.0,
+    "max_reagent_transfer": 0.0,
+    "max_bioreactor_transfer": 0.0,
+    "action_mode": "facility_net",
+    "include_supplier_state": true,
+    "supplier_disruption_rate": 0.0,
+    "clinic_coordinates": [
+      [33.7490, -84.3880],
+      [33.9519, -83.3576],
+      [32.0809, -81.0912]
+    ],
+    "information_edges": [[0, 1], [1, 2]],
+    "specimen_edges": [[0, 1], [1, 2]],
+    "resource_edges": [[0, 1], [1, 2]],
+    "capacity_edges": [[0, 1], [1, 2]],
+    "geographic_transfer_cost_scale": 0.25,
+    "geographic_transfer_speed_mph": 500.0,
+    "geographic_transfer_fixed_hours": 0.5,
+    "geographic_transfer_time_cost_scale": 0.05,
+    "material_shelf_life": 10,
+    "finished_shelf_life": 3,
+    "enable_specimen_routing": true,
+    "include_specimen_routing_state": true,
+    "specimen_routing_lead_time_epochs": 1,
+    "max_specimen_transfers_per_patient": 1,
+    "specimen_transit_loss_probability": 0.0,
+    "finished_product_return_assumption": "return_to_collection_facility",
+    "finished_product_return_lead_time_epochs": 0,
+    "patient": {
+      "healthy_decay_rate": 0.0,
+      "frail_decay_rate": 0.0,
+      "eligibility_threshold": 0.75
+    }
+  }
+}

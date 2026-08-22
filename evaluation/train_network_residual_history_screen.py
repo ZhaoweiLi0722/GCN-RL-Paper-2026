@@ -66,7 +66,11 @@ def main() -> None:
     parser.add_argument("--correction-gate-threshold", type=float, default=None)
     parser.add_argument(
         "--online-reward-mode",
-        choices=("environment", "one_step_anchor_relative"),
+        choices=(
+            "environment",
+            "one_step_anchor_relative",
+            "n_step_anchor_relative",
+        ),
         default=None,
     )
     parser.add_argument(
@@ -362,8 +366,8 @@ def make_history_screen_config(
         "demonstration_path"
     ] = str(cache_path)
     if pretrain_epochs is not None:
-        if pretrain_epochs < 1:
-            raise ValueError("pretrain_epochs must be positive")
+        if pretrain_epochs < 0:
+            raise ValueError("pretrain_epochs must be non-negative")
         config["advantage_distillation_pretrain"]["epochs"] = int(
             pretrain_epochs
         )

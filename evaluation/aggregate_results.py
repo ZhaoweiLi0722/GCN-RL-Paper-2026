@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable
@@ -53,6 +54,8 @@ DEFAULT_METRICS = (
     "urgency_cost",
 )
 
+CSV_FIELD_SIZE_LIMIT = min(sys.maxsize, 2**31 - 1)
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -69,6 +72,7 @@ def main() -> None:
 
 
 def read_rows(paths: Iterable[str | Path]) -> list[dict[str, Any]]:
+    csv.field_size_limit(CSV_FIELD_SIZE_LIMIT)
     rows: list[dict[str, Any]] = []
     for path in paths:
         with Path(path).open(newline="") as handle:

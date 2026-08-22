@@ -102,6 +102,53 @@ def project_tensor_to_pattern_basis(
     return uniform + coefficient * projected_pattern
 
 
+def quantize_facility_net_specimen_actions_tensor(
+    actions,
+    *,
+    num_facilities: int,
+    max_specimen_transfer: float,
+    straight_through: bool = False,
+):
+    """Map normalized specimen requests to the patient-lot grid used by the env.
+
+    The first ``num_facilities`` entries of a facility-net action are signed
+    specimen requests. The routing environment scales these entries by
+    ``max_specimen_transfer`` and rounds half away from zero before matching
+    patients to qualified edges. With ``straight_through=True``, the forward
+    value remains exactly quantized while gradients pass through as identity.
+    """
+
+    facilities = int(num_facilities)
+    transfer_scale = float(max_specimen_transfer)
+    if actions.ndim != 2:
+        raise ValueError(
+            "facility-net action quantization requires a rank-2 tensor"
+        )
+    if facilities <= 0 or int(actions.shape[1]) < facilities:
+        raise ValueError(
+            "facility-net action quantization requires a positive facility "
+            "count within the action width"
+        )
+    if not np.isfinite(transfer_scale) or transfer_scale <= 0.0:
+        raise ValueError("max_specimen_transfer must be finite and positive")
+
+    specimen_actions = actions[:, :facilities]
+    requested_patients = specimen_actions * transfer_scale
+    rounded_patients = (
+        torch.sign(requested_patients)
+        * torch.floor(torch.abs(requested_patients) + 0.5)
+    )
+    quantized_specimen = rounded_patients / transfer_scale
+    if straight_through:
+        quantized_specimen = specimen_actions + (
+            quantized_specimen - specimen_actions
+        ).detach()
+    return torch.cat(
+        (quantized_specimen, actions[:, facilities:]),
+        dim=1,
+    )
+
+
 def _infer_action_size(env_state: Any | None, action_space_info: Any | None) -> int | None:
     for candidate in (action_space_info, env_state):
         if candidate is None:

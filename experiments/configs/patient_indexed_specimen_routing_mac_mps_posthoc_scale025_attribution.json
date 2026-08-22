@@ -1,0 +1,18 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_posthoc_scale025_attribution",
+  "routing_final_root": "results/patient_indexed_specimen_routing_mac_mps_primary/evaluation/posthoc_scale025_final",
+  "routing_pretrain_root": "results/patient_indexed_specimen_routing_mac_mps_primary/evaluation/posthoc_scale025_pretrain",
+  "algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd"
+  ],
+  "metrics": {
+    "total_cost": "lower",
+    "completion_service_level": "higher",
+    "patients_lost": "lower",
+    "patient_ineligibility_during_manufacturing_rate": "lower"
+  },
+  "bootstrap_resamples": 20000,
+  "bootstrap_seed": 8500000,
+  "output_path": "results/patient_indexed_specimen_routing_mac_mps_primary/analysis/posthoc_scale025_attribution.json"
+}

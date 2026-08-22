@@ -4,6 +4,7 @@
   "algorithms": [
     "flat_residual_mdl2",
     "flat_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_td3_bc",
     "flat_residual_mdl2_option_dqn_afd",
     "flat_residual_mdl2_replenish_ddpg_afd",
     "flat_residual_iso",
@@ -12,6 +13,7 @@
     "gcn_residual_mdl2",
     "gcn_residual_mdl2_network_ddpg_afd",
     "gcn_residual_mdl2_option_dqn_afd",
+    "gcn_residual_mdl2_network_td3_bc",
     "gcn_residual_mdl2_network_td3_afd",
     "gcn_residual_mdl2_replenish_ddpg",
     "gcn_residual_mdl2_replenish_ddpg_afd",
@@ -52,6 +54,7 @@
   "primary_algorithms": [
     "flat_residual_mdl2",
     "flat_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_td3_bc",
     "flat_residual_mdl2_option_dqn_afd",
     "flat_residual_mdl2_replenish_ddpg_afd",
     "flat_residual_iso",
@@ -60,6 +63,7 @@
     "gcn_residual_mdl2",
     "gcn_residual_mdl2_network_ddpg_afd",
     "gcn_residual_mdl2_option_dqn_afd",
+    "gcn_residual_mdl2_network_td3_bc",
     "gcn_residual_mdl2_network_td3_afd",
     "gcn_residual_mdl2_replenish_ddpg",
     "gcn_residual_mdl2_replenish_ddpg_afd",
@@ -94,6 +98,7 @@
   "learned_config_paths": {
     "flat_residual_mdl2": "configs/flat_residual_20_clinic.yaml",
     "flat_residual_mdl2_network_ddpg_afd": "configs/flat_residual_20_clinic.yaml",
+    "flat_residual_mdl2_network_td3_bc": "configs/flat_residual_20_clinic.yaml",
     "flat_residual_mdl2_option_dqn_afd": "configs/gcn_residual_20_clinic.yaml",
     "flat_residual_mdl2_replenish_ddpg_afd": "configs/flat_residual_20_clinic.yaml",
     "flat_residual_iso": "configs/flat_residual_20_clinic.yaml",
@@ -102,6 +107,7 @@
     "gcn_residual_mdl2": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_mdl2_network_ddpg_afd": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_mdl2_option_dqn_afd": "configs/gcn_residual_20_clinic.yaml",
+    "gcn_residual_mdl2_network_td3_bc": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_mdl2_network_td3_afd": "configs/gcn_td3_20_clinic.yaml",
     "gcn_residual_mdl2_replenish_ddpg": "configs/gcn_residual_20_clinic.yaml",
     "gcn_residual_mdl2_replenish_ddpg_afd": "configs/gcn_residual_20_clinic.yaml",
@@ -255,6 +261,42 @@
     },
     "flat_residual_mdl2_network_ddpg_afd": {
       "inherits": "gcn_residual_mdl2_network_ddpg_afd",
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "flat_residual_mdl2_network_td3_bc": {
+      "inherits": "flat_residual_mdl2_network_ddpg_afd",
+      "config_overrides": {
+        "actor_lr": 0.00001,
+        "critic_lr": 0.0003,
+        "critic_warmup_updates": 500,
+        "anchor_advantage_actor_loss": {
+          "enabled": true,
+          "margin": 0.0,
+          "temperature": 0.05,
+          "negative_penalty_weight": 1.0
+        },
+        "imitation_pretrain": {
+          "enabled": false,
+          "regularization_weight": 0.0,
+          "regularization_batch_size": 128
+        },
+        "actor_advantage_baseline": "reference",
+        "reference_advantage_use_upper_confidence": true,
+        "reference_policy_regularization_weight": 25.0,
+        "exploration_noise": {
+          "theta": 0.15,
+          "sigma": 0.005
+        },
+        "policy_noise": 0.01,
+        "noise_clip": 0.02,
+        "policy_delay": 2,
+        "actor_gradient_clip": 5.0,
+        "critic_gradient_clip": 10.0,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
       "local_search": {
         "enabled": false
       }
@@ -985,6 +1027,42 @@
         "policy_noise": 0.015,
         "noise_clip": 0.03,
         "policy_delay": 2,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "local_search": {
+        "enabled": false
+      }
+    },
+    "gcn_residual_mdl2_network_td3_bc": {
+      "inherits": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_overrides": {
+        "actor_lr": 0.00001,
+        "critic_lr": 0.0003,
+        "critic_warmup_updates": 500,
+        "anchor_advantage_actor_loss": {
+          "enabled": true,
+          "margin": 0.0,
+          "temperature": 0.05,
+          "negative_penalty_weight": 1.0
+        },
+        "imitation_pretrain": {
+          "enabled": false,
+          "regularization_weight": 0.0,
+          "regularization_batch_size": 128
+        },
+        "actor_advantage_baseline": "reference",
+        "reference_advantage_use_upper_confidence": true,
+        "reference_policy_regularization_weight": 25.0,
+        "exploration_noise": {
+          "theta": 0.15,
+          "sigma": 0.005
+        },
+        "policy_noise": 0.01,
+        "noise_clip": 0.02,
+        "policy_delay": 2,
+        "actor_gradient_clip": 5.0,
+        "critic_gradient_clip": 10.0,
         "update_frequency": 1,
         "updates_per_update": 1
       },
@@ -1825,6 +1903,16 @@
     {
       "name": "patient_condition_geo_demand_drift_severe",
       "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift_severe.json"
+    },
+    {
+      "name": "patient_condition_geo_demand_drift_severe_history",
+      "env_config": "experiments/configs/20_clinic_patient_condition_geo_demand_drift_severe.json",
+      "env_overrides": {
+        "scenario_name": "patient_condition_geo_demand_drift_severe_history",
+        "include_demand_history_state": true,
+        "demand_history_window": 12,
+        "include_time_state": true
+      }
     },
     {
       "name": "patient_condition_geo_regional_drift",

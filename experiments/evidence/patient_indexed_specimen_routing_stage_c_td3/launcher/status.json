@@ -1,0 +1,52 @@
+{
+  "claim": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/claim.json",
+  "commit": "8a7768e3495be6d63e2091445ac6a7aa28ec0558",
+  "error": "field larger than field limit (131072)",
+  "error_type": "Error",
+  "exit_code": 1,
+  "failed_at": "2026-08-14T08:32:30.875167+00:00",
+  "phase": "training",
+  "phases": [
+    {
+      "command": [
+        "/opt/anaconda3/envs/gcn-rl/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_conservative_gcn_td3",
+        "tests.test_conservative_flat_td3",
+        "tests.test_off_policy_training_state",
+        "tests.test_patient_indexed_specimen_routing_stage_c_td3"
+      ],
+      "completed_at": "2026-08-14T05:06:36.053175+00:00",
+      "exit_code": 0,
+      "name": "focused_tests",
+      "started_at": "2026-08-14T05:06:30.634539+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/focused_tests.stderr.log",
+      "stderr_sha256": "1893ef7a3be303053261b148eea6684b5ade95104a55968c5662e544c44b38ec",
+      "stdout": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/focused_tests.stdout.log",
+      "stdout_sha256": "e76caa7fbf9daf4b610499c8d26b385cf4d8dc1fa6084aac075a75fa614dec07"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/envs/gcn-rl/bin/python",
+        "-m",
+        "evaluation.train_multiscenario_network_residual",
+        "--config",
+        "experiments/configs/patient_indexed_specimen_routing_stage_c_td3_100.json"
+      ],
+      "completed_at": "2026-08-14T08:32:30.869329+00:00",
+      "exit_code": 0,
+      "name": "training",
+      "started_at": "2026-08-14T05:06:36.054075+00:00",
+      "stderr": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/training.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "results/patient_indexed_specimen_routing_stage_c_td3_development/launcher/training.stdout.log",
+      "stdout_sha256": "dce4cf3103c59339af52b7f157716f1ddf710b26c37c1f884d037dd833357adb"
+    }
+  ],
+  "pid": 3010,
+  "ppid": 1,
+  "started_at": "2026-08-14T05:06:30.632961+00:00",
+  "status": "failed",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py\", line 483, in run_stage\n    status[\"training_audit\"] = audit_training(spec)\n                               ^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py\", line 269, in audit_training\n    rows = read_csv_rows(run_root / \"training.csv\")\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/cytseng/Code/GCN-RL-Paper-2026-HT/evaluation/run_patient_indexed_specimen_routing_stage_c_td3.py\", line 236, in read_csv_rows\n    return list(csv.DictReader(handle))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/anaconda3/envs/gcn-rl/lib/python3.11/csv.py\", line 111, in __next__\n    row = next(self.reader)\n          ^^^^^^^^^^^^^^^^^\n_csv.Error: field larger than field limit (131072)\n"
+}

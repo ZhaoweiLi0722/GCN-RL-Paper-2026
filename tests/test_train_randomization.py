@@ -204,6 +204,26 @@ class TrainRandomizationTest(unittest.TestCase):
         self.assertAlmostEqual(rows[1]["online_rl_critic_loss_mean"], 3.5)
         self.assertAlmostEqual(rows[1]["online_rl_actor_updated_mean"], 0.5)
 
+    def test_training_loop_respects_update_frequency(self):
+        env = CapacityPlanningEnv(_base_config(), seed=0)
+        rows = train_off_policy_agent(
+            _MetricAgent(env),
+            env,
+            {
+                "algorithm": "metric",
+                "seed": 4200,
+                "num_episodes": 2,
+                "max_steps_per_episode": 8,
+                "checkpoint_interval": 999,
+                "update_frequency": 4,
+                "updates_per_update": 1,
+            },
+        )
+
+        self.assertEqual([row["online_rl_update_calls"] for row in rows], [1, 1])
+        self.assertEqual([row["online_rl_updates"] for row in rows], [1, 1])
+        self.assertTrue(all(row["update_frequency"] == 4 for row in rows))
+
     def test_write_rows_unions_late_training_metric_columns(self):
         rows = [
             {"episode": 0, "online_rl_updates": 0},

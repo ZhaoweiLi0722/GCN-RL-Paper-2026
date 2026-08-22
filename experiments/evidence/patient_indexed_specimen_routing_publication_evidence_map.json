@@ -1,0 +1,135 @@
+{
+  "claims": [
+    {
+      "claim": "AFR-GCN-DDPG lowers total cost relative to routing MDL-2.",
+      "effect_pct": -0.6584742769523861,
+      "id": "anchor_improvement",
+      "source": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/final_summary.json",
+      "status": "supported_formal_holdout"
+    },
+    {
+      "claim": "AFR-GCN-DDPG lowers total cost relative to parameter-matched AFR-Flat-DDPG.",
+      "effect_pct": -0.32135654615948883,
+      "id": "graph_attribution",
+      "source": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/final_summary.json",
+      "status": "supported_formal_holdout"
+    },
+    {
+      "claim": "The evidence does not isolate a favorable incremental effect of online actor-critic updates over frozen pretraining.",
+      "id": "online_learning_attribution",
+      "sources": [
+        "docs/patient_indexed_specimen_routing_stage_f1_results.md",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h0_persistent/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h1_nonstationary/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_structured_exploration/comparison/structured_exploration_summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/development/checkpoint_curve_summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/final_summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_stage_c_td3/evaluation/final/summary.json"
+      ],
+      "status": "not_established"
+    },
+    {
+      "claim": "Prospective paired critic supervision did not produce a favorable incremental final-versus-frozen or candidate-versus-control DDPG effect.",
+      "id": "paired_online_ddpg_attribution",
+      "source": "docs/patient_indexed_specimen_routing_stage_f1_results.md",
+      "status": "not_established_development"
+    },
+    {
+      "claim": "Clinically useful local action headroom is concentrated in projected specimen-routing choices; continuous reagent and capacity channels did not pass prospective material-headroom gates.",
+      "id": "continuous_action_geometry",
+      "sources": [
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h0_persistent/summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h1_nonstationary/summary.json"
+      ],
+      "status": "supported_development_diagnostic"
+    },
+    {
+      "claim": "The GCN advantage strengthens under return lead 1 but reverses under specimen availability lead 0.",
+      "id": "transport_timing_robustness",
+      "sources": [
+        "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/sensitivity/lead0_summary.json",
+        "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/sensitivity/return1_summary.json"
+      ],
+      "status": "asymmetric_not_general"
+    },
+    {
+      "claim": "Matched TD3 corroborates graph and anchor value on a development stream but does not establish online attribution.",
+      "id": "td3_backbone_ablation",
+      "sources": [
+        "experiments/evidence/patient_indexed_specimen_routing_stage_c_td3/evaluation/final/summary.json"
+      ],
+      "status": "supported_development_only"
+    }
+  ],
+  "frozen_on": "2026-08-22",
+  "primary_method": "AFR-GCN-DDPG",
+  "prohibited_claims": [
+    "Do not claim that online DDPG or TD3 updates independently created the observed gain.",
+    "Do not present TD3 or Stage C3 development streams as formal holdout confirmation.",
+    "Do not claim that continuous reagent or capacity controls provide validated material headroom in the current simulator.",
+    "Do not claim blanket transport-timing robustness.",
+    "Do not call modeled weighted-objective units dollars without external calibration.",
+    "Do not add specimen-transfer cost separately to base_cost; it is a base-cost subcomponent."
+  ],
+  "schema_version": 1,
+  "sources": [
+    {
+      "path": "docs/patient_indexed_specimen_routing_stage_f1_results.md",
+      "sha256": "dd585c78504444ed22a7fd67c51bd2759bc648762360074e4e67b5c70f6efbe6"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0/summary.json",
+      "sha256": "738bf04c8f5716e284a2f3006fe0a102516e83ae81dc1b87bbd37c1513f82524"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h0_persistent/summary.json",
+      "sha256": "f533452b92d169796bceaa6966ad7925c67b59de5cfa6edf39ef6d29ec025f74"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_continuous_control_redefinition/h1_nonstationary/summary.json",
+      "sha256": "0dbb140148ae96755a94c24f2e74e2a1d644b6b909bbf78ffc31df370bef401e"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json",
+      "sha256": "9e96deec850d6033fb5a2fb9e2f5090f8a040468df9faf8634015a14875d1c41"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_structured_exploration/comparison/structured_exploration_summary.json",
+      "sha256": "30d1a39785a8e4bc9f17d68e6cf615f4e29ab5b2a64284e1105601bc87fecda4"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/development/checkpoint_curve_summary.json",
+      "sha256": "0016e3bb8fa779984de1a21015bcade6f377d72a231b7581adc14ffc5a652ecf"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/cost_component_summary.json",
+      "sha256": "3f72c363ef75e84fcb220947799e273a8a804b3777ab5e16ec51196a62ac0c31"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/final_summary.json",
+      "sha256": "7f762fd1ab16f95e908b56c3925a0f6bed2bf68f12fa6fd609c13dbb18b6f3a4"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/pretrain_summary.json",
+      "sha256": "eb8f6560bf4f060eb7609152c69073b60bfadc90f6cf18187079cd0a3d599856"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/sensitivity/lead0_summary.json",
+      "sha256": "890a18ccf237053df2e47ac412a33d059c542097a02fd31eabf5449ba10416c9"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/sensitivity/return1_summary.json",
+      "sha256": "ba3a7adc568c996ca0fbe48536871c9b09118a73dd6244c8b38ed738c71f6312"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_stage_c_td3/evaluation/final/summary.json",
+      "sha256": "91e830a27c1f2b045074bb6eddb88d59b6778c39dc036adacd3664a3b86e4120"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_stage_c_td3/evaluation/pretrain/summary.json",
+      "sha256": "86d02cd94746a88e676b43e49525de84512086c3bb2e47b61e1284fbc4ed9982"
+    }
+  ]
+}

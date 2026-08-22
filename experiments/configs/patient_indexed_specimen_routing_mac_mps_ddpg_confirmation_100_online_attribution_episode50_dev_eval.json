@@ -1,0 +1,43 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_episode50_dev_eval",
+  "experimental_role": "development-only fixed-policy episode-50 checkpoint evaluation on the locked Stage B CRN stream",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/training_manifest.json",
+  "algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd"
+  ],
+  "training_seeds": [10, 11, 12, 13, 14],
+  "checkpoint_variants": ["episode50"],
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "deployment_candidates": [
+    {"scale": 0.0, "group_thresholds": [1.0]},
+    {"scale": 1.0, "use_checkpoint_group_thresholds": true}
+  ],
+  "fixed_deployment_candidate": {
+    "scale": 1.0,
+    "use_checkpoint_group_thresholds": true
+  },
+  "fixed_checkpoint_variant": "episode50",
+  "validation_replications": 1,
+  "validation_seed": 93000000,
+  "holdout_replications": 50,
+  "holdout_seed": 93100000,
+  "max_steps": 52,
+  "strict_scenario_clinical_noninferiority": false,
+  "clinical_noninferiority": {
+    "mode": "paired_ci",
+    "z_value": 1.96,
+    "margins": {
+      "completion_service_level": 0.001,
+      "patients_lost": 1.0,
+      "patient_ineligibility_during_manufacturing_rate": 0.001
+    }
+  },
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100/episode50"
+}

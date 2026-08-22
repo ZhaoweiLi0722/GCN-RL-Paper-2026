@@ -13,6 +13,7 @@ def available_algorithms() -> tuple[str, ...]:
         "flat_residual_iso",
         "flat_residual_mdl2",
         "flat_residual_mdl2_network_ddpg_afd",
+        "flat_residual_mdl2_network_td3_bc",
         "flat_residual_mdl2_option_dqn_afd",
         "flat_residual_mdl2_replenish_ddpg_afd",
         "flat_residual_myo",
@@ -26,6 +27,7 @@ def available_algorithms() -> tuple[str, ...]:
         "gcn_residual_iso",
         "gcn_residual_mdl2",
         "gcn_residual_mdl2_network_ddpg_afd",
+        "gcn_residual_mdl2_network_td3_bc",
         "gcn_residual_mdl2_network_td3_afd",
         "gcn_residual_mdl2_replenish_ddpg",
         "gcn_residual_mdl2_replenish_ddpg_afd",
@@ -68,6 +70,12 @@ def get_agent_class(algorithm: str) -> Any:
         from src.baselines.flat_option_dqn import FlatResidualOptionDQNAgent
 
         return FlatResidualOptionDQNAgent
+    if algorithm == "flat_residual_mdl2_network_td3_bc":
+        from src.models.conservative_flat_td3 import (
+            ConservativeFlatResidualTD3Agent,
+        )
+
+        return ConservativeFlatResidualTD3Agent
     if algorithm == "gcn_ddpg":
         from src.models.gcn_ddpg import GCNDDPGAgent
 
@@ -85,6 +93,14 @@ def get_agent_class(algorithm: str) -> Any:
         from src.models.gcn_ddpg import GCNDDPGAgent
 
         return GCNDDPGAgent
+    if algorithm in {
+        "gcn_residual_mdl2_network_td3_bc",
+    }:
+        from src.models.conservative_gcn_td3 import (
+            ConservativeGCNResidualTD3Agent,
+        )
+
+        return ConservativeGCNResidualTD3Agent
     if algorithm in {
         "gcn_td3",
         "gcn_residual_mdl2_network_td3_afd",

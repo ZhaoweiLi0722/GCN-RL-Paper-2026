@@ -21,6 +21,10 @@ from evaluation.run_full_benchmark import (
     make_scenario_env_config,
     select_scenarios,
 )
+from evaluation.scenario_assignment import (
+    normalize_scenario_by_seed,
+    serialized_scenario_by_seed,
+)
 from src.baselines.heuristics import get_heuristic_class
 from src.rl.agents import get_agent_class
 from src.rl.config import load_config
@@ -339,6 +343,9 @@ def evaluate_multiscenario_agents(
     clinical_noninferiority = normalized_clinical_noninferiority(
         evaluation_config.get("clinical_noninferiority", {})
     )
+    evaluation_config_overrides = dict(
+        evaluation_config.get("config_overrides", {})
+    )
     output_root = Path(
         evaluation_config.get(
             "output_root",
@@ -371,6 +378,22 @@ def evaluate_multiscenario_agents(
         raise ValueError(
             "Evaluation algorithm/seed filters selected no training runs"
         )
+    selected_training_seeds = sorted(
+        {int(run["seed"]) for run in selected_runs}
+    )
+    raw_scenario_by_seed = evaluation_config.get(
+        "scenario_by_training_seed",
+        training_manifest.get("scenario_by_seed"),
+    )
+    scenario_by_training_seed = normalize_scenario_by_seed(
+        raw_scenario_by_seed,
+        available_scenarios=scenario_names,
+        required_seeds=(
+            selected_training_seeds
+            if raw_scenario_by_seed
+            else ()
+        ),
+    )
 
     run_results = []
     holdout_rows_by_run: dict[tuple[str, int], list[dict[str, Any]]] = {}
@@ -385,11 +408,23 @@ def evaluate_multiscenario_agents(
     for run in selected_runs:
         algorithm = str(run["algorithm"])
         training_seed = int(run["seed"])
+        run_scenario_names = (
+            (scenario_by_training_seed[training_seed],)
+            if scenario_by_training_seed
+            else scenario_names
+        )
+        run_scenarios = [
+            scenarios_by_name[name]
+            for name in run_scenario_names
+        ]
         checkpoint_variants = resolve_checkpoint_variants(
             run,
             requested_checkpoint_variants,
         )
-        config_snapshot = load_config(run["config"])
+        config_snapshot = deep_update_dict(
+            load_config(resolve_manifest_artifact_path(run["config"])),
+            evaluation_config_overrides,
+        )
         run_root = output_root / algorithm / f"seed{training_seed}"
         run_root.mkdir(parents=True, exist_ok=True)
 
@@ -399,8 +434,8 @@ def evaluate_multiscenario_agents(
             for candidate in candidates:
                 result, candidate_rows, anchor_rows = evaluate_deployment_candidate(
                     plan=plan,
-                    scenarios=scenarios,
-                    scenario_names=scenario_names,
+                    scenarios=run_scenarios,
+                    scenario_names=run_scenario_names,
                     algorithm=algorithm,
                     training_seed=training_seed,
                     checkpoint=checkpoint,
@@ -468,8 +503,8 @@ def evaluate_multiscenario_agents(
         holdout_result, holdout_rows, holdout_anchor_rows = (
             evaluate_deployment_candidate(
                 plan=plan,
-                scenarios=scenarios,
-                scenario_names=scenario_names,
+                scenarios=run_scenarios,
+                scenario_names=run_scenario_names,
                 algorithm=algorithm,
                 training_seed=training_seed,
                 checkpoint=selected_checkpoint,
@@ -501,6 +536,7 @@ def evaluate_multiscenario_agents(
         run_result = {
             "algorithm": algorithm,
             "training_seed": training_seed,
+            "scenarios": list(run_scenario_names),
             "checkpoint": str(selected_checkpoint),
             "checkpoint_variants": {
                 name: str(path)
@@ -524,6 +560,9 @@ def evaluate_multiscenario_agents(
     payload = {
         "training_manifest": str(training_manifest_path),
         "scenarios": list(scenario_names),
+        "scenario_by_training_seed": serialized_scenario_by_seed(
+            scenario_by_training_seed
+        ),
         "validation_replications": validation_replications,
         "validation_seed": validation_seed,
         "holdout_replications": holdout_replications,
@@ -1200,7 +1239,7 @@ def resolve_checkpoint_variants(
     }
     unknown = tuple(
         value for value in requested_variants
-        if value not in supported
+        if value not in supported and _checkpoint_variant_episode(value) is None
     )
     if unknown:
         raise ValueError(
@@ -1210,13 +1249,28 @@ def resolve_checkpoint_variants(
     resolved: dict[str, Path] = {}
     seen_paths: set[Path] = set()
     for variant in requested_variants:
-        manifest_key = supported[variant]
-        raw_path = run.get(manifest_key)
-        if not raw_path:
-            raise ValueError(
-                f"Training manifest is missing {manifest_key!r}"
+        if variant in supported:
+            manifest_key = supported[variant]
+            raw_path = run.get(manifest_key)
+            if not raw_path:
+                raise ValueError(
+                    f"Training manifest is missing {manifest_key!r}"
+                )
+            path = resolve_manifest_artifact_path(raw_path)
+        else:
+            episode = _checkpoint_variant_episode(variant)
+            algorithm = str(run.get("algorithm", "")).strip()
+            seed = run.get("seed")
+            final_checkpoint = run.get("checkpoint")
+            if episode is None or not algorithm or seed is None or not final_checkpoint:
+                raise ValueError(
+                    "Intermediate checkpoint variants require algorithm, seed, "
+                    "and checkpoint in the training manifest"
+                )
+            checkpoint_dir = resolve_manifest_artifact_path(final_checkpoint).parent
+            path = checkpoint_dir / (
+                f"{algorithm}_seed{int(seed)}_episode{episode}.pt"
             )
-        path = Path(raw_path)
         if not path.is_file():
             raise FileNotFoundError(
                 f"{variant} checkpoint does not exist: {path}"
@@ -1229,6 +1283,30 @@ def resolve_checkpoint_variants(
     if not resolved:
         raise ValueError("Checkpoint variants resolved to an empty set")
     return resolved
+
+
+def _checkpoint_variant_episode(value: str) -> int | None:
+    prefix = "episode"
+    suffix = value[len(prefix):] if value.startswith(prefix) else ""
+    if not suffix.isdigit():
+        return None
+    episode = int(suffix)
+    return episode if episode > 0 else None
+
+
+def resolve_manifest_artifact_path(raw_path: str | Path) -> Path:
+    """Resolve relative manifest paths produced on Windows or POSIX."""
+
+    path = Path(raw_path)
+    if path.is_file():
+        return path
+    raw_text = str(raw_path)
+    if "\\" in raw_text:
+        portable_path = Path(raw_text.replace("\\", "/"))
+        if portable_path.is_file():
+            return portable_path
+        return portable_path
+    return path
 
 
 def aggregate_holdout_results(
@@ -1266,18 +1344,23 @@ def aggregate_holdout_results(
             seed=bootstrap_seed,
         )
 
-    graph = "gcn_residual_mdl2_network_ddpg_afd"
-    flat = "flat_residual_mdl2_network_ddpg_afd"
-    graph_seeds = {
-        seed for algorithm, seed in holdout_rows_by_run
-        if algorithm == graph
-    }
-    flat_seeds = {
-        seed for algorithm, seed in holdout_rows_by_run
-        if algorithm == flat
-    }
-    common_seeds = sorted(graph_seeds & flat_seeds)
-    if common_seeds:
+    matched_pairs = [
+        (graph, f"flat_{graph[4:]}")
+        for graph in algorithms
+        if graph.startswith("gcn_") and f"flat_{graph[4:]}" in algorithms
+    ]
+    for pair_index, (graph, flat) in enumerate(matched_pairs):
+        graph_seeds = {
+            seed for algorithm, seed in holdout_rows_by_run
+            if algorithm == graph
+        }
+        flat_seeds = {
+            seed for algorithm, seed in holdout_rows_by_run
+            if algorithm == flat
+        }
+        common_seeds = sorted(graph_seeds & flat_seeds)
+        if not common_seeds:
+            continue
         graph_rows = [
             row
             for seed in common_seeds
@@ -1288,11 +1371,14 @@ def aggregate_holdout_results(
             for seed in common_seeds
             for row in holdout_rows_by_run[(flat, seed)]
         ]
-        result["graph_vs_flat"] = metric_bootstrap_bundle(
+        bundle = metric_bootstrap_bundle(
             graph_rows,
             flat_rows,
-            seed=bootstrap_seed + 1,
+            seed=bootstrap_seed + pair_index + 1,
         )
+        result[f"{graph}_vs_{flat}"] = bundle
+        if "graph_vs_flat" not in result:
+            result["graph_vs_flat"] = bundle
     return result
 
 

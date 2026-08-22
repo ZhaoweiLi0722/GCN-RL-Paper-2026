@@ -1,6 +1,6 @@
 # Detailed Research Weekly Update
 
-- Reporting period: July 20-30, 2026
+- Reporting period: July 20-31, 2026
 - Audience: GCN-RL project team
 - Primary question: Can graph-aware residual reinforcement learning improve
   adaptive capacity and resource-transfer decisions in a patient-condition-aware
@@ -17,19 +17,24 @@ together:
 3. whether online actor-critic updates add value beyond graph-policy
    pretraining.
 
-The evidence now supports the first two claims under clearly defined scenarios.
-AFR-GCN-DDPG produced a small but statistically stable improvement over MDL-2
-under demand-prior drift. The network extension produced a materially larger
-and statistically significant advantage over both MDL-2 and a
-parameter-matched flat policy under geographically structured regional demand
-shifts. A subsequent online TD3 screen also produced a final graph policy that
-outperformed MDL-2 and matched flat TD3. However, the incremental effect of
-online TD3 updates relative to the frozen pretrained graph policy remains
-uncertain at the pooled level.
+The evidence supports the first two claims under clearly defined matched
+scenarios. AFR-GCN-DDPG produced a small but statistically stable improvement
+over MDL-2 under demand-prior drift. The network extension produced a
+materially larger and statistically significant advantage over both MDL-2 and
+a parameter-matched flat policy under geographically structured regional
+demand shifts. A subsequent online AFR-GCN-TD3 screen also produced a final
+graph policy that outperformed MDL-2 and matched flat AFR-TD3 in the regional
+screen.
 
-The current five-scenario zero-shot campaign is designed to resolve that last
-attribution question without retraining or changing the completed
-checkpoints.
+The third claim is not established. In the matched regional screen, the
+increment from online TD3 updates over the frozen pretrained graph policy was
+directionally favorable but not statistically resolved. The completed
+five-scenario zero-shot evaluation then found that the same regional-specialist
+checkpoints did not generalize reliably across nominal, severe global,
+regional, abrupt-shift, and compound-stress regimes. This is a useful
+diagnostic result, but it is not a fair final test of a generalist policy
+because the checkpoints were trained as regional specialists rather than on a
+multi-scenario distribution.
 
 ## 1. Environment And Experimental Design Updates
 
@@ -57,19 +62,36 @@ node-level replenishment and edge-level reagent and idle-capacity transfers.
 The canonical proposed method remains AFR-GCN-DDPG.
 
 AFR means advantage-filtered residual and describes the complete controller,
-not a new actor-critic algorithm. It combines:
+not a new actor-critic algorithm and not a DDPG-only mechanism. It combines:
 
 1. an MDL-2 operational anchor;
 2. a GCN state encoder for clinic and geographic-edge information;
-3. a DDPG actor that produces bounded corrections to the anchor action;
+3. an actor-critic backbone that produces bounded corrections to the anchor
+   action;
 4. advantage-filtered distillation, which retains a nonzero teacher correction
    only when paired look-ahead predicts an improvement over the anchor;
 5. feasibility projection and deployment safeguards.
 
 Advantage-filtered distillation is a training-data construction and
-regularization step inside AFR. It is not a second deployed policy. TD3 is
-retained as a matched stability and backbone comparison. SAC and PPO remain
-secondary family baselines rather than the primary research direction.
+regularization step inside AFR. It is not a second deployed policy. The current
+AFR implementation has been evaluated with both DDPG and TD3 backbones:
+
+| Name | Uses AFR? | Role |
+|---|---|---|
+| AFR-GCN-DDPG | Yes | Canonical proposed controller |
+| AFR-GCN-TD3 | Yes | Principal matched backbone and stability ablation |
+| AFR-Flat-DDPG / AFR-Flat-TD3 | Yes | Representation-matched controls |
+| Pure GCN-DDPG / GCN-TD3 | No | Anchor and residual-formulation ablations |
+| GCN-SAC / GCN-PPO | No in the current study | Secondary from-scratch family baselines |
+
+The RTX 4090 conservative TD3 campaign used an MDL-2 anchor, graph residual
+actor, advantage-filtered pretraining, deployment safeguards, and TD3
+fine-tuning. It should therefore be called **AFR-GCN-TD3**, not simply
+GCN-TD3. Earlier notes sometimes used the shorter label; this update uses the
+precise name. DDPG remains canonical because it is continuous with the prior
+paper and performed better than matched AFR-GCN-TD3 in the five-seed
+replenishment-residual comparison. TD3 remains a serious matched ablation, not
+a non-AFR method.
 
 ## 3. Verified Experimental Results
 
@@ -184,10 +206,10 @@ actor-critic learning generated the improvement.
 Traceable result:
 [regional network AFR results](../../specs/2026-07-25-regional-regime-network-afr/results.md).
 
-### 3.4 Conservative Online TD3 Screen
+### 3.4 Conservative Online AFR-GCN-TD3 Screen
 
-The RTX 4090 screen trained matched GCN and flat TD3 residual policies for 100
-episodes across seeds 0, 1, and 2.
+The RTX 4090 screen trained matched graph and flat AFR-TD3 residual policies
+for 100 online episodes across seeds 0, 1, and 2.
 
 Each run completed:
 
@@ -198,7 +220,7 @@ Each run completed:
 - nonzero actor drift;
 - no Traceback, NaN, OOM, or CPU fallback.
 
-Final GCN-TD3 versus MDL-2:
+Final AFR-GCN-TD3 versus MDL-2:
 
 - seed 0 relative cost difference: -0.051936%;
 - seed 1 relative cost difference: -0.139249%;
@@ -208,7 +230,7 @@ Final GCN-TD3 versus MDL-2:
   [-$3.872 million, -$1.131 million];
 - clinical noninferiority passed for all three seeds.
 
-Matched flat TD3 versus MDL-2:
+Matched AFR-Flat-TD3 versus MDL-2:
 
 - seed 0 relative cost difference: +0.049693%;
 - seed 1 relative cost difference: +0.040470%;
@@ -216,7 +238,7 @@ Matched flat TD3 versus MDL-2:
 - clinical noninferiority failed for all three seeds, primarily because of
   increased patient loss.
 
-Final GCN-TD3 versus matched flat TD3:
+Final AFR-GCN-TD3 versus matched AFR-Flat-TD3:
 
 - relative cost difference: -0.165951%;
 - mean cost difference: -$4.083 million;
@@ -226,7 +248,7 @@ Final GCN-TD3 versus matched flat TD3:
 - patients-lost difference: -7.05.
 
 The final graph controller therefore significantly outperformed MDL-2 and
-matched flat TD3 in the regional-drift screen.
+matched AFR-Flat-TD3 in the regional-drift screen.
 
 The final-versus-frozen comparison was less conclusive:
 
@@ -240,90 +262,148 @@ The graph-aware final controller advantage is established within this screen;
 the independent incremental contribution of online TD3 updates is not yet
 established.
 
-## 4. Experiment In Progress
+## 4. Completed Five-Scenario Zero-Shot Evaluation
 
-The RTX 4090 is running an evaluation-only five-scenario zero-shot campaign.
-It reuses the six completed final checkpoints and six frozen-pretrain
-checkpoints. It does not retrain policies or perform online updates.
+This evaluation reused the six final and six frozen-pretrain AFR-TD3
+checkpoints without retraining, checkpoint reselection, online updates, or
+deployment retuning. It tested nominal demand history, severe global demand
+drift, regional demand drift, abrupt regional regime shift, and compound
+regional stress.
 
-Scenarios:
+The protocol used three graph and three parameter-matched flat training seeds,
+100 paired holdout replications per scenario and seed, a 52-week horizon, and
+holdout seed `40900000`. All 6,000 cross-stage common-random-number keys and
+scientific anchor outcomes matched. All values were finite; checkpoint hashes
+were unchanged; and no retraining, online updates, Traceback, NaN, OOM, CPU
+fallback, or risk-accounting recovery occurred.
 
-1. nominal demand history;
-2. severe global demand drift;
-3. regional demand drift;
-4. abrupt regional regime shift;
-5. compound regional stress.
+Cost differences below are candidate minus baseline in millions of dollars;
+negative values favor the candidate.
 
-Protocol:
+| Comparison | Pooled mean difference | Paired 95% CI | Conclusion |
+|---|---:|---:|---|
+| Final AFR-GCN-TD3 vs MDL-2 | +$2.562M | [+$0.360M, +$4.823M] | Significantly worse pooled |
+| Final AFR-Flat-TD3 vs MDL-2 | +$1.382M | [+$1.001M, +$1.805M] | Significantly worse pooled |
+| Final AFR-GCN-TD3 vs AFR-Flat-TD3 | +$1.180M | [-$0.729M, +$3.490M] | No pooled graph advantage |
+| GCN final vs frozen pretrain | -$0.024M | [-$0.182M, +$0.150M] | No online-TD3 increment |
+| GCN-minus-flat final/frozen difference-in-differences | +$0.017M | [-$0.166M, +$0.211M] | No graph-specific online increment |
 
-- GCN and parameter-matched flat policies;
-- training seeds 0, 1, and 2;
-- 100 paired holdout replications for every scenario and seed;
-- identical common-random-number keys for final and frozen checkpoints;
-- 52-week horizon;
-- fixed deployment scale and clinical noninferiority criteria.
+Final AFR-GCN-TD3 minus MDL-2 by scenario was:
 
-The campaign will classify online TD3 attribution as:
+- nominal: +$2.400M, 95% CI [+$0.020M, +$4.975M];
+- severe global drift: +$5.275M, 95% CI
+  [+$3.866M, +$6.348M];
+- regional drift: -$0.508M, 95% CI [-$1.440M, +$0.538M];
+- abrupt shift: +$1.300M, 95% CI [-$1.441M, +$3.549M];
+- compound stress: +$4.344M, 95% CI [+$0.401M, +$9.385M].
 
-- Strong;
-- Scenario-specific;
-- Not established.
+Clinical noninferiority for final AFR-GCN-TD3 versus MDL-2 failed pooled and
+passed only in the regional scenario. Final AFR-Flat-TD3 failed pooled and in
+all five scenarios. Final and frozen graph policies used residual corrections
+on 69.85% and 69.27% of decisions, respectively, and their correction
+magnitudes were nearly identical. The preregistered online-TD3 attribution
+classification is therefore **Not established**.
 
-## 5. Supported And Unsupported Claims
+This result does not invalidate the matched regional result. It shows that the
+current checkpoints are regional specialists rather than generalists. Because
+they were trained on a narrow regional distribution, the five-scenario
+evaluation should be reported as an out-of-distribution stress diagnostic, not
+as the final generalization test of a multi-scenario policy.
+
+DDPG has also received a smaller external robustness screen. The
+abrupt-shift Network AFR-GCN-DDPG checkpoint increased cost by 0.3798% under
+gradual regional drift and worsened completion and patient loss. Under compound
+stress, its mean cost decreased by 0.1228%, but the interval crossed zero and
+clinical outcomes worsened. DDPG therefore has not demonstrated cross-regime
+zero-shot robustness either. This earlier screen covered only two external
+scenarios and did not include a matched final-versus-frozen DDPG attribution
+test.
+
+The verified archive for the TD3 zero-shot campaign has SHA256
+`75f5f42ea8c130ca79f19f138aa9b662317969a4e3ea3209219dbef41119d7b9`.
+
+## 5. Experiment Coverage Matrix
+
+| Experimental question | DDPG status | TD3 status | Remaining requirement |
+|---|---|---|---|
+| Pure graph RL from scratch | Screened with GCN-DDPG; materially worse than MDL-2 | Screened with GCN-TD3; stronger than pure DDPG but still worse than MDL-2 | Retain as secondary ablations, not flagship evidence |
+| Matched AFR replenishment residual | Completed: 300 episodes x 5 seeds; significantly better than MDL-2 | Completed: 300 episodes x 5 seeds; CI versus MDL-2 crossed zero | Complete |
+| Graph versus matched flat, replenishment only | Completed; graph-flat CI crossed zero | Not the main attribution test | No graph claim from replenishment-only actions |
+| Graph versus matched flat, network edge actions | Completed: 3 seeds x 100 holdouts; graph significantly better | Completed in a separate 100-episode regional online screen; graph significantly better | Repeat under one locked multi-scenario protocol |
+| External zero-shot robustness | Limited two-scenario screen; failed | Full five-scenario final/frozen screen; failed pooled | Retrain a generalist before the definitive holdout |
+| Online RL increment over frozen pretraining | **Not formally tested with matched multi-seed inference** | Tested in matched and zero-shot screens; not established | DDPG final-vs-frozen is mandatory |
+| Multi-scenario/domain-randomized training | Diagnostic attempts only; no accepted final policy | Not completed | Mandatory next campaign |
+| Final paper confirmation | Not completed | Not completed | 5 seeds x 500 paired replications after progression gates |
+
+Pure GCN-SAC and GCN-PPO were also screened from scratch at the common
+progression budget and remained substantially worse than MDL-2. They should
+remain secondary family baselines. Full AFR-SAC and AFR-PPO are not required
+unless the paper claims that AFR is a backbone-agnostic contribution. The
+primary fair backbone comparison is AFR-GCN-DDPG versus AFR-GCN-TD3 because
+both are deterministic continuous-control methods and can share the same
+anchor, residual action, teacher data, safeguards, and evaluation protocol.
+
+## 6. Supported And Unsupported Claims
 
 Supported by current evidence:
 
-- Anchored residual learning can improve on a misspecified MDL-2 policy under
+- AFR-GCN-DDPG can improve on a misspecified MDL-2 policy under matched
   demand-prior drift.
 - DDPG is the stronger canonical backbone in the matched five-seed
   replenishment-residual comparison.
-- A graph representation provides significant value when geographically
+- Graph representation provides significant value when geographically
   structured edge-level transfers are part of the action space.
-- The final graph TD3 controller can outperform MDL-2 and matched flat TD3
-  while satisfying clinical noninferiority in regional drift.
+- Final AFR-GCN-TD3 can outperform MDL-2 and matched AFR-Flat-TD3 in its
+  matched regional training regime.
 
-Not yet supported:
+Not supported:
 
-- Reinforcement learning outperforms all heuristics in every scenario.
-- All graph-policy improvement is attributable to online actor-critic updates.
-- The current checkpoint is robust across unseen demand and disruption
-  regimes.
-- The three-seed TD3 screen is sufficient for a final five-seed,
-  500-replication manuscript claim.
+- Reinforcement learning outperforms heuristics in every scenario.
+- The complete graph-controller advantage is caused by online actor-critic
+  updates.
+- Current DDPG or TD3 checkpoints generalize robustly across unseen regimes.
+- The current three-seed network results are sufficient for a final
+  five-seed, 500-replication manuscript claim.
 
-## 6. Proposed Next Steps
+## 7. Required Next Experiments
 
-If online TD3 attribution is Strong:
+### 7.1 Mandatory core experiment
 
-1. retain AFR-GCN-DDPG as the proposed controller;
-2. retain AFR-GCN-TD3 as the principal backbone ablation;
-3. add training seeds 3 and 4;
-4. run the final five-seed, 500-paired-replication confirmation.
+1. Train one multi-scenario Network AFR policy over randomized demand
+   magnitude, shift timing, regional shock center, disruption severity, and
+   patient deterioration.
+2. Run the exact same AFR protocol for DDPG and TD3: identical graph/flat
+   observations, teacher data, residual action space, safeguards, online
+   episodes, checkpoint rules, and evaluation streams.
+3. For DDPG, evaluate five locked arms with identical common random numbers:
+   MDL-2, frozen AFR-GCN pretrain, final AFR-GCN-DDPG, frozen AFR-Flat
+   pretrain, and final AFR-Flat-DDPG.
+4. Estimate the online DDPG increment
+   `J(final DDPG) - J(frozen pretrain)` and the graph-minus-flat
+   difference-in-differences with a hierarchical bootstrap over training seeds
+   and paired replications.
+5. Separate evaluation into in-distribution trajectories, interpolation over
+   unseen factor combinations, structural zero-shot transfer to unseen shock
+   locations, and extrapolation stress. The last category is a diagnostic, not
+   the primary success criterion.
 
-If attribution is Scenario-specific:
+### 7.2 Progression and final gates
 
-1. identify the scenarios in which online updates add value;
-2. train a scenario-conditioned or multi-scenario policy;
-3. retain nominal demand as a no-harm case;
-4. use regional and compound stress to test adaptive network value.
+- Start with 100 online episodes x 3 seeds x 100 paired replications.
+- Advance only if graph beats MDL-2 and matched flat, final beats frozen
+  pretraining, clinical noninferiority passes, and at least two of three seeds
+  deploy nonzero residuals.
+- Then run 300-500 episodes x 5 seeds x 500 paired replications.
+- Include fixed-prior MDL-2, rolling/forecast-aware MDL-2, robust/tuned MDL-2,
+  oracle MDL-2 as a nondeployable upper bound, ISO, MYO, pMYO, pure GCN-RL,
+  and matched flat AFR controls.
 
-If attribution is Not established:
+## 8. Decisions Requested From The Team
 
-1. do not increase the same training budget without changing the learning
-   problem;
-2. return to the AFR-GCN-DDPG main line;
-3. add multi-scenario replay, persistent advantage-filtered regularization,
-   and a conservative advantage constraint;
-4. frame the current contribution around graph-aware residual control and the
-   patient-condition/geography testbed, while reporting the limited online-RL
-   increment honestly.
-
-## 7. Decisions Requested From The Team
-
-1. Confirm AFR-GCN-DDPG as the proposed method and TD3 as the principal matched
-   stability ablation.
-2. Present graph representation, anchored residual control, and online-RL
-   attribution as separate empirical claims.
-3. Confirm which robustness scenarios belong in the primary manuscript table.
-4. Decide whether a non-significant online increment should trigger
-   multi-scenario GCN-DDPG fine-tuning or a narrower paper claim.
+1. Confirm AFR-GCN-DDPG as the proposed method and AFR-GCN-TD3 as the principal
+   matched backbone ablation.
+2. Confirm that pure GCN-TD3 and AFR-GCN-TD3 must use distinct labels
+   throughout the manuscript and result tables.
+3. Approve multi-scenario training before any further zero-shot claim.
+4. Treat the DDPG final-versus-frozen attribution experiment as mandatory
+   before claiming that online DDPG learning generated the observed advantage.

@@ -1,0 +1,103 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0",
+  "experimental_role": "read-only post-F1 development audit of legal-action critic ranking, straight-through actor gradients, and projection/quantization transfer; not training, checkpoint selection, formal confirmation, or deployment evidence",
+  "primary_algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "roles": {
+    "control": {
+      "training_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/training_manifest.json"
+    },
+    "candidate": {
+      "training_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_100/training_manifest.json"
+    }
+  },
+  "comparison_summary": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison/online_paired_advantage_summary.json",
+  "training_seeds": [60, 61, 62],
+  "scenario_by_training_seed": {
+    "60": "routing_persistent_hotspot_cluster1",
+    "61": "routing_persistent_hotspot_cluster2",
+    "62": "routing_persistent_hotspot_cluster3"
+  },
+  "locked_files": [
+    {
+      "name": "stage_f1_recovery2_status",
+      "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/launcher/status.json",
+      "sha256": "0097b4c84f9f9ab2403eccd670543b640109657eb03a86764d423c5a0496d380"
+    },
+    {
+      "name": "stage_f1_comparison",
+      "path": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery2/comparison/online_paired_advantage_summary.json",
+      "sha256": "8f4967115c584900969a7dba93e29da5ab70dfc65caa27d81423805be85c010a"
+    }
+  ],
+  "locked_trees": [
+    {
+      "name": "stage_f1_control_training",
+      "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training",
+      "artifact_count": 151,
+      "sha256": "eb276c4402d766124080f1eddbfa1c365ff5a32d8baedb0204ff39e23c5041e8"
+    },
+    {
+      "name": "stage_f1_candidate_training",
+      "root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training",
+      "artifact_count": 151,
+      "sha256": "af861462f59e0917a7de4ad3311e02ccbf244e8ccbf6587ecfd0dac4e231cbb3"
+    }
+  ],
+  "audit": {
+    "device": "cpu",
+    "checkpoint_variants": ["pretrain", "episode25", "final"],
+    "checkpoint_suffixes": {
+      "pretrain": "pretrain",
+      "episode25": "episode25",
+      "final": "episode100"
+    },
+    "max_steps_per_episode": 52,
+    "decision_steps": [0, 6, 12, 18, 25, 31, 37, 43, 51],
+    "horizons": [4, "remaining"],
+    "rollout_replications": 3,
+    "live_seed": 96900000,
+    "rollout_seed": 98000000,
+    "material_improvement": 1000000.0,
+    "explicit_options": [
+      {"group": "specimen_transfer", "epsilon": 0.05, "sign": 1.0},
+      {"group": "specimen_transfer", "epsilon": 0.05, "sign": -1.0},
+      {"group": "specimen_transfer", "epsilon": 0.10, "sign": 1.0},
+      {"group": "specimen_transfer", "epsilon": 0.10, "sign": -1.0}
+    ]
+  },
+  "stage_g0_gate": {
+    "primary_horizon": "remaining",
+    "minimum_headroom_state_fraction": 0.10,
+    "minimum_candidate_critic_top1_accuracy": 0.40,
+    "minimum_candidate_critic_gain": 0.05,
+    "minimum_critic_gradient_accuracy_gap": 0.10,
+    "maximum_incremental_executed_action_difference_fraction": 0.20,
+    "minimum_incremental_quantization_collapse_fraction": 0.50
+  },
+  "forbidden_crn_seeds": [
+    91000000,
+    91100000,
+    93000000,
+    93100000,
+    94000000,
+    94100000,
+    94600000,
+    95000000,
+    95100000,
+    95200000,
+    95300000,
+    95400000,
+    95500000,
+    95600000,
+    95700000,
+    95800000,
+    95850000,
+    95900000,
+    96200000,
+    96600000,
+    96700000,
+    96750000
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0_development",
+  "smoke_output_root": "/private/tmp/patient_indexed_specimen_routing_ddpg_actor_projection_transfer_g0_smoke"
+}

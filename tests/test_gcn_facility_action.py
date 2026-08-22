@@ -120,6 +120,30 @@ class NetworkResidualLayoutTests(unittest.TestCase):
             edge_selector_top_k=1,
         )
 
+    def _routing_actor(self, *, readout_mode="network_residual"):
+        from src.models.gcn import GCNActor
+
+        specimen_edges = ((0, 1), (1, 2), (2, 3))
+        resource_edges = ((0, 1), (1, 2), (2, 3))
+        capacity_edges = ((0, 1), (0, 2), (1, 3), (2, 3))
+        return GCNActor(
+            NODE_DIM,
+            4,
+            4,
+            16,
+            _line_edges(4),
+            GCN_HIDDEN,
+            HEAD_HIDDEN,
+            readout_mode=readout_mode,
+            specimen_routing_enabled=True,
+            specimen_edges=specimen_edges,
+            resource_edges=resource_edges,
+            capacity_edges=capacity_edges,
+            specimen_edge_features=tuple((0.1, 0.2) for _ in specimen_edges),
+            resource_edge_features=tuple((0.2, 0.3) for _ in resource_edges),
+            capacity_edge_features=tuple((0.3, 0.4) for _ in capacity_edges),
+        )
+
     def test_network_residual_layout_masks_specimens_and_conserves_transfers(self) -> None:
         actor = self._actor()
 
@@ -149,6 +173,39 @@ class NetworkResidualLayoutTests(unittest.TestCase):
         actions = actor(torch.randn(3, 4, NODE_DIM))
 
         self.assertTrue(torch.allclose(actions, torch.zeros_like(actions)))
+
+    def test_routing_network_residual_emits_conserved_specimen_pressure(self) -> None:
+        actor = self._routing_actor()
+
+        actions = actor(torch.randn(5, 4, NODE_DIM)).reshape(5, 4, 4)
+
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 0].sum(dim=1),
+                torch.zeros(5),
+                atol=1e-6,
+            )
+        )
+        self.assertTrue(torch.any(actions[:, 0].abs() > 1e-8))
+        self.assertIn("specimen_transfer", actor.last_edge_flows)
+
+        actor.zero_initialize_output_heads()
+        zero_actions = actor(torch.randn(2, 4, NODE_DIM))
+        self.assertTrue(torch.allclose(zero_actions, torch.zeros_like(zero_actions)))
+
+    def test_routing_pressure_readout_is_facility_specific_and_conserved(self) -> None:
+        actor = self._routing_actor(readout_mode="pressure_intensity")
+
+        actions = actor(torch.randn(5, 4, NODE_DIM)).reshape(5, 4, 4)
+
+        self.assertTrue(
+            torch.allclose(
+                actions[:, 0].sum(dim=1),
+                torch.zeros(5),
+                atol=1e-6,
+            )
+        )
+        self.assertTrue(torch.any(actions[:, 0].abs() > 1e-8))
 
     def test_edge_selector_uses_soft_training_and_hard_topk_evaluation(self) -> None:
         actor = self._actor(edge_selector_enabled=True)

@@ -38,6 +38,7 @@ PATIENT_METRICS = (
     "patients_lost_waiting_ineligible",
     "patients_lost_manufacturing",
     "patients_lost_expired",
+    "patients_lost_waiting_expired",
     "patients_started",
     "patients_completed",
     "therapies_discarded",
@@ -47,6 +48,18 @@ PATIENT_METRICS = (
     "patient_ineligibility_during_manufacturing_rate",
     "manufacturing_loss_rate",
     "average_turnaround_time",
+    "risk_type_count_recoveries",
+)
+
+ROUTING_METRICS = (
+    "specimen_route_count",
+    "specimen_route_distance_miles",
+    "specimen_route_time_hours",
+    "specimen_route_cost",
+    "blocked_specimen_requests",
+    "transit_loss",
+    "transit_expiry",
+    "transit_ineligible",
 )
 
 
@@ -152,30 +165,9 @@ def evaluate_agent(
             "average_inference_ms": 1000.0 * inference_seconds / max(step, 1),
         }
         if metrics.has_patient_metrics:
-            row.update(
-                {
-                    "eligibility_rate": metrics.eligibility_rate_last,
-                    "eligibility_rate_mean": metrics.eligibility_rate_mean,
-                    "patients_lost": metrics.patients_lost,
-                    "patients_lost_ineligible": metrics.patients_lost_ineligible,
-                    "patients_lost_waiting_ineligible": (
-                        metrics.patients_lost_waiting_ineligible
-                    ),
-                    "patients_lost_manufacturing": metrics.patients_lost_manufacturing,
-                    "patients_lost_expired": metrics.patients_lost_expired,
-                    "patients_started": metrics.patients_started,
-                    "patients_completed": metrics.patients_completed,
-                    "therapies_discarded": metrics.therapies_discarded,
-                    "material_wasted": metrics.material_wasted,
-                    "at_risk_unserved": metrics.at_risk_unserved,
-                    "completion_service_level": metrics.completion_service_level_last,
-                    "patient_ineligibility_during_manufacturing_rate": (
-                        metrics.patient_ineligibility_during_manufacturing_rate_last
-                    ),
-                    "manufacturing_loss_rate": metrics.manufacturing_loss_rate_last,
-                    "average_turnaround_time": metrics.average_turnaround_time_last,
-                }
-            )
+            row.update(metrics.patient_row())
+        if metrics.has_routing_metrics:
+            row.update(metrics.routing_row())
         if metrics.has_cost_breakdown:
             row.update(metrics.cost_components)
         rows.append(row)
@@ -193,6 +185,7 @@ def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
     metrics_to_summarize = list(SUMMARY_METRICS)
     metrics_to_summarize += [m for m in PATIENT_METRICS if m in rows[0]]
+    metrics_to_summarize += [m for m in ROUTING_METRICS if m in rows[0]]
     metrics_to_summarize += [m for m in COST_COMPONENT_METRICS if m in rows[0]]
     for metric in metrics_to_summarize:
         values = np.asarray([float(row[metric]) for row in rows], dtype=float)

@@ -1,0 +1,65 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_stage_b",
+  "experimental_role": "development-only DDPG online-attribution checkpoint curve; never formal confirmation or deployment selection",
+  "locked_plan": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+  "training_commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+  "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/training_manifest.json",
+  "training_manifest_sha256": "0311c648fc1570843daf659f5e45ad27cceb967a9265710d03bd45c60a5e31e2",
+  "teacher": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_dagger1/teacher_train_dagger.npz",
+  "teacher_sha256": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92",
+  "checkpoint_variants": [
+    "pretrain",
+    "episode25",
+    "episode50",
+    "episode75",
+    "episode100"
+  ],
+  "evaluation_configs": {
+    "pretrain": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_pretrain_dev_eval.json",
+    "episode25": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_episode25_dev_eval.json",
+    "episode50": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_episode50_dev_eval.json",
+    "episode75": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_episode75_dev_eval.json",
+    "episode100": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_online_attribution_episode100_dev_eval.json"
+  },
+  "algorithms": [
+    "gcn_residual_mdl2_network_ddpg_afd",
+    "flat_residual_mdl2_network_ddpg_afd"
+  ],
+  "training_seeds": [
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "development_validation_seed": 93000000,
+  "development_evaluation_seed": 93100000,
+  "development_replications_per_scenario": 50,
+  "bootstrap_seed": 93200000,
+  "bootstrap_resamples": 20000,
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100",
+  "curve_summary": "results/patient_indexed_specimen_routing_mac_mps_primary/development/ddpg_online_attribution_100/checkpoint_curve_summary.json",
+  "decision_rule": {
+    "late_segment_from": "episode75",
+    "late_segment_to": "episode100",
+    "primary_algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+    "improving_requires_total_cost_ci_high_below_zero": true,
+    "improving_requires_seed_wins_at_least": 3,
+    "improving_requires_clinical_noninferiority": true,
+    "if_improving": "matched_ddpg_200_episode_development",
+    "otherwise": "matched_td3_100_episode_three_seed_development_screen"
+  },
+  "forbidden": [
+    "formal_holdout_seed_91100000",
+    "training",
+    "checkpoint_selection",
+    "deployment_retuning",
+    "formal_claim_from_development_data"
+  ]
+}

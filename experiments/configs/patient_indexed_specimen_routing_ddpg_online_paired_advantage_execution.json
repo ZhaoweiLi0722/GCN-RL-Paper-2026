@@ -1,0 +1,407 @@
+{
+  "name": "patient_indexed_specimen_routing_ddpg_online_paired_advantage_stage_f1",
+  "experimental_role": "locked development-only paired finite-horizon critic-supervision DDPG attribution experiment",
+  "plan": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+  "campaign_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development",
+  "launcher_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/recovery1/launcher",
+  "recovery": {
+    "superseded_execution_commit": "a8d5e9595edad27c8ddd0683824ba984f95a3de0",
+    "superseded_launcher_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/launcher",
+    "failure_scope": "host-MPS focused-test fixture device mismatch before claim, smoke, state preparation, or training",
+    "training_jobs_launched": 0
+  },
+  "f0_summary": "experiments/evidence/patient_indexed_specimen_routing_ddpg_online_identifiability_f0/summary.json",
+  "preonline_output_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline",
+  "preonline_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline/patient_indexed_specimen_routing_ddpg_online_paired_advantage_preonline/training_manifest.json",
+  "paired_state_root": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/paired_states",
+  "control_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100.json",
+  "candidate_training_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_100.json",
+  "control_training_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100/training_manifest.json",
+  "candidate_training_manifest": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_100/training_manifest.json",
+  "control_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_curve_eval.json",
+  "candidate_evaluation_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_curve_eval.json",
+  "control_smoke_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_smoke.json",
+  "candidate_smoke_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_smoke.json",
+  "comparison_output": "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/comparison/online_paired_advantage_summary.json",
+  "scenario_by_seed": {
+    "60": "routing_persistent_hotspot_cluster1",
+    "61": "routing_persistent_hotspot_cluster2",
+    "62": "routing_persistent_hotspot_cluster3"
+  },
+  "development_crn_seeds": [
+    96600000,
+    96700000
+  ],
+  "forbidden_crn_seeds": [
+    91000000,
+    91100000,
+    93000000,
+    93100000,
+    94000000,
+    94100000,
+    94600000,
+    95000000,
+    95100000,
+    95200000,
+    95300000,
+    95400000,
+    95500000,
+    95600000,
+    95700000,
+    95800000,
+    95850000,
+    95900000,
+    96200000
+  ],
+  "maximum_parameter_relative_gap": 0.01,
+  "minimum_structured_behavior_linf_delta": 0.008333333333333333,
+  "bootstrap_resamples": 20000,
+  "bootstrap_seed": 96750000,
+  "focused_tests": [
+    "tests.test_ddpg_online_identifiability_f0",
+    "tests.test_ddpg_online_paired_advantage",
+    "tests.test_ddpg_online_paired_advantage_stage_f1",
+    "tests.test_ddpg_structured_exploration",
+    "tests.test_gcn_ddpg_graph",
+    "tests.test_off_policy_training_state",
+    "tests.test_train_multiscenario_network_residual",
+    "tests.test_multiscenario_residual_evaluation",
+    "tests.test_patient_indexed_specimen_routing_contract"
+  ],
+  "fresh_output_roots": [
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preflight_smoke",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/preonline",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/paired_states",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/training",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/training",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/control/evaluation",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/candidate/evaluation",
+    "results/patient_indexed_specimen_routing_ddpg_online_paired_advantage_development/comparison"
+  ],
+  "locked_files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "0f8bcc592856df63897b1fc33e3e14fb5cfcf9e59fb9265ae0bfa19208d2336c"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "578e0c78ed30b9a47567a453e7d779b23051c7e8c336a730d973e965e3d136b7"
+    },
+    {
+      "path": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+      "sha256": "bb7b205f6fdd9009bac40e2d278d298ad278e8ab485b348aab7009b3ed14013e"
+    },
+    {
+      "path": "docs/patient_indexed_specimen_routing_stage_f0_protocol.md",
+      "sha256": "7f8a178522f8a118b834d96bd397cbe127b683a3fe0664ace2c92c9dba06c64e"
+    },
+    {
+      "path": "docs/patient_indexed_specimen_routing_stage_f0_results.md",
+      "sha256": "29c86acdeffc476907bcd3b06d07665d50ff928139546b0a330a35683cfb1ea5"
+    },
+    {
+      "path": "docs/patient_indexed_specimen_routing_stage_f1_protocol.md",
+      "sha256": "5457168ba98ba42a2643739c6f00b500ee84a947fb292ebcc718cc8773363706"
+    },
+    {
+      "path": "evaluation/aggregate_results.py",
+      "sha256": "960d40f3ee1499ff9582b9c67f2f6a4c17564df1de3e0cc9cac1403d1bc6fa49"
+    },
+    {
+      "path": "evaluation/aggregate_stats.py",
+      "sha256": "c280c0d676059e3d68cac1b6f7c3d793bb5b7986952feb1c9ef85378d908e0ec"
+    },
+    {
+      "path": "evaluation/audit_ddpg_online_identifiability.py",
+      "sha256": "9a90748217bd11094dfa3338af69832d471783edb317d4477e1c0b7e269fa5e0"
+    },
+    {
+      "path": "evaluation/compare_ddpg_persistent_shift.py",
+      "sha256": "00625c7628d8d913fb4f84b6c9de0b7666ee525a74f13fdb8af3e38e238cd01d"
+    },
+    {
+      "path": "evaluation/compare_ddpg_online_paired_advantage.py",
+      "sha256": "8192ef5fa9e4062ca121b063c11c5cec1c85aa4a959a2e70e33ac3fb8c3db153"
+    },
+    {
+      "path": "evaluation/evaluate_fixed_checkpoint_curve.py",
+      "sha256": "fd948be8e428ffd21315c1733f64c38c385f450566c9bbe46998542645a91d5d"
+    },
+    {
+      "path": "evaluation/evaluate_formal.py",
+      "sha256": "83be1135c9846cdd94ed8d7ad45b5bad2854581dcb5724e8d34d363dd02c5bac"
+    },
+    {
+      "path": "evaluation/evaluate_multiscenario_network_residual.py",
+      "sha256": "a58e4a9d43115477271b7cafbe0c05c1e6eb79e478239b137bd10dba1faf05f3"
+    },
+    {
+      "path": "evaluation/launch_patient_indexed_specimen_routing_ddpg_online_paired_advantage.py",
+      "sha256": "294ace2c7d269be79dfedbc1b4bb18f90251267859c542c2749cb67c25b72db4"
+    },
+    {
+      "path": "evaluation/option_teacher_config.py",
+      "sha256": "2b852ad3b4cee6df044c2c8e5accebdeadbb8d5613dc930a4c50a4df0948df3e"
+    },
+    {
+      "path": "evaluation/prepare_ddpg_online_paired_advantage_preonline.py",
+      "sha256": "e310f5229316c933f6a2c3cce7ac2b88dca186ac100ce6c7e61d49b7682a7036"
+    },
+    {
+      "path": "evaluation/probe_continuous_residual_checkpoints.py",
+      "sha256": "0ae68a64de04c115fbbd4f58089b86169d5f6dfd0c6a8bc8dc62e68845f5e85a"
+    },
+    {
+      "path": "evaluation/run_full_benchmark.py",
+      "sha256": "f5f2743b5333a4f052db84367095a552668855e67dfe2a813b4bc072be60e0a4"
+    },
+    {
+      "path": "evaluation/run_gcn_residual_sweep.py",
+      "sha256": "e9c9f5a4fefa0463bc6c8c38888caf2fe3394a6311fa10f6a6ab0e0642b1cdb8"
+    },
+    {
+      "path": "evaluation/run_patient_indexed_specimen_routing_ddpg_persistent_shift.py",
+      "sha256": "4be546be528d73d5635b6d04b530192003263a92a4bc0cecc623c66a72d3305c"
+    },
+    {
+      "path": "evaluation/run_patient_indexed_specimen_routing_ddpg_online_paired_advantage.py",
+      "sha256": "e9536aae3702e1a4821bd5d20ca6ad7e533ca5562414b5e14662429aea1e2704"
+    },
+    {
+      "path": "evaluation/scenario_assignment.py",
+      "sha256": "f240549cde74a15907af96c6ebd3cb10d0fcedc063d1e0c4862705a8ecd40e81"
+    },
+    {
+      "path": "evaluation/train_multiscenario_network_residual.py",
+      "sha256": "253f7e981644156ef15bc2b170361758665d7327efc0af20356af9e04eb30f37"
+    },
+    {
+      "path": "evaluation/train_network_residual_history_screen.py",
+      "sha256": "ba80630ac57fdc7ff423dc611bdf698f00943d403566318858bf43122b134e8e"
+    },
+    {
+      "path": "evaluation/plot_results.py",
+      "sha256": "24e3eea14fd73753eb00af42e76dfe45b94756db007f8134501a98d2d11891a9"
+    },
+    {
+      "path": "configs/gcn_residual_20_clinic.yaml",
+      "sha256": "6f8a4f59b43f6527f879ab8d754e083517dd85fc5a6dac3eda9c2668247c679e"
+    },
+    {
+      "path": "configs/flat_residual_20_clinic.yaml",
+      "sha256": "3b667785e61ee9ca5e264d7a75c90e2832e7479834f28bb089c00ae9bc6d0ca4"
+    },
+    {
+      "path": "experiments/configs/20_clinic_patient_condition_geo_regional_drift.json",
+      "sha256": "a5807e64cc1d1d5f5ab932c453ca614f08e541fc4c62bb506c36ecd0b09b4bd2"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+      "sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_identifiability_f0.json",
+      "sha256": "2b7d44556cf10bb0632b6ccb26ddea8d89b42bf3c6e060f6893d4194da23248c"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100.json",
+      "sha256": "af46bf7e88f02b5fe444e0df09771030565d9b47cdfbeddd82bd59f9f806ade2"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_100.json",
+      "sha256": "823c8f99b6bc5c73607b41dae130b3c1938b7630ae375dc8cc224b8f5716dd0c"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_curve_eval.json",
+      "sha256": "3fb23ab46d54c953ac1097c65255d5c693534b85cfb0ce0afc9eeeb565f9b243"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_candidate_curve_eval.json",
+      "sha256": "3ee8096528ec24b10425cc86f24cddb18380ceb9170cb971d5bce6ccd289b35e"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_smoke.json",
+      "sha256": "ca1c18059e4cbe4a1ed193c55a30a7acb8e12f6ba3f66da2293375233256d25d"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_smoke.json",
+      "sha256": "ee8328b8bb22e64dfa4e9a0f9242280e063473754c607740d572f52d30788e1e"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+      "sha256": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_online_identifiability_f0/summary.json",
+      "sha256": "1ed22e07109a8fa93e0130ee527cedffd7bb832c32a42cb22b9940c4a6cc4008"
+    },
+    {
+      "path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_online_identifiability_f0/manifold_rows.csv",
+      "sha256": "980b547034ba8999bb233401a1b5ab01e0db9a21aced74fda02e049c75ff5094"
+    },
+    {
+      "path": "src/env/aging_inventory.py",
+      "sha256": "35a4eb55492391f34c16a207e459386d098cfd529055b1e1c62049b8baab2781"
+    },
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "bfc561af473e94b412f103e5c9409ab1544a5587936db5a6af67757bca5d3886"
+    },
+    {
+      "path": "src/env/multi_scenario.py",
+      "sha256": "868165582b98104cf07615f2afcd68595ca9747088eb5fae4b61711e6c35b93b"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "41b8e7f514976a5d2339cb9d3f4436566cd435b9394fbbb223671036e51b1df8"
+    },
+    {
+      "path": "src/env/patient_condition.py",
+      "sha256": "bc0e274e70562ae1ab1ae6d78f487e62c91b3ef2f46172d6ce7608fb6f70ec68"
+    },
+    {
+      "path": "src/env/specimen_routing.py",
+      "sha256": "5d9de6539c212362f55d943b975c810e0f21aa11bea7872f28615c550157f2ec"
+    },
+    {
+      "path": "src/graph/ablation.py",
+      "sha256": "7e3c0b00fbf7ac0ac0bf3eb02d492464ef01ecc0279c30006ac102926e7bfa13"
+    },
+    {
+      "path": "src/graph/edges.py",
+      "sha256": "aa1a37c2a675406571c4ea764ba8f8df6d279d4da45c6eb6c554bc6b5628b0cc"
+    },
+    {
+      "path": "src/graph/geography.py",
+      "sha256": "475937c83c63fe69f98afb56b7223e990bbef324fe7162e11f8088ccfd0dc088"
+    },
+    {
+      "path": "src/baselines/flat_ddpg.py",
+      "sha256": "05f016cf64ab7aa17f05c627e7d8b383faeb674f2b2cd299b88b3116018f389c"
+    },
+    {
+      "path": "src/baselines/heuristics.py",
+      "sha256": "9228c352d8a5d776a55c46a544f009d8c2dd6cda6bc40cfd4d21e6937fee1d64"
+    },
+    {
+      "path": "src/models/gcn.py",
+      "sha256": "63c92d66a14eca9b1e5a150ffc1f92a4cd5832d3aa94d062e5ada41d34806e69"
+    },
+    {
+      "path": "src/models/gcn_ddpg.py",
+      "sha256": "2eaea8a4a82559691b48c20bc62186ee926559f59459705fe71a80c85607b371"
+    },
+    {
+      "path": "src/models/graph_features.py",
+      "sha256": "53f0c20fe2734ef8d313dbaf39189964c6a5582fddd0a579e860692d8affab9a"
+    },
+    {
+      "path": "src/models/temporal.py",
+      "sha256": "ac29c075ecc247d34081bf3f3097a3e21975a34063ffa2dd8f63bae712ea5062"
+    },
+    {
+      "path": "src/rl/action_projection.py",
+      "sha256": "7022e16c8187a23a0cf11bd3ed0a3830d9c67b0ca267d31bda0e082b95766b0e"
+    },
+    {
+      "path": "src/rl/agents.py",
+      "sha256": "0c03ff5b5ab3604f238ff32055ca635997ed32a071306e06cd6554a633781386"
+    },
+    {
+      "path": "src/rl/config.py",
+      "sha256": "0245b8a45dea79420c663efd577603431e49b14255698487a9f73770afe4fccc"
+    },
+    {
+      "path": "src/rl/critic_advantage.py",
+      "sha256": "e8a7d7ee3d7457378db3f0eacfb2f8b770b9fa98ae200cd469d92c951cdef3a8"
+    },
+    {
+      "path": "src/rl/critic_realignment.py",
+      "sha256": "267a0e62a083f02ba829e41ebeee842c5f2e9faab39057ead4fd6af9d737de78"
+    },
+    {
+      "path": "src/rl/experiment.py",
+      "sha256": "97cefd581b89261320576c7eb9f2605f8ae586a2abe61579063381738fc961f2"
+    },
+    {
+      "path": "src/rl/networks.py",
+      "sha256": "d381a850f6aab53a089a4b6601c1f43aa53f0345f45756a9e68ae189530d33e9"
+    },
+    {
+      "path": "src/rl/noise.py",
+      "sha256": "3a2a0f7c7421128023809fef7db61f166b2662410d5aab073d0b3c526270e65b"
+    },
+    {
+      "path": "src/rl/paired_advantage.py",
+      "sha256": "e8e261ea4bc944caf940aa6960407180ec41515b084954d7367148d2fea2e161"
+    },
+    {
+      "path": "src/rl/preprocessing.py",
+      "sha256": "1060208a391a38a814935a831c671a1b778d1050753056003f8e904325bc2bb1"
+    },
+    {
+      "path": "src/rl/replay_buffer.py",
+      "sha256": "86fda607c25fff3610f4fd89a80dc6d56e4df46f0da822658fb6a52cc13deefe"
+    },
+    {
+      "path": "src/rl/residual_endpoint_projection.py",
+      "sha256": "870e46eec21fa3a4b0b4071c8b1a4bfe336575cf637a88407cb907c8d2fae8a7"
+    },
+    {
+      "path": "src/rl/residual_options.py",
+      "sha256": "69602213544dbe7c691294d3c96a052168963fc1747b607ee0d0238ea21b322a"
+    },
+    {
+      "path": "src/rl/residual_temporal_guard.py",
+      "sha256": "180ffce09968eddb08be7c53bf6a367a8c8c430819790577fb9c948eee82dfb1"
+    },
+    {
+      "path": "src/rl/structured_exploration.py",
+      "sha256": "9b42739d7d8d21583e5c5e78cf5cfdcda7917707892c531b453d55cd81c0edbe"
+    },
+    {
+      "path": "src/rl/tensor_conversion.py",
+      "sha256": "faf79e0466917940f9c9ff07a743a5c283b777b569d2ecda646b3cd3e004cfdb"
+    },
+    {
+      "path": "src/rl/training_state.py",
+      "sha256": "e7e473a19fb04aff77b12de92d8f01a18232dd33ddc34f7182c8e7d3d7e88ec4"
+    },
+    {
+      "path": "tests/test_ddpg_online_identifiability_f0.py",
+      "sha256": "a4b031043d7f8bbdafb8a08b9826a19098aa4d5a957ebf79d24195461a9697f6"
+    },
+    {
+      "path": "tests/test_ddpg_online_paired_advantage.py",
+      "sha256": "83c5bea37deafcd0913f9f05eced3e979acb185d0a0f6913505652f469cb9f0f"
+    },
+    {
+      "path": "tests/test_ddpg_online_paired_advantage_stage_f1.py",
+      "sha256": "3e0b955313f7aa0f6760a988ffa000584dd4f2aa28282401e6e31e1decccd4df"
+    },
+    {
+      "path": "tests/test_ddpg_structured_exploration.py",
+      "sha256": "77aac1bbaadaf50c365979f0616d9b211f3ec74698518396afc92f4eddf71eaf"
+    },
+    {
+      "path": "tests/test_gcn_ddpg_graph.py",
+      "sha256": "a4f916964441cedd5c7fc4dcd0f6b5aa33a5f894f12041c0682e9648b0e625ca"
+    },
+    {
+      "path": "tests/test_off_policy_training_state.py",
+      "sha256": "7151af7c466bc929dff521e1a8f10d073f23c9cf9401607a4cc8bab078b9db3d"
+    },
+    {
+      "path": "tests/test_train_multiscenario_network_residual.py",
+      "sha256": "86d15891c09c4f5173cafb96af46fbc4300ae7b5eebe856064f6ad2e26791a18"
+    },
+    {
+      "path": "tests/test_multiscenario_residual_evaluation.py",
+      "sha256": "a943b21856ca5d61cc2aa6a3aaf4d888204ca70bd2738a1ed6a5c6c41ca99c9e"
+    },
+    {
+      "path": "tests/test_patient_indexed_specimen_routing_contract.py",
+      "sha256": "cb77d717412dc3b35a9829d162a6d8b800483328ed70c47f8b546e46adc6df4f"
+    }
+  ]
+}

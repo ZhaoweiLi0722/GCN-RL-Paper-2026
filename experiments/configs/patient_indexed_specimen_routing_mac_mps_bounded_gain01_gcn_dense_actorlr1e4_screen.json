@@ -1,0 +1,62 @@
+{
+  "name": "patient_indexed_specimen_routing_mac_mps_bounded_gain01_gcn_dense_actorlr1e4_screen",
+  "experimental_role": "single-factor DDPG actor-learning-rate screen after measured supervised underfit",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "budget": "routing_smoke",
+  "reference_scenario": "routing_nominal_history",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "teacher_cache": "results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_screen/teacher_train.npz",
+  "demand_history_window": 12,
+  "online_episodes": 5,
+  "pretrain_epochs": 300,
+  "offline_updates": 0,
+  "seeds": [
+    0
+  ],
+  "config_overrides": {
+    "device": "mps",
+    "batch_size": 64,
+    "actor_lr": 0.0001,
+    "checkpoint_interval": 1,
+    "training_state_checkpoint_interval": 1,
+    "progress_interval": 1,
+    "update_frequency": 1,
+    "residual_action": {
+      "scale": 0.1,
+      "group_scales": {
+        "specimen_transfer": 0.1,
+        "reagent_transfer": 0.1,
+        "capacity_transfer": 0.1,
+        "replenishment": 0.0
+      },
+      "endpoint_projection": {
+        "enabled": false
+      }
+    },
+    "train_randomization": {
+      "enabled": true,
+      "forecast_error_range": [
+        0.0,
+        0.2
+      ],
+      "demand_rate_multiplier_range": [
+        0.9,
+        1.1
+      ]
+    }
+  },
+  "algorithms": [
+    {
+      "name": "gcn_residual_mdl2_network_ddpg_afd",
+      "seeds": [
+        0
+      ]
+    }
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/sensitivity/bounded_gain01/gcn_dense_actorlr1e4_screen_training_mps"
+}

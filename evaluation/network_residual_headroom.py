@@ -45,6 +45,8 @@ def main() -> None:
     parser.add_argument("--lookahead-seed", type=int, default=None)
     parser.add_argument("--teacher-shard-index", type=int, default=None)
     parser.add_argument("--teacher-shard-count", type=int, default=None)
+    parser.add_argument("--state-probe-shard-index", type=int, default=None)
+    parser.add_argument("--state-probe-shard-count", type=int, default=None)
     args = parser.parse_args()
 
     config = load_config(args.config)
@@ -62,10 +64,17 @@ def main() -> None:
         config["seed"] = int(args.seed)
     if args.lookahead_seed is not None:
         config["lookahead_seed"] = int(args.lookahead_seed)
-    if (
+    teacher_shard_requested = (
         args.teacher_shard_index is not None
         or args.teacher_shard_count is not None
-    ):
+    )
+    state_probe_shard_requested = (
+        args.state_probe_shard_index is not None
+        or args.state_probe_shard_count is not None
+    )
+    if teacher_shard_requested and state_probe_shard_requested:
+        raise SystemExit("Teacher and state-probe sharding cannot be combined")
+    if teacher_shard_requested:
         if (
             args.teacher_shard_index is None
             or args.teacher_shard_count is None
@@ -73,10 +82,28 @@ def main() -> None:
             raise SystemExit(
                 "Use --teacher-shard-index and --teacher-shard-count together"
             )
+        if not args.skip_state_probe:
+            raise SystemExit("Teacher shards require --skip-state-probe")
         config = teacher_shard_config(
             config,
             args.teacher_shard_index,
             args.teacher_shard_count,
+        )
+    if state_probe_shard_requested:
+        if (
+            args.state_probe_shard_index is None
+            or args.state_probe_shard_count is None
+        ):
+            raise SystemExit(
+                "Use --state-probe-shard-index and "
+                "--state-probe-shard-count together"
+            )
+        if not args.skip_teacher:
+            raise SystemExit("State-probe shards require --skip-teacher")
+        config = state_probe_shard_config(
+            config,
+            args.state_probe_shard_index,
+            args.state_probe_shard_count,
         )
     output_root = Path(config["output_root"])
     output_root.mkdir(parents=True, exist_ok=True)
@@ -171,6 +198,40 @@ def teacher_shard_config(
     return shard
 
 
+def state_probe_shard_config(
+    config: dict[str, Any],
+    shard_index: int,
+    shard_count: int,
+) -> dict[str, Any]:
+    """Partition probe rollouts while preserving global seeds and CRN indices."""
+
+    total = int(config["state_probe_rollouts"])
+    shard_index = int(shard_index)
+    shard_count = int(shard_count)
+    if shard_count <= 0 or not 0 <= shard_index < shard_count:
+        raise ValueError("State-probe shard index/count are invalid")
+    if shard_count > total:
+        raise ValueError("State-probe shard count cannot exceed rollouts")
+    base_size, remainder = divmod(total, shard_count)
+    rollout_count = base_size + int(shard_index < remainder)
+    rollout_start = shard_index * base_size + min(shard_index, remainder)
+    shard = copy.deepcopy(config)
+    shard["state_probe_rollouts"] = rollout_count
+    shard["state_probe_rollout_start"] = rollout_start
+    shard["state_probe_total_rollouts"] = total
+    shard_root = (
+        Path(config["output_root"])
+        / "state_probe_shards"
+        / f"shard_{shard_index:02d}_of_{shard_count:02d}"
+    )
+    shard["output_root"] = str(shard_root)
+    shard["name"] = (
+        f"{config.get('name', 'network_residual_headroom')}"
+        f"_state_probe_shard_{shard_index:02d}_of_{shard_count:02d}"
+    )
+    return shard
+
+
 def load_env_config(config: dict[str, Any]) -> dict[str, Any]:
     env_config = load_config(config["env_config"])
     env_config.update(dict(config.get("env_overrides", {})))
@@ -235,6 +296,67 @@ def candidate_action_specs(
                     }
                 )
     return specs
+
+
+def facility_net_residual_envelope(
+    action_dim: int,
+    num_facilities: int,
+    group_limits: dict[str, Any],
+) -> np.ndarray:
+    """Return per-dimension residual limits for the facility-net action."""
+
+    n = int(num_facilities)
+    if n <= 0 or int(action_dim) != 4 * n:
+        raise ValueError(
+            "Residual action envelopes require a four-group facility-net action"
+        )
+    slices = {
+        "specimen_transfer": slice(0, n),
+        "reagent_transfer": slice(n, 2 * n),
+        "capacity_transfer": slice(2 * n, 3 * n),
+        "replenishment": slice(3 * n, 4 * n),
+    }
+    unknown = sorted(set(group_limits) - set(slices))
+    if unknown:
+        raise ValueError(f"Unsupported residual envelope groups: {unknown}")
+    envelope = np.zeros(int(action_dim), dtype=np.float32)
+    for group, group_slice in slices.items():
+        limit = float(group_limits.get(group, 0.0))
+        if not 0.0 <= limit <= 1.0:
+            raise ValueError("Residual envelope limits must lie in [0, 1]")
+        envelope[group_slice] = limit
+    return envelope
+
+
+def bound_candidate_specs_to_residual_envelope(
+    specs: list[dict[str, Any]],
+    *,
+    num_facilities: int,
+    group_limits: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Project every candidate onto an action envelope around the anchor."""
+
+    if not specs:
+        raise ValueError("At least one candidate is required")
+    anchor_action = np.asarray(specs[0]["action"], dtype=np.float32).reshape(-1)
+    envelope = facility_net_residual_envelope(
+        anchor_action.size,
+        num_facilities,
+        group_limits,
+    )
+    bounded = []
+    for spec in specs:
+        action = np.asarray(spec["action"], dtype=np.float32).reshape(-1)
+        if action.shape != anchor_action.shape:
+            raise ValueError("Candidate actions must match the anchor action shape")
+        row = dict(spec)
+        row["action"] = np.clip(
+            anchor_action + np.clip(action - anchor_action, -envelope, envelope),
+            -1.0,
+            1.0,
+        ).astype(np.float32)
+        bounded.append(row)
+    return bounded
 
 
 def lookahead_rollout_seeds(
@@ -347,7 +469,9 @@ def run_state_probe(config: dict[str, Any]) -> list[dict[str, Any]]:
     env = build_env(env_config, seed=int(config["seed"]))
     anchor = make_anchor(config, env)
     rows: list[dict[str, Any]] = []
-    for rollout in range(int(config["state_probe_rollouts"])):
+    rollout_start = int(config.get("state_probe_rollout_start", 0))
+    rollout_stop = rollout_start + int(config["state_probe_rollouts"])
+    for rollout in range(rollout_start, rollout_stop):
         state = env.reset(seed=int(config["seed"]) + rollout)
         anchor.reset()
         done = False
@@ -501,6 +625,9 @@ class ClinicalLookaheadTeacher:
             )
         else:
             self.option_specs = ()
+        self.residual_action_envelope = dict(
+            config.get("residual_action_envelope", {})
+        )
         self.total_decisions = 0
         self.corrected_decisions = 0
         self.selected_groups: Counter[str] = Counter()
@@ -551,6 +678,12 @@ class ClinicalLookaheadTeacher:
                 epsilons=self.config["epsilons"],
                 candidate_groups=self.config["candidate_groups"],
                 candidate_signs=self.config.get("candidate_signs", (-1.0, 1.0)),
+            )
+        if self.residual_action_envelope:
+            specs = bound_candidate_specs_to_residual_envelope(
+                specs,
+                num_facilities=int(env.config.num_facilities),
+                group_limits=self.residual_action_envelope,
             )
         evaluated = evaluate_candidate_specs(
             specs,

@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import csv
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
@@ -10,18 +13,43 @@ from evaluation.augment_teacher_cache_time_state import (
     augment_teacher_cache_with_time,
 )
 from evaluation.merge_headroom_teacher_shards import (
+    carry_forward_state_probe,
+    discover_teacher_shards,
     merge_demonstration_caches,
+    normalized_shard_rows,
+    read_csv_rows,
+    validate_teacher_shard_result,
+)
+from evaluation.merge_headroom_state_probe_shards import (
+    merge_state_probe_rows,
 )
 from evaluation.network_residual_headroom import (
     headroom_decision,
     lookahead_rollout_seeds,
     select_clinical_candidate,
+    state_probe_shard_config,
     teacher_shard_config,
 )
 from evaluation.probe_option_distillation import pretrain_gate_decision
 
 
 class NetworkResidualHeadroomTests(unittest.TestCase):
+    def test_teacher_merge_preserves_state_probe_shard_provenance(self) -> None:
+        result = {"online_teacher": {"teacher_total_decisions": 52}}
+        state_probe = {"states": 520}
+        state_probe_shards = {"count": 10, "states": 520}
+
+        carry_forward_state_probe(
+            result,
+            {
+                "state_probe": state_probe,
+                "state_probe_shards": state_probe_shards,
+            },
+        )
+
+        self.assertIs(result["state_probe"], state_probe)
+        self.assertIs(result["state_probe_shards"], state_probe_shards)
+
     def test_teacher_cache_time_augmentation_preserves_rows(self) -> None:
         payload = {
             "states": np.asarray([[1.0], [2.0], [3.0], [4.0]], dtype=np.float32),
@@ -73,6 +101,128 @@ class NetworkResidualHeadroomTests(unittest.TestCase):
         self.assertEqual(shard["teacher_replication_start"], 6)
         self.assertEqual(shard["lookahead_decision_offset"], 312)
         self.assertTrue(shard["output_root"].endswith("shard_03_of_05"))
+
+    def test_teacher_shard_discovery_rejects_incomplete_set(self) -> None:
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "shard_00_of_02").mkdir()
+
+            with self.assertRaisesRegex(ValueError, "incomplete"):
+                discover_teacher_shards(root)
+
+    def test_teacher_shard_result_requires_exact_locked_config(self) -> None:
+        config = {
+            "name": "test_teacher",
+            "teacher_replications": 3,
+            "max_steps": 52,
+            "output_root": "results/test",
+            "demonstration_path": "results/test/teacher_cache.npz",
+        }
+        expected = teacher_shard_config(config, 1, 3)
+        result = {
+            "config": expected,
+            "online_teacher": {
+                "teacher_replication_start": 1,
+                "lookahead_decision_offset": 52,
+            },
+        }
+
+        validated = validate_teacher_shard_result(
+            config,
+            result,
+            shard_index=1,
+            shard_count=3,
+        )
+
+        self.assertEqual(validated, expected)
+        result["config"] = {**expected, "max_steps": 51}
+        with self.assertRaisesRegex(ValueError, "config does not match"):
+            validate_teacher_shard_result(
+                config,
+                result,
+                shard_index=1,
+                shard_count=3,
+            )
+
+    def test_teacher_shard_rows_require_complete_local_replications(self) -> None:
+        with self.assertRaisesRegex(ValueError, "local replications"):
+            normalized_shard_rows(
+                [
+                    {"replication": "0"},
+                    {"replication": "0"},
+                ],
+                start=0,
+                count=2,
+                base_evaluation_seed=100,
+            )
+
+    def test_teacher_csv_reader_accepts_large_serialized_state_fields(self) -> None:
+        payload = "x" * (1024 * 1024)
+        with TemporaryDirectory() as temporary:
+            path = Path(temporary) / "teacher.csv"
+            with path.open("w", newline="") as handle:
+                writer = csv.DictWriter(
+                    handle,
+                    fieldnames=("replication", "serialized_state"),
+                )
+                writer.writeheader()
+                writer.writerow(
+                    {"replication": 0, "serialized_state": payload}
+                )
+
+            rows = read_csv_rows(path)
+
+        self.assertEqual(rows[0]["replication"], "0")
+        self.assertEqual(rows[0]["serialized_state"], payload)
+
+    def test_state_probe_shards_preserve_global_rollout_indices(self) -> None:
+        config = {
+            "name": "test_probe",
+            "state_probe_rollouts": 10,
+            "max_steps": 52,
+            "output_root": "results/test",
+        }
+
+        shard = state_probe_shard_config(config, 3, 4)
+
+        self.assertEqual(shard["state_probe_rollouts"], 2)
+        self.assertEqual(shard["state_probe_rollout_start"], 8)
+        self.assertEqual(shard["state_probe_total_rollouts"], 10)
+        self.assertEqual(
+            Path(shard["output_root"]).parts[-2:],
+            ("state_probe_shards", "shard_03_of_04"),
+        )
+
+    def test_state_probe_rows_merge_in_canonical_order(self) -> None:
+        shard_rows = [
+            [
+                {"rollout": "1", "step": "1", "selected_group": "anchor"},
+                {"rollout": "1", "step": "0", "selected_group": "anchor"},
+            ],
+            [
+                {"rollout": "0", "step": "1", "selected_group": "anchor"},
+                {"rollout": "0", "step": "0", "selected_group": "anchor"},
+            ],
+        ]
+
+        merged = merge_state_probe_rows(
+            shard_rows,
+            total_rollouts=2,
+            max_steps=2,
+        )
+
+        self.assertEqual(
+            [(int(row["rollout"]), int(row["step"])) for row in merged],
+            [(0, 0), (0, 1), (1, 0), (1, 1)],
+        )
+
+    def test_state_probe_merge_rejects_missing_rollout(self) -> None:
+        with self.assertRaisesRegex(ValueError, "cover every rollout"):
+            merge_state_probe_rows(
+                [[{"rollout": "0", "step": "0"}]],
+                total_rollouts=2,
+                max_steps=2,
+            )
 
     def test_teacher_shard_caches_merge_in_replication_order(self) -> None:
         def cache(value: float) -> dict:

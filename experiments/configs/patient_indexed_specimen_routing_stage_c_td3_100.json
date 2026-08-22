@@ -1,0 +1,143 @@
+{
+  "name": "patient_indexed_specimen_routing_stage_c_td3_100",
+  "experimental_role": "prespecified three-seed routing-primary matched TD3 development screen selected by the completed Stage B plateaued_or_inconclusive gate; not formal confirmation and not eligible for selective extension",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "budget": "routing_pilot",
+  "reference_scenario": "routing_nominal_history",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ],
+  "teacher_cache": "experiments/evidence/patient_indexed_specimen_routing_stage_c/teacher_train_dagger.npz",
+  "teacher_cache_sha256": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92",
+  "demand_history_window": 12,
+  "online_episodes": 100,
+  "pretrain_epochs": 300,
+  "offline_updates": 500,
+  "seeds": [
+    20,
+    21,
+    22
+  ],
+  "config_overrides": {
+    "device": "mps",
+    "batch_size": 64,
+    "actor_lr": 0.00001,
+    "actor_update_frequency": 2,
+    "critic_warmup_updates": 500,
+    "checkpoint_interval": 5,
+    "training_state_checkpoint_interval": 5,
+    "progress_interval": 5,
+    "update_frequency": 1,
+    "policy_delay": 2,
+    "policy_noise": 0.01,
+    "noise_clip": 0.02,
+    "actor_gradient_clip": 5.0,
+    "critic_gradient_clip": 10.0,
+    "actor_advantage_baseline": "anchor",
+    "reference_policy_regularization_weight": 0.0,
+    "specimen_action_quantization": {
+      "enabled": true,
+      "actor_gradient": "straight_through"
+    },
+    "preonline_fork_allowed_overrides": [
+      "critic_teacher_advantage_calibration",
+      "imitation_pretrain.regularization_weight",
+      "online_advantage_self_imitation",
+      "online_advantage_self_imitation.enabled",
+      "online_advantage_self_imitation.minimum_return",
+      "online_advantage_self_imitation.release_pretrain_reference",
+      "online_advantage_self_imitation.require_positive_one_step_return",
+      "online_advantage_self_imitation.weight",
+      "pretrain_reference_actor_loss.weight",
+      "residual_action.correction_gate.align_online_policy",
+      "residual_action.online_reward_mode",
+      "residual_action.online_reward_n_step_horizon",
+      "specimen_action_quantization"
+    ],
+    "critic_teacher_advantage_calibration": {
+      "enabled": true,
+      "updates": 100,
+      "target_scale": 1.0,
+      "ranking_weight": 10.0,
+      "online_ranking_weight": 3.0
+    },
+    "pretrain_reference_actor_loss": {
+      "enabled": true,
+      "weight": 500.0
+    },
+    "online_advantage_self_imitation": {
+      "enabled": true,
+      "weight": 1.0,
+      "release_pretrain_reference": true,
+      "require_positive_one_step_return": true,
+      "minimum_return": 0.0005
+    },
+    "imitation_pretrain": {
+      "regularization_weight": 1.0
+    },
+    "advantage_distillation_pretrain": {
+      "actor_lr": 0.0001
+    },
+    "residual_action": {
+      "scale": 0.1,
+      "online_reward_mode": "n_step_anchor_relative",
+      "online_reward_n_step_horizon": 4,
+      "group_scales": {
+        "specimen_transfer": 0.1,
+        "reagent_transfer": 0.0,
+        "capacity_transfer": 0.0,
+        "replenishment": 0.0
+      },
+      "endpoint_projection": {
+        "enabled": false
+      },
+      "correction_gate": {
+        "enabled": true,
+        "mode": "classification",
+        "groups": [
+          "specimen_transfer"
+        ],
+        "threshold": 0.5,
+        "target_delta": 0.04,
+        "lr": 0.0003,
+        "loss_weight": 1.0,
+        "include_proposed_residual_features": true,
+        "proposed_residual_feature_mode": "clipped_action_delta",
+        "align_online_policy": true
+      }
+    },
+    "train_randomization": {
+      "enabled": true,
+      "forecast_error_range": [
+        0.0,
+        0.2
+      ],
+      "demand_rate_multiplier_range": [
+        0.9,
+        1.1
+      ]
+    }
+  },
+  "algorithms": [
+    {
+      "name": "gcn_residual_mdl2_network_td3_bc",
+      "seeds": [
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "name": "flat_residual_mdl2_network_td3_bc",
+      "seeds": [
+        20,
+        21,
+        22
+      ]
+    }
+  ],
+  "output_root": "results/patient_indexed_specimen_routing_stage_c_td3_development/training"
+}

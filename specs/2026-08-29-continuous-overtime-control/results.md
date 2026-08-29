@@ -324,3 +324,91 @@ Zhaowei's review of both the amendment and this result remains outstanding.
 - State-dependence report:
   `experiments/evidence/continuous_overtime_headroom_e2b/state_dependence.json`
 - Config: `experiments/configs/continuous_overtime_headroom_e2b.json`
+
+---
+
+## Stage E3: label stability on fresh streams — 2026-08-29
+
+### Decision
+
+**PASSED both criteria: `labels_replicate_on_fresh_streams`. Stage E4 is
+authorized.** Training remains unauthorized.
+
+### A circularity avoided
+
+The spec defines the E3 gate as discovery/validation best-action agreement
+≥70%. Stage E2b already reported that number — 96.3% — but computed from the
+rows it selected on. Reporting it as a passing E3 would be circular: one
+dataset cannot both fit the selection and test whether it replicates.
+
+E3 therefore re-runs the identical 27 states, ladder, and environment under
+CRN streams disjoint from every seed E2b used (`96400000` and `96500000`
+families), and asks whether the same per-state optimum returns on data that
+took no part in choosing it. Tests assert the seed families do not overlap and
+that the environment, states, and ladder did not drift between E2b and E3 —
+replication is only meaningful when the physics are identical.
+
+### Result
+
+2,592 rows, 4m46s.
+
+| Criterion | Measured | Gate | |
+| --- | ---: | ---: | --- |
+| Best-action agreement (fresh discovery vs fresh validation) | **0.926** (25/27) | ≥ 0.70 | PASS |
+| Pairwise cost-sign agreement over 1,147 material pairs | **0.990** | ≥ 0.80 | PASS |
+
+**Cross-check across four disjoint seed families** (all E2b seeds pooled
+versus all E3 seeds pooled):
+
+| | Measured |
+| --- | ---: |
+| Best-action agreement | **1.000** (27/27) |
+| Pairwise sign agreement | 0.992 over 1,151 material pairs |
+
+The per-state optimum is identical across entirely separate seed families.
+That is the strongest available evidence that the structure is a property of
+the states rather than of one replication stream.
+
+**Independent re-measure of the E2b headline.** E3's own rows, never used in
+the E2b analysis, give a prospective state-dependence value of **+0.6182%**
+against E2b's +0.6446% (interior fraction 0.926 in both). The E2b result
+replicates on fresh data.
+
+### Comparison with the routing channel
+
+The same design applied to patient-indexed specimen routing failed at Stage
+G1:
+
+| | Routing (G1) | Overtime (E3) |
+| --- | ---: | ---: |
+| Best-action agreement | 0.545 | **0.926** |
+| Pairwise sign agreement | 0.825 | **0.990** |
+| Gate outcome | FAILED (70% required) | PASSED |
+
+G1's lesson is preserved in the gate's structure: pairwise agreement stayed
+high on the routing channel (82.5%) while the top-action choice replicated
+only 54.5% of the time, so the two criteria are kept separate and the argmax
+is primary. Policy improvement needs a reliable best-action choice, not a weak
+average ordering. A regression test is pinned to G1's exact numbers and
+asserts the gate rejects them.
+
+### What remains open
+
+Label stability across replication streams is not generalization across
+states. E3 shows the per-state optimum is a stable target; it does not show
+that target is predictable from features observable at decision time. The
+optimum still does not track the number of capacity-bound clinics, so the
+driver is not a simple count.
+
+**Stage E4 (held-out-seed critic ranking) is the test that separates a
+learnable signal from one that depends on realized future demand**, and it
+must pass before any actor is trained.
+
+### Evidence
+
+- Rows: `results/continuous_overtime_label_stability_e3/headroom_rows.csv`
+- Summary: `results/continuous_overtime_label_stability_e3/summary.json`
+- Gate report:
+  `experiments/evidence/continuous_overtime_label_stability_e3/label_stability.json`
+- Config: `experiments/configs/continuous_overtime_label_stability_e3.json`
+- Implementation: `evaluation/label_stability.py` (12 tests)

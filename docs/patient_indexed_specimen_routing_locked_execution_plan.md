@@ -1207,3 +1207,36 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
   `results/continuous_overtime_headroom_e2b/`,
   `experiments/evidence/continuous_overtime_headroom_e2b/`.
+
+### 2026-08-29: Stage E3 label stability PASSED on fresh streams; Stage E4 authorized
+
+- The spec's E3 gate (discovery/validation best-action agreement >= 70%) had
+  already been produced by E2b at 96.3%, but from the rows E2b selected on.
+  Reporting that as a passing E3 would have been circular. E3 therefore
+  re-ran the identical states, ladder, and environment under CRN streams
+  disjoint from every E2b seed (`96400000`/`96500000` families). Tests assert
+  the seed families do not overlap and that the environment did not drift.
+- Primary result (fresh discovery vs fresh validation): best-action agreement
+  **0.926** (25/27) against a 0.70 gate; pairwise cost-sign agreement
+  **0.990** over 1,147 material pairs against a 0.80 gate. Classification
+  `labels_replicate_on_fresh_streams`.
+- Cross-check across four disjoint seed families (all E2b seeds vs all E3
+  seeds): best-action agreement **1.000** (27/27), pairwise 0.992. The
+  per-state optimum is identical across separate seed families.
+- E3's rows independently re-measure the E2b headline: prospective
+  state-dependence value **+0.6182%** versus E2b's +0.6446%, interior fraction
+  0.926 in both.
+- Contrast with the routing channel, same design: Stage G1 achieved 54.5%
+  best-action agreement and 82.5% pairwise, and failed. The argmax criterion
+  is kept primary precisely because G1 showed pairwise agreement can stay high
+  while the top-action choice is unstable; a regression test is pinned to
+  G1's numbers and asserts the gate rejects them.
+- Still open: label stability is not generalization across states. The
+  per-state optimum remains untracked by the number of capacity-bound clinics.
+  **Stage E4 (held-out-seed critic ranking) is the test that separates a
+  learnable signal from one depending on realized future demand.**
+- **Stage E4 is authorized.** Training remains unauthorized; Stage E5 requires
+  its own specification and sign-off.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_label_stability_e3/`,
+  `experiments/evidence/continuous_overtime_label_stability_e3/`.

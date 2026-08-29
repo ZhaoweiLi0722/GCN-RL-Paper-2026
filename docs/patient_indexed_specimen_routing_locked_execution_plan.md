@@ -1143,24 +1143,32 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   benefit, so the optimum is always the upper bound.
 - A follow-up analysis of the same rows measured the quantity the gate failed
   to ask about. Overtime is worth 303.2M over the anchor, but the best single
-  constant rung captures essentially all of it: the value of state-dependence
-  is 0.67M, or **0.0054% of anchor cost** — the same order as the Stage F1
-  attribution noise floor (+/-0.001-0.004%). The ceiling for any learned
-  policy on this channel is below the measurement floor.
+  constant rung captures essentially all of it. Selecting per-state arms
+  PROSPECTIVELY (chosen on discovery, scored on held-out validation, with the
+  constant chosen the same way) is **worse than the constant by 10.20M, i.e.
+  -0.083% of anchor cost**. An in-sample oracle reads +0.0054%, but it selects
+  on the stream it is scored on and so capitalizes on replication noise; the
+  honest out-of-sample value is negative. A state-dependent policy fitted to
+  real data on this channel loses to a one-line constant, so there is no
+  budget for any learned policy to capture.
 - Classification of the channel as configured:
   `channel_captured_by_constant_policy`. **Stage E3 is not authorized.**
 - No re-tune or re-run was performed. Re-running after observing a result
   requires this change-control entry, a new config name, and a new output
   root.
-- Proposed amendment, pending Howard and Zhaowei approval: make the value of
-  state-dependence the PRIMARY E2 criterion (proposed threshold 0.005 of
-  anchor cost, ~100x the noise floor, plus interior-best-arm fraction 0.30),
+- Amendment APPROVED by Howard 2026-08-29 (Zhaowei's review still pending;
+  recorded here so the approval trail is exact). Makes the PROSPECTIVE value
+  of state-dependence the PRIMARY E2 criterion (threshold 0.005 of anchor
+  cost, ~100x the noise floor, plus interior-best-arm fraction 0.30),
   demoting the headroom criterion to a necessary precondition; only then
   re-calibrate the overtime cost weights and re-run. If no calibration clears
   the amended gate, reject the overtime channel and report that.
 - Measure and gate implemented read-only in
-  `evaluation/state_dependence_value.py` (9 tests). It consumes rows already
-  collected and trains nothing.
+  `evaluation/state_dependence_value.py` (15 tests). It consumes rows already
+  collected and trains nothing. The gate refuses any report lacking a
+  prospective value rather than falling back to the optimistic in-sample
+  figure; a regression test drives pure noise through both and asserts the
+  oracle looks spuriously positive while the prospective value does not.
 - Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
   `results/continuous_overtime_headroom_e2/`,
   `experiments/evidence/continuous_overtime_headroom_e2/`

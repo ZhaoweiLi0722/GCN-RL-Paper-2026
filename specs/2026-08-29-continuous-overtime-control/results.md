@@ -102,27 +102,39 @@ exceed:
 | Per-state **oracle** (upper bound for any policy) | 11,979.4 |
 
 - Overtime is worth **303.2M** over the anchor. The channel has real value.
-- The value of *state-dependence* — the entire budget available to any
-  state-dependent policy, learned or otherwise — is
-  **0.67M, or 0.0054% of anchor cost**.
+- The in-sample oracle beats the best constant by only **0.67M (0.0054%)**.
+- Selecting per-state arms **prospectively** — chosen on the discovery stream,
+  scored on the held-out validation stream, with the constant chosen the same
+  way — is **worse than the constant by 10.20M (−0.083%)**.
+
+The prospective figure is the one that governs, and the gap between the two
+matters. An oracle that picks each state's arm using the same means it is
+scored on capitalizes on replication noise; it overstates what any real policy
+can achieve. Selecting on independent data — the discipline Stage G1 was built
+around — the per-state policy does not merely fail to beat a constant, it
+**loses to one**. Discovery and validation agree on the best arm in 92.6% of
+states, but that agreement is on `u_1.00` almost everywhere; where they
+disagree, following the discovery signal costs more than ignoring it.
 
 Only 2 distinct arms are ever optimal (`u_1.00` in 26 states, `u_0.80` in 1),
 and the best arm is strictly interior in 3.7% of states.
 
-**This is the finding that governs the study.** 0.0054% is the same order as
-the online-attribution noise floor measured on this simulator (Stage F1
-final-versus-frozen deltas were ±0.001–0.004%). A perfect oracle beats a
-one-line constant by less than the noise. No algorithm, architecture,
-training budget, or graph encoder can extract a defensible result from a
-channel with that budget — the ceiling is below the measurement floor.
+**This is the finding that governs the study.** A state-dependent policy fitted
+to real data on this channel is worth less than a one-line constant. There is
+no budget for a learned policy to capture — the quantity is negative, not
+merely small — so no algorithm, architecture, training budget, or graph
+encoder can extract a defensible result. For scale, the loss is −0.083% where
+the Stage F1 attribution noise floor was ±0.001–0.004%.
 
 It is also the routing failure repeating in a new setting: a simple baseline
-banks the value, and the learned component has nothing left to attribute.
-The overtime channel was supposed to escape that, and as configured it does
-not.
+banks the value, and the learned component has nothing left to attribute. The
+overtime channel was supposed to escape that, and as configured it does not.
 
 Measure and gate implemented in `evaluation/state_dependence_value.py`
-(9 tests). Applied to these rows it classifies the channel
+(15 tests, including one where pure noise produces a spuriously positive
+in-sample oracle and a correctly negative prospective value). The gate refuses
+a report that carries no prospective value rather than falling back to the
+optimistic figure. Applied to these rows it classifies the channel
 `channel_captured_by_constant_policy`; report at
 `experiments/evidence/continuous_overtime_headroom_e2/state_dependence.json`.
 
@@ -136,8 +148,11 @@ output root, in this order:
 1. **Amend the E2 gate before re-calibrating anything.** Make the value of
    state-dependence the *primary* criterion, with the headroom criterion
    demoted to a necessary-but-insufficient precondition. Proposed threshold:
-   `value_of_state_dependence_fraction ≥ 0.005` (0.5%), roughly 100× the
-   attribution noise floor, plus an interior-best-arm fraction ≥ 0.30.
+   `prospective_value_of_state_dependence_fraction ≥ 0.005` (0.5%), roughly
+   100× the attribution noise floor, plus an interior-best-arm fraction ≥ 0.30.
+   The criterion must be the prospective value, never the in-sample oracle:
+   on this very screen the oracle reads +0.0054% while the honest
+   out-of-sample value is −0.083%.
 
    The current gate asks "is there headroom over the anchor?" and a corner
    solution answered yes. The study needs headroom *a learned policy could

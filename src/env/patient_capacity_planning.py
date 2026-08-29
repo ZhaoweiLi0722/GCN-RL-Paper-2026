@@ -315,9 +315,19 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         #    the therapy completes manufacturing and is infused.
         idle_bioreactors = self.bioreactors[:, 0]
         waiting = self._waiting_counts()
-        production = np.floor(
-            np.minimum.reduce((waiting, idle_bioreactors, self.reagents))
-        ).astype(float)
+        if self.config.enable_overtime_control:
+            overtime_fraction, overtime_surge = self._decode_overtime(normalized)
+            production = np.floor(
+                np.minimum.reduce(
+                    (waiting, idle_bioreactors + overtime_surge, self.reagents)
+                )
+            ).astype(float)
+            base_production = np.minimum(production, idle_bioreactors)
+            overtime_production = production - base_production
+        else:
+            production = np.floor(
+                np.minimum.reduce((waiting, idle_bioreactors, self.reagents))
+            ).astype(float)
         started_patients = self._start_production(production)
 
         # 2) During the epoch, waiting and in-production patients both
@@ -342,9 +352,26 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         #    identity-bound and cannot be pooled.
         next_reagents = self.reagents - production + replenishment
         next_bioreactors = np.zeros_like(self.bioreactors)
-        next_bioreactors[:, 0] = (
-            self.bioreactors[:, 0] - production + completed_counts + lost_manufacturing
-        )
+        if self.config.enable_overtime_control:
+            # Borrowed-capacity accounting: overtime starts occupy no physical
+            # reactor, so returning reactors first repay the outstanding
+            # overtime counter (the borrowed shift ends) before rejoining the
+            # idle pool (spec 2026-08-29-continuous-overtime-control).
+            returning = completed_counts + lost_manufacturing
+            overtime_repaid = np.minimum(self.overtime_outstanding, returning)
+            next_bioreactors[:, 0] = (
+                self.bioreactors[:, 0]
+                - base_production
+                + returning
+                - overtime_repaid
+            )
+            self.overtime_outstanding = (
+                self.overtime_outstanding - overtime_repaid + overtime_production
+            )
+        else:
+            next_bioreactors[:, 0] = (
+                self.bioreactors[:, 0] - production + completed_counts + lost_manufacturing
+            )
         for i in range(n):
             for stage in range(1, self.config.production_lead_time):
                 next_bioreactors[i, stage] = float(
@@ -466,8 +493,18 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             specimen_transfer_cost=specimen_transfer_cost,
             capacity_transfer_cost=capacity_transfer_cost,
             reagent_transfer_cost=reagent_transfer_cost,
+            overtime_surge=(
+                overtime_surge if self.config.enable_overtime_control else None
+            ),
         )
         base_cost = float(sum(operating_cost_components.values()))
+        if self.config.enable_overtime_control:
+            if self.config.enable_overtime_fatigue:
+                self.overtime_fatigue = (
+                    self.config.overtime_fatigue_decay * self.overtime_fatigue
+                    + overtime_fraction
+                )
+            self.previous_overtime_fraction = overtime_fraction.copy()
         patient_cost_components = {
             "patient_loss_cost": self.env_config.weight_patient_lost
             * float(patients_lost.sum()),
@@ -594,6 +631,11 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 + capacity_transfer_cost
             ),
         }
+        if self.config.enable_overtime_control:
+            info["overtime_fraction"] = overtime_fraction.copy()
+            info["overtime_surge"] = overtime_surge.copy()
+            info["overtime_production"] = overtime_production.copy()
+            info["overtime_outstanding"] = self.overtime_outstanding.copy()
         info.update(self._performance_info())
         return self.observation(), -cost, done, info
 
@@ -1160,6 +1202,13 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 "supplier_disruption_rate",
             )
         }
+        if self.config.enable_overtime_control:
+            for name in (
+                "previous_overtime_fraction",
+                "overtime_outstanding",
+                "overtime_fatigue",
+            ):
+                arrays[name] = np.asarray(getattr(self, name)).copy()
         scalars = {
             name: copy.deepcopy(getattr(self, name))
             for name in (
@@ -1189,9 +1238,15 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 "_next_patient_sequence",
             )
         }
+        snapshot_extras: dict[str, Any] = {}
+        if self.config.enable_overtime_control:
+            # Key present only when enabled so flag-off snapshots stay
+            # byte-identical to the pre-overtime format.
+            snapshot_extras["enable_overtime_control"] = True
         return {
             "format_version": 1,
             "num_facilities": int(self.config.num_facilities),
+            **snapshot_extras,
             "enable_specimen_routing": bool(
                 self.env_config.enable_specimen_routing
             ),
@@ -1243,6 +1298,7 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 "include_specimen_routing_state",
                 self.env_config.include_specimen_routing_state,
             ),
+            ("enable_overtime_control", self.config.enable_overtime_control),
         ):
             if bool(state.get(key)) != bool(expected):
                 raise ValueError(f"Patient-environment state contract mismatch: {key}")

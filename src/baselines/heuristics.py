@@ -98,7 +98,16 @@ class CapacityHeuristicPolicy:
             raise ValueError("Heuristic policies currently require action_mode='facility_net'")
 
         action = self._facility_net_action(env)
+        if getattr(env.config, "enable_overtime_control", False):
+            action = np.concatenate(
+                [np.asarray(action, dtype=np.float32), self._overtime_action_block(env)]
+            )
         return project_action(action, env_state=env, action_space_info=env.action_size).action
+
+    def _overtime_action_block(self, env: CapacityPlanningEnv) -> np.ndarray:
+        """Raw overtime block in [-1, 1]; the default heuristic uses none."""
+
+        return np.full(env.config.num_facilities, -1.0, dtype=np.float32)
 
     def observe(self, *args, **kwargs) -> None:
         return None
@@ -382,6 +391,111 @@ class ShieldedMeanDemandLookahead2Policy(ShieldedPatientPriorityMyopicPolicy):
         return "mdl2"
 
 
+def _overtime_shortfall_and_headroom(
+    env: CapacityPlanningEnv,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Reagent-sufficient capacity shortfall and per-facility surge headroom.
+
+    Because production is ``min(waiting, idle + surge, reagents)``, surging
+    while reagents bind burns overtime cost for zero production, so the usable
+    shortfall is capped by the reagent bound
+    (spec 2026-08-29-continuous-overtime-control).
+    """
+
+    waiting = env.waiting_counts() if hasattr(env, "waiting_counts") else env.specimens
+    idle = env.bioreactors[:, 0]
+    usable = np.minimum(np.asarray(waiting, dtype=float), env.reagents)
+    shortfall = np.maximum(usable - idle, 0.0)
+    headroom = np.asarray(env.overtime_surge_headroom, dtype=float)
+    return shortfall, headroom
+
+
+def _overtime_block_from_surge(
+    surge_units: np.ndarray, headroom: np.ndarray
+) -> np.ndarray:
+    fraction = np.divide(
+        surge_units,
+        headroom,
+        out=np.zeros_like(surge_units),
+        where=headroom > 0.0,
+    )
+    return np.clip(2.0 * fraction - 1.0, -1.0, 1.0).astype(np.float32)
+
+
+class OvertimeMeanDemandLookahead2Policy(MeanDemandLookahead2Policy):
+    """MDL-2-OT: MDL-2 plus a closed-form myopic overtime rule.
+
+    Surges only when (a) eligible-waiting exceeds idle capacity, (b) reagents
+    suffice to use the surge, and (c) the modeled marginal shortage/patient
+    risk exceeds the marginal convex overtime cost. No simulation at decision
+    time.
+    """
+
+    algorithm = "mdl2_ot"
+
+    def _overtime_action_block(self, env: CapacityPlanningEnv) -> np.ndarray:
+        shortfall, headroom = _overtime_shortfall_and_headroom(env)
+        target = np.minimum(shortfall, headroom)
+        # Marginal modeled benefit of one surge unit: avoided bioreactor
+        # shortage, plus patient-loss pressure when the environment carries a
+        # patient layer.
+        benefit = np.full_like(target, float(env.config.costs.bioreactor_shortage))
+        if hasattr(env, "at_risk_counts") and hasattr(env, "waiting_counts"):
+            waiting = np.maximum(np.asarray(env.waiting_counts(), dtype=float), 1.0)
+            urgency = np.clip(np.asarray(env.at_risk_counts(), dtype=float) / waiting, 0.0, 1.0)
+            weight_patient_lost = float(
+                getattr(getattr(env, "env_config", None), "weight_patient_lost", 0.0)
+            )
+            benefit = benefit + weight_patient_lost * urgency
+        marginal_cost = (
+            float(env.config.weight_overtime_linear)
+            + 2.0 * float(env.config.weight_overtime_quadratic) * target
+        )
+        surge_units = np.where(benefit >= marginal_cost, target, 0.0)
+        return _overtime_block_from_surge(surge_units, headroom)
+
+
+class OvertimeUrgencyAwareMyopicPolicy(UrgencyAwareMyopicPolicy):
+    """uMYO-OT: urgency surge mapped onto the continuous overtime channel."""
+
+    algorithm = "umyo_ot"
+
+    def _overtime_action_block(self, env: CapacityPlanningEnv) -> np.ndarray:
+        shortfall, headroom = _overtime_shortfall_and_headroom(env)
+        if not hasattr(env, "at_risk_counts"):
+            return _overtime_block_from_surge(np.zeros_like(shortfall), headroom)
+        waiting = np.maximum(np.asarray(env.waiting_counts(), dtype=float), 1.0)
+        urgency = np.clip(
+            (np.asarray(env.at_risk_counts(), dtype=float)
+             + np.asarray(env.near_expiry_counts(), dtype=float)) / waiting,
+            0.0,
+            1.0,
+        )
+        surge_units = np.minimum(shortfall, headroom) * urgency
+        return _overtime_block_from_surge(surge_units, headroom)
+
+
+class StaticOvertimePolicy(MeanDemandLookahead2Policy):
+    """static_ot: MDL-2 plus a constant overtime fraction (tuned-scalar reference)."""
+
+    algorithm = "static_ot"
+
+    def __init__(self, state_dim=None, action_dim=None, config=None):
+        super().__init__(state_dim, action_dim, config)
+        config = config or {}
+        self.static_overtime_fraction = float(
+            config.get("static_overtime_fraction", 0.0)
+        )
+        if not 0.0 <= self.static_overtime_fraction <= 1.0:
+            raise ValueError("static_overtime_fraction must be within [0, 1]")
+
+    def _overtime_action_block(self, env: CapacityPlanningEnv) -> np.ndarray:
+        n = env.config.num_facilities
+        return np.full(
+            n, 2.0 * self.static_overtime_fraction - 1.0, dtype=np.float32
+        )
+
+
 HEURISTIC_POLICIES = {
     "myo": MyopicPolicy,
     "iso": IsolatedPolicy,
@@ -394,6 +508,9 @@ HEURISTIC_POLICIES = {
     "pmyo": PatientPriorityMyopicPolicy,
     "mdl2_shield": ShieldedMeanDemandLookahead2Policy,
     "pmyo_shield": ShieldedPatientPriorityMyopicPolicy,
+    "mdl2_ot": OvertimeMeanDemandLookahead2Policy,
+    "umyo_ot": OvertimeUrgencyAwareMyopicPolicy,
+    "static_ot": StaticOvertimePolicy,
 }
 
 

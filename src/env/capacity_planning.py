@@ -92,6 +92,18 @@ class CapacityPlanningConfig:
     capacity_edges: Sequence[Edge] | None = None
     resource_edges: Sequence[Edge] | None = None
     costs: CostParameters = CostParameters()
+    # Continuous overtime control (spec 2026-08-29-continuous-overtime-control).
+    # Flag-off behavior is bit-identical to the pre-overtime environment.
+    enable_overtime_control: bool = False
+    max_overtime_fraction: float = 0.3
+    weight_overtime_linear: float = 15_000.0
+    weight_overtime_quadratic: float = 5_000.0
+    enable_overtime_fatigue: bool = False
+    overtime_fatigue_decay: float = 0.8
+    overtime_fatigue_cost_scale: float = 1.0
+    # Decision B is dormant: the flag freezes the config surface but activation
+    # is rejected until separately authorized by change control.
+    enable_production_throttle: bool = False
 
 
 class CapacityPlanningEnv:
@@ -228,11 +240,20 @@ class CapacityPlanningEnv:
             self.features_per_facility += 3 * int(
                 self.config.demand_sequence_length
             )
+        if self.config.enable_overtime_control:
+            # [previous u_ot, outstanding overtime, static surge headroom]
+            # plus fatigue when enabled (spec 2026-08-29).
+            self.features_per_facility += 3 + int(self.config.enable_overtime_fatigue)
         self.observation_size = (
             n * self.features_per_facility + int(self.config.include_time_state)
         )
+        self.overtime_surge_headroom = (
+            self.config.max_overtime_fraction * self.initial_idle_bioreactors
+            if self.config.enable_overtime_control
+            else np.zeros(n, dtype=float)
+        )
         if self.config.action_mode == "facility_net":
-            self.action_size = 4 * n
+            self.action_size = 4 * n + (n if self.config.enable_overtime_control else 0)
         else:
             self.action_size = (
                 n + len(self.specimen_edges) + len(self.capacity_edges) + len(self.resource_edges)
@@ -273,6 +294,9 @@ class CapacityPlanningEnv:
         self.cumulative_bioreactor_capacity = 0.0
         self.reagent_shortage_steps = 0
         self.bioreactor_shortage_steps = 0
+        self.previous_overtime_fraction = np.zeros(n, dtype=float)
+        self.overtime_outstanding = np.zeros(n, dtype=float)
+        self.overtime_fatigue = np.zeros(n, dtype=float)
         return self.observation()
 
     def enable_train_randomization(
@@ -338,6 +362,8 @@ class CapacityPlanningEnv:
         demand_sequence, error_sequence, sequence_mask = (
             self._demand_sequence_features()
         )
+        if self.config.enable_overtime_control:
+            overtime_features = self._overtime_features()
         for i in range(self.config.num_facilities):
             row_parts = [
                 np.array([self.demand[i], self.specimens[i], self.reagents[i]], dtype=float),
@@ -375,6 +401,8 @@ class CapacityPlanningEnv:
                         )
                     )
                 )
+            if self.config.enable_overtime_control:
+                row_parts.append(overtime_features[i])
             rows.append(np.concatenate(tuple(row_parts)))
         observation = np.concatenate(rows).astype(np.float32)
         if self.config.include_time_state:
@@ -444,6 +472,12 @@ class CapacityPlanningEnv:
                 sequence_mask[:, index]
                 for index in range(sequence_mask.shape[1])
             )
+        if self.config.enable_overtime_control:
+            overtime_features = self._overtime_features()
+            facility_columns.extend(
+                overtime_features[:, index]
+                for index in range(overtime_features.shape[1])
+            )
         time_feature_index = None
         if self.config.include_time_state:
             time_feature_index = len(facility_columns)
@@ -490,6 +524,8 @@ class CapacityPlanningEnv:
         if self.config.action_mode == "facility_net":
             n = self.config.num_facilities
             action[3 * n : 4 * n] = -1.0
+            if self.config.enable_overtime_control:
+                action[4 * n : 5 * n] = -1.0  # raw -1 maps to u_ot = 0
         else:
             action[: self.config.num_facilities] = -1.0
         return action
@@ -681,11 +717,28 @@ class CapacityPlanningEnv:
             * self.max_reagent_replenishment
             * supplier_available
         )
-        production = np.minimum.reduce((self.specimens, self.bioreactors[:, 0], self.reagents))
-        next_specimens = self.specimens - production + current_demand
-        next_reagents = self.reagents - production + replenishment
-        next_bioreactors = np.zeros_like(self.bioreactors)
-        next_bioreactors[:, 0] = self.bioreactors[:, 0] - production + self.bioreactors[:, 1]
+        if self.config.enable_overtime_control:
+            overtime_fraction, overtime_surge = self._decode_overtime(normalized)
+            idle_now = self.bioreactors[:, 0]
+            production = np.minimum.reduce(
+                (self.specimens, idle_now + overtime_surge, self.reagents)
+            )
+            base_production = np.minimum(production, idle_now)
+            overtime_production = production - base_production
+            returning = self.bioreactors[:, 1]
+            overtime_repaid = np.minimum(self.overtime_outstanding, returning)
+            next_specimens = self.specimens - production + current_demand
+            next_reagents = self.reagents - production + replenishment
+            next_bioreactors = np.zeros_like(self.bioreactors)
+            next_bioreactors[:, 0] = (
+                idle_now - base_production + returning - overtime_repaid
+            )
+        else:
+            production = np.minimum.reduce((self.specimens, self.bioreactors[:, 0], self.reagents))
+            next_specimens = self.specimens - production + current_demand
+            next_reagents = self.reagents - production + replenishment
+            next_bioreactors = np.zeros_like(self.bioreactors)
+            next_bioreactors[:, 0] = self.bioreactors[:, 0] - production + self.bioreactors[:, 1]
         if self.config.production_lead_time > 2:
             next_bioreactors[:, 1:-1] = self.bioreactors[:, 2:]
         next_bioreactors[:, -1] = production
@@ -783,8 +836,21 @@ class CapacityPlanningEnv:
                 reagent_flows,
                 reagent_net,
             ),
+            overtime_surge=(
+                overtime_surge if self.config.enable_overtime_control else None
+            ),
         )
         cost = float(sum(cost_components.values()))
+        if self.config.enable_overtime_control:
+            self.overtime_outstanding = (
+                self.overtime_outstanding - overtime_repaid + overtime_production
+            )
+            if self.config.enable_overtime_fatigue:
+                self.overtime_fatigue = (
+                    self.config.overtime_fatigue_decay * self.overtime_fatigue
+                    + overtime_fraction
+                )
+            self.previous_overtime_fraction = overtime_fraction.copy()
 
         self._update_running_metrics(current_demand, production, self.specimens, self.bioreactors)
         if np.any(under_reagents > 0):
@@ -822,8 +888,38 @@ class CapacityPlanningEnv:
             "under_reagents": under_reagents.copy(),
             "under_bioreactors": under_bioreactors.copy(),
         }
+        if self.config.enable_overtime_control:
+            info["overtime_fraction"] = overtime_fraction.copy()
+            info["overtime_surge"] = overtime_surge.copy()
+            info["overtime_production"] = overtime_production.copy()
+            info["overtime_outstanding"] = self.overtime_outstanding.copy()
         info.update(self._performance_info())
         return self.observation(), -cost, done, info
+
+    def _decode_overtime(self, normalized: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """Map the overtime action block to (u_ot, committed surge).
+
+        Raw ``[-1, 1]`` values map affinely to ``u_ot ∈ [0, 1]``; the committed
+        surge is ``u_ot * max_overtime_fraction * initial_idle_bioreactors``
+        (spec 2026-08-29-continuous-overtime-control).
+        """
+
+        n = self.config.num_facilities
+        overtime_fraction = (normalized[4 * n : 5 * n] + 1.0) / 2.0
+        overtime_surge = overtime_fraction * self.overtime_surge_headroom
+        return overtime_fraction, overtime_surge
+
+    def _overtime_features(self) -> np.ndarray:
+        """Per-facility overtime feature block appended to observations."""
+
+        columns = [
+            self.previous_overtime_fraction,
+            self.overtime_outstanding,
+            self.overtime_surge_headroom,
+        ]
+        if self.config.enable_overtime_fatigue:
+            columns.append(self.overtime_fatigue)
+        return np.column_stack(tuple(columns))
 
     def _operating_cost_components(
         self,
@@ -836,11 +932,12 @@ class CapacityPlanningEnv:
         specimen_transfer_cost: float,
         capacity_transfer_cost: float,
         reagent_transfer_cost: float,
+        overtime_surge: np.ndarray | None = None,
     ) -> dict[str, float]:
         """Return an additive decomposition of one epoch's operating cost."""
 
         costs = self.config.costs
-        return {
+        components = {
             "reagent_purchase_cost": costs.reagent_purchase * float(replenishment.sum()),
             "reagent_holding_cost": costs.reagent_holding * float(idle_reagents.sum()),
             "reagent_shortage_cost": costs.reagent_shortage * float(under_reagents.sum()),
@@ -852,6 +949,23 @@ class CapacityPlanningEnv:
             "capacity_transfer_cost": float(capacity_transfer_cost),
             "reagent_transfer_cost": float(reagent_transfer_cost),
         }
+        if overtime_surge is not None:
+            # Charged on the committed surge so the cost stays smooth and
+            # strictly monotone in u_ot even when the integer production bound
+            # does not move (spec 2026-08-29-continuous-overtime-control).
+            linear = self.config.weight_overtime_linear
+            if self.config.enable_overtime_fatigue:
+                linear = linear * (
+                    1.0
+                    + self.config.overtime_fatigue_cost_scale * self.overtime_fatigue
+                )
+            components["overtime_cost"] = float(
+                np.sum(
+                    linear * overtime_surge
+                    + self.config.weight_overtime_quadratic * overtime_surge**2
+                )
+            )
+        return components
 
     def _validate_config(self) -> None:
         if self.config.num_facilities < 1:
@@ -905,6 +1019,32 @@ class CapacityPlanningEnv:
             raise ValueError("geographic_neighbor_k must be positive")
         if self.config.clinic_coordinates is not None:
             normalize_coordinates(self.config.clinic_coordinates, self.config.num_facilities)
+        if self.config.enable_production_throttle:
+            raise ValueError(
+                "enable_production_throttle is dormant (Decision B); activation "
+                "requires its own change-control entry per "
+                "specs/2026-08-29-continuous-overtime-control"
+            )
+        if not 0.0 <= self.config.max_overtime_fraction <= 1.0:
+            raise ValueError("max_overtime_fraction must be within [0, 1]")
+        if self.config.enable_overtime_control:
+            if self.config.action_mode != "facility_net":
+                raise ValueError(
+                    "enable_overtime_control requires action_mode='facility_net'"
+                )
+            if self.config.weight_overtime_linear <= 0.0:
+                raise ValueError("weight_overtime_linear must be positive")
+            if self.config.weight_overtime_quadratic <= 0.0:
+                raise ValueError("weight_overtime_quadratic must be positive")
+        if self.config.enable_overtime_fatigue:
+            if not self.config.enable_overtime_control:
+                raise ValueError(
+                    "enable_overtime_fatigue requires enable_overtime_control"
+                )
+            if not 0.0 < self.config.overtime_fatigue_decay < 1.0:
+                raise ValueError("overtime_fatigue_decay must be within (0, 1)")
+            if self.config.overtime_fatigue_cost_scale < 0.0:
+                raise ValueError("overtime_fatigue_cost_scale must be nonnegative")
         if self.config.geographic_transfer_cost_scale < 0.0:
             raise ValueError("geographic_transfer_cost_scale must be nonnegative")
         if self.config.geographic_transfer_speed_mph <= 0.0:

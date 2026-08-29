@@ -13,6 +13,7 @@ from pathlib import Path
 
 from evaluation.audit_overtime_headroom_e2 import (
     DEFAULT_CONFIG,
+    assert_row_provenance,
     gate_decision,
     load_screen_config,
     smoke_config,
@@ -94,6 +95,48 @@ class E2ConfigTest(unittest.TestCase):
         self.assertNotEqual(smoke["output_root"], CONFIG["output_root"])
         self.assertEqual(len(smoke["state_generation"]["seeds"]), 1)
         self.assertEqual(len(smoke["replications"]["discovery_seeds"]), 1)
+
+
+class E2ProvenanceGuardTest(unittest.TestCase):
+    """The guard must interrogate the live environment, not a self-comparison.
+
+    F0/G0/G1 recorded scenario labels their reconstructed environments did not
+    match. A check of a declaration against itself can never fire, so this
+    asserts the guard rejects both a scenario mismatch and a lost overtime flag.
+    """
+
+    class _FakeConfig:
+        def __init__(self, overtime: bool) -> None:
+            self.enable_overtime_control = overtime
+
+    class _FakeEnv:
+        def __init__(self, scenario, overtime=True) -> None:
+            self.scenario_name = scenario
+            self.config = E2ProvenanceGuardTest._FakeConfig(overtime)
+
+    def test_accepts_matching_environment(self) -> None:
+        assert_row_provenance(self._FakeEnv("routing_abrupt_regime_shift"),
+                              "routing_abrupt_regime_shift")
+
+    def test_rejects_scenario_mismatch(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "provenance mismatch"):
+            assert_row_provenance(
+                self._FakeEnv("routing_nominal_history"),
+                "routing_abrupt_regime_shift",
+            )
+
+    def test_rejects_missing_scenario_attribute(self) -> None:
+        env = self._FakeEnv("x")
+        del env.scenario_name
+        with self.assertRaisesRegex(RuntimeError, "provenance mismatch"):
+            assert_row_provenance(env, "routing_abrupt_regime_shift")
+
+    def test_rejects_lost_overtime_flag(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "enable_overtime_control"):
+            assert_row_provenance(
+                self._FakeEnv("routing_abrupt_regime_shift", overtime=False),
+                "routing_abrupt_regime_shift",
+            )
 
 
 class E2GateMathTest(unittest.TestCase):

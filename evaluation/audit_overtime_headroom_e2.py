@@ -48,13 +48,14 @@ def main() -> None:
     parser.add_argument("--output-root")
     args = parser.parse_args()
 
-    config = load_screen_config(Path(args.config))
+    config_path = Path(args.config)
+    config = load_screen_config(config_path)
     if args.smoke:
         config = smoke_config(config)
     if args.output_root:
         config["output_root"] = args.output_root
     validate_config(config)
-    run_screen(config)
+    run_screen(config, config_path=config_path)
 
 
 def load_screen_config(path: Path) -> dict[str, Any]:
@@ -254,12 +255,34 @@ def generate_states(
     return states
 
 
+def assert_row_provenance(env, scenario_name: str) -> None:
+    """Guard the environment that actually produces a row.
+
+    The F0/G0/G1 audits recorded scenario labels that their reconstructed
+    environments did not match. Checking a declaration against itself cannot
+    catch that; the check has to interrogate the live object, and it has to run
+    for every row rather than once per scenario.
+    """
+
+    built = getattr(env, "scenario_name", None)
+    if built != scenario_name:
+        raise RuntimeError(
+            f"scenario provenance mismatch: row declares {scenario_name!r}, "
+            f"environment reports {built!r}"
+        )
+    if not env.config.enable_overtime_control:
+        raise RuntimeError(
+            f"environment for {scenario_name!r} lost enable_overtime_control"
+        )
+
+
 def evaluate_state(
     env,
     policy,
     state: dict[str, Any],
     arms: list[tuple[str, float | None]],
     stream_seeds: dict[str, list[int]],
+    scenario_name: str,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for stream, seeds in stream_seeds.items():
@@ -267,6 +290,7 @@ def evaluate_state(
             for arm_name, rung in arms:
                 env.load_state_dict(state["snapshot"])
                 env.rng = np.random.default_rng(int(crn_seed))
+                assert_row_provenance(env, scenario_name)
                 if rung is None:
                     action = anchor_action(policy, env)
                 else:
@@ -394,7 +418,7 @@ def summarize_scenario(
     }
 
 
-def run_screen(config: dict[str, Any]) -> dict[str, Any]:
+def run_screen(config: dict[str, Any], config_path: Path | None = None) -> dict[str, Any]:
     plan = load_benchmark_plan(Path(config["plan"]))
     scenarios = select_scenarios(plan, config["scenarios"])
     policy = get_heuristic_class(str(config["anchor_algorithm"]))()
@@ -421,14 +445,12 @@ def run_screen(config: dict[str, Any]) -> dict[str, Any]:
             env = build_scenario_env(env_dict, int(state_seed))
             for state in states:
                 policy.reset()
-                rows = evaluate_state(env, policy, state, arms, stream_seeds)
+                rows = evaluate_state(
+                    env, policy, state, arms, stream_seeds, scenario["name"]
+                )
                 for row in rows:
                     row["scenario"] = scenario["name"]
                     row["scenario_declaration_sha256"] = declared_digest
-                    if scenario_declaration_digest(env_dict) != declared_digest:
-                        raise RuntimeError(
-                            f"scenario declaration drifted for {scenario['name']}"
-                        )
                 scenario_rows.extend(rows)
                 state_ids.append(state["state_id"])
         all_rows.extend(scenario_rows)
@@ -460,6 +482,10 @@ def run_screen(config: dict[str, Any]) -> dict[str, Any]:
         "scenario_summaries": scenario_summaries,
         "decision": decision,
         "row_count": len(all_rows),
+        "config_sha256": (
+            sha256_path(config_path) if config_path is not None else None
+        ),
+        "plan_sha256": sha256_path(Path(config["plan"])),
     }
     write_outputs(config, all_rows, summary)
     return summary

@@ -1174,3 +1174,36 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `experiments/evidence/continuous_overtime_headroom_e2/`
   (summary carries config/plan/rows SHA256; `state_dependence.json` carries
   the report and gate decision).
+
+### 2026-08-29: Stage E2b re-calibration PASSED; Stage E3 authorized
+
+- Executed under the approved amendment with a new config name
+  (`experiments/configs/continuous_overtime_headroom_e2b.json`) and output
+  root. The Stage E2 result stands as recorded and was not revised.
+- Calibration: `max_overtime_fraction` 0.3 -> 0.6 and
+  `weight_overtime_quadratic` 5,000 -> 20,000, moving the marginal-cost /
+  averted-shortage crossing from outside the admissible range (s*=1.76) to
+  inside it (s*=0.88, 29% of full surge). All other settings unchanged.
+- Headroom precondition passed in both non-nominal scenarios (1.00, 1.00).
+- Primary criterion passed: prospective value of state-dependence
+  **+0.6446%** of anchor cost against a 0.5% gate, with interior best-arm
+  fraction 0.926 against a 0.30 gate. Classification
+  `state_dependent_headroom_established`.
+- The result carries four independent indications of signal rather than
+  selection noise: in-sample (+0.6677%) and prospective (+0.6446%) values
+  nearly coincide where E2's sign flipped; discovery/validation best-arm
+  agreement is 96.3% (the failed routing G1 gate required 70% and achieved
+  54.5%); 8 distinct rungs are optimal somewhere; and the closed-form MDL-2-OT
+  anchor is beaten by a constant, which is in turn beaten by state-dependence.
+- Not yet established: generalization to unseen states from observable
+  features. The per-state optimum does not track the number of capacity-bound
+  clinics, so the driver is not a simple count. Stage E4's held-out-seed
+  ranking is the test that separates a learnable signal from one that depends
+  on realized future demand, and it must pass before any actor is trained.
+- **Stage E3 (label stability) is authorized on this calibration.** Stage E5
+  still requires its own specification and sign-off. Training remains
+  unauthorized.
+- Zhaowei's review of the amendment and of this result remains outstanding.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_headroom_e2b/`,
+  `experiments/evidence/continuous_overtime_headroom_e2b/`.

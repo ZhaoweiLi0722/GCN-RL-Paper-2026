@@ -210,3 +210,117 @@ weakens over the remaining horizon. This matches the H0/G0/G1 precedent.
 Tightening it would require per-stream RNG partitioning. It does not affect
 the corner-solution finding, which is a monotone effect far larger than the
 pairing noise.
+
+---
+
+## Stage E2b: re-calibrated headroom screen — 2026-08-29
+
+### Decision
+
+**PASSED both criteria: `state_dependent_headroom_established`. Stage E3 is
+authorized.**
+
+The re-calibration was executed under the approved change-control amendment,
+with a new config name (`continuous_overtime_headroom_e2b.json`) and output
+root. The E2 result stands as recorded; nothing about it was revised.
+
+The author of the amendment predicted this run would fail. It did not, and the
+evidence that it genuinely passed is stronger than a single threshold
+crossing — see "Why this looks like signal" below.
+
+### Calibration change
+
+| Parameter | E2 | E2b |
+| --- | ---: | ---: |
+| `max_overtime_fraction` | 0.3 | 0.6 |
+| `weight_overtime_quadratic` | 5,000 | 20,000 |
+| Surge range (reactors/clinic) | 0 – 1.5 | 0 – 3.0 |
+| Marginal cost crosses the 50,274 shortage benefit at | s\*=1.76 (outside range) | s\*=0.88 (**inside**, 29% of full surge) |
+
+Everything else — scenarios, states, ladder, CRN streams, clinical rule,
+headroom threshold — is unchanged from E2.
+
+### Result
+
+2,592 rows, 27 states, 4m42s. Headroom precondition passed in both non-nominal
+scenarios (abrupt shift 1.00, compound stress 1.00; nominal 0.89).
+
+| Policy | Total validation cost |
+| --- | ---: |
+| MDL-2-OT anchor (closed-form rule) | 14,059.5M |
+| Best **constant** rung (`u_0.80`) | 13,772.3M |
+| **Prospective** per-state (chosen on discovery, scored on validation) | 13,681.7M |
+| In-sample oracle | 13,678.4M |
+
+| Criterion | Measured | Gate | |
+| --- | ---: | ---: | --- |
+| Prospective value of state-dependence | **+0.6446%** | ≥ 0.5% | PASS |
+| Interior best-arm fraction | **0.926** | ≥ 0.30 | PASS |
+
+Totals are higher than E2 in absolute terms because overtime is now priced
+roughly four times higher at the margin; the comparison that matters is
+between policies within this calibration.
+
+### Why this looks like signal, not noise
+
+Four independent indications, and the first is the important one:
+
+1. **The in-sample and prospective values nearly coincide**: +0.6677% versus
+   **+0.6446%**, a gap of 0.023 points. In E2 the same comparison read
+   +0.0054% versus −0.083% — the sign flipped, which is the signature of
+   selecting on noise. Here, selecting each state's rung on independent data
+   costs almost nothing relative to the optimistic bound, which is what a real
+   effect looks like.
+2. **Discovery/validation best-arm agreement is 96.3%** across 27 states. The
+   Stage G1 gate that failed on the routing channel required 70%; the routing
+   channel managed 54.5%.
+3. **The optimum is genuinely spread**: 8 distinct rungs are optimal somewhere
+   (`u_0.30` ×3, `u_0.40` ×6, `u_0.50` ×8, `u_0.60` ×1, `u_0.70` ×1,
+   `u_0.80` ×1, `u_0.90` ×5, `u_1.00` ×2), interior in 92.6% of states. E2 had
+   2 distinct arms and 3.7% interior.
+4. **The closed-form anchor is beaten by a constant**, and the constant is
+   beaten by state-dependence: 14,059.5M → 13,772.3M → 13,681.7M. The
+   MDL-2-OT rule is not capturing the state-dependent structure, so this is
+   not a case where a better heuristic trivially absorbs the gain.
+
+For scale, the prospective value (0.64%) is comparable to the manuscript's
+headline routing result (0.658% versus MDL-2), and roughly 150× the Stage F1
+attribution noise floor.
+
+### What this does NOT yet establish
+
+The measured quantity is the value of choosing a rung **per state**, where the
+27 states are known and each is scored under held-out replication noise. That
+is not the same as a policy that **generalizes to unseen states** from
+observable features. Two gaps remain, and they are exactly what the remaining
+gates test:
+
+- The per-state optimum does not track the obvious summary statistic. Grouping
+  states by their best rung shows no clean ordering in the number of
+  capacity-bound clinics (means 17.3, 19.0, 18.1, 19.0, 14.0, 13.0, 19.6,
+  19.5 across `u_0.30` … `u_1.00`). Whatever drives the optimum is not a
+  one-dimensional count, which is encouraging for a graph encoder and a
+  warning against assuming a simple rule will do.
+- The value could depend on realized future demand rather than on anything
+  observable at decision time. **Stage E4's held-out-seed ranking is the test
+  that separates those cases**, and it must pass before any actor is trained.
+
+The per-state penalty for simply using the best constant is a median of 3.47M
+(max 8.58M), so the effect is not carried by one outlier state.
+
+### Recommendation
+
+Proceed to Stage E3 (label stability) on this calibration, then E4. Stage E5
+still requires its own specification and sign-off, and the prohibition on
+training before E4 passes is unchanged.
+
+Zhaowei's review of both the amendment and this result remains outstanding.
+
+### Evidence
+
+- Rows: `results/continuous_overtime_headroom_e2b/headroom_rows.csv`
+- Summary: `results/continuous_overtime_headroom_e2b/summary.json`
+  (config/plan/rows SHA256)
+- State-dependence report:
+  `experiments/evidence/continuous_overtime_headroom_e2b/state_dependence.json`
+- Config: `experiments/configs/continuous_overtime_headroom_e2b.json`

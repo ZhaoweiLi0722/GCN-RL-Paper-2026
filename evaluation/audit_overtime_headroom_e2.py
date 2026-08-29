@@ -33,6 +33,11 @@ from evaluation.run_full_benchmark import (
     make_scenario_env_config,
     select_scenarios,
 )
+from evaluation.state_dependence_value import (
+    state_dependence_gate,
+    state_dependence_value,
+    validation_means,
+)
 from src.baselines.heuristics import get_heuristic_class
 from src.rl.experiment import build_env
 
@@ -464,7 +469,27 @@ def run_screen(config: dict[str, Any], config_path: Path | None = None) -> dict[
         )
 
     validate_rows(config, all_rows, len(arms), stream_seeds)
-    decision = gate_decision(config, scenario_summaries)
+    state_dependence = None
+    if "state_dependence_minimum_fraction" in config["gates"]:
+        report = state_dependence_value(
+            validation_means(all_rows, stream="validation"),
+            selection_means=validation_means(all_rows, stream="discovery"),
+        )
+        state_dependence = {
+            "report": report,
+            "gate": state_dependence_gate(
+                report,
+                minimum_fraction=float(
+                    config["gates"]["state_dependence_minimum_fraction"]
+                ),
+                minimum_interior_fraction=float(
+                    config["gates"].get(
+                        "state_dependence_minimum_interior_fraction", 0.0
+                    )
+                ),
+            ),
+        }
+    decision = gate_decision(config, scenario_summaries, state_dependence)
     summary = {
         "name": config["name"],
         "experimental_role": config["experimental_role"],
@@ -492,8 +517,19 @@ def run_screen(config: dict[str, Any], config_path: Path | None = None) -> dict[
 
 
 def gate_decision(
-    config: dict[str, Any], scenario_summaries: list[dict[str, Any]]
+    config: dict[str, Any],
+    scenario_summaries: list[dict[str, Any]],
+    state_dependence: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    """Combine the headroom precondition with the primary state-dependence gate.
+
+    Per the 2026-08-29 change-control amendment, headroom over the anchor is
+    necessary but not sufficient: Stage E2 cleared it while a single constant
+    rung captured the whole gain. E3 is authorized only when a state-dependent
+    policy selected out-of-sample beats the best constant by the prospective
+    threshold.
+    """
+
     fraction_gate = float(config["gates"]["state_fraction"])
     non_nominal = set(config["non_nominal_scenarios"])
     passing = [
@@ -502,19 +538,48 @@ def gate_decision(
         if s["scenario"] in non_nominal
         and s["material_validated_fraction"] >= fraction_gate
     ]
-    passed = bool(passing)
-    return {
+    headroom_passed = bool(passing)
+    decision = {
         "gate": "e2_headroom",
         "state_fraction_required": fraction_gate,
         "non_nominal_scenarios_passing": passing,
-        "headroom_gate_passed": passed,
-        "classification": (
-            "overtime_headroom_established"
-            if passed
-            else "overtime_headroom_not_established"
-        ),
-        "e3_authorized": passed,
+        "headroom_gate_passed": headroom_passed,
     }
+    if state_dependence is None:
+        decision.update(
+            {
+                "classification": (
+                    "overtime_headroom_established"
+                    if headroom_passed
+                    else "overtime_headroom_not_established"
+                ),
+                "e3_authorized": headroom_passed,
+                "state_dependence_gate_applied": False,
+            }
+        )
+        return decision
+
+    sd_gate = state_dependence["gate"]
+    sd_passed = bool(sd_gate["state_dependence_gate_passed"])
+    passed = bool(headroom_passed and sd_passed)
+    if not headroom_passed:
+        classification = "overtime_headroom_not_established"
+    elif not sd_passed:
+        classification = sd_gate["classification"]
+    else:
+        classification = "state_dependent_headroom_established"
+    decision.update(
+        {
+            "state_dependence_gate_applied": True,
+            "state_dependence_gate_passed": sd_passed,
+            "prospective_value_fraction": sd_gate["measured_fraction"],
+            "in_sample_oracle_fraction": sd_gate["in_sample_oracle_fraction"],
+            "interior_best_arm_fraction": sd_gate["measured_interior_fraction"],
+            "classification": classification,
+            "e3_authorized": passed,
+        }
+    )
+    return decision
 
 
 def validate_rows(

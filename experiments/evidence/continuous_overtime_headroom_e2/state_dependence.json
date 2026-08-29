@@ -1,0 +1,38 @@
+{
+  "gate": {
+    "classification": "channel_captured_by_constant_policy",
+    "gate": "state_dependence",
+    "in_sample_oracle_fraction": 5.4251956121995975e-05,
+    "interior_criterion_passed": false,
+    "measured_fraction": -0.0008302598332189864,
+    "measured_interior_fraction": 0.037037037037037035,
+    "minimum_fraction": 0.005,
+    "minimum_interior_fraction": 0.3,
+    "state_dependence_gate_passed": false,
+    "value_criterion_passed": false
+  },
+  "report": {
+    "anchor_total": 12283264437.368982,
+    "best_constant_arm": "u_1.00",
+    "constant_total": 11980021914.874702,
+    "distinct_best_arm_count": 2,
+    "distinct_best_arms": [
+      "u_0.80",
+      "u_1.00"
+    ],
+    "interior_best_arm_fraction": 0.037037037037037035,
+    "interior_best_arm_states": 1,
+    "oracle_total": 11979355523.751411,
+    "prospective_available": true,
+    "prospective_constant_arm": "u_1.00",
+    "prospective_constant_total": 11980021914.874702,
+    "prospective_total": 11990220215.957857,
+    "prospective_value_of_state_dependence": -10198301.083154678,
+    "prospective_value_of_state_dependence_fraction": -0.0008302598332189864,
+    "selection_scoring_best_arm_agreement": 0.9259259259259259,
+    "state_count": 27,
+    "value_of_channel_over_anchor": 303242522.49427986,
+    "value_of_state_dependence": 666391.1232910156,
+    "value_of_state_dependence_fraction": 5.4251956121995975e-05
+  }
+}

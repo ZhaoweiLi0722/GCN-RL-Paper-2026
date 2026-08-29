@@ -1,0 +1,44 @@
+{
+  "name": "continuous_overtime_headroom_e2b_recalibrated",
+  "experimental_role": "development-only Stage E2b re-calibrated overtime headroom screen per the 2026-08-29 change-control amendment; evaluation-only, no training, no checkpoint selection, no formal stream; gate values frozen before the run",
+  "amendment": "2026-08-29 change-control entry: primary criterion is the PROSPECTIVE value of state-dependence (selected on discovery, scored on validation); headroom is a necessary but insufficient precondition. Supersedes continuous_overtime_headroom_e2.json, whose result stands as recorded.",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "anchor_algorithm": "mdl2_ot",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_compound_regional_stress"
+  ],
+  "non_nominal_scenarios": [
+    "routing_abrupt_regime_shift",
+    "routing_compound_regional_stress"
+  ],
+  "overtime_env_overrides": {
+    "enable_overtime_control": true,
+    "max_overtime_fraction": 0.6,
+    "weight_overtime_linear": 15000.0,
+    "weight_overtime_quadratic": 20000.0,
+    "enable_overtime_fatigue": false,
+    "enable_production_throttle": false
+  },
+  "calibration_rationale": "With initial_idle_bioreactors=5 the surge range becomes 0..3.0 reactors (max_overtime_fraction 0.3->0.6). Marginal overtime cost 15000+2*20000*s crosses the 50274 averted-shortage benefit at s*=0.88 and the 500000 patient-loss benefit far outside the range, so the cost-benefit crossing now sits strictly inside the admissible range at roughly 29% of full surge. The optimum should therefore be interior and should move with how much patient-loss risk each state carries. E2 used max_overtime_fraction=0.3 and weight_overtime_quadratic=5000, which put the crossing outside the range and produced a corner solution.",
+  "state_generation": {
+    "seeds": [96100000, 96100001, 96100002],
+    "decision_epochs": [30, 55, 80]
+  },
+  "action_ladder": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+  "ladder_target_rule": "override the overtime block at clinics where min(waiting, reagents) > idle at the decision epoch; anchor block elsewhere",
+  "replications": {
+    "discovery_seeds": [96200000, 96200001, 96200002],
+    "validation_seeds": [96300000, 96300001, 96300002, 96300003, 96300004]
+  },
+  "gates": {
+    "material_threshold": 1000000.0,
+    "state_fraction": 0.30,
+    "clinical_rule": "validation-mean completion service not lower, patients lost not higher, manufacturing ineligibility not higher than the anchor arm",
+    "state_dependence_minimum_fraction": 0.005,
+    "state_dependence_minimum_interior_fraction": 0.30,
+    "state_dependence_rule": "PRIMARY criterion. Prospective value of state-dependence (per-state arm chosen on the discovery stream, scored on validation, constant chosen the same way) must be at least 0.5% of anchor cost -- roughly 100x the Stage F1 attribution noise floor of +/-0.001-0.004% -- and the best arm must be strictly interior in at least 30% of states. The in-sample oracle is never admissible: on Stage E2 it read +0.0054% while the honest out-of-sample value was -0.083%."
+  },
+  "output_root": "results/continuous_overtime_headroom_e2b"
+}

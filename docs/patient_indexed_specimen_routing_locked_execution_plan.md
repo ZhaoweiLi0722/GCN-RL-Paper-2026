@@ -1126,3 +1126,51 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Mandatory invariant: with the new flags disabled, environment behavior is
   bit-identical to the current environment under fixed seeds, enforced by a
   committed regression test before any screen runs.
+
+### 2026-08-29: Stage E2 completed; gate amendment proposed, E3 not authorized
+
+- The overtime headroom screen ran on implementation commit `9effc17`
+  (2,592 rows, 27 states x 12 arms x 8 CRN replications). All rows were
+  unique, finite, count-checked, and passed a live-environment provenance
+  assertion.
+- The literal E2 gate PASSED (`overtime_headroom_established`): both
+  non-nominal scenarios cleared the prospective 30% state fraction
+  (abrupt shift 1.00, compound stress 0.33; nominal 0.89).
+- The screen nevertheless produced a disqualifying diagnostic. The optimum is
+  a corner solution: `u_1.00` is best in 26/27 states and mean cost falls
+  monotonically to the ladder boundary. Marginal overtime cost never exceeds
+  30,000 against a 50,274 shortage benefit and a 500,000 patient-loss
+  benefit, so the optimum is always the upper bound.
+- A follow-up analysis of the same rows measured the quantity the gate failed
+  to ask about. Overtime is worth 303.2M over the anchor, but the best single
+  constant rung captures essentially all of it. Selecting per-state arms
+  PROSPECTIVELY (chosen on discovery, scored on held-out validation, with the
+  constant chosen the same way) is **worse than the constant by 10.20M, i.e.
+  -0.083% of anchor cost**. An in-sample oracle reads +0.0054%, but it selects
+  on the stream it is scored on and so capitalizes on replication noise; the
+  honest out-of-sample value is negative. A state-dependent policy fitted to
+  real data on this channel loses to a one-line constant, so there is no
+  budget for any learned policy to capture.
+- Classification of the channel as configured:
+  `channel_captured_by_constant_policy`. **Stage E3 is not authorized.**
+- No re-tune or re-run was performed. Re-running after observing a result
+  requires this change-control entry, a new config name, and a new output
+  root.
+- Amendment APPROVED by Howard 2026-08-29 (Zhaowei's review still pending;
+  recorded here so the approval trail is exact). Makes the PROSPECTIVE value
+  of state-dependence the PRIMARY E2 criterion (threshold 0.005 of anchor
+  cost, ~100x the noise floor, plus interior-best-arm fraction 0.30),
+  demoting the headroom criterion to a necessary precondition; only then
+  re-calibrate the overtime cost weights and re-run. If no calibration clears
+  the amended gate, reject the overtime channel and report that.
+- Measure and gate implemented read-only in
+  `evaluation/state_dependence_value.py` (15 tests). It consumes rows already
+  collected and trains nothing. The gate refuses any report lacking a
+  prospective value rather than falling back to the optimistic in-sample
+  figure; a regression test drives pure noise through both and asserts the
+  oracle looks spuriously positive while the prospective value does not.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_headroom_e2/`,
+  `experiments/evidence/continuous_overtime_headroom_e2/`
+  (summary carries config/plan/rows SHA256; `state_dependence.json` carries
+  the report and gate decision).

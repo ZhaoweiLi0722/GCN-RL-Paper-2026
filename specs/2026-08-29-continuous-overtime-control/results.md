@@ -412,3 +412,116 @@ must pass before any actor is trained.
   `experiments/evidence/continuous_overtime_label_stability_e3/label_stability.json`
 - Config: `experiments/configs/continuous_overtime_label_stability_e3.json`
 - Implementation: `evaluation/label_stability.py` (12 tests)
+
+---
+
+## Stage E4: held-out-seed ranking feasibility — 2026-08-29
+
+### Decision
+
+**FAILED the preregistered gate: `optimum_not_predictable_from_state`.
+Stage E5 is NOT authorized. Training remains unauthorized.**
+
+### Result
+
+135 states (5 generation seeds x 9 decision epochs x 3 scenarios), 12,960
+rows, 11-rung ladder. Leave-one-generation-seed-out ridge on 15 decision-time
+network features.
+
+| Criterion | Measured | Gate | |
+| --- | ---: | ---: | --- |
+| Pooled top-1 | **0.252** | ≥ 0.50 | **FAIL** |
+| Worst-fold top-1 | **0.148** | ≥ 0.50 | **FAIL** |
+| Pairwise accuracy | 0.754 | ≥ 0.70 | PASS |
+| Worst-fold gain over state-blind | +0.111 | ≥ 0.05 | PASS |
+
+Chance top-1 is 0.091; the state-blind predictor achieves 0.059. Per fold:
+
+| Held-out seed | Fitted top-1 | State-blind | Gain | Pairwise |
+| --- | ---: | ---: | ---: | ---: |
+| 96600000 | 0.259 | 0.111 | +0.148 | 0.777 |
+| 96600001 | 0.185 | 0.074 | +0.111 | 0.772 |
+| 96600002 | 0.333 | 0.074 | +0.259 | 0.723 |
+| 96600003 | 0.148 | 0.000 | +0.148 | 0.735 |
+| 96600004 | 0.333 | 0.037 | +0.296 | 0.764 |
+
+Every fold beats the state-blind predictor and every fold passes pairwise, but
+no fold comes close to the 50% top-1 floor.
+
+### Post-hoc diagnostic (not part of the gate)
+
+Computed after seeing the failure, and labelled as such:
+
+| Policy | Total cost | vs best constant |
+| --- | ---: | ---: |
+| MDL-2-OT anchor | 72,025.4M | |
+| Best constant (`u_0.60`) | 70,721.4M | — |
+| **Fitted model** | 70,574.6M | **−0.2038%** of anchor |
+| Oracle (hindsight) | 70,257.3M | −0.6444% of anchor |
+
+The fitted model captures **31.6%** of the available state-dependent headroom
+and beats the best tuned constant by 0.20% of anchor cost, out of sample.
+Median rung distance between prediction and truth is 1, and 53.3% of
+predictions land within one rung.
+
+So the model is not failing to learn; it is failing to pick the exact rung out
+of eleven. Because the cost surface near the optimum is smooth — which was the
+explicit design goal of the re-calibration — a near miss is cheap, and top-1
+accuracy is a harsh proxy for the quantity that actually matters.
+
+### Two limitations of this screen, both conservative
+
+1. **The gate inherited argmax primacy from Stage G1 without rechecking that
+   it fits this channel.** In routing, actions were integer lots on a jagged
+   surface where a near miss was a different decision. Here the surface is
+   smooth by construction, so the same criterion is stricter than the endpoint
+   warrants. This is the same class of error as the E2 gate defect: measuring
+   a proxy rather than the decision-relevant quantity.
+2. **The learner is deliberately weak and destroys graph structure.** Fifteen
+   network-level aggregates (sums, maxima, standard deviations over 20
+   clinics) discard exactly the per-clinic spatial detail a GCN exists to use.
+   A failure here bounds what a linear model on aggregates can do; it does not
+   bound what a graph encoder on per-clinic features could do.
+
+Both limitations mean the true learnability of this channel is at least as
+good as measured, and plausibly better.
+
+### Recommendation: stop here and obtain external review
+
+The preregistered gate failed, so **E5 is not authorized and no actor may be
+trained**. That stands regardless of the diagnostic above.
+
+This is now the **second** time a screen has failed and analysis has surfaced
+a reason the gate was mis-specified (E2's headroom-blind-to-geometry defect
+was the first). Each amendment has been individually defensible and each was
+executed under change control with fresh configs and output roots. But the
+pattern itself is a warning: a sequence of individually reasonable amendments,
+each made after seeing a failure, is a garden of forking paths, and it
+converges on a passing result whether or not one exists.
+
+The author of both amendments should not authorize a third. Zhaowei's review
+of the E2b/E3 chain (PR #9) is already outstanding and is now the appropriate
+decision point for all of:
+
+- whether the argmax criterion should be replaced by a realized-cost criterion
+  for a smooth channel, and if so what threshold;
+- whether an E4b with per-clinic graph-structured features is a legitimate
+  continuation or post-hoc gate-shopping;
+- whether the accumulated amendment count already compromises the chain and it
+  should be re-run end to end under a single frozen protocol.
+
+The last option deserves serious weight. Everything measured so far is
+reproducible and hash-recorded, so a clean re-run under one preregistered
+protocol is affordable — roughly an hour of compute — and would answer the
+forking-paths objection outright.
+
+### Evidence
+
+- Rows: `results/continuous_overtime_critic_ranking_e4/headroom_rows.csv`
+- Ranking report:
+  `results/continuous_overtime_critic_ranking_e4/ranking_feasibility.json`
+  (config and rows SHA256)
+- Curated: `experiments/evidence/continuous_overtime_critic_ranking_e4/`
+- Config: `experiments/configs/continuous_overtime_critic_ranking_e4.json`
+- Implementation: `evaluation/ranking_feasibility.py`,
+  `evaluation/run_overtime_ranking_e4.py` (11 tests)

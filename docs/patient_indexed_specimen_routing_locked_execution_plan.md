@@ -1240,3 +1240,40 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
   `results/continuous_overtime_label_stability_e3/`,
   `experiments/evidence/continuous_overtime_label_stability_e3/`.
+
+### 2026-08-29: Stage E4 FAILED; Stage E5 not authorized; external review required
+
+- The held-out-seed ranking screen ran on 135 states (5 generation seeds x 9
+  decision epochs x 3 scenarios), 12,960 rows, 11-rung ladder, with
+  leave-one-generation-seed-out ridge on 15 decision-time network features.
+- Preregistered gate FAILED. Pooled top-1 **0.252** and worst-fold top-1
+  **0.148** against a 0.50 floor. Pairwise accuracy 0.754 (gate 0.70) and
+  worst-fold gain over the state-blind predictor +0.111 (gate 0.05) both
+  passed. Classification `optimum_not_predictable_from_state`.
+- **Stage E5 is NOT authorized. No actor may be trained.**
+- Post-hoc diagnostic, recorded as post-hoc: the fitted model nevertheless
+  beats the best tuned constant by 0.2038% of anchor cost out of sample,
+  capturing 31.6% of the available state-dependent headroom, with a median
+  rung distance of 1. The model learns the region of the optimum but not the
+  exact rung; because the re-calibrated cost surface is smooth by design, a
+  near miss is cheap and top-1 is a harsh proxy for the endpoint.
+- Two conservative limitations: the gate inherited argmax primacy from Stage
+  G1 without rechecking that it suits a smooth channel (routing's surface was
+  jagged integer lots), and the learner is a linear model on network-level
+  aggregates that discards the per-clinic structure a GCN exists to exploit.
+- **Process finding.** This is the second screen failure followed by analysis
+  showing the gate was mis-specified (the first was E2's headroom criterion
+  being blind to geometry). Each amendment was individually defensible and
+  executed under change control with fresh configs and output roots, but the
+  pattern is a garden of forking paths and converges on a pass whether or not
+  one exists. The author of both amendments must not authorize a third.
+- Referred to Zhaowei (PR #9, review already outstanding) for decision on:
+  replacing the argmax criterion with a realized-cost criterion for smooth
+  channels; whether an E4b with graph-structured per-clinic features is a
+  legitimate continuation or gate-shopping; and whether the accumulated
+  amendment count warrants a clean end-to-end re-run under one frozen
+  protocol. The last option is affordable (about an hour of compute) and would
+  answer the forking-paths objection directly.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_critic_ranking_e4/`,
+  `experiments/evidence/continuous_overtime_critic_ranking_e4/`.

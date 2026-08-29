@@ -88,30 +88,96 @@ The cost weights responsible (`weight_overtime_linear = 15_000`,
 screen was opened for review (PR #7), precisely because they had not been
 sanity-checked against the real cost scale by anyone but their author.
 
+### The decisive measurement: value of state-dependence
+
+The corner solution prompted a second analysis of the same rows, comparing
+three policies over the 27 states. The oracle picks the best rung per state
+with knowledge of the realized outcome, so it is an upper bound no policy can
+exceed:
+
+| Policy | Total validation cost (M units) |
+| --- | ---: |
+| MDL-2-OT anchor (closed-form rule) | 12,283.3 |
+| Best **constant** rung (`u_1.00`, the `static_ot` reference) | 11,980.0 |
+| Per-state **oracle** (upper bound for any policy) | 11,979.4 |
+
+- Overtime is worth **303.2M** over the anchor. The channel has real value.
+- The value of *state-dependence* — the entire budget available to any
+  state-dependent policy, learned or otherwise — is
+  **0.67M, or 0.0054% of anchor cost**.
+
+Only 2 distinct arms are ever optimal (`u_1.00` in 26 states, `u_0.80` in 1),
+and the best arm is strictly interior in 3.7% of states.
+
+**This is the finding that governs the study.** 0.0054% is the same order as
+the online-attribution noise floor measured on this simulator (Stage F1
+final-versus-frozen deltas were ±0.001–0.004%). A perfect oracle beats a
+one-line constant by less than the noise. No algorithm, architecture,
+training budget, or graph encoder can extract a defensible result from a
+channel with that budget — the ceiling is below the measurement floor.
+
+It is also the routing failure repeating in a new setting: a simple baseline
+banks the value, and the learned component has nothing left to attribute.
+The overtime channel was supposed to escape that, and as configured it does
+not.
+
+Measure and gate implemented in `evaluation/state_dependence_value.py`
+(9 tests). Applied to these rows it classifies the channel
+`channel_captured_by_constant_policy`; report at
+`experiments/evidence/continuous_overtime_headroom_e2/state_dependence.json`.
+
 ### Recommendation (requires change control; not executed)
 
 Do not advance to E3 on this configuration, and do not silently re-tune and
 re-run — that would be post-hoc selection against an observed result. The
-proper route is an appended change-control entry authorizing an E2
-re-calibration under a new config name and output root, holding the
-prospective gates fixed:
+proper route is an appended change-control entry, under a new config name and
+output root, in this order:
 
-1. Raise `weight_overtime_quadratic` so the marginal cost crosses the
-   averted-shortage benefit inside the admissible range. A quadratic weight
-   near 20,000 puts the marginal cost at full surge around 75,000 — above the
-   50,274 shortage benefit, below the 500,000 patient-loss benefit — which
-   should place the optimum in the interior and make it depend on how much
-   patient-loss risk the state actually carries.
-2. Optionally raise `max_overtime_fraction` so the ladder spans a wider range
-   of surge levels, giving the interior optimum room to move between states.
-3. Add an explicit interior-optimum criterion to the E2 gate itself: require
-   that the best rung is strictly interior in a stated minimum fraction of
-   states. The current gate measures headroom but is blind to geometry, which
-   is why a corner solution passed it. This is a gate defect worth fixing
-   regardless of the re-calibration outcome.
+1. **Amend the E2 gate before re-calibrating anything.** Make the value of
+   state-dependence the *primary* criterion, with the headroom criterion
+   demoted to a necessary-but-insufficient precondition. Proposed threshold:
+   `value_of_state_dependence_fraction ≥ 0.005` (0.5%), roughly 100× the
+   attribution noise floor, plus an interior-best-arm fraction ≥ 0.30.
 
-Recommendation 3 should be adopted whatever else is decided: as written, the
-E2 gate can be passed by an environment that cannot support the study.
+   The current gate asks "is there headroom over the anchor?" and a corner
+   solution answered yes. The study needs headroom *a learned policy could
+   capture that a tuned constant cannot*, which is a different question the
+   gate never asked. An interior-optimum criterion alone is also insufficient:
+   an interior optimum that sits at the same rung in every state is still
+   captured exactly by a constant. Only the oracle-versus-best-constant gap
+   measures the right quantity.
+
+2. **Then re-calibrate and re-run**, with the amended gate deciding. Raising
+   `weight_overtime_quadratic` toward ~20,000 puts the marginal cost at full
+   surge near 75,000 — above the 50,274 shortage benefit, below the 500,000
+   patient-loss benefit — which should move the optimum interior and make it
+   track how much patient-loss risk each state actually carries. Widening
+   `max_overtime_fraction` gives that optimum room to move between states.
+
+3. **If no calibration clears the amended gate, reject the channel and say
+   so.** Capacity surge may simply be an "almost always useful" lever whose
+   optimum barely moves with state. That is a fast, cheap negative, and it is
+   more valuable than tuning toward a passing number.
+
+A caution for step 3: "find a channel that passes" must not become the
+objective. If several candidate channels all show near-zero state-dependence
+value, that is itself the result — evidence that this simulator's operational
+decisions are heuristically saturated, which is a sharper and more defensible
+claim than the current manuscript makes.
+
+### Methodological note
+
+The value-of-state-dependence measure should have been part of E2's design
+from the start; its absence is a design defect in the screen as originally
+specified, not a discovery enabled by running it. It is cheap (reuses rows
+already collected, no training, no extra rollouts) and general: it is a
+pre-training test for whether learning can possibly help on a given decision
+channel. Applied to the original routing action space it would have predicted
+the online-DDPG null in an afternoon rather than across Stages F1, G0, G1,
+and H0/H1.
+
+This makes it a stronger candidate contribution to the follow-up study's
+gating-protocol framing than the overtime channel itself.
 
 ### Evidence
 

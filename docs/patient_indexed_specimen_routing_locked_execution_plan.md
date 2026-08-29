@@ -1126,3 +1126,43 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Mandatory invariant: with the new flags disabled, environment behavior is
   bit-identical to the current environment under fixed seeds, enforced by a
   committed regression test before any screen runs.
+
+### 2026-08-29: Stage E2 completed; gate amendment proposed, E3 not authorized
+
+- The overtime headroom screen ran on implementation commit `9effc17`
+  (2,592 rows, 27 states x 12 arms x 8 CRN replications). All rows were
+  unique, finite, count-checked, and passed a live-environment provenance
+  assertion.
+- The literal E2 gate PASSED (`overtime_headroom_established`): both
+  non-nominal scenarios cleared the prospective 30% state fraction
+  (abrupt shift 1.00, compound stress 0.33; nominal 0.89).
+- The screen nevertheless produced a disqualifying diagnostic. The optimum is
+  a corner solution: `u_1.00` is best in 26/27 states and mean cost falls
+  monotonically to the ladder boundary. Marginal overtime cost never exceeds
+  30,000 against a 50,274 shortage benefit and a 500,000 patient-loss
+  benefit, so the optimum is always the upper bound.
+- A follow-up analysis of the same rows measured the quantity the gate failed
+  to ask about. Overtime is worth 303.2M over the anchor, but the best single
+  constant rung captures essentially all of it: the value of state-dependence
+  is 0.67M, or **0.0054% of anchor cost** — the same order as the Stage F1
+  attribution noise floor (+/-0.001-0.004%). The ceiling for any learned
+  policy on this channel is below the measurement floor.
+- Classification of the channel as configured:
+  `channel_captured_by_constant_policy`. **Stage E3 is not authorized.**
+- No re-tune or re-run was performed. Re-running after observing a result
+  requires this change-control entry, a new config name, and a new output
+  root.
+- Proposed amendment, pending Howard and Zhaowei approval: make the value of
+  state-dependence the PRIMARY E2 criterion (proposed threshold 0.005 of
+  anchor cost, ~100x the noise floor, plus interior-best-arm fraction 0.30),
+  demoting the headroom criterion to a necessary precondition; only then
+  re-calibrate the overtime cost weights and re-run. If no calibration clears
+  the amended gate, reject the overtime channel and report that.
+- Measure and gate implemented read-only in
+  `evaluation/state_dependence_value.py` (9 tests). It consumes rows already
+  collected and trains nothing.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_headroom_e2/`,
+  `experiments/evidence/continuous_overtime_headroom_e2/`
+  (summary carries config/plan/rows SHA256; `state_dependence.json` carries
+  the report and gate decision).

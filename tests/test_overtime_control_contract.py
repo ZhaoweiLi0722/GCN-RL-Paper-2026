@@ -12,11 +12,17 @@ import unittest
 
 import numpy as np
 
+from src.baselines.heuristics import (
+    HeuristicSettings,
+    MeanDemandLookahead2Policy,
+    facility_net_action_from_state,
+)
 from src.env.capacity_planning import CapacityPlanningConfig, CapacityPlanningEnv
 from src.env.patient_capacity_planning import (
     PatientConditionCapacityEnv,
     PatientEnvConfig,
 )
+from src.rl.preprocessing import facility_state_width
 
 
 def _base_config(**overrides) -> CapacityPlanningConfig:
@@ -41,6 +47,72 @@ def _overtime_action(env: CapacityPlanningEnv, u: float) -> np.ndarray:
     action = env.noop_action()
     action[4 * n : 5 * n] = 2.0 * u - 1.0
     return action
+
+
+class FacilityStateWidthMirrorTest(unittest.TestCase):
+    """`facility_state_width` must mirror the env's per-facility layout.
+
+    The from-state heuristic path guards with `size < base_width` and then
+    reshapes, so a helper that *under*-reports the width passes the guard and
+    silently misaligns every facility after the first. Lock the mirror across
+    flag combinations so the overtime block cannot drift out of it again.
+    """
+
+    def _env_config_dict(self, config: CapacityPlanningConfig) -> dict:
+        return {
+            "num_facilities": config.num_facilities,
+            "production_lead_time": config.production_lead_time,
+            "include_supplier_state": config.include_supplier_state,
+            "include_demand_forecast_state": config.include_demand_forecast_state,
+            "include_transfer_pipeline_state": config.include_transfer_pipeline_state,
+            "include_demand_history_state": config.include_demand_history_state,
+            "include_demand_sequence_state": config.include_demand_sequence_state,
+            "demand_sequence_length": config.demand_sequence_length,
+            "enable_overtime_control": config.enable_overtime_control,
+            "enable_overtime_fatigue": config.enable_overtime_fatigue,
+        }
+
+    def test_width_matches_env_across_flag_combinations(self) -> None:
+        for overtime in (False, True):
+            for fatigue in (False, True):
+                if fatigue and not overtime:
+                    continue
+                for extras in ({}, {"include_supplier_state": True,
+                                    "include_demand_forecast_state": True,
+                                    "include_transfer_pipeline_state": True,
+                                    "include_demand_history_state": True}):
+                    with self.subTest(overtime=overtime, fatigue=fatigue, extras=bool(extras)):
+                        config = _base_config(
+                            enable_overtime_control=overtime,
+                            enable_overtime_fatigue=fatigue,
+                            **extras,
+                        )
+                        env = CapacityPlanningEnv(config, seed=0)
+                        self.assertEqual(
+                            facility_state_width(self._env_config_dict(config)),
+                            env.features_per_facility,
+                        )
+
+    def test_from_state_anchor_matches_live_env_anchor(self) -> None:
+        config = _base_config()
+        env = CapacityPlanningEnv(config, seed=0)
+        policy = MeanDemandLookahead2Policy()
+        live = policy.select_action(env.observation(), env=env)
+        from_state = facility_net_action_from_state(
+            env.observation(),
+            self._env_config_dict(config)
+            | {
+                "max_reagent_replenishment": list(env.max_reagent_replenishment),
+                "max_specimen_transfer": config.max_specimen_transfer,
+                "max_bioreactor_transfer": config.max_bioreactor_transfer,
+                "max_reagent_transfer": config.max_reagent_transfer,
+            },
+            settings=policy.settings,
+        )
+        n = config.num_facilities
+        # The from-state path reconstructs the 4n base blocks; the live policy
+        # appends the overtime block on top of the same base action.
+        np.testing.assert_allclose(live[: 4 * n], from_state[: 4 * n], atol=1e-6)
 
 
 class OvertimeContractTest(unittest.TestCase):

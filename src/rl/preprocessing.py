@@ -40,7 +40,13 @@ def facility_state_width(env_config: dict[str, Any]) -> int:
         + 3
         * int(bool(env_config.get("include_demand_history_state", False)))
     )
-    return width + 3 * demand_sequence_length(env_config)
+    width += 3 * demand_sequence_length(env_config)
+    if bool(env_config.get("enable_overtime_control", False)):
+        # [previous u_ot, outstanding overtime, static surge headroom] plus
+        # fatigue when enabled; mirrors CapacityPlanningEnv.features_per_facility
+        # (spec 2026-08-29-continuous-overtime-control).
+        width += 3 + int(bool(env_config.get("enable_overtime_fatigue", False)))
+    return width
 
 
 @dataclass(frozen=True)

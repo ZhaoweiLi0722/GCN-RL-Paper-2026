@@ -1,0 +1,39 @@
+{
+  "name": "continuous_overtime_headroom_e2",
+  "experimental_role": "development-only Stage E2 overtime headroom screen per specs/2026-08-29-continuous-overtime-control; evaluation-only, no training, no checkpoint selection, no formal stream; gate values frozen before the run",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "anchor_algorithm": "mdl2_ot",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_compound_regional_stress"
+  ],
+  "non_nominal_scenarios": [
+    "routing_abrupt_regime_shift",
+    "routing_compound_regional_stress"
+  ],
+  "overtime_env_overrides": {
+    "enable_overtime_control": true,
+    "max_overtime_fraction": 0.3,
+    "weight_overtime_linear": 15000.0,
+    "weight_overtime_quadratic": 5000.0,
+    "enable_overtime_fatigue": false,
+    "enable_production_throttle": false
+  },
+  "state_generation": {
+    "seeds": [96100000, 96100001, 96100002],
+    "decision_epochs": [30, 55, 80]
+  },
+  "action_ladder": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+  "ladder_target_rule": "override the overtime block at clinics where min(waiting, reagents) > idle at the decision epoch; anchor block elsewhere",
+  "replications": {
+    "discovery_seeds": [96200000, 96200001, 96200002],
+    "validation_seeds": [96300000, 96300001, 96300002, 96300003, 96300004]
+  },
+  "gates": {
+    "material_threshold": 1000000.0,
+    "state_fraction": 0.30,
+    "clinical_rule": "validation-mean completion service not lower, patients lost not higher, manufacturing ineligibility not higher than the anchor arm"
+  },
+  "output_root": "results/continuous_overtime_headroom_e2"
+}

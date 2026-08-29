@@ -1,13 +1,13 @@
 # Continuous Overtime Control (Step-0 Draft)
 
-> **STATUS: DRAFT — NOT AUTHORIZED.** This is the step-0 change-control artifact
-> for a NEW STUDY under the locked routing-primary execution plan
+> **STATUS: SIGNED OFF 2026-08-29 — E1–E4 AUTHORIZED, NO TRAINING.** This is
+> the step-0 change-control artifact for a NEW STUDY under the locked
+> routing-primary execution plan
 > (`docs/patient_indexed_specimen_routing_locked_execution_plan.md`). The
-> routing-primary campaign is closed at Stage E; nothing here amends it, reopens
-> its formal holdout, or launches any experiment. This spec becomes active only
-> after (1) Howard and Zhaowei sign off, (2) a change-control entry is appended
-> to the locked plan naming this spec, and (3) the signed spec is committed
-> before any implementation or run.
+> routing-primary campaign remains closed at Stage E; nothing here amends it,
+> reopens its formal holdout, or launches any training. Authorization covers
+> flag-gated implementation (E1) and the three evaluation-only screens
+> (E2–E4). Stage E5 (any training) requires its own spec and sign-off.
 
 This specification designs the environment-first phase of the follow-up study
 motivated by the online-RL attribution null (Stages F1/G0/G1/H0-H1). It adds one
@@ -30,5 +30,13 @@ Motivating analysis: `docs/online_rl_attribution_postmortem_and_followup_brief.m
 
 | Role | Name | Decision | Date |
 | --- | --- | --- | --- |
-| Principal investigator | Howard Tseng | _pending_ | |
-| Collaborator / reviewer | Zhaowei Li | _pending_ | |
+| Principal investigator | Howard Tseng | Approved | 2026-08-29 |
+| Collaborator / reviewer | Zhaowei Li | Approved (via direct message to Howard, quoting the proposal summary) | 2026-08-29 |
+
+Pre-merge self-review amendments (2026-08-29): borrowed-capacity accounting
+with a fleet-conservation invariant (the original "never enters the shift
+register" wording would have silently inflated the fleet on lot completion);
+action slice `[4n:5n]` and `u_ot = (a+1)/2` mapping pinned;
+`base_capacity = initial_idle_bioreactors` pinned; overtime cost charged on
+committed surge; MDL-2-OT surge rule extended with a reagent-sufficiency
+condition; dormant-throttle activation rejected by config validation.

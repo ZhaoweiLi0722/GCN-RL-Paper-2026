@@ -33,16 +33,35 @@ Each requirement below traces to a failure documented in
 ## Decision A (primary): overtime capacity `u_ot`
 
 - **Action block**: one additional `facility_net` block of `n` continuous
-  values. Raw actor output in `[-1, 1]` maps affinely to `u_ot ∈ [0, 1]`.
-  `action_size` becomes `5n` when `enable_overtime_control` is true.
-- **Effect**: effective idle capacity this epoch becomes
-  `idle_effective = idle_bioreactors + u_ot * max_overtime_fraction * base_capacity_i`,
-  entering the existing production expression
-  `production = min(specimens_eligible, idle_effective, reagents)`.
-  Overtime capacity is transient: it never enters the bioreactor shift register,
-  never persists to the next epoch, and cannot be transferred.
-- **Cost**: `overtime_cost_i = weight_overtime_linear * s_i + weight_overtime_quadratic * s_i^2`
-  where `s_i = u_ot_i * max_overtime_fraction * base_capacity_i`. Both weights
+  values at slice `[4n:5n]` (appended after replenishment). Raw actor output
+  `a ∈ [-1, 1]` maps as `u_ot = (a + 1) / 2 ∈ [0, 1]`; `noop_action` appends
+  `-1.0` so no-op means zero overtime. `action_size` becomes `5n` when
+  `enable_overtime_control` is true.
+- **Surge definition**: `s_i = u_ot_i * max_overtime_fraction * base_capacity_i`
+  with `base_capacity_i = initial_idle_bioreactors[i]` (the physical fleet
+  size, NOT `max_idle_bioreactors`).
+- **Effect**: the production capacity bound becomes
+  `idle_effective = idle_bioreactors + s`, entering the existing expression
+  `production = min(specimens_eligible, idle_effective, reagents)` (the patient
+  environment keeps its `floor(...)` integer-lot semantics). Surge cannot be
+  transferred and does not change `under_bioreactors` / holding accounting,
+  which remain as currently computed (scope minimality).
+- **Borrowed-capacity accounting (fleet conservation)**: production splits into
+  `base_production = min(production, idle_bioreactors)` and
+  `overtime_production = production - base_production <= s`. Overtime starts
+  increment a per-facility outstanding-overtime counter `d_i`; when therapies
+  complete or are discarded from manufacturing, the returning reactors first
+  repay `d_i` (they vanish — the borrowed shift ends) before adding to the
+  idle pool. Invariant, enforced by test:
+  `idle + in_process - outstanding_overtime` equals the physical fleet at
+  every step (modulo capacity transfers and existing clips). Without this
+  rule, surge starts would silently inflate the fleet when their reactors
+  "return" on completion.
+- **Cost**: `overtime_cost_i = weight_overtime_linear * s_i + weight_overtime_quadratic * s_i^2`,
+  charged on the **committed** surge `s_i` (the requested shift is paid for
+  whether or not the integer production count uses it). This keeps the cost
+  smooth and strictly monotone in `u_ot`, preserving the continuous-gradient
+  property even in epochs where the integer bound does not move. Both weights
   are strictly positive so the optimum is interior and state-dependent. The
   component is added to `_operating_cost_components` under the key
   `overtime_cost` and reported in every additive decomposition.
@@ -67,12 +86,18 @@ Each requirement below traces to a failure documented in
   production is small, Decision B may enter the study only if the E2 headroom
   screen is run separately for it and passes; otherwise it stays disabled.
   `u_prod = 1` is the required default.
+- **Dormancy enforcement**: in E1, `enable_production_throttle=True` is
+  REJECTED by config validation with an error naming this spec's activation
+  requirement. The flag exists so the config surface is frozen now; the
+  behavior ships only with its own change-control entry.
 
 ## State and observation
 
 - Per-facility features appended when `enable_overtime_control` is true:
-  current `u_ot` (previous epoch's executed value), fatigue `f_i` when enabled,
-  and `max_overtime_fraction * base_capacity_i` (static surge headroom).
+  previous epoch's executed `u_ot`, outstanding overtime `d_i` (borrowed
+  reactors not yet repaid), static surge headroom
+  `max_overtime_fraction * base_capacity_i`, and fatigue `f_i` when
+  `enable_overtime_fatigue` is also true.
 - The identical feature block is appended to both the flat observation and the
   graph `node_features` so graph and flat policies remain representation-matched.
 - Observation and action sizes change ONLY when the enabling flags are true.
@@ -83,9 +108,11 @@ The comparator field must be extended before any learned policy is evaluated on
 the new channel, or every comparison is a strawman:
 
 - **MDL-2-OT**: MDL-2 plus a myopic overtime rule — surge when projected
-  eligible-waiting exceeds idle capacity and the marginal modeled patient-loss
-  risk exceeds the marginal overtime cost. Closed-form threshold, no simulation
-  at decision time.
+  eligible-waiting exceeds idle capacity, **projected reagents suffice to use
+  the surge** (because of the `min(...)` structure, surging while reagents
+  bind burns overtime cost for zero production), and the marginal modeled
+  patient-loss risk exceeds the marginal overtime cost. Closed-form threshold,
+  no simulation at decision time.
 - **uMYO-OT**: the existing urgency-surge heuristic mapped onto the new
   continuous channel.
 - **Static-OT sweep**: constant `u_ot ∈ {0.0, 0.1, ..., 1.0}` on top of MDL-2;

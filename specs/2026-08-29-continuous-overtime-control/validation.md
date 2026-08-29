@@ -27,17 +27,25 @@ Test modules are created in E1; names above are fixed by this spec.
 - Flag-on: `action_size == 5n`; observation and `node_features` widths grow by
   exactly the documented per-facility block; `noop_action` maps to `u_ot = 0`.
 - Cost hook: `overtime_cost` present in `_operating_cost_components`, equal to
-  the closed-form convex expression, and included in the additive total
-  (decomposition sums to the reported cost).
-- Continuity: for a fixed state, executed surge and overtime cost are monotone
+  the closed-form convex expression **on the committed surge** (nonzero for
+  `u_ot > 0` even in epochs where the integer production count is unchanged),
+  and included in the additive total (decomposition sums to the reported cost).
+- Continuity: for a fixed state, committed surge and overtime cost are monotone
   and continuous in `u_ot` on a dense grid; marginal cost is strictly positive
   for `u_ot > 0`.
-- Transience: surge capacity never appears in the next epoch's bioreactor
-  shift register and is never transferable.
+- Action mapping: raw `-1` maps to `u_ot = 0` and raw `+1` to `u_ot = 1`;
+  `base_capacity` is `initial_idle_bioreactors`, not `max_idle_bioreactors`.
+- Fleet conservation (borrowed-capacity accounting): drive an episode with
+  overtime binding (production > physical idle) and assert at every step that
+  `idle + in_process - outstanding_overtime` equals the physical fleet
+  (adjusted for executed capacity transfers); assert completing overtime lots
+  repay the outstanding counter instead of inflating the idle pool, and that
+  the counter is nonnegative and reaches zero after a quiet tail.
 - Fatigue (flag-on): decay recursion matches the spec; flag-off leaves no
   fatigue trace in state or cost.
 - Decision B dormant: `enable_production_throttle=False` yields no third block
-  and no behavior change.
+  and no behavior change, and `enable_production_throttle=True` raises a
+  validation error naming this spec's activation requirement.
 
 ### `test_overtime_heuristics`
 

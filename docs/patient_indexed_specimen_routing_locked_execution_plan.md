@@ -1105,3 +1105,24 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `9e96deec850d6033fb5a2fb9e2f5090f8a040468df9faf8634015a14875d1c41`.
   Detailed report:
   `docs/patient_indexed_specimen_routing_stage_g1_results.md`.
+
+### 2026-08-29: Continuous overtime control follow-up study opened (new study, Stage E0 complete)
+
+- Howard and Zhaowei approved the step-0 specification
+  `specs/2026-08-29-continuous-overtime-control/` (sign-offs recorded in its
+  README). This opens a NEW STUDY motivated by the closed online-attribution
+  extension; it does not amend, reopen, or reinterpret any routing-primary
+  stage, result, or the formal holdout, all of which remain closed at Stage E.
+- Authorized scope: flag-gated environment implementation (Stage E1: overtime
+  capacity control behind `enable_overtime_control`, dormant
+  `enable_production_throttle` rejected at validation), extended overtime
+  heuristic comparators, and the three evaluation-only screens E2 (headroom),
+  E3 (label stability), E4 (critic ranking) with the prospective gates and
+  one-round remediations fixed in that spec's plan.md.
+- Not authorized: any RL or distillation training on the new channel (Stage E5
+  requires its own specification and sign-off), any reuse of the routing-primary
+  formal holdout streams, and any change to existing result roots, checkpoints,
+  teacher artifacts, or CRN streams.
+- Mandatory invariant: with the new flags disabled, environment behavior is
+  bit-identical to the current environment under fixed seeds, enforced by a
+  committed regression test before any screen runs.

@@ -70,6 +70,7 @@ figures/residual_policy_benchmark/
 
 # Private / personal research materials (not for sharing)
 docs/local_progress_reports/
+docs/research_howard/
 
 # Local editor / assistant tooling config (not part of the project)
 .claude/

@@ -199,3 +199,61 @@ class E2GateMathTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class E2CombinedGateTest(unittest.TestCase):
+    """Headroom is a precondition; state-dependence is the primary criterion."""
+
+    def _summaries(self, fraction):
+        return [{"scenario": "shift", "material_validated_fraction": fraction}]
+
+    def _config(self):
+        return {
+            "gates": {"state_fraction": 0.30, "material_threshold": 1e6},
+            "non_nominal_scenarios": ["shift"],
+        }
+
+    def _sd(self, passed, measured):
+        return {
+            "gate": {
+                "state_dependence_gate_passed": passed,
+                "classification": (
+                    "state_dependent_headroom_established"
+                    if passed
+                    else "channel_captured_by_constant_policy"
+                ),
+                "measured_fraction": measured,
+                "in_sample_oracle_fraction": 0.000054,
+                "measured_interior_fraction": 0.037,
+            }
+        }
+
+    def test_headroom_alone_no_longer_authorizes_e3(self) -> None:
+        # The exact Stage E2 shape: headroom passes, state-dependence does not.
+        decision = gate_decision(
+            self._config(), self._summaries(1.0), self._sd(False, -0.00083)
+        )
+        self.assertTrue(decision["headroom_gate_passed"])
+        self.assertFalse(decision["e3_authorized"])
+        self.assertEqual(
+            decision["classification"], "channel_captured_by_constant_policy"
+        )
+
+    def test_both_gates_required(self) -> None:
+        decision = gate_decision(
+            self._config(), self._summaries(0.1), self._sd(True, 0.02)
+        )
+        self.assertFalse(decision["headroom_gate_passed"])
+        self.assertFalse(decision["e3_authorized"])
+        self.assertEqual(
+            decision["classification"], "overtime_headroom_not_established"
+        )
+
+    def test_both_passing_authorizes_e3(self) -> None:
+        decision = gate_decision(
+            self._config(), self._summaries(1.0), self._sd(True, 0.02)
+        )
+        self.assertTrue(decision["e3_authorized"])
+        self.assertEqual(
+            decision["classification"], "state_dependent_headroom_established"
+        )

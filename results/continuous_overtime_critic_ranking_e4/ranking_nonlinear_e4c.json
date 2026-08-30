@@ -1,0 +1,90 @@
+{
+  "config_sha256": "c308fafd9825bb8bb2e44c0da9dcf16c53a0517aff325532ad48a6d3da6b9b38",
+  "experimental_role": "EXPLORATORY nonlinear-learner check; not confirmatory",
+  "gate_top1": 0.5,
+  "name": "continuous_overtime_ranking_nonlinear_e4c",
+  "results": {
+    "aggregate": {
+      "boosted_depth1_r60": {
+        "fold_top1": [
+          0.48148148148148145,
+          0.48148148148148145,
+          0.5185185185185185,
+          0.07407407407407407,
+          0.4074074074074074
+        ],
+        "headroom_captured": 0.42226812628682225,
+        "pooled_top1": 0.3925925925925926,
+        "realized_vs_constant_pct": -0.2720912066937587,
+        "worst_fold_top1": 0.07407407407407407
+      },
+      "boosted_depth3_r150": {
+        "fold_top1": [
+          0.2962962962962963,
+          0.37037037037037035,
+          0.14814814814814814,
+          0.4444444444444444,
+          0.2962962962962963
+        ],
+        "headroom_captured": 0.137455759373847,
+        "pooled_top1": 0.3111111111111111,
+        "realized_vs_constant_pct": -0.08857051031512848,
+        "worst_fold_top1": 0.14814814814814814
+      },
+      "boosted_depth3_r60": {
+        "fold_top1": [
+          0.25925925925925924,
+          0.2222222222222222,
+          0.14814814814814814,
+          0.3333333333333333,
+          0.25925925925925924
+        ],
+        "headroom_captured": 0.10884119189949229,
+        "pooled_top1": 0.24444444444444444,
+        "realized_vs_constant_pct": -0.07013252812220132,
+        "worst_fold_top1": 0.14814814814814814
+      }
+    },
+    "aggregate+distribution+graph": {
+      "boosted_depth1_r60": {
+        "fold_top1": [
+          0.3333333333333333,
+          0.37037037037037035,
+          0.18518518518518517,
+          0.37037037037037035,
+          0.4074074074074074
+        ],
+        "headroom_captured": 0.3703344387289794,
+        "pooled_top1": 0.3333333333333333,
+        "realized_vs_constant_pct": -0.23862739818913117,
+        "worst_fold_top1": 0.18518518518518517
+      },
+      "boosted_depth3_r150": {
+        "fold_top1": [
+          0.14814814814814814,
+          0.3333333333333333,
+          0.14814814814814814,
+          0.2962962962962963,
+          0.2222222222222222
+        ],
+        "headroom_captured": 0.06819588388024748,
+        "pooled_top1": 0.22962962962962963,
+        "realized_vs_constant_pct": -0.04394246020813873,
+        "worst_fold_top1": 0.14814814814814814
+      },
+      "boosted_depth3_r60": {
+        "fold_top1": [
+          0.1111111111111111,
+          0.2222222222222222,
+          0.18518518518518517,
+          0.14814814814814814,
+          0.2222222222222222
+        ],
+        "headroom_captured": 0.07973629946389055,
+        "pooled_top1": 0.17777777777777778,
+        "realized_vs_constant_pct": -0.051378601859445955,
+        "worst_fold_top1": 0.1111111111111111
+      }
+    }
+  }
+}

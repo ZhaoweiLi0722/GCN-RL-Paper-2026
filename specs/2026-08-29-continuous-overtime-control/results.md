@@ -609,3 +609,107 @@ readily. That check has not been run.
 
 - `results/continuous_overtime_critic_ranking_e4/ranking_ablation_e4b.json`
 - Implementation: `evaluation/run_overtime_ranking_e4b.py`
+
+---
+
+## CONFIRMATORY RUN on the reserved held-out set — 2026-08-29
+
+Executed once, on `routing_regional_drift` with seed families `97100000`,
+`97200000`, `97300000`, under the protocol frozen and committed in `4a11d00`
+**before** the run started (`frozen_protocol.md`). 4,320 rows, 45 states.
+
+### Predictions versus outcome
+
+| Quantity | Predicted | Actual | |
+| --- | --- | ---: | --- |
+| Headroom gate | PASS | PASS (0.80) | correct |
+| **State-dependence value** | **PASS, +0.5% to +0.8%** | **+0.4500% — FAIL** | **WRONG** |
+| Interior best-arm fraction | ≥ 0.80 | 0.778 | near miss |
+| Label stability, best-action | PASS, 0.85–0.98 | 0.911 PASS | correct |
+| Label stability, pairwise | PASS, ≥ 0.95 | 0.991 PASS | correct |
+| Ranking top-1 | FAIL, 0.25–0.40 | 0.267 FAIL | correct |
+| Ranking worst-fold top-1 | FAIL, ≤ 0.35 | 0.111 FAIL | correct |
+| Realized cost vs constant | −0.15% to −0.35% | −0.1264% | outside range |
+| Headroom captured | 30–50% | 26.3% | outside range |
+
+### The prediction that matters is the one that was wrong
+
+**The state-dependence result did not replicate.** It measured +0.4500%
+against the frozen 0.5% gate, so the channel classifies on held-out data
+exactly as it did at Stage E2: `channel_captured_by_constant_policy`.
+
+This is precisely the falsification condition written into
+`frozen_protocol.md` before the run: *"a state-dependence value near zero
+would mean the E2b/E3 positive was specific to the exploratory scenarios."*
+The value is not near zero, but it is below the gate, and the gate is the
+prespecified decision rule.
+
+The exploratory estimates were +0.6446% (E2b) and +0.6182% (E3), measured
+across three seed families on three scenarios. On a fourth scenario the same
+quantity is +0.4500% — about 30% lower, and on the failing side of a threshold
+fixed in advance. Three internally consistent replications did not predict the
+held-out result.
+
+**This vindicates reserving the held-out set, and it means the forking-paths
+concern was real rather than hypothetical.** The E2b calibration and the gate
+amendment produced a result that looked solid under every check available
+inside the exploratory scenarios — including a 1.000 cross-family agreement in
+E3 — and it still degraded on a scenario that took no part in developing the
+protocol. Had we stopped at E3 and reported +0.64% as the finding, we would
+have reported a number that does not survive a regime change.
+
+### The ranking result is worse than exploration suggested
+
+Held-out ranking did not merely fail; the fitted model is **worse than the
+state-blind constant**:
+
+| Held-out seed | Fitted top-1 | State-blind | Gain |
+| --- | ---: | ---: | ---: |
+| 97100000 | 0.444 | 0.667 | **−0.222** |
+| 97100001 | 0.333 | 0.111 | +0.222 |
+| 97100002 | 0.222 | 0.333 | −0.111 |
+| 97100003 | 0.111 | 0.222 | −0.111 |
+| 97100004 | 0.222 | 0.222 | +0.000 |
+
+Pooled fitted top-1 0.267 against a state-blind 0.311. In exploration the
+model beat state-blind on every fold (state-blind was 0.059 there); here it
+loses on three of five. The state-blind baseline is much stronger on this
+scenario because the optimum concentrates on one rung — which is the same
+finding as the state-dependence miss, seen from the other side.
+
+The model still captures 26.3% of the oracle budget and beats the constant by
+0.1264% on realized cost, so it is not worthless. But both figures fall below
+the exploratory range, and the argmax result is now unambiguous.
+
+### Conclusion
+
+**The overtime channel does not support a learned policy, and the exploratory
+positive was regime-specific.**
+
+Final classification on held-out data: `channel_captured_by_constant_policy`,
+`optimum_not_predictable_from_state`. **Stage E5 is not authorized and the
+channel is closed.**
+
+What survives as a claim, stated at the strength the evidence supports:
+
+1. Overtime is a valuable operational lever — worth roughly 1.8% of anchor
+   cost on the held-out scenario — but essentially all of that is captured by
+   a single tuned constant.
+2. There is a small amount of genuine state-dependent value (+0.45% oracle,
+   26.3% of it capturable out of sample), below the threshold set in advance
+   as the minimum worth learning.
+3. The per-state optimum replicates across CRN streams (0.911, 0.991) but is
+   not predictable from decision-time state, and a state-conditioned model
+   underperforms a constant on most held-out folds.
+4. Neither distributional features, graph message passing, nor nonlinear
+   models change this (E4b, E4c).
+
+### Evidence
+
+- Rows: `results/continuous_overtime_confirmatory/headroom_rows.csv`
+- Summary and ranking:
+  `results/continuous_overtime_confirmatory/{summary,ranking_feasibility}.json`
+- Curated: `experiments/evidence/continuous_overtime_confirmatory/`
+- Frozen protocol and pre-registered predictions:
+  `specs/2026-08-29-continuous-overtime-control/frozen_protocol.md`
+  (committed `4a11d00`, before execution)

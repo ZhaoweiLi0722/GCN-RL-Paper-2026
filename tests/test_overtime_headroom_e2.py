@@ -257,3 +257,41 @@ class E2CombinedGateTest(unittest.TestCase):
         self.assertEqual(
             decision["classification"], "state_dependent_headroom_established"
         )
+
+
+class HeldOutReservationTest(unittest.TestCase):
+    """The reservation is enforced by code, not by memory.
+
+    Exploration is about to get liberal; the held-out set must be impossible
+    to touch by accident, including via a debug or smoke run.
+    """
+
+    def test_reserved_scenario_rejected_in_exploration(self) -> None:
+        bad = copy.deepcopy(CONFIG)
+        bad["scenarios"] = bad["scenarios"] + ["routing_regional_drift"]
+        bad["non_nominal_scenarios"] = bad["non_nominal_scenarios"] + ["routing_regional_drift"]
+        with self.assertRaisesRegex(ValueError, "reserved for the confirmatory run"):
+            validate_config(bad)
+
+    def test_reserved_seeds_rejected_in_exploration(self) -> None:
+        for field, seed in (("discovery_seeds", 97200000), ("validation_seeds", 97300005)):
+            bad = copy.deepcopy(CONFIG)
+            bad["replications"][field][0] = seed
+            with self.assertRaisesRegex(ValueError, "reserved for the confirmatory run"):
+                validate_config(bad)
+        bad = copy.deepcopy(CONFIG)
+        bad["state_generation"]["seeds"][0] = 97100003
+        with self.assertRaisesRegex(ValueError, "reserved for the confirmatory run"):
+            validate_config(bad)
+
+    def test_confirmatory_flag_unlocks_the_reserved_set(self) -> None:
+        ok = copy.deepcopy(CONFIG)
+        ok["confirmatory_run"] = True
+        ok["scenarios"] = ["routing_regional_drift"]
+        ok["non_nominal_scenarios"] = ["routing_regional_drift"]
+        ok["state_generation"]["seeds"] = [97100000, 97100001, 97100002]
+        ok["replications"] = {
+            "discovery_seeds": [97200000, 97200001, 97200002],
+            "validation_seeds": [97300000, 97300001, 97300002, 97300003, 97300004],
+        }
+        validate_config(ok)

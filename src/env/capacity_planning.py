@@ -92,6 +92,26 @@ class CapacityPlanningConfig:
     capacity_edges: Sequence[Edge] | None = None
     resource_edges: Sequence[Edge] | None = None
     costs: CostParameters = CostParameters()
+    # Stochastic procurement lead times with order crossing
+    # (spec 2026-08-29-stochastic-lead-time-regime). Flag-off behavior is
+    # bit-identical to the deterministic-procurement environment.
+    #
+    # `reagent_purchase_lead_time` already had a CONSUMER in
+    # src/baselines/heuristics.py -- which reads it via getattr and folds it
+    # into the order-up-to horizon -- but no producer anywhere in src/env/, so
+    # it silently defaulted to 0. This supplies the producer.
+    enable_stochastic_procurement: bool = False
+    reagent_purchase_lead_time: int = 0
+    # Categorical distribution over arrival delays; index = epochs of delay.
+    # A non-degenerate distribution permits ORDER CROSSING, which is the
+    # property that breaks conventional order-up-to reasoning.
+    reagent_lead_time_probabilities: Sequence[float] = ()
+    include_on_order_state: bool = False
+    # Analysis device, not a modelling choice: when set, lead times are still
+    # DRAWN (so the random stream is untouched) and then overridden with this
+    # constant. It isolates the cost of lead-time VARIABILITY from the cost of
+    # the lead itself, paired exactly against the stochastic run.
+    procurement_lead_override: int | None = None
     # Continuous overtime control (spec 2026-08-29-continuous-overtime-control).
     # Flag-off behavior is bit-identical to the pre-overtime environment.
     enable_overtime_control: bool = False
@@ -240,6 +260,8 @@ class CapacityPlanningEnv:
             self.features_per_facility += 3 * int(
                 self.config.demand_sequence_length
             )
+        if self.config.include_on_order_state:
+            self.features_per_facility += self._procurement_pipeline_depth() + 1
         if self.config.enable_overtime_control:
             # [previous u_ot, outstanding overtime, static surge headroom]
             # plus fatigue when enabled (spec 2026-08-29).
@@ -294,6 +316,9 @@ class CapacityPlanningEnv:
         self.cumulative_bioreactor_capacity = 0.0
         self.reagent_shortage_steps = 0
         self.bioreactor_shortage_steps = 0
+        self.reagent_purchase_pipeline = np.zeros(
+            (max(self._procurement_pipeline_depth(), 0) + 1, n), dtype=float
+        )
         self.previous_overtime_fraction = np.zeros(n, dtype=float)
         self.overtime_outstanding = np.zeros(n, dtype=float)
         self.overtime_fatigue = np.zeros(n, dtype=float)
@@ -364,6 +389,8 @@ class CapacityPlanningEnv:
         )
         if self.config.enable_overtime_control:
             overtime_features = self._overtime_features()
+        if self.config.include_on_order_state:
+            on_order_features = self._on_order_features()
         for i in range(self.config.num_facilities):
             row_parts = [
                 np.array([self.demand[i], self.specimens[i], self.reagents[i]], dtype=float),
@@ -401,6 +428,8 @@ class CapacityPlanningEnv:
                         )
                     )
                 )
+            if self.config.include_on_order_state:
+                row_parts.append(on_order_features[i])
             if self.config.enable_overtime_control:
                 row_parts.append(overtime_features[i])
             rows.append(np.concatenate(tuple(row_parts)))
@@ -471,6 +500,11 @@ class CapacityPlanningEnv:
             facility_columns.extend(
                 sequence_mask[:, index]
                 for index in range(sequence_mask.shape[1])
+            )
+        if self.config.include_on_order_state:
+            on_order = self._on_order_features()
+            facility_columns.extend(
+                on_order[:, index] for index in range(on_order.shape[1])
             )
         if self.config.enable_overtime_control:
             overtime_features = self._overtime_features()
@@ -717,6 +751,11 @@ class CapacityPlanningEnv:
             * self.max_reagent_replenishment
             * supplier_available
         )
+        procurement_arrivals = None
+        if self._procurement_pipeline_depth() > 0:
+            leads = self._draw_procurement_leads()
+            self._place_procurement(replenishment, leads)
+            procurement_arrivals = self._receive_procurement()
         if self.config.enable_overtime_control:
             overtime_fraction, overtime_surge = self._decode_overtime(normalized)
             idle_now = self.bioreactors[:, 0]
@@ -728,7 +767,9 @@ class CapacityPlanningEnv:
             returning = self.bioreactors[:, 1]
             overtime_repaid = np.minimum(self.overtime_outstanding, returning)
             next_specimens = self.specimens - production + current_demand
-            next_reagents = self.reagents - production + replenishment
+            next_reagents = self.reagents - production + (
+                replenishment if procurement_arrivals is None else procurement_arrivals
+            )
             next_bioreactors = np.zeros_like(self.bioreactors)
             next_bioreactors[:, 0] = (
                 idle_now - base_production + returning - overtime_repaid
@@ -736,7 +777,9 @@ class CapacityPlanningEnv:
         else:
             production = np.minimum.reduce((self.specimens, self.bioreactors[:, 0], self.reagents))
             next_specimens = self.specimens - production + current_demand
-            next_reagents = self.reagents - production + replenishment
+            next_reagents = self.reagents - production + (
+                replenishment if procurement_arrivals is None else procurement_arrivals
+            )
             next_bioreactors = np.zeros_like(self.bioreactors)
             next_bioreactors[:, 0] = self.bioreactors[:, 0] - production + self.bioreactors[:, 1]
         if self.config.production_lead_time > 2:
@@ -888,6 +931,9 @@ class CapacityPlanningEnv:
             "under_reagents": under_reagents.copy(),
             "under_bioreactors": under_bioreactors.copy(),
         }
+        if procurement_arrivals is not None:
+            info["procurement_arrivals"] = procurement_arrivals.copy()
+            info["reagents_on_order"] = self.reagent_purchase_pipeline.sum(axis=0)
         if self.config.enable_overtime_control:
             info["overtime_fraction"] = overtime_fraction.copy()
             info["overtime_surge"] = overtime_surge.copy()
@@ -895,6 +941,62 @@ class CapacityPlanningEnv:
             info["overtime_outstanding"] = self.overtime_outstanding.copy()
         info.update(self._performance_info())
         return self.observation(), -cost, done, info
+
+    def _procurement_pipeline_depth(self) -> int:
+        """Number of future epochs an order can land in (0 = arrives next epoch)."""
+
+        if self.config.enable_stochastic_procurement:
+            return max(
+                len(self.config.reagent_lead_time_probabilities) - 1,
+                int(self.config.reagent_purchase_lead_time),
+            )
+        return int(self.config.reagent_purchase_lead_time)
+
+    def _draw_procurement_leads(self) -> np.ndarray:
+        """One lead-time draw per facility per epoch.
+
+        Deliberately per (facility, epoch) rather than per order or per unit:
+        the number of random draws must not depend on the ORDER QUANTITY,
+        which is an action. Drawing per unit would make the random stream
+        action-dependent and destroy the exact CRN pairing that every paired
+        screen in this project relies on. Order crossing still arises, because
+        orders placed in different epochs draw independent delays.
+        """
+
+        n = self.config.num_facilities
+        if not self.config.enable_stochastic_procurement:
+            return np.full(n, int(self.config.reagent_purchase_lead_time), dtype=int)
+        probabilities = np.asarray(
+            self.config.reagent_lead_time_probabilities, dtype=float
+        )
+        drawn = self.rng.choice(len(probabilities), size=n, p=probabilities)
+        if self.config.procurement_lead_override is not None:
+            # Draw first, then discard: the stream must match the stochastic run.
+            return np.full(n, int(self.config.procurement_lead_override), dtype=int)
+        return drawn
+
+    def _receive_procurement(self) -> np.ndarray:
+        """Pop this epoch's arrivals and age the procurement pipeline."""
+
+        arrivals = self.reagent_purchase_pipeline[0].copy()
+        self.reagent_purchase_pipeline = np.roll(
+            self.reagent_purchase_pipeline, -1, axis=0
+        )
+        self.reagent_purchase_pipeline[-1] = 0.0
+        return arrivals
+
+    def _place_procurement(self, replenishment: np.ndarray, leads: np.ndarray) -> None:
+        depth = self.reagent_purchase_pipeline.shape[0]
+        for facility in range(self.config.num_facilities):
+            slot = min(int(leads[facility]), depth - 1)
+            self.reagent_purchase_pipeline[slot, facility] += float(
+                replenishment[facility]
+            )
+
+    def _on_order_features(self) -> np.ndarray:
+        """Outstanding on-order quantity by remaining age, per facility."""
+
+        return self.reagent_purchase_pipeline.T.copy()
 
     def _decode_overtime(self, normalized: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """Map the overtime action block to (u_ot, committed surge).
@@ -1019,6 +1121,37 @@ class CapacityPlanningEnv:
             raise ValueError("geographic_neighbor_k must be positive")
         if self.config.clinic_coordinates is not None:
             normalize_coordinates(self.config.clinic_coordinates, self.config.num_facilities)
+        if self.config.reagent_purchase_lead_time < 0:
+            raise ValueError("reagent_purchase_lead_time must be nonnegative")
+        if self.config.enable_stochastic_procurement:
+            probabilities = [float(p) for p in self.config.reagent_lead_time_probabilities]
+            if len(probabilities) < 2:
+                raise ValueError(
+                    "enable_stochastic_procurement requires at least two lead-time "
+                    "probabilities; a degenerate distribution is deterministic "
+                    "procurement and should use reagent_purchase_lead_time instead"
+                )
+            if any(p < 0.0 for p in probabilities):
+                raise ValueError("reagent_lead_time_probabilities must be nonnegative")
+            if abs(sum(probabilities) - 1.0) > 1e-9:
+                raise ValueError("reagent_lead_time_probabilities must sum to 1")
+        elif self.config.reagent_lead_time_probabilities:
+            raise ValueError(
+                "reagent_lead_time_probabilities requires enable_stochastic_procurement"
+            )
+        if (
+            self.config.procurement_lead_override is not None
+            and not self.config.enable_stochastic_procurement
+        ):
+            raise ValueError(
+                "procurement_lead_override is a counterfactual device for the "
+                "stochastic regime and requires enable_stochastic_procurement"
+            )
+        if self.config.include_on_order_state and not self._procurement_pipeline_depth():
+            raise ValueError(
+                "include_on_order_state requires a procurement lead time or a "
+                "stochastic procurement distribution"
+            )
         if self.config.enable_production_throttle:
             raise ValueError(
                 "enable_production_throttle is dormant (Decision B); activation "

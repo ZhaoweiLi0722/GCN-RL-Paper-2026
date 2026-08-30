@@ -44,6 +44,16 @@ from src.rl.experiment import build_env
 DEFAULT_CONFIG = Path("experiments/configs/continuous_overtime_headroom_e2.json")
 FORMAL_HOLDOUT_SEED = 91_100_000
 DEV_CRN_SEEDS = (94_000_000, 94_100_000)
+# Reserved for the single confirmatory run; see
+# specs/2026-08-29-continuous-overtime-control/held_out_reservation.md.
+# Exploratory screens must not touch these, so the reservation is enforced by
+# code rather than by memory.
+RESERVED_SCENARIO = "routing_regional_drift"
+RESERVED_SEED_RANGES = ((97_100_000, 97_100_009), (97_200_000, 97_200_004), (97_300_000, 97_300_009))
+
+
+def is_reserved_seed(seed: int) -> bool:
+    return any(low <= seed <= high for low, high in RESERVED_SEED_RANGES)
 
 
 def main() -> None:
@@ -130,6 +140,16 @@ def validate_config(config: dict[str, Any]) -> None:
     for seed in all_seeds:
         if seed == FORMAL_HOLDOUT_SEED or seed in DEV_CRN_SEEDS:
             raise ValueError(f"seed {seed} collides with a protected CRN stream")
+        if is_reserved_seed(seed) and not config.get("confirmatory_run", False):
+            raise ValueError(
+                f"seed {seed} is reserved for the confirmatory run; see "
+                "specs/2026-08-29-continuous-overtime-control/held_out_reservation.md"
+            )
+    if RESERVED_SCENARIO in config["scenarios"] and not config.get("confirmatory_run", False):
+        raise ValueError(
+            f"scenario {RESERVED_SCENARIO!r} is reserved for the confirmatory run; see "
+            "specs/2026-08-29-continuous-overtime-control/held_out_reservation.md"
+        )
     gates = config["gates"]
     if float(gates["material_threshold"]) <= 0.0:
         raise ValueError("material_threshold must be positive")

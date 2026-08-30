@@ -1,0 +1,99 @@
+{
+  "agreement_curve": {
+    "1": {
+      "mean": 0.785,
+      "p10": 0.7407407407407407,
+      "p90": 0.8518518518518519
+    },
+    "16": {
+      "mean": 0.9118518518518519,
+      "p10": 0.8518518518518519,
+      "p90": 0.9629629629629629
+    },
+    "2": {
+      "mean": 0.7962962962962963,
+      "p10": 0.7407407407407407,
+      "p90": 0.8518518518518519
+    },
+    "32": {
+      "mean": 0.9516666666666667,
+      "p10": 0.9259259259259259,
+      "p90": 0.9629629629629629
+    },
+    "4": {
+      "mean": 0.8220370370370369,
+      "p10": 0.7777777777777778,
+      "p90": 0.8888888888888888
+    },
+    "8": {
+      "mean": 0.855185185185185,
+      "p10": 0.7777777777777778,
+      "p90": 0.9259259259259259
+    }
+  },
+  "allocation_comparison": {
+    "16": {
+      "sequential_halving_agreement": 0.88,
+      "simulator_calls_per_group": 80,
+      "uniform_agreement": 0.9066666666666666
+    },
+    "2": {
+      "sequential_halving_agreement": 0.7837037037037037,
+      "simulator_calls_per_group": 10,
+      "uniform_agreement": 0.7933333333333333
+    },
+    "4": {
+      "sequential_halving_agreement": 0.8037037037037037,
+      "simulator_calls_per_group": 20,
+      "uniform_agreement": 0.825925925925926
+    },
+    "8": {
+      "sequential_halving_agreement": 0.8348148148148147,
+      "simulator_calls_per_group": 40,
+      "uniform_agreement": 0.868888888888889
+    }
+  },
+  "arms": [
+    "shift_+0.00",
+    "shift_+0.05",
+    "shift_+0.10",
+    "shift_-0.05",
+    "shift_-0.10"
+  ],
+  "config_sha256": "cfac2cb97d36eddcf67ffdb66fb8e18a0cb8b8f62c912c8e955a36cd65e9fcac",
+  "convergence_to_full_pool": {
+    "1": 0.8279629629629629,
+    "16": 0.9440740740740742,
+    "2": 0.8511111111111112,
+    "32": 0.9757407407407408,
+    "4": 0.8761111111111112,
+    "8": 0.9137037037037037
+  },
+  "decision": {
+    "agreement_at_max_k": 0.9516666666666667,
+    "classification": "g1_negative_underpowered",
+    "consequence": "the 70% gate is reachable with budget; the Stage G1 conclusion is reclassified as a budget statement and the question it closed is REOPENED (any follow-up needs its own specification)",
+    "last_doubling_gain": 0.03981481481481475,
+    "max_k": 32,
+    "thresholds": {
+      "fundamental_below": 0.6,
+      "fundamental_gain_cap": 0.02,
+      "underpowered_at_least": 0.7
+    }
+  },
+  "experimental_role": "development-only measurement of a LABEL ESTIMATOR, not a policy experiment. Measures how reliably the best legal specimen action can be identified as a function of simulation budget and allocation scheme. No training, no checkpoint selection, no formal stream, no change to any existing result root.",
+  "g1_budget_point": {
+    "g1_reported": 0.545,
+    "mean": 0.8214814814814815,
+    "p10": 0.7407407407407407,
+    "p90": 0.8888888888888888,
+    "shape": [
+      3,
+      5
+    ]
+  },
+  "name": "routing_label_budget_analysis",
+  "rows_sha256": "d011d7850e9ffed4e0418bb9cb7953cb99edd0f88380d29587682c1a4d5a6474",
+  "states": 27,
+  "worlds": 64
+}

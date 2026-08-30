@@ -1,0 +1,206 @@
+{
+  "cross_check_e2b_vs_e3": {
+    "agreement": {
+      "agreeing_states": 27,
+      "best_action_agreement": 1.0,
+      "state_count": 27
+    },
+    "pairwise": {
+      "agreeing_pairs": 1142,
+      "material_pairs": 1151,
+      "pairwise_sign_agreement": 0.9921807124239791
+    }
+  },
+  "independent_state_dependence_remeasure": {
+    "anchor_total": 14539465693.730953,
+    "best_constant_arm": "u_0.60",
+    "constant_total": 14237273868.174343,
+    "distinct_best_arm_count": 8,
+    "distinct_best_arms": [
+      "u_0.30",
+      "u_0.40",
+      "u_0.50",
+      "u_0.60",
+      "u_0.70",
+      "u_0.80",
+      "u_0.90",
+      "u_1.00"
+    ],
+    "interior_best_arm_fraction": 0.9259259259259259,
+    "interior_best_arm_states": 25,
+    "oracle_total": 14144351125.276571,
+    "prospective_available": true,
+    "prospective_constant_arm": "u_0.60",
+    "prospective_constant_total": 14237273868.174343,
+    "prospective_total": 14147387634.386042,
+    "prospective_value_of_state_dependence": 89886233.78830147,
+    "prospective_value_of_state_dependence_fraction": 0.006182224002018046,
+    "selection_scoring_best_arm_agreement": 0.9259259259259259,
+    "state_count": 27,
+    "value_of_channel_over_anchor": 302191825.5566101,
+    "value_of_state_dependence": 92922742.89777184,
+    "value_of_state_dependence_fraction": 0.006391069992196326
+  },
+  "primary_fresh_vs_fresh": {
+    "agreement": {
+      "agreeing_states": 25,
+      "best_action_agreement": 0.9259259259259259,
+      "per_state": {
+        "routing_abrupt_regime_shift:seed96100000:epoch30": {
+          "agree": true,
+          "stream_a_best": "u_0.90",
+          "stream_b_best": "u_0.90"
+        },
+        "routing_abrupt_regime_shift:seed96100000:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.40",
+          "stream_b_best": "u_0.40"
+        },
+        "routing_abrupt_regime_shift:seed96100000:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        },
+        "routing_abrupt_regime_shift:seed96100001:epoch30": {
+          "agree": true,
+          "stream_a_best": "u_1.00",
+          "stream_b_best": "u_1.00"
+        },
+        "routing_abrupt_regime_shift:seed96100001:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        },
+        "routing_abrupt_regime_shift:seed96100001:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.40",
+          "stream_b_best": "u_0.40"
+        },
+        "routing_abrupt_regime_shift:seed96100002:epoch30": {
+          "agree": true,
+          "stream_a_best": "u_0.90",
+          "stream_b_best": "u_0.90"
+        },
+        "routing_abrupt_regime_shift:seed96100002:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.40",
+          "stream_b_best": "u_0.40"
+        },
+        "routing_abrupt_regime_shift:seed96100002:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.30",
+          "stream_b_best": "u_0.30"
+        },
+        "routing_compound_regional_stress:seed96100000:epoch30": {
+          "agree": false,
+          "stream_a_best": "u_1.00",
+          "stream_b_best": "u_0.90"
+        },
+        "routing_compound_regional_stress:seed96100000:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        },
+        "routing_compound_regional_stress:seed96100000:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        },
+        "routing_compound_regional_stress:seed96100001:epoch30": {
+          "agree": true,
+          "stream_a_best": "u_0.30",
+          "stream_b_best": "u_0.30"
+        },
+        "routing_compound_regional_stress:seed96100001:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.40",
+          "stream_b_best": "u_0.40"
+        },
+        "routing_compound_regional_stress:seed96100001:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.70",
+          "stream_b_best": "u_0.70"
+        },
+        "routing_compound_regional_stress:seed96100002:epoch30": {
+          "agree": true,
+          "stream_a_best": "u_0.60",
+          "stream_b_best": "u_0.60"
+        },
+        "routing_compound_regional_stress:seed96100002:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        },
+        "routing_compound_regional_stress:seed96100002:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.80",
+          "stream_b_best": "u_0.80"
+        },
+        "routing_nominal_history:seed96100000:epoch30": {
+          "agree": true,
+          "stream_a_best": "u_1.00",
+          "stream_b_best": "u_1.00"
+        },
+        "routing_nominal_history:seed96100000:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.40",
+          "stream_b_best": "u_0.40"
+        },
+        "routing_nominal_history:seed96100000:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.40",
+          "stream_b_best": "u_0.40"
+        },
+        "routing_nominal_history:seed96100001:epoch30": {
+          "agree": false,
+          "stream_a_best": "u_1.00",
+          "stream_b_best": "u_0.90"
+        },
+        "routing_nominal_history:seed96100001:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        },
+        "routing_nominal_history:seed96100001:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        },
+        "routing_nominal_history:seed96100002:epoch30": {
+          "agree": true,
+          "stream_a_best": "u_0.90",
+          "stream_b_best": "u_0.90"
+        },
+        "routing_nominal_history:seed96100002:epoch55": {
+          "agree": true,
+          "stream_a_best": "u_0.30",
+          "stream_b_best": "u_0.30"
+        },
+        "routing_nominal_history:seed96100002:epoch80": {
+          "agree": true,
+          "stream_a_best": "u_0.50",
+          "stream_b_best": "u_0.50"
+        }
+      },
+      "state_count": 27
+    },
+    "gate": {
+      "best_action_criterion_passed": true,
+      "classification": "labels_replicate_on_fresh_streams",
+      "e4_authorized": true,
+      "gate": "e3_label_stability",
+      "label_stability_gate_passed": true,
+      "material_pairs": 1147,
+      "measured_best_action_agreement": 0.9259259259259259,
+      "measured_pairwise_sign_agreement": 0.9895379250217959,
+      "minimum_best_action_agreement": 0.7,
+      "minimum_pairwise_agreement": 0.8,
+      "pairwise_criterion_passed": true
+    },
+    "pairwise": {
+      "agreeing_pairs": 1135,
+      "material_pairs": 1147,
+      "pairwise_sign_agreement": 0.9895379250217959
+    }
+  }
+}

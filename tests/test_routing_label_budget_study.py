@@ -141,3 +141,36 @@ class ExecutedSignatureTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ReadingRuleTest(unittest.TestCase):
+    """All three branches, including boundaries, pinned before the data is read."""
+
+    RULE = {
+        "underpowered_if_agreement_at_k32_at_least": 0.70,
+        "fundamental_if_agreement_at_k32_below": 0.60,
+        "fundamental_also_requires_last_doubling_gain_below": 0.02,
+    }
+
+    def _curve(self, penultimate, final):
+        return {16: {"mean": penultimate}, 32: {"mean": final}}
+
+    def test_underpowered_branch_and_its_boundary(self) -> None:
+        from evaluation.routing_label_budget_analysis import classify
+        out = classify(self._curve(0.68, 0.70), self.RULE)
+        self.assertEqual(out["classification"], "g1_negative_underpowered")
+        self.assertIn("REOPENED", out["consequence"])
+
+    def test_fundamental_branch_requires_a_flat_tail(self) -> None:
+        from evaluation.routing_label_budget_analysis import classify
+        flat = classify(self._curve(0.589, 0.599), self.RULE)
+        self.assertEqual(flat["classification"], "g1_negative_confirmed_fundamental")
+        # Same endpoint, still climbing -> must NOT be called fundamental.
+        climbing = classify(self._curve(0.50, 0.599), self.RULE)
+        self.assertEqual(climbing["classification"], "inconclusive_at_this_budget")
+
+    def test_middle_band_is_inconclusive(self) -> None:
+        from evaluation.routing_label_budget_analysis import classify
+        out = classify(self._curve(0.63, 0.65), self.RULE)
+        self.assertEqual(out["classification"], "inconclusive_at_this_budget")
+        self.assertIn("change-control", out["consequence"])

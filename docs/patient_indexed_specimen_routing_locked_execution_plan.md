@@ -1306,3 +1306,41 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - **No routing experiment has been launched.** Re-opening the routing labelling
   question requires its own change-control entry and specification; this entry
   records only the correction and the validated instrument.
+
+### 2026-08-29: Routing label budget study completed; Stage G1 negative STANDS
+
+- The study asked whether Stage G1's 54.5% best-action agreement was a
+  property of the routing channel or of its eight-world replication budget.
+  It collected a complete paired-CRN pool (27 states, 5 legal specimen arms,
+  64 worlds, 8,640 rollouts) and replayed allocation policies offline.
+- The frozen reading rule returned `g1_negative_underpowered`, **but that
+  classification is not the study's conclusion.** Its precondition is violated
+  by the data: at Stage G1's exact budget shape (3 vs 5 worlds) this study
+  measures **0.821** agreement against G1's reported **0.545**. Budget cannot
+  explain a 0.28 gap measured at the same budget.
+- Honest classification: `precondition_violated_cannot_adjudicate_g1`. The
+  study never reproduced G1's baseline — its agreement is 0.785 from a single
+  world, already above the 0.70 gate — so it cannot test whether budget lifts
+  a 0.545 baseline over that gate.
+- **Stage G1's negative stands unchanged. Nothing in the closed routing
+  conclusion is reopened.** The difference lies in states and policy context
+  (G1 used 156 frozen-pretrain trajectory states from the Stage F1 runs; this
+  study used fresh MDL-2-anchored states), which the spec flagged as a
+  transfer risk and which has now failed empirically.
+- Methodological lesson recorded in the study's results.md: a prospective
+  reading rule protects against choosing thresholds after seeing data, but not
+  against an experiment failing to reproduce the condition it was meant to
+  probe. Future budget studies must gate on reproducing the baseline first and
+  declare themselves uninformative otherwise.
+- Secondary negative: sequential halving was WORSE than uniform allocation at
+  every budget tested (0.784 vs 0.793 up to 0.880 vs 0.907), contradicting its
+  synthetic validation. Likely cause is arm count — 5 arms give roughly two
+  halving rounds, so a near-optimal arm can be eliminated before near-ties are
+  resolved. The labeller should not be used for short ladders on this
+  evidence.
+- Adjudicating Stage G1 requires replication on G1's own states, whose
+  artifacts live on the RTX 4090 host. That is a separate specification and is
+  not proposed here.
+- Evidence: `specs/2026-08-29-routing-label-budget-study/results.md`,
+  `results/routing_label_budget_study/`,
+  `experiments/evidence/routing_label_budget_study/`.

@@ -1277,3 +1277,32 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
   `results/continuous_overtime_critic_ranking_e4/`,
   `experiments/evidence/continuous_overtime_critic_ranking_e4/`.
+
+
+### 2026-08-29: Correction — CRN pairing is exact; label instability re-interpreted
+
+- A limitation recorded against the overtime screens claimed that paired
+  common-random-number comparisons weaken over the horizon because
+  per-patient deterioration draws desynchronize once arms diverge. **That
+  claim was wrong.** Direct measurement shows two arms replayed from one state
+  under one seed finish with an identical RNG bit-generator state, identical
+  cumulative enrollment, and identical patient ids; only cost differs.
+- Cause: patient attributes are drawn once at enrollment and the enrollment
+  count follows realized demand, not the action, so no action can change the
+  random stream. The same reasoning applies to the H0/G0/G1 screens.
+- Scientific consequence: within a world, an arm-versus-arm comparison carries
+  no Monte Carlo noise, so disagreement between replication streams is not
+  estimator noise. It means the best action differs between worlds. The
+  learning target is the argmax of EXPECTED cost, which additional worlds do
+  estimate — measured on the Stage E4 rows, best-action agreement rises from
+  0.826 to 0.887 as worlds per group go 1 to 4.
+- This raises a direct question about the closed Stage G1 result: its 54.5%
+  agreement was measured at a low replication budget, so it may have been
+  underpowered rather than fundamental. A budget-efficient labeller
+  (`evaluation/sequential_halving_labeling.py`, 11 tests) has been built and
+  validated on synthetic ground truth, where at equal simulator budget it
+  identifies the true best arm in 0.837/0.940/0.987 of trials against
+  0.730/0.860/0.960 for uniform allocation.
+- **No routing experiment has been launched.** Re-opening the routing labelling
+  question requires its own change-control entry and specification; this entry
+  records only the correction and the validated instrument.

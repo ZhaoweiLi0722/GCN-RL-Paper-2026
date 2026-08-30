@@ -202,14 +202,28 @@ gating-protocol framing than the overtime channel itself.
 - Config: `experiments/configs/continuous_overtime_headroom_e2.json`
 - Implementation: `evaluation/audit_overtime_headroom_e2.py`
 
-### Known limitation
+### Correction: CRN pairing is exact, not degrading
 
-Arms share a CRN seed and a common start state, but once arms diverge in
-patient counts the per-patient deterioration draws desynchronize, so pairing
-weakens over the remaining horizon. This matches the H0/G0/G1 precedent.
-Tightening it would require per-stream RNG partitioning. It does not affect
-the corner-solution finding, which is a monotone effect far larger than the
-pairing noise.
+Earlier versions of this document, and the change-control entry for this
+stage, stated that pairing weakens over the horizon because per-patient
+deterioration draws desynchronize once arms diverge in patient counts.
+**That was wrong**, and it was corrected on 2026-08-29 after direct
+measurement.
+
+Patient attributes are drawn once at enrollment (health index, Weibull
+survival, risk type), and the number of enrollments depends on realized
+demand, not on the action. Replaying two arms from one state under one seed
+therefore consumes an identical random stream: the final RNG bit-generator
+state, the cumulative enrollment count, and the patient ids all match exactly,
+while the costs differ by the action's effect alone.
+
+The consequence is not cosmetic. Within a single world an arm-versus-arm
+comparison carries **no Monte Carlo noise at all**, so remaining
+disagreement between replication streams is not estimator noise — it is the
+best action genuinely differing between worlds. The quantity a policy needs is
+the argmax of *expected* cost, which more worlds do estimate; measured on the
+Stage E4 rows, best-action agreement rises from 0.826 to 0.887 as the worlds
+per group go from 1 to 4, which is real but slow improvement.
 
 ---
 

@@ -40,12 +40,31 @@ replication on the 4090 host is the follow-up — it is not part of this study.
 
 ## Actions
 
-The Stage G1 legal family: the MDL-2 anchor action, plus the anchor with the
-specimen net-flow block shifted by `−0.10, −0.05, +0.05, +0.10` (raw action
-units, applied uniformly across clinics, clipped to [−1, 1]) — five arms per
-state. This matches the C3/G0/G1 correction family in form; the
-distinct-execution filter above is what gives the shifts behavioral meaning
-per state.
+Five arms per state: the MDL-2 anchor, plus the anchor with the specimen
+net-flow block shifted by `−0.10, −0.05, +0.05, +0.10` along a **centred
+state-derived pressure pattern**, clipped to [−1, 1].
+
+The pattern is `p = (waiting − min(idle capacity, reagents))`, mean-centred and
+scaled to unit maximum absolute value, computed once per state and frozen, so
+every world sees the identical action vector for a given (state, arm).
+
+**Amendment, 2026-08-29, before any pool collection and before any outcome was
+observed.** The first draft specified a *uniform* shift across clinics. A
+pre-run probe showed that produces **zero executed routes for every arm**:
+specimen net flow is conserved, so shifting all clinics in the same direction
+leaves no counterparties and nothing can move. The five arms would have been
+behaviourally identical and the study vacuous — the requested integer net
+differed, but no patient was routed. Centring the shift makes some clinics
+offer and others request; the same probe then yields five distinct executed
+flows at epochs 30, 55 and 80, moving 5–13 patients. Centred pressure patterns
+are also the form the project's existing structured-exploration machinery uses
+(`project_tensor_to_pattern_basis`: "transfer corrections use one centred
+pressure pattern").
+
+The distinct-execution filter below operates on **executed** flows
+(`specimen_transfers`), never on requested ones — the probe showed requests can
+differ while executions are identical, so filtering on requests would admit
+degenerate states.
 
 ## Worlds and pairing
 

@@ -107,6 +107,11 @@ class CapacityPlanningConfig:
     # property that breaks conventional order-up-to reasoning.
     reagent_lead_time_probabilities: Sequence[float] = ()
     include_on_order_state: bool = False
+    # Analysis device, not a modelling choice: when set, lead times are still
+    # DRAWN (so the random stream is untouched) and then overridden with this
+    # constant. It isolates the cost of lead-time VARIABILITY from the cost of
+    # the lead itself, paired exactly against the stochastic run.
+    procurement_lead_override: int | None = None
     # Continuous overtime control (spec 2026-08-29-continuous-overtime-control).
     # Flag-off behavior is bit-identical to the pre-overtime environment.
     enable_overtime_control: bool = False
@@ -964,7 +969,11 @@ class CapacityPlanningEnv:
         probabilities = np.asarray(
             self.config.reagent_lead_time_probabilities, dtype=float
         )
-        return self.rng.choice(len(probabilities), size=n, p=probabilities)
+        drawn = self.rng.choice(len(probabilities), size=n, p=probabilities)
+        if self.config.procurement_lead_override is not None:
+            # Draw first, then discard: the stream must match the stochastic run.
+            return np.full(n, int(self.config.procurement_lead_override), dtype=int)
+        return drawn
 
     def _receive_procurement(self) -> np.ndarray:
         """Pop this epoch's arrivals and age the procurement pipeline."""
@@ -1129,6 +1138,14 @@ class CapacityPlanningEnv:
         elif self.config.reagent_lead_time_probabilities:
             raise ValueError(
                 "reagent_lead_time_probabilities requires enable_stochastic_procurement"
+            )
+        if (
+            self.config.procurement_lead_override is not None
+            and not self.config.enable_stochastic_procurement
+        ):
+            raise ValueError(
+                "procurement_lead_override is a counterfactual device for the "
+                "stochastic regime and requires enable_stochastic_procurement"
             )
         if self.config.include_on_order_state and not self._procurement_pipeline_depth():
             raise ValueError(

@@ -193,3 +193,117 @@ class ValidationTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PatientEnvWiringTest(unittest.TestCase):
+    """The patient env overrides step() and must be wired separately.
+
+    The first implementation wired only the base environment. Every routing
+    and overtime study uses the PATIENT environment, whose step() computes its
+    own next_reagents, so the extension was inert exactly where it mattered --
+    and the base-env equivalence test passed anyway. These tests exist so that
+    cannot recur silently.
+    """
+
+    def _patient_config(self, **overrides):
+        from src.env.patient_capacity_planning import PatientEnvConfig
+        base = dataclasses.replace(BASE, **overrides)
+        return PatientEnvConfig(base=base)
+
+    def _run(self, config, seed=5, steps=25):
+        from src.env.patient_capacity_planning import PatientConditionCapacityEnv
+        env = PatientConditionCapacityEnv(config, seed=seed)
+        env.reset(seed=seed)
+        policy = get_heuristic_class("mdl2")()
+        policy.reset()
+        infos = []
+        for _ in range(steps):
+            _, _, done, info = env.step(policy.select_action(env.observation(), env=env))
+            infos.append(info)
+            if done:
+                break
+        return env, infos
+
+    def test_patient_env_actually_uses_the_pipeline(self) -> None:
+        env, infos = self._run(
+            self._patient_config(
+                enable_stochastic_procurement=True,
+                reagent_lead_time_probabilities=(0.1, 0.2, 0.4, 0.2, 0.1),
+                include_on_order_state=True,
+            )
+        )
+        self.assertIn("procurement_arrivals", infos[-1])
+        self.assertIn("reagents_on_order", infos[-1])
+        self.assertEqual(env.reagent_purchase_pipeline.shape[0], 5)
+
+    def test_patient_env_conserves_the_pipeline(self) -> None:
+        env, infos = self._run(self._patient_config(reagent_purchase_lead_time=2))
+        ordered = sum(float(i["replenishment"].sum()) for i in infos)
+        arrived = sum(float(i["procurement_arrivals"].sum()) for i in infos)
+        self.assertGreater(ordered, 0.0)
+        self.assertAlmostEqual(
+            ordered, arrived + float(env.reagent_purchase_pipeline.sum()), places=6
+        )
+
+    def test_patient_env_flag_off_is_unchanged(self) -> None:
+        env_a, infos_a = self._run(self._patient_config())
+        env_b, infos_b = self._run(self._patient_config(reagent_purchase_lead_time=0))
+        self.assertEqual(env_a.rng.bit_generator.state, env_b.rng.bit_generator.state)
+        np.testing.assert_array_equal(env_a.reagents, env_b.reagents)
+        self.assertNotIn("procurement_arrivals", infos_a[-1])
+
+    def test_snapshot_round_trip_carries_the_pipeline(self) -> None:
+        from src.env.patient_capacity_planning import PatientConditionCapacityEnv
+        config = self._patient_config(reagent_purchase_lead_time=2)
+        env, _ = self._run(config)
+        snapshot = env.state_dict()
+        self.assertIn("reagent_purchase_pipeline", snapshot["arrays"])
+        restored = PatientConditionCapacityEnv(config, seed=99)
+        restored.reset(seed=99)
+        restored.load_state_dict(snapshot)
+        np.testing.assert_array_equal(
+            restored.reagent_purchase_pipeline, env.reagent_purchase_pipeline
+        )
+
+
+class LeadTimeAwarePolicyTest(unittest.TestCase):
+    def test_reduces_to_mdl2_without_a_lead_time(self) -> None:
+        env = CapacityPlanningEnv(BASE, seed=4)
+        env.reset(seed=4)
+        plain = get_heuristic_class("mdl2")().select_action(env.observation(), env=env)
+        aware = get_heuristic_class("mdl2_lt")().select_action(env.observation(), env=env)
+        np.testing.assert_allclose(plain, aware, atol=1e-6)
+
+    def test_expected_lead_matches_the_distribution_mean(self) -> None:
+        config = dataclasses.replace(
+            BASE,
+            enable_stochastic_procurement=True,
+            reagent_lead_time_probabilities=(0.1, 0.2, 0.4, 0.2, 0.1),
+        )
+        env = CapacityPlanningEnv(config, seed=4)
+        policy = get_heuristic_class("mdl2_lt")()
+        self.assertAlmostEqual(policy.expected_lead(env), 2.0, places=9)
+
+    def test_orders_against_inventory_position_not_on_hand(self) -> None:
+        """Ignoring stock in transit is the classic lead-time planning error."""
+
+        config = dataclasses.replace(BASE, reagent_purchase_lead_time=3)
+        env = CapacityPlanningEnv(config, seed=4)
+        env.reset(seed=4)
+        n = env.config.num_facilities
+        policy = get_heuristic_class("mdl2_lt")()
+        # Draw stock down until the planner is actually ordering; at reset it
+        # sits on plenty of inventory and orders nothing, which cannot
+        # distinguish the two accounting rules.
+        for _ in range(20):
+            env.step(policy.select_action(env.observation(), env=env))
+        before = policy.select_action(env.observation(), env=env)[3 * n : 4 * n].copy()
+        self.assertGreater(float(before.sum()), -float(n), "fixture must be ordering")
+        # Put a large quantity in transit; on-hand is unchanged.
+        env.reagent_purchase_pipeline[-1] += 50.0
+        after = policy.select_action(env.observation(), env=env)[3 * n : 4 * n]
+        self.assertLess(float(after.sum()), float(before.sum()))
+
+    def test_rejects_negative_safety_multiplier(self) -> None:
+        with self.assertRaisesRegex(ValueError, "safety_multiplier"):
+            get_heuristic_class("mdl2_lt")(config={"safety_multiplier": -0.5})

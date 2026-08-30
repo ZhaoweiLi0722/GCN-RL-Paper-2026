@@ -391,6 +391,75 @@ class ShieldedMeanDemandLookahead2Policy(ShieldedPatientPriorityMyopicPolicy):
         return "mdl2"
 
 
+class LeadTimeAwareMeanDemandLookahead2Policy(MeanDemandLookahead2Policy):
+    """MDL-2-LT: MDL-2 that knows orders take time to arrive.
+
+    Plain MDL-2 sets reagent orders from ON-HAND inventory and covers only its
+    lookahead window. Under a procurement lead time both assumptions break, and
+    the first one breaks badly: ignoring stock already in transit means
+    re-ordering the same shortfall every epoch until it lands, so the planner
+    systematically over-orders. Comparing a learned policy against that
+    unmodified planner would be a strawman, which is why this comparator is
+    built and tuned before any learned work.
+
+    Two corrections, both standard inventory practice:
+
+    1. Order against the inventory POSITION (on hand plus on order), not the
+       on-hand level.
+    2. Cover demand over the lead plus the lookahead window, not the lookahead
+       window alone, with a tunable safety multiplier for lead variability.
+    """
+
+    algorithm = "mdl2_lt"
+
+    def __init__(self, state_dim=None, action_dim=None, config=None):
+        super().__init__(state_dim, action_dim, config)
+        config = config or {}
+        self.safety_multiplier = float(config.get("safety_multiplier", 1.0))
+        if self.safety_multiplier < 0.0:
+            raise ValueError("safety_multiplier must be nonnegative")
+
+    def expected_lead(self, env: CapacityPlanningEnv) -> float:
+        probabilities = getattr(env.config, "reagent_lead_time_probabilities", ())
+        if getattr(env.config, "enable_stochastic_procurement", False) and probabilities:
+            weights = np.asarray(probabilities, dtype=float)
+            return float((np.arange(len(weights)) * weights).sum())
+        return float(getattr(env.config, "reagent_purchase_lead_time", 0))
+
+    def _facility_net_action(self, env: CapacityPlanningEnv) -> np.ndarray:
+        action = super()._facility_net_action(env)
+        pipeline = getattr(env, "reagent_purchase_pipeline", None)
+        if pipeline is None or pipeline.shape[0] <= 1:
+            return action  # no lead time configured: identical to MDL-2
+
+        n = env.config.num_facilities
+        specimens = np.asarray(env.specimens, dtype=float)
+        reagents = np.asarray(env.reagents, dtype=float)
+        idle = np.asarray(env.bioreactors[:, 0], dtype=float)
+        production = np.minimum.reduce((specimens, idle, reagents))
+        next_specimens = np.maximum(specimens - production + np.asarray(env.demand, dtype=float), 0.0)
+        on_hand_after_production = reagents - production
+        on_order = pipeline.sum(axis=0)
+
+        rate = np.asarray(
+            getattr(env, "demand_rate_estimates", env.demand_rates), dtype=float
+        )
+        coverage = float(self.settings.lookahead_periods) + self.expected_lead(env)
+        target = (next_specimens + coverage * rate) * self.safety_multiplier
+        target = target * float(self.settings.local_order_up_to_multiplier)
+
+        position = on_hand_after_production + on_order
+        replenishment = np.clip(
+            target - position, 0.0, np.asarray(env.max_reagent_replenishment, dtype=float)
+        ) * np.asarray(env.supplier_available, dtype=float)
+
+        action = action.copy()
+        action[3 * n : 4 * n] = _normalize_replenishment(
+            replenishment, np.asarray(env.max_reagent_replenishment, dtype=float)
+        )
+        return action
+
+
 def _overtime_shortfall_and_headroom(
     env: CapacityPlanningEnv,
 ) -> tuple[np.ndarray, np.ndarray]:
@@ -511,6 +580,7 @@ HEURISTIC_POLICIES = {
     "mdl2_ot": OvertimeMeanDemandLookahead2Policy,
     "umyo_ot": OvertimeUrgencyAwareMyopicPolicy,
     "static_ot": StaticOvertimePolicy,
+    "mdl2_lt": LeadTimeAwareMeanDemandLookahead2Policy,
 }
 
 

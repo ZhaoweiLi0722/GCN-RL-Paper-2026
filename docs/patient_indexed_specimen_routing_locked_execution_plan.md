@@ -1344,3 +1344,37 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Evidence: `specs/2026-08-29-routing-label-budget-study/results.md`,
   `results/routing_label_budget_study/`,
   `experiments/evidence/routing_label_budget_study/`.
+
+### 2026-08-29: Stochastic lead-time regime study — GATE FAILED, study closed
+
+- The study tested whether making reagent procurement lead times stochastic
+  (with order crossing) leaves the tuned heuristic structurally misspecified,
+  following the deep-research finding that random lead times are a documented
+  regime with a 7.1% heuristic optimality gap.
+- Gate metric: cost of lead-time variability for the tuned lead-time-aware
+  planner, measured exactly paired (the override draws the lead and discards
+  it, so both runs consume an identical random stream). Lead distribution
+  mean 2.0, variance 1.2, order crossing possible; 24 evaluation seeds per
+  scenario; safety multiplier tuned on 10 separate development seeds.
+- Result: **+0.176% pooled** (0.113% / 0.160% / 0.256% by scenario), against a
+  1% floor. Consistent in sign and roughly 40x too small to matter.
+- **GATE FAILED. The study stops per its protocol.** No gating protocol was
+  run, no learned policy was built, and no held-out data was spent.
+- Mechanism: reagents are one of three binding resources
+  (`min(specimens, capacity, reagents)`), so lead-time noise on one input is
+  absorbed by slack in the others; and a correctly specified planner absorbs
+  nearly all the rest. Lead-blind MDL-2 loses 0.81% under stochastic leads;
+  the lead-aware planner recovers it (-0.91%, better on 12/12 seeds) using two
+  standard corrections — order against inventory position, and cover lead plus
+  lookahead.
+- Scientific consequence: a regime the literature identifies as favourable to
+  learned control does not produce exploitable headroom in this problem class,
+  for a structural reason that applies to any lever perturbing one resource at
+  a time. Combined with the closed routing and overtime channels, the sub-1%
+  ceiling looks like a property of the problem rather than of the method.
+- Pre-registered prediction was 2-4%; the outcome was +0.176%, wrong by an
+  order of magnitude and the third optimistic prediction refuted by
+  measurement this session.
+- Kept: the flag-gated environment extension (off by default) and the MDL-2-LT
+  comparator, with 20 tests.
+- Evidence: `specs/2026-08-29-stochastic-lead-time-regime/results.md`.

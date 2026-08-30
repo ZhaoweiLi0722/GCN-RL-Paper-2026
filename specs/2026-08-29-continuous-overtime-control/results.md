@@ -525,3 +525,87 @@ forking-paths objection outright.
 - Config: `experiments/configs/continuous_overtime_critic_ranking_e4.json`
 - Implementation: `evaluation/ranking_feasibility.py`,
   `evaluation/run_overtime_ranking_e4.py` (11 tests)
+
+---
+
+## Stage E4b (EXPLORATORY): does graph structure carry the signal? — 2026-08-29
+
+**Exploratory, not confirmatory.** Consumes the Stage E4 rows; trains no
+deployed policy; touches no reserved data.
+
+### Motivation and outcome
+
+E4 failed using 15 network-level aggregates, and I argued that was a strawman
+for a graph method: sums and maxima over 20 clinics destroy exactly the
+per-clinic topology a GCN exists to exploit. This ablation tested that claim.
+
+**The claim was wrong.** Adding distributional shape and graph structure does
+not rescue the result, and graph features specifically add nothing.
+
+### Ablation (leave-one-generation-seed-out, 135 states, ridge)
+
+Best result per feature family across an α grid from 0.1 to 10,000:
+
+| Feature set | Dim | Best top-1 | Best realized cost vs constant | Headroom captured |
+| --- | ---: | ---: | ---: | ---: |
+| aggregate (E4 baseline) | 15 | 0.319 | **−0.2655%** | **41.2%** |
+| aggregate + distribution | 27 | **0.356** | −0.2599% | 40.3% |
+| aggregate + distribution + graph | 34 | 0.341 | −0.2529% | 39.2% |
+| graph only | 7 | 0.215 | — | — |
+
+Gate is top-1 ≥ 0.50. Every configuration fails, and the α curve now has an
+interior peak, so linear-model performance on this channel is bounded around
+**0.30–0.36** rather than being limited by the grid.
+
+Graph features are not merely unhelpful — the best top-1 (0.356) and the best
+realized cost (−0.2655%) both come from feature sets *without* them, and
+graph-only is the worst family tested. One-hop message passing over the
+resource edges and spatial autocorrelation of shortfall carry no additional
+information about where the overtime optimum sits.
+
+### What this settles
+
+The E4 verdict stands on much stronger ground. The limitation I flagged when
+reporting it — "the learner destroys the graph structure a GCN would use" —
+has now been tested directly and rejected as an explanation.
+
+Under a realized-cost criterion, the outcome is unchanged: the best model
+captures 41.2% of the oracle budget and beats the tuned constant by 0.27% of
+anchor cost, against the two principled thresholds considered (≥50% of oracle
+budget, or ≥0.5% of anchor). **Both still fail**, exactly as predicted when
+the criterion change was proposed. Replacing argmax with realized cost does
+not change this channel's verdict.
+
+### The scientific finding: two distinct ways a channel can be unlearnable
+
+Overtime and routing fail in different places, and the contrast is the useful
+result:
+
+| | Routing (G0/G1) | Overtime (E2b/E3/E4) |
+| --- | --- | --- |
+| Does state-dependent value exist? | not isolated | **yes, +0.64%** |
+| Do the labels replicate? | **no** — 0.545 agreement | **yes** — 0.926, 1.000 cross-family |
+| Is the optimum predictable from state? | not reached | **no** — top-1 0.31–0.36 vs 0.50 |
+| Failure mode | target is noise | target is stable but not a function of observable state |
+
+Routing's counterfactual labels do not replicate: there is no stable target to
+learn. Overtime's labels replicate almost perfectly, yet a model given the
+decision-time state — including graph-derived features — cannot identify the
+optimum. The signal is real and reproducible but is not carried by anything a
+policy can observe when it acts. The most likely driver is realized future
+demand, which is knowable in hindsight and unavailable at decision time.
+
+That taxonomy is a stronger contribution than either channel alone, and it is
+what the cheap gating protocol is for: both failures were identified in hours
+of evaluation-only compute, before any agent was trained.
+
+### Residual limitation
+
+The learner is linear throughout. A nonlinear model could in principle capture
+interactions this ablation cannot, and with 135 states it would also overfit
+readily. That check has not been run.
+
+### Evidence
+
+- `results/continuous_overtime_critic_ranking_e4/ranking_ablation_e4b.json`
+- Implementation: `evaluation/run_overtime_ranking_e4b.py`

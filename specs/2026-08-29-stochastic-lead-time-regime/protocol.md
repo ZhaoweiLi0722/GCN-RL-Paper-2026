@@ -1,5 +1,11 @@
 # Protocol
 
+> **Status and chronology.** This document was a step-0 draft and its sign-off
+> table remained pending when an implementation and exploratory diagnostic
+> were run. The text below preserves the intended gate. The implementation
+> notes identify what was actually built; they are not a retroactive amendment
+> of the unsigned protocol.
+
 ## Scientific role
 
 Test whether making reagent procurement lead times **stochastic with order
@@ -11,7 +17,7 @@ the ~1% we see today.
 
 ## Environment extension (flag-gated, default off)
 
-New configuration surface on `CapacityPlanningConfig`:
+The draft proposed this configuration surface on `CapacityPlanningConfig`:
 
 ```
 reagent_purchase_lead_time: int = 0          # deterministic component
@@ -20,10 +26,20 @@ reagent_lead_time_probabilities: tuple[float, ...] = ()   # order-crossing allow
 enable_stochastic_procurement: bool = False
 ```
 
+The implementation uses `enable_stochastic_procurement`,
+`reagent_purchase_lead_time`, `reagent_lead_time_probabilities`,
+`include_on_order_state`, and the analysis-only
+`procurement_lead_override`. It does not implement the proposed
+`reagent_lead_time_distribution` selector; the probability vector is the
+single stochastic interface.
+
 Mechanics, mirroring the existing transfer pipeline:
 
 - An order placed at epoch *t* enters a procurement pipeline and arrives at
-  *t + L*, where *L* is drawn per order from the configured distribution.
+  *t + L*. The draft specified a draw per order. The implementation draws once
+  per facility per epoch so the number of random draws cannot depend on the
+  action quantity; all orders placed by that facility in that epoch share the
+  draw. This preserves exact common-random-number pairing across policies.
 - **Order crossing is permitted**: a later order may arrive before an earlier
   one. This is the property that breaks conventional base-stock reasoning and
   is the reason the literature reports large heuristic gaps under random lead
@@ -62,6 +78,16 @@ the tuned MDL-2-LT optimality gap under the stochastic regime.
 A sub-1% result here is a genuinely valuable negative: it would show that the
 literature's 7.1% figure does not transfer to this problem class, which is a
 sharper claim than anything the current manuscript makes.
+
+### Executed diagnostic did not implement this gate
+
+The subsequent diagnostic compared the tuned lead-aware planner under
+stochastic leads with the same planner under a lead fixed at the same mean.
+That estimates the *cost of lead-time variability*. It is not an optimality
+gap against a hindsight benchmark or strong rollout policy, so its `+0.176%`
+estimate cannot be compared with the 1%/3% thresholds above as a formal gate
+decision. The diagnostic may inform whether a fully authorized study is worth
+running, but it cannot close the preregistered question.
 
 ## Deliverable 2: the gating protocol (only if the gap gate passes)
 

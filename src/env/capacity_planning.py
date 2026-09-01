@@ -77,6 +77,15 @@ class CapacityPlanningConfig:
     demand_regime_final_multipliers: Sequence[float] | float = 1.0
     demand_regime_change_step: int = 0
     demand_regime_transition_duration: int = 0
+    # Advance referral/collection schedule used only by the intertemporal
+    # shared-capacity study. The active cluster changes at declared block
+    # boundaries, and the known schedule is folded into the demand forecast.
+    enable_scheduled_referral_waves: bool = False
+    scheduled_referral_clusters: Sequence[Sequence[int]] = ()
+    scheduled_referral_start_step: int = 0
+    scheduled_referral_block_length: int = 1
+    scheduled_referral_peak_multiplier: float = 1.0
+    scheduled_referral_repeat: bool = True
     clinic_coordinates: Sequence[Sequence[float]] | None = None
     geographic_neighbor_k: int = 3
     geographic_transfer_cost_scale: float = 0.0
@@ -121,6 +130,14 @@ class CapacityPlanningConfig:
     enable_overtime_fatigue: bool = False
     overtime_fatigue_decay: float = 0.8
     overtime_fatigue_cost_scale: float = 1.0
+    # Intertemporal shared-capacity extension. This reuses the overtime action
+    # block but delays and smooths its effect; defaults preserve the original
+    # same-epoch overtime contract exactly.
+    enable_intertemporal_overtime_commitment: bool = False
+    overtime_commitment_lead_time: int = 2
+    overtime_commitment_persistence: float = 0.5
+    overtime_shared_budget_fraction: float = 1.0
+    weight_overtime_activation: float = 0.0
     # Decision B is dormant: the flag freezes the config surface but activation
     # is rejected until separately authorized by change control.
     enable_production_throttle: bool = False
@@ -266,6 +283,12 @@ class CapacityPlanningEnv:
             # [previous u_ot, outstanding overtime, static surge headroom]
             # plus fatigue when enabled (spec 2026-08-29).
             self.features_per_facility += 3 + int(self.config.enable_overtime_fatigue)
+            if self.config.enable_intertemporal_overtime_commitment:
+                # Active capacity, each pending target, and the remaining
+                # shared-budget fraction (spec 2026-09-01).
+                self.features_per_facility += (
+                    2 + int(self.config.overtime_commitment_lead_time)
+                )
         self.observation_size = (
             n * self.features_per_facility + int(self.config.include_time_state)
         )
@@ -322,6 +345,16 @@ class CapacityPlanningEnv:
         self.previous_overtime_fraction = np.zeros(n, dtype=float)
         self.overtime_outstanding = np.zeros(n, dtype=float)
         self.overtime_fatigue = np.zeros(n, dtype=float)
+        self.overtime_active_capacity = np.zeros(n, dtype=float)
+        self.overtime_commitment_pipeline = np.zeros(
+            (
+                int(self.config.overtime_commitment_lead_time)
+                if self.config.enable_intertemporal_overtime_commitment
+                else 0,
+                n,
+            ),
+            dtype=float,
+        )
         return self.observation()
 
     def enable_train_randomization(
@@ -599,6 +632,9 @@ class CapacityPlanningEnv:
         supplier_available = self.supplier_available.copy()
         current_demand = self.demand.copy()
         current_demand_forecast = self.demand_forecast.copy()
+        current_scheduled_referral_multiplier = (
+            self._scheduled_referral_multiplier_at(self.t)
+        )
         replenishment = (
             ((normalized[:n] + 1.0) / 2.0)
             * self.max_reagent_replenishment
@@ -728,6 +764,10 @@ class CapacityPlanningEnv:
             "under_reagents": under_reagents.copy(),
             "under_bioreactors": under_bioreactors.copy(),
         }
+        if self.config.enable_scheduled_referral_waves:
+            info["scheduled_referral_multiplier"] = (
+                current_scheduled_referral_multiplier.copy()
+            )
         info.update(self._performance_info())
         return self.observation(), -cost, done, info
 
@@ -742,6 +782,9 @@ class CapacityPlanningEnv:
         supplier_available = self.supplier_available.copy()
         current_demand = self.demand.copy()
         current_demand_forecast = self.demand_forecast.copy()
+        current_scheduled_referral_multiplier = (
+            self._scheduled_referral_multiplier_at(self.t)
+        )
 
         specimen_requests = normalized[:n] * self.config.max_specimen_transfer
         reagent_transfer_requests = normalized[n : 2 * n] * self.config.max_reagent_transfer
@@ -757,7 +800,12 @@ class CapacityPlanningEnv:
             self._place_procurement(replenishment, leads)
             procurement_arrivals = self._receive_procurement()
         if self.config.enable_overtime_control:
-            overtime_fraction, overtime_surge = self._decode_overtime(normalized)
+            (
+                overtime_fraction,
+                overtime_surge,
+                overtime_requested_surge,
+                overtime_activation_change,
+            ) = self._resolve_overtime_for_step(normalized)
             idle_now = self.bioreactors[:, 0]
             production = np.minimum.reduce(
                 (self.specimens, idle_now + overtime_surge, self.reagents)
@@ -882,6 +930,11 @@ class CapacityPlanningEnv:
             overtime_surge=(
                 overtime_surge if self.config.enable_overtime_control else None
             ),
+            overtime_activation_change=(
+                overtime_activation_change
+                if self.config.enable_intertemporal_overtime_commitment
+                else None
+            ),
         )
         cost = float(sum(cost_components.values()))
         if self.config.enable_overtime_control:
@@ -891,7 +944,9 @@ class CapacityPlanningEnv:
             if self.config.enable_overtime_fatigue:
                 self.overtime_fatigue = (
                     self.config.overtime_fatigue_decay * self.overtime_fatigue
-                    + overtime_fraction
+                    + self._overtime_utilization_fraction(
+                        overtime_fraction, overtime_surge
+                    )
                 )
             self.previous_overtime_fraction = overtime_fraction.copy()
 
@@ -934,11 +989,22 @@ class CapacityPlanningEnv:
         if procurement_arrivals is not None:
             info["procurement_arrivals"] = procurement_arrivals.copy()
             info["reagents_on_order"] = self.reagent_purchase_pipeline.sum(axis=0)
+        if self.config.enable_scheduled_referral_waves:
+            info["scheduled_referral_multiplier"] = (
+                current_scheduled_referral_multiplier.copy()
+            )
         if self.config.enable_overtime_control:
             info["overtime_fraction"] = overtime_fraction.copy()
             info["overtime_surge"] = overtime_surge.copy()
             info["overtime_production"] = overtime_production.copy()
             info["overtime_outstanding"] = self.overtime_outstanding.copy()
+            if self.config.enable_intertemporal_overtime_commitment:
+                info["overtime_requested_fraction"] = overtime_fraction.copy()
+                info["overtime_requested_surge"] = overtime_requested_surge.copy()
+                info["overtime_active_capacity"] = overtime_surge.copy()
+                info["overtime_commitment_change"] = (
+                    overtime_activation_change.copy()
+                )
         info.update(self._performance_info())
         return self.observation(), -cost, done, info
 
@@ -1011,6 +1077,90 @@ class CapacityPlanningEnv:
         overtime_surge = overtime_fraction * self.overtime_surge_headroom
         return overtime_fraction, overtime_surge
 
+    def _shared_overtime_budget(self) -> float:
+        return float(
+            self.config.overtime_shared_budget_fraction
+            * self.overtime_surge_headroom.sum()
+        )
+
+    def _project_overtime_commitment(
+        self,
+        overtime_fraction: np.ndarray,
+        requested_surge: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Project a request continuously onto the shared staffing budget."""
+
+        requested = np.maximum(np.asarray(requested_surge, dtype=float), 0.0)
+        budget = self._shared_overtime_budget()
+        total = float(requested.sum())
+        if total > budget and total > 0.0:
+            requested = requested * (budget / total)
+        projected_fraction = np.divide(
+            requested,
+            self.overtime_surge_headroom,
+            out=np.zeros_like(requested),
+            where=self.overtime_surge_headroom > 0.0,
+        )
+        return np.clip(projected_fraction, 0.0, 1.0), requested
+
+    def _resolve_overtime_for_step(
+        self, normalized: np.ndarray
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """Return request fraction, active surge, request surge, and adjustment.
+
+        The original same-epoch path remains a pure decode. In intertemporal
+        mode the current request enters a lead-time pipeline while a matured
+        target updates the persistent capacity available in this epoch.
+        """
+
+        overtime_fraction, requested_surge = self._decode_overtime(normalized)
+        if not self.config.enable_intertemporal_overtime_commitment:
+            return (
+                overtime_fraction,
+                requested_surge,
+                requested_surge,
+                np.zeros_like(requested_surge),
+            )
+
+        overtime_fraction, requested_surge = self._project_overtime_commitment(
+            overtime_fraction, requested_surge
+        )
+        previous_request = (
+            self.previous_overtime_fraction * self.overtime_surge_headroom
+        )
+        commitment_change = np.abs(requested_surge - previous_request)
+
+        matured_request = self.overtime_commitment_pipeline[0].copy()
+        if self.overtime_commitment_pipeline.shape[0] > 1:
+            self.overtime_commitment_pipeline[:-1] = (
+                self.overtime_commitment_pipeline[1:]
+            )
+        self.overtime_commitment_pipeline[-1] = requested_surge
+
+        persistence = float(self.config.overtime_commitment_persistence)
+        self.overtime_active_capacity = (
+            persistence * self.overtime_active_capacity
+            + (1.0 - persistence) * matured_request
+        )
+        return (
+            overtime_fraction,
+            self.overtime_active_capacity.copy(),
+            requested_surge,
+            commitment_change,
+        )
+
+    def _overtime_utilization_fraction(
+        self, overtime_fraction: np.ndarray, active_surge: np.ndarray
+    ) -> np.ndarray:
+        if not self.config.enable_intertemporal_overtime_commitment:
+            return overtime_fraction
+        return np.divide(
+            active_surge,
+            self.overtime_surge_headroom,
+            out=np.zeros_like(active_surge),
+            where=self.overtime_surge_headroom > 0.0,
+        )
+
     def _overtime_features(self) -> np.ndarray:
         """Per-facility overtime feature block appended to observations."""
 
@@ -1019,6 +1169,35 @@ class CapacityPlanningEnv:
             self.overtime_outstanding,
             self.overtime_surge_headroom,
         ]
+        if self.config.enable_intertemporal_overtime_commitment:
+            active_fraction = np.divide(
+                self.overtime_active_capacity,
+                self.overtime_surge_headroom,
+                out=np.zeros_like(self.overtime_active_capacity),
+                where=self.overtime_surge_headroom > 0.0,
+            )
+            columns.append(active_fraction)
+            for pending in self.overtime_commitment_pipeline:
+                columns.append(
+                    np.divide(
+                        pending,
+                        self.overtime_surge_headroom,
+                        out=np.zeros_like(pending),
+                        where=self.overtime_surge_headroom > 0.0,
+                    )
+                )
+            budget = self._shared_overtime_budget()
+            previous_request = (
+                self.previous_overtime_fraction * self.overtime_surge_headroom
+            )
+            remaining = (
+                max(budget - float(previous_request.sum()), 0.0) / budget
+                if budget > 0.0
+                else 0.0
+            )
+            columns.append(
+                np.full(self.config.num_facilities, remaining, dtype=float)
+            )
         if self.config.enable_overtime_fatigue:
             columns.append(self.overtime_fatigue)
         return np.column_stack(tuple(columns))
@@ -1035,6 +1214,7 @@ class CapacityPlanningEnv:
         capacity_transfer_cost: float,
         reagent_transfer_cost: float,
         overtime_surge: np.ndarray | None = None,
+        overtime_activation_change: np.ndarray | None = None,
     ) -> dict[str, float]:
         """Return an additive decomposition of one epoch's operating cost."""
 
@@ -1066,6 +1246,11 @@ class CapacityPlanningEnv:
                     linear * overtime_surge
                     + self.config.weight_overtime_quadratic * overtime_surge**2
                 )
+            )
+        if overtime_activation_change is not None:
+            components["overtime_activation_cost"] = float(
+                self.config.weight_overtime_activation
+                * np.asarray(overtime_activation_change, dtype=float).sum()
             )
         return components
 
@@ -1117,6 +1302,33 @@ class CapacityPlanningEnv:
             multipliers = _as_vector(values, self.config.num_facilities, name)
             if np.any(multipliers < 0.0):
                 raise ValueError(f"{name} must be nonnegative")
+        if self.config.enable_scheduled_referral_waves:
+            clusters = tuple(self.config.scheduled_referral_clusters)
+            if not clusters or any(not tuple(cluster) for cluster in clusters):
+                raise ValueError(
+                    "scheduled_referral_clusters must contain nonempty clusters"
+                )
+            for cluster in clusters:
+                indices = tuple(int(index) for index in cluster)
+                if len(set(indices)) != len(indices):
+                    raise ValueError(
+                        "scheduled_referral_clusters cannot repeat a facility"
+                    )
+                if any(
+                    index < 0 or index >= self.config.num_facilities
+                    for index in indices
+                ):
+                    raise ValueError(
+                        "scheduled_referral_clusters contains an invalid facility"
+                    )
+            if self.config.scheduled_referral_start_step < 0:
+                raise ValueError("scheduled_referral_start_step must be nonnegative")
+            if self.config.scheduled_referral_block_length < 1:
+                raise ValueError("scheduled_referral_block_length must be positive")
+            if self.config.scheduled_referral_peak_multiplier < 1.0:
+                raise ValueError(
+                    "scheduled_referral_peak_multiplier must be at least 1"
+                )
         if self.config.geographic_neighbor_k < 1:
             raise ValueError("geographic_neighbor_k must be positive")
         if self.config.clinic_coordinates is not None:
@@ -1169,6 +1381,24 @@ class CapacityPlanningEnv:
                 raise ValueError("weight_overtime_linear must be positive")
             if self.config.weight_overtime_quadratic <= 0.0:
                 raise ValueError("weight_overtime_quadratic must be positive")
+        if self.config.enable_intertemporal_overtime_commitment:
+            if not self.config.enable_overtime_control:
+                raise ValueError(
+                    "enable_intertemporal_overtime_commitment requires "
+                    "enable_overtime_control"
+                )
+            if self.config.overtime_commitment_lead_time < 1:
+                raise ValueError("overtime_commitment_lead_time must be positive")
+            if not 0.0 <= self.config.overtime_commitment_persistence < 1.0:
+                raise ValueError(
+                    "overtime_commitment_persistence must be within [0, 1)"
+                )
+            if not 0.0 < self.config.overtime_shared_budget_fraction <= 1.0:
+                raise ValueError(
+                    "overtime_shared_budget_fraction must be within (0, 1]"
+                )
+            if self.config.weight_overtime_activation < 0.0:
+                raise ValueError("weight_overtime_activation must be nonnegative")
         if self.config.enable_overtime_fatigue:
             if not self.config.enable_overtime_control:
                 raise ValueError(
@@ -1349,32 +1579,70 @@ class CapacityPlanningEnv:
             self.demand_rates
             * self.demand_regime_multiplier
             * self.demand_rate_multiplier
+            * self._scheduled_referral_multiplier_at(self.t)
+        )
+
+    def _scheduled_referral_multiplier_at(self, step: int) -> np.ndarray:
+        """Return the configured referral-wave multiplier for one epoch."""
+
+        multiplier = np.ones(self.config.num_facilities, dtype=float)
+        if not self.config.enable_scheduled_referral_waves:
+            return multiplier
+        start = int(self.config.scheduled_referral_start_step)
+        if step < start:
+            return multiplier
+        clusters = tuple(tuple(int(index) for index in cluster) for cluster in (
+            self.config.scheduled_referral_clusters
+        ))
+        block_index = (int(step) - start) // int(
+            self.config.scheduled_referral_block_length
+        )
+        if not self.config.scheduled_referral_repeat and block_index >= len(clusters):
+            return multiplier
+        active_cluster = clusters[block_index % len(clusters)]
+        multiplier[np.asarray(active_cluster, dtype=int)] = float(
+            self.config.scheduled_referral_peak_multiplier
+        )
+        return multiplier
+
+    def _demand_regime_multiplier_at(self, step: int) -> np.ndarray:
+        """Pure counterpart of `_update_demand_regime_multiplier`."""
+
+        change_step = int(self.config.demand_regime_change_step)
+        duration = int(self.config.demand_regime_transition_duration)
+        if step < change_step:
+            return self.demand_regime_initial_multipliers.astype(float).copy()
+        if duration == 0:
+            return self.demand_regime_final_multipliers.astype(float).copy()
+        progress = float(np.clip((step - change_step) / duration, 0.0, 1.0))
+        return (
+            (1.0 - progress) * self.demand_regime_initial_multipliers
+            + progress * self.demand_regime_final_multipliers
         )
 
     def _update_demand_regime_multiplier(self) -> None:
         """Update the persistent spatial demand regime for the current epoch."""
 
-        change_step = int(self.config.demand_regime_change_step)
-        duration = int(self.config.demand_regime_transition_duration)
-        if self.t < change_step:
-            self.demand_regime_multiplier = (
-                self.demand_regime_initial_multipliers.astype(float).copy()
-            )
-            return
-        if duration == 0:
-            self.demand_regime_multiplier = (
-                self.demand_regime_final_multipliers.astype(float).copy()
-            )
-            return
-        progress = float(np.clip((self.t - change_step) / duration, 0.0, 1.0))
-        self.demand_regime_multiplier = (
-            (1.0 - progress) * self.demand_regime_initial_multipliers
-            + progress * self.demand_regime_final_multipliers
-        )
+        self.demand_regime_multiplier = self._demand_regime_multiplier_at(self.t)
 
     def _sample_demand_forecast(self) -> np.ndarray:
         horizon = int(self.config.demand_forecast_horizon)
-        if self.config.demand_forecast_source == "prior_estimate":
+        if self.config.enable_scheduled_referral_waves:
+            base_rates = (
+                self.demand_rate_estimates
+                if self.config.demand_forecast_source == "prior_estimate"
+                else self.demand_rates
+            )
+            forecast = np.zeros(self.config.num_facilities, dtype=float)
+            for offset in range(1, horizon + 1):
+                step = self.t + offset
+                forecast += (
+                    base_rates
+                    * self._demand_regime_multiplier_at(step)
+                    * self.demand_rate_multiplier
+                    * self._scheduled_referral_multiplier_at(step)
+                )
+        elif self.config.demand_forecast_source == "prior_estimate":
             forecast = self.demand_rate_estimates * horizon
         else:
             forecast = self._effective_demand_rates() * horizon

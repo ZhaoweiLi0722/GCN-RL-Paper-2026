@@ -293,6 +293,10 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         )
         routed_specimen_arrivals = self._receive_specimen_route_arrivals()
         supplier_available = self.supplier_available.copy()
+        current_demand_forecast = self.demand_forecast.copy()
+        current_scheduled_referral_multiplier = (
+            self._scheduled_referral_multiplier_at(self.t)
+        )
         specimen_requests = normalized[:n] * self.config.max_specimen_transfer
         reagent_transfer_requests = normalized[n : 2 * n] * self.config.max_reagent_transfer
         capacity_requests = normalized[2 * n : 3 * n] * self.config.max_bioreactor_transfer
@@ -316,7 +320,12 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         idle_bioreactors = self.bioreactors[:, 0]
         waiting = self._waiting_counts()
         if self.config.enable_overtime_control:
-            overtime_fraction, overtime_surge = self._decode_overtime(normalized)
+            (
+                overtime_fraction,
+                overtime_surge,
+                overtime_requested_surge,
+                overtime_activation_change,
+            ) = self._resolve_overtime_for_step(normalized)
             production = np.floor(
                 np.minimum.reduce(
                     (waiting, idle_bioreactors + overtime_surge, self.reagents)
@@ -506,13 +515,20 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             overtime_surge=(
                 overtime_surge if self.config.enable_overtime_control else None
             ),
+            overtime_activation_change=(
+                overtime_activation_change
+                if self.config.enable_intertemporal_overtime_commitment
+                else None
+            ),
         )
         base_cost = float(sum(operating_cost_components.values()))
         if self.config.enable_overtime_control:
             if self.config.enable_overtime_fatigue:
                 self.overtime_fatigue = (
                     self.config.overtime_fatigue_decay * self.overtime_fatigue
-                    + overtime_fraction
+                    + self._overtime_utilization_fraction(
+                        overtime_fraction, overtime_surge
+                    )
                 )
             self.previous_overtime_fraction = overtime_fraction.copy()
         patient_cost_components = {
@@ -644,11 +660,23 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         if procurement_arrivals is not None:
             info["procurement_arrivals"] = procurement_arrivals.copy()
             info["reagents_on_order"] = self.reagent_purchase_pipeline.sum(axis=0)
+        if self.config.enable_scheduled_referral_waves:
+            info["demand_forecast"] = current_demand_forecast.copy()
+            info["scheduled_referral_multiplier"] = (
+                current_scheduled_referral_multiplier.copy()
+            )
         if self.config.enable_overtime_control:
             info["overtime_fraction"] = overtime_fraction.copy()
             info["overtime_surge"] = overtime_surge.copy()
             info["overtime_production"] = overtime_production.copy()
             info["overtime_outstanding"] = self.overtime_outstanding.copy()
+            if self.config.enable_intertemporal_overtime_commitment:
+                info["overtime_requested_fraction"] = overtime_fraction.copy()
+                info["overtime_requested_surge"] = overtime_requested_surge.copy()
+                info["overtime_active_capacity"] = overtime_surge.copy()
+                info["overtime_commitment_change"] = (
+                    overtime_activation_change.copy()
+                )
         info.update(self._performance_info())
         return self.observation(), -cost, done, info
 
@@ -1222,6 +1250,12 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 "overtime_fatigue",
             ):
                 arrays[name] = np.asarray(getattr(self, name)).copy()
+            if self.config.enable_intertemporal_overtime_commitment:
+                for name in (
+                    "overtime_active_capacity",
+                    "overtime_commitment_pipeline",
+                ):
+                    arrays[name] = np.asarray(getattr(self, name)).copy()
         if self._procurement_pipeline_depth() > 0:
             arrays["reagent_purchase_pipeline"] = self.reagent_purchase_pipeline.copy()
         scalars = {
@@ -1258,6 +1292,8 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
             # Key present only when enabled so flag-off snapshots stay
             # byte-identical to the pre-overtime format.
             snapshot_extras["enable_overtime_control"] = True
+        if self.config.enable_intertemporal_overtime_commitment:
+            snapshot_extras["enable_intertemporal_overtime_commitment"] = True
         return {
             "format_version": 1,
             "num_facilities": int(self.config.num_facilities),
@@ -1314,6 +1350,10 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 self.env_config.include_specimen_routing_state,
             ),
             ("enable_overtime_control", self.config.enable_overtime_control),
+            (
+                "enable_intertemporal_overtime_commitment",
+                self.config.enable_intertemporal_overtime_commitment,
+            ),
         ):
             if bool(state.get(key)) != bool(expected):
                 raise ValueError(f"Patient-environment state contract mismatch: {key}")

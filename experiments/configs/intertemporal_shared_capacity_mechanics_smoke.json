@@ -1,0 +1,62 @@
+{
+  "name": "intertemporal_shared_capacity_mechanics_smoke",
+  "experimental_role": "Engineering smoke only. No policy training, no scientific gate decision, and no formal holdout use.",
+  "env_config": "experiments/configs/20_clinic_patient_condition_geo.json",
+  "env_overrides": {
+    "scenario_name": "scheduled_referral_rotation_mechanics_smoke",
+    "episode_horizon": 24,
+    "include_demand_forecast_state": true,
+    "demand_forecast_horizon": 4,
+    "demand_forecast_error": 0.05,
+    "enable_scheduled_referral_waves": true,
+    "scheduled_referral_clusters": [
+      [0, 1, 2, 3, 4],
+      [5, 6, 7, 8, 9],
+      [10, 11, 12, 13, 14],
+      [15, 16, 17, 18, 19]
+    ],
+    "scheduled_referral_start_step": 0,
+    "scheduled_referral_block_length": 4,
+    "scheduled_referral_peak_multiplier": 1.8,
+    "scheduled_referral_repeat": true,
+    "enable_overtime_control": true,
+    "max_overtime_fraction": 0.6,
+    "weight_overtime_linear": 15000.0,
+    "weight_overtime_quadratic": 20000.0,
+    "enable_overtime_fatigue": true,
+    "overtime_fatigue_decay": 0.8,
+    "overtime_fatigue_cost_scale": 1.0,
+    "enable_intertemporal_overtime_commitment": true,
+    "overtime_commitment_lead_time": 2,
+    "overtime_commitment_persistence": 0.5,
+    "overtime_shared_budget_fraction": 0.25,
+    "weight_overtime_activation": 5000.0
+  },
+  "seed": 99299000,
+  "steps": 12,
+  "policies": [
+    {
+      "algorithm": "mdl2",
+      "config": {}
+    },
+    {
+      "algorithm": "static_ot",
+      "config": {
+        "static_overtime_fraction": 0.25
+      }
+    },
+    {
+      "algorithm": "forecast_iot",
+      "config": {
+        "forecast_overtime_budget_fraction": 1.0
+      }
+    },
+    {
+      "algorithm": "graph_forecast_iot",
+      "config": {
+        "forecast_overtime_budget_fraction": 1.0
+      }
+    }
+  ],
+  "output": "results/intertemporal_shared_capacity_development/mechanics_smoke.json"
+}

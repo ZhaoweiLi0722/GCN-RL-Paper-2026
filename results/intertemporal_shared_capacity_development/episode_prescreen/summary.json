@@ -1,0 +1,113 @@
+{
+  "candidates": {
+    "forecast_iot": {
+      "by_scenario": {
+        "scheduled_rotation_forward": {
+          "count": 8,
+          "mean": 0.003908011588633258,
+          "normal_95_half_width": 0.011188648243760129,
+          "positive_pairs": 6,
+          "sem": 0.005708494001918433
+        },
+        "scheduled_rotation_reverse": {
+          "count": 8,
+          "mean": 0.007461060518342262,
+          "normal_95_half_width": 0.00963263800631004,
+          "positive_pairs": 5,
+          "sem": 0.004914611227709204
+        },
+        "scheduled_rotation_slower_noisy": {
+          "count": 8,
+          "mean": 0.010861479018401586,
+          "normal_95_half_width": 0.009565708669985658,
+          "positive_pairs": 6,
+          "sem": 0.00488046360713554
+        }
+      },
+      "candidate": "forecast_iot",
+      "clinical": {
+        "candidate_mean_completion_service_level": 0.516171953705009,
+        "candidate_patients_lost": 61295.0,
+        "noninferior": true,
+        "static_mean_completion_service_level": 0.4923095518709188,
+        "static_patients_lost": 66270.0
+      },
+      "pair_count": 24,
+      "passes": true,
+      "pooled_seed_clustered": {
+        "count": 8,
+        "mean": 0.007410183708459036,
+        "normal_95_half_width": 0.007620645735645205,
+        "sem": 0.0038880845590026558
+      },
+      "positive_pairs": 17
+    },
+    "graph_forecast_iot": {
+      "by_scenario": {
+        "scheduled_rotation_forward": {
+          "count": 8,
+          "mean": 0.005012183875833281,
+          "normal_95_half_width": 0.01054301633714704,
+          "positive_pairs": 6,
+          "sem": 0.005379089967932163
+        },
+        "scheduled_rotation_reverse": {
+          "count": 8,
+          "mean": 0.006741073478126905,
+          "normal_95_half_width": 0.009120307933272006,
+          "positive_pairs": 6,
+          "sem": 0.004653218333302044
+        },
+        "scheduled_rotation_slower_noisy": {
+          "count": 8,
+          "mean": 0.011606384728570715,
+          "normal_95_half_width": 0.00939247131946967,
+          "positive_pairs": 6,
+          "sem": 0.004792077203811056
+        }
+      },
+      "candidate": "graph_forecast_iot",
+      "clinical": {
+        "candidate_mean_completion_service_level": 0.5123513462516661,
+        "candidate_patients_lost": 62106.0,
+        "noninferior": true,
+        "static_mean_completion_service_level": 0.4923095518709188,
+        "static_patients_lost": 66270.0
+      },
+      "pair_count": 24,
+      "passes": true,
+      "pooled_seed_clustered": {
+        "count": 8,
+        "mean": 0.007786547360843633,
+        "normal_95_half_width": 0.006151945658660147,
+        "sem": 0.0031387477850306875
+      },
+      "positive_pairs": 18
+    }
+  },
+  "decision": "episode_level_state_dependent_signal_detected",
+  "discovery_episode_count": 135,
+  "experimental_role": "Prospective development-only J2a pre-screen. No learned policy, no formal confirmation, and no formal holdout use.",
+  "formal_confirmation_performed": false,
+  "j2_authorized": true,
+  "name": "intertemporal_shared_capacity_episode_prescreen",
+  "paired_rng_audit": {
+    "discovery_groups": 9,
+    "passes": true,
+    "validation_groups": 24
+  },
+  "policy_training_performed": false,
+  "provenance": {
+    "config_path": "experiments/configs/intertemporal_shared_capacity_episode_prescreen.json",
+    "config_sha256": "99725af8254e05b81a91e9532593b915f759ff032bf4abbc4324581c5f171fad",
+    "rows_sha256": "9326e6155b4216962ea113fca5640ba1d4cc110a832f10b03d72158caeb68f34"
+  },
+  "selected_candidate": "graph_forecast_iot",
+  "selected_tuning_values": {
+    "forecast_iot": 1.0,
+    "graph_forecast_iot": 1.0,
+    "static_ot": 0.25
+  },
+  "training_authorized": false,
+  "validation_episode_count": 72
+}

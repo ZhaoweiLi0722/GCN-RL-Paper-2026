@@ -491,6 +491,111 @@ def _overtime_block_from_surge(
     return np.clip(2.0 * fraction - 1.0, -1.0, 1.0).astype(np.float32)
 
 
+def _bounded_proportional_allocation(
+    weights: np.ndarray,
+    caps: np.ndarray,
+    budget: float,
+) -> np.ndarray:
+    """Allocate a shared continuous budget proportionally with local caps."""
+
+    allocation = np.zeros_like(np.asarray(caps, dtype=float))
+    remaining = max(float(budget), 0.0)
+    active = np.asarray(caps, dtype=float) > 0.0
+    positive_weights = np.maximum(np.asarray(weights, dtype=float), 0.0)
+    while remaining > 1e-12 and np.any(active):
+        current_weights = np.where(active, positive_weights, 0.0)
+        if float(current_weights.sum()) <= 0.0:
+            current_weights = active.astype(float)
+        proposal = remaining * current_weights / float(current_weights.sum())
+        headroom = np.maximum(np.asarray(caps, dtype=float) - allocation, 0.0)
+        accepted = np.minimum(proposal, headroom)
+        allocation += accepted
+        used = float(accepted.sum())
+        remaining -= used
+        active = headroom - accepted > 1e-12
+        if used <= 1e-12:
+            break
+    return allocation
+
+
+class IntertemporalForecastOvertimePolicy(MeanDemandLookahead2Policy):
+    """Allocate the shared future staffing pool from the visible forecast."""
+
+    algorithm = "forecast_iot"
+
+    def __init__(self, state_dim=None, action_dim=None, config=None):
+        super().__init__(state_dim, action_dim, config)
+        config = config or {}
+        self.forecast_overtime_budget_fraction = float(
+            config.get("forecast_overtime_budget_fraction", 1.0)
+        )
+        if not 0.0 <= self.forecast_overtime_budget_fraction <= 1.0:
+            raise ValueError(
+                "forecast_overtime_budget_fraction must be within [0, 1]"
+            )
+
+    def _forecast_weights(self, env: CapacityPlanningEnv) -> np.ndarray:
+        waiting = (
+            env.waiting_counts() if hasattr(env, "waiting_counts") else env.specimens
+        )
+        weights = np.asarray(env.demand_forecast, dtype=float) + np.asarray(
+            waiting, dtype=float
+        )
+        if hasattr(env, "at_risk_counts"):
+            weights += 2.0 * np.asarray(env.at_risk_counts(), dtype=float)
+        return np.maximum(weights, 0.0)
+
+    def _overtime_action_block(self, env: CapacityPlanningEnv) -> np.ndarray:
+        if not env.config.enable_intertemporal_overtime_commitment:
+            raise ValueError(
+                "forecast_iot requires enable_intertemporal_overtime_commitment"
+            )
+        headroom = np.asarray(env.overtime_surge_headroom, dtype=float)
+        budget = (
+            env._shared_overtime_budget()
+            * self.forecast_overtime_budget_fraction
+        )
+        allocation = _bounded_proportional_allocation(
+            self._forecast_weights(env), headroom, budget
+        )
+        return _overtime_block_from_surge(allocation, headroom)
+
+
+class GraphSmoothedIntertemporalForecastPolicy(
+    IntertemporalForecastOvertimePolicy
+):
+    """Forecast allocator with one-hop information-graph smoothing."""
+
+    algorithm = "graph_forecast_iot"
+
+    def __init__(self, state_dim=None, action_dim=None, config=None):
+        super().__init__(state_dim, action_dim, config)
+        config = config or {}
+        self.graph_forecast_smoothing = float(
+            config.get("graph_forecast_smoothing", 0.5)
+        )
+        if not 0.0 <= self.graph_forecast_smoothing <= 1.0:
+            raise ValueError("graph_forecast_smoothing must be within [0, 1]")
+
+    def _forecast_weights(self, env: CapacityPlanningEnv) -> np.ndarray:
+        base = super()._forecast_weights(env)
+        neighbor_sum = np.zeros_like(base)
+        neighbor_count = np.zeros_like(base)
+        for left, right in env.information_edges:
+            neighbor_sum[left] += base[right]
+            neighbor_sum[right] += base[left]
+            neighbor_count[left] += 1.0
+            neighbor_count[right] += 1.0
+        neighbor_mean = np.divide(
+            neighbor_sum,
+            neighbor_count,
+            out=base.copy(),
+            where=neighbor_count > 0.0,
+        )
+        smoothing = self.graph_forecast_smoothing
+        return (1.0 - smoothing) * base + smoothing * neighbor_mean
+
+
 class OvertimeMeanDemandLookahead2Policy(MeanDemandLookahead2Policy):
     """MDL-2-OT: MDL-2 plus a closed-form myopic overtime rule.
 
@@ -580,6 +685,8 @@ HEURISTIC_POLICIES = {
     "mdl2_ot": OvertimeMeanDemandLookahead2Policy,
     "umyo_ot": OvertimeUrgencyAwareMyopicPolicy,
     "static_ot": StaticOvertimePolicy,
+    "forecast_iot": IntertemporalForecastOvertimePolicy,
+    "graph_forecast_iot": GraphSmoothedIntertemporalForecastPolicy,
     "mdl2_lt": LeadTimeAwareMeanDemandLookahead2Policy,
 }
 

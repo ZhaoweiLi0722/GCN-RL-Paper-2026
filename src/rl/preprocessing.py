@@ -46,6 +46,10 @@ def facility_state_width(env_config: dict[str, Any]) -> int:
         # fatigue when enabled; mirrors CapacityPlanningEnv.features_per_facility
         # (spec 2026-08-29-continuous-overtime-control).
         width += 3 + int(bool(env_config.get("enable_overtime_fatigue", False)))
+        if bool(env_config.get("enable_intertemporal_overtime_commitment", False)):
+            # Active capacity, pending commitment slots, and repeated shared
+            # budget state (spec 2026-09-01-intertemporal-shared-capacity).
+            width += 2 + int(env_config.get("overtime_commitment_lead_time", 2))
     return width
 
 

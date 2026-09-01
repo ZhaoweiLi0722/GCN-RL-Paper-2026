@@ -1,0 +1,292 @@
+{
+  "diagnosis": "candidate_library_saturated_even_under_optimistic_oracle",
+  "discovery_in_sample": {
+    "epoch:12": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0022721440634482252,
+      "minimum_state_saving": 0.0,
+      "positive_states": 8,
+      "relative_saving": 0.0012651511860232425,
+      "state_count": 9
+    },
+    "epoch:16": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0017168128000469105,
+      "minimum_state_saving": 0.0,
+      "positive_states": 5,
+      "relative_saving": 0.0005717144528385537,
+      "state_count": 9
+    },
+    "epoch:24": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.002646152632397981,
+      "minimum_state_saving": 0.0,
+      "positive_states": 7,
+      "relative_saving": 0.0008074733521540642,
+      "state_count": 9
+    },
+    "epoch:32": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0027410367940511513,
+      "minimum_state_saving": 0.0,
+      "positive_states": 8,
+      "relative_saving": 0.00085978322186886,
+      "state_count": 9
+    },
+    "epoch:4": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030801535349794895,
+      "minimum_state_saving": 0.0,
+      "positive_states": 7,
+      "relative_saving": 0.000984812647637388,
+      "state_count": 9
+    },
+    "epoch:8": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.00293658127383353,
+      "minimum_state_saving": 0.0,
+      "positive_states": 8,
+      "relative_saving": 0.0007807663459834777,
+      "state_count": 9
+    },
+    "overall": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030801535349794895,
+      "minimum_state_saving": 0.0,
+      "positive_states": 43,
+      "relative_saving": 0.0008741766315262323,
+      "state_count": 54
+    },
+    "scenario:scheduled_rotation_forward": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030801535349794895,
+      "minimum_state_saving": 0.0,
+      "positive_states": 13,
+      "relative_saving": 0.0009251618499854085,
+      "state_count": 18
+    },
+    "scenario:scheduled_rotation_reverse": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.00293658127383353,
+      "minimum_state_saving": 0.0,
+      "positive_states": 14,
+      "relative_saving": 0.0009136147753002093,
+      "state_count": 18
+    },
+    "scenario:scheduled_rotation_slower_noisy": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0027410367940511513,
+      "minimum_state_saving": 0.0,
+      "positive_states": 16,
+      "relative_saving": 0.0007987626026816957,
+      "state_count": 18
+    }
+  },
+  "discovery_selected_candidate_counts": {
+    "b0.75_a0.00": 1,
+    "b0.75_a0.25": 1,
+    "b0.75_a0.50": 1,
+    "b0.75_a0.75": 3,
+    "b0.75_a1.00": 2,
+    "b1.00_a0.00": 14,
+    "b1.00_a0.25": 11,
+    "b1.00_a0.50": 3,
+    "b1.00_a0.75": 5,
+    "b1.00_a1.00": 13
+  },
+  "experimental_role": "Post-hoc decomposition of a prospectively failed gate; not a new gate, training authorization, or formal result.",
+  "formal_confirmation_performed": false,
+  "global_candidate": "b1.00_a0.25",
+  "j2_decision": "fixed_state_j2_failed",
+  "j3_authorized": false,
+  "name": "intertemporal_shared_capacity_j2_posthoc_diagnostic",
+  "optimistic_validation_oracle": {
+    "epoch:12": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.002404614193995643,
+      "minimum_state_saving": 0.000230532045692778,
+      "positive_states": 9,
+      "relative_saving": 0.0010226772551854989,
+      "state_count": 9
+    },
+    "epoch:16": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030083848909618115,
+      "minimum_state_saving": 0.0,
+      "positive_states": 4,
+      "relative_saving": 0.000699367897684881,
+      "state_count": 9
+    },
+    "epoch:24": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0026529792501533206,
+      "minimum_state_saving": 0.0,
+      "positive_states": 7,
+      "relative_saving": 0.000737567277840587,
+      "state_count": 9
+    },
+    "epoch:32": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0020794095730550803,
+      "minimum_state_saving": 0.00027072368828555274,
+      "positive_states": 9,
+      "relative_saving": 0.0008958747222960732,
+      "state_count": 9
+    },
+    "epoch:4": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0026800084841073005,
+      "minimum_state_saving": 0.0,
+      "positive_states": 6,
+      "relative_saving": 0.0008316762278579065,
+      "state_count": 9
+    },
+    "epoch:8": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0026223234246370093,
+      "minimum_state_saving": 0.0,
+      "positive_states": 8,
+      "relative_saving": 0.0014107105941470511,
+      "state_count": 9
+    },
+    "overall": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030083848909618115,
+      "minimum_state_saving": 0.0,
+      "positive_states": 43,
+      "relative_saving": 0.000935637776671746,
+      "state_count": 54
+    },
+    "scenario:scheduled_rotation_forward": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030083848909618115,
+      "minimum_state_saving": 0.0,
+      "positive_states": 16,
+      "relative_saving": 0.0010796243824282715,
+      "state_count": 18
+    },
+    "scenario:scheduled_rotation_reverse": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0026529792501533206,
+      "minimum_state_saving": 0.0,
+      "positive_states": 14,
+      "relative_saving": 0.000930428865066507,
+      "state_count": 18
+    },
+    "scenario:scheduled_rotation_slower_noisy": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0026223234246370093,
+      "minimum_state_saving": 0.0,
+      "positive_states": 13,
+      "relative_saving": 0.00081535042786456,
+      "state_count": 18
+    }
+  },
+  "paired_rng_audit": {
+    "candidate_count_mismatch_worlds": 0,
+    "paired_world_count": 270,
+    "passes": true,
+    "rng_mismatch_worlds": 0
+  },
+  "policy_training_performed": false,
+  "prospective_validation": {
+    "epoch:12": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.002404614193995643,
+      "minimum_state_saving": -0.00014642309099872292,
+      "positive_states": 7,
+      "relative_saving": 0.0007608825449640156,
+      "state_count": 9
+    },
+    "epoch:16": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030083848909618115,
+      "minimum_state_saving": -8.417074262894043e-05,
+      "positive_states": 3,
+      "relative_saving": 0.0006120052412980856,
+      "state_count": 9
+    },
+    "epoch:24": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0026529792501533206,
+      "minimum_state_saving": -0.00022776279613980873,
+      "positive_states": 5,
+      "relative_saving": 0.0005566613876292414,
+      "state_count": 9
+    },
+    "epoch:32": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0020794095730550803,
+      "minimum_state_saving": -0.0003759813776397265,
+      "positive_states": 7,
+      "relative_saving": 0.0007412685745414863,
+      "state_count": 9
+    },
+    "epoch:4": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0019931500798961357,
+      "minimum_state_saving": -0.0001105837390445114,
+      "positive_states": 5,
+      "relative_saving": 0.0005022920012307833,
+      "state_count": 9
+    },
+    "epoch:8": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.002434181782799594,
+      "minimum_state_saving": -0.0014469335004307028,
+      "positive_states": 6,
+      "relative_saving": 0.0009374882931321495,
+      "state_count": 9
+    },
+    "overall": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030083848909618115,
+      "minimum_state_saving": -0.0014469335004307028,
+      "positive_states": 33,
+      "relative_saving": 0.0006915242287131369,
+      "state_count": 54
+    },
+    "scenario:scheduled_rotation_forward": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0030083848909618115,
+      "minimum_state_saving": -0.0003759813776397265,
+      "positive_states": 11,
+      "relative_saving": 0.0008145521585048078,
+      "state_count": 18
+    },
+    "scenario:scheduled_rotation_reverse": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0026529792501533206,
+      "minimum_state_saving": -0.0014469335004307028,
+      "positive_states": 10,
+      "relative_saving": 0.0005882815763970447,
+      "state_count": 18
+    },
+    "scenario:scheduled_rotation_slower_noisy": {
+      "material_states_at_0_005": 0,
+      "maximum_state_saving": 0.0020794095730550803,
+      "minimum_state_saving": -0.00021857027590710924,
+      "positive_states": 12,
+      "relative_saving": 0.0006678923702824322,
+      "state_count": 18
+    }
+  },
+  "provenance": {
+    "j2_rows": "results/intertemporal_shared_capacity_development/fixed_state_j2/headroom_rows.csv",
+    "j2_rows_sha256": "ad488114a2a30c21acf53bdcf2eb59ff6864aa2ccab9775d5168cc77cb6bfcb4",
+    "j2_summary": "results/intertemporal_shared_capacity_development/fixed_state_j2/summary.json",
+    "j2_summary_sha256": "3af63a13e770e12926f2f726e6ffc34585878ca85e89f529c285aca1bd2bbff4"
+  },
+  "selection_agreement_with_validation_oracle": 0.5,
+  "training_authorized": false,
+  "validation_oracle_candidate_counts": {
+    "b0.75_a0.00": 1,
+    "b0.75_a0.75": 1,
+    "b0.75_a1.00": 2,
+    "b1.00_a0.00": 16,
+    "b1.00_a0.25": 11,
+    "b1.00_a0.50": 6,
+    "b1.00_a0.75": 4,
+    "b1.00_a1.00": 13
+  }
+}

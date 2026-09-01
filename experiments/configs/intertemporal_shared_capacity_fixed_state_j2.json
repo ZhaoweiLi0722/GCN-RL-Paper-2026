@@ -1,0 +1,43 @@
+{
+  "name": "intertemporal_shared_capacity_fixed_state_j2",
+  "experimental_role": "Prospective development-only fixed-state J2 screen after J2a pass. No learned policy, no formal confirmation, and no formal holdout use.",
+  "source_scenario_config": "experiments/configs/intertemporal_shared_capacity_episode_prescreen.json",
+  "source_scenario_config_sha256": "99725af8254e05b81a91e9532593b915f759ff032bf4abbc4324581c5f171fad",
+  "generation_seeds": {
+    "start": 99300000,
+    "count": 3
+  },
+  "decision_epochs": [4, 8, 12, 16, 24, 32],
+  "discovery_worlds": {
+    "start": 99410000,
+    "count_per_state": 2
+  },
+  "validation_worlds": {
+    "start": 99510000,
+    "count_per_state": 3
+  },
+  "lookahead": 12,
+  "behavior_policy": {
+    "forecast_overtime_budget_fraction": 1.0,
+    "graph_forecast_smoothing": 0.5
+  },
+  "continuation_policy": {
+    "forecast_overtime_budget_fraction": 1.0,
+    "graph_forecast_smoothing": 0.5
+  },
+  "action_library": {
+    "forecast_overtime_budget_fractions": [0.75, 1.0],
+    "graph_forecast_smoothing": [0.0, 0.25, 0.5, 0.75, 1.0]
+  },
+  "local_raw_perturbation": 0.04,
+  "gate": {
+    "minimum_behavioral_sensitivity_fraction": 0.90,
+    "minimum_material_state_fraction": 0.30,
+    "minimum_relative_saving": 0.005,
+    "minimum_interior_selected_fraction": 0.30,
+    "minimum_distinct_selected_actions": 3,
+    "material_relative_saving": 0.005,
+    "require_clinical_noninferiority": true
+  },
+  "output_root": "results/intertemporal_shared_capacity_development/fixed_state_j2"
+}

@@ -1,0 +1,57 @@
+{
+  "config_path": "experiments/configs/intertemporal_shared_capacity_mechanics_smoke.json",
+  "config_sha256": "a5e1b4418172e154a06dccccfbd4055b6184c4408caf68f14fabe84b8618a3af",
+  "experimental_role": "Engineering smoke only. No policy training, no scientific gate decision, and no formal holdout use.",
+  "name": "intertemporal_shared_capacity_mechanics_smoke",
+  "policies": [
+    {
+      "active_steps": 0,
+      "algorithm": "mdl2",
+      "distinct_schedule_blocks": 3,
+      "final_rng_sha256": "2f4dafa72fadb4ea1171926f8a56311d2db9dcf4779bf8b639ce60488def14f4",
+      "max_active_capacity": 0.0,
+      "max_requested_capacity": 0.0,
+      "shared_budget": 31.500000000000007,
+      "steps": 12,
+      "total_cost": 375064972.0452225
+    },
+    {
+      "active_steps": 10,
+      "algorithm": "static_ot",
+      "distinct_schedule_blocks": 3,
+      "final_rng_sha256": "2f4dafa72fadb4ea1171926f8a56311d2db9dcf4779bf8b639ce60488def14f4",
+      "max_active_capacity": 31.46923828125,
+      "max_requested_capacity": 31.500000000000007,
+      "shared_budget": 31.500000000000007,
+      "steps": 12,
+      "total_cost": 370138620.6546772
+    },
+    {
+      "active_steps": 10,
+      "algorithm": "forecast_iot",
+      "distinct_schedule_blocks": 3,
+      "final_rng_sha256": "2f4dafa72fadb4ea1171926f8a56311d2db9dcf4779bf8b639ce60488def14f4",
+      "max_active_capacity": 31.469238278848945,
+      "max_requested_capacity": 31.50000000000001,
+      "shared_budget": 31.500000000000007,
+      "steps": 12,
+      "total_cost": 328453375.8112945
+    },
+    {
+      "active_steps": 10,
+      "algorithm": "graph_forecast_iot",
+      "distinct_schedule_blocks": 3,
+      "final_rng_sha256": "2f4dafa72fadb4ea1171926f8a56311d2db9dcf4779bf8b639ce60488def14f4",
+      "max_active_capacity": 31.46923824087717,
+      "max_requested_capacity": 31.500000000000014,
+      "shared_budget": 31.500000000000007,
+      "steps": 12,
+      "total_cost": 331110403.69862276
+    }
+  ],
+  "policy_training_performed": false,
+  "rng_end_state_match": true,
+  "scientific_gate_decision": null,
+  "seed": 99299000,
+  "source_sha256": "666a098d36c56b4a4eada8bbe0a2e845fc8e2e0325c8383805edb60331afcc5b"
+}

@@ -1,0 +1,32 @@
+{
+  "name": "stochastic_procurement_variability_publication_reproduction",
+  "experimental_role": "Post-hoc reproducibility audit of the reported exploratory fixed-mean variability diagnostic. Frozen after the original +0.176% report was known. Not a preregistered optimality-gap gate, not a formal confirmation, and no policy training.",
+  "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "scenarios": [
+    "routing_abrupt_regime_shift",
+    "routing_compound_regional_stress",
+    "routing_nominal_history"
+  ],
+  "algorithm": "mdl2_lt",
+  "lead_time_env_overrides": {
+    "enable_stochastic_procurement": true,
+    "reagent_lead_time_probabilities": [0.1, 0.2, 0.4, 0.2, 0.1],
+    "include_on_order_state": true
+  },
+  "safety_multiplier_grid": [0.5, 0.75, 1.0, 1.25, 1.5],
+  "development_seeds": {
+    "start": 99100000,
+    "count": 10
+  },
+  "evaluation_seeds": {
+    "start": 99200000,
+    "count": 24
+  },
+  "reported_reference": {
+    "pooled_gap_fraction": 0.00176,
+    "routing_abrupt_regime_shift": 0.00113,
+    "routing_compound_regional_stress": 0.00160,
+    "routing_nominal_history": 0.00256
+  },
+  "output_root": "results/stochastic_procurement_variability_reproduction"
+}

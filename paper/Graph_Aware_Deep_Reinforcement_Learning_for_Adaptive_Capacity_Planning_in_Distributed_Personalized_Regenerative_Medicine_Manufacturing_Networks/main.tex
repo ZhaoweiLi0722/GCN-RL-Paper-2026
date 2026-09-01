@@ -1469,6 +1469,18 @@ backbone because it is the prespecified five-seed formal method. The matched
 TD3 result is a useful development ablation, not evidence that DDPG generally
 dominates TD3 or that TD3 has formal-holdout status.
 
+This attribution result also yields a reusable experimental design rule. Before
+committing another actor--critic campaign to a candidate decision channel, the
+channel should first demonstrate four properties on independent simulation
+streams: clinically noninferior headroom beyond the incumbent anchor, value
+from conditioning on decision-time state rather than using a tuned constant,
+stable counterfactual action labels, and behavioral sensitivity after decoding
+and feasibility projection. Failure of any one property makes an endpoint
+online-RL gain difficult to identify even when optimization diagnostics are
+finite and the policy network changes. Treating these checks as prospective
+admissibility gates is a methodological lesson from the negative attribution
+evidence, not a claim that another policy has already passed them.
+
 Several limitations remain. The routing-primary DDPG comparison has five
 training seeds, but the matched TD3 and mechanism-diagnostic screens have only
 three and use development streams. The formal comparison isolates graph versus
@@ -1511,9 +1523,15 @@ development evidence. Valuable extensions include unseen clinic networks,
 continuous transport-viability coupling, transfer disruptions, externally
 calibrated economic weights, and a separately prespecified routing-versus-no-
 routing study. If online deterministic policy gradients are to be made central,
-a new model should expose stable continuous operational authority through
-decisions such as overtime, staffing, production-rate, procurement, or
-continuous capacity reservation, with new comparators and independent streams.
+a new model should expose stable continuous operational authority with genuine
+intertemporal consequences. A promising example is advance staffing or
+overtime-capacity commitment with ramping delays, convex fatigue or activation
+costs, and persistent carryover, rather than a scalar same-epoch adjustment.
+Any production-rate or procurement extension should first verify that its
+effect remains continuous after execution and is not removed by integer-lot
+rounding or absorbed by a tuned look-ahead anchor. Such a study requires a
+separate preregistration, new comparators, independent streams, and the four
+admissibility gates above; it is not an extension of the frozen formal result.
 Longer-term models should integrate production scheduling,
 product preparation and distribution, and treatment operations.
 

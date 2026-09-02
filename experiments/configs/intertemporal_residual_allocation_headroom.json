@@ -1,0 +1,75 @@
+{
+  "name": "intertemporal_residual_allocation_headroom_r0",
+  "experimental_role": "Prospective development-only policy-free screen of budget-neutral per-facility overtime residuals around the strongest frozen graph-forecast comparator. No policy training and no formal confirmation.",
+  "execution_authorization": {
+    "zhaowei": {
+      "approved": true,
+      "date": "2026-09-02",
+      "scope": "Protocol and implementation review; no DDPG training authorization."
+    },
+    "howard": {
+      "approved": false,
+      "date": null,
+      "scope": "Must explicitly approve this frozen protocol before scientific seeds are consumed."
+    }
+  },
+  "protocol": "specs/2026-09-02-intertemporal-residual-headroom/frozen_protocol.md",
+  "protocol_sha256": "14bee66f9ac881d5c021613563b2bd7b634618b12728603992b5a99468e37232",
+  "source_scenario_config": "experiments/configs/intertemporal_shared_capacity_episode_prescreen.json",
+  "source_scenario_config_sha256": "99725af8254e05b81a91e9532593b915f759ff032bf4abbc4324581c5f171fad",
+  "parent_j2_summary": "results/intertemporal_shared_capacity_development/fixed_state_j2/summary.json",
+  "parent_j2_summary_sha256": "3af63a13e770e12926f2f726e6ffc34585878ca85e89f529c285aca1bd2bbff4",
+  "required_parent_decision": "fixed_state_j2_failed",
+  "required_parent_global_candidate": "b1.00_a0.25",
+  "generation_seeds": {
+    "start": 99700000,
+    "count": 3
+  },
+  "decision_epochs": [4, 8, 12, 16, 24, 32],
+  "discovery_worlds": {
+    "start": 99800000,
+    "count_per_state": 2
+  },
+  "validation_worlds": {
+    "start": 99900000,
+    "count_per_state": 5
+  },
+  "forbidden_seed_ranges": [
+    [91100000, 91199999],
+    [94000000, 96899999],
+    [97100000, 99599999]
+  ],
+  "lookahead": 12,
+  "behavior_policy": {
+    "forecast_overtime_budget_fraction": 1.0,
+    "graph_forecast_smoothing": 0.25
+  },
+  "baseline_policy": {
+    "forecast_overtime_budget_fraction": 1.0,
+    "graph_forecast_smoothing": 0.25
+  },
+  "continuation_policy": {
+    "forecast_overtime_budget_fraction": 1.0,
+    "graph_forecast_smoothing": 0.25
+  },
+  "action_library": {
+    "directions": ["decrease", "increase"],
+    "transfer_budget_fractions": [0.05, 0.10]
+  },
+  "mechanics": {
+    "minimum_realized_transfer_units": 1e-8,
+    "minimum_noncollapsed_candidate_fraction": 0.90,
+    "maximum_budget_error": 1e-8
+  },
+  "gate": {
+    "minimum_optimistic_relative_saving": 0.005,
+    "minimum_prospective_relative_saving": 0.005,
+    "minimum_material_state_fraction": 0.30,
+    "material_relative_saving": 0.005,
+    "minimum_selected_validation_win_fraction": 0.70,
+    "minimum_pairwise_material_sign_agreement": 0.80,
+    "require_positive_every_scenario": true,
+    "require_clinical_noninferiority": true
+  },
+  "output_root": "results/intertemporal_residual_allocation_headroom_development/r0"
+}

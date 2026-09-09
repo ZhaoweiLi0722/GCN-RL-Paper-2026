@@ -12,7 +12,12 @@ import csv
 import hashlib
 import json
 import math
+import os
+import subprocess
+import sys
+import time
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -36,12 +41,23 @@ DEFAULT_CONFIG = Path(
     "experiments/configs/intertemporal_residual_allocation_headroom.json"
 )
 BASELINE_CANDIDATE = "baseline_graph_forecast"
+USER_EXCEPTION = {
+    "mode": "zhaowei_directed_development_screen_20260908",
+    "record": "specs/2026-09-08-user-authorized-residual-screen/authorization.md",
+    "record_sha256": "6103f6eb1719ee13c596addb8d58de6f863d33221487b97803297a0442f50676",
+    "original_config": str(DEFAULT_CONFIG),
+    "original_config_sha256": "df9ed23407dbe7cbf47050a550755027743fbf30fb4688848a4f413d80a73ca2",
+}
+USER_OUTPUT_ROOT = (
+    "results/intertemporal_residual_allocation_headroom_development/"
+    "r0_zhaowei_20260908"
+)
 
 
 def execution_approvals(config: dict[str, Any]) -> dict[str, bool]:
     block = config.get("execution_authorization", {})
     return {
-        role: bool(details.get("approved", False))
+        role: details.get("approved") is True
         for role, details in block.items()
     }
 
@@ -53,12 +69,45 @@ def require_execution_authorization(config: dict[str, Any]) -> None:
         raise PermissionError(
             "execution requires explicit zhaowei and howard authorization records"
         )
+    if "execution_exception" in config:
+        _require_user_directed_exception(config, approvals)
+        return
     pending = sorted(role for role, approved in approvals.items() if not approved)
     if pending:
         raise PermissionError(
             "scientific execution is not authorized; pending approval: "
             + ", ".join(pending)
         )
+
+
+def _require_user_directed_exception(
+    config: dict[str, Any], approvals: dict[str, bool]
+) -> None:
+    # This dated exception cannot authorize a different scientific contract.
+    if config["execution_exception"] != USER_EXCEPTION:
+        raise PermissionError("unrecognized execution exception record")
+    if approvals != {"zhaowei": True, "howard": False}:
+        raise PermissionError("user exception must retain Howard as unapproved")
+    if config["execution_authorization"]["zhaowei"].get("date") != "2026-09-08":
+        raise PermissionError("user exception requires the actual authorization date")
+    for path_key, hash_key in (
+        ("record", "record_sha256"),
+        ("original_config", "original_config_sha256"),
+    ):
+        path = Path(USER_EXCEPTION[path_key])
+        if not path.is_file() or sha256(path) != USER_EXCEPTION[hash_key]:
+            raise PermissionError(f"user exception evidence hash mismatch: {path}")
+    original = load_json(Path(USER_EXCEPTION["original_config"]))
+    metadata = {
+        "name", "experimental_role", "execution_authorization",
+        "execution_exception", "output_root",
+    }
+    scientific = {key: value for key, value in config.items() if key not in metadata}
+    frozen = {key: value for key, value in original.items() if key not in metadata}
+    if scientific != frozen:
+        raise PermissionError("user exception may not change scientific settings")
+    if config["output_root"] != USER_OUTPUT_ROOT:
+        raise PermissionError("user exception requires its separate single-use root")
 
 
 def _seed_set(start: int, count: int) -> set[int]:
@@ -673,12 +722,33 @@ def evaluate_rows(
     }
 
 
-def write_csv(rows: list[dict[str, Any]], path: Path) -> None:
+def write_csv(
+    rows: list[dict[str, Any]], path: Path, *, append: bool = False
+) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", newline="", encoding="utf-8") as handle:
+    with path.open("a" if append else "w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
-        writer.writeheader()
+        if not append:
+            writer.writeheader()
         writer.writerows(rows)
+        handle.flush()
+
+
+def write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(
+        json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    temporary.replace(path)
+
+
+def update_status(
+    output_root: Path, record: dict[str, Any], **changes: Any
+) -> None:
+    record.update(changes)
+    record["updated_at"] = datetime.now(timezone.utc).isoformat()
+    write_json_atomic(output_root / "status.json", record)
 
 
 def describe(config: dict[str, Any]) -> dict[str, Any]:
@@ -692,13 +762,18 @@ def describe(config: dict[str, Any]) -> dict[str, Any]:
         * len(config["decision_epochs"])
     )
     approvals = execution_approvals(config)
-    authorized = set(approvals) == {"zhaowei", "howard"} and all(
-        approvals.values()
-    )
+    try:
+        require_execution_authorization(config)
+        authorized = True
+    except PermissionError:
+        authorized = False
     return {
         "name": config["name"],
         "execution_approvals": approvals,
         "execution_authorized": authorized,
+        "authorization_mode": config.get("execution_exception", {}).get(
+            "mode", "dual_named_approval"
+        ),
         "candidate_count": len(candidates),
         "state_count": state_count,
         "expected_discovery_rows": (
@@ -719,10 +794,65 @@ def run(config: dict[str, Any], *, config_path: Path) -> dict[str, Any]:
     source = validate_config(config)
     require_execution_authorization(config)
     output_root = Path(config["output_root"])
-    if output_root.exists():
+    try:
+        output_root.mkdir(parents=True, exist_ok=False)
+    except FileExistsError:
         raise FileExistsError(
             f"refusing to overwrite residual-screen output root: {output_root}"
+        ) from None
+    status = {
+        "status": "running",
+        "phase": "preparing_states",
+        "started_at": datetime.now(timezone.utc).isoformat(),
+        "pid": os.getpid(),
+        "ppid": os.getppid(),
+        "exit_code": None,
+        "persisted_rows": 0,
+        "execution_approvals": execution_approvals(config),
+        "authorization_mode": config.get("execution_exception", {}).get(
+            "mode", "dual_named_approval"
+        ),
+        "policy_training_performed": False,
+        "formal_confirmation_performed": False,
+    }
+    started = time.monotonic()
+    update_status(output_root, status)
+    try:
+        claim = {
+            **status,
+            "cwd": str(Path.cwd()),
+            "executable": sys.executable,
+            "argv": sys.argv,
+            "execution_commit": subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], text=True, timeout=10
+            ).strip(),
+            "config_path": str(config_path),
+            "config_sha256": sha256(config_path),
+            "execution_exception": config.get("execution_exception"),
+        }
+        write_json_atomic(output_root / "claim.json", claim)
+        result = _execute_screen(
+            config, config_path=config_path, source=source,
+            output_root=output_root, status=status,
         )
+    except BaseException as exc:
+        update_status(
+            output_root, status, status="failed", exit_code=1,
+            error_type=type(exc).__name__, error=str(exc),
+            elapsed_seconds=time.monotonic() - started,
+        )
+        raise
+    update_status(
+        output_root, status, status="completed", phase="completed", exit_code=0,
+        decision=result["decision"], elapsed_seconds=time.monotonic() - started,
+    )
+    return result
+
+
+def _execute_screen(
+    config: dict[str, Any], *, config_path: Path, source: dict[str, Any],
+    output_root: Path, status: dict[str, Any],
+) -> dict[str, Any]:
     base_env = load_json(Path(source["env_config"]))
     num_facilities = int(base_env["num_facilities"])
     candidates = candidate_specs(config, num_facilities)
@@ -730,6 +860,10 @@ def run(config: dict[str, Any], *, config_path: Path) -> dict[str, Any]:
     expected = describe(config)
     if len(states) != int(expected["state_count"]):
         raise RuntimeError("state generation count mismatch")
+    rows_path = output_root / "residual_headroom_rows.csv"
+    manifest_path = output_root / "state_manifest.json"
+    write_json_atomic(manifest_path, {"states": manifest})
+    update_status(output_root, status, state_count=len(states))
     print(json.dumps({"phase": "states", "completed": len(states)}), flush=True)
 
     rows: list[dict[str, Any]] = []
@@ -753,10 +887,23 @@ def run(config: dict[str, Any], *, config_path: Path) -> dict[str, Any]:
                         phase=phase,
                         lookahead=int(config["lookahead"]),
                     )
+                    if any(
+                        not math.isfinite(value)
+                        for value in row.values()
+                        if isinstance(value, (int, float))
+                    ):
+                        raise RuntimeError("non-finite persisted screen metric")
                     rows.append(row)
                     world_rows.append(row)
                 if len({row["rng_sha256"] for row in world_rows}) != 1:
                     raise RuntimeError("candidate arms did not preserve exact RNG use")
+                write_csv(world_rows, rows_path, append=rows_path.exists())
+                update_status(
+                    output_root, status, phase=phase,
+                    current_state=int(state["state_index"]),
+                    current_scenario=str(state["scenario"]),
+                    replication=replication + 1, persisted_rows=len(rows),
+                )
             print(
                 json.dumps(
                     {
@@ -781,15 +928,8 @@ def run(config: dict[str, Any], *, config_path: Path) -> dict[str, Any]:
         num_facilities=num_facilities,
     )
 
-    rows_path = output_root / "residual_headroom_rows.csv"
-    manifest_path = output_root / "state_manifest.json"
     summary_path = output_root / "summary.json"
     inventory_path = output_root / "artifact_inventory.json"
-    write_csv(rows, rows_path)
-    manifest_path.write_text(
-        json.dumps({"states": manifest}, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
     summary = {
         "name": config["name"],
         "experimental_role": config["experimental_role"],
@@ -800,6 +940,11 @@ def run(config: dict[str, Any], *, config_path: Path) -> dict[str, Any]:
         "discovery_row_count": len(discovery_rows),
         "validation_row_count": len(validation_rows),
         **result,
+        "observable_ranking_screen_eligible": result["passes"],
+        "observable_ranking_screen_authorized": False,
+        "execution_approvals": execution_approvals(config),
+        "execution_exception": config.get("execution_exception"),
+        "collaborator_review_pending": not execution_approvals(config)["howard"],
         "provenance": {
             "config_path": str(config_path),
             "config_sha256": sha256(config_path),
@@ -826,6 +971,9 @@ def run(config: dict[str, Any], *, config_path: Path) -> dict[str, Any]:
         "files": [
             {"path": str(config_path), "sha256": sha256(config_path)},
             {"path": str(config["protocol"]), "sha256": sha256(Path(config["protocol"]))},
+            {"path": str(config["source_scenario_config"]), "sha256": sha256(Path(config["source_scenario_config"]))},
+            {"path": str(source["env_config"]), "sha256": sha256(Path(source["env_config"]))},
+            {"path": str(config["parent_j2_summary"]), "sha256": sha256(Path(config["parent_j2_summary"]))},
             *[
                 {"path": str(path), "sha256": sha256(path)}
                 for path in source_paths
@@ -833,8 +981,13 @@ def run(config: dict[str, Any], *, config_path: Path) -> dict[str, Any]:
             {"path": str(rows_path), "sha256": sha256(rows_path)},
             {"path": str(manifest_path), "sha256": sha256(manifest_path)},
             {"path": str(summary_path), "sha256": sha256(summary_path)},
+            {"path": str(output_root / "claim.json"), "sha256": sha256(output_root / "claim.json")},
         ]
     }
+    if "execution_exception" in config:
+        for key in ("record", "original_config"):
+            path = Path(config["execution_exception"][key])
+            inventory["files"].append({"path": str(path), "sha256": sha256(path)})
     inventory_path.write_text(
         json.dumps(inventory, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )

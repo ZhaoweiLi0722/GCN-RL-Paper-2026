@@ -97,3 +97,28 @@ The current manuscript may cite only results backed by committed executable
 configuration and machine-readable evidence. Exploratory or incomplete
 follow-up diagnostics belong in limitations or future work, not in headline
 performance claims.
+
+## 2026-09-08: User-directed exception for the residual headroom screen
+
+- Zhaowei explicitly authorized proceeding without waiting for Howard's
+  review. Howard remains pending; no collaborator approval is asserted.
+- The completed J2 evidence was reviewed: prospective value 0.06915%,
+  optimistic within-library value 0.09356%, both below 0.5%. The one remaining
+  bounded question is per-facility budget-neutral support, not more global
+  tuning or a claim that online DDPG works.
+- A separate branch/config and a hashed authorization addendum permit only
+  the existing 54-state, 81-action R0-R2 screen. Scientific fields must match
+  the original hashed config exactly. Original protocol, original config,
+  pending Howard record, original result root, and PR #12 are unchanged.
+- The new result root is
+  `results/intertemporal_residual_allocation_headroom_development/r0_zhaowei_20260908`.
+  Reserved development families 99700000/99800000/99900000 retain their
+  original assignments; no recorded use was found before execution.
+- Atomic output claiming and incremental CSV/status persistence protect
+  partial evidence without changing evaluation mechanics. No resume/retry,
+  downstream learner, new scenario, or formal-holdout use is authorized.
+- Any outcome is collaborator-unreviewed development evidence. A pass only
+  makes a separately approved ranking study eligible for discussion.
+- Authority and exact bounds:
+  `specs/2026-09-08-user-authorized-residual-screen/authorization.md`.
+  This addendum and implementation must be committed before scientific use.

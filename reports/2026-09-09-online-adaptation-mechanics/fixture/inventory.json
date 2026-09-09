@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "path": "experiments/configs/online_adaptation_information_mechanics.json",
+      "sha256": "3fc80ef48fb527723694011a42a01c6264b6ed205d4a0ba1a6772a9ede5c4e81"
+    },
+    {
+      "path": "evaluation/check_online_adaptation_mechanics.py",
+      "sha256": "79c2f002e418d92402dee0c07049ef0b423fd556eca510e97e1aad97950b468e"
+    },
+    {
+      "path": "src/env/public_demand_information.py",
+      "sha256": "641835d783566a2028ea82952e4cf5cfba12266aae0ebb04ef550ce3357a5829"
+    },
+    {
+      "path": "src/utils/finite_scenario_tree.py",
+      "sha256": "83d1d23f39910f6daa044b0c6683c35925495df74a27dabb00adce6de0ac6984"
+    },
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4"
+    },
+    {
+      "path": "reports/2026-09-09-online-adaptation-mechanics/fixture/claim.json",
+      "sha256": "075860d208a4063ff7eaafbe6538be9d829e20c9126290e0eb1692bd3a8d055e"
+    },
+    {
+      "path": "reports/2026-09-09-online-adaptation-mechanics/fixture/transitions.jsonl",
+      "sha256": "bda870b7b49b75120496899204644271a1966791dd962a917f486c6c9e3b2861"
+    },
+    {
+      "path": "reports/2026-09-09-online-adaptation-mechanics/fixture/summary.json",
+      "sha256": "c0715ad7a58b50a8a225b401006c67b444076329297ca3714bc177823e0fb841"
+    }
+  ]
+}

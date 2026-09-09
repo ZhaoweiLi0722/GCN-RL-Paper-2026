@@ -1,0 +1,33 @@
+{
+  "audit_passes": true,
+  "fixture_only": true,
+  "research_performance_evidence": false,
+  "inventory_hashes_verified": 9,
+  "unique_transitions": 10920,
+  "maximum_mechanical_error": 0,
+  "recomputed_costs": {
+    "nonanticipative_cost": 3067475.425,
+    "clairvoyant_cost": 2964928.225,
+    "best_open_loop_cost": 3146448.325
+  },
+  "independently_replayed_cost": 3067475.425,
+  "nonanticipative_actions_by_world": {
+    "0": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "1": [
+      "left",
+      "right",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ]
+  },
+  "same_root_action": true
+}

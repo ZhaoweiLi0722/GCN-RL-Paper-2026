@@ -155,3 +155,17 @@ performance claims.
   The implementation/config/contract are committed before the full fixture.
 - This step grants no training, new scientific seeds, formal evaluation,
   rerunning closed screens, changed gates, push, merge or proxy approval.
+
+## 2026-09-09: P0 mechanics completed
+
+- Commit `1d2fa7fe17a15fb48f4ba01119f80ba74a579a4b` completed the fixed
+  six-step fixture with all 10,920 transitions; 108 focused tests passed.
+- Independent saved-row reconstruction verified finite-grid clairvoyant,
+  nonanticipative and shared open-loop values, policy replay, exact capacity
+  timing/budget mechanics, and nine inventory hashes.
+- These values are mechanics fixtures, not RL or research performance evidence.
+  The contingent solution changes decisions without updating parameters,
+  reinforcing the need for a competent frozen feedback comparator.
+- P0 is closed. No automatic new scenario, performance campaign, DDPG training,
+  formal evaluation or scientific approval follows it. Howard remains pending.
+- Record: `specs/2026-09-09-online-adaptation-mechanics/readout.md`.

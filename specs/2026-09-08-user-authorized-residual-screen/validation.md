@@ -49,3 +49,29 @@ action and CRN cardinality; paired RNG agreement; complete 54-state manifest;
 recomputed R0-R2 summary; matching artifact hashes; no training/formal output;
 original branch/config/protocol and parent evidence unchanged. Failure is
 retained; no automatic downstream action follows a positive or negative gate.
+
+## Post-Execution Checks, 2026-09-09
+
+- The same 87 focused tests passed again after execution (2.775 seconds).
+- Full `python -m compileall -q .` passed with the existing venv and separate
+  temporary bytecode cache, including the new read-only audit script.
+- `audit_result.py` independently reproduced all R0-R2 decisions and primary
+  calculations from the retained CSV; [audit.json](audit.json) records its
+  output. It imports no experiment code and consumes no simulation seeds.
+- Terminal evidence, limits and the uncorrected clock discrepancy are recorded
+  in [results.md](results.md). Scientific support failed; execution and artifact
+  integrity checks passed. These are different conclusions.
+
+Focused test invocation:
+
+```bash
+PYTHONPYCACHEPREFIX=/private/tmp/gcn_rl_pycache \
+  '/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python' -m unittest \
+  tests/test_residual_headroom_user_authorization.py \
+  tests/test_intertemporal_residual_headroom.py \
+  tests/test_intertemporal_shared_capacity_screen.py \
+  tests/test_intertemporal_shared_capacity.py \
+  tests/test_overtime_control_equivalence.py \
+  tests/test_overtime_control_contract.py \
+  tests/test_overtime_heuristics.py tests/test_overtime_headroom_e2.py
+```

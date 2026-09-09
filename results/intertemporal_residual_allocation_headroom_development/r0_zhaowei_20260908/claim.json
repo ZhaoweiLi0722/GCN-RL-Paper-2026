@@ -1,0 +1,34 @@
+{
+  "argv": [
+    "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/residual-headroom-user-authorized/evaluation/screen_intertemporal_residual_allocation_headroom.py",
+    "--config",
+    "experiments/configs/intertemporal_residual_allocation_headroom_user_20260908.json"
+  ],
+  "authorization_mode": "zhaowei_directed_development_screen_20260908",
+  "config_path": "experiments/configs/intertemporal_residual_allocation_headroom_user_20260908.json",
+  "config_sha256": "3469fd859561995da5e3e0bfaead28440c04df859e9e7a97403b4936c4397f4a",
+  "cwd": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/residual-headroom-user-authorized",
+  "executable": "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+  "execution_approvals": {
+    "howard": false,
+    "zhaowei": true
+  },
+  "execution_commit": "400d64f764b4e96a0d93d0c4a2721c4f68b2f08b",
+  "execution_exception": {
+    "mode": "zhaowei_directed_development_screen_20260908",
+    "original_config": "experiments/configs/intertemporal_residual_allocation_headroom.json",
+    "original_config_sha256": "df9ed23407dbe7cbf47050a550755027743fbf30fb4688848a4f413d80a73ca2",
+    "record": "specs/2026-09-08-user-authorized-residual-screen/authorization.md",
+    "record_sha256": "6103f6eb1719ee13c596addb8d58de6f863d33221487b97803297a0442f50676"
+  },
+  "exit_code": null,
+  "formal_confirmation_performed": false,
+  "persisted_rows": 0,
+  "phase": "preparing_states",
+  "pid": 55681,
+  "policy_training_performed": false,
+  "ppid": 4503,
+  "started_at": "2026-09-09T03:54:43.668289+00:00",
+  "status": "running",
+  "updated_at": "2026-09-09T03:54:43.668372+00:00"
+}

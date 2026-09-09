@@ -122,3 +122,20 @@ performance claims.
 - Authority and exact bounds:
   `specs/2026-09-08-user-authorized-residual-screen/authorization.md`.
   This addendum and implementation must be committed before scientific use.
+
+## 2026-09-09: User-directed residual screen completed
+
+- Execution commit `400d64f764b4e96a0d93d0c4a2721c4f68b2f08b` completed with
+  exit 0; 54 states, 81 actions, and 30,618 paired rollout rows were retained.
+- Independent read-only recomputation and 17 inventory hashes passed. R0
+  mechanics passed; R1/R2 failed. Prospective saving was 0.189611% and
+  optimistic validation-selected saving 0.240906%; neither reached 0.5%.
+  Material, clinically noninferior states were 0/54 for both selectors.
+- This is evidence about a finite first-action residual library with frozen
+  continuation, not a global optimality proof or an online DDPG result.
+- The screen is closed without retry, tuning, training or formal confirmation.
+  Howard's review is still pending; no joint approval or automatic downstream
+  authorization is recorded. Original PR #12 and its result destination remain
+  unchanged. No merge or push was performed in this execution step.
+- Readout, audit, timing caveat and a design-only information-boundary memo:
+  `specs/2026-09-08-user-authorized-residual-screen/results.md`.

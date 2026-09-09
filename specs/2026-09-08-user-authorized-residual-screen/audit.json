@@ -1,0 +1,60 @@
+{
+  "audit_passes": true,
+  "execution_commit": "400d64f764b4e96a0d93d0c4a2721c4f68b2f08b",
+  "inventory_hashes_verified": 17,
+  "states": 54,
+  "unique_rows": 30618,
+  "phase_rows": {
+    "discovery": 8748,
+    "validation": 21870
+  },
+  "paired_worlds": 378,
+  "comparisons": {
+    "prospective_validation": {
+      "relative_saving": 0.0018961090620276822,
+      "material_state_count": 0,
+      "positive_cost_saving_states": 53,
+      "maximum_state_relative_saving": 0.004465419358369289,
+      "clinical_noninferior": true,
+      "by_scenario": {
+        "scheduled_rotation_forward": 0.002160857150470189,
+        "scheduled_rotation_reverse": 0.0014567012127718927,
+        "scheduled_rotation_slower_noisy": 0.0020686937821916954
+      }
+    },
+    "optimistic_validation_oracle": {
+      "relative_saving": 0.0024090586264502133,
+      "material_state_count": 0,
+      "positive_cost_saving_states": 54,
+      "maximum_state_relative_saving": 0.004465419358369289,
+      "clinical_noninferior": true,
+      "by_scenario": {
+        "scheduled_rotation_forward": 0.0026864841606589127,
+        "scheduled_rotation_reverse": 0.002060971029447253,
+        "scheduled_rotation_slower_noisy": 0.002485334983698588
+      }
+    }
+  },
+  "discovery_material_selections": 0,
+  "material_pairs": 4,
+  "positive_material_pairs": 0,
+  "exact_action_matches": 16,
+  "mechanics": {
+    "candidate_state_count": 4320,
+    "covered_facility_directions": 40,
+    "maximum_budget_error": 2.1316282072803006e-14,
+    "noncollapsed_candidate_fraction": 0.9717592592592592,
+    "noncollapsed_candidate_state_count": 4198,
+    "passes": true,
+    "required_facility_directions": 40
+  },
+  "gates": {
+    "R0": true,
+    "R1": false,
+    "R2": false
+  },
+  "decision": "budget_neutral_residual_support_failed",
+  "wall_timestamp_seconds": 9721.497632,
+  "reported_monotonic_seconds": 3641.241458292,
+  "timing_discrepancy_seconds": 6080.2561737080005
+}

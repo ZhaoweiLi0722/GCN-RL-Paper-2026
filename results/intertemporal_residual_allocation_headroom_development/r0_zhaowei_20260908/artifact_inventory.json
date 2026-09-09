@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "path": "experiments/configs/intertemporal_residual_allocation_headroom_user_20260908.json",
+      "sha256": "3469fd859561995da5e3e0bfaead28440c04df859e9e7a97403b4936c4397f4a"
+    },
+    {
+      "path": "specs/2026-09-02-intertemporal-residual-headroom/frozen_protocol.md",
+      "sha256": "14bee66f9ac881d5c021613563b2bd7b634618b12728603992b5a99468e37232"
+    },
+    {
+      "path": "experiments/configs/intertemporal_shared_capacity_episode_prescreen.json",
+      "sha256": "99725af8254e05b81a91e9532593b915f759ff032bf4abbc4324581c5f171fad"
+    },
+    {
+      "path": "experiments/configs/20_clinic_patient_condition_geo.json",
+      "sha256": "1c96b8c8513b7f64221c8f28935a01bb16a5376c036a4c8544574dfcd2a772a3"
+    },
+    {
+      "path": "results/intertemporal_shared_capacity_development/fixed_state_j2/summary.json",
+      "sha256": "3af63a13e770e12926f2f726e6ffc34585878ca85e89f529c285aca1bd2bbff4"
+    },
+    {
+      "path": "evaluation/screen_intertemporal_residual_allocation_headroom.py",
+      "sha256": "13afec35aaebc349e4fedaca467bdc4767c6ff74717023f49901024a6112dcf0"
+    },
+    {
+      "path": "evaluation/screen_intertemporal_shared_capacity_states.py",
+      "sha256": "40eb811672b94fb82f42d0ff216d4d15c7808e5ec885261520e0b7283274e6dc"
+    },
+    {
+      "path": "evaluation/screen_intertemporal_shared_capacity_episodes.py",
+      "sha256": "1758febf54c6d2f168de2739584b6e4fedea2cf9f989482efc24568796f38090"
+    },
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4"
+    },
+    {
+      "path": "src/baselines/heuristics.py",
+      "sha256": "3ed3f944d47b52f76f8d7581ff706c6903e238c43ed077301ece1ddc0db0de35"
+    },
+    {
+      "path": "results/intertemporal_residual_allocation_headroom_development/r0_zhaowei_20260908/residual_headroom_rows.csv",
+      "sha256": "3548560337a805948831faba79eb40529dfc14b827959833f74c48e10b2eb224"
+    },
+    {
+      "path": "results/intertemporal_residual_allocation_headroom_development/r0_zhaowei_20260908/state_manifest.json",
+      "sha256": "d1a4003556fc8e9d1b312e64619e49d7e05c42074b0133bf213eaa73d66d3927"
+    },
+    {
+      "path": "results/intertemporal_residual_allocation_headroom_development/r0_zhaowei_20260908/summary.json",
+      "sha256": "67e9805da8e3e91f0d7afd48f95d75ab0e847b85c0bbd12036478a83ce79f163"
+    },
+    {
+      "path": "results/intertemporal_residual_allocation_headroom_development/r0_zhaowei_20260908/claim.json",
+      "sha256": "1cb222e23848c6604902b11491dc02339f0a28212979fdd2cf793352919a610e"
+    },
+    {
+      "path": "specs/2026-09-08-user-authorized-residual-screen/authorization.md",
+      "sha256": "6103f6eb1719ee13c596addb8d58de6f863d33221487b97803297a0442f50676"
+    },
+    {
+      "path": "experiments/configs/intertemporal_residual_allocation_headroom.json",
+      "sha256": "df9ed23407dbe7cbf47050a550755027743fbf30fb4688848a4f413d80a73ca2"
+    }
+  ]
+}

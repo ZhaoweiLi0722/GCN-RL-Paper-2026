@@ -1,0 +1,23 @@
+{
+  "authorization_mode": "zhaowei_directed_development_screen_20260908",
+  "current_scenario": "scheduled_rotation_slower_noisy",
+  "current_state": 53,
+  "decision": "budget_neutral_residual_support_failed",
+  "elapsed_seconds": 3641.241458292,
+  "execution_approvals": {
+    "howard": false,
+    "zhaowei": true
+  },
+  "exit_code": 0,
+  "formal_confirmation_performed": false,
+  "persisted_rows": 30618,
+  "phase": "completed",
+  "pid": 55681,
+  "policy_training_performed": false,
+  "ppid": 4503,
+  "replication": 5,
+  "started_at": "2026-09-09T03:54:43.668289+00:00",
+  "state_count": 54,
+  "status": "completed",
+  "updated_at": "2026-09-09T06:36:45.165921+00:00"
+}

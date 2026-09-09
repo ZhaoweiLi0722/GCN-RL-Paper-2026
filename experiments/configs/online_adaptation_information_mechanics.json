@@ -1,0 +1,32 @@
+{
+  "role": "mechanics_fixture_only_not_research_performance",
+  "seed": 123,
+  "horizon": 6,
+  "forecast": {"prior_rates": [2.0, 2.0], "window": 4, "horizon": 2, "adaptive": true},
+  "actions": {"none": [0.0, 0.0], "left": [1.0, 0.0], "balanced": [0.5, 0.5], "right": [0.0, 1.0]},
+  "worlds": [
+    {"probability": 0.5, "arrivals": [[0, 0], [6, 0], [6, 0], [6, 0], [6, 0], [6, 0], [0, 0]]},
+    {"probability": 0.5, "arrivals": [[0, 0], [0, 6], [0, 6], [0, 6], [0, 6], [0, 6], [0, 0]]}
+  ],
+  "env": {
+    "num_facilities": 2,
+    "action_mode": "facility_net",
+    "episode_horizon": 6,
+    "production_lead_time": 3,
+    "demand_rates": [0.0, 0.0],
+    "initial_specimens": [0.0, 0.0],
+    "initial_reagents": [100.0, 100.0],
+    "initial_idle_bioreactors": [4.0, 4.0],
+    "max_idle_bioreactors": [20.0, 20.0],
+    "enable_overtime_control": true,
+    "max_overtime_fraction": 0.5,
+    "enable_intertemporal_overtime_commitment": true,
+    "overtime_commitment_lead_time": 2,
+    "overtime_commitment_persistence": 0.5,
+    "overtime_shared_budget_fraction": 0.5,
+    "weight_overtime_activation": 1000.0,
+    "include_demand_forecast_state": false,
+    "include_demand_history_state": false,
+    "include_demand_sequence_state": false
+  }
+}

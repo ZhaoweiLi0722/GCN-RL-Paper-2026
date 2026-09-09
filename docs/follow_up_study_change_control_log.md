@@ -139,3 +139,19 @@ performance claims.
   unchanged. No merge or push was performed in this execution step.
 - Readout, audit, timing caveat and a design-only information-boundary memo:
   `specs/2026-09-08-user-authorized-residual-screen/results.md`.
+
+## 2026-09-09: P0 information-boundary mechanics preparation
+
+- Following the audited terminal residual-screen outcome, Zhaowei requested
+  continuing with the proposed next design. Howard remains pending.
+- Scope is new opt-in public-history forecast code, a bounded finite-tree
+  planning diagnostic, and fixture-seed mechanics tests. Existing simulator
+  code and all scientific evidence remain unchanged; Stage E stays closed.
+- The finite-tree diagnostic uses two facilities, two deterministic tapes,
+  four actions, six decisions and seed 123 only. It is not a newly approved
+  stochastic scenario or a policy-training study. No fixture value may be
+  cited as manuscript performance or online DDPG gain.
+- P0 contract: `specs/2026-09-09-online-adaptation-mechanics/README.md`.
+  The implementation/config/contract are committed before the full fixture.
+- This step grants no training, new scientific seeds, formal evaluation,
+  rerunning closed screens, changed gates, push, merge or proxy approval.

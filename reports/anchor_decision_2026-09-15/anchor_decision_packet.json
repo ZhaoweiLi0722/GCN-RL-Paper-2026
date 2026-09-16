@@ -1,0 +1,1752 @@
+{
+ "rule": "formal paired_ci, z=1.96, margins completion 0.001 / mfg-ineligibility 0.001 / patients_lost 1.0; strict per-scenario = False in formal",
+ "seed_base": 99700000,
+ "per_scenario": {
+  "routing_nominal_history": {
+   "mdl2_hedge_out130": {
+    "cost_pct": -4.601962699371734,
+    "cost_ci_pct": [
+     -5.183466832919554,
+     -4.013700753276194
+    ],
+    "wins": 93,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.013315346269951116,
+      "ci_low": 0.01037397787566665,
+      "ci_high": 0.01625671466423558,
+      "bound": 0.01037397787566665,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.002437372345075993,
+      "ci_low": 0.0013679738591454754,
+      "ci_high": 0.0035067708310065108,
+      "bound": 0.0035067708310065108,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -28.66,
+      "ci_low": -45.42788091001738,
+      "ci_high": -11.892119089982621,
+      "bound": -11.892119089982621,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl2_hedge_out140": {
+    "cost_pct": -5.168973970109477,
+    "cost_ci_pct": [
+     -5.766840680956394,
+     -4.572124301461397
+    ],
+    "wins": 94,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.01665126531095623,
+      "ci_low": 0.013711170012089217,
+      "ci_high": 0.019591360609823246,
+      "bound": 0.013711170012089217,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0015531688462937592,
+      "ci_low": 0.00039720520147691965,
+      "ci_high": 0.0027091324911105987,
+      "bound": 0.0027091324911105987,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -43.35,
+      "ci_low": -60.18988629607239,
+      "ci_high": -26.510113703927615,
+      "bound": -26.510113703927615,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl2_hedge_out150": {
+    "cost_pct": -5.6272582904821995,
+    "cost_ci_pct": [
+     -6.242885649450744,
+     -5.014186439771242
+    ],
+    "wins": 95,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.020019904414641486,
+      "ci_low": 0.0169544067021774,
+      "ci_high": 0.02308540212710557,
+      "bound": 0.0169544067021774,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.001035462269261662,
+      "ci_low": -0.0001387888399258354,
+      "ci_high": 0.0022097133784491595,
+      "bound": 0.0022097133784491595,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -58.31,
+      "ci_low": -76.05806720512338,
+      "ci_high": -40.561932794876626,
+      "bound": -40.561932794876626,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl_look003": {
+    "cost_pct": -5.596024038788701,
+    "cost_ci_pct": [
+     -6.190714461623587,
+     -5.009684343793487
+    ],
+    "wins": 97,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.015778767232341902,
+      "ci_low": 0.012858712786985874,
+      "ci_high": 0.01869882167769793,
+      "bound": 0.012858712786985874,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.002112865710554927,
+      "ci_low": 0.0009114172490538098,
+      "ci_high": 0.0033143141720560444,
+      "bound": 0.0033143141720560444,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -39.18,
+      "ci_low": -56.08735920940818,
+      "ci_high": -22.27264079059182,
+      "bound": -22.27264079059182,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl_look004": {
+    "cost_pct": -5.335947460241944,
+    "cost_ci_pct": [
+     -5.9672463481964195,
+     -4.716887210381475
+    ],
+    "wins": 96,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.010838664699760546,
+      "ci_low": 0.007720899198071454,
+      "ci_high": 0.013956430201449637,
+      "bound": 0.007720899198071454,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0057097584744074305,
+      "ci_low": 0.004505617402261015,
+      "ci_high": 0.006913899546553846,
+      "bound": 0.006913899546553846,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 4.64,
+      "ci_low": -13.461300070682459,
+      "ci_high": 22.74130007068246,
+      "bound": 22.74130007068246,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   }
+  },
+  "routing_abrupt_regime_shift": {
+   "mdl2_hedge_out130": {
+    "cost_pct": -4.505371806264969,
+    "cost_ci_pct": [
+     -5.130861028208818,
+     -3.8707895000782466
+    ],
+    "wins": 91,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.011960589614256239,
+      "ci_low": 0.008929905677549352,
+      "ci_high": 0.014991273550963125,
+      "bound": 0.008929905677549352,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0022010286907816314,
+      "ci_low": 0.0011743773736040287,
+      "ci_high": 0.003227680007959234,
+      "bound": 0.003227680007959234,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -28.75,
+      "ci_low": -44.180600607595,
+      "ci_high": -13.319399392405003,
+      "bound": -13.319399392405003,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl2_hedge_out140": {
+    "cost_pct": -5.050004952924092,
+    "cost_ci_pct": [
+     -5.667599446116086,
+     -4.419812226287631
+    ],
+    "wins": 93,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.013806039458535025,
+      "ci_low": 0.01090538531612546,
+      "ci_high": 0.01670669360094459,
+      "bound": 0.01090538531612546,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0024702455735333786,
+      "ci_low": 0.0014547494497859053,
+      "ci_high": 0.0034857416972808516,
+      "bound": 0.0034857416972808516,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -27.76,
+      "ci_low": -42.82159412728113,
+      "ci_high": -12.698405872718869,
+      "bound": -12.698405872718869,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl2_hedge_out150": {
+    "cost_pct": -5.537411463154838,
+    "cost_ci_pct": [
+     -6.1361616504263345,
+     -4.926579052958275
+    ],
+    "wins": 96,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.016941520814716286,
+      "ci_low": 0.014085548540113825,
+      "ci_high": 0.019797493089318746,
+      "bound": 0.014085548540113825,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0028080477714709034,
+      "ci_low": 0.00177431632270475,
+      "ci_high": 0.003841779220237057,
+      "bound": 0.003841779220237057,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -36.33,
+      "ci_low": -51.13921058800907,
+      "ci_high": -21.520789411990926,
+      "bound": -21.520789411990926,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl_look003": {
+    "cost_pct": -5.376361265302788,
+    "cost_ci_pct": [
+     -5.997306771877924,
+     -4.76397979909508
+    ],
+    "wins": 96,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.013570631933541839,
+      "ci_low": 0.010643699383672649,
+      "ci_high": 0.01649756448341103,
+      "bound": 0.010643699383672649,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0030223809367671407,
+      "ci_low": 0.0019208733922846445,
+      "ci_high": 0.0041238884812496365,
+      "bound": 0.0041238884812496365,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": -24.81,
+      "ci_low": -39.77284261541694,
+      "ci_high": -9.847157384583056,
+      "bound": -9.847157384583056,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": false
+    }
+   },
+   "mdl_look004": {
+    "cost_pct": -5.027660769112148,
+    "cost_ci_pct": [
+     -5.665414597906456,
+     -4.393694393104421
+    ],
+    "wins": 95,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.008766305975927436,
+      "ci_low": 0.005696685830998448,
+      "ci_high": 0.011835926120856426,
+      "bound": 0.005696685830998448,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.006754442829248898,
+      "ci_low": 0.005538438044016802,
+      "ci_high": 0.007970447614480994,
+      "bound": 0.007970447614480994,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 29.26,
+      "ci_low": 13.03130664164253,
+      "ci_high": 45.48869335835747,
+      "bound": 45.48869335835747,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   }
+  },
+  "routing_regional_drift": {
+   "mdl2_hedge_out130": {
+    "cost_pct": -2.6987711317238494,
+    "cost_ci_pct": [
+     -3.3718028780796843,
+     -2.0309629782601686
+    ],
+    "wins": 79,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.0029790885031176296,
+      "ci_low": -0.00025508910314906916,
+      "ci_high": 0.006213266109384328,
+      "bound": -0.00025508910314906916,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.00420651479658453,
+      "ci_low": 0.0029148343967480067,
+      "ci_high": 0.005498195196421053,
+      "bound": 0.005498195196421053,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 7.95,
+      "ci_low": -10.299613286064698,
+      "ci_high": 26.199613286064697,
+      "bound": 26.199613286064697,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   },
+   "mdl2_hedge_out140": {
+    "cost_pct": -2.6446086633523724,
+    "cost_ci_pct": [
+     -3.2933948469198038,
+     -2.0045228554317998
+    ],
+    "wins": 82,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.002990244160239951,
+      "ci_low": -0.00016054518239182755,
+      "ci_high": 0.006141033502871729,
+      "bound": -0.00016054518239182755,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.004601814766563633,
+      "ci_low": 0.00324181490192486,
+      "ci_high": 0.005961814631202406,
+      "bound": 0.005961814631202406,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 9.75,
+      "ci_low": -7.9741250494256235,
+      "ci_high": 27.474125049425624,
+      "bound": 27.474125049425624,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   },
+   "mdl2_hedge_out150": {
+    "cost_pct": -2.3107837583672026,
+    "cost_ci_pct": [
+     -2.9209404327815074,
+     -1.6946354028849868
+    ],
+    "wins": 75,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.0020088043838317675,
+      "ci_low": -0.0010090936943455407,
+      "ci_high": 0.005026702462009076,
+      "bound": -0.0010090936943455407,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0051509959968359074,
+      "ci_low": 0.0037982112719796447,
+      "ci_high": 0.00650378072169217,
+      "bound": 0.00650378072169217,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 17.29,
+      "ci_low": 0.3244474088930396,
+      "ci_high": 34.25555259110696,
+      "bound": 34.25555259110696,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   },
+   "mdl_look003": {
+    "cost_pct": -3.0469821913344943,
+    "cost_ci_pct": [
+     -3.703208062185226,
+     -2.3937190527897863
+    ],
+    "wins": 84,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.002672726403640883,
+      "ci_low": -0.00052829645349704,
+      "ci_high": 0.005873749260778806,
+      "bound": -0.00052829645349704,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.004795968818769669,
+      "ci_low": 0.00339770498036726,
+      "ci_high": 0.006194232657172077,
+      "bound": 0.006194232657172077,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 11.89,
+      "ci_low": -6.2990093922987285,
+      "ci_high": 30.07900939229873,
+      "bound": 30.07900939229873,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   },
+   "mdl_look004": {
+    "cost_pct": -0.5957454675884588,
+    "cost_ci_pct": [
+     -1.2682100997575687,
+     0.05968416640649561
+    ],
+    "wins": 52,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": -0.01307519812421552,
+      "ci_low": -0.01631778241209166,
+      "ci_high": -0.00983261383633938,
+      "bound": -0.01631778241209166,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.01200292376475814,
+      "ci_low": 0.010520260567101218,
+      "ci_high": 0.01348558696241506,
+      "bound": 0.01348558696241506,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 108.95,
+      "ci_low": 90.79850250772347,
+      "ci_high": 127.10149749227654,
+      "bound": 127.10149749227654,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   }
+  },
+  "routing_compound_regional_stress": {
+   "mdl2_hedge_out130": {
+    "cost_pct": -2.378167818784953,
+    "cost_ci_pct": [
+     -2.7812518531011774,
+     -1.976703519900938
+    ],
+    "wins": 84,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.00841730776026497,
+      "ci_low": 0.005718606212738404,
+      "ci_high": 0.011116009307791535,
+      "bound": 0.005718606212738404,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.0009626334831967781,
+      "ci_low": -0.0026599625300613495,
+      "ci_high": 0.0007346955636677932,
+      "bound": 0.0007346955636677932,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -35.28,
+      "ci_low": -54.06287274059788,
+      "ci_high": -16.49712725940212,
+      "bound": -16.49712725940212,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl2_hedge_out140": {
+    "cost_pct": -2.069768142256729,
+    "cost_ci_pct": [
+     -2.477414064182634,
+     -1.6739994420957565
+    ],
+    "wins": 85,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.008082237403479731,
+      "ci_low": 0.005510447389164872,
+      "ci_high": 0.01065402741779459,
+      "bound": 0.005510447389164872,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.0006028131217805962,
+      "ci_low": -0.0021779705791784166,
+      "ci_high": 0.0009723443356172243,
+      "bound": 0.0009723443356172243,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -31.26,
+      "ci_low": -49.31648595739762,
+      "ci_high": -13.20351404260239,
+      "bound": -13.20351404260239,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl2_hedge_out150": {
+    "cost_pct": -1.8295205278822007,
+    "cost_ci_pct": [
+     -2.2709656271160354,
+     -1.3991347760193622
+    ],
+    "wins": 77,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.009256681631724151,
+      "ci_low": 0.006622106124645475,
+      "ci_high": 0.011891257138802827,
+      "bound": 0.006622106124645475,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.0007029275412945755,
+      "ci_low": -0.002323483085524357,
+      "ci_high": 0.0009176280029352061,
+      "bound": 0.0009176280029352061,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -35.9,
+      "ci_low": -54.06880798722821,
+      "ci_high": -17.73119201277179,
+      "bound": -17.73119201277179,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl_look003": {
+    "cost_pct": -3.0938037883381773,
+    "cost_ci_pct": [
+     -3.4765826055552678,
+     -2.7179414675819293
+    ],
+    "wins": 95,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.008978038817855047,
+      "ci_low": 0.006360161867928052,
+      "ci_high": 0.011595915767782041,
+      "bound": 0.006360161867928052,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.0018045859154538035,
+      "ci_low": -0.0034292975686150548,
+      "ci_high": -0.00017987426229255227,
+      "bound": -0.00017987426229255227,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -36.63,
+      "ci_low": -54.71639800673926,
+      "ci_high": -18.543601993260744,
+      "bound": -18.543601993260744,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl_look004": {
+    "cost_pct": -2.34237263435569,
+    "cost_ci_pct": [
+     -2.8167002484441266,
+     -1.8820613021059913
+    ],
+    "wins": 82,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.0007828620165636451,
+      "ci_low": -0.0022082325136474736,
+      "ci_high": 0.0037739565467747637,
+      "bound": -0.0022082325136474736,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.004421811399948532,
+      "ci_low": 0.002615648878335894,
+      "ci_high": 0.006227973921561171,
+      "bound": 0.006227973921561171,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 29.11,
+      "ci_low": 8.772027157064052,
+      "ci_high": 49.44797284293595,
+      "bound": 49.44797284293595,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   }
+  },
+  "routing_contract_demand_drift": {
+   "mdl2_hedge_out130": {
+    "cost_pct": -2.693480689446037,
+    "cost_ci_pct": [
+     -3.103564983527224,
+     -2.2896616780286796
+    ],
+    "wins": 87,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.011024388062669026,
+      "ci_low": 0.008360478190147192,
+      "ci_high": 0.013688297935190859,
+      "bound": 0.008360478190147192,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.0018033154020223351,
+      "ci_low": -0.003533928696278486,
+      "ci_high": -7.270210776618422e-05,
+      "bound": -7.270210776618422e-05,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -31.9,
+      "ci_low": -50.98509161464503,
+      "ci_high": -12.814908385354972,
+      "bound": -12.814908385354972,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl2_hedge_out140": {
+    "cost_pct": -2.8991300412772603,
+    "cost_ci_pct": [
+     -3.3275670153565655,
+     -2.4777382478595977
+    ],
+    "wins": 92,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.01352333026085598,
+      "ci_low": 0.010776521901913966,
+      "ci_high": 0.016270138619797994,
+      "bound": 0.010776521901913966,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.002863811155830726,
+      "ci_low": -0.004564458139686142,
+      "ci_high": -0.0011631641719753094,
+      "bound": -0.0011631641719753094,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -43.85,
+      "ci_low": -63.5887751249753,
+      "ci_high": -24.111224875024707,
+      "bound": -24.111224875024707,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl2_hedge_out150": {
+    "cost_pct": -2.7765887252620813,
+    "cost_ci_pct": [
+     -3.1934227896113314,
+     -2.3698198992264383
+    ],
+    "wins": 95,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.01492601497729801,
+      "ci_low": 0.012259635091245759,
+      "ci_high": 0.01759239486335026,
+      "bound": 0.012259635091245759,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.002472230535774183,
+      "ci_low": -0.004153797641400573,
+      "ci_high": -0.0007906634301477931,
+      "bound": -0.0007906634301477931,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -46.87,
+      "ci_low": -66.07900310512039,
+      "ci_high": -27.660996894879595,
+      "bound": -27.660996894879595,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl_look003": {
+    "cost_pct": -3.6664530370418467,
+    "cost_ci_pct": [
+     -4.060173652782336,
+     -3.2781289326370584
+    ],
+    "wins": 97,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.013472889176847018,
+      "ci_low": 0.01080380802557638,
+      "ci_high": 0.016141970328117657,
+      "bound": 0.01080380802557638,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.003526157632750279,
+      "ci_low": -0.005261430849421327,
+      "ci_high": -0.0017908844160792311,
+      "bound": -0.0017908844160792311,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -46.47,
+      "ci_low": -65.88565441048729,
+      "ci_high": -27.054345589512703,
+      "bound": -27.054345589512703,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl_look004": {
+    "cost_pct": -3.495987693320388,
+    "cost_ci_pct": [
+     -3.885742615212467,
+     -3.1104427536176216
+    ],
+    "wins": 96,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.007980879107578758,
+      "ci_low": 0.005469175983095162,
+      "ci_high": 0.010492582232062354,
+      "bound": 0.005469175983095162,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": 0.0032037035253221074,
+      "ci_low": 0.0015395760110451424,
+      "ci_high": 0.004867831039599073,
+      "bound": 0.004867831039599073,
+      "margin": 0.001,
+      "pass": false
+     },
+     "patients_lost": {
+      "mean": 13.72,
+      "ci_low": -4.715876644798376,
+      "ci_high": 32.155876644798376,
+      "bound": 32.155876644798376,
+      "margin": 1.0,
+      "pass": false
+     },
+     "all_pass": false
+    }
+   }
+  },
+  "routing_contract_demand_drift_severe": {
+   "mdl2_hedge_out130": {
+    "cost_pct": -2.5076747521258698,
+    "cost_ci_pct": [
+     -2.671072255305578,
+     -2.3498837546454157
+    ],
+    "wins": 100,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.017043975948790292,
+      "ci_low": 0.015929274964430935,
+      "ci_high": 0.01815867693314965,
+      "bound": 0.015929274964430935,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.034852063134957485,
+      "ci_low": -0.037013165906581665,
+      "ci_high": -0.032690960363333306,
+      "bound": -0.032690960363333306,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -156.09,
+      "ci_low": -166.35064656391083,
+      "ci_high": -145.82935343608918,
+      "bound": -145.82935343608918,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl2_hedge_out140": {
+    "cost_pct": -3.062930352278717,
+    "cost_ci_pct": [
+     -3.2277016009295343,
+     -2.8973737588344286
+    ],
+    "wins": 100,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.021750904735217905,
+      "ci_low": 0.020623325637983053,
+      "ci_high": 0.022878483832452758,
+      "bound": 0.020623325637983053,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.04432606001181459,
+      "ci_low": -0.04653479326980398,
+      "ci_high": -0.0421173267538252,
+      "bound": -0.0421173267538252,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -199.47,
+      "ci_low": -209.84846850312238,
+      "ci_high": -189.09153149687762,
+      "bound": -189.09153149687762,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl2_hedge_out150": {
+    "cost_pct": -3.3856919856374206,
+    "cost_ci_pct": [
+     -3.5559286244002206,
+     -3.21250433496504
+    ],
+    "wins": 100,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.025153934206094096,
+      "ci_low": 0.02396351081485552,
+      "ci_high": 0.02634435759733267,
+      "bound": 0.02396351081485552,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.05175703739989561,
+      "ci_low": -0.05405501990332634,
+      "ci_high": -0.04945905489646488,
+      "bound": -0.04945905489646488,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -230.98,
+      "ci_low": -241.97475599490386,
+      "ci_high": -219.98524400509612,
+      "bound": -219.98524400509612,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl_look003": {
+    "cost_pct": -2.822416581281226,
+    "cost_ci_pct": [
+     -2.9785828186822148,
+     -2.6680699921816835
+    ],
+    "wins": 100,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.018447249669774703,
+      "ci_low": 0.01733640526833254,
+      "ci_high": 0.019558094071216867,
+      "bound": 0.01733640526833254,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.03762943126057561,
+      "ci_low": -0.039825390174474735,
+      "ci_high": -0.03543347234667648,
+      "bound": -0.03543347234667648,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -169.1,
+      "ci_low": -179.32410212402166,
+      "ci_high": -158.87589787597832,
+      "bound": -158.87589787597832,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   },
+   "mdl_look004": {
+    "cost_pct": -4.369595869995994,
+    "cost_ci_pct": [
+     -4.573690097441997,
+     -4.1660687610171205
+    ],
+    "wins": 100,
+    "n": 100,
+    "clinical": {
+     "completion_service_level": {
+      "mean": 0.028738326987666155,
+      "ci_low": 0.027329923158706665,
+      "ci_high": 0.030146730816625646,
+      "bound": 0.027329923158706665,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patient_ineligibility_during_manufacturing_rate": {
+      "mean": -0.06168359050983272,
+      "ci_low": -0.06441398837107644,
+      "ci_high": -0.058953192648589,
+      "bound": -0.058953192648589,
+      "margin": 0.001,
+      "pass": true
+     },
+     "patients_lost": {
+      "mean": -263.82,
+      "ci_low": -277.054486927873,
+      "ci_high": -250.58551307212701,
+      "bound": -250.58551307212701,
+      "margin": 1.0,
+      "pass": true
+     },
+     "all_pass": true
+    }
+   }
+  }
+ },
+ "pooled_all6": {
+  "mdl2_hedge_out130": {
+   "cost_pct": -3.0033389543775946,
+   "cost_ci_pct": [
+    -3.182565364010187,
+    -2.8228062242884424
+   ],
+   "wins": 534,
+   "n": 600,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.010790116026508213,
+     "ci_low": 0.009636359270708583,
+     "ci_high": 0.011943872782307843,
+     "bound": 0.009636359270708583,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": -0.0047955160312890726,
+     "ci_low": -0.00605359819844783,
+     "ci_high": -0.003537433864130316,
+     "bound": -0.003537433864130316,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": -45.455,
+     "ci_low": -53.40283200834523,
+     "ci_high": -37.50716799165477,
+     "bound": -37.50716799165477,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": true
+   }
+  },
+  "mdl2_hedge_out140": {
+   "cost_pct": -3.2772297575646108,
+   "cost_ci_pct": [
+    -3.4697374847497247,
+    -3.0796131673624783
+   ],
+   "wins": 546,
+   "n": 600,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.01280067022154747,
+     "ci_low": 0.011618227741187264,
+     "ci_high": 0.013983112701907675,
+     "bound": 0.011618227741187264,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": -0.00652790918383919,
+     "ci_low": -0.008033337465367347,
+     "ci_high": -0.0050224809023110325,
+     "bound": -0.0050224809023110325,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": -55.99,
+     "ci_low": -64.58373552169027,
+     "ci_high": -47.396264478309725,
+     "bound": -47.396264478309725,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": true
+   }
+  },
+  "mdl2_hedge_out150": {
+   "cost_pct": -3.381331887470442,
+   "cost_ci_pct": [
+    -3.5903813104930933,
+    -3.1705645114512535
+   ],
+   "wins": 538,
+   "n": 600,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.0147178100713843,
+     "ci_low": 0.01348622171148517,
+     "ci_high": 0.01594939843128343,
+     "bound": 0.01348622171148517,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": -0.007656281573232651,
+     "ci_low": -0.009372648464042798,
+     "ci_high": -0.005939914682422503,
+     "bound": -0.005939914682422503,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": -65.18333333333334,
+     "ci_low": -74.3540293292705,
+     "ci_high": -56.01263733739617,
+     "bound": -56.01263733739617,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": true
+   }
+  },
+  "mdl_look003": {
+   "cost_pct": -3.6513770558519156,
+   "cost_ci_pct": [
+    -3.828082288903833,
+    -3.470359383077657
+   ],
+   "wins": 569,
+   "n": 600,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.012153383872333565,
+     "ci_low": 0.010996072497711238,
+     "ci_high": 0.013310695246955892,
+     "bound": 0.010996072497711238,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": -0.005504826557114658,
+     "ci_low": -0.0068429609563294075,
+     "ci_high": -0.004166692157899909,
+     "bound": -0.004166692157899909,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": -50.71666666666667,
+     "ci_low": -58.82157776160154,
+     "ci_high": -42.6117555717318,
+     "bound": -42.6117555717318,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": true
+   }
+  },
+  "mdl_look004": {
+   "cost_pct": -3.6213165127212137,
+   "cost_ci_pct": [
+    -3.882304533135202,
+    -3.3642592873169206
+   ],
+   "wins": 521,
+   "n": 600,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.007338640110546836,
+     "ci_low": 0.00582589977697509,
+     "ci_high": 0.008851380444118583,
+     "bound": 0.00582589977697509,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": -0.004931825086024601,
+     "ci_low": -0.007098206003445845,
+     "ci_high": -0.002765444168603357,
+     "bound": -0.002765444168603357,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": -13.023333333333333,
+     "ci_low": -24.812239562109966,
+     "ci_high": -1.2344271045567012,
+     "bound": -1.2344271045567012,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": true
+   }
+  }
+ },
+ "pooled_routing4": {
+  "mdl2_hedge_out130": {
+   "cost_pct": -3.4104337047832516,
+   "cost_ci_pct": [
+    -3.6923056852659957,
+    -3.130874924208376
+   ],
+   "wins": 347,
+   "n": 400,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.009168083036897489,
+     "ci_low": 0.007631616577772151,
+     "ci_high": 0.010704549496022826,
+     "bound": 0.007631616577772151,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.0019705705873113446,
+     "ci_low": 0.0012983268625028916,
+     "ci_high": 0.0026428143121197973,
+     "bound": 0.0026428143121197973,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": -21.185,
+     "ci_low": -29.991060362663724,
+     "ci_high": -12.378939637336273,
+     "bound": -12.378939637336273,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": false
+   }
+  },
+  "mdl2_hedge_out140": {
+   "cost_pct": -3.5397094984420323,
+   "cost_ci_pct": [
+    -3.830776628472679,
+    -3.2439538166253046
+   ],
+   "wins": 354,
+   "n": 400,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.010382446583302734,
+     "ci_low": 0.008849067502427248,
+     "ci_high": 0.01191582566417822,
+     "bound": 0.008849067502427248,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.002005604016152544,
+     "ci_low": 0.0013354521443565315,
+     "ci_high": 0.0026757558879485564,
+     "bound": 0.0026757558879485564,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": -23.155,
+     "ci_low": -31.82504746651245,
+     "ci_high": -14.48495253348755,
+     "bound": -14.48495253348755,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": false
+   }
+  },
+  "mdl2_hedge_out150": {
+   "cost_pct": -3.592919339002453,
+   "cost_ci_pct": [
+    -3.903033568738194,
+    -3.283846586410657
+   ],
+   "wins": 343,
+   "n": 400,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.012056727811228423,
+     "ci_low": 0.010457877195605711,
+     "ci_high": 0.013655578426851134,
+     "bound": 0.010457877195605711,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.0020728946240684745,
+     "ci_low": 0.001384795516008773,
+     "ci_high": 0.002760993732128176,
+     "bound": 0.002760993732128176,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": -28.3125,
+     "ci_low": -37.19723544734441,
+     "ci_high": -19.427764552655592,
+     "bound": -19.427764552655592,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003": {
+   "cost_pct": -4.143317866159578,
+   "cost_ci_pct": [
+    -4.431506063476175,
+    -3.8525219218388007
+   ],
+   "wins": 372,
+   "n": 400,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.010250041096844917,
+     "ci_low": 0.008712759530375869,
+     "ci_high": 0.011787322663313966,
+     "bound": 0.008712759530375869,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.002031657387659483,
+     "ci_low": 0.0013203108185694007,
+     "ci_high": 0.002743003956749566,
+     "bound": 0.002743003956749566,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": -22.1825,
+     "ci_low": -30.92558721172072,
+     "ci_high": -13.43941278827928,
+     "bound": -13.43941278827928,
+     "margin": 1.0,
+     "pass": true
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look004": {
+   "cost_pct": -3.2168271777816457,
+   "cost_ci_pct": [
+    -3.551506821393879,
+    -2.8890971049902805
+   ],
+   "wins": 325,
+   "n": 400,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.0018281586420090274,
+     "ci_low": 2.7282127907529404e-05,
+     "ci_high": 0.0036290351561105256,
+     "bound": 2.7282127907529404e-05,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.007222234117090751,
+     "ci_low": 0.006447443284410409,
+     "ci_high": 0.007997024949771094,
+     "bound": 0.007997024949771094,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": 42.99,
+     "ci_low": 33.106354560308034,
+     "ci_high": 52.87364543969197,
+     "bound": 52.87364543969197,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  }
+ },
+ "head_to_head": {
+  "mdl_look003_vs_hedge_out140_all6": {
+   "cost_pct": -0.386824423400514,
+   "cost_ci_pct": [
+    -0.45930683786954796,
+    -0.3135732624843471
+   ],
+   "wins": 387,
+   "n": 600,
+   "clinical": {
+    "completion_service_level": {
+     "mean": -0.0006472863492139044,
+     "ci_low": -0.00104847815374966,
+     "ci_high": -0.0002460945446781488,
+     "bound": -0.00104847815374966,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.0010230826267245323,
+     "ci_low": 0.0007000156733961115,
+     "ci_high": 0.0013461495800529532,
+     "bound": 0.0013461495800529532,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": 5.273333333333333,
+     "ci_low": 2.758052396964014,
+     "ci_high": 7.788614269702653,
+     "bound": 7.788614269702653,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003_vs_hedge_out140_routing4": {
+   "cost_pct": -0.6257583971383514,
+   "cost_ci_pct": [
+    -0.7352178005849779,
+    -0.5162193151109502
+   ],
+   "wins": 285,
+   "n": 400,
+   "clinical": {
+    "completion_service_level": {
+     "mean": -0.0001324054864578167,
+     "ci_low": -0.0006615232687452775,
+     "ci_high": 0.0003967122958296441,
+     "bound": -0.0006615232687452775,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 2.6053371506939567e-05,
+     "ci_low": -0.00026359636995959497,
+     "ci_high": 0.00031570311297347413,
+     "bound": 0.00031570311297347413,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": 0.9725,
+     "ci_low": -2.03636075360117,
+     "ci_high": 3.9813607536011704,
+     "bound": 3.9813607536011704,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003_vs_hedge_out140_routing_nominal_history": {
+   "cost_pct": -0.4503273733900332,
+   "cost_ci_pct": [
+    -0.6685786341154224,
+    -0.23628191471437157
+   ],
+   "wins": 67,
+   "n": 100,
+   "clinical": {
+    "completion_service_level": {
+     "mean": -0.0008724980786143316,
+     "ci_low": -0.0019222124805196711,
+     "ci_high": 0.0001772163232910079,
+     "bound": -0.0019222124805196711,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.000559696864261168,
+     "ci_low": 1.7620137045349336e-05,
+     "ci_high": 0.0011017735914769866,
+     "bound": 0.0011017735914769866,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": 4.17,
+     "ci_low": -1.6881853860882359,
+     "ci_high": 10.028185386088236,
+     "bound": 10.028185386088236,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003_vs_hedge_out140_routing_abrupt_regime_shift": {
+   "cost_pct": -0.34371388036080386,
+   "cost_ci_pct": [
+    -0.6094951837638009,
+    -0.07832142459676525
+   ],
+   "wins": 55,
+   "n": 100,
+   "clinical": {
+    "completion_service_level": {
+     "mean": -0.00023540752499318418,
+     "ci_low": -0.0014508490194524266,
+     "ci_high": 0.0009800339694660584,
+     "bound": -0.0014508490194524266,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.0005521353632337616,
+     "ci_low": 9.879045940340417e-05,
+     "ci_high": 0.001005480267064119,
+     "bound": 0.001005480267064119,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": 2.95,
+     "ci_low": -2.74742458564314,
+     "ci_high": 8.64742458564314,
+     "bound": 8.64742458564314,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003_vs_hedge_out140_routing_regional_drift": {
+   "cost_pct": -0.4133037959764809,
+   "cost_ci_pct": [
+    -0.591751685560486,
+    -0.24135113393511778
+   ],
+   "wins": 72,
+   "n": 100,
+   "clinical": {
+    "completion_service_level": {
+     "mean": -0.00031751775659906776,
+     "ci_low": -0.0013027680925060039,
+     "ci_high": 0.0006677325793078685,
+     "bound": -0.0013027680925060039,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.00019415405220603587,
+     "ci_low": -0.00034284625410433144,
+     "ci_high": 0.0007311543585164031,
+     "bound": 0.0007311543585164031,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": 2.14,
+     "ci_low": -3.5788821403975084,
+     "ci_high": 7.858882140397508,
+     "bound": 7.858882140397508,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003_vs_hedge_out140_routing_compound_regional_stress": {
+   "cost_pct": -1.0456787721783372,
+   "cost_ci_pct": [
+    -1.2189835246111287,
+    -0.8828303297122654
+   ],
+   "wins": 91,
+   "n": 100,
+   "clinical": {
+    "completion_service_level": {
+     "mean": 0.0008958014143753168,
+     "ci_low": -5.259139176166797e-05,
+     "ci_high": 0.0018441942205123015,
+     "bound": -5.259139176166797e-05,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": -0.001201772793673207,
+     "ci_low": -0.0018970403902616683,
+     "ci_high": -0.0005065051970847459,
+     "bound": -0.0005065051970847459,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": -5.37,
+     "ci_low": -12.025997684901501,
+     "ci_high": 1.2859976849015,
+     "bound": 1.2859976849015,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003_vs_hedge_out140_routing_contract_demand_drift": {
+   "cost_pct": -0.7902328744230326,
+   "cost_ci_pct": [
+    -0.9301472607372894,
+    -0.6480146263839553
+   ],
+   "wins": 86,
+   "n": 100,
+   "clinical": {
+    "completion_service_level": {
+     "mean": -5.0441084008960304e-05,
+     "ci_low": -0.0009894856508205607,
+     "ci_high": 0.00088860348280264,
+     "bound": -0.0009894856508205607,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": -0.0006623464769195533,
+     "ci_low": -0.0013290626704798173,
+     "ci_high": 4.369716640710694e-06,
+     "bound": 4.369716640710694e-06,
+     "margin": 0.001,
+     "pass": true
+    },
+    "patients_lost": {
+     "mean": -2.62,
+     "ci_low": -9.200310165051706,
+     "ci_high": 3.9603101650517054,
+     "bound": 3.9603101650517054,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  },
+  "mdl_look003_vs_hedge_out140_routing_contract_demand_drift_severe": {
+   "cost_pct": 0.24811330884205707,
+   "cost_ci_pct": [
+    0.19172375102338268,
+    0.30467057408362885
+   ],
+   "wins": 16,
+   "n": 100,
+   "clinical": {
+    "completion_service_level": {
+     "mean": -0.0033036550654431994,
+     "ci_low": -0.003648873097866211,
+     "ci_high": -0.0029584370330201877,
+     "bound": -0.003648873097866211,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patient_ineligibility_during_manufacturing_rate": {
+     "mean": 0.006696628751238989,
+     "ci_low": 0.006004960595376382,
+     "ci_high": 0.007388296907101596,
+     "bound": 0.007388296907101596,
+     "margin": 0.001,
+     "pass": false
+    },
+    "patients_lost": {
+     "mean": 30.37,
+     "ci_low": 27.099337970577352,
+     "ci_high": 33.64066202942265,
+     "bound": 33.64066202942265,
+     "margin": 1.0,
+     "pass": false
+    },
+    "all_pass": false
+   }
+  }
+ }
+}

@@ -64,6 +64,21 @@ validated PRM demand distribution. Regional dependence should be justified by
 the application or labeled a synthetic mechanism study. More variability is
 not inherently favorable to learning.
 
+## Prior-oracle screen result (2026-09-15)
+
+A no-training screen measured how much MDL-2 loses from its demand prior by
+running the same decision rule with the simulator's true rate
+([results](../2026-09-15-prior-oracle-gap-screen/results.md)). In the four
+routing-primary scenarios the ceiling on "better distribution knowledge" is at
+most 0.08%, and under the abrupt regime shift a clairvoyant rate is 2.4% worse
+than the stale prior because it removes an accidental capacity hedge. Level
+misspecification that persists for the whole horizon yields about 0.8% at 40%
+misspecification. Consequences for this plan: the treatment must create value
+through anticipation and cross-tier hedging, not through mean tracking; a
+regularized adaptive heuristic and a hedging-aware heuristic belong in the
+comparator list; and an anticipation-oracle arm (future rate at lead-time
+horizon) should be added to Stage 1.
+
 ## Implementation prerequisites: new code, not configuration-only changes
 
 1. **Add a topology-blind placement control.** Existing samplers choose the k

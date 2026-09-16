@@ -104,8 +104,11 @@ holdout stream, editing the manuscript, or changing any published number.
 ## Open item this proposal does not settle
 
 Whether the specimen-routing gain survives on a coverage-correct anchor is
-unknown. The headroom screen answers whether room exists; only retraining
-answers whether a learned policy captures it.
+unknown. The headroom screen (`specs/2026-09-16-routing-headroom-anchor-screen/results.md`)
+has since been run: on MDL-3 the routing channel's prospective state-dependent
+value is 0.02% of cost and labels replicate at 0.62, both below the
+pre-training gates, and both weaker than on MDL-2. Room is not established;
+only retraining could show a multi-step policy captures more than the probe.
 
 Evidence files: `reports/anchor_decision_2026-09-15/anchor_decision_packet.{md,json}`;
 row-level outputs under gitignored `results/prior_oracle_gap_screen_*`.

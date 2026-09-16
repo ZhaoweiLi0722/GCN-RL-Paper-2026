@@ -86,6 +86,18 @@ act on. **This plan's anchor must therefore be a coverage-correct MDL variant
 or any treatment effect will be confounded with anchor under-coverage. The
 anticipation-oracle arm is no longer needed.
 
+## Stage 1 executed on the existing scenarios (2026-09-16): gates fail on both anchors
+
+The Stage 1 label-stability and state-dependence design below was run on the
+four existing routing-primary scenarios for both the MDL-2 and MDL-3 anchors
+([results](../2026-09-16-routing-headroom-anchor-screen/results.md)). Best-
+action agreement 0.70 (MDL-2) and 0.62 (MDL-3) with per-trajectory minima of
+0.38; prospective state-dependence value 0.06% and 0.02% against the 0.5%
+gate. Under this plan's own stop rule, no training follows on the existing
+input process. Any future run of this plan therefore starts from Stage 0's
+new input templates, on the MDL-3 anchor, and must show that the treatment
+raises these two numbers before anything else is done.
+
 ## Implementation prerequisites: new code, not configuration-only changes
 
 1. **Add a topology-blind placement control.** Existing samplers choose the k

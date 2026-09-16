@@ -6,6 +6,18 @@ Status: **design only; not an execution authorization or frozen protocol**.
 The routing-primary campaign remains at Stage E. No new simulator rollout,
 training, optimization experiment, or formal-holdout reuse was performed.
 
+## Status update (2026-09-16): step 3 pilot completed, certificate uninformative
+
+Measurement B was built and run on 200 development worlds
+([results](../2026-09-16-hindsight-lower-bound/results.md)). The bound is
+valid on every world but bounds MDL-2's optimality gap only at 39% (36% for
+the best measured configuration), because the relaxation grants perfect
+information and start-selection authority that the environment's forced-start
+rule denies every implementable policy. Per this plan's own reading table the
+gap question is **unresolved**. The pilot did certify a floor on patient
+loss: at least 28% of arrivals are lost under any policy, against 40% for
+MDL-2. Measurement A remains the only route to an informative headroom number.
+
 ## Question and estimand
 
 Measure how far MDL-2 and the frozen pretrained graph controller are from the

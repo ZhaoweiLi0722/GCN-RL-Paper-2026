@@ -300,7 +300,10 @@ def main(argv=None) -> int:
     if args.resume and rows_path.exists():
         with open(rows_path) as h:
             for r in csv.DictReader(h):
-                r = {k: (float(v) if k not in ("scenario", "dominated", "lp_leq_relaxed_sim", "error") and v not in ("", "nan") else v) for k, v in r.items()}
+                def _num(v):
+                    try: return float(v)
+                    except (TypeError, ValueError): return v
+                r = {k: (v if k in ("scenario", "dominated", "lp_leq_relaxed_sim", "error", "objective") else _num(v)) for k, v in r.items()}
                 r["dominated"] = r["dominated"] == "True"; r["lp_leq_relaxed_sim"] = r["lp_leq_relaxed_sim"] == "True"
                 rows.append(r)
         done = {(r["scenario"], int(r["replication"])) for r in rows}

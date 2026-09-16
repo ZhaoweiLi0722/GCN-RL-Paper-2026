@@ -76,8 +76,15 @@ misspecification that persists for the whole horizon yields about 0.8% at 40%
 misspecification. Consequences for this plan: the treatment must create value
 through anticipation and cross-tier hedging, not through mean tracking; a
 regularized adaptive heuristic and a hedging-aware heuristic belong in the
-comparator list; and an anticipation-oracle arm (future rate at lead-time
-horizon) should be added to Stage 1.
+comparator list. A second pass (Part 2 of the same results) showed that
+anticipation is worth nothing to MDL-2 while extending its lookahead from two
+to three epochs, matching the production lead time, lowers cost by 3.5% pooled
+and 5.6% in the nominal scenario, on fresh seeds. The executed anchor is
+under-covering by one lead time on a lever the formal learned policy could not
+act on. **This plan's anchor must therefore be a coverage-correct MDL variant
+(MDL-3 or order-up-to ×1.4), frozen on a development stream before Stage 0,**
+or any treatment effect will be confounded with anchor under-coverage. The
+anticipation-oracle arm is no longer needed.
 
 ## Implementation prerequisites: new code, not configuration-only changes
 

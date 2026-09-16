@@ -99,12 +99,23 @@ class RateSourceMDL2(MeanDemandLookahead2Policy):
 
     algorithm = "mdl2_variant"
 
-    def __init__(self, *, rate_source: str, history_weight: float | None = None):
-        config: dict[str, Any] = {}
+    def __init__(
+        self,
+        *,
+        rate_source: str,
+        history_weight: float | None = None,
+        order_up_to_multiplier: float = 1.0,
+        anticipation_horizon: int = 0,
+        lookahead_periods: int | None = None,
+    ):
+        config: dict[str, Any] = {"local_order_up_to_multiplier": float(order_up_to_multiplier)}
+        if lookahead_periods is not None:
+            config["lookahead_periods"] = int(lookahead_periods)
         if history_weight is not None:
-            config = {"use_demand_history": True, "demand_history_weight": float(history_weight)}
+            config.update({"use_demand_history": True, "demand_history_weight": float(history_weight)})
         super().__init__(config=config)
         self.rate_source = rate_source
+        self.anticipation_horizon = int(anticipation_horizon)
         self._fingerprint: list[float] = []
 
     def reset(self) -> None:
@@ -117,6 +128,17 @@ class RateSourceMDL2(MeanDemandLookahead2Policy):
             return np.asarray(env._effective_demand_rates(), dtype=float)
         if self.rate_source == "oracle_regime":
             return np.asarray(env.demand_rates * env.demand_regime_multiplier, dtype=float)
+        if self.rate_source == "anticipate":
+            # Regime rate H epochs ahead; transient shocks are unpredictable and excluded.
+            return np.asarray(
+                env.demand_rates * regime_multiplier_at(env, int(env.t) + self.anticipation_horizon),
+                dtype=float,
+            )
+        if self.rate_source == "regime_max":
+            # Robust hedge: knows the set of regimes, not their timing.
+            init = np.asarray(env.demand_regime_initial_multipliers, dtype=float)
+            fin = np.asarray(env.demand_regime_final_multipliers, dtype=float)
+            return np.asarray(env.demand_rates * np.maximum(init, fin), dtype=float)
         raise ValueError(self.rate_source)
 
     def _facility_net_action(self, env) -> np.ndarray:
@@ -150,6 +172,22 @@ class RateSourceMDL2(MeanDemandLookahead2Policy):
         return hashlib.sha1(np.asarray(self._fingerprint, dtype=np.float64).tobytes()).hexdigest()[:12]
 
 
+def regime_multiplier_at(env, t: int) -> np.ndarray:
+    """Replicates the environment's persistent-regime schedule at epoch ``t``."""
+
+    cfg = env.config
+    change = int(getattr(cfg, "demand_regime_change_step", 0))
+    duration = int(getattr(cfg, "demand_regime_transition_duration", 0))
+    init = np.asarray(env.demand_regime_initial_multipliers, dtype=float)
+    fin = np.asarray(env.demand_regime_final_multipliers, dtype=float)
+    if t < change:
+        return init
+    if duration == 0:
+        return fin
+    progress = float(np.clip((t - change) / duration, 0.0, 1.0))
+    return (1.0 - progress) * init + progress * fin
+
+
 def make_policy(arm: str) -> RateSourceMDL2:
     if arm == "mdl2_prior":
         return RateSourceMDL2(rate_source="prior")
@@ -157,6 +195,19 @@ def make_policy(arm: str) -> RateSourceMDL2:
         return RateSourceMDL2(rate_source="oracle_rate")
     if arm == "mdl2_oracle_regime":
         return RateSourceMDL2(rate_source="oracle_regime")
+    match = re.fullmatch(r"mdl2_anticipate(\d{3})", arm)
+    if match:
+        return RateSourceMDL2(rate_source="anticipate", anticipation_horizon=int(match.group(1)))
+    if arm == "mdl2_hedge_regime_max":
+        return RateSourceMDL2(rate_source="regime_max")
+    match = re.fullmatch(r"mdl2_hedge_out(\d{3})", arm)
+    if match:
+        # mdl2_hedge_outNNN: executed prior with order-up-to multiplier NNN/100.
+        return RateSourceMDL2(rate_source="prior", order_up_to_multiplier=int(match.group(1)) / 100.0)
+    match = re.fullmatch(r"mdl_look(\d{3})", arm)
+    if match:
+        # mdl_lookNNN: MDL family with NNN lookahead periods (MDL-2 is 002).
+        return RateSourceMDL2(rate_source="prior", lookahead_periods=int(match.group(1)))
     match = re.fullmatch(r"mdl2_rolling(\d{3})", arm)
     if match:
         # mdl2_rollingNNN: NNN/100 weight on the 12-epoch rolling arrival mean.

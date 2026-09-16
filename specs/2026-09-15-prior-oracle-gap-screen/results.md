@@ -157,3 +157,122 @@ the *future* rate at horizon equal to transfer plus production lead time
 measures the value of anticipation separately from the value of the current
 mean. If it is large and a regularized adaptive heuristic cannot capture it,
 that is the environment signature the follow-up study should build on.
+
+---
+
+# Part 2: anticipation versus hedging versus anchor calibration
+
+Same worlds (seed base 99,100,000, 100 per scenario) unless marked *fresh*
+(seed base 99,700,000, disjoint). Same MDL-2 rule throughout; only its inputs
+or its two scalar settings change. Arrival fingerprints matched across arms in
+every run.
+
+## Result 5: anticipation is worth nothing; the executed anchor is under-covering by roughly one lead time
+
+Total cost, arm minus executed MDL-2, percent of prior:
+
+| Scenario | anticipate 4 ep | anticipate 8 ep | regime-max hedge | order-up-to ×1.3 | order-up-to ×1.5 | MDL-3 | MDL-4 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| nominal history | 0.000 | 0.000 | 0.000 | −4.80 | −5.11 | **−5.52** | −4.75 |
+| regional drift | −0.07 | −0.32 | −0.44 | −2.35 | −2.00 | −2.77 | −0.18 |
+| compound stress | −0.09 | −0.14 | −0.63 | −2.19 | −1.87 | −2.87 | −2.16 |
+| abrupt shift | +2.47 | +2.47 | −4.11 | −3.98 | −5.17 | −4.93 | −4.64 |
+| demand drift (40%) | −0.88 | −0.88 | −0.88 | −2.61 | −2.58 | −3.51 | −3.26 |
+| demand drift severe (80%) | −2.92 | −2.92 | −2.92 | −2.55 | −3.49 | −2.91 | −4.51 |
+| **pooled** | −0.83 | −0.87 | −1.64 | −2.90 | −3.26 | **−3.53** | −3.44 |
+
+- **Anticipation** (knowing the regime rate four or eight epochs ahead,
+  shocks excluded) equals the current-rate oracle in every scenario. Under
+  the abrupt shift it is still +2.47% worse than the stale prior. Timing
+  knowledge does not help MDL-2 because its rule reacts to the level it is
+  given; a higher future rate simply moves the same mistake earlier.
+- **Hedging without any future knowledge** captures the whole abrupt-shift
+  penalty and more: the regime-max hedge (knows the set of regimes, not the
+  timing) is −4.11%; a uniform ×1.3 order-up-to multiplier, which knows
+  nothing about regimes at all, is −3.98%.
+- **The same multiplier improves the nominal scenario by 4.8 to 5.1%**, where
+  the prior is exactly right and no regime exists. The effect is therefore
+  not about uncertainty. The executed anchor is under-covering: MDL-2 targets
+  two epochs of demand while production takes three and capacity transfers
+  take up to three. Extending the lookahead to three epochs (MDL-3) is the
+  most natural repair and is the best single arm pooled (−3.53%). MDL-4 is
+  already too long; regional drift collapses to −0.18%.
+- The order-up-to sweep (1.05 → 3.0) has an interior optimum between 1.3 and
+  1.5 in every scenario, then degrades to +5 to +13% at 3.0. This is a
+  standard newsvendor-shaped response, not a monotone "more is better".
+
+*Fresh-seed confirmation* (99.7M, disjoint from selection): ×1.3 −3.00%,
+×1.4 −3.28%, ×1.5 −3.38%, MDL-3 −3.65%, MDL-4 −3.62%, all with 95% CIs
+excluding zero. Selection on the development stream did not inflate the
+effect.
+
+## Result 6: the mechanism is capacity pooling, and it trips the manufacturing-ineligibility guardrail
+
+Components, nominal scenario, ×1.2 versus prior: bioreactor-shortage penalty
+−87.9M, patient-loss cost −19.8M, reagent purchase +11.1M, transshipments
++164 per episode. A higher target workload raises the shortage signal that
+drives MDL-2's sharing rules, so more idle capacity is moved toward clinics
+under pressure. Reagent spend rises modestly; the saving is almost entirely
+the bioreactor-shortage term, which is the largest single component of the
+objective (0.96–1.11 billion of 2.2–2.6 billion).
+
+Applying the formal study's own scenario-level clinical guardrails
+(completion may not fall by more than 0.1 pp, manufacturing ineligibility may
+not rise by more than 0.1 pp, patients lost may not rise), point differences
+on the fresh stream:
+
+| Scenario | MDL-3 Δcost | Δcompletion (pp) | Δmfg-inelig (pp) | Δlost | passes |
+| --- | ---: | ---: | ---: | ---: | :--: |
+| nominal history | −5.60% | +1.58 | +0.21 | −39.2 | no (ineligibility) |
+| abrupt shift | −5.38% | +1.36 | +0.30 | −24.8 | no (ineligibility) |
+| regional drift | −3.05% | +0.27 | +0.48 | +11.9 | no |
+| compound stress | −3.09% | +0.90 | −0.18 | −36.6 | yes |
+| demand drift | −3.67% | +1.35 | −0.35 | −46.5 | yes |
+| demand drift severe | −2.82% | +1.85 | −3.76 | −169.1 | yes |
+
+Every retuned arm raises completion service by 1 to 2 percentage points and,
+in five of six scenarios, lowers patient loss by 25 to 170 per episode. But
+more patients started means more patients become ineligible *during*
+manufacturing, and that rate rises by 0.2 to 0.5 pp in the nominal, abrupt,
+and regional-drift scenarios, breaching the 0.1 pp margin. Regional drift
+also loses 12 more patients. Under the strict per-scenario gate the retuned
+heuristics would fail exactly where the formal learned policy's seeds 10 and
+14 also failed (abrupt shift). Whether a 0.1 pp rise in manufacturing
+ineligibility should veto a 1.5 pp rise in completion and 40 fewer lost
+patients is a clinical weighting question the guardrail design has not
+answered; the cost objective already says yes.
+
+## What this means for the existing evidence
+
+1. **The formal anchor is miscalibrated on a lever the learned policy could
+   not touch.** The formal residual has group scales
+   `specimen_transfer 0.1, reagent 0.0, capacity 0.0, replenishment 0.0`.
+   The −0.66% learned gain is specimen routing only. The −3.5% here is
+   reagent and capacity coverage, outside the learned action authority. The
+   two numbers are not competing for the same headroom, but a reviewer will
+   ask why the anchor was not tuned before a learned correction was layered
+   on it, and whether the routing gain survives on top of a tuned anchor.
+   That last question needs retraining and is not answered here.
+2. **"Tuned heuristics" in the historical notes were not tuned on this
+   setting.** No configuration in the repository sets
+   `local_order_up_to_multiplier` or a lookahead other than 2 for the
+   routing-primary anchor. The 2026-07 robustness conclusions that "tuned
+   heuristics beat learned control" were correct in direction and understated
+   in magnitude.
+3. **The RL-beats-heuristic framing loses another 3.5 points of ground; the
+   graph-versus-flat and structural findings do not.** Graph-minus-flat is a
+   matched comparison on the same anchor and is unaffected. The reporting
+   audit, the crossed-bootstrap result, and the online-RL null stand.
+4. **For the follow-up environment study**, the treatment must be defined
+   relative to a coverage-correct anchor (MDL-3 or ×1.4, chosen on a
+   development stream and frozen), or any learned gain will be confounded
+   with the anchor's under-coverage. The plan's comparator list should name
+   this explicitly.
+
+## Not done here
+
+No learned policy was retrained on a retuned anchor. No guardrail margins
+were changed. No formal artifacts were touched. Choosing MDL-3 versus ×1.4 as
+the new anchor, and whether the clinical gate should be re-weighted, are
+protocol decisions for the change-control process, not results of this
+screen.

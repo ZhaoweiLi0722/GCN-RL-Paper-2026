@@ -81,9 +81,11 @@ anticipation is worth nothing to MDL-2 while extending its lookahead from two
 to three epochs, matching the production lead time, lowers cost by 3.5% pooled
 and 5.6% in the nominal scenario, on fresh seeds. The executed anchor is
 under-covering by one lead time on a lever the formal learned policy could not
-act on. **This plan's anchor must therefore be a coverage-correct MDL variant
-(MDL-3 or order-up-to ×1.4), frozen on a development stream before Stage 0,**
-or any treatment effect will be confounded with anchor under-coverage. The
+act on. **Decision B (2026-09-16): the anchor stays MDL-2 and the formal
+clinical gate stays as written** (`docs/anchor_amendment_proposal_2026-09-15.md`,
+decision record). MDL-3 is therefore a mandatory reported comparator in every
+cell of this plan, not the anchor, and every treatment effect must be shown
+against both so it is not confounded with anchor under-coverage. The
 anticipation-oracle arm is no longer needed.
 
 ## Stage 1 executed on the existing scenarios (2026-09-16): gates fail on both anchors

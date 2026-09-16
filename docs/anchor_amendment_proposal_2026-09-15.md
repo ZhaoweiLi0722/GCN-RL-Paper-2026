@@ -112,3 +112,56 @@ only retraining could show a multi-step policy captures more than the probe.
 
 Evidence files: `reports/anchor_decision_2026-09-15/anchor_decision_packet.{md,json}`;
 row-level outputs under gitignored `results/prior_oracle_gap_screen_*`.
+
+---
+
+## Decision record (2026-09-16): option B adopted
+
+The user chose **B: keep the formal clinical gate as written and keep MDL-2
+as the anchor.** No amendment to the locked plan is made. MDL-3 is not adopted
+as an anchor for any study.
+
+### What B commits the manuscript to
+
+1. State that MDL-2 covers two epochs of demand while production takes three,
+   and that extending the lookahead to three epochs lowers the modeled
+   objective by 3.65% pooled (4.14% on the four routing scenarios), raises
+   completion service by 1.0 percentage point, and reduces patient loss by 22
+   per episode, on fresh seeds, with no learning.
+2. State that this variant was excluded by the prespecified clinical gate
+   because its manufacturing-ineligibility rate rises by 0.20 percentage
+   points, 95% CI [0.13, 0.27], against a 0.10-point margin.
+3. State the clinical reason that margin exists and why a 0.20-point rise in
+   manufacturing ineligibility outweighs a 1.0-point rise in completion and 22
+   fewer lost patients. **No such reason is written anywhere in the
+   repository.** The margins (0.001 for completion, 0.001 for manufacturing
+   ineligibility, 1.0 patient for patients lost) appear only as numbers in
+   the formal configuration; the locked plan, the stage reviews, and the
+   manuscript do not state them numerically or justify them. The manuscript
+   currently says only "passes all pre-specified clinical noninferiority
+   checks". This gap must be filled by the authors or a clinical co-author
+   before submission; it cannot be derived from the code.
+4. Report the learned policy's −0.66% next to the excluded heuristic's −3.65%
+   in the same table, with the gate outcome for each, so the reader sees the
+   trade the gate is making. Presenting only the learned gain would be
+   selective.
+5. Keep the graph-versus-flat comparison as the primary structural result. It
+   is a matched comparison on the same anchor and is unaffected by B.
+
+### What B commits the follow-up work to
+
+- Any new study keeps MDL-2 as the anchor, and must report MDL-3 (or the
+  best guardrail-passing coverage variant, if one is ever specified through
+  change control) as a mandatory comparator, so that treatment effects are
+  never confounded with anchor under-coverage.
+- The prior-oracle, anticipation, hedging, and headroom screens of
+  2026-09-15/16 remain valid as recorded; none used MDL-3 as an anchor of
+  record.
+
+### Risk accepted
+
+A reviewer who reads the cost coefficients (patient loss 500,000 per patient,
+ineligibility carrying no separate weight) may observe that the objective the
+paper optimizes already prefers MDL-3 by a wide margin, and that the gate
+overrides the objective without a stated rationale. Option B is defensible
+only if item 3 is answered.

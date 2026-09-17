@@ -16,7 +16,14 @@ information and start-selection authority that the environment's forced-start
 rule denies every implementable policy. Per this plan's own reading table the
 gap question is **unresolved**. The pilot did certify a floor on patient
 loss: at least 28% of arrivals are lost under any policy, against 40% for
-MDL-2. Measurement A remains the only route to an informative headroom number.
+MDL-2. Measurement A was then run for the restricted class
+([results](../2026-09-16-measurement-a-rollout-planner/results.md), 36 of 40
+worlds): an information-matched rollout planner using the learned residual's
+own five options beats MDL-2 by 1.81% [−2.21, −1.44] and the learned residual
+by 1.15% [−1.50, −0.81], passing all pooled guardrails. The first row of the
+reading table applies: **the current learning procedure leaves usable
+improvement uncaptured inside its own action class.** The full-class and
+privileged runs are pending on machine memory.
 
 ## Question and estimand
 

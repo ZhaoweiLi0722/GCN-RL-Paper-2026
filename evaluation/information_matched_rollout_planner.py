@@ -47,6 +47,8 @@ from typing import Any
 
 import numpy as np
 
+csv.field_size_limit(sys.maxsize)
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -211,6 +213,7 @@ def parse_args(argv=None):
     p.add_argument("--max-steps", type=int, default=None, help="smoke only")
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--output-root", required=True)
+    p.add_argument("--resume", action="store_true", help="skip (scenario, replication) pairs already in <output-root>/rows.csv")
     return p.parse_args(argv)
 
 
@@ -223,6 +226,17 @@ def main(argv=None) -> int:
     out = Path(args.output_root); out.mkdir(parents=True, exist_ok=True)
     (out / "settings.json").write_text(json.dumps({k: v for k, v in vars(args).items()}, indent=2))
     results = []; started = time.perf_counter()
+    prior_rows = []; prior_logs = []
+    if args.resume and (out / "rows.csv").exists():
+        with open(out / "rows.csv") as h:
+            prior_rows = list(csv.DictReader(h))
+        if (out / "decision_logs.json").exists():
+            prior_logs = json.loads((out / "decision_logs.json").read_text())
+        done = {(r["scenario"], int(float(r["replication"]))) for r in prior_rows}
+        jobs = [j for j in jobs if (j["scenario"], j["rep"]) not in done]
+        print(f"resuming: {len(prior_rows)} episodes done, {len(jobs)} remaining", flush=True)
+    def all_rows():
+        return prior_rows + [x["row"] for x in results]
     if args.workers <= 1:
         for j in jobs:
             r = run_job(j); results.append(r); print(f"{r['scenario']} rep{r['rep']} cost {float(r['row']['total_cost'])/1e6:.1f}M non-anchor {r['non_anchor_fraction']:.2f} {r['seconds']:.0f}s", flush=True)
@@ -231,13 +245,16 @@ def main(argv=None) -> int:
         with ProcessPoolExecutor(max_workers=args.workers, mp_context=mp.get_context("spawn")) as ex:
             for r in ex.map(run_job, jobs):
                 results.append(r); print(f"{r['scenario']} rep{r['rep']} cost {float(r['row']['total_cost'])/1e6:.1f}M non-anchor {r['non_anchor_fraction']:.2f} {r['seconds']:.0f}s ({time.perf_counter()-started:.0f}s)", flush=True)
-                write_rows([x["row"] for x in results], out / "rows.csv")
-    write_rows([x["row"] for x in results], out / "rows.csv")
+                write_rows(all_rows(), out / "rows.csv")
+    write_rows(all_rows(), out / "rows.csv")
     audit = {"patients_resampled": sum(x["audit"]["patients"] for x in results), "identical_health_index": sum(x["audit"]["identical_health_index"] for x in results),
              "mean_abs_survival_mismatch": (sum(x["audit"]["abs_survival_mismatch"] for x in results) / max(1, sum(x["audit"]["patients"] for x in results))),
              "clones": sum(x["audit"]["clones"] for x in results), "privileged": args.privileged}
     (out / "audit.json").write_text(json.dumps(audit, indent=2))
-    (out / "decision_logs.json").write_text(json.dumps([{"scenario": x["scenario"], "rep": x["rep"], "log": x["log"]} for x in results]))
+    (out / "decision_logs.json").write_text(json.dumps(prior_logs + [{"scenario": x["scenario"], "rep": x["rep"], "log": x["log"]} for x in results]))
+    if prior_rows and (out / "audit.json").exists():
+        old = json.loads((out / "audit.json").read_text())
+        for k in ("patients_resampled", "identical_health_index", "clones"): audit[k] += int(old.get(k, 0))
     print(json.dumps(audit, indent=1)); print(f"wall {time.perf_counter()-started:.0f}s")
     return 0
 

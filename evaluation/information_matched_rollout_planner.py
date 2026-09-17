@@ -201,6 +201,20 @@ def run_job(job: dict[str, Any]) -> dict[str, Any]:
             "non_anchor_fraction": float(np.mean([c != "mdl2" for c in chosen])) if chosen else 0.0, "seconds": time.perf_counter() - started}
 
 
+def persist_partial(out: Path, prior_logs: list, results: list, privileged: bool) -> None:
+    """Write audit counters and decision logs after every episode so a killed batch loses nothing."""
+
+    audit = {"patients_resampled": sum(x["audit"]["patients"] for x in results), "identical_health_index": sum(x["audit"]["identical_health_index"] for x in results),
+             "mean_abs_survival_mismatch": (sum(x["audit"]["abs_survival_mismatch"] for x in results) / max(1, sum(x["audit"]["patients"] for x in results))),
+             "clones": sum(x["audit"]["clones"] for x in results), "episodes": len(results), "privileged": privileged}
+    if (out / "audit_partial.json").exists():
+        old = json.loads((out / "audit_partial.json").read_text())
+        if old.get("episodes", 0) > 0 and not results:
+            return
+    (out / "audit_partial.json").write_text(json.dumps(audit, indent=2))
+    (out / "decision_logs.json").write_text(json.dumps(prior_logs + [{"scenario": x["scenario"], "rep": x["rep"], "log": x["log"]} for x in results]))
+
+
 def parse_args(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--plan", default="experiments/configs/patient_indexed_specimen_routing_benchmark.json")
@@ -240,12 +254,13 @@ def main(argv=None) -> int:
     if args.workers <= 1:
         for j in jobs:
             r = run_job(j); results.append(r); print(f"{r['scenario']} rep{r['rep']} cost {float(r['row']['total_cost'])/1e6:.1f}M non-anchor {r['non_anchor_fraction']:.2f} {r['seconds']:.0f}s", flush=True)
+            write_rows(all_rows(), out / "rows.csv"); persist_partial(out, prior_logs, results, args.privileged)
     else:
         import multiprocessing as mp
         with ProcessPoolExecutor(max_workers=args.workers, mp_context=mp.get_context("spawn")) as ex:
             for r in ex.map(run_job, jobs):
                 results.append(r); print(f"{r['scenario']} rep{r['rep']} cost {float(r['row']['total_cost'])/1e6:.1f}M non-anchor {r['non_anchor_fraction']:.2f} {r['seconds']:.0f}s ({time.perf_counter()-started:.0f}s)", flush=True)
-                write_rows(all_rows(), out / "rows.csv")
+                write_rows(all_rows(), out / "rows.csv"); persist_partial(out, prior_logs, results, args.privileged)
     write_rows(all_rows(), out / "rows.csv")
     audit = {"patients_resampled": sum(x["audit"]["patients"] for x in results), "identical_health_index": sum(x["audit"]["identical_health_index"] for x in results),
              "mean_abs_survival_mismatch": (sum(x["audit"]["abs_survival_mismatch"] for x in results) / max(1, sum(x["audit"]["patients"] for x in results))),

@@ -36,11 +36,15 @@ policy cannot observe is replaced:
 - remaining durations of regional supplier disruptions are cleared;
 - future draws use a fresh generator per rollout world.
 
-Across the 36 episodes the planner built about 61,000 rollout worlds and
-resampled roughly 15 million patient-world pairs. **Zero** kept their true
-health index. Mean absolute mismatch between recomputed and observed survival
-was 0.0003. Nothing in the planner reads a quantity the learned policy could
-not read.
+Verified audit figures come from the smoke run (3 decisions, 2 worlds): 580
+patient resamples, **zero** kept their true health index, mean absolute
+mismatch between recomputed and observed survival 0.0003. The 36 evaluation
+episodes ran the identical code path, but their aggregate audit counters and
+per-decision logs were not persisted: the runner wrote them only at the end
+of a batch and every batch was killed by the operating system for memory
+before reaching that point. The runner now writes both files after every
+episode; the pending runs will carry the full audit. Nothing in the planner
+reads a quantity the learned policy could not read.
 
 ## Result: within the learned policy's own action class, the achievable improvement is about three times what the learned policy captures
 
@@ -88,8 +92,9 @@ What it does not say: that a learned policy can reach 1.8%. The planner is not
 deployable at 10 minutes per episode. The right use of the number is as the
 target and as the teacher: a residual distilled from *this* planner's
 decisions, rather than from single-rollout advantage labels, is the obvious
-next candidate, and the planner's decision logs (`artifacts/`, one entry per
-decision with all candidate means) are the training data.
+next candidate. The planner logs every decision with all candidate means;
+those logs will be available from the pending runs onward (see the note
+above on why the completed 36 episodes did not persist them).
 
 ## Pending
 

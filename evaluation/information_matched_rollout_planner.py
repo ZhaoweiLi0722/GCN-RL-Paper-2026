@@ -38,6 +38,7 @@ from __future__ import annotations
 import argparse
 import copy
 import csv
+import gc
 import json
 import sys
 import time
@@ -172,12 +173,18 @@ class RolloutPlanner:
         acts, names = self.candidates(state, env)
         costs = np.zeros((len(acts), self.K))
         for k in range(self.K):
-            base, audit = make_matched_clone(env, self.seed_base + 1000 * self.decision_index + k, self.sampler, privileged=self.privileged)
+            world_seed = self.seed_base + 1000 * self.decision_index + k
+            base, audit = make_matched_clone(env, world_seed, self.sampler, privileged=self.privileged)
             for key in ("patients", "identical_health_index", "abs_survival_mismatch"): self.audit[key] += audit[key]
             self.audit["clones"] += 1
+            # One environment object per world: snapshot once, restore per candidate. Same CRN world for every
+            # candidate, no per-candidate deep copy (memory), identical results to the deepcopy formulation.
+            snapshot = base.state_dict()
             for c, act in enumerate(acts):
-                clone = copy.deepcopy(base); clone.rng = np.random.default_rng(self.seed_base + 1000 * self.decision_index + k)
-                costs[c, k] = rollout_cost(clone, act, self.continuation)
+                base.load_state_dict(snapshot); base.rng = np.random.default_rng(world_seed)
+                costs[c, k] = rollout_cost(base, act, self.continuation)
+            del base, snapshot
+        gc.collect()
         means = costs.mean(axis=1); best = int(np.argmin(means))
         if means[best] >= means[0] - 1e-6: best = 0
         self.log.append({"decision": self.decision_index, "chosen": names[best], "anchor_minus_chosen": float(means[0] - means[best]),

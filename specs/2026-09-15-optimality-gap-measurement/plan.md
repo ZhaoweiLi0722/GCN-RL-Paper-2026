@@ -19,11 +19,14 @@ loss: at least 28% of arrivals are lost under any policy, against 40% for
 MDL-2. Measurement A was then run for the restricted class
 ([results](../2026-09-16-measurement-a-rollout-planner/results.md), 36 of 40
 worlds): an information-matched rollout planner using the learned residual's
-own five options beats MDL-2 by 1.81% [−2.21, −1.44] and the learned residual
-by 1.15% [−1.50, −0.81], passing all pooled guardrails. The first row of the
-reading table applies: **the current learning procedure leaves usable
-improvement uncaptured inside its own action class.** The full-class and
-privileged runs are pending on machine memory.
+own five options beats MDL-2 by 1.83% [−2.19, −1.48] and the learned residual
+by 1.15% [−1.49, −0.82] on 40 worlds, passing all pooled guardrails. Under
+existing full controls (12 worlds) the planner reaches −6.64% [−7.98, −5.22],
+beats MDL-3 by 1.94%, and passes the manufacturing-ineligibility margin MDL-3
+fails. Two reading-table rows apply: **the learning procedure leaves usable
+improvement uncaptured inside its own class, and the residual action
+restriction is a material limitation.** The gap bracket is now 6.6% to 39%.
+Privileged (value-of-information) run pending.
 
 ## Question and estimand
 

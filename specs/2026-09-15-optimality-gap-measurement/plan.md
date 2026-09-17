@@ -26,7 +26,10 @@ beats MDL-3 by 1.94%, and passes the manufacturing-ineligibility margin MDL-3
 fails. Two reading-table rows apply: **the learning procedure leaves usable
 improvement uncaptured inside its own class, and the residual action
 restriction is a material limitation.** The gap bracket is now 6.6% to 39%.
-Privileged (value-of-information) run pending.
+The privileged variant shows the value of information on this channel is
+0.37% [0.14, 0.59], so the certified bound's slack is control authority and
+relaxation, not information; Measurement B's certificate cannot be tightened
+meaningfully by information-relaxation penalties.
 
 ## Question and estimand
 

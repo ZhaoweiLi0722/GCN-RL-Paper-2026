@@ -8,9 +8,9 @@ Tool: `evaluation/information_matched_rollout_planner.py`. Artifacts: per-
 episode rows for both classes, full-class decision logs (every decision with
 all candidate means), audit counters, and the joined comparison.
 
-**Status.** Restricted class complete (40 worlds, 10 per scenario). Full class
-complete at its reduced budget (12 worlds, 3 per scenario). The privileged-
-information diagnostic is running; it will be appended when it finishes.
+**Status.** Complete. Restricted class 40 worlds (10 per scenario); full class
+12 worlds (3 per scenario); privileged-information diagnostic 12 worlds
+(3 per scenario).
 Runs were interrupted repeatedly by the operating system reclaiming memory
 held by other applications; the runner persists every episode, so nothing
 was lost, but the full class was cut from 10 to 3 worlds per scenario.
@@ -126,9 +126,24 @@ of the room a six-rollout planner recovers at decision time.
   same information beats every learned configuration by a factor of three to
   ten on the paper's own metric.
 
-## Pending
+## Result 3, value of information: knowing the future is worth 0.4%
 
-The privileged variant of the restricted planner (true latents, true rates)
-is running. Its gap over the matched restricted planner is the value of
-information on this channel and separates how much of the certified bound's
-slack is information rather than control authority.
+The privileged variant of the restricted planner keeps every patient's true
+latent health parameters and the true demand process in its rollouts (its
+audit confirms zero resamples). On the same 12 worlds as the full class:
+
+| restricted-class planner | Δcost vs MDL-2 |
+| --- | ---: |
+| privileged (true latents, true rates) | −1.96% |
+| information-matched | −1.59% |
+| **value of information** | **−0.37% [−0.59, −0.14]**, privileged wins 10 of 12 |
+
+Per scenario the value of information is 0.27 to 0.50 percent; the privileged
+planner loses 12 fewer patients per episode than the matched one. This closes
+the loop on the certified lower bound: of its 39 points of slack, well under
+one point is attributable to information on this channel. The rest is the
+control authority the relaxation grants and the simulator denies every policy
+(choosing which waiting patients to start, holding slots), plus the linear
+relaxations themselves. It also means the matched planner's numbers are not
+an artifact of information leakage: with the leak deliberately reinstated,
+the result moves by a third of a point.

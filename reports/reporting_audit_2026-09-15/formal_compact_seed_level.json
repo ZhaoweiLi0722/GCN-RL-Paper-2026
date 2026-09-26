@@ -1,0 +1,192 @@
+{
+  "alpha": 0.05,
+  "contrasts": {
+    "flat_residual_mdl2_network_ddpg_afd_final_vs_frozen": {
+      "intervals": {
+        "seed_cluster": {
+          "ci_high": 172318.38644628524,
+          "ci_low": -451074.8770714283,
+          "excludes_zero": false,
+          "width": 623393.2635177135
+        },
+        "seed_t_interval": {
+          "ci_high": 420728.02949911915,
+          "ci_low": -699484.5201242622,
+          "df": 4,
+          "excludes_zero": false,
+          "width": 1120212.5496233813
+        }
+      },
+      "mean_difference": -139378.24531257153,
+      "mean_gap_pct": -0.0052055419073577585,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -167759.18258924485,
+        "routing_compound_regional_stress": -68438.16421794891,
+        "routing_nominal_history": 43296.95459070206,
+        "routing_regional_drift": -364612.5890337944
+      },
+      "per_seed_mean_difference": [
+        262634.3750773668,
+        -599978.5488747358,
+        -161925.84543657303,
+        -446745.7210855484,
+        249124.5137566328
+      ]
+    },
+    "flat_residual_mdl2_network_ddpg_afd_vs_anchor": {
+      "intervals": {
+        "nested_seed_then_row_published": {
+          "ci_high": -7509749.293102153,
+          "ci_low": -10587379.477904543,
+          "excludes_zero": true,
+          "width": 3077630.1848023906
+        },
+        "seed_cluster": {
+          "ci_high": -7553062.598703504,
+          "ci_low": -10436712.483064413,
+          "excludes_zero": true,
+          "width": 2883649.8843609095
+        },
+        "seed_t_interval": {
+          "ci_high": -6556154.144001825,
+          "ci_low": -11615196.233488837,
+          "df": 4,
+          "excludes_zero": true,
+          "width": 5059042.0894870125
+        }
+      },
+      "mean_difference": -9085675.188745331,
+      "mean_gap_pct": -0.33820457332869364,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -1179758.1176442145,
+        "routing_compound_regional_stress": -15224647.67921648,
+        "routing_nominal_history": -12050366.74115343,
+        "routing_regional_drift": -7887928.216967201
+      },
+      "per_seed_mean_difference": [
+        -6440093.26973784,
+        -9578770.649446726,
+        -11387025.195389986,
+        -9222516.592152,
+        -8799970.237000108
+      ]
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_final_vs_frozen": {
+      "intervals": {
+        "seed_cluster": {
+          "ci_high": 140992.22604062557,
+          "ci_low": -14960.341510868073,
+          "excludes_zero": false,
+          "width": 155952.56755149364
+        },
+        "seed_t_interval": {
+          "ci_high": 213730.0605570941,
+          "ci_low": -67924.84151383926,
+          "df": 4,
+          "excludes_zero": false,
+          "width": 281654.90207093337
+        }
+      },
+      "mean_difference": 72902.60952162743,
+      "mean_gap_pct": 0.002731784152284323,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -125034.4112897873,
+        "routing_compound_regional_stress": 285283.97464399337,
+        "routing_nominal_history": 42824.144789409635,
+        "routing_regional_drift": 88536.72994289399
+      },
+      "per_seed_mean_difference": [
+        87361.78007614613,
+        121656.5907202959,
+        66352.37932944298,
+        176745.85668361187,
+        -87603.55920135975
+      ]
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_vs_anchor": {
+      "intervals": {
+        "nested_seed_then_row_published": {
+          "ci_high": -15725338.49798524,
+          "ci_low": -19361227.288247786,
+          "excludes_zero": true,
+          "width": 3635888.7902625464
+        },
+        "seed_cluster": {
+          "ci_high": -15851987.854022956,
+          "ci_low": -19171696.792432286,
+          "excludes_zero": true,
+          "width": 3319708.9384093303
+        },
+        "seed_t_interval": {
+          "ci_high": -14680268.920736482,
+          "ci_low": -20698811.507716153,
+          "df": 4,
+          "excludes_zero": true,
+          "width": 6018542.58697967
+        }
+      },
+      "mean_difference": -17689540.214226317,
+      "mean_gap_pct": -0.658474276952371,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -9465213.12920313,
+        "routing_compound_regional_stress": -26864724.573425673,
+        "routing_nominal_history": -18260615.47743082,
+        "routing_regional_drift": -16167607.676845646
+      },
+      "per_seed_mean_difference": [
+        -19307775.702086568,
+        -19321569.586738706,
+        -18599793.384510875,
+        -16858658.75500512,
+        -14359903.642790318
+      ]
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_vs_flat_residual_mdl2_network_ddpg_afd": {
+      "intervals": {
+        "nested_seed_then_row_published": {
+          "ci_high": -6427714.469363891,
+          "ci_low": -11064605.447635679,
+          "excludes_zero": true,
+          "width": 4636890.978271788
+        },
+        "seed_cluster": {
+          "ci_high": -6636309.070535064,
+          "ci_low": -10992752.33531468,
+          "excludes_zero": true,
+          "width": 4356443.264779616
+        },
+        "seed_t_interval": {
+          "ci_high": -4603237.584463414,
+          "ci_low": -12604492.466498557,
+          "df": 4,
+          "excludes_zero": true,
+          "width": 8001254.882035144
+        }
+      },
+      "mean_difference": -8603865.025480986,
+      "mean_gap_pct": -0.32135654615947984,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -8285455.011558915,
+        "routing_compound_regional_stress": -11640076.894209195,
+        "routing_nominal_history": -6210248.736277389,
+        "routing_regional_drift": -8279679.459878445
+      },
+      "per_seed_mean_difference": [
+        -12867682.432348728,
+        -9742798.93729198,
+        -7212768.189120889,
+        -7636142.162853122,
+        -5559933.40579021
+      ]
+    }
+  },
+  "crn_checks": {
+    "flat_residual_mdl2_network_ddpg_afd: anchor cell-mean max spread across seeds": 0.0,
+    "gcn_residual_mdl2_network_ddpg_afd: anchor cell-mean max spread across seeds": 0.0
+  },
+  "final_summary": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/final_summary.json",
+  "mode": "compact_seed_level_only",
+  "note": "Seed-cluster bootstrap on per-seed, per-scenario holdout cell means from the compact publication summary. World-level and two-way intervals require the row-level formal root and are not computed here.",
+  "pretrain_summary": "experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/formal/pretrain_summary.json",
+  "resamples": 20000
+}

@@ -1174,3 +1174,207 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `experiments/evidence/continuous_overtime_headroom_e2/`
   (summary carries config/plan/rows SHA256; `state_dependence.json` carries
   the report and gate decision).
+
+### 2026-08-29: Stage E2b re-calibration PASSED; Stage E3 authorized
+
+- Executed under the approved amendment with a new config name
+  (`experiments/configs/continuous_overtime_headroom_e2b.json`) and output
+  root. The Stage E2 result stands as recorded and was not revised.
+- Calibration: `max_overtime_fraction` 0.3 -> 0.6 and
+  `weight_overtime_quadratic` 5,000 -> 20,000, moving the marginal-cost /
+  averted-shortage crossing from outside the admissible range (s*=1.76) to
+  inside it (s*=0.88, 29% of full surge). All other settings unchanged.
+- Headroom precondition passed in both non-nominal scenarios (1.00, 1.00).
+- Primary criterion passed: prospective value of state-dependence
+  **+0.6446%** of anchor cost against a 0.5% gate, with interior best-arm
+  fraction 0.926 against a 0.30 gate. Classification
+  `state_dependent_headroom_established`.
+- The result carries four independent indications of signal rather than
+  selection noise: in-sample (+0.6677%) and prospective (+0.6446%) values
+  nearly coincide where E2's sign flipped; discovery/validation best-arm
+  agreement is 96.3% (the failed routing G1 gate required 70% and achieved
+  54.5%); 8 distinct rungs are optimal somewhere; and the closed-form MDL-2-OT
+  anchor is beaten by a constant, which is in turn beaten by state-dependence.
+- Not yet established: generalization to unseen states from observable
+  features. The per-state optimum does not track the number of capacity-bound
+  clinics, so the driver is not a simple count. Stage E4's held-out-seed
+  ranking is the test that separates a learnable signal from one that depends
+  on realized future demand, and it must pass before any actor is trained.
+- **Stage E3 (label stability) is authorized on this calibration.** Stage E5
+  still requires its own specification and sign-off. Training remains
+  unauthorized.
+- Zhaowei's review of the amendment and of this result remains outstanding.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_headroom_e2b/`,
+  `experiments/evidence/continuous_overtime_headroom_e2b/`.
+
+### 2026-08-29: Stage E3 label stability PASSED on fresh streams; Stage E4 authorized
+
+- The spec's E3 gate (discovery/validation best-action agreement >= 70%) had
+  already been produced by E2b at 96.3%, but from the rows E2b selected on.
+  Reporting that as a passing E3 would have been circular. E3 therefore
+  re-ran the identical states, ladder, and environment under CRN streams
+  disjoint from every E2b seed (`96400000`/`96500000` families). Tests assert
+  the seed families do not overlap and that the environment did not drift.
+- Primary result (fresh discovery vs fresh validation): best-action agreement
+  **0.926** (25/27) against a 0.70 gate; pairwise cost-sign agreement
+  **0.990** over 1,147 material pairs against a 0.80 gate. Classification
+  `labels_replicate_on_fresh_streams`.
+- Cross-check across four disjoint seed families (all E2b seeds vs all E3
+  seeds): best-action agreement **1.000** (27/27), pairwise 0.992. The
+  per-state optimum is identical across separate seed families.
+- E3's rows independently re-measure the E2b headline: prospective
+  state-dependence value **+0.6182%** versus E2b's +0.6446%, interior fraction
+  0.926 in both.
+- Contrast with the routing channel, same design: Stage G1 achieved 54.5%
+  best-action agreement and 82.5% pairwise, and failed. The argmax criterion
+  is kept primary precisely because G1 showed pairwise agreement can stay high
+  while the top-action choice is unstable; a regression test is pinned to
+  G1's numbers and asserts the gate rejects them.
+- Still open: label stability is not generalization across states. The
+  per-state optimum remains untracked by the number of capacity-bound clinics.
+  **Stage E4 (held-out-seed critic ranking) is the test that separates a
+  learnable signal from one depending on realized future demand.**
+- **Stage E4 is authorized.** Training remains unauthorized; Stage E5 requires
+  its own specification and sign-off.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_label_stability_e3/`,
+  `experiments/evidence/continuous_overtime_label_stability_e3/`.
+
+### 2026-08-29: Stage E4 FAILED; Stage E5 not authorized; external review required
+
+- The held-out-seed ranking screen ran on 135 states (5 generation seeds x 9
+  decision epochs x 3 scenarios), 12,960 rows, 11-rung ladder, with
+  leave-one-generation-seed-out ridge on 15 decision-time network features.
+- Preregistered gate FAILED. Pooled top-1 **0.252** and worst-fold top-1
+  **0.148** against a 0.50 floor. Pairwise accuracy 0.754 (gate 0.70) and
+  worst-fold gain over the state-blind predictor +0.111 (gate 0.05) both
+  passed. Classification `optimum_not_predictable_from_state`.
+- **Stage E5 is NOT authorized. No actor may be trained.**
+- Post-hoc diagnostic, recorded as post-hoc: the fitted model nevertheless
+  beats the best tuned constant by 0.2038% of anchor cost out of sample,
+  capturing 31.6% of the available state-dependent headroom, with a median
+  rung distance of 1. The model learns the region of the optimum but not the
+  exact rung; because the re-calibrated cost surface is smooth by design, a
+  near miss is cheap and top-1 is a harsh proxy for the endpoint.
+- Two conservative limitations: the gate inherited argmax primacy from Stage
+  G1 without rechecking that it suits a smooth channel (routing's surface was
+  jagged integer lots), and the learner is a linear model on network-level
+  aggregates that discards the per-clinic structure a GCN exists to exploit.
+- **Process finding.** This is the second screen failure followed by analysis
+  showing the gate was mis-specified (the first was E2's headroom criterion
+  being blind to geometry). Each amendment was individually defensible and
+  executed under change control with fresh configs and output roots, but the
+  pattern is a garden of forking paths and converges on a pass whether or not
+  one exists. The author of both amendments must not authorize a third.
+- Referred to Zhaowei (PR #9, review already outstanding) for decision on:
+  replacing the argmax criterion with a realized-cost criterion for smooth
+  channels; whether an E4b with graph-structured per-clinic features is a
+  legitimate continuation or gate-shopping; and whether the accumulated
+  amendment count warrants a clean end-to-end re-run under one frozen
+  protocol. The last option is affordable (about an hour of compute) and would
+  answer the forking-paths objection directly.
+- Evidence: `specs/2026-08-29-continuous-overtime-control/results.md`,
+  `results/continuous_overtime_critic_ranking_e4/`,
+  `experiments/evidence/continuous_overtime_critic_ranking_e4/`.
+
+
+### 2026-08-29: Correction — CRN pairing is exact; label instability re-interpreted
+
+- A limitation recorded against the overtime screens claimed that paired
+  common-random-number comparisons weaken over the horizon because
+  per-patient deterioration draws desynchronize once arms diverge. **That
+  claim was wrong.** Direct measurement shows two arms replayed from one state
+  under one seed finish with an identical RNG bit-generator state, identical
+  cumulative enrollment, and identical patient ids; only cost differs.
+- Cause: patient attributes are drawn once at enrollment and the enrollment
+  count follows realized demand, not the action, so no action can change the
+  random stream. The same reasoning applies to the H0/G0/G1 screens.
+- Scientific consequence: within a world, an arm-versus-arm comparison carries
+  no Monte Carlo noise, so disagreement between replication streams is not
+  estimator noise. It means the best action differs between worlds. The
+  learning target is the argmax of EXPECTED cost, which additional worlds do
+  estimate — measured on the Stage E4 rows, best-action agreement rises from
+  0.826 to 0.887 as worlds per group go 1 to 4.
+- This raises a direct question about the closed Stage G1 result: its 54.5%
+  agreement was measured at a low replication budget, so it may have been
+  underpowered rather than fundamental. A budget-efficient labeller
+  (`evaluation/sequential_halving_labeling.py`, 11 tests) has been built and
+  validated on synthetic ground truth, where at equal simulator budget it
+  identifies the true best arm in 0.837/0.940/0.987 of trials against
+  0.730/0.860/0.960 for uniform allocation.
+- **No routing experiment has been launched.** Re-opening the routing labelling
+  question requires its own change-control entry and specification; this entry
+  records only the correction and the validated instrument.
+
+### 2026-08-29: Routing label budget study completed; Stage G1 negative STANDS
+
+- The study asked whether Stage G1's 54.5% best-action agreement was a
+  property of the routing channel or of its eight-world replication budget.
+  It collected a complete paired-CRN pool (27 states, 5 legal specimen arms,
+  64 worlds, 8,640 rollouts) and replayed allocation policies offline.
+- The frozen reading rule returned `g1_negative_underpowered`, **but that
+  classification is not the study's conclusion.** Its precondition is violated
+  by the data: at Stage G1's exact budget shape (3 vs 5 worlds) this study
+  measures **0.821** agreement against G1's reported **0.545**. Budget cannot
+  explain a 0.28 gap measured at the same budget.
+- Honest classification: `precondition_violated_cannot_adjudicate_g1`. The
+  study never reproduced G1's baseline — its agreement is 0.785 from a single
+  world, already above the 0.70 gate — so it cannot test whether budget lifts
+  a 0.545 baseline over that gate.
+- **Stage G1's negative stands unchanged. Nothing in the closed routing
+  conclusion is reopened.** The difference lies in states and policy context
+  (G1 used 156 frozen-pretrain trajectory states from the Stage F1 runs; this
+  study used fresh MDL-2-anchored states), which the spec flagged as a
+  transfer risk and which has now failed empirically.
+- Methodological lesson recorded in the study's results.md: a prospective
+  reading rule protects against choosing thresholds after seeing data, but not
+  against an experiment failing to reproduce the condition it was meant to
+  probe. Future budget studies must gate on reproducing the baseline first and
+  declare themselves uninformative otherwise.
+- Secondary negative: sequential halving was WORSE than uniform allocation at
+  every budget tested (0.784 vs 0.793 up to 0.880 vs 0.907), contradicting its
+  synthetic validation. Likely cause is arm count — 5 arms give roughly two
+  halving rounds, so a near-optimal arm can be eliminated before near-ties are
+  resolved. The labeller should not be used for short ladders on this
+  evidence.
+- Adjudicating Stage G1 requires replication on G1's own states, whose
+  artifacts live on the RTX 4090 host. That is a separate specification and is
+  not proposed here.
+- Evidence: `specs/2026-08-29-routing-label-budget-study/results.md`,
+  `results/routing_label_budget_study/`,
+  `experiments/evidence/routing_label_budget_study/`.
+
+### 2026-08-29: Stochastic lead-time regime study — GATE FAILED, study closed
+
+- The study tested whether making reagent procurement lead times stochastic
+  (with order crossing) leaves the tuned heuristic structurally misspecified,
+  following the deep-research finding that random lead times are a documented
+  regime with a 7.1% heuristic optimality gap.
+- Gate metric: cost of lead-time variability for the tuned lead-time-aware
+  planner, measured exactly paired (the override draws the lead and discards
+  it, so both runs consume an identical random stream). Lead distribution
+  mean 2.0, variance 1.2, order crossing possible; 24 evaluation seeds per
+  scenario; safety multiplier tuned on 10 separate development seeds.
+- Result: **+0.176% pooled** (0.113% / 0.160% / 0.256% by scenario), against a
+  1% floor. Consistent in sign and roughly 40x too small to matter.
+- **GATE FAILED. The study stops per its protocol.** No gating protocol was
+  run, no learned policy was built, and no held-out data was spent.
+- Mechanism: reagents are one of three binding resources
+  (`min(specimens, capacity, reagents)`), so lead-time noise on one input is
+  absorbed by slack in the others; and a correctly specified planner absorbs
+  nearly all the rest. Lead-blind MDL-2 loses 0.81% under stochastic leads;
+  the lead-aware planner recovers it (-0.91%, better on 12/12 seeds) using two
+  standard corrections — order against inventory position, and cover lead plus
+  lookahead.
+- Scientific consequence: a regime the literature identifies as favourable to
+  learned control does not produce exploitable headroom in this problem class,
+  for a structural reason that applies to any lever perturbing one resource at
+  a time. Combined with the closed routing and overtime channels, the sub-1%
+  ceiling looks like a property of the problem rather than of the method.
+- Pre-registered prediction was 2-4%; the outcome was +0.176%, wrong by an
+  order of magnitude and the third optimistic prediction refuted by
+  measurement this session.
+- Kept: the flag-gated environment extension (off by default) and the MDL-2-LT
+  comparator, with 20 tests.
+- Evidence: `specs/2026-08-29-stochastic-lead-time-regime/results.md`.

@@ -1,0 +1,291 @@
+{
+  "alpha": 0.05,
+  "contrasts": {
+    "flat_residual_mdl2_network_td3_bc_final_vs_frozen": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 349036.76395167806,
+        "analytic_se_of_mean": 178083.25252488212,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.00028888405777574105,
+        "variance_component_residual": 19028186897904.56,
+        "variance_component_seed": 0.0,
+        "variance_component_world": 0.0
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": 567722.9410150894,
+          "ci_low": -231249.79475476625,
+          "excludes_zero": false,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 798972.7357698557
+        },
+        "seed_cluster": {
+          "ci_high": 356168.85198865895,
+          "ci_low": -69824.94422535658,
+          "excludes_zero": false,
+          "width": 425993.7962140155
+        },
+        "two_way": {
+          "ci_high": 668956.1322503214,
+          "ci_low": -329674.2495085936,
+          "excludes_zero": false,
+          "width": 998630.381758915
+        },
+        "world_cluster": {
+          "ci_high": 509741.5372471541,
+          "ci_low": -172593.40036886884,
+          "excludes_zero": false,
+          "width": 682334.937616023
+        }
+      },
+      "mean_difference": 166164.6004707682,
+      "mean_gap_pct": 0.00623311747346295,
+      "n_training_seeds": 3,
+      "n_worlds_per_scenario": 50,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -23954.49606543541,
+        "routing_compound_regional_stress": 607301.706220344,
+        "routing_nominal_history": 29708.70910580953,
+        "routing_regional_drift": 51602.48262235482
+      },
+      "per_seed_mean_difference": [
+        356168.8519886589,
+        -69824.94422535658,
+        212149.8936490023
+      ],
+      "ties": 14,
+      "wins": 287
+    },
+    "flat_residual_mdl2_network_td3_bc_vs_anchor": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 1828709.895981512,
+        "analytic_se_of_mean": 933032.3903814111,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.6317487319154502,
+        "variance_component_residual": 79390230486386.78,
+        "variance_component_seed": 170611627075.27298,
+        "variance_component_world": 136272369666356.17
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": -7281285.083461472,
+          "ci_low": -9976486.72296088,
+          "excludes_zero": true,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 2695201.639499408
+        },
+        "seed_cluster": {
+          "ci_high": -8040143.842816673,
+          "ci_low": -9465137.211512819,
+          "excludes_zero": true,
+          "width": 1424993.3686961457
+        },
+        "two_way": {
+          "ci_high": -6746331.463896381,
+          "ci_low": -10454044.976837026,
+          "excludes_zero": true,
+          "width": 3707713.512940645
+        },
+        "world_cluster": {
+          "ci_high": -6977033.385005444,
+          "ci_low": -10183301.322737552,
+          "excludes_zero": true,
+          "width": 3206267.937732108
+        }
+      },
+      "mean_difference": -8611323.797440097,
+      "mean_gap_pct": -0.32196533947996037,
+      "n_training_seeds": 3,
+      "n_worlds_per_scenario": 50,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -680636.3403417333,
+        "routing_compound_regional_stress": -13154298.292853026,
+        "routing_nominal_history": -12791638.962163,
+        "routing_regional_drift": -7818721.594402626
+      },
+      "per_seed_mean_difference": [
+        -9465137.211512819,
+        -8040143.842816673,
+        -8328690.337990795
+      ],
+      "ties": 0,
+      "wins": 445
+    },
+    "gcn_residual_mdl2_network_td3_bc_final_vs_frozen": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 307989.9913421454,
+        "analytic_se_of_mean": 157140.63694136497,
+        "mean_pairwise_seed_correlation_of_world_differences": -0.03375302522045679,
+        "variance_component_residual": 14815907867002.727,
+        "variance_component_seed": 0.0,
+        "variance_component_world": 0.0
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": 352145.12841289485,
+          "ci_low": -325161.5726383283,
+          "excludes_zero": false,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 677306.7010512231
+        },
+        "seed_cluster": {
+          "ci_high": 142758.74847911356,
+          "ci_low": -172018.14109219075,
+          "excludes_zero": false,
+          "width": 314776.8895713043
+        },
+        "two_way": {
+          "ci_high": 435393.3796673439,
+          "ci_low": -398339.1093115128,
+          "excludes_zero": false,
+          "width": 833732.4889788567
+        },
+        "world_cluster": {
+          "ci_high": 312815.5735228261,
+          "ci_low": -258213.54591801594,
+          "excludes_zero": false,
+          "width": 571029.119440842
+        }
+      },
+      "mean_difference": 21135.48354652842,
+      "mean_gap_pct": 0.0007960820397345594,
+      "n_training_seeds": 3,
+      "n_worlds_per_scenario": 50,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -30950.69310968876,
+        "routing_compound_regional_stress": 341895.7160508696,
+        "routing_nominal_history": -528294.6782673263,
+        "routing_regional_drift": 301891.5895122592
+      },
+      "per_seed_mean_difference": [
+        92665.84325266242,
+        142758.74847911356,
+        -172018.14109219075
+      ],
+      "ties": 13,
+      "wins": 290
+    },
+    "gcn_residual_mdl2_network_td3_bc_vs_anchor": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 4162300.505494896,
+        "analytic_se_of_mean": 2123661.7129166126,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.7312745383918632,
+        "variance_component_residual": 95011741098647.36,
+        "variance_component_seed": 9196072232923.951,
+        "variance_component_world": 257245751620438.34
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": -16784147.005342465,
+          "ci_low": -23086362.293863177,
+          "excludes_zero": true,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 6302215.288520712
+        },
+        "seed_cluster": {
+          "ci_high": -17306252.66808886,
+          "ci_low": -23180286.677167963,
+          "excludes_zero": true,
+          "width": 5874034.009079102
+        },
+        "two_way": {
+          "ci_high": -16343971.49504835,
+          "ci_low": -23205816.792078007,
+          "excludes_zero": true,
+          "width": 6861845.297029657
+        },
+        "world_cluster": {
+          "ci_high": -17785365.397878055,
+          "ci_low": -21530955.212393913,
+          "excludes_zero": true,
+          "width": 3745589.814515859
+        }
+      },
+      "mean_difference": -19653054.44254627,
+      "mean_gap_pct": -0.7348001880144804,
+      "n_training_seeds": 3,
+      "n_worlds_per_scenario": 50,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -9376669.404802771,
+        "routing_compound_regional_stress": -36482775.07717538,
+        "routing_nominal_history": -17584500.110884298,
+        "routing_regional_drift": -15168273.177322652
+      },
+      "per_seed_mean_difference": [
+        -23180286.67716796,
+        -18472623.982382007,
+        -17306252.66808886
+      ],
+      "ties": 0,
+      "wins": 528
+    },
+    "gcn_residual_mdl2_network_td3_bc_vs_flat_residual_mdl2_network_td3_bc": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 3320128.0955919274,
+        "analytic_se_of_mean": 1693974.0197227742,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.5030235022900823,
+        "variance_component_residual": 179209110247032.1,
+        "variance_component_seed": 4993527049390.149,
+        "variance_component_world": 181271422524126.0
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": -8498536.531201087,
+          "ci_low": -13808709.969527105,
+          "excludes_zero": true,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 5310173.438326018
+        },
+        "seed_cluster": {
+          "ci_high": -8977562.330098065,
+          "ci_low": -13715149.46565514,
+          "excludes_zero": true,
+          "width": 4737587.135557076
+        },
+        "two_way": {
+          "ci_high": -8036515.7693237085,
+          "ci_low": -14131774.75507276,
+          "excludes_zero": true,
+          "width": 6095258.985749051
+        },
+        "world_cluster": {
+          "ci_high": -9140272.012372011,
+          "ci_low": -12930854.528979845,
+          "excludes_zero": true,
+          "width": 3790582.516607834
+        }
+      },
+      "mean_difference": -11041730.64510618,
+      "mean_gap_pct": -0.41416832699454686,
+      "n_training_seeds": 3,
+      "n_worlds_per_scenario": 50,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -8696033.06446104,
+        "routing_compound_regional_stress": -23328476.78432235,
+        "routing_nominal_history": -4792861.148721299,
+        "routing_regional_drift": -7349551.582920025
+      },
+      "per_seed_mean_difference": [
+        -13715149.46565514,
+        -10432480.13956533,
+        -8977562.330098065
+      ],
+      "ties": 0,
+      "wins": 443
+    }
+  },
+  "crn_checks": {
+    "anchor max abs diff gcn_residual_mdl2_network_td3_bc vs flat_residual_mdl2_network_td3_bc": 0.0,
+    "flat_residual_mdl2_network_td3_bc: anchor max spread across training seeds": 0.0,
+    "gcn_residual_mdl2_network_td3_bc: anchor max spread across training seeds": 0.0
+  },
+  "frozen_root": "results/patient_indexed_specimen_routing_stage_c_td3_development/evaluation/pretrain",
+  "metric": "total_cost",
+  "mode": "row_level",
+  "resamples": 20000,
+  "root": "results/patient_indexed_specimen_routing_stage_c_td3_development/evaluation/final",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ]
+}

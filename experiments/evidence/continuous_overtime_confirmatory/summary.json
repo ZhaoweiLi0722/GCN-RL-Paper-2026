@@ -1,0 +1,1576 @@
+{
+  "config_echo": {
+    "action_ladder": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "anchor_algorithm": "mdl2_ot",
+    "gates": {
+      "clinical_rule": "validation-mean completion service not lower, patients lost not higher, manufacturing ineligibility not higher than the anchor arm",
+      "label_stability_minimum_best_action_agreement": 0.7,
+      "label_stability_minimum_pairwise_agreement": 0.8,
+      "material_threshold": 1000000.0,
+      "ranking_minimum_gain_over_state_blind": 0.05,
+      "ranking_minimum_pairwise": 0.7,
+      "ranking_minimum_top1": 0.5,
+      "ranking_model": "ridge alpha=10 on the 15 aggregate decision-time features (best realized-cost configuration found in exploration); no tuning permitted in the confirmatory run",
+      "state_dependence_minimum_fraction": 0.005,
+      "state_dependence_minimum_interior_fraction": 0.3,
+      "state_dependence_rule": "PRIMARY criterion. Prospective value of state-dependence (per-state arm chosen on the discovery stream, scored on validation, constant chosen the same way) must be at least 0.5% of anchor cost -- roughly 100x the Stage F1 attribution noise floor of +/-0.001-0.004% -- and the best arm must be strictly interior in at least 30% of states. The in-sample oracle is never admissible: on Stage E2 it read +0.0054% while the honest out-of-sample value was -0.083%.",
+      "state_fraction": 0.3
+    },
+    "non_nominal_scenarios": [
+      "routing_regional_drift"
+    ],
+    "overtime_env_overrides": {
+      "enable_overtime_control": true,
+      "enable_overtime_fatigue": false,
+      "enable_production_throttle": false,
+      "max_overtime_fraction": 0.6,
+      "weight_overtime_linear": 15000.0,
+      "weight_overtime_quadratic": 20000.0
+    },
+    "scenarios": [
+      "routing_regional_drift"
+    ]
+  },
+  "config_sha256": "1c1e2d25daaed2d14e354f890b615d96a32552472c7295ce31d437b3b8732205",
+  "decision": {
+    "classification": "channel_captured_by_constant_policy",
+    "e3_authorized": false,
+    "gate": "e2_headroom",
+    "headroom_gate_passed": true,
+    "in_sample_oracle_fraction": 0.004809851630786928,
+    "interior_best_arm_fraction": 0.7777777777777778,
+    "non_nominal_scenarios_passing": [
+      "routing_regional_drift"
+    ],
+    "prospective_value_fraction": 0.0044997111239824085,
+    "state_dependence_gate_applied": true,
+    "state_dependence_gate_passed": false,
+    "state_fraction_required": 0.3
+  },
+  "experimental_role": "CONFIRMATORY run of the frozen protocol on the reserved held-out scenario and seed families. Executed once; its result stands. See specs/2026-08-29-continuous-overtime-control/held_out_reservation.md and frozen_protocol.md.",
+  "name": "continuous_overtime_confirmatory",
+  "plan_sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709",
+  "row_count": 4320,
+  "rows_sha256": "f42c2f07892f934ca89e5272cd3c7434bb13eb798dab721b9973515aa1c79261",
+  "scenario_summaries": [
+    {
+      "best_arm_agreement_fraction": 0.9111111111111111,
+      "material_validated_fraction": 0.8,
+      "material_validated_states": 36,
+      "prospective_success_fraction": 0.7777777777777778,
+      "scenario": "routing_regional_drift",
+      "state_count": 45,
+      "states": [
+        {
+          "best_arm_agreement": false,
+          "best_discovery_arm": "u_0.60",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 2376397.444440365
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.60",
+            "material_and_noninferior": false,
+            "validated_saving": 11246331.791927576
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch20"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_1.00",
+          "best_validation_arm": "u_1.00",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.20",
+              "validated_saving": 5274446.488658905
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 12051306.40941286
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 18415060.88037753
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 25667241.08760643
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 24247118.378331423
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 28958861.722254515
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 34694080.78060961
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 34005636.27289343
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 39139145.40257931
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_1.00",
+            "material_and_noninferior": true,
+            "validated_saving": 39139145.40257931
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch30"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_1.00",
+          "best_validation_arm": "u_1.00",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 1581035.5978072882
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 1903756.1897394657
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 6651603.93088305
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 8725843.072208047
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 8578734.529278755
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 7607700.076097727
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 8702696.023982644
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 6127328.151968956
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 10296340.954703689
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_1.00",
+            "material_and_noninferior": true,
+            "validated_saving": 10296340.954703689
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch40"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1411152.1088421792
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 2571487.185832128
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 1020175.1607996076
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 1401294.2454645485
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 2571487.185832128
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch50"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.50",
+              "validated_saving": 1201861.2053264678
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 1201861.2053264678
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch60"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.00",
+          "best_validation_arm": "u_0.00",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.00",
+            "material_and_noninferior": false,
+            "validated_saving": 16200.022315979004
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch70"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.50",
+              "validated_saving": 1552602.1556314304
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 1552602.1556314304
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch80"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": false,
+            "validated_saving": 211426.17669659853
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch90"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1280318.901943028
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 1468584.2856588066
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 1468584.2856588066
+          },
+          "state_id": "routing_regional_drift:seed97100000:epoch95"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_1.00",
+          "best_validation_arm": "u_1.00",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 2474124.0757694244
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 16200062.522183418
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 21384618.582842827
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 31124202.880698204
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 33429860.367167234
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 34800831.500249386
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 40586414.830532074
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 41733011.77268863
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 45979514.186098814
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_1.00",
+            "material_and_noninferior": true,
+            "validated_saving": 45979514.186098814
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch20"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.80",
+          "best_validation_arm": "u_0.80",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 6469952.108536243
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 13347707.475637197
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 21099686.285253525
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 26986503.60761261
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 32918588.527429342
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 32573312.41174245
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 36266135.640770674
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 39770333.09915447
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 38022324.71036625
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 35632130.58073592
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.80",
+            "material_and_noninferior": true,
+            "validated_saving": 39770333.09915447
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch30"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_1.00",
+          "best_validation_arm": "u_1.00",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.20",
+              "validated_saving": 8093928.6535815
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 15410566.363867164
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 21289239.793035507
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 27997565.09375
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 31889374.077884197
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 34900364.44556534
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 39729590.155162334
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 38228392.202965856
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 40918929.443673134
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_1.00",
+            "material_and_noninferior": true,
+            "validated_saving": 40918929.443673134
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch40"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1614752.3383493721
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 4105154.5421574116
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 4664043.67598021
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 2700892.872805357
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 3064926.9525963366
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 2401829.747039303
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 1790288.511604473
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 4664043.67598021
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch50"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.30",
+          "best_validation_arm": "u_0.30",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.30",
+            "material_and_noninferior": false,
+            "validated_saving": 573417.8429828584
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch60"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.00",
+          "best_validation_arm": "u_0.00",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.00",
+            "material_and_noninferior": false,
+            "validated_saving": 35000.000480271876
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch70"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1599771.135293454
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1888558.0297010094
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 1470609.112333171
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": true,
+            "validated_saving": 1888558.0297010094
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch80"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1016318.864488706
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": true,
+            "validated_saving": 1016318.864488706
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch90"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.30",
+          "best_validation_arm": "u_0.30",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.30",
+            "material_and_noninferior": false,
+            "validated_saving": 756070.5815929547
+          },
+          "state_id": "routing_regional_drift:seed97100001:epoch95"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.60",
+          "best_validation_arm": "u_0.60",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 7888729.119670868
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 12313628.740508556
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 20723606.67720437
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 25720522.50815153
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 32092260.899065018
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 32325931.67196107
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 29764011.548437357
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 25704907.74524045
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 26933049.09894514
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 24942994.90696788
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.60",
+            "material_and_noninferior": true,
+            "validated_saving": 32325931.67196107
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch20"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_1.00",
+          "best_validation_arm": "u_1.00",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 5634311.914274454
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 10710817.426836967
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 21471480.612239838
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 27348046.885297537
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 33428174.75241208
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 34882392.13899779
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 31266423.0640738
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 38664607.6192193
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 38519331.73532581
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 41056059.22276282
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_1.00",
+            "material_and_noninferior": true,
+            "validated_saving": 41056059.22276282
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch30"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.80",
+          "best_validation_arm": "u_0.80",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 3395705.462958455
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 5475348.761931896
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 10967482.00663054
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 16288864.880662322
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 19996628.08395803
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 20653685.84771788
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 20536322.25678885
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 21801069.266883254
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 20496215.267555833
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 21040513.955622315
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.80",
+            "material_and_noninferior": true,
+            "validated_saving": 21801069.266883254
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch40"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 1122340.1143094152
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 1360881.403552875
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 3242983.8410600424
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 4778084.253237471
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 6347922.246171117
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 5264176.625448346
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 5194149.671863675
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 6104221.098124981
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 4385435.615381539
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 5669991.064539507
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 6347922.246171117
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch50"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1453601.5473660603
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 3657111.339345701
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 2770956.123061478
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 1918368.79962755
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 1026986.2690439299
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": true,
+            "validated_saving": 3657111.339345701
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch60"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.50",
+              "validated_saving": 1595997.8490681276
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 1595997.8490681276
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch70"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": false,
+            "validated_saving": 766831.2101577371
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch80"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1102156.5579264387
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1346965.8813601285
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": true,
+            "validated_saving": 1346965.8813601285
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch90"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.50",
+              "validated_saving": 2170837.6771512628
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 1370575.2634494826
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 1208295.1456363797
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 2170837.6771512628
+          },
+          "state_id": "routing_regional_drift:seed97100002:epoch95"
+        },
+        {
+          "best_arm_agreement": false,
+          "best_discovery_arm": "u_0.80",
+          "best_validation_arm": "u_0.60",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 6136304.482321024
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 8756252.6798594
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 11905018.472204208
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 7644389.160551786
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 10671617.344131708
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 12421729.206326485
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 10123212.407665491
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 8362364.143352509
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 10184369.774796486
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 2030920.1400766373
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.80",
+            "material_and_noninferior": true,
+            "validated_saving": 8362364.143352509
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch20"
+        },
+        {
+          "best_arm_agreement": false,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.90",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 6393607.75704217
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 10271550.181042671
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 15593112.837058544
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 15544048.343221188
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 19179680.12133479
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 17821708.019670963
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 16843353.462128162
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 17731420.597317457
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 20825200.602368116
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 16228513.585640192
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 19179680.12133479
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch30"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_1.00",
+          "best_validation_arm": "u_1.00",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 2909905.157120943
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 4376889.045851946
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 4517530.670411944
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 5768384.66484499
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 9867240.855736017
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 10692974.013865948
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 13836081.403085232
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 16324681.00422287
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 14582065.090916157
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 20051782.785477996
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_1.00",
+            "material_and_noninferior": true,
+            "validated_saving": 20051782.785477996
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch40"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.80",
+          "best_validation_arm": "u_0.80",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1901208.5018584132
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 3052069.891349569
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 4870175.398389548
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 3753167.380377978
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 4852881.805064902
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 6193381.097811371
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 4526005.180792481
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 5897128.033964783
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.80",
+            "material_and_noninferior": true,
+            "validated_saving": 6193381.097811371
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch50"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1339328.3306980282
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1239976.12613447
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 1486503.852877453
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 1486503.852877453
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch60"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 2776653.2369261384
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 3409630.5342444256
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 3367952.0222420767
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 2300264.005029805
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 1908967.8826076165
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 1210429.7222420797
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": true,
+            "validated_saving": 3409630.5342444256
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch70"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.30",
+          "best_validation_arm": "u_0.30",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.30",
+            "material_and_noninferior": false,
+            "validated_saving": 270416.5235741958
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch80"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": false,
+            "validated_saving": -45741.03922954947
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch90"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1819870.0421361923
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1657975.5414220318
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 2436047.333701551
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 1753343.3227109313
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 1262279.3084501624
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 1186327.1196154058
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 2436047.333701551
+          },
+          "state_id": "routing_regional_drift:seed97100003:epoch95"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.60",
+          "best_validation_arm": "u_0.60",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 8423880.932304382
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 9905094.00124073
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 21410638.483268976
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 17234435.695578337
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 21507596.7779665
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 22279601.3206625
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 13373664.292983055
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 15726445.565673351
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 12933646.586906433
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 10702896.385049343
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.60",
+            "material_and_noninferior": true,
+            "validated_saving": 22279601.3206625
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch20"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.80",
+          "best_validation_arm": "u_0.80",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.10",
+              "validated_saving": 6596974.350558519
+            },
+            {
+              "arm": "u_0.20",
+              "validated_saving": 9962051.946620941
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 15856980.775825262
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 17803181.828839302
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 22462197.93801856
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 24593747.744306087
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 22460291.733189344
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 29753617.04924488
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 29108871.122169256
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 29023758.59572053
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.80",
+            "material_and_noninferior": true,
+            "validated_saving": 29753617.04924488
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch30"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_1.00",
+          "best_validation_arm": "u_1.00",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.20",
+              "validated_saving": 9169037.115687609
+            },
+            {
+              "arm": "u_0.30",
+              "validated_saving": 16218613.520899534
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 19104101.81038761
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 24433978.458651662
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 26264190.811241984
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 26331873.15262282
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 29752089.60476327
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 30284344.590259314
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 36285823.4401561
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_1.00",
+            "material_and_noninferior": true,
+            "validated_saving": 36285823.4401561
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch40"
+        },
+        {
+          "best_arm_agreement": false,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.30",
+              "validated_saving": 1827233.8677763045
+            },
+            {
+              "arm": "u_0.40",
+              "validated_saving": 2838286.4285806715
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 2573315.739564389
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 1047196.7506840229
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 1296286.2120649815
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 2194873.7577853203
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 2573315.739564389
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch50"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1559598.901662387
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 1939350.6859199628
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 1939350.6859199628
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch60"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.50",
+          "best_validation_arm": "u_0.50",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.40",
+              "validated_saving": 2445119.0193289444
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 2609016.509738438
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 1808754.0960366502
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 1096634.0782235637
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.50",
+            "material_and_noninferior": true,
+            "validated_saving": 2609016.509738438
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch70"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.00",
+          "best_validation_arm": "u_0.00",
+          "has_material_validated_opportunity": false,
+          "material_validated_arms": [],
+          "prospective_selection": {
+            "arm": "u_0.00",
+            "material_and_noninferior": false,
+            "validated_saving": 32399.988842010498
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch80"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.80",
+          "best_validation_arm": "u_0.80",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.40",
+              "validated_saving": 2096331.7287326157
+            },
+            {
+              "arm": "u_0.50",
+              "validated_saving": 2194549.218600303
+            },
+            {
+              "arm": "u_0.60",
+              "validated_saving": 1344966.8040992022
+            },
+            {
+              "arm": "u_0.70",
+              "validated_saving": 2199406.4852293134
+            },
+            {
+              "arm": "u_0.80",
+              "validated_saving": 2407687.767641276
+            },
+            {
+              "arm": "u_0.90",
+              "validated_saving": 1068041.4343832135
+            },
+            {
+              "arm": "u_1.00",
+              "validated_saving": 1158959.718600303
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.80",
+            "material_and_noninferior": true,
+            "validated_saving": 2407687.767641276
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch90"
+        },
+        {
+          "best_arm_agreement": true,
+          "best_discovery_arm": "u_0.40",
+          "best_validation_arm": "u_0.40",
+          "has_material_validated_opportunity": true,
+          "material_validated_arms": [
+            {
+              "arm": "u_0.40",
+              "validated_saving": 1317301.9069797099
+            }
+          ],
+          "prospective_selection": {
+            "arm": "u_0.40",
+            "material_and_noninferior": true,
+            "validated_saving": 1317301.9069797099
+          },
+          "state_id": "routing_regional_drift:seed97100004:epoch95"
+        }
+      ]
+    }
+  ]
+}

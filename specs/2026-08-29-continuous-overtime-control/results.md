@@ -202,11 +202,528 @@ gating-protocol framing than the overtime channel itself.
 - Config: `experiments/configs/continuous_overtime_headroom_e2.json`
 - Implementation: `evaluation/audit_overtime_headroom_e2.py`
 
-### Known limitation
+### Correction: CRN pairing is exact, not degrading
 
-Arms share a CRN seed and a common start state, but once arms diverge in
-patient counts the per-patient deterioration draws desynchronize, so pairing
-weakens over the remaining horizon. This matches the H0/G0/G1 precedent.
-Tightening it would require per-stream RNG partitioning. It does not affect
-the corner-solution finding, which is a monotone effect far larger than the
-pairing noise.
+Earlier versions of this document, and the change-control entry for this
+stage, stated that pairing weakens over the horizon because per-patient
+deterioration draws desynchronize once arms diverge in patient counts.
+**That was wrong**, and it was corrected on 2026-08-29 after direct
+measurement.
+
+Patient attributes are drawn once at enrollment (health index, Weibull
+survival, risk type), and the number of enrollments depends on realized
+demand, not on the action. Replaying two arms from one state under one seed
+therefore consumes an identical random stream: the final RNG bit-generator
+state, the cumulative enrollment count, and the patient ids all match exactly,
+while the costs differ by the action's effect alone.
+
+The consequence is not cosmetic. Within a single world an arm-versus-arm
+comparison carries **no Monte Carlo noise at all**, so remaining
+disagreement between replication streams is not estimator noise — it is the
+best action genuinely differing between worlds. The quantity a policy needs is
+the argmax of *expected* cost, which more worlds do estimate; measured on the
+Stage E4 rows, best-action agreement rises from 0.826 to 0.887 as the worlds
+per group go from 1 to 4, which is real but slow improvement.
+
+---
+
+## Stage E2b: re-calibrated headroom screen — 2026-08-29
+
+### Decision
+
+**PASSED both criteria: `state_dependent_headroom_established`. Stage E3 is
+authorized.**
+
+The re-calibration was executed under the approved change-control amendment,
+with a new config name (`continuous_overtime_headroom_e2b.json`) and output
+root. The E2 result stands as recorded; nothing about it was revised.
+
+The author of the amendment predicted this run would fail. It did not, and the
+evidence that it genuinely passed is stronger than a single threshold
+crossing — see "Why this looks like signal" below.
+
+### Calibration change
+
+| Parameter | E2 | E2b |
+| --- | ---: | ---: |
+| `max_overtime_fraction` | 0.3 | 0.6 |
+| `weight_overtime_quadratic` | 5,000 | 20,000 |
+| Surge range (reactors/clinic) | 0 – 1.5 | 0 – 3.0 |
+| Marginal cost crosses the 50,274 shortage benefit at | s\*=1.76 (outside range) | s\*=0.88 (**inside**, 29% of full surge) |
+
+Everything else — scenarios, states, ladder, CRN streams, clinical rule,
+headroom threshold — is unchanged from E2.
+
+### Result
+
+2,592 rows, 27 states, 4m42s. Headroom precondition passed in both non-nominal
+scenarios (abrupt shift 1.00, compound stress 1.00; nominal 0.89).
+
+| Policy | Total validation cost |
+| --- | ---: |
+| MDL-2-OT anchor (closed-form rule) | 14,059.5M |
+| Best **constant** rung (`u_0.80`) | 13,772.3M |
+| **Prospective** per-state (chosen on discovery, scored on validation) | 13,681.7M |
+| In-sample oracle | 13,678.4M |
+
+| Criterion | Measured | Gate | |
+| --- | ---: | ---: | --- |
+| Prospective value of state-dependence | **+0.6446%** | ≥ 0.5% | PASS |
+| Interior best-arm fraction | **0.926** | ≥ 0.30 | PASS |
+
+Totals are higher than E2 in absolute terms because overtime is now priced
+roughly four times higher at the margin; the comparison that matters is
+between policies within this calibration.
+
+### Why this looks like signal, not noise
+
+Four independent indications, and the first is the important one:
+
+1. **The in-sample and prospective values nearly coincide**: +0.6677% versus
+   **+0.6446%**, a gap of 0.023 points. In E2 the same comparison read
+   +0.0054% versus −0.083% — the sign flipped, which is the signature of
+   selecting on noise. Here, selecting each state's rung on independent data
+   costs almost nothing relative to the optimistic bound, which is what a real
+   effect looks like.
+2. **Discovery/validation best-arm agreement is 96.3%** across 27 states. The
+   Stage G1 gate that failed on the routing channel required 70%; the routing
+   channel managed 54.5%.
+3. **The optimum is genuinely spread**: 8 distinct rungs are optimal somewhere
+   (`u_0.30` ×3, `u_0.40` ×6, `u_0.50` ×8, `u_0.60` ×1, `u_0.70` ×1,
+   `u_0.80` ×1, `u_0.90` ×5, `u_1.00` ×2), interior in 92.6% of states. E2 had
+   2 distinct arms and 3.7% interior.
+4. **The closed-form anchor is beaten by a constant**, and the constant is
+   beaten by state-dependence: 14,059.5M → 13,772.3M → 13,681.7M. The
+   MDL-2-OT rule is not capturing the state-dependent structure, so this is
+   not a case where a better heuristic trivially absorbs the gain.
+
+For scale, the prospective value (0.64%) is comparable to the manuscript's
+headline routing result (0.658% versus MDL-2), and roughly 150× the Stage F1
+attribution noise floor.
+
+### What this does NOT yet establish
+
+The measured quantity is the value of choosing a rung **per state**, where the
+27 states are known and each is scored under held-out replication noise. That
+is not the same as a policy that **generalizes to unseen states** from
+observable features. Two gaps remain, and they are exactly what the remaining
+gates test:
+
+- The per-state optimum does not track the obvious summary statistic. Grouping
+  states by their best rung shows no clean ordering in the number of
+  capacity-bound clinics (means 17.3, 19.0, 18.1, 19.0, 14.0, 13.0, 19.6,
+  19.5 across `u_0.30` … `u_1.00`). Whatever drives the optimum is not a
+  one-dimensional count, which is encouraging for a graph encoder and a
+  warning against assuming a simple rule will do.
+- The value could depend on realized future demand rather than on anything
+  observable at decision time. **Stage E4's held-out-seed ranking is the test
+  that separates those cases**, and it must pass before any actor is trained.
+
+The per-state penalty for simply using the best constant is a median of 3.47M
+(max 8.58M), so the effect is not carried by one outlier state.
+
+### Recommendation
+
+Proceed to Stage E3 (label stability) on this calibration, then E4. Stage E5
+still requires its own specification and sign-off, and the prohibition on
+training before E4 passes is unchanged.
+
+Zhaowei's review of both the amendment and this result remains outstanding.
+
+### Evidence
+
+- Rows: `results/continuous_overtime_headroom_e2b/headroom_rows.csv`
+- Summary: `results/continuous_overtime_headroom_e2b/summary.json`
+  (config/plan/rows SHA256)
+- State-dependence report:
+  `experiments/evidence/continuous_overtime_headroom_e2b/state_dependence.json`
+- Config: `experiments/configs/continuous_overtime_headroom_e2b.json`
+
+---
+
+## Stage E3: label stability on fresh streams — 2026-08-29
+
+### Decision
+
+**PASSED both criteria: `labels_replicate_on_fresh_streams`. Stage E4 is
+authorized.** Training remains unauthorized.
+
+### A circularity avoided
+
+The spec defines the E3 gate as discovery/validation best-action agreement
+≥70%. Stage E2b already reported that number — 96.3% — but computed from the
+rows it selected on. Reporting it as a passing E3 would be circular: one
+dataset cannot both fit the selection and test whether it replicates.
+
+E3 therefore re-runs the identical 27 states, ladder, and environment under
+CRN streams disjoint from every seed E2b used (`96400000` and `96500000`
+families), and asks whether the same per-state optimum returns on data that
+took no part in choosing it. Tests assert the seed families do not overlap and
+that the environment, states, and ladder did not drift between E2b and E3 —
+replication is only meaningful when the physics are identical.
+
+### Result
+
+2,592 rows, 4m46s.
+
+| Criterion | Measured | Gate | |
+| --- | ---: | ---: | --- |
+| Best-action agreement (fresh discovery vs fresh validation) | **0.926** (25/27) | ≥ 0.70 | PASS |
+| Pairwise cost-sign agreement over 1,147 material pairs | **0.990** | ≥ 0.80 | PASS |
+
+**Cross-check across four disjoint seed families** (all E2b seeds pooled
+versus all E3 seeds pooled):
+
+| | Measured |
+| --- | ---: |
+| Best-action agreement | **1.000** (27/27) |
+| Pairwise sign agreement | 0.992 over 1,151 material pairs |
+
+The per-state optimum is identical across entirely separate seed families.
+That is the strongest available evidence that the structure is a property of
+the states rather than of one replication stream.
+
+**Independent re-measure of the E2b headline.** E3's own rows, never used in
+the E2b analysis, give a prospective state-dependence value of **+0.6182%**
+against E2b's +0.6446% (interior fraction 0.926 in both). The E2b result
+replicates on fresh data.
+
+### Comparison with the routing channel
+
+The same design applied to patient-indexed specimen routing failed at Stage
+G1:
+
+| | Routing (G1) | Overtime (E3) |
+| --- | ---: | ---: |
+| Best-action agreement | 0.545 | **0.926** |
+| Pairwise sign agreement | 0.825 | **0.990** |
+| Gate outcome | FAILED (70% required) | PASSED |
+
+G1's lesson is preserved in the gate's structure: pairwise agreement stayed
+high on the routing channel (82.5%) while the top-action choice replicated
+only 54.5% of the time, so the two criteria are kept separate and the argmax
+is primary. Policy improvement needs a reliable best-action choice, not a weak
+average ordering. A regression test is pinned to G1's exact numbers and
+asserts the gate rejects them.
+
+### What remains open
+
+Label stability across replication streams is not generalization across
+states. E3 shows the per-state optimum is a stable target; it does not show
+that target is predictable from features observable at decision time. The
+optimum still does not track the number of capacity-bound clinics, so the
+driver is not a simple count.
+
+**Stage E4 (held-out-seed critic ranking) is the test that separates a
+learnable signal from one that depends on realized future demand**, and it
+must pass before any actor is trained.
+
+### Evidence
+
+- Rows: `results/continuous_overtime_label_stability_e3/headroom_rows.csv`
+- Summary: `results/continuous_overtime_label_stability_e3/summary.json`
+- Gate report:
+  `experiments/evidence/continuous_overtime_label_stability_e3/label_stability.json`
+- Config: `experiments/configs/continuous_overtime_label_stability_e3.json`
+- Implementation: `evaluation/label_stability.py` (12 tests)
+
+---
+
+## Stage E4: held-out-seed ranking feasibility — 2026-08-29
+
+### Decision
+
+**FAILED the preregistered gate: `optimum_not_predictable_from_state`.
+Stage E5 is NOT authorized. Training remains unauthorized.**
+
+### Result
+
+135 states (5 generation seeds x 9 decision epochs x 3 scenarios), 12,960
+rows, 11-rung ladder. Leave-one-generation-seed-out ridge on 15 decision-time
+network features.
+
+| Criterion | Measured | Gate | |
+| --- | ---: | ---: | --- |
+| Pooled top-1 | **0.252** | ≥ 0.50 | **FAIL** |
+| Worst-fold top-1 | **0.148** | ≥ 0.50 | **FAIL** |
+| Pairwise accuracy | 0.754 | ≥ 0.70 | PASS |
+| Worst-fold gain over state-blind | +0.111 | ≥ 0.05 | PASS |
+
+Chance top-1 is 0.091; the state-blind predictor achieves 0.059. Per fold:
+
+| Held-out seed | Fitted top-1 | State-blind | Gain | Pairwise |
+| --- | ---: | ---: | ---: | ---: |
+| 96600000 | 0.259 | 0.111 | +0.148 | 0.777 |
+| 96600001 | 0.185 | 0.074 | +0.111 | 0.772 |
+| 96600002 | 0.333 | 0.074 | +0.259 | 0.723 |
+| 96600003 | 0.148 | 0.000 | +0.148 | 0.735 |
+| 96600004 | 0.333 | 0.037 | +0.296 | 0.764 |
+
+Every fold beats the state-blind predictor and every fold passes pairwise, but
+no fold comes close to the 50% top-1 floor.
+
+### Post-hoc diagnostic (not part of the gate)
+
+Computed after seeing the failure, and labelled as such:
+
+| Policy | Total cost | vs best constant |
+| --- | ---: | ---: |
+| MDL-2-OT anchor | 72,025.4M | |
+| Best constant (`u_0.60`) | 70,721.4M | — |
+| **Fitted model** | 70,574.6M | **−0.2038%** of anchor |
+| Oracle (hindsight) | 70,257.3M | −0.6444% of anchor |
+
+The fitted model captures **31.6%** of the available state-dependent headroom
+and beats the best tuned constant by 0.20% of anchor cost, out of sample.
+Median rung distance between prediction and truth is 1, and 53.3% of
+predictions land within one rung.
+
+So the model is not failing to learn; it is failing to pick the exact rung out
+of eleven. Because the cost surface near the optimum is smooth — which was the
+explicit design goal of the re-calibration — a near miss is cheap, and top-1
+accuracy is a harsh proxy for the quantity that actually matters.
+
+### Two limitations of this screen, both conservative
+
+1. **The gate inherited argmax primacy from Stage G1 without rechecking that
+   it fits this channel.** In routing, actions were integer lots on a jagged
+   surface where a near miss was a different decision. Here the surface is
+   smooth by construction, so the same criterion is stricter than the endpoint
+   warrants. This is the same class of error as the E2 gate defect: measuring
+   a proxy rather than the decision-relevant quantity.
+2. **The learner is deliberately weak and destroys graph structure.** Fifteen
+   network-level aggregates (sums, maxima, standard deviations over 20
+   clinics) discard exactly the per-clinic spatial detail a GCN exists to use.
+   A failure here bounds what a linear model on aggregates can do; it does not
+   bound what a graph encoder on per-clinic features could do.
+
+Both limitations mean the true learnability of this channel is at least as
+good as measured, and plausibly better.
+
+### Recommendation: stop here and obtain external review
+
+The preregistered gate failed, so **E5 is not authorized and no actor may be
+trained**. That stands regardless of the diagnostic above.
+
+This is now the **second** time a screen has failed and analysis has surfaced
+a reason the gate was mis-specified (E2's headroom-blind-to-geometry defect
+was the first). Each amendment has been individually defensible and each was
+executed under change control with fresh configs and output roots. But the
+pattern itself is a warning: a sequence of individually reasonable amendments,
+each made after seeing a failure, is a garden of forking paths, and it
+converges on a passing result whether or not one exists.
+
+The author of both amendments should not authorize a third. Zhaowei's review
+of the E2b/E3 chain (PR #9) is already outstanding and is now the appropriate
+decision point for all of:
+
+- whether the argmax criterion should be replaced by a realized-cost criterion
+  for a smooth channel, and if so what threshold;
+- whether an E4b with per-clinic graph-structured features is a legitimate
+  continuation or post-hoc gate-shopping;
+- whether the accumulated amendment count already compromises the chain and it
+  should be re-run end to end under a single frozen protocol.
+
+The last option deserves serious weight. Everything measured so far is
+reproducible and hash-recorded, so a clean re-run under one preregistered
+protocol is affordable — roughly an hour of compute — and would answer the
+forking-paths objection outright.
+
+### Evidence
+
+- Rows: `results/continuous_overtime_critic_ranking_e4/headroom_rows.csv`
+- Ranking report:
+  `results/continuous_overtime_critic_ranking_e4/ranking_feasibility.json`
+  (config and rows SHA256)
+- Curated: `experiments/evidence/continuous_overtime_critic_ranking_e4/`
+- Config: `experiments/configs/continuous_overtime_critic_ranking_e4.json`
+- Implementation: `evaluation/ranking_feasibility.py`,
+  `evaluation/run_overtime_ranking_e4.py` (11 tests)
+
+---
+
+## Stage E4b (EXPLORATORY): does graph structure carry the signal? — 2026-08-29
+
+**Exploratory, not confirmatory.** Consumes the Stage E4 rows; trains no
+deployed policy; touches no reserved data.
+
+### Motivation and outcome
+
+E4 failed using 15 network-level aggregates, and I argued that was a strawman
+for a graph method: sums and maxima over 20 clinics destroy exactly the
+per-clinic topology a GCN exists to exploit. This ablation tested that claim.
+
+**The claim was wrong.** Adding distributional shape and graph structure does
+not rescue the result, and graph features specifically add nothing.
+
+### Ablation (leave-one-generation-seed-out, 135 states, ridge)
+
+Best result per feature family across an α grid from 0.1 to 10,000:
+
+| Feature set | Dim | Best top-1 | Best realized cost vs constant | Headroom captured |
+| --- | ---: | ---: | ---: | ---: |
+| aggregate (E4 baseline) | 15 | 0.319 | **−0.2655%** | **41.2%** |
+| aggregate + distribution | 27 | **0.356** | −0.2599% | 40.3% |
+| aggregate + distribution + graph | 34 | 0.341 | −0.2529% | 39.2% |
+| graph only | 7 | 0.215 | — | — |
+
+Gate is top-1 ≥ 0.50. Every configuration fails, and the α curve now has an
+interior peak, so linear-model performance on this channel is bounded around
+**0.30–0.36** rather than being limited by the grid.
+
+Graph features are not merely unhelpful — the best top-1 (0.356) and the best
+realized cost (−0.2655%) both come from feature sets *without* them, and
+graph-only is the worst family tested. One-hop message passing over the
+resource edges and spatial autocorrelation of shortfall carry no additional
+information about where the overtime optimum sits.
+
+### What this settles
+
+The E4 verdict stands on much stronger ground. The limitation I flagged when
+reporting it — "the learner destroys the graph structure a GCN would use" —
+has now been tested directly and rejected as an explanation.
+
+Under a realized-cost criterion, the outcome is unchanged: the best model
+captures 41.2% of the oracle budget and beats the tuned constant by 0.27% of
+anchor cost, against the two principled thresholds considered (≥50% of oracle
+budget, or ≥0.5% of anchor). **Both still fail**, exactly as predicted when
+the criterion change was proposed. Replacing argmax with realized cost does
+not change this channel's verdict.
+
+### The scientific finding: two distinct ways a channel can be unlearnable
+
+Overtime and routing fail in different places, and the contrast is the useful
+result:
+
+| | Routing (G0/G1) | Overtime (E2b/E3/E4) |
+| --- | --- | --- |
+| Does state-dependent value exist? | not isolated | **yes, +0.64%** |
+| Do the labels replicate? | **no** — 0.545 agreement | **yes** — 0.926, 1.000 cross-family |
+| Is the optimum predictable from state? | not reached | **no** — top-1 0.31–0.36 vs 0.50 |
+| Failure mode | target is noise | target is stable but not a function of observable state |
+
+Routing's counterfactual labels do not replicate: there is no stable target to
+learn. Overtime's labels replicate almost perfectly, yet a model given the
+decision-time state — including graph-derived features — cannot identify the
+optimum. The signal is real and reproducible but is not carried by anything a
+policy can observe when it acts. The most likely driver is realized future
+demand, which is knowable in hindsight and unavailable at decision time.
+
+That taxonomy is a stronger contribution than either channel alone, and it is
+what the cheap gating protocol is for: both failures were identified in hours
+of evaluation-only compute, before any agent was trained.
+
+### Residual limitation
+
+The learner is linear throughout. A nonlinear model could in principle capture
+interactions this ablation cannot, and with 135 states it would also overfit
+readily. That check has not been run.
+
+### Evidence
+
+- `results/continuous_overtime_critic_ranking_e4/ranking_ablation_e4b.json`
+- Implementation: `evaluation/run_overtime_ranking_e4b.py`
+
+---
+
+## CONFIRMATORY RUN on the reserved held-out set — 2026-08-29
+
+Executed once, on `routing_regional_drift` with seed families `97100000`,
+`97200000`, `97300000`, under the protocol frozen and committed in `4a11d00`
+**before** the run started (`frozen_protocol.md`). 4,320 rows, 45 states.
+
+### Predictions versus outcome
+
+| Quantity | Predicted | Actual | |
+| --- | --- | ---: | --- |
+| Headroom gate | PASS | PASS (0.80) | correct |
+| **State-dependence value** | **PASS, +0.5% to +0.8%** | **+0.4500% — FAIL** | **WRONG** |
+| Interior best-arm fraction | ≥ 0.80 | 0.778 | near miss |
+| Label stability, best-action | PASS, 0.85–0.98 | 0.911 PASS | correct |
+| Label stability, pairwise | PASS, ≥ 0.95 | 0.991 PASS | correct |
+| Ranking top-1 | FAIL, 0.25–0.40 | 0.267 FAIL | correct |
+| Ranking worst-fold top-1 | FAIL, ≤ 0.35 | 0.111 FAIL | correct |
+| Realized cost vs constant | −0.15% to −0.35% | −0.1264% | outside range |
+| Headroom captured | 30–50% | 26.3% | outside range |
+
+### The prediction that matters is the one that was wrong
+
+**The state-dependence result did not replicate.** It measured +0.4500%
+against the frozen 0.5% gate, so the channel classifies on held-out data
+exactly as it did at Stage E2: `channel_captured_by_constant_policy`.
+
+This is precisely the falsification condition written into
+`frozen_protocol.md` before the run: *"a state-dependence value near zero
+would mean the E2b/E3 positive was specific to the exploratory scenarios."*
+The value is not near zero, but it is below the gate, and the gate is the
+prespecified decision rule.
+
+The exploratory estimates were +0.6446% (E2b) and +0.6182% (E3), measured
+across three seed families on three scenarios. On a fourth scenario the same
+quantity is +0.4500% — about 30% lower, and on the failing side of a threshold
+fixed in advance. Three internally consistent replications did not predict the
+held-out result.
+
+**This vindicates reserving the held-out set, and it means the forking-paths
+concern was real rather than hypothetical.** The E2b calibration and the gate
+amendment produced a result that looked solid under every check available
+inside the exploratory scenarios — including a 1.000 cross-family agreement in
+E3 — and it still degraded on a scenario that took no part in developing the
+protocol. Had we stopped at E3 and reported +0.64% as the finding, we would
+have reported a number that does not survive a regime change.
+
+### The ranking result is worse than exploration suggested
+
+Held-out ranking did not merely fail; the fitted model is **worse than the
+state-blind constant**:
+
+| Held-out seed | Fitted top-1 | State-blind | Gain |
+| --- | ---: | ---: | ---: |
+| 97100000 | 0.444 | 0.667 | **−0.222** |
+| 97100001 | 0.333 | 0.111 | +0.222 |
+| 97100002 | 0.222 | 0.333 | −0.111 |
+| 97100003 | 0.111 | 0.222 | −0.111 |
+| 97100004 | 0.222 | 0.222 | +0.000 |
+
+Pooled fitted top-1 0.267 against a state-blind 0.311. In exploration the
+model beat state-blind on every fold (state-blind was 0.059 there); here it
+loses on three of five. The state-blind baseline is much stronger on this
+scenario because the optimum concentrates on one rung — which is the same
+finding as the state-dependence miss, seen from the other side.
+
+The model still captures 26.3% of the oracle budget and beats the constant by
+0.1264% on realized cost, so it is not worthless. But both figures fall below
+the exploratory range, and the argmax result is now unambiguous.
+
+### Conclusion
+
+**The overtime channel does not support a learned policy, and the exploratory
+positive was regime-specific.**
+
+Final classification on held-out data: `channel_captured_by_constant_policy`,
+`optimum_not_predictable_from_state`. **Stage E5 is not authorized and the
+channel is closed.**
+
+What survives as a claim, stated at the strength the evidence supports:
+
+1. Overtime is a valuable operational lever — worth roughly 1.8% of anchor
+   cost on the held-out scenario — but essentially all of that is captured by
+   a single tuned constant.
+2. There is a small amount of genuine state-dependent value (+0.45% oracle,
+   26.3% of it capturable out of sample), below the threshold set in advance
+   as the minimum worth learning.
+3. The per-state optimum replicates across CRN streams (0.911, 0.991) but is
+   not predictable from decision-time state, and a state-conditioned model
+   underperforms a constant on most held-out folds.
+4. Neither distributional features, graph message passing, nor nonlinear
+   models change this (E4b, E4c).
+
+### Evidence
+
+- Rows: `results/continuous_overtime_confirmatory/headroom_rows.csv`
+- Summary and ranking:
+  `results/continuous_overtime_confirmatory/{summary,ranking_feasibility}.json`
+- Curated: `experiments/evidence/continuous_overtime_confirmatory/`
+- Frozen protocol and pre-registered predictions:
+  `specs/2026-08-29-continuous-overtime-control/frozen_protocol.md`
+  (committed `4a11d00`, before execution)

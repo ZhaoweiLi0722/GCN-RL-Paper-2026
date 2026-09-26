@@ -1,0 +1,96 @@
+{
+  "config_sha256": "c308fafd9825bb8bb2e44c0da9dcf16c53a0517aff325532ad48a6d3da6b9b38",
+  "experimental_role": "development-only Stage E4 held-out-seed ranking screen; evaluation-only, no training of any deployed policy. Tests whether the per-state optimum is PREDICTABLE from features observable at decision time, which E2b/E3 did not establish.",
+  "feature_names": [
+    "waiting_sum",
+    "waiting_max",
+    "waiting_std",
+    "idle_sum",
+    "idle_min",
+    "reagents_sum",
+    "reagents_min",
+    "bound_clinics",
+    "bound_shortfall_sum",
+    "bound_shortfall_max",
+    "at_risk_sum",
+    "near_expiry_sum",
+    "in_production_sum",
+    "normalized_time",
+    "demand_sum"
+  ],
+  "gate": {
+    "chance_top1": 0.09090909090909091,
+    "classification": "optimum_not_predictable_from_state",
+    "e5_design_authorized": false,
+    "gain_over_state_blind_passed": true,
+    "gate": "e4_ranking_feasibility",
+    "measured_pooled_pairwise": 0.7542087542087542,
+    "measured_pooled_top1": 0.2518518518518518,
+    "measured_worst_fold_gain": 0.1111111111111111,
+    "measured_worst_fold_top1": 0.14814814814814814,
+    "minimum_gain_over_state_blind": 0.05,
+    "minimum_pairwise": 0.7,
+    "minimum_top1": 0.5,
+    "pairwise_passed": true,
+    "per_fold_top1_passed": false,
+    "pooled_top1_passed": false,
+    "ranking_gate_passed": false,
+    "state_blind_top1": 0.05925925925925926
+  },
+  "name": "continuous_overtime_critic_ranking_e4",
+  "report": {
+    "chance_top1": 0.09090909090909091,
+    "folds": [
+      {
+        "fitted_top1": 0.25925925925925924,
+        "gain_over_state_blind": 0.14814814814814814,
+        "held_out_seed": 96600000,
+        "pairwise_accuracy": 0.7771043771043771,
+        "state_blind_top1": 0.1111111111111111,
+        "states": 27
+      },
+      {
+        "fitted_top1": 0.18518518518518517,
+        "gain_over_state_blind": 0.1111111111111111,
+        "held_out_seed": 96600001,
+        "pairwise_accuracy": 0.7717171717171717,
+        "state_blind_top1": 0.07407407407407407,
+        "states": 27
+      },
+      {
+        "fitted_top1": 0.3333333333333333,
+        "gain_over_state_blind": 0.25925925925925924,
+        "held_out_seed": 96600002,
+        "pairwise_accuracy": 0.7232323232323232,
+        "state_blind_top1": 0.07407407407407407,
+        "states": 27
+      },
+      {
+        "fitted_top1": 0.14814814814814814,
+        "gain_over_state_blind": 0.14814814814814814,
+        "held_out_seed": 96600003,
+        "pairwise_accuracy": 0.7353535353535353,
+        "state_blind_top1": 0.0,
+        "states": 27
+      },
+      {
+        "fitted_top1": 0.3333333333333333,
+        "gain_over_state_blind": 0.2962962962962963,
+        "held_out_seed": 96600004,
+        "pairwise_accuracy": 0.7636363636363637,
+        "state_blind_top1": 0.037037037037037035,
+        "states": 27
+      }
+    ],
+    "ladder_size": 11,
+    "pooled_fitted_top1": 0.2518518518518518,
+    "pooled_pairwise_accuracy": 0.7542087542087542,
+    "pooled_state_blind_top1": 0.05925925925925926,
+    "state_blind_arm": "u_0.60",
+    "state_count": 135,
+    "worst_fold_gain": 0.1111111111111111,
+    "worst_fold_top1": 0.14814814814814814
+  },
+  "ridge_alpha": 1.0,
+  "rows_sha256": "bb854c9308e7210659b3b61ed468b74fffa0e65ebf5192888ffa611f561d2ef0"
+}

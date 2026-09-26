@@ -1,0 +1,18 @@
+{
+  "arms": [
+    "shift_+0.00",
+    "shift_-0.10",
+    "shift_-0.05",
+    "shift_+0.05",
+    "shift_+0.10"
+  ],
+  "config_sha256": "cfac2cb97d36eddcf67ffdb66fb8e18a0cb8b8f62c912c8e955a36cd65e9fcac",
+  "dropped_state_ids": [],
+  "experimental_role": "development-only measurement of a LABEL ESTIMATOR, not a policy experiment. Measures how reliably the best legal specimen action can be identified as a function of simulation budget and allocation scheme. No training, no checkpoint selection, no formal stream, no change to any existing result root.",
+  "name": "routing_label_budget_study",
+  "row_count": 8640,
+  "rows_sha256": "d011d7850e9ffed4e0418bb9cb7953cb99edd0f88380d29587682c1a4d5a6474",
+  "states_dropped": 0,
+  "states_kept": 27,
+  "world_count": 64
+}

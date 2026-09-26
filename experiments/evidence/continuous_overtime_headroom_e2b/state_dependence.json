@@ -1,0 +1,44 @@
+{
+  "gate": {
+    "classification": "state_dependent_headroom_established",
+    "gate": "state_dependence",
+    "in_sample_oracle_fraction": 0.00667739671052955,
+    "interior_criterion_passed": true,
+    "measured_fraction": 0.006446337988730835,
+    "measured_interior_fraction": 0.9259259259259259,
+    "minimum_fraction": 0.005,
+    "minimum_interior_fraction": 0.3,
+    "state_dependence_gate_passed": true,
+    "value_criterion_passed": true
+  },
+  "report": {
+    "anchor_total": 14059520510.788042,
+    "best_constant_arm": "u_0.80",
+    "constant_total": 13772288023.002232,
+    "distinct_best_arm_count": 8,
+    "distinct_best_arms": [
+      "u_0.30",
+      "u_0.40",
+      "u_0.50",
+      "u_0.60",
+      "u_0.70",
+      "u_0.80",
+      "u_0.90",
+      "u_1.00"
+    ],
+    "interior_best_arm_fraction": 0.9259259259259259,
+    "interior_best_arm_states": 25,
+    "oracle_total": 13678407026.991873,
+    "prospective_available": true,
+    "prospective_constant_arm": "u_0.80",
+    "prospective_constant_total": 13772288023.002232,
+    "prospective_total": 13681655601.830198,
+    "prospective_value_of_state_dependence": 90632421.17203331,
+    "prospective_value_of_state_dependence_fraction": 0.006446337988730835,
+    "selection_scoring_best_arm_agreement": 0.9629629629629629,
+    "state_count": 27,
+    "value_of_channel_over_anchor": 287232487.7858105,
+    "value_of_state_dependence": 93880996.01035881,
+    "value_of_state_dependence_fraction": 0.00667739671052955
+  }
+}

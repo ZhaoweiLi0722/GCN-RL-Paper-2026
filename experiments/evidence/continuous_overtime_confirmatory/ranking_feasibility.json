@@ -1,0 +1,96 @@
+{
+  "config_sha256": "1c1e2d25daaed2d14e354f890b615d96a32552472c7295ce31d437b3b8732205",
+  "experimental_role": "CONFIRMATORY run of the frozen protocol on the reserved held-out scenario and seed families. Executed once; its result stands. See specs/2026-08-29-continuous-overtime-control/held_out_reservation.md and frozen_protocol.md.",
+  "feature_names": [
+    "waiting_sum",
+    "waiting_max",
+    "waiting_std",
+    "idle_sum",
+    "idle_min",
+    "reagents_sum",
+    "reagents_min",
+    "bound_clinics",
+    "bound_shortfall_sum",
+    "bound_shortfall_max",
+    "at_risk_sum",
+    "near_expiry_sum",
+    "in_production_sum",
+    "normalized_time",
+    "demand_sum"
+  ],
+  "gate": {
+    "chance_top1": 0.09090909090909091,
+    "classification": "optimum_not_predictable_from_state",
+    "e5_design_authorized": false,
+    "gain_over_state_blind_passed": false,
+    "gate": "e4_ranking_feasibility",
+    "measured_pooled_pairwise": 0.7163636363636363,
+    "measured_pooled_top1": 0.26666666666666666,
+    "measured_worst_fold_gain": -0.2222222222222222,
+    "measured_worst_fold_top1": 0.1111111111111111,
+    "minimum_gain_over_state_blind": 0.05,
+    "minimum_pairwise": 0.7,
+    "minimum_top1": 0.5,
+    "pairwise_passed": true,
+    "per_fold_top1_passed": false,
+    "pooled_top1_passed": false,
+    "ranking_gate_passed": false,
+    "state_blind_top1": 0.3111111111111111
+  },
+  "name": "continuous_overtime_confirmatory",
+  "report": {
+    "chance_top1": 0.09090909090909091,
+    "folds": [
+      {
+        "fitted_top1": 0.4444444444444444,
+        "gain_over_state_blind": -0.2222222222222222,
+        "held_out_seed": 97100000,
+        "pairwise_accuracy": 0.6909090909090909,
+        "state_blind_top1": 0.6666666666666666,
+        "states": 9
+      },
+      {
+        "fitted_top1": 0.3333333333333333,
+        "gain_over_state_blind": 0.2222222222222222,
+        "held_out_seed": 97100001,
+        "pairwise_accuracy": 0.703030303030303,
+        "state_blind_top1": 0.1111111111111111,
+        "states": 9
+      },
+      {
+        "fitted_top1": 0.2222222222222222,
+        "gain_over_state_blind": -0.1111111111111111,
+        "held_out_seed": 97100002,
+        "pairwise_accuracy": 0.797979797979798,
+        "state_blind_top1": 0.3333333333333333,
+        "states": 9
+      },
+      {
+        "fitted_top1": 0.1111111111111111,
+        "gain_over_state_blind": -0.1111111111111111,
+        "held_out_seed": 97100003,
+        "pairwise_accuracy": 0.6747474747474748,
+        "state_blind_top1": 0.2222222222222222,
+        "states": 9
+      },
+      {
+        "fitted_top1": 0.2222222222222222,
+        "gain_over_state_blind": 0.0,
+        "held_out_seed": 97100004,
+        "pairwise_accuracy": 0.7151515151515152,
+        "state_blind_top1": 0.2222222222222222,
+        "states": 9
+      }
+    ],
+    "ladder_size": 11,
+    "pooled_fitted_top1": 0.26666666666666666,
+    "pooled_pairwise_accuracy": 0.7163636363636363,
+    "pooled_state_blind_top1": 0.3111111111111111,
+    "state_blind_arm": "u_0.50",
+    "state_count": 45,
+    "worst_fold_gain": -0.2222222222222222,
+    "worst_fold_top1": 0.1111111111111111
+  },
+  "ridge_alpha": 10.0,
+  "rows_sha256": "f42c2f07892f934ca89e5272cd3c7434bb13eb798dab721b9973515aa1c79261"
+}

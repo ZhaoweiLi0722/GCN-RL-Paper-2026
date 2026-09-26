@@ -350,7 +350,17 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
         # 3) Resource bookkeeping (reagents + patient-aligned bioreactor
         #    pipeline), then reagent/capacity transfers. Specimens remain
         #    identity-bound and cannot be pooled.
-        next_reagents = self.reagents - production + replenishment
+        if self._procurement_pipeline_depth() > 0:
+            # The patient env overrides step(), so the procurement pipeline has
+            # to be wired here too; the base implementation is not reached.
+            leads = self._draw_procurement_leads()
+            self._place_procurement(replenishment, leads)
+            procurement_arrivals = self._receive_procurement()
+        else:
+            procurement_arrivals = None
+        next_reagents = self.reagents - production + (
+            replenishment if procurement_arrivals is None else procurement_arrivals
+        )
         next_bioreactors = np.zeros_like(self.bioreactors)
         if self.config.enable_overtime_control:
             # Borrowed-capacity accounting: overtime starts occupy no physical
@@ -631,6 +641,9 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 + capacity_transfer_cost
             ),
         }
+        if procurement_arrivals is not None:
+            info["procurement_arrivals"] = procurement_arrivals.copy()
+            info["reagents_on_order"] = self.reagent_purchase_pipeline.sum(axis=0)
         if self.config.enable_overtime_control:
             info["overtime_fraction"] = overtime_fraction.copy()
             info["overtime_surge"] = overtime_surge.copy()
@@ -1209,6 +1222,8 @@ class PatientConditionCapacityEnv(CapacityPlanningEnv):
                 "overtime_fatigue",
             ):
                 arrays[name] = np.asarray(getattr(self, name)).copy()
+        if self._procurement_pipeline_depth() > 0:
+            arrays["reagent_purchase_pipeline"] = self.reagent_purchase_pipeline.copy()
         scalars = {
             name: copy.deepcopy(getattr(self, name))
             for name in (

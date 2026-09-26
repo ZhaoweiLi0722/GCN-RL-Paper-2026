@@ -141,6 +141,33 @@ Measurement B 給的另一個數字比 39% 有用：**任何 policy 至少損失
 
 表 B 的 headroom 量測方式彼此不同，不能橫向比較；只有表 A 的 Measurement A 是資訊匹配且 forced-start 一致的 planner。
 
+## 2b. Graph policy 對 system uncertainty 的 robustness：測了什麼、沒測什麼
+
+**已測（有 CI 的證據）**
+
+| 不確定性軸 | 測法 | GCN vs MDL-2 | Flat vs MDL-2 | GCN vs Flat | 讀法 |
+| --- | --- | ---: | ---: | ---: | --- |
+| 需求 regime 突變（abrupt shift, 第 26 週） | formal 四 scenario 之一 | −0.43% | −0.05% | −0.38% | Flat 幾乎歸零，graph 優勢在此最大 |
+| 需求緩慢漂移（regional drift） | 同上 | −0.68% | −0.32% | −0.36% | |
+| 複合壓力（drift + shock + 供應中斷 + forecast error） | 同上 | −0.76% | −0.43% | −0.33% | 最嚴苛 scenario 反而改善最多 |
+| 無 regime 變化（nominal，含隨機 shock 與中斷） | 同上 | −0.69% | −0.46% | −0.23% | |
+| Specimen 立即可用（lead 0） | frozen policy 換環境參數，500 pairs | **+0.63%**（變差） | +0.38% | +0.26% | 反轉，幅度與主效果相當 |
+| 成品回程多 1 週（return 1） | 同上 | −1.05% | −0.75% | −0.30% | 優勢放大 |
+| Anchor 換成 MDL-3（zero-shot） | dev TD3 checkpoints，400 worlds | −0.19% vs MDL-3 | +0.71% vs MDL-3 | — | Graph 存活且修復 guardrail，flat 失敗 |
+| 跨 scenario zero-shot（舊校準，07-25） | abrupt-shift checkpoint 放到 gradual drift | +0.38%（變差） | — | — | 不能主張跨 scenario 轉移 |
+
+補充：formal 20 個 seed × scenario cell 全部 GCN 贏 MDL-2；但 abrupt shift 下 seed 10 與 14 的完成率違反 scenario-level 臨床 noninferiority（pooled 通過）。
+
+**沒測（reviewer 可能問）**
+
+- 環境參數的 misspecification：病人 decay、risk type 機率、supplier disruption rate、demand rate 偏離訓練值時 policy 是否退化。四個 scenario 只變需求 regime 與 shock 頻率，病人與供應參數固定。
+- 網路拓樸變化：新增或移除 clinic、移除 specimen edge、換 cluster 結構。No-edge / shuffled-edge / edge-type ablation 在 manuscript 裡列為 planned，沒有做，所以「graph 有用」目前是「matched GCN encoder 優於 matched MLP」，不是「用到拓樸」。
+- 隨機 procurement lead time：08-29 只測了 heuristic 的 variability cost，learned policy 沒放進去。
+- 在 routing-primary 校準下的跨 scenario 轉移：formal 是四個 scenario 混合訓練，沒有 train-on-one / test-on-another。
+- Seed 敏感度：5 個 training seed 之間 GCN 增益從 −0.50% 到 −0.87%，變異約 ±0.2%，比 CI 寬。
+
+**可以說的話**：graph residual 在四種需求不確定性 regime 下方向一致且都通過 pooled 臨床 gate，且在 anchor 改變時存活；但對運輸時序不對稱（lead-0 反轉），跨 scenario zero-shot 失敗，拓樸依賴性未驗證。不能說「對 system uncertainty 普遍 robust」。
+
 ## 3. 卡住的地方，需要 Zhaowei 提供
 
 - **Formal row-level 資料只在 Zhaowei 的 Mac 上**，gitignored 路徑 `results/patient_indexed_specimen_routing_mac_mps_primary/`。Crossed-design bootstrap 工具（`evaluation/crossed_design_bootstrap_audit.py`）已建好並驗證，沒有 raw rows 就無法重算 formal CI。檔案清單在 `docs/reporting_audit_2026-09-15.md` §2；請匯出為唯讀 archive 並附 SHA-256 manifest。
@@ -168,3 +195,11 @@ Measurement B 給的另一個數字比 39% 有用：**任何 policy 至少損失
 - Archive 匯出時程。這是投稿的第一個 blocker。
 - Measurement A full class 只有 12 worlds，是否在他的機器上補到每 scenario 10 worlds 後再寫進論文。
 - Follow-up 的 planner 蒸餾要現在開 spec，還是等 freeze 之後。
+
+### 「RL 有沒有作用」的結論怎麼寫
+
+- **可以說**：online actor-critic 更新（100 episodes DDPG）沒有可量測的貢獻。四個 scenario 的 final − frozen 增量都在 ±0.01% 內，CI 寬約 ±0.02–0.03%，五個 seed 無一致方向；TD3 backbone 與 structured-exploration screen 同樣結果。而且有機制解釋：量化執行消掉 25/27 的 actor 移動、counterfactual label 跨 CRN 只有 54.5% 一致、4-step horizon 與 remaining-horizon 最優只有 52% 一致。
+- **不能說「學習沒有作用」**：GCN 蒸餾 −0.66% CI 排除零、20/20 cell 全贏、臨床 noninferior，graph 對 flat −0.32%。這是 learned policy，只是訓練方式是監督式蒸餾。論文必須把「蒸餾」和「RL」分開講。
+- **不能說「RL 在這個問題上不可能有用」**：review 第 4 節明確反對 impossibility 主張。Planner 證明同樣觀測與 action class 內還有 1.83% 可拿而 learned policy 只拿到三分之一，這是學習方法拿得太少，不是沒東西可學。Hybrid discrete-continuous policy、paired-CRN advantage、從 planner decision logs 蒸餾都未測。
+- **建議寫法**：「在測試的 action 幾何與訓練訊號下，offline 蒸餾提供了全部可量測的改善；後續的 online DDPG 更新沒有產生可與 Monte Carlo 不確定性區分的增量。這不排除不同 action 表示或訓練訊號下的 online 學習有效。」
+- 一句話版本：蒸餾有用、graph 有用、online RL 在這個設定下量不到，而且我們知道為什麼。

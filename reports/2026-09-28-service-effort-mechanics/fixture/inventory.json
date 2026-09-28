@@ -1,0 +1,84 @@
+{
+  "files": [
+    {
+      "path": "src/env/service_effort_mechanics.py",
+      "sha256": "bf8add6c56fe3cbf6e506769f1e509bb9f90a552ca59f7b7f6e08357d999f0ea"
+    },
+    {
+      "path": "src/baselines/public_service_response.py",
+      "sha256": "2824a69290373a644a1b687a0526c7c93b872ec48b317887ed158de460bd0c7a"
+    },
+    {
+      "path": "evaluation/check_service_effort_mechanics.py",
+      "sha256": "db1df02b8f4fbbd9fc486edf227f158798bb638077ace9c14a72901889b90770"
+    },
+    {
+      "path": "tests/test_service_effort_mechanics.py",
+      "sha256": "92d199a787ca74ff3055e4cdf809b2ad5d935b3daeb322ed8f89103c54c8fa09"
+    },
+    {
+      "path": "specs/2026-09-28-service-effort-mechanics/protocol.md",
+      "sha256": "45be191961fab0f0662198bda68613d0ab839e2c7996415074f3d909fbb669ae"
+    },
+    {
+      "path": "experiments/configs/service_effort_mechanics_20260928.json",
+      "sha256": "357602f897ca375f0167b756bf66ce084e8676c64acbe422ac4ced85bac816ec"
+    },
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4"
+    },
+    {
+      "path": "src/env/development_disruption.py",
+      "sha256": "5e3c3d53c89b95aa34ae34f246bc8c61ffe29108f3c581f4305c0f9cc917be79"
+    },
+    {
+      "path": "experiments/configs/disruption_feasibility_20260928.json",
+      "sha256": "132bf05c946579948664d88654c6fd944c93c398e896133f80d9399f1ba4e148"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/episodes.jsonl",
+      "sha256": "1bd0d6d6c39866b55505425e63572713f1ba8135c650e932339e297f7ea2d1ae"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/execution.json",
+      "sha256": "bf91ff9146c677715436c7f76e00808b11bc4f7a1ab8d6319ca1698cde659713"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/status.json",
+      "sha256": "4e38d321fecd33c0240a9ae9ce5ebe773b0bcc16a872cfec76cd73f0407ff212"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/inventory.json",
+      "sha256": "98055ee590b9c975845148a9797c5284ec0594dc8dabb192ffe2e156a4de665d"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/steps.jsonl",
+      "sha256": "3880db662571bf7e6b2aaa6db127ac2b35d6f36e6724d13eb10edc4aa0739021"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/summary.json",
+      "sha256": "bbc124c2ea4bc290cb44d242fe14b5eeff48c3e73d8de655de94e11bbf00e9cd"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/claim.json",
+      "sha256": "f28fe09f5812115eb497f9dcea30e8c5e1614854655d82ba9da4abc729c43c0f"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/transitions.jsonl",
+      "sha256": "801d1fa50f0081d19fbb9847289b88e7391727c82ae621f3514335868a782f5e"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/summary.json",
+      "sha256": "cba214ff2ac2f6153be3c279bc84f6518794af40a61aa243f4d13b41cd2c8b4f"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/status.json",
+      "sha256": "59c31bb2e1febbfb8836a0b3f2cf278b798f53fb2bac7deeb35ddca5398c936e"
+    }
+  ]
+}

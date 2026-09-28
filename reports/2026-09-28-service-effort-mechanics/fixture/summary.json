@@ -1,0 +1,130 @@
+{
+  "classification": "mechanics_pass_only_not_a_learning_or_headroom_gate",
+  "fixture_only": true,
+  "research_performance_evidence": false,
+  "training_performed": false,
+  "patient_environment_executed": false,
+  "new_scientific_crns_used": false,
+  "clinical_validity_established": false,
+  "scenario_count": 3,
+  "transition_rows": 24,
+  "first_distinguishable_decision_epoch": 4,
+  "interpretation": "In this noiseless, fully measured work fixture, a simple estimator identifies the response; no RL need is established.",
+  "cases": {
+    "nominal": {
+      "final_estimate": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "uncensored_samples": [
+        7,
+        7,
+        7
+      ],
+      "terminal_ledger": {
+        "settled": false,
+        "performance_comparison_allowed": false,
+        "reason": "mechanics fixture: unfinished jobs and prepaid pending hours are reported, not valued",
+        "remaining_work": [
+          2.25,
+          0.5,
+          2.25
+        ],
+        "unfinished_jobs": [
+          2,
+          1,
+          2
+        ],
+        "pending_prepaid_hours": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "committed_hours": 7.0,
+        "applied_hours": 7.0,
+        "labor_cost": 15.3125,
+        "change_cost": 0.5
+      }
+    },
+    "persistent_shift": {
+      "final_estimate": [
+        0.5,
+        1.25,
+        1.0
+      ],
+      "uncensored_samples": [
+        7,
+        6,
+        7
+      ],
+      "terminal_ledger": {
+        "settled": false,
+        "performance_comparison_allowed": false,
+        "reason": "mechanics fixture: unfinished jobs and prepaid pending hours are reported, not valued",
+        "remaining_work": [
+          2.875,
+          0,
+          2.25
+        ],
+        "unfinished_jobs": [
+          2,
+          0,
+          2
+        ],
+        "pending_prepaid_hours": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "committed_hours": 7.0,
+        "applied_hours": 7.0,
+        "labor_cost": 15.3125,
+        "change_cost": 0.5
+      }
+    },
+    "backlog_limited": {
+      "final_estimate": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "uncensored_samples": [
+        0,
+        0,
+        0
+      ],
+      "terminal_ledger": {
+        "settled": false,
+        "performance_comparison_allowed": false,
+        "reason": "mechanics fixture: unfinished jobs and prepaid pending hours are reported, not valued",
+        "remaining_work": [
+          0,
+          0,
+          0
+        ],
+        "unfinished_jobs": [
+          0,
+          0,
+          0
+        ],
+        "pending_prepaid_hours": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "committed_hours": 7.0,
+        "applied_hours": 7.0,
+        "labor_cost": 15.3125,
+        "change_cost": 0.5
+      }
+    }
+  },
+  "execution_commit": "2634e1dd3344b25d22a7285a21d362e14b2b41a4"
+}

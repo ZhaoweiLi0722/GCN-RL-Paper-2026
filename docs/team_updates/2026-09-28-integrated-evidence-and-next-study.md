@@ -93,3 +93,13 @@ and does not rule it out. The roadmap separates graph representation from
 online weight updates, includes a conditional two-week decision schedule, and
 preserves a GCN-focused manuscript route if online increments remain absent.
 It is a planning document, not an executable protocol or a new training launch.
+
+## Service-effort mechanics completed
+
+The [isolated service-effort readout](../../specs/2026-09-28-service-effort-mechanics/readout.md)
+records 24 deterministic transitions, 63 passing relevant tests and an
+independent row/hash audit. Continuous progress with indivisible completions,
+commitment delays and a receipt-only estimator are implemented outside the
+patient simulator. This verifies mechanics only: a simple estimator identifies
+the noiseless response, so it provides no evidence that online DDPG is needed.
+No patient experiment, new neural training, remote push or main merge occurred.

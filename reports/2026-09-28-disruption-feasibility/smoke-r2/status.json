@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "execution_commit": "9139798804122498c2b0f62a47947be0777d9051",
+  "smoke_only": true,
+  "start_unix": 1790619700.4570181,
+  "python": "3.9.6",
+  "numpy": "2.0.2",
+  "exit_code": 0,
+  "end_unix": 1790619701.54718
+}

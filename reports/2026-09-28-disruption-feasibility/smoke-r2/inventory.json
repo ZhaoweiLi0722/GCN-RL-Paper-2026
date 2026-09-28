@@ -1,0 +1,20 @@
+{
+  "source_sha256": {
+    "experiments/configs/disruption_feasibility_20260928.json": "132bf05c946579948664d88654c6fd944c93c398e896133f80d9399f1ba4e148",
+    "experiments/configs/patient_indexed_specimen_routing_benchmark.json": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709",
+    "experiments/configs/20_clinic_patient_condition_geo.json": "1c96b8c8513b7f64221c8f28935a01bb16a5376c036a4c8544574dfcd2a772a3",
+    "evaluation/disruption_feasibility_pilot.py": "d2c9ba41a089521cbde8448d88d404ec4ccc30051dda26fc82460bfb0878d31e",
+    "src/env/development_disruption.py": "5e3c3d53c89b95aa34ae34f246bc8c61ffe29108f3c581f4305c0f9cc917be79",
+    "src/env/patient_capacity_planning.py": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4",
+    "src/env/capacity_planning.py": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1",
+    "src/baselines/heuristics.py": "3ed3f944d47b52f76f8d7581ff706c6903e238c43ed077301ece1ddc0db0de35",
+    "src/rl/experiment.py": "97cefd581b89261320576c7eb9f2605f8ae586a2abe61579063381738fc961f2"
+  },
+  "output_sha256": {
+    "episodes.jsonl": "b59f23c3aa6bb97ebb51ef26173b9502fd77150024dab0f2580f8435668a7669",
+    "execution.json": "21abb4a933cee4b6eb2b170a579a922872c99eca326927fde737b0338ddb4277",
+    "status.json": "b7ed40606b1e80ef152f168e16fcf00b49904c44d63453191fb326e5d6774d6c",
+    "steps.jsonl": "022e2f1d075e107da5a121cfc2f350e2e80f3842a17ce67ee6ddc90e976ce317",
+    "summary.json": "1bc6e082c7453026d537421c6518c639a8dac78a43957a1b877cb3bd83a53b28"
+  }
+}

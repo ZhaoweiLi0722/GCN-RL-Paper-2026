@@ -1,0 +1,29 @@
+{
+  "study": "synthetic_disruption_baseline_feasibility_only",
+  "benchmark_plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+  "source_scenario": "routing_nominal_history",
+  "output_root": "reports/2026-09-28-disruption-feasibility/pilot",
+  "env_overrides": {
+    "episode_horizon": 52,
+    "max_idle_bioreactors": 210,
+    "include_demand_forecast_state": false,
+    "demand_forecast_error": null,
+    "demand_shock_probability": 0.0,
+    "regional_supplier_disruption_probability": 0.0,
+    "supplier_disruption_rate": 0.0,
+    "enable_stochastic_procurement": true,
+    "reagent_lead_time_probabilities": [0.8, 0.2, 0.0, 0.0],
+    "include_on_order_state": true
+  },
+  "change_step": 13,
+  "capacity_fraction": [0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  "shifted_lead_probabilities": [0.1, 0.2, 0.4, 0.3],
+  "discovery_seeds": [203000000, 203000001, 203000002, 203000003],
+  "validation_seeds": [204000000, 204000001, 204000002, 204000003, 204000004, 204000005, 204000006, 204000007],
+  "policies": [
+    {"name": "mdl2", "algorithm": "mdl2", "settings": {}},
+    {"name": "mdl3", "algorithm": "mdl2", "settings": {"lookahead_periods": 3}},
+    {"name": "mdl2_lt", "algorithm": "mdl2_lt", "settings": {}},
+    {"name": "mdl2_lt_safety120", "algorithm": "mdl2_lt", "settings": {"safety_multiplier": 1.2}}
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "status": "completed",
+  "scope": "synthetic_baseline_feasibility_only",
+  "online_rl_evidence": false,
+  "clinical_noninferiority_established": false,
+  "training_authorized": false,
+  "episodes": 32,
+  "steps": 192,
+  "paired_arrivals_and_rng_verified": true,
+  "identical_controls_verified": true,
+  "cells": {
+    "capacity_nochange": {
+      "discovery_selected": "mdl2",
+      "discovery_mean_cost": {
+        "mdl2": 41310817.08089279,
+        "mdl3": 44018112.50367847,
+        "mdl2_lt": 41585799.346043035,
+        "mdl2_lt_safety120": 43419853.51850943
+      },
+      "validation_differences_vs_mdl2": {
+        "mdl2": {
+          "total_cost": 0.0,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.0,
+          "lower_cost_worlds": 0
+        },
+        "mdl3": {
+          "total_cost": 3018848.6727185994,
+          "completion_service_level": -0.01461038961038963,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 8.186758864927278,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt": {
+          "total_cost": 190634.2701101303,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.5169774871085525,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt_safety120": {
+          "total_cost": 1871613.637675941,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 5.075593777996097,
+          "lower_cost_worlds": 0
+        }
+      }
+    },
+    "capacity_outage": {
+      "discovery_selected": "mdl2",
+      "discovery_mean_cost": {
+        "mdl2": 43172363.90225904,
+        "mdl3": 45557331.63776789,
+        "mdl2_lt": 43447346.14220397,
+        "mdl2_lt_safety120": 45391452.331535086
+      },
+      "validation_differences_vs_mdl2": {
+        "mdl2": {
+          "total_cost": 0.0,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.0,
+          "lower_cost_worlds": 0
+        },
+        "mdl3": {
+          "total_cost": 2962746.637233123,
+          "completion_service_level": -0.014610389610389574,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 7.739110762510962,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt": {
+          "total_cost": 190634.2701101303,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.49796351566887104,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt_safety120": {
+          "total_cost": 1964841.2687399983,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 5.132441639941324,
+          "lower_cost_worlds": 0
+        }
+      }
+    },
+    "lead_nochange": {
+      "discovery_selected": "mdl2",
+      "discovery_mean_cost": {
+        "mdl2": 41310817.08089279,
+        "mdl3": 44018112.50367847,
+        "mdl2_lt": 41585799.346043035,
+        "mdl2_lt_safety120": 43419853.51850943
+      },
+      "validation_differences_vs_mdl2": {
+        "mdl2": {
+          "total_cost": 0.0,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.0,
+          "lower_cost_worlds": 0
+        },
+        "mdl3": {
+          "total_cost": 3018848.6727185994,
+          "completion_service_level": -0.01461038961038963,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 8.186758864927278,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt": {
+          "total_cost": 190634.2701101303,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.5169774871085525,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt_safety120": {
+          "total_cost": 1871613.637675941,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 5.075593777996097,
+          "lower_cost_worlds": 0
+        }
+      }
+    },
+    "lead_shift": {
+      "discovery_selected": "mdl2",
+      "discovery_mean_cost": {
+        "mdl2": 41691518.08096044,
+        "mdl3": 44813573.2182422,
+        "mdl2_lt": 41755119.595988914,
+        "mdl2_lt_safety120": 43411645.19838171
+      },
+      "validation_differences_vs_mdl2": {
+        "mdl2": {
+          "total_cost": 0.0,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.0,
+          "lower_cost_worlds": 0
+        },
+        "mdl3": {
+          "total_cost": 3353119.5158632547,
+          "completion_service_level": -0.01461038961038963,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 9.093625540061018,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt": {
+          "total_cost": 190123.5200560093,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 0.5156130252943053,
+          "lower_cost_worlds": 0
+        },
+        "mdl2_lt_safety120": {
+          "total_cost": 1865920.4774361849,
+          "completion_service_level": 0.0,
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patients_lost": 0.0,
+          "cost_change_pct": 5.060357088097458,
+          "lower_cost_worlds": 0
+        }
+      }
+    }
+  }
+}

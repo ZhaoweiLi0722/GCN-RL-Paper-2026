@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "execution_commit": "9139798804122498c2b0f62a47947be0777d9051",
+  "smoke_only": true,
+  "start_unix": 1790619641.023038,
+  "python": "3.9.6",
+  "numpy": "2.0.2",
+  "exit_code": 1,
+  "error": "RuntimeError(\"nonconserved reactor stock: {'cell': 'capacity_nochange', 'split': 'discovery', 'world_seed': 123, 'policy': 'mdl2'}, 1, 5.600000500679016\")",
+  "end_unix": 1790619641.046446
+}

@@ -34,6 +34,16 @@ def profile(fractions=(0., 0.), probabilities=(.8, .2, 0., 0.)):
 
 
 class DisruptionTests(unittest.TestCase):
+    def test_legacy_idle_limit_can_drop_arriving_capacity(self):
+        for limit, expected_stock in ((6., 9.), (12., 12.)):
+            env = PatientConditionCapacityEnv(config(transfer_lead_time=1,
+                max_idle_bioreactors=(limit, limit)), seed=1)
+            env.bioreactors[1, 0] -= 3.
+            env.capacity_transfer_pipeline[0, 0] = 3.
+            self.assertEqual(env.bioreactors.sum() + env.capacity_transfer_pipeline.sum(), 12.)
+            env._receive_transfer_arrivals()
+            self.assertEqual(env.bioreactors.sum() + env.capacity_transfer_pipeline.sum(), expected_stock)
+
     def test_no_change_is_bit_identical_to_parent(self):
         a = PatientConditionCapacityEnv(config(), seed=1)
         b = DevelopmentDisruptionEnv(config(), profile(), seed=1)

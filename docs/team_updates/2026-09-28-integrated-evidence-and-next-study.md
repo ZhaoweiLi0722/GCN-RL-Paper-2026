@@ -73,3 +73,12 @@ archives; correct crossed inference; reconcile equations with executed code;
 justify clinical margins; test graph/transport dependence; keep formal,
 development and mechanism-only findings separate. No promise of a positive
 online effect or journal acceptance is made.
+
+## Pilot completed
+
+The bounded pilot and independent audit are complete. See
+`specs/2026-09-28-disruption-feasibility/readout.md` for all rule comparisons,
+clinical tradeoffs, the preserved smoke failure and the explicit change to
+synthetic idle-storage limits. This does not advance a neural-training gate.
+An aggregate-observation counterexample is now covered by
+`tests/test_development_disruption.py`. The user elected local-only integration.

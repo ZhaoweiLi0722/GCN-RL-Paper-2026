@@ -1481,6 +1481,17 @@ finite and the policy network changes. Treating these checks as prospective
 admissibility gates is a methodological lesson from the negative attribution
 evidence, not a claim that another policy has already passed them.
 
+The scope of these gates is important: a local first-action screen followed
+by a fixed continuation policy cannot certify global near-optimality or rule
+out gains from repeatedly coordinated decisions. Subsequent exploratory
+planner reports motivate a separate assessment of sequential control, but
+their information interface, simulation-query budget, and raw paired outcomes
+must be reconciled before comparison with the learned controllers. Likewise,
+reacting to newly observed capacity or procurement conditions is feedback
+control, not by itself evidence for updating neural policy parameters. Future
+attribution studies must compare online updates against a competent frozen,
+history-aware policy as well as adaptive non-RL alternatives.
+
 Several limitations remain. The routing-primary DDPG comparison has five
 training seeds, but the matched TD3 and mechanism-diagnostic screens have only
 three and use development streams. The formal comparison isolates graph versus

@@ -82,3 +82,14 @@ clinical tradeoffs, the preserved smoke failure and the explicit change to
 synthetic idle-storage limits. This does not advance a neural-training gate.
 An aggregate-observation counterexample is now covered by
 `tests/test_development_disruption.py`. The user elected local-only integration.
+
+## Research roadmap after the pilot
+
+The [online-adaptation roadmap](../../specs/2026-09-28-online-adaptation-roadmap/plan.md)
+prioritizes an unknown persistent resource-response mechanism, with a strong
+frozen history-aware policy, adaptive rules and system-identification/MPC as
+comparators. The preceding equipment-removal pilot did not test that mechanism
+and does not rule it out. The roadmap separates graph representation from
+online weight updates, includes a conditional two-week decision schedule, and
+preserves a GCN-focused manuscript route if online increments remain absent.
+It is a planning document, not an executable protocol or a new training launch.

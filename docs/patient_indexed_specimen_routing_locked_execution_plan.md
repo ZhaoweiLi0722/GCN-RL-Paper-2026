@@ -1174,3 +1174,20 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `experiments/evidence/continuous_overtime_headroom_e2/`
   (summary carries config/plan/rows SHA256; `state_dependence.json` carries
   the report and gate decision).
+
+### 2026-09-28: Separate service-effort mechanics fixture, no campaign reopening
+
+- Zhaowei requested continuation of the local online-adaptation roadmap. The
+  next bounded packet is `specs/2026-09-28-service-effort-mechanics/protocol.md`:
+  deterministic software fixtures for delayed continuous effort, conserved
+  service work and a receipt-only response estimator.
+- This module is isolated from patient production and is not a new scientific
+  routing experiment. It uses no patient trajectories, teacher/checkpoint,
+  scientific CRNs, neural training or formal confirmation. Howard's sign-off
+  is not asserted. The protocol and source are committed before its recorded
+  fixture execution; prior campaign evidence remains immutable.
+- The completed September 28 disruption pilot did not test unknown resource
+  effectiveness. The fixture does not establish engineering calibration,
+  sequential headroom, clinical noninferiority, graph benefit or online RL
+  gain. A scientifically justified process/measurement contract is required
+  before integrating any new mechanism into patient simulation.

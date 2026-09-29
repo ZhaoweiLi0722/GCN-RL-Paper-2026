@@ -38,7 +38,41 @@ packets are complete, or all remaining packets require external input, report
 the checkpoint and remove the continuation automation. Do not automatically
 invent a new experimental campaign to keep the queue nonempty.
 
-## Progress
+## Renewed local preparation queue
+
+After the completed P1 checkpoint, Zhaowei explicitly asked to continue and
+advance automatically. This opens the following **finite software-preparation
+queue**, not a new scientific campaign. Existing completion records remain
+historical checkpoints. All original no-push/no-training/no-holdout boundaries
+still apply. Do not wait for engineering data to complete independent software
+contracts, but do not fabricate that data to launch a patient scenario.
+
+| ID | Status | Concrete completion boundary |
+| --- | --- | --- |
+| N1 | Complete; production integration not authorized | Opt-in `src/rl/validated_returns.py`, 19 synthetic failure/return tests and `specs/2026-09-29-replay-repair-preparation/contract.md`. Combined 109-test suite and full compilation pass. Not wired into old agents. Reject disconnected windows, mixed semantics and implicit legacy migration; one explicit gamma-to-n target reference. |
+| N2 | Pending | Build a separate common-input graph/flat/gate contract fixture with synthetic tensors and tests. Enumerate shared information, state ordering, proposal conditioning, head/edge-ablation treatment and parameter-count scope. Reuse existing feature helpers only if their contract is explicit. No existing agent/default changes or environment/learning run. |
+| N3 | Pending | Prepare and test a no-training adapter/acceptance harness for the N1/N2 contracts, including reward scaling, short tails, termination/truncation and negative cases. Mark genuine legacy provenance gaps as non-migratable, not inferred. Draft a prospective development decision packet with unresolved scientific choices and required approval; do not choose new seeds, tune or execute it. |
+
+For N2/N3, implement only the smallest independent prototype/tests needed to
+answer the contract question. Do not create a duplicate full training framework.
+If a production integration choice needs scientific approval, record that exact
+choice and finish the other independent checks. At completion or external block,
+report once and remove the renewed automation rather than adding new packets.
+
+## Renewed progress
+
+- September 29, N1: implemented explicit replay semantics, immutable one-step
+  records, lineage-checked multi-step returns and a shared numeric Bellman-target
+  reference. Independent counterfactuals remain one-step. Reward scaling occurs
+  once; actual tail length and explicit terminal/truncation policy determine
+  bootstrap. Nineteen new synthetic tests and the combined 109-test regression
+  suite pass, as do full compilation and diff checks. Existing model,
+  environment, baseline, legacy replay, config and tracked evidence paths are
+  unchanged from `04d8c67`. No agent imports the prototype. Lineage assertions
+  still require collector verification; this is neither a historical repair
+  nor evidence of improved online learning. N2 is the next independent packet.
+
+## Historical progress
 
 - September 29, M1: initial inspection found generic DDPG prose inconsistent
   with the formal configuration: four-step anchor-relative online returns,

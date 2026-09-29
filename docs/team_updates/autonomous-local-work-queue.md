@@ -1,8 +1,8 @@
 # Autonomous local research queue
 
-## Live checkpoint: renewed S3 continuation
+## Live checkpoint: S3 complete, new scope decision required
 
-Updated 2026-09-29 15:33 UTC. The historical M/N completion records below remain valid;
+Updated 2026-09-29 15:38 UTC. The historical M/N completion records below remain valid;
 their old automation stop notices do not cancel the newly requested finite S3
 continuation. Use this section as the current queue, not an old completed packet.
 
@@ -10,13 +10,17 @@ continuation. Use this section as the current queue, not an old completed packet
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | S2 complete at `efe5a86`: 288/288 episodes, 9,364 audited steps, six probes, 123 relevant tests; no online-RL evidence |
-| Current task | S3 implementation and tests complete; recorded forecast diagnostic not yet executed |
+| Current task | S3 complete: implementation, source freeze, one recorded matrix, independent audit, readout and continuation-adequacy decision memo |
 | Protocol commit | `b91dd3b`; archived S2 probe/summary hashes reverified, config JSON and full compilation pass |
-| Automatic continuation | Created and confirmed ACTIVE: `gcn-rl` (GCN-RL local research continuation), attached to this task, every 30 minutes; local host/app must remain available |
+| Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | `evaluation/check_completion_action_ranking.py`; 17 new tests, 140 combined regression tests and full compileall pass; S2 read-only audit replays all 288 archived episodes; 40 historical input locks pass |
-| Process/output check | Read-only `ps` verified no related process at 15:23 UTC; S3 output root absent. Recheck immediately before launching; no running claim inferred from scheduler |
-| Next concrete action | Commit implementation/tests, verify no duplicate run, execute the one locked S3 forecast matrix, then read-only audit and decision memo |
-| Approval needed now | None for the declared S3 implementation, tests, one bounded forecast matrix, audit and decision memo |
+| Recorded execution | Source `a6d450906f57d1fac1718562ba99145b175e8af7`; PID 23324 returned exit 0 in 8.998s; 491,520 model paths, 10,409,928 transition queries, 16 blocks, 256 raw chunks; zero new actual episodes or neural updates |
+| Independent verification | Read-only audit passes all costs/hashes/identities, 48 budget records, 5,040 paired contrasts, 960 scalar path checks / 20,085 intervals; no full-matrix repeat |
+| Process/output check | Prelaunch and post-exit read-only `ps` found no competing/remaining related evaluator; stdout reached 16/16, successful process exit and completed status agree; no error artifact |
+| Scientific result | Two unchanged contexts agree on the existing booked rule; both changed public contexts have block argmin disagreements; the one non-rule frozen choice changes benefit sign across validation blocks. No stable improvement over the public rule or online-RL evidence |
+| Evidence paths | `reports/2026-09-29-completion-action-ranking/run/`; `specs/2026-09-29-completion-action-ranking/readout.md` and `decision.md` |
+| Next concrete action | User/coauthor decision on the proposed model-only feedback-continuation comparison; do not execute it under S3 authority |
+| Approval needed now | Explicit approval for a new bounded continuation-comparison packet (prospective protocol, tests, one capped model-only run, audit). No training, new actual/patient episodes, reward tuning or remote actions included |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 

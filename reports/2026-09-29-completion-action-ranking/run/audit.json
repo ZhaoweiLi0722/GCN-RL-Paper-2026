@@ -1,0 +1,19 @@
+{
+  "audit": "passed",
+  "raw_chunks": 256,
+  "forecast_paths": 491520,
+  "scalar_replayed_paths": 960,
+  "scalar_replayed_intervals": 20085,
+  "scalar_indices_per_block": [
+    0,
+    127,
+    128,
+    2047
+  ],
+  "block_budget_records": 48,
+  "paired_contrasts_recomputed": 5040,
+  "source_locks": 4,
+  "input_locks": 40,
+  "full_forecast_matrix_rerun": false,
+  "arithmetic": "statistics.fmean/stdev on paired raw costs"
+}

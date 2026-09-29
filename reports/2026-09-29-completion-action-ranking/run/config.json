@@ -1,0 +1,32 @@
+{
+  "role": "conditional_model_action_ranking_diagnostic_not_online_rl",
+  "source_commit": "efe5a869b82b3df7797c254e4222cb460a0f2c9a",
+  "s2_root": "reports/2026-09-29-completion-control-screen/run",
+  "s2_probes_sha256": "90d05ca4781722c6ae9d1c6cdb7e7666a797e1390c73a483f57a70cb183abdec",
+  "s2_summary_sha256": "e74e61d552086636d54c60cc4904d716ca3eff5a3acaca3e94e70e6ef9e62051",
+  "source_probe_count": 6,
+  "expected_unique_contexts": 4,
+  "blocks": [
+    "selection",
+    "validation_a",
+    "validation_b",
+    "validation_c"
+  ],
+  "sample_budgets": [
+    128,
+    512,
+    2048
+  ],
+  "sample_chunk_size": 128,
+  "grid_denominator": 4,
+  "prefix_depth": 1,
+  "continuation": "unchanged_s1_booked_backlog_feedback",
+  "response_model": "constant_archived_posterior_mean",
+  "namespace": "completion-action-ranking-S3-20260929-v1",
+  "max_forecast_paths": 491520,
+  "wall_cap_seconds": 900,
+  "automatic_retries": 0,
+  "new_actual_episodes_authorized": false,
+  "training_authorized": false,
+  "patient_integration_authorized": false
+}

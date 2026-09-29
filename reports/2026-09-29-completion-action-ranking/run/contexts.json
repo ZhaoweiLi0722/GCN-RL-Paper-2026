@@ -1,0 +1,580 @@
+[
+  {
+    "id": "30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24",
+    "public": {
+      "observation": {
+        "epoch": 9,
+        "stages": [
+          "done",
+          "support",
+          "scheduled",
+          "scheduled",
+          "done",
+          "support",
+          "scheduled",
+          "scheduled"
+        ],
+        "ready_epochs": [
+          2,
+          -1,
+          -1,
+          -1,
+          5,
+          -1,
+          -1,
+          -1
+        ],
+        "downstream_remaining": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "pending_hours": [
+          0.5,
+          0.5
+        ],
+        "previous_request": [
+          0.5,
+          0.5
+        ]
+      },
+      "response": [
+        1.0137533590194003,
+        0.8632792621246788
+      ],
+      "downstream_slots": 4,
+      "mechanics": {
+        "role": "hypothetical_completion_feedback_mechanics_not_performance",
+        "horizon": 32,
+        "max_closure_steps": 256,
+        "effort": {
+          "site_hour_caps": [
+            1.0,
+            1.0
+          ],
+          "shared_hour_budget": 1.0,
+          "commitment_lead_steps": 1,
+          "hourly_cost": 2.0,
+          "quadratic_cost": 0.5,
+          "switching_cost": 0.25
+        },
+        "booked_releases": [
+          0,
+          8,
+          16,
+          24
+        ],
+        "downstream_steps": 2,
+        "downstream_slots": [
+          1,
+          4
+        ],
+        "holding_cost": 1.0,
+        "nominal_response": [
+          1.0,
+          1.0
+        ],
+        "slow_fast_response": [
+          0.5,
+          1.5
+        ],
+        "change_epoch": 8,
+        "families": [
+          "unchanged",
+          "persistent_left_slow",
+          "persistent_right_slow",
+          "rapid_alternating"
+        ],
+        "engineering_seeds": [
+          0,
+          1
+        ],
+        "filter": {
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "prior": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "refresh_probability": 0.05
+        },
+        "quadrature": {
+          "points": 1000,
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "hours": [
+            0.0,
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ]
+        },
+        "expected_cases": 16,
+        "training_authorized": false,
+        "patient_integration_authorized": false,
+        "operational_calibration": false
+      }
+    },
+    "references": {
+      "s2_depth1_16": 3,
+      "s2_depth1_64": 8,
+      "booked_rule": 11
+    },
+    "aliases": [
+      {
+        "source_probe_index": 3,
+        "family": "persistent",
+        "slots": 4
+      },
+      {
+        "source_probe_index": 5,
+        "family": "fast_iid",
+        "slots": 4
+      }
+    ]
+  },
+  {
+    "id": "56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77",
+    "public": {
+      "observation": {
+        "epoch": 9,
+        "stages": [
+          "done",
+          "waiting",
+          "scheduled",
+          "scheduled",
+          "done",
+          "support",
+          "scheduled",
+          "scheduled"
+        ],
+        "ready_epochs": [
+          2,
+          9,
+          -1,
+          -1,
+          5,
+          -1,
+          -1,
+          -1
+        ],
+        "downstream_remaining": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "pending_hours": [
+          0.5,
+          0.5
+        ],
+        "previous_request": [
+          0.5,
+          0.5
+        ]
+      },
+      "response": [
+        1.2088488784307225,
+        0.8632792621246788
+      ],
+      "downstream_slots": 1,
+      "mechanics": {
+        "role": "hypothetical_completion_feedback_mechanics_not_performance",
+        "horizon": 32,
+        "max_closure_steps": 256,
+        "effort": {
+          "site_hour_caps": [
+            1.0,
+            1.0
+          ],
+          "shared_hour_budget": 1.0,
+          "commitment_lead_steps": 1,
+          "hourly_cost": 2.0,
+          "quadratic_cost": 0.5,
+          "switching_cost": 0.25
+        },
+        "booked_releases": [
+          0,
+          8,
+          16,
+          24
+        ],
+        "downstream_steps": 2,
+        "downstream_slots": [
+          1,
+          4
+        ],
+        "holding_cost": 1.0,
+        "nominal_response": [
+          1.0,
+          1.0
+        ],
+        "slow_fast_response": [
+          0.5,
+          1.5
+        ],
+        "change_epoch": 8,
+        "families": [
+          "unchanged",
+          "persistent_left_slow",
+          "persistent_right_slow",
+          "rapid_alternating"
+        ],
+        "engineering_seeds": [
+          0,
+          1
+        ],
+        "filter": {
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "prior": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "refresh_probability": 0.05
+        },
+        "quadrature": {
+          "points": 1000,
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "hours": [
+            0.0,
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ]
+        },
+        "expected_cases": 16,
+        "training_authorized": false,
+        "patient_integration_authorized": false,
+        "operational_calibration": false
+      }
+    },
+    "references": {
+      "s2_depth1_16": 3,
+      "s2_depth1_64": 3,
+      "booked_rule": 2
+    },
+    "aliases": [
+      {
+        "source_probe_index": 0,
+        "family": "unchanged",
+        "slots": 1
+      }
+    ]
+  },
+  {
+    "id": "79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539",
+    "public": {
+      "observation": {
+        "epoch": 9,
+        "stages": [
+          "done",
+          "waiting",
+          "scheduled",
+          "scheduled",
+          "done",
+          "support",
+          "scheduled",
+          "scheduled"
+        ],
+        "ready_epochs": [
+          2,
+          9,
+          -1,
+          -1,
+          5,
+          -1,
+          -1,
+          -1
+        ],
+        "downstream_remaining": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "pending_hours": [
+          0.5,
+          0.5
+        ],
+        "previous_request": [
+          0.5,
+          0.5
+        ]
+      },
+      "response": [
+        1.2088488784307225,
+        0.8632792621246788
+      ],
+      "downstream_slots": 4,
+      "mechanics": {
+        "role": "hypothetical_completion_feedback_mechanics_not_performance",
+        "horizon": 32,
+        "max_closure_steps": 256,
+        "effort": {
+          "site_hour_caps": [
+            1.0,
+            1.0
+          ],
+          "shared_hour_budget": 1.0,
+          "commitment_lead_steps": 1,
+          "hourly_cost": 2.0,
+          "quadratic_cost": 0.5,
+          "switching_cost": 0.25
+        },
+        "booked_releases": [
+          0,
+          8,
+          16,
+          24
+        ],
+        "downstream_steps": 2,
+        "downstream_slots": [
+          1,
+          4
+        ],
+        "holding_cost": 1.0,
+        "nominal_response": [
+          1.0,
+          1.0
+        ],
+        "slow_fast_response": [
+          0.5,
+          1.5
+        ],
+        "change_epoch": 8,
+        "families": [
+          "unchanged",
+          "persistent_left_slow",
+          "persistent_right_slow",
+          "rapid_alternating"
+        ],
+        "engineering_seeds": [
+          0,
+          1
+        ],
+        "filter": {
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "prior": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "refresh_probability": 0.05
+        },
+        "quadrature": {
+          "points": 1000,
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "hours": [
+            0.0,
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ]
+        },
+        "expected_cases": 16,
+        "training_authorized": false,
+        "patient_integration_authorized": false,
+        "operational_calibration": false
+      }
+    },
+    "references": {
+      "s2_depth1_16": 3,
+      "s2_depth1_64": 3,
+      "booked_rule": 2
+    },
+    "aliases": [
+      {
+        "source_probe_index": 1,
+        "family": "unchanged",
+        "slots": 4
+      }
+    ]
+  },
+  {
+    "id": "8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd",
+    "public": {
+      "observation": {
+        "epoch": 9,
+        "stages": [
+          "done",
+          "support",
+          "scheduled",
+          "scheduled",
+          "done",
+          "support",
+          "scheduled",
+          "scheduled"
+        ],
+        "ready_epochs": [
+          2,
+          -1,
+          -1,
+          -1,
+          5,
+          -1,
+          -1,
+          -1
+        ],
+        "downstream_remaining": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "pending_hours": [
+          0.5,
+          0.5
+        ],
+        "previous_request": [
+          0.5,
+          0.5
+        ]
+      },
+      "response": [
+        1.0137533590194003,
+        0.8632792621246788
+      ],
+      "downstream_slots": 1,
+      "mechanics": {
+        "role": "hypothetical_completion_feedback_mechanics_not_performance",
+        "horizon": 32,
+        "max_closure_steps": 256,
+        "effort": {
+          "site_hour_caps": [
+            1.0,
+            1.0
+          ],
+          "shared_hour_budget": 1.0,
+          "commitment_lead_steps": 1,
+          "hourly_cost": 2.0,
+          "quadratic_cost": 0.5,
+          "switching_cost": 0.25
+        },
+        "booked_releases": [
+          0,
+          8,
+          16,
+          24
+        ],
+        "downstream_steps": 2,
+        "downstream_slots": [
+          1,
+          4
+        ],
+        "holding_cost": 1.0,
+        "nominal_response": [
+          1.0,
+          1.0
+        ],
+        "slow_fast_response": [
+          0.5,
+          1.5
+        ],
+        "change_epoch": 8,
+        "families": [
+          "unchanged",
+          "persistent_left_slow",
+          "persistent_right_slow",
+          "rapid_alternating"
+        ],
+        "engineering_seeds": [
+          0,
+          1
+        ],
+        "filter": {
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "prior": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "refresh_probability": 0.05
+        },
+        "quadrature": {
+          "points": 1000,
+          "rates": [
+            0.5,
+            1.0,
+            1.5
+          ],
+          "hours": [
+            0.0,
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ]
+        },
+        "expected_cases": 16,
+        "training_authorized": false,
+        "patient_integration_authorized": false,
+        "operational_calibration": false
+      }
+    },
+    "references": {
+      "s2_depth1_16": 3,
+      "s2_depth1_64": 8,
+      "booked_rule": 11
+    },
+    "aliases": [
+      {
+        "source_probe_index": 2,
+        "family": "persistent",
+        "slots": 1
+      },
+      {
+        "source_probe_index": 4,
+        "family": "fast_iid",
+        "slots": 1
+      }
+    ]
+  }
+]

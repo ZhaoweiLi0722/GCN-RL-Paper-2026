@@ -1368,3 +1368,20 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   changes, formal holdout use, remote writes or Howard sign-off. Stop at a
   terminal failure or the declared decision boundary rather than relaunching
   or manufacturing new experimental scope to keep an automation running.
+
+### 2026-09-29: S3 audited completion and scope boundary
+
+- Source `a6d450906f57d1fac1718562ba99145b175e8af7` completed the one locked
+  forecast matrix: four unique public contexts, four independent blocks,
+  491,520 model paths and zero new actual episodes/optimizer updates. All raw
+  cost hashes, 5,040 paired contrasts and 960 bounded scalar replays verify;
+  140 relevant tests pass. No recorded failure, retry or protocol change.
+- Readout: `specs/2026-09-29-completion-action-ranking/readout.md`. Two unchanged
+  contexts agree on the simple booked rule. Both changed public contexts have
+  block argmin disagreement; the one non-rule selection reverses its advantage
+  across validation blocks. No stable increment over the rule or online-RL
+  benefit is established by this conditional-model exercise.
+- The finite S3 chain is complete. `decision.md` proposes, but does not authorize,
+  a bounded feedback-continuation comparison. Remove this continuation
+  automation at handoff. New scope needs explicit approval and a separately
+  committed protocol; preserve S3/S2/S1, missing E1 data and closed Stage E.

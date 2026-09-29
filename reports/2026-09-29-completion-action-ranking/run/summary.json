@@ -1,0 +1,219 @@
+{
+  "classification": "conditional_model_ranking_only",
+  "contexts": [
+    {
+      "context": "30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24",
+      "aliases": [
+        {
+          "source_probe_index": 3,
+          "family": "persistent",
+          "slots": 4
+        },
+        {
+          "source_probe_index": 5,
+          "family": "fast_iid",
+          "slots": 4
+        }
+      ],
+      "frozen_choice": {
+        "index": 11,
+        "action": [
+          0.5,
+          0.5
+        ],
+        "selection_samples": 2048
+      },
+      "block_argmin_indices_2048": [
+        11,
+        11,
+        7,
+        11
+      ],
+      "validation_signs_2048": {
+        "s2_depth1_16": [
+          -1,
+          -1,
+          -1
+        ],
+        "s2_depth1_64": [
+          -1,
+          -1,
+          -1
+        ],
+        "booked_rule": [
+          0,
+          0,
+          0
+        ]
+      },
+      "budget_agreement_by_block": {
+        "selection": true,
+        "validation_a": false,
+        "validation_b": false,
+        "validation_c": false
+      },
+      "ranking_unresolved": true
+    },
+    {
+      "context": "56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77",
+      "aliases": [
+        {
+          "source_probe_index": 0,
+          "family": "unchanged",
+          "slots": 1
+        }
+      ],
+      "frozen_choice": {
+        "index": 2,
+        "action": [
+          0.0,
+          0.5
+        ],
+        "selection_samples": 2048
+      },
+      "block_argmin_indices_2048": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "validation_signs_2048": {
+        "s2_depth1_16": [
+          -1,
+          -1,
+          -1
+        ],
+        "s2_depth1_64": [
+          -1,
+          -1,
+          -1
+        ],
+        "booked_rule": [
+          0,
+          0,
+          0
+        ]
+      },
+      "budget_agreement_by_block": {
+        "selection": false,
+        "validation_a": true,
+        "validation_b": true,
+        "validation_c": true
+      },
+      "ranking_unresolved": false
+    },
+    {
+      "context": "79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539",
+      "aliases": [
+        {
+          "source_probe_index": 1,
+          "family": "unchanged",
+          "slots": 4
+        }
+      ],
+      "frozen_choice": {
+        "index": 2,
+        "action": [
+          0.0,
+          0.5
+        ],
+        "selection_samples": 2048
+      },
+      "block_argmin_indices_2048": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "validation_signs_2048": {
+        "s2_depth1_16": [
+          -1,
+          -1,
+          -1
+        ],
+        "s2_depth1_64": [
+          -1,
+          -1,
+          -1
+        ],
+        "booked_rule": [
+          0,
+          0,
+          0
+        ]
+      },
+      "budget_agreement_by_block": {
+        "selection": false,
+        "validation_a": true,
+        "validation_b": false,
+        "validation_c": true
+      },
+      "ranking_unresolved": false
+    },
+    {
+      "context": "8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd",
+      "aliases": [
+        {
+          "source_probe_index": 2,
+          "family": "persistent",
+          "slots": 1
+        },
+        {
+          "source_probe_index": 4,
+          "family": "fast_iid",
+          "slots": 1
+        }
+      ],
+      "frozen_choice": {
+        "index": 7,
+        "action": [
+          0.25,
+          0.5
+        ],
+        "selection_samples": 2048
+      },
+      "block_argmin_indices_2048": [
+        7,
+        7,
+        11,
+        7
+      ],
+      "validation_signs_2048": {
+        "s2_depth1_16": [
+          -1,
+          -1,
+          -1
+        ],
+        "s2_depth1_64": [
+          -1,
+          -1,
+          -1
+        ],
+        "booked_rule": [
+          -1,
+          1,
+          -1
+        ]
+      },
+      "budget_agreement_by_block": {
+        "selection": false,
+        "validation_a": false,
+        "validation_b": false,
+        "validation_c": false
+      },
+      "ranking_unresolved": true
+    }
+  ],
+  "unique_contexts": 4,
+  "source_probe_aliases": 6,
+  "blocks": 16,
+  "forecast_paths": 491520,
+  "transition_queries": 10409928,
+  "unresolved_contexts": 2,
+  "actual_environment_episodes": 0,
+  "neural_updates": 0,
+  "online_rl_evidence": false,
+  "strong_controller_headroom_established": false,
+  "model_validated": false,
+  "clinical_calibration": false
+}

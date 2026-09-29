@@ -1,0 +1,81 @@
+{
+  "execution_commit": "19cb526c67bc8b2ce47b6294cbf5fe8be5b12017",
+  "source_locks": [
+    {
+      "path": "evaluation/audit_queue_cost_sensitivity.py",
+      "sha256": "8fb5f1c7bdbe7a47e2bd1dc9892781ba4a4ede0bf46ad63e47c19c9dd41bb511"
+    },
+    {
+      "path": "tests/test_queue_cost_sensitivity.py",
+      "sha256": "afed13f4413c3ca5e222f9eaf74a55d3af39863d13002fdf0808dfaffa3f1d79"
+    },
+    {
+      "path": "evaluation/audit_service_queue_boundary.py",
+      "sha256": "63889c51bb24486ab860730e609852d525923d3aa2e78d14882da3bedb985b1a"
+    },
+    {
+      "path": "evaluation/diagnose_service_queue_evidence.py",
+      "sha256": "423e62bd84a3b835f7950ba2944fd81e91445b7ea209e13f0af76b3bd9915935"
+    },
+    {
+      "path": "evaluation/check_service_effort_mechanics.py",
+      "sha256": "db1df02b8f4fbbd9fc486edf227f158798bb638077ace9c14a72901889b90770"
+    },
+    {
+      "path": "specs/2026-09-29-queue-cost-sensitivity/protocol.md",
+      "sha256": "c90b9fb5cc8dd88c1ea89516c3031976028b0201459ca7da765eb6e24923c229"
+    },
+    {
+      "path": "experiments/configs/queue_cost_sensitivity_20260929.json",
+      "sha256": "ef2f4fb5c6ef8d9800354f8eab8a4a75a443beb0f7fff86b4e0afc44916e40b7"
+    },
+    {
+      "path": "experiments/configs/service_queue_boundary_20260929.json",
+      "sha256": "de1511daf738e753f9e977659ab36ae7fa470589a6567c341938c4d3dcc0c8d8"
+    }
+  ],
+  "input_locks": [
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/claim.json",
+      "sha256": "f555ef2e2359e36b4205d2428c72b2b2de33a5408fc9429eff251d797824f871"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/decisions.jsonl.gz",
+      "sha256": "876b8d68e557bb4b2c2b9d694408f23933e70323819ed15e9513e9e064eca445"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/episodes.jsonl.gz",
+      "sha256": "0a7d6e47827bd280f09d9afaf1f2b8ac58fcb2f11120d13fca7855bf28b124d6"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/inventory.json",
+      "sha256": "f3e55f4febb0b2e7df3ee7525d4d782baeb5a43cf16274b867977f9069e95865"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/status.json",
+      "sha256": "371136d073e548bebba3a61c4ab2ed551a7a33abfa0cda0368300a1103293a60"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/summary.json",
+      "sha256": "e108db0471cc18bddee3363badd6d929237aef22f8c8a4cb06fbbfa5e1c99d98"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/tree_closures.jsonl.gz",
+      "sha256": "0230d9d3be908344918123414e29c47eaf38b1340a092a3de78c6404558ddd97"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/tree_transitions.jsonl.gz",
+      "sha256": "8aeb7ea52e03db87f64fc909a117b5c983b63cc7912c2dbe478ff9f646e93d18"
+    }
+  ],
+  "upstream_audit": {
+    "audit": "passed",
+    "baseline_episodes": 60,
+    "decision_rows": 300,
+    "tree_edges": 16368,
+    "unique_closures": 9088,
+    "verified_hashes": 59,
+    "limitation": "nonanticipative optimizer is regression-tested, not independently reimplemented; planner query counts are implementation-reported"
+  },
+  "inputs_unchanged_after_analysis": true
+}

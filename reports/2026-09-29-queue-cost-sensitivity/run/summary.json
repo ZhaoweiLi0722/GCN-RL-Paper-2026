@@ -1,0 +1,82 @@
+{
+  "classification": "post_hoc_repricing_of_existing_synthetic_rows",
+  "record_count": 72,
+  "settings": [
+    {
+      "labor_multiplier": 0.5,
+      "switching_multiplier": 0.5,
+      "cells_matching_any_archived_path": 6,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.375
+    },
+    {
+      "labor_multiplier": 0.5,
+      "switching_multiplier": 1.0,
+      "cells_matching_any_archived_path": 6,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.125
+    },
+    {
+      "labor_multiplier": 0.5,
+      "switching_multiplier": 2.0,
+      "cells_matching_any_archived_path": 6,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.25
+    },
+    {
+      "labor_multiplier": 1.0,
+      "switching_multiplier": 0.5,
+      "cells_matching_any_archived_path": 8,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.0
+    },
+    {
+      "labor_multiplier": 1.0,
+      "switching_multiplier": 1.0,
+      "cells_matching_any_archived_path": 8,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.0
+    },
+    {
+      "labor_multiplier": 1.0,
+      "switching_multiplier": 2.0,
+      "cells_matching_any_archived_path": 8,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.0
+    },
+    {
+      "labor_multiplier": 2.0,
+      "switching_multiplier": 0.5,
+      "cells_matching_any_archived_path": 8,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.0
+    },
+    {
+      "labor_multiplier": 2.0,
+      "switching_multiplier": 1.0,
+      "cells_matching_any_archived_path": 8,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.0
+    },
+    {
+      "labor_multiplier": 2.0,
+      "switching_multiplier": 2.0,
+      "cells_matching_any_archived_path": 8,
+      "cells_with_positive_feedback_value": 4,
+      "maximum_best_archived_path_gap": 0.0
+    }
+  ],
+  "unit_multipliers_recover_all_original_cells": true,
+  "new_environment_queries": 0,
+  "new_planner_queries": 0,
+  "online_updates": 0,
+  "independent_replications": 0,
+  "manufacturing_calibration": false,
+  "limitations": [
+    "archived controller paths are not reoptimized for alternative weights",
+    "known-law optimum is itself a frozen history-action map",
+    "rich full-progress observations are not completion-only observations",
+    "batch and booked-flow cells are dependent offset duplicates",
+    "no reward or scientific scenario is selected from these results"
+  ]
+}

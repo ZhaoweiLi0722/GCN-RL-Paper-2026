@@ -1,0 +1,1022 @@
+[
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 60.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 60.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 60.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "balanced"
+    ],
+    "components": {
+      "holding": 58.0,
+      "labor": 21.25,
+      "switching": 1.75
+    }
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "balanced"
+    ],
+    "components": {
+      "holding": 58.0,
+      "labor": 21.25,
+      "switching": 1.75
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 72.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 72.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 66.0,
+      "labor": 32.25,
+      "switching": 1.75
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 74.0,
+      "labor": 37.25,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 69.0,
+      "labor": 28.25,
+      "switching": 2.0
+    }
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 74.0,
+      "labor": 37.25,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "components": {
+      "holding": 80.0,
+      "labor": 20.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "components": {
+      "holding": 80.0,
+      "labor": 20.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 88.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 80.0,
+      "labor": 31.75,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "components": {
+      "holding": 82.0,
+      "labor": 38.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 80.0,
+      "labor": 27.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 81.0,
+      "labor": 36.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 50.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 50.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 50.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "balanced"
+    ],
+    "components": {
+      "holding": 48.0,
+      "labor": 21.25,
+      "switching": 1.75
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "balanced"
+    ],
+    "components": {
+      "holding": 48.0,
+      "labor": 21.25,
+      "switching": 1.75
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 62.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 62.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 60.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 60.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 60.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 60.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 56.0,
+      "labor": 32.25,
+      "switching": 1.75
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 64.0,
+      "labor": 37.25,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 59.0,
+      "labor": 28.25,
+      "switching": 2.0
+    }
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "left",
+      "right",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 64.0,
+      "labor": 37.25,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 20.25,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 20.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 20.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_balanced",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 36.0,
+      "switching": 1.0
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "adaptive_backlog_rule",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 78.0,
+      "labor": 32.0,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 31.75,
+      "switching": 1.25
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "fixed_model_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "components": {
+      "holding": 72.0,
+      "labor": 38.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "components": {
+      "holding": 70.0,
+      "labor": 27.75,
+      "switching": 1.5
+    }
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "method": "identification_mpc",
+    "actions": [
+      "left",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "components": {
+      "holding": 71.0,
+      "labor": 36.75,
+      "switching": 1.5
+    }
+  }
+]

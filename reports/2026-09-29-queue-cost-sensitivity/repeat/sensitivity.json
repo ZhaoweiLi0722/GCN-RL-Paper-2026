@@ -1,0 +1,4798 @@
+[
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 70.625,
+      "backlog_rule": 70.625,
+      "adaptive_backlog_rule": 70.625,
+      "fixed_model_mpc": 69.5,
+      "identification_mpc": 69.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 1.125,
+      "backlog_rule": 1.125,
+      "adaptive_backlog_rule": 1.125,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 69.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "right",
+            "right",
+            "balanced"
+          ],
+          "cost": 69.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 69.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 69.5,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "right",
+        "right",
+        "balanced"
+      ],
+      "clairvoyant_cost": 69.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 71.125,
+      "backlog_rule": 71.125,
+      "adaptive_backlog_rule": 71.125,
+      "fixed_model_mpc": 70.375,
+      "identification_mpc": 70.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.75,
+      "backlog_rule": 0.75,
+      "adaptive_backlog_rule": 0.75,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 70.375,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "left",
+            "right",
+            "right"
+          ],
+          "cost": 70.375,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 70.375,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 70.375,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 70.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 72.125,
+      "backlog_rule": 72.125,
+      "adaptive_backlog_rule": 72.125,
+      "fixed_model_mpc": 72.125,
+      "identification_mpc": 72.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.25,
+      "backlog_rule": 0.25,
+      "adaptive_backlog_rule": 0.25,
+      "fixed_model_mpc": 0.25,
+      "identification_mpc": 0.25
+    },
+    "archived_paths_matching_optimum": [],
+    "best_archived_path_gap_descriptive_only": 0.25,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 71.875,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "left",
+            "right",
+            "right"
+          ],
+          "cost": 71.875,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 71.875,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 71.875,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 71.875
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 80.75,
+      "backlog_rule": 80.75,
+      "adaptive_backlog_rule": 80.75,
+      "fixed_model_mpc": 80.125,
+      "identification_mpc": 80.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.625,
+      "backlog_rule": 0.625,
+      "adaptive_backlog_rule": 0.625,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 80.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "right",
+            "right",
+            "balanced"
+          ],
+          "cost": 80.125,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 80.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 80.125,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "right",
+        "right",
+        "balanced"
+      ],
+      "clairvoyant_cost": 80.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 81.25,
+      "backlog_rule": 81.25,
+      "adaptive_backlog_rule": 81.25,
+      "fixed_model_mpc": 81.0,
+      "identification_mpc": 81.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.25,
+      "backlog_rule": 0.25,
+      "adaptive_backlog_rule": 0.25,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 81.0,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "right",
+            "right",
+            "balanced"
+          ],
+          "cost": 81.0,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 81.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 81.0,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "right",
+        "right",
+        "balanced"
+      ],
+      "clairvoyant_cost": 81.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 82.25,
+      "backlog_rule": 82.25,
+      "adaptive_backlog_rule": 82.25,
+      "fixed_model_mpc": 82.75,
+      "identification_mpc": 82.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 0.5,
+      "identification_mpc": 0.5
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 82.25,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 82.25,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 82.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 82.25,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 82.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 101.0,
+      "backlog_rule": 101.0,
+      "adaptive_backlog_rule": 101.0,
+      "fixed_model_mpc": 101.375,
+      "identification_mpc": 101.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 0.375,
+      "identification_mpc": 0.375
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 101.0,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 101.0,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 101.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 101.0,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 101.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 101.5,
+      "backlog_rule": 101.5,
+      "adaptive_backlog_rule": 101.5,
+      "fixed_model_mpc": 102.25,
+      "identification_mpc": 102.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 0.75,
+      "identification_mpc": 0.75
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 101.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 101.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 101.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 101.5,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 101.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 102.5,
+      "backlog_rule": 102.5,
+      "adaptive_backlog_rule": 102.5,
+      "fixed_model_mpc": 104.0,
+      "identification_mpc": 104.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 1.5,
+      "identification_mpc": 1.5
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 102.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 102.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 102.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 102.5,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 102.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 90.5,
+      "backlog_rule": 86.625,
+      "adaptive_backlog_rule": 86.625,
+      "fixed_model_mpc": 88.1875,
+      "identification_mpc": 88.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 4.25,
+      "backlog_rule": 0.375,
+      "adaptive_backlog_rule": 0.375,
+      "fixed_model_mpc": 1.9375,
+      "identification_mpc": 2.5
+    },
+    "archived_paths_matching_optimum": [],
+    "best_archived_path_gap_descriptive_only": 0.375,
+    "feedback_value_over_open_loop": 2.125,
+    "known_law_feedback_optimum": {
+      "cost": 86.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "left",
+            "left"
+          ],
+          "cost": 79.375,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "cost": 93.125,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 86.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 88.375,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 79.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 91.0,
+      "backlog_rule": 87.25,
+      "adaptive_backlog_rule": 87.25,
+      "fixed_model_mpc": 89.0,
+      "identification_mpc": 89.625
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 3.875,
+      "backlog_rule": 0.125,
+      "adaptive_backlog_rule": 0.125,
+      "fixed_model_mpc": 1.875,
+      "identification_mpc": 2.5
+    },
+    "archived_paths_matching_optimum": [],
+    "best_archived_path_gap_descriptive_only": 0.125,
+    "feedback_value_over_open_loop": 2.0,
+    "known_law_feedback_optimum": {
+      "cost": 87.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "left",
+            "left"
+          ],
+          "cost": 80.375,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "cost": 93.875,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 87.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 89.125,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 80.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 92.0,
+      "backlog_rule": 88.5,
+      "adaptive_backlog_rule": 88.5,
+      "fixed_model_mpc": 90.625,
+      "identification_mpc": 91.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 3.5,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 2.125,
+      "identification_mpc": 2.875
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.125,
+    "known_law_feedback_optimum": {
+      "cost": 88.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 88.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 88.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 88.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 90.625,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 82.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 108.5,
+      "backlog_rule": 102.625,
+      "adaptive_backlog_rule": 102.625,
+      "fixed_model_mpc": 105.5625,
+      "identification_mpc": 105.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 5.875,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 2.9375,
+      "identification_mpc": 2.5
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.375,
+    "known_law_feedback_optimum": {
+      "cost": 102.625,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 102.625,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 102.625,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 102.625,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 107.0,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 95.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 109.0,
+      "backlog_rule": 103.25,
+      "adaptive_backlog_rule": 103.25,
+      "fixed_model_mpc": 106.375,
+      "identification_mpc": 106.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 5.75,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 3.125,
+      "identification_mpc": 2.75
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.5,
+    "known_law_feedback_optimum": {
+      "cost": 103.25,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 103.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 103.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 103.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 107.75,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 96.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 110.0,
+      "backlog_rule": 104.5,
+      "adaptive_backlog_rule": 104.5,
+      "fixed_model_mpc": 108.0,
+      "identification_mpc": 107.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 5.5,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 3.5,
+      "identification_mpc": 3.25
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 104.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 104.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 104.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 104.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 109.25,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 98.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 144.5,
+      "backlog_rule": 134.625,
+      "adaptive_backlog_rule": 134.625,
+      "fixed_model_mpc": 140.3125,
+      "identification_mpc": 137.875
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.875,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 5.6875,
+      "identification_mpc": 3.25
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.5,
+    "known_law_feedback_optimum": {
+      "cost": 134.625,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 134.625,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 134.625,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 134.625,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 144.125,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 125.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 145.0,
+      "backlog_rule": 135.25,
+      "adaptive_backlog_rule": 135.25,
+      "fixed_model_mpc": 141.125,
+      "identification_mpc": 138.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.75,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 5.875,
+      "identification_mpc": 3.5
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.5,
+    "known_law_feedback_optimum": {
+      "cost": 135.25,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 135.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 135.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 135.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 144.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 125.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 146.0,
+      "backlog_rule": 136.5,
+      "adaptive_backlog_rule": 136.5,
+      "fixed_model_mpc": 142.75,
+      "identification_mpc": 140.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.5,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 6.25,
+      "identification_mpc": 4.0
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.5,
+    "known_law_feedback_optimum": {
+      "cost": 136.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 136.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 136.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 136.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 146.0,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 127.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 98.625,
+      "backlog_rule": 98.625,
+      "adaptive_backlog_rule": 98.625,
+      "fixed_model_mpc": 91.125,
+      "identification_mpc": 91.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.5,
+      "backlog_rule": 7.5,
+      "adaptive_backlog_rule": 7.5,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 91.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 91.125,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 91.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 91.125,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 91.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 99.125,
+      "backlog_rule": 99.125,
+      "adaptive_backlog_rule": 99.125,
+      "fixed_model_mpc": 91.875,
+      "identification_mpc": 91.875
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.25,
+      "backlog_rule": 7.25,
+      "adaptive_backlog_rule": 7.25,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 91.875,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 91.875,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 91.875,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 91.875,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 91.875
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 100.125,
+      "backlog_rule": 100.125,
+      "adaptive_backlog_rule": 100.125,
+      "fixed_model_mpc": 93.375,
+      "identification_mpc": 93.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.75,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 93.375,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 93.375,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 93.375,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 93.375,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 93.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 108.75,
+      "backlog_rule": 108.75,
+      "adaptive_backlog_rule": 108.75,
+      "fixed_model_mpc": 101.5,
+      "identification_mpc": 101.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.25,
+      "backlog_rule": 7.25,
+      "adaptive_backlog_rule": 7.25,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 101.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 101.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 101.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 101.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 101.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 109.25,
+      "backlog_rule": 109.25,
+      "adaptive_backlog_rule": 109.25,
+      "fixed_model_mpc": 102.25,
+      "identification_mpc": 102.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.0,
+      "backlog_rule": 7.0,
+      "adaptive_backlog_rule": 7.0,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 102.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 102.25,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 102.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 102.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 102.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 110.25,
+      "backlog_rule": 110.25,
+      "adaptive_backlog_rule": 110.25,
+      "fixed_model_mpc": 103.75,
+      "identification_mpc": 103.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.5,
+      "backlog_rule": 6.5,
+      "adaptive_backlog_rule": 6.5,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 103.75,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 103.75,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 103.75,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 103.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 103.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 129.0,
+      "backlog_rule": 129.0,
+      "adaptive_backlog_rule": 129.0,
+      "fixed_model_mpc": 122.25,
+      "identification_mpc": 122.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.75,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 122.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 122.25,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 122.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 122.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 122.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 129.5,
+      "backlog_rule": 129.5,
+      "adaptive_backlog_rule": 129.5,
+      "fixed_model_mpc": 123.0,
+      "identification_mpc": 123.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.5,
+      "backlog_rule": 6.5,
+      "adaptive_backlog_rule": 6.5,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 123.0,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 123.0,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 123.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 123.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 123.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 130.5,
+      "backlog_rule": 130.5,
+      "adaptive_backlog_rule": 130.5,
+      "fixed_model_mpc": 124.5,
+      "identification_mpc": 124.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.0,
+      "backlog_rule": 6.0,
+      "adaptive_backlog_rule": 6.0,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 124.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 124.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 124.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 124.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 124.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 106.5,
+      "backlog_rule": 104.625,
+      "adaptive_backlog_rule": 104.625,
+      "fixed_model_mpc": 99.3125,
+      "identification_mpc": 97.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.125,
+      "backlog_rule": 7.25,
+      "adaptive_backlog_rule": 7.25,
+      "fixed_model_mpc": 1.9375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.625,
+    "known_law_feedback_optimum": {
+      "cost": 97.375,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 94.625,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 100.125,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 97.375,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 100.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 94.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 107.0,
+      "backlog_rule": 105.25,
+      "adaptive_backlog_rule": 105.25,
+      "fixed_model_mpc": 100.0,
+      "identification_mpc": 98.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 8.875,
+      "backlog_rule": 7.125,
+      "adaptive_backlog_rule": 7.125,
+      "fixed_model_mpc": 1.875,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.625,
+    "known_law_feedback_optimum": {
+      "cost": 98.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 95.375,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 100.875,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 98.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 100.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 95.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 108.0,
+      "backlog_rule": 106.5,
+      "adaptive_backlog_rule": 106.5,
+      "fixed_model_mpc": 101.375,
+      "identification_mpc": 99.625
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 8.375,
+      "backlog_rule": 6.875,
+      "adaptive_backlog_rule": 6.875,
+      "fixed_model_mpc": 1.75,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.625,
+    "known_law_feedback_optimum": {
+      "cost": 99.625,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 96.875,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 102.375,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 99.625,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 102.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 96.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 124.5,
+      "backlog_rule": 120.625,
+      "adaptive_backlog_rule": 120.625,
+      "fixed_model_mpc": 116.9375,
+      "identification_mpc": 113.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 11.0,
+      "backlog_rule": 7.125,
+      "adaptive_backlog_rule": 7.125,
+      "fixed_model_mpc": 3.4375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 113.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 108.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 118.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 113.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 118.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 108.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 125.0,
+      "backlog_rule": 121.25,
+      "adaptive_backlog_rule": 121.25,
+      "fixed_model_mpc": 117.625,
+      "identification_mpc": 114.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 10.75,
+      "backlog_rule": 7.0,
+      "adaptive_backlog_rule": 7.0,
+      "fixed_model_mpc": 3.375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 114.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 109.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 119.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 114.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 119.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 109.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 126.0,
+      "backlog_rule": 122.5,
+      "adaptive_backlog_rule": 122.5,
+      "fixed_model_mpc": 119.0,
+      "identification_mpc": 115.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 10.25,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 3.25,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 115.75,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 110.75,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 120.75,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 115.75,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 120.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 110.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 160.5,
+      "backlog_rule": 152.625,
+      "adaptive_backlog_rule": 152.625,
+      "fixed_model_mpc": 152.1875,
+      "identification_mpc": 145.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 14.75,
+      "backlog_rule": 6.875,
+      "adaptive_backlog_rule": 6.875,
+      "fixed_model_mpc": 6.4375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.0,
+    "known_law_feedback_optimum": {
+      "cost": 145.75,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 136.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 155.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 145.75,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 154.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 136.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 161.0,
+      "backlog_rule": 153.25,
+      "adaptive_backlog_rule": 153.25,
+      "fixed_model_mpc": 152.875,
+      "identification_mpc": 146.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 14.5,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 6.375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.0,
+    "known_law_feedback_optimum": {
+      "cost": 146.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 137.0,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 156.0,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 146.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 155.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 136.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 162.0,
+      "backlog_rule": 154.5,
+      "adaptive_backlog_rule": 154.5,
+      "fixed_model_mpc": 154.25,
+      "identification_mpc": 148.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 14.0,
+      "backlog_rule": 6.5,
+      "adaptive_backlog_rule": 6.5,
+      "fixed_model_mpc": 6.25,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.0,
+    "known_law_feedback_optimum": {
+      "cost": 148.0,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 138.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 157.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 148.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 157.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 138.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 60.625,
+      "backlog_rule": 60.625,
+      "adaptive_backlog_rule": 60.625,
+      "fixed_model_mpc": 59.5,
+      "identification_mpc": 59.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 1.125,
+      "backlog_rule": 1.125,
+      "adaptive_backlog_rule": 1.125,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 59.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "right",
+            "right",
+            "balanced"
+          ],
+          "cost": 59.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 59.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 59.5,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "right",
+        "right",
+        "balanced"
+      ],
+      "clairvoyant_cost": 59.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 61.125,
+      "backlog_rule": 61.125,
+      "adaptive_backlog_rule": 61.125,
+      "fixed_model_mpc": 60.375,
+      "identification_mpc": 60.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.75,
+      "backlog_rule": 0.75,
+      "adaptive_backlog_rule": 0.75,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 60.375,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "left",
+            "right",
+            "right"
+          ],
+          "cost": 60.375,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 60.375,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 60.375,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 60.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 62.125,
+      "backlog_rule": 62.125,
+      "adaptive_backlog_rule": 62.125,
+      "fixed_model_mpc": 62.125,
+      "identification_mpc": 62.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.25,
+      "backlog_rule": 0.25,
+      "adaptive_backlog_rule": 0.25,
+      "fixed_model_mpc": 0.25,
+      "identification_mpc": 0.25
+    },
+    "archived_paths_matching_optimum": [],
+    "best_archived_path_gap_descriptive_only": 0.25,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 61.875,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "left",
+            "right",
+            "right"
+          ],
+          "cost": 61.875,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 61.875,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 61.875,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 61.875
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 70.75,
+      "backlog_rule": 70.75,
+      "adaptive_backlog_rule": 70.75,
+      "fixed_model_mpc": 70.125,
+      "identification_mpc": 70.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.625,
+      "backlog_rule": 0.625,
+      "adaptive_backlog_rule": 0.625,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 70.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "right",
+            "right",
+            "balanced"
+          ],
+          "cost": 70.125,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 70.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 70.125,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "right",
+        "right",
+        "balanced"
+      ],
+      "clairvoyant_cost": 70.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 71.25,
+      "backlog_rule": 71.25,
+      "adaptive_backlog_rule": 71.25,
+      "fixed_model_mpc": 71.0,
+      "identification_mpc": 71.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.25,
+      "backlog_rule": 0.25,
+      "adaptive_backlog_rule": 0.25,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 71.0,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "left",
+            "right",
+            "right",
+            "balanced"
+          ],
+          "cost": 71.0,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 71.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 71.0,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "right",
+        "right",
+        "balanced"
+      ],
+      "clairvoyant_cost": 71.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 72.25,
+      "backlog_rule": 72.25,
+      "adaptive_backlog_rule": 72.25,
+      "fixed_model_mpc": 72.75,
+      "identification_mpc": 72.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 0.5,
+      "identification_mpc": 0.5
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 72.25,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 72.25,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 72.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 72.25,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 72.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 91.0,
+      "backlog_rule": 91.0,
+      "adaptive_backlog_rule": 91.0,
+      "fixed_model_mpc": 91.375,
+      "identification_mpc": 91.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 0.375,
+      "identification_mpc": 0.375
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 91.0,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 91.0,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 91.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 91.0,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 91.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 91.5,
+      "backlog_rule": 91.5,
+      "adaptive_backlog_rule": 91.5,
+      "fixed_model_mpc": 92.25,
+      "identification_mpc": 92.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 0.75,
+      "identification_mpc": 0.75
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 91.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 91.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 91.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 91.5,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 91.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 92.5,
+      "backlog_rule": 92.5,
+      "adaptive_backlog_rule": 92.5,
+      "fixed_model_mpc": 94.0,
+      "identification_mpc": 94.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 0.0,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 1.5,
+      "identification_mpc": 1.5
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_balanced",
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 92.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced",
+            "balanced"
+          ],
+          "cost": 92.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 92.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 92.5,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 92.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 80.5,
+      "backlog_rule": 76.625,
+      "adaptive_backlog_rule": 76.625,
+      "fixed_model_mpc": 78.1875,
+      "identification_mpc": 78.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 4.25,
+      "backlog_rule": 0.375,
+      "adaptive_backlog_rule": 0.375,
+      "fixed_model_mpc": 1.9375,
+      "identification_mpc": 2.5
+    },
+    "archived_paths_matching_optimum": [],
+    "best_archived_path_gap_descriptive_only": 0.375,
+    "feedback_value_over_open_loop": 2.125,
+    "known_law_feedback_optimum": {
+      "cost": 76.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "left",
+            "left"
+          ],
+          "cost": 69.375,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "cost": 83.125,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 76.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 78.375,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 69.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 81.0,
+      "backlog_rule": 77.25,
+      "adaptive_backlog_rule": 77.25,
+      "fixed_model_mpc": 79.0,
+      "identification_mpc": 79.625
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 3.875,
+      "backlog_rule": 0.125,
+      "adaptive_backlog_rule": 0.125,
+      "fixed_model_mpc": 1.875,
+      "identification_mpc": 2.5
+    },
+    "archived_paths_matching_optimum": [],
+    "best_archived_path_gap_descriptive_only": 0.125,
+    "feedback_value_over_open_loop": 2.0,
+    "known_law_feedback_optimum": {
+      "cost": 77.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "left",
+            "left"
+          ],
+          "cost": 70.375,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "cost": 83.875,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 77.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 79.125,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 70.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 82.0,
+      "backlog_rule": 78.5,
+      "adaptive_backlog_rule": 78.5,
+      "fixed_model_mpc": 80.625,
+      "identification_mpc": 81.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 3.5,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 2.125,
+      "identification_mpc": 2.875
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.125,
+    "known_law_feedback_optimum": {
+      "cost": 78.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 78.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 78.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 78.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 80.625,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 72.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 98.5,
+      "backlog_rule": 92.625,
+      "adaptive_backlog_rule": 92.625,
+      "fixed_model_mpc": 95.5625,
+      "identification_mpc": 95.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 5.875,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 2.9375,
+      "identification_mpc": 2.5
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.375,
+    "known_law_feedback_optimum": {
+      "cost": 92.625,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 92.625,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 92.625,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 92.625,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 97.0,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 85.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 99.0,
+      "backlog_rule": 93.25,
+      "adaptive_backlog_rule": 93.25,
+      "fixed_model_mpc": 96.375,
+      "identification_mpc": 96.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 5.75,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 3.125,
+      "identification_mpc": 2.75
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.5,
+    "known_law_feedback_optimum": {
+      "cost": 93.25,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 93.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 93.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 93.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 97.75,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 86.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 100.0,
+      "backlog_rule": 94.5,
+      "adaptive_backlog_rule": 94.5,
+      "fixed_model_mpc": 98.0,
+      "identification_mpc": 97.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 5.5,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 3.5,
+      "identification_mpc": 3.25
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 94.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 94.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 94.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 94.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 99.25,
+      "open_loop_actions": [
+        "left",
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "clairvoyant_cost": 88.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 134.5,
+      "backlog_rule": 124.625,
+      "adaptive_backlog_rule": 124.625,
+      "fixed_model_mpc": 130.3125,
+      "identification_mpc": 127.875
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.875,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 5.6875,
+      "identification_mpc": 3.25
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.5,
+    "known_law_feedback_optimum": {
+      "cost": 124.625,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 124.625,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 124.625,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 124.625,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 134.125,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 115.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 135.0,
+      "backlog_rule": 125.25,
+      "adaptive_backlog_rule": 125.25,
+      "fixed_model_mpc": 131.125,
+      "identification_mpc": 128.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.75,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 5.875,
+      "identification_mpc": 3.5
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.5,
+    "known_law_feedback_optimum": {
+      "cost": 125.25,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 125.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 125.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 125.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 134.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 115.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 136.0,
+      "backlog_rule": 126.5,
+      "adaptive_backlog_rule": 126.5,
+      "fixed_model_mpc": 132.75,
+      "identification_mpc": 130.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.5,
+      "backlog_rule": 0.0,
+      "adaptive_backlog_rule": 0.0,
+      "fixed_model_mpc": 6.25,
+      "identification_mpc": 4.0
+    },
+    "archived_paths_matching_optimum": [
+      "backlog_rule",
+      "adaptive_backlog_rule"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.5,
+    "known_law_feedback_optimum": {
+      "cost": 126.5,
+      "root_action": "balanced",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 126.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "balanced",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 126.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 126.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 136.0,
+      "open_loop_actions": [
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 117.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 88.625,
+      "backlog_rule": 88.625,
+      "adaptive_backlog_rule": 88.625,
+      "fixed_model_mpc": 81.125,
+      "identification_mpc": 81.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.5,
+      "backlog_rule": 7.5,
+      "adaptive_backlog_rule": 7.5,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 81.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 81.125,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 81.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 81.125,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 81.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 89.125,
+      "backlog_rule": 89.125,
+      "adaptive_backlog_rule": 89.125,
+      "fixed_model_mpc": 81.875,
+      "identification_mpc": 81.875
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.25,
+      "backlog_rule": 7.25,
+      "adaptive_backlog_rule": 7.25,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 81.875,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 81.875,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 81.875,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 81.875,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 81.875
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 90.125,
+      "backlog_rule": 90.125,
+      "adaptive_backlog_rule": 90.125,
+      "fixed_model_mpc": 83.375,
+      "identification_mpc": 83.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.75,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 83.375,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 83.375,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 83.375,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 83.375,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 83.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 98.75,
+      "backlog_rule": 98.75,
+      "adaptive_backlog_rule": 98.75,
+      "fixed_model_mpc": 91.5,
+      "identification_mpc": 91.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.25,
+      "backlog_rule": 7.25,
+      "adaptive_backlog_rule": 7.25,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 91.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 91.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 91.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 91.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 91.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 99.25,
+      "backlog_rule": 99.25,
+      "adaptive_backlog_rule": 99.25,
+      "fixed_model_mpc": 92.25,
+      "identification_mpc": 92.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 7.0,
+      "backlog_rule": 7.0,
+      "adaptive_backlog_rule": 7.0,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 92.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 92.25,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 92.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 92.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 92.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 100.25,
+      "backlog_rule": 100.25,
+      "adaptive_backlog_rule": 100.25,
+      "fixed_model_mpc": 93.75,
+      "identification_mpc": 93.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.5,
+      "backlog_rule": 6.5,
+      "adaptive_backlog_rule": 6.5,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 93.75,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 93.75,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 93.75,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 93.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 93.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 119.0,
+      "backlog_rule": 119.0,
+      "adaptive_backlog_rule": 119.0,
+      "fixed_model_mpc": 112.25,
+      "identification_mpc": 112.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.75,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 112.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 112.25,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 112.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 112.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 112.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 119.5,
+      "backlog_rule": 119.5,
+      "adaptive_backlog_rule": 119.5,
+      "fixed_model_mpc": 113.0,
+      "identification_mpc": 113.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.5,
+      "backlog_rule": 6.5,
+      "adaptive_backlog_rule": 6.5,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 113.0,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 113.0,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 113.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 113.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 113.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 120.5,
+      "backlog_rule": 120.5,
+      "adaptive_backlog_rule": 120.5,
+      "fixed_model_mpc": 114.5,
+      "identification_mpc": 114.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 6.0,
+      "backlog_rule": 6.0,
+      "adaptive_backlog_rule": 6.0,
+      "fixed_model_mpc": 0.0,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "fixed_model_mpc",
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 0.0,
+    "known_law_feedback_optimum": {
+      "cost": 114.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "nominal",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "balanced",
+            "right"
+          ],
+          "cost": 114.5,
+          "first_distinguishable_decision_epoch": null
+        }
+      ],
+      "replayed_expected_cost": 114.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 114.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 114.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 96.5,
+      "backlog_rule": 94.625,
+      "adaptive_backlog_rule": 94.625,
+      "fixed_model_mpc": 89.3125,
+      "identification_mpc": 87.375
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 9.125,
+      "backlog_rule": 7.25,
+      "adaptive_backlog_rule": 7.25,
+      "fixed_model_mpc": 1.9375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.625,
+    "known_law_feedback_optimum": {
+      "cost": 87.375,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 84.625,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 90.125,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 87.375,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 90.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 84.5
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 97.0,
+      "backlog_rule": 95.25,
+      "adaptive_backlog_rule": 95.25,
+      "fixed_model_mpc": 90.0,
+      "identification_mpc": 88.125
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 8.875,
+      "backlog_rule": 7.125,
+      "adaptive_backlog_rule": 7.125,
+      "fixed_model_mpc": 1.875,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.625,
+    "known_law_feedback_optimum": {
+      "cost": 88.125,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 85.375,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 90.875,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 88.125,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 90.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 85.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 0.5,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 98.0,
+      "backlog_rule": 96.5,
+      "adaptive_backlog_rule": 96.5,
+      "fixed_model_mpc": 91.375,
+      "identification_mpc": 89.625
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 8.375,
+      "backlog_rule": 6.875,
+      "adaptive_backlog_rule": 6.875,
+      "fixed_model_mpc": 1.75,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 2.625,
+    "known_law_feedback_optimum": {
+      "cost": 89.625,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 86.875,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 92.375,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 89.625,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 92.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 86.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 114.5,
+      "backlog_rule": 110.625,
+      "adaptive_backlog_rule": 110.625,
+      "fixed_model_mpc": 106.9375,
+      "identification_mpc": 103.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 11.0,
+      "backlog_rule": 7.125,
+      "adaptive_backlog_rule": 7.125,
+      "fixed_model_mpc": 3.4375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 103.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 98.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 108.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 103.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 108.25,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 98.375
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 115.0,
+      "backlog_rule": 111.25,
+      "adaptive_backlog_rule": 111.25,
+      "fixed_model_mpc": 107.625,
+      "identification_mpc": 104.25
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 10.75,
+      "backlog_rule": 7.0,
+      "adaptive_backlog_rule": 7.0,
+      "fixed_model_mpc": 3.375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 104.25,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 99.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 109.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 104.25,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 109.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 99.0
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 1.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 116.0,
+      "backlog_rule": 112.5,
+      "adaptive_backlog_rule": 112.5,
+      "fixed_model_mpc": 109.0,
+      "identification_mpc": 105.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 10.25,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 3.25,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 4.75,
+    "known_law_feedback_optimum": {
+      "cost": 105.75,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 100.75,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 110.75,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 105.75,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 110.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 100.25
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 0.5
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 150.5,
+      "backlog_rule": 142.625,
+      "adaptive_backlog_rule": 142.625,
+      "fixed_model_mpc": 142.1875,
+      "identification_mpc": 135.75
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 14.75,
+      "backlog_rule": 6.875,
+      "adaptive_backlog_rule": 6.875,
+      "fixed_model_mpc": 6.4375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.0,
+    "known_law_feedback_optimum": {
+      "cost": 135.75,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 126.25,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 145.25,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 135.75,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 144.75,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 126.125
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 1.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 151.0,
+      "backlog_rule": 143.25,
+      "adaptive_backlog_rule": 143.25,
+      "fixed_model_mpc": 142.875,
+      "identification_mpc": 136.5
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 14.5,
+      "backlog_rule": 6.75,
+      "adaptive_backlog_rule": 6.75,
+      "fixed_model_mpc": 6.375,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.0,
+    "known_law_feedback_optimum": {
+      "cost": 136.5,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 127.0,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 146.0,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 136.5,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 145.5,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "right"
+      ],
+      "clairvoyant_cost": 126.75
+    },
+    "observation_partition_checks": 1364
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "multipliers": {
+      "holding": 1.0,
+      "labor": 2.0,
+      "switching": 2.0
+    },
+    "archived_path_costs_not_reoptimized": {
+      "fixed_balanced": 152.0,
+      "backlog_rule": 144.5,
+      "adaptive_backlog_rule": 144.5,
+      "fixed_model_mpc": 144.25,
+      "identification_mpc": 138.0
+    },
+    "archived_path_gaps_to_known_law_optimum": {
+      "fixed_balanced": 14.0,
+      "backlog_rule": 6.5,
+      "adaptive_backlog_rule": 6.5,
+      "fixed_model_mpc": 6.25,
+      "identification_mpc": 0.0
+    },
+    "archived_paths_matching_optimum": [
+      "identification_mpc"
+    ],
+    "best_archived_path_gap_descriptive_only": 0.0,
+    "feedback_value_over_open_loop": 9.0,
+    "known_law_feedback_optimum": {
+      "cost": 138.0,
+      "root_action": "left",
+      "witness": [
+        {
+          "world": "left_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "left",
+            "left"
+          ],
+          "cost": 128.5,
+          "first_distinguishable_decision_epoch": 3
+        },
+        {
+          "world": "right_slow",
+          "actions": [
+            "left",
+            "balanced",
+            "balanced",
+            "right",
+            "right"
+          ],
+          "cost": 147.5,
+          "first_distinguishable_decision_epoch": 3
+        }
+      ],
+      "replayed_expected_cost": 138.0,
+      "online_parameter_updates": false,
+      "scope": "known finite-law history policy, five decisions then the declared common continuation"
+    },
+    "bounds": {
+      "open_loop_cost": 147.0,
+      "open_loop_actions": [
+        "left",
+        "balanced",
+        "balanced",
+        "balanced",
+        "balanced"
+      ],
+      "clairvoyant_cost": 128.0
+    },
+    "observation_partition_checks": 1364
+  }
+]

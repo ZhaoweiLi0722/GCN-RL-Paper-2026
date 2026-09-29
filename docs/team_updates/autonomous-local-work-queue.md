@@ -64,6 +64,13 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
+- September 29, N7 in progress: user requested the next named real-collector
+  closed-loop/resume check. Six finite cases join existing collector, OU process
+  and N6 kernel, with at most six decisions and three online updates per path.
+  Restore pending windows, identities, environment/OU/replay RNG and optimizers
+  together. The protocol is `specs/2026-09-29-prospective-closed-loop-engineering/protocol.md`.
+  No performance comparison, scientific launch, historical change or remote action.
+
 - September 29, N6 complete: real actor/critic Adam updates on invented numeric
   windows pass alongside fixed gate/reference and exact fresh-process kernel
   resume for graph physical/self-only and matched flat heads. Repeated reports

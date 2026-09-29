@@ -1282,3 +1282,15 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - This does not reopen Stage E or permit environment training, performance
   evaluation, formal data use, remote operations or a claim of online gain.
   Kernel-boundary resumption is distinct from full environment/collector resume.
+
+### 2026-09-29: Bounded live closed-loop/resume engineering after N6
+
+- N6 passed exact synthetic CPU update-boundary recovery. Zhaowei requested the
+  next named small real-collector closed-loop and complete trajectory-resume check.
+  Protocol: `specs/2026-09-29-prospective-closed-loop-engineering/protocol.md`.
+- Permit only its six bounded CPU cases, existing unit fixture and finite
+  optimizer updates, with a fresh-process interrupted path and one repeat.
+  Commit config/protocol first and implementation before recorded execution.
+- This is engineering acceptance, not a scientific gain screen or new scenario.
+  Preserve old evidence/defaults; do not use formal streams, tune outcomes,
+  infer clinical terminal adequacy or Howard approval, or perform remote actions.

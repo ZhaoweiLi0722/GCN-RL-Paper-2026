@@ -1,0 +1,33 @@
+{
+  "kind": "bounded_live_collector_learner_resume_engineering",
+  "enabled": true,
+  "device": "cpu",
+  "fixture_seed": 0,
+  "environment_source": "experiments/configs/prospective_collector_engineering_20260929.json",
+  "environment_source_sha256": "ffcf575a929ac981ee016da599e8b1693491bb33c806c9fae578a6716f63ebdd",
+  "learner_evidence": "reports/2026-09-29-prospective-learner-engineering/check.json",
+  "learner_evidence_sha256": "bff185e60ae0d57d155082088731fbc40245f6b0c309a5349de4af6c4fd45bca",
+  "max_steps": 6,
+  "interrupt_after_steps": 4,
+  "return_steps": 3,
+  "gamma": 0.9,
+  "reward_scale": 0.00001,
+  "residual_scale": 0.1,
+  "noise": {"mu": 0.0, "theta": 0.15, "sigma": 0.05},
+  "learner": {
+    "actor_lr": 0.001, "critic_lr": 0.002, "tau": 0.05,
+    "batch_size": 2, "replay_capacity": 4, "max_updates": 3,
+    "max_return_steps": 3, "differentiate_gate_proposal": true
+  },
+  "cases": [
+    {"architecture": "graph", "message_mode": "physical", "hidden_width": 64,
+     "episode_horizon": 8, "horizon_end": "truncation", "boundary": "collector_cutoff"},
+    {"architecture": "graph", "message_mode": "self_only", "hidden_width": 64,
+     "episode_horizon": 6, "horizon_end": "truncation", "boundary": "environment_truncation"},
+    {"architecture": "flat", "message_mode": "physical", "hidden_width": 68,
+     "episode_horizon": 6, "horizon_end": "terminal", "boundary": "terminal_mapping"}
+  ],
+  "modes": ["online", "frozen"],
+  "performance_evaluation": false,
+  "scientific_launch_authorized": false
+}

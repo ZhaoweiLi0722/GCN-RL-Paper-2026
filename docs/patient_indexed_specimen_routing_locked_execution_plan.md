@@ -1476,3 +1476,18 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Keep nominal-history provenance, mean-only/no-CI limits, failed G1/H0/H1
   decisions and closed Stage E. The next prospective endpoint/data/budget/gate
   decision remains separate; no reward-weight change or neural launch follows.
+
+### 2026-09-29: R3 finite-window design and synthetic acceptance checks
+
+- Following the explicit 52-step endpoint question and R2 readout, Zhaowei
+  requested continuation. Adopt that fixed-weight endpoint for the bounded
+  design in `specs/2026-09-29-fixed-window-value-contract/protocol.md`; this is
+  not approval for new trajectories, fitting, or a neural campaign.
+- Specify negative absolute step costs, one scale, gamma=1, one-step TD,
+  objective-terminal masking and named frozen-policy continuation. Preserve
+  the original actor/gate rather than substituting the N4-N7 random prototype.
+- Test only invented numeric paths with existing return helpers; no model,
+  environment or checkpoint loaded. Proposed 1,152 continuation records /
+  37,596 transitions / 3,600 seconds are caps for a future data-only pilot, not
+  consumed budget. F1 checkpoint provenance, runtime parity, new streams,
+  implementation and explicit launch approval remain outstanding.

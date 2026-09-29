@@ -1,0 +1,54 @@
+{
+  "kind": "non_executable_fixed_window_value_pilot_design",
+  "scientific_execution_authorized": false,
+  "objective": {
+    "id": "legacy_cost_52_step_window_v1",
+    "horizon": 52,
+    "reward_kind": "absolute_environment",
+    "reward_scale": 1e-9,
+    "gamma": 1.0,
+    "return_steps": 1,
+    "bootstrap_on_collection_truncation": true,
+    "terminal_value_at_objective_end": 0.0,
+    "cost_weights_changed": false,
+    "full_settlement_claimed": false
+  },
+  "proposal": {
+    "scenario": "routing_nominal_history",
+    "actor_seeds": [60, 61, 62],
+    "checkpoint_role": "F1_control_pretrain",
+    "state_trajectories_per_actor": 1,
+    "decision_steps": [0, 13, 26, 39],
+    "maximum_unique_actions": 6,
+    "discovery_draws": 8,
+    "validation_draws": 8,
+    "continuation": "same_frozen_actor_and_gate",
+    "primary_reference": "frozen_first_action_then_frozen_continuation",
+    "secondary_reference": "mdl2_first_action_then_frozen_continuation",
+    "critic_or_actor_fit_updates": 0,
+    "maximum_continuation_records": 1152,
+    "maximum_environment_transitions": 37596,
+    "maximum_distinct_seed_starts": 195,
+    "wall_seconds": 3600,
+    "automatic_retry": false,
+    "training_escalation_authorized": false
+  },
+  "required_before_execution": {
+    "checkpoint_file_hashes_and_effective_configs": null,
+    "historical_source_version_and_strict_policy_parity": null,
+    "effective_environment_and_cost_hashes": null,
+    "new_stream_allocation_and_collision_audit": null,
+    "committed_collector_and_analysis_implementation": null,
+    "explicit_data_only_pilot_approval": null
+  },
+  "source_locks": {
+    "src/rl/validated_returns.py": "45de110691e67ec56fcaf56ab80d8ddd0a15870f33186360994bccd12d3c36e2",
+    "src/rl/prospective_adapter.py": "9274704705ee0029a23fcd26260d0ea3da4617f788bccd9ae418e880a8173bf6",
+    "src/models/gcn_ddpg.py": "2eaea8a4a82559691b48c20bc62186ee926559f59459705fe71a80c85607b371",
+    "src/models/prospective_forward_agent.py": "73987de49aaf2f6164f4bb2007c352b5270495144eb0931737533dc108897062",
+    "src/models/graph_features.py": "53f0c20fe2734ef8d313dbaf39189964c6a5582fddd0a579e860692d8affab9a",
+    "src/env/capacity_planning.py": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1",
+    "evaluation/audit_ddpg_legal_action_ranker_feasibility.py": "b6426ed5a3685d6bfab0b4b778ba0ff288c5855c248a94c8533fb86060fa3507",
+    "evaluation/run_gcn_residual_sweep.py": "e9c9f5a4fefa0463bc6c8c38888caf2fe3394a6311fa10f6a6ab0e0642b1cdb8"
+  }
+}

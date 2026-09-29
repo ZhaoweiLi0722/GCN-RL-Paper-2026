@@ -1224,3 +1224,20 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Preserve the prior service-effort result where best open loop equaled optimal
   feedback. Any new feedback benefit is not evidence of online weight-update
   value: the exact nonanticipative policy itself is a frozen history-action map.
+
+### 2026-09-29: Existing formal-row recovery and reporting sensitivity
+
+- Continued local Stage E reporting work located the original final/pretrain
+  CSVs in the persistent patient-routing worktree. Existing compact evidence
+  verifies both summary hashes and ten GCN-final CSV hashes. The other thirty
+  CSVs require current hashes and reconciliation to all historical cell means;
+  historical byte-level provenance is not asserted for those files.
+- The post-hoc reporting protocol is
+  `specs/2026-09-29-formal-crossed-audit/protocol.md`. It uses Howard's unchanged
+  crossed-bootstrap tool to audit the five existing total-cost contrasts. It
+  does not run new evaluation, choose policies/scenarios, tune on the holdout,
+  change clinical margins, or replace the original primary statistical method.
+- Preserve every old file. A new local cost-only projection and dated analysis
+  are additive reproducibility artifacts. Formal Stage E remains closed; no
+  new scientific launch, external publication, or collaborator approval is
+  implied by this reporting task.

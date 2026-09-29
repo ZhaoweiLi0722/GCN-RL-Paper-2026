@@ -1,0 +1,22 @@
+{
+  "role": "synthetic_conventional_control_feasibility_not_online_rl",
+  "mechanics_config": "experiments/configs/completion_feedback_mechanics_20260929.json",
+  "families": ["unchanged", "persistent", "fast_iid"],
+  "splits": ["discovery", "replication"],
+  "world_indices": [0, 1, 2, 3],
+  "downstream_slots": [1, 4],
+  "methods": ["booked_rule", "reservation_rule", "fixed16", "id16", "fixed64", "id64"],
+  "grid_denominator": 4,
+  "planning_samples": [16, 64],
+  "main_depth": 1,
+  "probe_epoch": 9,
+  "probe_world": 0,
+  "probe_split": "discovery",
+  "probe_depths": [1, 2],
+  "namespace": "completion-control-S2-20260929-v1",
+  "expected_episodes": 288,
+  "expected_probes": 6,
+  "wall_cap_seconds": 900,
+  "training_authorized": false,
+  "patient_integration_authorized": false
+}

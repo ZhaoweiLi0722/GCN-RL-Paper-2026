@@ -1322,3 +1322,18 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Keep all old evidence and defaults, E1's missing domain data, and Stage E
   unchanged. This does not assert clinical realism, Howard sign-off, approval
   for a calibrated study, headroom or any guaranteed benefit/publication result.
+
+### 2026-09-29: S2 bounded conventional-control screen
+
+- S1 mechanics and positive/failed closure fixtures passed; no learning benefit
+  or safe headroom was established. Zhaowei requested continuation of the named
+  conventional-control comparison. The local synthetic scope is fixed in
+  `specs/2026-09-29-completion-control-screen/protocol.md`.
+- Preserve S1. Use fresh namespaced development worlds with unchanged, persistent
+  and fast-independent response families, equal information/actions and full
+  settlement. Compare fixed public rules and identical fixed/identified rollout
+  planners at two budgets; add preselected depth checks and retain every result.
+- Commit protocol/config and source before the finite 288-episode screen. Stop
+  at its declared wall/closure caps without automatic retuning or relaunch.
+  No neural campaign, old holdout use, source-default change, calibrated
+  manufacturing claim, remote action or collaborator approval is inferred.

@@ -1,8 +1,8 @@
 # Autonomous local research queue
 
-## Live checkpoint: S3 complete, new scope decision required
+## Live checkpoint: S4 authorized, protocol preparation
 
-Updated 2026-09-29 15:38 UTC. The historical M/N completion records below remain valid;
+Updated 2026-09-29 after explicit S4 continuation. The historical M/N completion records below remain valid;
 their old automation stop notices do not cancel the newly requested finite S3
 continuation. Use this section as the current queue, not an old completed packet.
 
@@ -10,7 +10,7 @@ continuation. Use this section as the current queue, not an old completed packet
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | S2 complete at `efe5a86`: 288/288 episodes, 9,364 audited steps, six probes, 123 relevant tests; no online-RL evidence |
-| Current task | S3 complete: implementation, source freeze, one recorded matrix, independent audit, readout and continuation-adequacy decision memo |
+| Current task | S3 complete at `838249d`; S4 finite continuation comparison now explicitly authorized. Protocol/config prepared, implementation and recorded run not yet executed |
 | Protocol commit | `b91dd3b`; archived S2 probe/summary hashes reverified, config JSON and full compilation pass |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | `evaluation/check_completion_action_ranking.py`; 17 new tests, 140 combined regression tests and full compileall pass; S2 read-only audit replays all 288 archived episodes; 40 historical input locks pass |
@@ -19,8 +19,8 @@ continuation. Use this section as the current queue, not an old completed packet
 | Process/output check | Prelaunch and post-exit read-only `ps` found no competing/remaining related evaluator; stdout reached 16/16, successful process exit and completed status agree; no error artifact |
 | Scientific result | Two unchanged contexts agree on the existing booked rule; both changed public contexts have block argmin disagreements; the one non-rule frozen choice changes benefit sign across validation blocks. No stable improvement over the public rule or online-RL evidence |
 | Evidence paths | `reports/2026-09-29-completion-action-ranking/run/`; `specs/2026-09-29-completion-action-ranking/readout.md` and `decision.md` |
-| Next concrete action | User/coauthor decision on the proposed model-only feedback-continuation comparison; do not execute it under S3 authority |
-| Approval needed now | Explicit approval for a new bounded continuation-comparison packet (prospective protocol, tests, one capped model-only run, audit). No training, new actual/patient episodes, reward tuning or remote actions included |
+| Next concrete action | Commit S4 protocol/config, implement/test the bounded continuation comparison, source-lock and run once, audit/read out; if no stable conditional signal, document reward/objective diagnosis |
+| Approval needed now | None inside the newly approved S4 packet. Considering reward defects is allowed; changing rewards, tuning cost weights or training is not |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 
@@ -31,9 +31,9 @@ next action and any precise approval need. A running label needs fresh process
 and progress evidence, not the existence of the scheduler. Do not duplicate an
 active job. Continue adjacent unblocked steps within a run where feasible.
 
-S3 source of truth:
-`specs/2026-09-29-completion-action-ranking/protocol.md` and
-`experiments/configs/completion_action_ranking_20260929.json`.
+S4 source of truth:
+`specs/2026-09-29-completion-continuation-comparison/protocol.md` and
+`experiments/configs/completion_continuation_comparison_20260929.json`.
 Proceed through protocol -> implementation/tests -> source lock -> one bounded
 run -> read-only audit -> readout/continuation-adequacy memo. Routine phases do
 not each need a new user reply. After this finite chain completes, or if only

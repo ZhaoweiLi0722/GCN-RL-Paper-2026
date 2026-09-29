@@ -1385,3 +1385,18 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   a bounded feedback-continuation comparison. Remove this continuation
   automation at handoff. New scope needs explicit approval and a separately
   committed protocol; preserve S3/S2/S1, missing E1 data and closed Stage E.
+
+### 2026-09-29: Approved S4 continuation comparison and reward diagnosis
+
+- After S3's completed audit and the named continuation-comparison proposal,
+  Zhaowei requested continuation and consideration of the reward function if
+  progress remains absent. Scope is fixed in
+  `specs/2026-09-29-completion-continuation-comparison/protocol.md`.
+- Authorize that finite model-only implementation/test/one-run/audit packet on
+  the four archived public contexts, followed by a read-only reward/objective
+  diagnosis if no stable conditional signal emerges. Commit protocol/config
+  and then source before recording. Preserve all old code and evidence.
+- Do not change reward weights, run neural training or new actual/patient
+  episodes, expand/retry after outcomes, use formal holdout, perform remote
+  operations or imply Howard approval. Stage E remains closed. Reward revision
+  is a separate scientific decision, not an automatic response to a null result.

@@ -1350,3 +1350,21 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Do not launch DDPG or claim certified frozen-policy headroom. Any next
   independent action-ranking/continuation study needs a separate committed
   protocol. Preserve this completed evidence, prior results and closed Stage E.
+
+### 2026-09-29: S3 and automatic routine continuation
+
+- After the audited S2 readout, Zhaowei explicitly asked to continue the named
+  independent action-ranking check and avoid manually prompting every routine
+  step. Scope: `specs/2026-09-29-completion-action-ranking/protocol.md`.
+- Authorize implementation/tests, one bounded conditional-model forecast
+  diagnostic on all six archived probes (four unique public contexts), audit,
+  readout and a continuation-adequacy decision memo. All planned sample budgets
+  and independent blocks are fixed before execution; no outcome-based extension.
+- Commit protocol/config then source before recording. Preserve S1/S2 and
+  earlier results, disclose conditional model assumptions and duplicated probes.
+  A same-task scheduled continuation may carry routine stages forward without
+  asking again, updating the local queue with evidence and next actions.
+- This does not authorize a neural campaign, arbitrary new scenario/reward
+  changes, formal holdout use, remote writes or Howard sign-off. Stop at a
+  terminal failure or the declared decision boundary rather than relaunching
+  or manufacturing new experimental scope to keep an automation running.

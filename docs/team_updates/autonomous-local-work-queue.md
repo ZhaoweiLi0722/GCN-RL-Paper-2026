@@ -1,5 +1,38 @@
 # Autonomous local research queue
 
+## Live checkpoint: renewed S3 continuation
+
+Updated 2026-09-29. The historical M/N completion records below remain valid;
+their old automation stop notices do not cancel the newly requested finite S3
+continuation. Use this section as the current queue, not an old completed packet.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
+| Last verified stage | S2 complete at `efe5a86`: 288/288 episodes, 9,364 audited steps, six probes, 123 relevant tests; no online-RL evidence |
+| Current task | S3 protocol/config prepared; implementation, tests and recorded forecast diagnostic not yet executed |
+| Next concrete action | Implement the frozen S3 protocol, with paired raw-cost storage and scalar/prefix/duplicate-context tests |
+| Approval needed now | None for the declared S3 implementation, tests, one bounded forecast matrix, audit and decision memo |
+| Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
+| Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
+
+The user asked for automatic continuation and a continuously updated status.
+Keep this checkpoint current after each completed work packet, including
+timestamps, current phase, actual process evidence if any, last test/result,
+next action and any precise approval need. A running label needs fresh process
+and progress evidence, not the existence of the scheduler. Do not duplicate an
+active job. Continue adjacent unblocked steps within a run where feasible.
+
+S3 source of truth:
+`specs/2026-09-29-completion-action-ranking/protocol.md` and
+`experiments/configs/completion_action_ranking_20260929.json`.
+Proceed through protocol -> implementation/tests -> source lock -> one bounded
+run -> read-only audit -> readout/continuation-adequacy memo. Routine phases do
+not each need a new user reply. After this finite chain completes, or if only
+out-of-scope work remains, record the decision and disable this continuation
+automation. Do not fill the queue with invented experiments. Unchanged waits
+need no repeated message; report actual milestones, failures or required input.
+
 ## Authority and boundaries
 
 Zhaowei requested on September 29 that routine steps continue automatically

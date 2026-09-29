@@ -1,27 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: R2 archived decision-cost diagnosis complete
+## Live checkpoint: R3 value-target design complete; F1 artifacts needed
 
-Updated 2026-09-29 17:36 UTC after the user's acceptance of the recommended
-legacy-simulator direction. R2 is retrospective archived-cost analysis, not a
-changed experiment, reward intervention or authorization to train.
+Updated 2026-09-29 17:52 UTC after the user's continuation following the
+52-step endpoint question. R3 completes a non-executable design and synthetic
+tests. No scientific pilot, reward intervention or training was launched.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
-| Last verified stage | R2 complete; R1/S4 and all earlier scientific code/results unchanged |
-| Current task | Archived action-cost audit and independent Decimal verification complete |
-| Protocol commit | R2 protocol/config `5594989`, auditor `1441c32`, verifier `dd62d6f`; outputs recorded after the corresponding source commit |
+| Last verified stage | R3 design/test packet complete; R2 and all earlier scientific code/results unchanged |
+| Current task | Fixed-window value-label pilot design, continuation compatibility and synthetic acceptance tests complete |
+| Protocol commit | R3 protocol/config/tests `1318149`; not an execution commit or launch authorization |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
-| Implementation evidence | New read-only CSV/NPZ auditor and separate stdlib Decimal verifier; 14 new/29 combined tests, full compileall and diff checks pass. No production reward/learner/environment source changed |
-| Recorded execution | 1,560 cost rows, 1,560 predictions, all 156 archived states; exit 0. Zero environment queries, optimizer updates or reward changes |
-| Independent verification | Seven locked inputs unchanged; all 624 selections and pooled/per-seed cost summaries match independent Decimal reconstruction; original G1 metrics reproduce |
-| Process/output check | Fresh read-only ps check found no related research Python process; audit and verification exited 0, no background task |
-| Scientific result | Descriptive validation cost differences vs MDL-2: frozen critic argmax +4.488M, fitted offline critic +3.181M, discovery-cost selector -0.932M per diagnostic state. These are NOT frozen/online actor comparisons or episode savings |
-| Reward diagnosis | 40/71 discovery-validation top-action disagreements exceed the legacy 1M cost threshold. Wrong actions are not uniformly near-ties; no evidence yet that changing cost weights or repairing targets causes online gain |
-| Evidence paths | `reports/2026-09-29-g1-decision-cost/{audit,verification}.json`; `specs/2026-09-29-g1-decision-cost/{protocol,readout}.md` |
-| Next concrete action | Obtain endpoint decision, then draft a separately bounded fixed-weight reward/replay/TD-consistency feasibility protocol with raw replication costs and clinical outcomes. Reuse N1-N7; do not start training or choose a favorable gate from old validation data |
-| Approval needed now | Legacy route accepted. Recommend original 52-step finite-window cost for the next protocol, not full settlement. This endpoint choice is pending; data/initialization/budget and scientific launch still require a committed protocol and authorization |
+| Implementation evidence | 11 new/59 combined tests, full compileall and diff checks pass; existing return helpers reused, no production source change or duplicate learner framework |
+| Recorded execution | Synthetic numeric tests only. Zero new environment queries, historical-checkpoint inference or optimizer updates; proposed pilot NOT run |
+| Independent verification | 52-step returns agree with independent suffix sums; eight source locks and proposed budget arithmetic verified |
+| Process/output check | Fresh read-only ps check found no related research Python process; tests/compileall exited 0, no background task |
+| Scientific result | No new performance result. R2's archived cost differences remain descriptive; no online/frozen actor comparison established |
+| Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
+| Evidence paths | `specs/2026-09-29-fixed-window-value-contract/{protocol,readout}.md`; `experiments/configs/fixed_window_value_contract_20260929.json`; `tests/test_fixed_window_objective.py` |
+| Next concrete action | Locate F1 seed60-62 control-pretrain checkpoints and config/summary/manifest, then perform read-only provenance/strict policy-parity checks; do not substitute random N7 or formal actors |
+| Data/approval needed now | Artifact location asked once, no reply yet. Scoped worktree and two persistent-root searches found no F1 checkpoint; former temp worktree absent, remote location unverified. Pilot implementation, fresh streams and explicit capped data-only launch approval remain separate |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 
@@ -32,13 +32,13 @@ next action and any precise approval need. A running label needs fresh process
 and progress evidence, not the existence of the scheduler. Do not duplicate an
 active job. Continue adjacent unblocked steps within a run where feasible.
 
-R2 source of truth:
-`specs/2026-09-29-g1-decision-cost/protocol.md` and
-`experiments/configs/g1_decision_cost_20260929.json`. The finite read-only packet
-has completed; no automation remains to disable. G1's nominal-history correction
-and failed decision remain in force; its favorable discovery-selector mean is
-not grounds to reopen it. Do not fill the queue with invented experiments or
-repeat the completed arithmetic as new progress.
+R3 source of truth:
+`specs/2026-09-29-fixed-window-value-contract/protocol.md` and the matching
+config above. The finite design/test packet is complete; no automation remains
+to disable. Proposed 1,152 continuation records / 37,596 transitions / 3,600 s
+are NOT consumed budget or execution permission. G1's correction/failure remain
+in force. Do not fill the queue with invented experiments, repeat arithmetic as
+new progress, or recreate missing pretrained weights without a new decision.
 Unchanged waits need no repeated message; report actual milestones or decisions.
 
 ## Authority and boundaries

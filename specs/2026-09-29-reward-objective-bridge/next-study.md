@@ -9,7 +9,10 @@ The subsequent archived-cost readout in
 `specs/2026-09-29-g1-decision-cost/readout.md` distinguishes costly action
 selection errors from exact top-1 disagreement. It is not a reward intervention
 or an approval to train. Recommend the original 52-step finite-window endpoint
-for the next protocol draft; explicit endpoint approval remains pending.
+for the next protocol draft. After the explicit endpoint question, Zhaowei
+requested continuation; the finite-window design is now recorded in
+`specs/2026-09-29-fixed-window-value-contract/protocol.md`. This is design
+acceptance, not approval to launch its proposed data-only pilot or training.
 
 ## Separate two routes
 
@@ -98,8 +101,8 @@ license cost-weight tuning. All negative, failed and inconclusive runs remain.
 
 1. Legacy simulator-consistency route accepted by Zhaowei; new operational
    scenario remains separate and uncalibrated. This is not Howard's sign-off.
-2. For the former, approve the endpoint: explicitly finite-window versus fully
-   settled. Review its implications for comparability with the current paper.
+2. Finite-window endpoint chosen for the R3 design; retain its post-window
+   liability limitation. The fully settled task is not silently substituted.
 3. Identify acceptable actor/gate initialization and corrected critic data with
    verifiable provenance; no automatic migration of the old mixed replay.
 4. Fix an independent ranking gate, practical effect margin, streams, sample/

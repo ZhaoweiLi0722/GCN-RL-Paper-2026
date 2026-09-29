@@ -1,0 +1,1730 @@
+[
+  {
+    "case": "discovery__unchanged__slots1__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world1__fixed16",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world1__id16",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world2__fixed16",
+    "audit": "passed",
+    "intervals": 34,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world2__id16",
+    "audit": "passed",
+    "intervals": 34,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world2__id64",
+    "audit": "passed",
+    "intervals": 34,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots1__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world1__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world1__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world2__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world2__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots1__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world1__fixed16",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world1__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world2__fixed16",
+    "audit": "passed",
+    "intervals": 34,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world2__id16",
+    "audit": "passed",
+    "intervals": 34,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world2__id64",
+    "audit": "passed",
+    "intervals": 34,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__unchanged__slots4__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world1__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world1__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world2__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world2__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__unchanged__slots4__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": true
+  },
+  {
+    "case": "discovery__persistent__slots1__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world1__fixed16",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world1__id16",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world1__fixed64",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world1__id64",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world2__fixed16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world2__id16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots1__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world1__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world1__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world2__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world2__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots1__world3__id64",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world1__fixed16",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world1__id16",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world1__fixed64",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world1__id64",
+    "audit": "passed",
+    "intervals": 38,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world2__fixed16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world2__id16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__persistent__slots4__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world1__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world1__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world2__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world2__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__persistent__slots4__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world1__fixed16",
+    "audit": "passed",
+    "intervals": 35,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world1__id16",
+    "audit": "passed",
+    "intervals": 35,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world2__fixed16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world2__id16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots1__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world1__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world1__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world2__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world2__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots1__world3__id64",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world1__fixed16",
+    "audit": "passed",
+    "intervals": 35,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world1__id16",
+    "audit": "passed",
+    "intervals": 35,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world2__fixed16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world2__id16",
+    "audit": "passed",
+    "intervals": 33,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "discovery__fast_iid__slots4__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world0__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world0__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world0__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world0__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world0__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world0__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world1__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world1__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world1__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world1__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world1__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world1__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world2__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world2__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world2__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world2__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world2__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world2__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world3__booked_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world3__reservation_rule",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world3__fixed16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world3__id16",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world3__fixed64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  },
+  {
+    "case": "replication__fast_iid__slots4__world3__id64",
+    "audit": "passed",
+    "intervals": 32,
+    "full_planner_replay": false
+  }
+]

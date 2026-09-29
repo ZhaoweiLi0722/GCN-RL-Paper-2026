@@ -1,0 +1,16 @@
+{
+  "role": "synthetic_conventional_control_feasibility_not_online_rl",
+  "episodes": 288,
+  "audited_intervals": 9364,
+  "all_settled": true,
+  "probes": 6,
+  "nontrivial_probes": 6,
+  "budget_disagreements": 4,
+  "depth_disagreements": 0,
+  "transition_queries": 41236921,
+  "probe_transition_queries": 1992285,
+  "online_rl_evidence": false,
+  "clinical_calibration": false,
+  "strong_frozen_policy_headroom_established": false,
+  "elapsed_seconds": 24.897121208
+}

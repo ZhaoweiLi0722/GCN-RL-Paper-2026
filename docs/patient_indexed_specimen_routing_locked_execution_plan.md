@@ -1337,3 +1337,16 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   at its declared wall/closure caps without automatic retuning or relaunch.
   No neural campaign, old holdout use, source-default change, calibrated
   manufacturing claim, remote action or collaborator approval is inferred.
+
+### 2026-09-29: S2 completion and decision
+
+- Source commit `b0b3e315a629b9fca44e742120075981d5187c01` completed all 288
+  declared episodes and six probes with zero retries; all 9,364 scalar intervals,
+  full settlement, 60 paired contrast records and 29 file locks reverify.
+  Readout: `specs/2026-09-29-completion-control-screen/readout.md`.
+- Four of six preselected probes change first request with forecast budget.
+  Identification-plus-rollout does not show replicated persistent-shift gain;
+  the favorable slots4 discovery mean reverses on the fixed replication split.
+- Do not launch DDPG or claim certified frozen-policy headroom. Any next
+  independent action-ranking/continuation study needs a separate committed
+  protocol. Preserve this completed evidence, prior results and closed Stage E.

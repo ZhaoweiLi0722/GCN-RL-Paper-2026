@@ -1,0 +1,79 @@
+{
+  "role": "hypothetical_completion_feedback_mechanics_not_performance",
+  "horizon": 32,
+  "max_closure_steps": 256,
+  "effort": {
+    "site_hour_caps": [
+      1.0,
+      1.0
+    ],
+    "shared_hour_budget": 1.0,
+    "commitment_lead_steps": 1,
+    "hourly_cost": 2.0,
+    "quadratic_cost": 0.5,
+    "switching_cost": 0.25
+  },
+  "booked_releases": [
+    0,
+    8,
+    16,
+    24
+  ],
+  "downstream_steps": 2,
+  "downstream_slots": [
+    1,
+    4
+  ],
+  "holding_cost": 1.0,
+  "nominal_response": [
+    1.0,
+    1.0
+  ],
+  "slow_fast_response": [
+    0.5,
+    1.5
+  ],
+  "change_epoch": 8,
+  "families": [
+    "unchanged",
+    "persistent_left_slow",
+    "persistent_right_slow",
+    "rapid_alternating"
+  ],
+  "engineering_seeds": [
+    0,
+    1
+  ],
+  "filter": {
+    "rates": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "prior": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "refresh_probability": 0.05
+  },
+  "quadrature": {
+    "points": 1000,
+    "rates": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "hours": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ]
+  },
+  "expected_cases": 16,
+  "training_authorized": false,
+  "patient_integration_authorized": false,
+  "operational_calibration": false
+}

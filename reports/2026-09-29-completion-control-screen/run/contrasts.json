@@ -1,0 +1,2342 @@
+[
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "discovery",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 66.21875,
+        "right_cost": 71.875,
+        "difference": -5.65625
+      },
+      {
+        "world": 1,
+        "left_cost": 77.625,
+        "right_cost": 85.875,
+        "difference": -8.25
+      },
+      {
+        "world": 2,
+        "left_cost": 57.125,
+        "right_cost": 60.125,
+        "difference": -3.0
+      },
+      {
+        "world": 3,
+        "left_cost": 65.96875,
+        "right_cost": 73.875,
+        "difference": -7.90625
+      }
+    ],
+    "mean": -6.203125,
+    "min": -8.25,
+    "max": -3.0,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 64.78125,
+        "right_cost": 71.875,
+        "difference": -7.09375
+      },
+      {
+        "world": 1,
+        "left_cost": 84.28125,
+        "right_cost": 85.875,
+        "difference": -1.59375
+      },
+      {
+        "world": 2,
+        "left_cost": 57.5,
+        "right_cost": 60.125,
+        "difference": -2.625
+      },
+      {
+        "world": 3,
+        "left_cost": 73.34375,
+        "right_cost": 73.875,
+        "difference": -0.53125
+      }
+    ],
+    "mean": -2.9609375,
+    "min": -7.09375,
+    "max": -0.53125,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "discovery",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 66.5,
+        "right_cost": 64.78125,
+        "difference": 1.71875
+      },
+      {
+        "world": 1,
+        "left_cost": 83.53125,
+        "right_cost": 84.28125,
+        "difference": -0.75
+      },
+      {
+        "world": 2,
+        "left_cost": 68.75,
+        "right_cost": 57.5,
+        "difference": 11.25
+      },
+      {
+        "world": 3,
+        "left_cost": 71.71875,
+        "right_cost": 73.34375,
+        "difference": -1.625
+      }
+    ],
+    "mean": 2.6484375,
+    "min": -1.625,
+    "max": 11.25,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 64.78125,
+        "right_cost": 71.53125,
+        "difference": -6.75
+      },
+      {
+        "world": 1,
+        "left_cost": 84.28125,
+        "right_cost": 115.125,
+        "difference": -30.84375
+      },
+      {
+        "world": 2,
+        "left_cost": 57.5,
+        "right_cost": 84.25,
+        "difference": -26.75
+      },
+      {
+        "world": 3,
+        "left_cost": 73.34375,
+        "right_cost": 62.84375,
+        "difference": 10.5
+      }
+    ],
+    "mean": -13.4609375,
+    "min": -30.84375,
+    "max": 10.5,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "discovery",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 66.5,
+        "right_cost": 67.71875,
+        "difference": -1.21875
+      },
+      {
+        "world": 1,
+        "left_cost": 83.53125,
+        "right_cost": 92.46875,
+        "difference": -8.9375
+      },
+      {
+        "world": 2,
+        "left_cost": 68.75,
+        "right_cost": 76.5,
+        "difference": -7.75
+      },
+      {
+        "world": 3,
+        "left_cost": 71.71875,
+        "right_cost": 76.875,
+        "difference": -5.15625
+      }
+    ],
+    "mean": -5.765625,
+    "min": -8.9375,
+    "max": -1.21875,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "replication",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 75.59375,
+        "right_cost": 82.875,
+        "difference": -7.28125
+      },
+      {
+        "world": 1,
+        "left_cost": 63.71875,
+        "right_cost": 71.625,
+        "difference": -7.90625
+      },
+      {
+        "world": 2,
+        "left_cost": 61.4375,
+        "right_cost": 66.625,
+        "difference": -5.1875
+      },
+      {
+        "world": 3,
+        "left_cost": 66.21875,
+        "right_cost": 72.875,
+        "difference": -6.65625
+      }
+    ],
+    "mean": -6.7578125,
+    "min": -7.90625,
+    "max": -5.1875,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 77.375,
+        "right_cost": 82.875,
+        "difference": -5.5
+      },
+      {
+        "world": 1,
+        "left_cost": 62.375,
+        "right_cost": 71.625,
+        "difference": -9.25
+      },
+      {
+        "world": 2,
+        "left_cost": 70.53125,
+        "right_cost": 66.625,
+        "difference": 3.90625
+      },
+      {
+        "world": 3,
+        "left_cost": 65.6875,
+        "right_cost": 72.875,
+        "difference": -7.1875
+      }
+    ],
+    "mean": -4.5078125,
+    "min": -9.25,
+    "max": 3.90625,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "replication",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 81.71875,
+        "right_cost": 77.375,
+        "difference": 4.34375
+      },
+      {
+        "world": 1,
+        "left_cost": 63.5625,
+        "right_cost": 62.375,
+        "difference": 1.1875
+      },
+      {
+        "world": 2,
+        "left_cost": 63.125,
+        "right_cost": 70.53125,
+        "difference": -7.40625
+      },
+      {
+        "world": 3,
+        "left_cost": 63.78125,
+        "right_cost": 65.6875,
+        "difference": -1.90625
+      }
+    ],
+    "mean": -0.9453125,
+    "min": -7.40625,
+    "max": 4.34375,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 77.375,
+        "right_cost": 76.875,
+        "difference": 0.5
+      },
+      {
+        "world": 1,
+        "left_cost": 62.375,
+        "right_cost": 71.34375,
+        "difference": -8.96875
+      },
+      {
+        "world": 2,
+        "left_cost": 70.53125,
+        "right_cost": 72.1875,
+        "difference": -1.65625
+      },
+      {
+        "world": 3,
+        "left_cost": 65.6875,
+        "right_cost": 66.0,
+        "difference": -0.3125
+      }
+    ],
+    "mean": -2.609375,
+    "min": -8.96875,
+    "max": 0.5,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "unchanged",
+    "slots": 1,
+    "split": "replication",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 81.71875,
+        "right_cost": 73.40625,
+        "difference": 8.3125
+      },
+      {
+        "world": 1,
+        "left_cost": 63.5625,
+        "right_cost": 62.40625,
+        "difference": 1.15625
+      },
+      {
+        "world": 2,
+        "left_cost": 63.125,
+        "right_cost": 73.03125,
+        "difference": -9.90625
+      },
+      {
+        "world": 3,
+        "left_cost": 63.78125,
+        "right_cost": 65.28125,
+        "difference": -1.5
+      }
+    ],
+    "mean": -0.484375,
+    "min": -9.90625,
+    "max": 8.3125,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "discovery",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 64.21875,
+        "right_cost": 69.875,
+        "difference": -5.65625
+      },
+      {
+        "world": 1,
+        "left_cost": 75.625,
+        "right_cost": 83.875,
+        "difference": -8.25
+      },
+      {
+        "world": 2,
+        "left_cost": 55.125,
+        "right_cost": 57.125,
+        "difference": -2.0
+      },
+      {
+        "world": 3,
+        "left_cost": 61.96875,
+        "right_cost": 69.875,
+        "difference": -7.90625
+      }
+    ],
+    "mean": -5.953125,
+    "min": -8.25,
+    "max": -2.0,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 62.78125,
+        "right_cost": 69.875,
+        "difference": -7.09375
+      },
+      {
+        "world": 1,
+        "left_cost": 78.0625,
+        "right_cost": 83.875,
+        "difference": -5.8125
+      },
+      {
+        "world": 2,
+        "left_cost": 52.9375,
+        "right_cost": 57.125,
+        "difference": -4.1875
+      },
+      {
+        "world": 3,
+        "left_cost": 68.75,
+        "right_cost": 69.875,
+        "difference": -1.125
+      }
+    ],
+    "mean": -4.5546875,
+    "min": -7.09375,
+    "max": -1.125,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "discovery",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 71.0,
+        "right_cost": 62.78125,
+        "difference": 8.21875
+      },
+      {
+        "world": 1,
+        "left_cost": 79.0625,
+        "right_cost": 78.0625,
+        "difference": 1.0
+      },
+      {
+        "world": 2,
+        "left_cost": 67.09375,
+        "right_cost": 52.9375,
+        "difference": 14.15625
+      },
+      {
+        "world": 3,
+        "left_cost": 70.0625,
+        "right_cost": 68.75,
+        "difference": 1.3125
+      }
+    ],
+    "mean": 6.171875,
+    "min": 1.0,
+    "max": 14.15625,
+    "lower": 0,
+    "equal": 0,
+    "higher": 4
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 62.78125,
+        "right_cost": 69.21875,
+        "difference": -6.4375
+      },
+      {
+        "world": 1,
+        "left_cost": 78.0625,
+        "right_cost": 103.46875,
+        "difference": -25.40625
+      },
+      {
+        "world": 2,
+        "left_cost": 52.9375,
+        "right_cost": 85.625,
+        "difference": -32.6875
+      },
+      {
+        "world": 3,
+        "left_cost": 68.75,
+        "right_cost": 58.90625,
+        "difference": 9.84375
+      }
+    ],
+    "mean": -13.671875,
+    "min": -32.6875,
+    "max": 9.84375,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "discovery",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 71.0,
+        "right_cost": 65.40625,
+        "difference": 5.59375
+      },
+      {
+        "world": 1,
+        "left_cost": 79.0625,
+        "right_cost": 83.40625,
+        "difference": -4.34375
+      },
+      {
+        "world": 2,
+        "left_cost": 67.09375,
+        "right_cost": 68.25,
+        "difference": -1.15625
+      },
+      {
+        "world": 3,
+        "left_cost": 70.0625,
+        "right_cost": 90.8125,
+        "difference": -20.75
+      }
+    ],
+    "mean": -5.1640625,
+    "min": -20.75,
+    "max": 5.59375,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "replication",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 72.59375,
+        "right_cost": 79.875,
+        "difference": -7.28125
+      },
+      {
+        "world": 1,
+        "left_cost": 61.71875,
+        "right_cost": 69.625,
+        "difference": -7.90625
+      },
+      {
+        "world": 2,
+        "left_cost": 60.4375,
+        "right_cost": 65.625,
+        "difference": -5.1875
+      },
+      {
+        "world": 3,
+        "left_cost": 64.21875,
+        "right_cost": 69.875,
+        "difference": -5.65625
+      }
+    ],
+    "mean": -6.5078125,
+    "min": -7.90625,
+    "max": -5.1875,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 75.375,
+        "right_cost": 79.875,
+        "difference": -4.5
+      },
+      {
+        "world": 1,
+        "left_cost": 61.375,
+        "right_cost": 69.625,
+        "difference": -8.25
+      },
+      {
+        "world": 2,
+        "left_cost": 70.65625,
+        "right_cost": 65.625,
+        "difference": 5.03125
+      },
+      {
+        "world": 3,
+        "left_cost": 64.8125,
+        "right_cost": 69.875,
+        "difference": -5.0625
+      }
+    ],
+    "mean": -3.1953125,
+    "min": -8.25,
+    "max": 5.03125,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "replication",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 80.40625,
+        "right_cost": 75.375,
+        "difference": 5.03125
+      },
+      {
+        "world": 1,
+        "left_cost": 57.8125,
+        "right_cost": 61.375,
+        "difference": -3.5625
+      },
+      {
+        "world": 2,
+        "left_cost": 72.5,
+        "right_cost": 70.65625,
+        "difference": 1.84375
+      },
+      {
+        "world": 3,
+        "left_cost": 63.0,
+        "right_cost": 64.8125,
+        "difference": -1.8125
+      }
+    ],
+    "mean": 0.375,
+    "min": -3.5625,
+    "max": 5.03125,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 75.375,
+        "right_cost": 65.59375,
+        "difference": 9.78125
+      },
+      {
+        "world": 1,
+        "left_cost": 61.375,
+        "right_cost": 67.625,
+        "difference": -6.25
+      },
+      {
+        "world": 2,
+        "left_cost": 70.65625,
+        "right_cost": 67.28125,
+        "difference": 3.375
+      },
+      {
+        "world": 3,
+        "left_cost": 64.8125,
+        "right_cost": 67.875,
+        "difference": -3.0625
+      }
+    ],
+    "mean": 0.9609375,
+    "min": -6.25,
+    "max": 9.78125,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "unchanged",
+    "slots": 4,
+    "split": "replication",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 80.40625,
+        "right_cost": 70.3125,
+        "difference": 10.09375
+      },
+      {
+        "world": 1,
+        "left_cost": 57.8125,
+        "right_cost": 58.875,
+        "difference": -1.0625
+      },
+      {
+        "world": 2,
+        "left_cost": 72.5,
+        "right_cost": 68.78125,
+        "difference": 3.71875
+      },
+      {
+        "world": 3,
+        "left_cost": 63.0,
+        "right_cost": 68.53125,
+        "difference": -5.53125
+      }
+    ],
+    "mean": 1.8046875,
+    "min": -5.53125,
+    "max": 10.09375,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "discovery",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 64.21875,
+        "right_cost": 65.5,
+        "difference": -1.28125
+      },
+      {
+        "world": 1,
+        "left_cost": 84.9375,
+        "right_cost": 83.75,
+        "difference": 1.1875
+      },
+      {
+        "world": 2,
+        "left_cost": 64.5625,
+        "right_cost": 68.375,
+        "difference": -3.8125
+      },
+      {
+        "world": 3,
+        "left_cost": 98.21875,
+        "right_cost": 85.5,
+        "difference": 12.71875
+      }
+    ],
+    "mean": 2.203125,
+    "min": -3.8125,
+    "max": 12.71875,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 78.09375,
+        "right_cost": 65.5,
+        "difference": 12.59375
+      },
+      {
+        "world": 1,
+        "left_cost": 91.84375,
+        "right_cost": 83.75,
+        "difference": 8.09375
+      },
+      {
+        "world": 2,
+        "left_cost": 66.6875,
+        "right_cost": 68.375,
+        "difference": -1.6875
+      },
+      {
+        "world": 3,
+        "left_cost": 86.1875,
+        "right_cost": 85.5,
+        "difference": 0.6875
+      }
+    ],
+    "mean": 4.921875,
+    "min": -1.6875,
+    "max": 12.59375,
+    "lower": 1,
+    "equal": 0,
+    "higher": 3
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "discovery",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 77.25,
+        "right_cost": 78.09375,
+        "difference": -0.84375
+      },
+      {
+        "world": 1,
+        "left_cost": 93.5,
+        "right_cost": 91.84375,
+        "difference": 1.65625
+      },
+      {
+        "world": 2,
+        "left_cost": 66.5,
+        "right_cost": 66.6875,
+        "difference": -0.1875
+      },
+      {
+        "world": 3,
+        "left_cost": 94.875,
+        "right_cost": 86.1875,
+        "difference": 8.6875
+      }
+    ],
+    "mean": 2.328125,
+    "min": -0.84375,
+    "max": 8.6875,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 78.09375,
+        "right_cost": 92.78125,
+        "difference": -14.6875
+      },
+      {
+        "world": 1,
+        "left_cost": 91.84375,
+        "right_cost": 108.34375,
+        "difference": -16.5
+      },
+      {
+        "world": 2,
+        "left_cost": 66.6875,
+        "right_cost": 88.375,
+        "difference": -21.6875
+      },
+      {
+        "world": 3,
+        "left_cost": 86.1875,
+        "right_cost": 106.0625,
+        "difference": -19.875
+      }
+    ],
+    "mean": -18.1875,
+    "min": -21.6875,
+    "max": -14.6875,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "discovery",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 77.25,
+        "right_cost": 67.71875,
+        "difference": 9.53125
+      },
+      {
+        "world": 1,
+        "left_cost": 93.5,
+        "right_cost": 92.875,
+        "difference": 0.625
+      },
+      {
+        "world": 2,
+        "left_cost": 66.5,
+        "right_cost": 84.0,
+        "difference": -17.5
+      },
+      {
+        "world": 3,
+        "left_cost": 94.875,
+        "right_cost": 79.40625,
+        "difference": 15.46875
+      }
+    ],
+    "mean": 2.03125,
+    "min": -17.5,
+    "max": 15.46875,
+    "lower": 1,
+    "equal": 0,
+    "higher": 3
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "replication",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 83.75,
+        "right_cost": 77.5,
+        "difference": 6.25
+      },
+      {
+        "world": 1,
+        "left_cost": 65.5,
+        "right_cost": 73.875,
+        "difference": -8.375
+      },
+      {
+        "world": 2,
+        "left_cost": 65.21875,
+        "right_cost": 68.75,
+        "difference": -3.53125
+      },
+      {
+        "world": 3,
+        "left_cost": 62.96875,
+        "right_cost": 69.75,
+        "difference": -6.78125
+      }
+    ],
+    "mean": -3.109375,
+    "min": -8.375,
+    "max": 6.25,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 76.125,
+        "right_cost": 77.5,
+        "difference": -1.375
+      },
+      {
+        "world": 1,
+        "left_cost": 62.375,
+        "right_cost": 73.875,
+        "difference": -11.5
+      },
+      {
+        "world": 2,
+        "left_cost": 69.5625,
+        "right_cost": 68.75,
+        "difference": 0.8125
+      },
+      {
+        "world": 3,
+        "left_cost": 63.15625,
+        "right_cost": 69.75,
+        "difference": -6.59375
+      }
+    ],
+    "mean": -4.6640625,
+    "min": -11.5,
+    "max": 0.8125,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "replication",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 75.5625,
+        "right_cost": 76.125,
+        "difference": -0.5625
+      },
+      {
+        "world": 1,
+        "left_cost": 63.5625,
+        "right_cost": 62.375,
+        "difference": 1.1875
+      },
+      {
+        "world": 2,
+        "left_cost": 71.15625,
+        "right_cost": 69.5625,
+        "difference": 1.59375
+      },
+      {
+        "world": 3,
+        "left_cost": 80.875,
+        "right_cost": 63.15625,
+        "difference": 17.71875
+      }
+    ],
+    "mean": 4.984375,
+    "min": -0.5625,
+    "max": 17.71875,
+    "lower": 1,
+    "equal": 0,
+    "higher": 3
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 76.125,
+        "right_cost": 90.1875,
+        "difference": -14.0625
+      },
+      {
+        "world": 1,
+        "left_cost": 62.375,
+        "right_cost": 71.34375,
+        "difference": -8.96875
+      },
+      {
+        "world": 2,
+        "left_cost": 69.5625,
+        "right_cost": 75.625,
+        "difference": -6.0625
+      },
+      {
+        "world": 3,
+        "left_cost": 63.15625,
+        "right_cost": 74.03125,
+        "difference": -10.875
+      }
+    ],
+    "mean": -9.9921875,
+    "min": -14.0625,
+    "max": -6.0625,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "persistent",
+    "slots": 1,
+    "split": "replication",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 75.5625,
+        "right_cost": 91.21875,
+        "difference": -15.65625
+      },
+      {
+        "world": 1,
+        "left_cost": 63.5625,
+        "right_cost": 62.40625,
+        "difference": 1.15625
+      },
+      {
+        "world": 2,
+        "left_cost": 71.15625,
+        "right_cost": 80.8125,
+        "difference": -9.65625
+      },
+      {
+        "world": 3,
+        "left_cost": 80.875,
+        "right_cost": 74.5625,
+        "difference": 6.3125
+      }
+    ],
+    "mean": -4.4609375,
+    "min": -15.65625,
+    "max": 6.3125,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "discovery",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 64.21875,
+        "right_cost": 63.5,
+        "difference": 0.71875
+      },
+      {
+        "world": 1,
+        "left_cost": 80.9375,
+        "right_cost": 81.75,
+        "difference": -0.8125
+      },
+      {
+        "world": 2,
+        "left_cost": 62.5625,
+        "right_cost": 65.375,
+        "difference": -2.8125
+      },
+      {
+        "world": 3,
+        "left_cost": 92.21875,
+        "right_cost": 80.5,
+        "difference": 11.71875
+      }
+    ],
+    "mean": 2.203125,
+    "min": -2.8125,
+    "max": 11.71875,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 89.0625,
+        "right_cost": 63.5,
+        "difference": 25.5625
+      },
+      {
+        "world": 1,
+        "left_cost": 90.0,
+        "right_cost": 81.75,
+        "difference": 8.25
+      },
+      {
+        "world": 2,
+        "left_cost": 72.4375,
+        "right_cost": 65.375,
+        "difference": 7.0625
+      },
+      {
+        "world": 3,
+        "left_cost": 102.34375,
+        "right_cost": 80.5,
+        "difference": 21.84375
+      }
+    ],
+    "mean": 15.6796875,
+    "min": 7.0625,
+    "max": 25.5625,
+    "lower": 0,
+    "equal": 0,
+    "higher": 4
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "discovery",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 73.84375,
+        "right_cost": 89.0625,
+        "difference": -15.21875
+      },
+      {
+        "world": 1,
+        "left_cost": 94.53125,
+        "right_cost": 90.0,
+        "difference": 4.53125
+      },
+      {
+        "world": 2,
+        "left_cost": 76.875,
+        "right_cost": 72.4375,
+        "difference": 4.4375
+      },
+      {
+        "world": 3,
+        "left_cost": 76.15625,
+        "right_cost": 102.34375,
+        "difference": -26.1875
+      }
+    ],
+    "mean": -8.109375,
+    "min": -26.1875,
+    "max": 4.53125,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 89.0625,
+        "right_cost": 90.3125,
+        "difference": -1.25
+      },
+      {
+        "world": 1,
+        "left_cost": 90.0,
+        "right_cost": 103.6875,
+        "difference": -13.6875
+      },
+      {
+        "world": 2,
+        "left_cost": 72.4375,
+        "right_cost": 91.0,
+        "difference": -18.5625
+      },
+      {
+        "world": 3,
+        "left_cost": 102.34375,
+        "right_cost": 86.71875,
+        "difference": 15.625
+      }
+    ],
+    "mean": -4.46875,
+    "min": -18.5625,
+    "max": 15.625,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "discovery",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 73.84375,
+        "right_cost": 65.40625,
+        "difference": 8.4375
+      },
+      {
+        "world": 1,
+        "left_cost": 94.53125,
+        "right_cost": 97.375,
+        "difference": -2.84375
+      },
+      {
+        "world": 2,
+        "left_cost": 76.875,
+        "right_cost": 81.75,
+        "difference": -4.875
+      },
+      {
+        "world": 3,
+        "left_cost": 76.15625,
+        "right_cost": 89.5,
+        "difference": -13.34375
+      }
+    ],
+    "mean": -3.15625,
+    "min": -13.34375,
+    "max": 8.4375,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "replication",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 76.75,
+        "right_cost": 73.5,
+        "difference": 3.25
+      },
+      {
+        "world": 1,
+        "left_cost": 65.5,
+        "right_cost": 73.875,
+        "difference": -8.375
+      },
+      {
+        "world": 2,
+        "left_cost": 64.21875,
+        "right_cost": 67.75,
+        "difference": -3.53125
+      },
+      {
+        "world": 3,
+        "left_cost": 61.96875,
+        "right_cost": 67.75,
+        "difference": -5.78125
+      }
+    ],
+    "mean": -3.609375,
+    "min": -8.375,
+    "max": 3.25,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 72.125,
+        "right_cost": 73.5,
+        "difference": -1.375
+      },
+      {
+        "world": 1,
+        "left_cost": 61.375,
+        "right_cost": 73.875,
+        "difference": -12.5
+      },
+      {
+        "world": 2,
+        "left_cost": 67.6875,
+        "right_cost": 67.75,
+        "difference": -0.0625
+      },
+      {
+        "world": 3,
+        "left_cost": 62.5625,
+        "right_cost": 67.75,
+        "difference": -5.1875
+      }
+    ],
+    "mean": -4.78125,
+    "min": -12.5,
+    "max": -0.0625,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "replication",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 73.0625,
+        "right_cost": 72.125,
+        "difference": 0.9375
+      },
+      {
+        "world": 1,
+        "left_cost": 61.46875,
+        "right_cost": 61.375,
+        "difference": 0.09375
+      },
+      {
+        "world": 2,
+        "left_cost": 70.71875,
+        "right_cost": 67.6875,
+        "difference": 3.03125
+      },
+      {
+        "world": 3,
+        "left_cost": 63.0,
+        "right_cost": 62.5625,
+        "difference": 0.4375
+      }
+    ],
+    "mean": 1.125,
+    "min": 0.09375,
+    "max": 3.03125,
+    "lower": 0,
+    "equal": 0,
+    "higher": 4
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 72.125,
+        "right_cost": 85.625,
+        "difference": -13.5
+      },
+      {
+        "world": 1,
+        "left_cost": 61.375,
+        "right_cost": 67.625,
+        "difference": -6.25
+      },
+      {
+        "world": 2,
+        "left_cost": 67.6875,
+        "right_cost": 72.59375,
+        "difference": -4.90625
+      },
+      {
+        "world": 3,
+        "left_cost": 62.5625,
+        "right_cost": 75.90625,
+        "difference": -13.34375
+      }
+    ],
+    "mean": -9.5,
+    "min": -13.5,
+    "max": -4.90625,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "persistent",
+    "slots": 4,
+    "split": "replication",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 73.0625,
+        "right_cost": 79.3125,
+        "difference": -6.25
+      },
+      {
+        "world": 1,
+        "left_cost": 61.46875,
+        "right_cost": 58.875,
+        "difference": 2.59375
+      },
+      {
+        "world": 2,
+        "left_cost": 70.71875,
+        "right_cost": 73.90625,
+        "difference": -3.1875
+      },
+      {
+        "world": 3,
+        "left_cost": 63.0,
+        "right_cost": 77.9375,
+        "difference": -14.9375
+      }
+    ],
+    "mean": -5.4453125,
+    "min": -14.9375,
+    "max": 2.59375,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "discovery",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 60.90625,
+        "right_cost": 65.5,
+        "difference": -4.59375
+      },
+      {
+        "world": 1,
+        "left_cost": 60.1875,
+        "right_cost": 67.625,
+        "difference": -7.4375
+      },
+      {
+        "world": 2,
+        "left_cost": 60.375,
+        "right_cost": 63.25,
+        "difference": -2.875
+      },
+      {
+        "world": 3,
+        "left_cost": 67.96875,
+        "right_cost": 75.875,
+        "difference": -7.90625
+      }
+    ],
+    "mean": -5.703125,
+    "min": -7.90625,
+    "max": -2.875,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 80.96875,
+        "right_cost": 65.5,
+        "difference": 15.46875
+      },
+      {
+        "world": 1,
+        "left_cost": 78.125,
+        "right_cost": 67.625,
+        "difference": 10.5
+      },
+      {
+        "world": 2,
+        "left_cost": 66.65625,
+        "right_cost": 63.25,
+        "difference": 3.40625
+      },
+      {
+        "world": 3,
+        "left_cost": 72.8125,
+        "right_cost": 75.875,
+        "difference": -3.0625
+      }
+    ],
+    "mean": 6.578125,
+    "min": -3.0625,
+    "max": 15.46875,
+    "lower": 1,
+    "equal": 0,
+    "higher": 3
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "discovery",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 82.34375,
+        "right_cost": 80.96875,
+        "difference": 1.375
+      },
+      {
+        "world": 1,
+        "left_cost": 77.375,
+        "right_cost": 78.125,
+        "difference": -0.75
+      },
+      {
+        "world": 2,
+        "left_cost": 67.5,
+        "right_cost": 66.65625,
+        "difference": 0.84375
+      },
+      {
+        "world": 3,
+        "left_cost": 73.71875,
+        "right_cost": 72.8125,
+        "difference": 0.90625
+      }
+    ],
+    "mean": 0.59375,
+    "min": -0.75,
+    "max": 1.375,
+    "lower": 1,
+    "equal": 0,
+    "higher": 3
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 80.96875,
+        "right_cost": 80.40625,
+        "difference": 0.5625
+      },
+      {
+        "world": 1,
+        "left_cost": 78.125,
+        "right_cost": 105.625,
+        "difference": -27.5
+      },
+      {
+        "world": 2,
+        "left_cost": 66.65625,
+        "right_cost": 77.03125,
+        "difference": -10.375
+      },
+      {
+        "world": 3,
+        "left_cost": 72.8125,
+        "right_cost": 58.1875,
+        "difference": 14.625
+      }
+    ],
+    "mean": -5.671875,
+    "min": -27.5,
+    "max": 14.625,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "discovery",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 82.34375,
+        "right_cost": 80.71875,
+        "difference": 1.625
+      },
+      {
+        "world": 1,
+        "left_cost": 77.375,
+        "right_cost": 85.84375,
+        "difference": -8.46875
+      },
+      {
+        "world": 2,
+        "left_cost": 67.5,
+        "right_cost": 79.5,
+        "difference": -12.0
+      },
+      {
+        "world": 3,
+        "left_cost": 73.71875,
+        "right_cost": 65.40625,
+        "difference": 8.3125
+      }
+    ],
+    "mean": -2.6328125,
+    "min": -12.0,
+    "max": 8.3125,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "replication",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 65.53125,
+        "right_cost": 72.125,
+        "difference": -6.59375
+      },
+      {
+        "world": 1,
+        "left_cost": 63.71875,
+        "right_cost": 71.625,
+        "difference": -7.90625
+      },
+      {
+        "world": 2,
+        "left_cost": 57.65625,
+        "right_cost": 63.375,
+        "difference": -5.71875
+      },
+      {
+        "world": 3,
+        "left_cost": 65.75,
+        "right_cost": 71.875,
+        "difference": -6.125
+      }
+    ],
+    "mean": -6.5859375,
+    "min": -7.90625,
+    "max": -5.71875,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 66.3125,
+        "right_cost": 72.125,
+        "difference": -5.8125
+      },
+      {
+        "world": 1,
+        "left_cost": 67.78125,
+        "right_cost": 71.625,
+        "difference": -3.84375
+      },
+      {
+        "world": 2,
+        "left_cost": 60.625,
+        "right_cost": 63.375,
+        "difference": -2.75
+      },
+      {
+        "world": 3,
+        "left_cost": 65.40625,
+        "right_cost": 71.875,
+        "difference": -6.46875
+      }
+    ],
+    "mean": -4.71875,
+    "min": -6.46875,
+    "max": -2.75,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "replication",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 70.0625,
+        "right_cost": 66.3125,
+        "difference": 3.75
+      },
+      {
+        "world": 1,
+        "left_cost": 69.40625,
+        "right_cost": 67.78125,
+        "difference": 1.625
+      },
+      {
+        "world": 2,
+        "left_cost": 59.25,
+        "right_cost": 60.625,
+        "difference": -1.375
+      },
+      {
+        "world": 3,
+        "left_cost": 82.9375,
+        "right_cost": 65.40625,
+        "difference": 17.53125
+      }
+    ],
+    "mean": 5.3828125,
+    "min": -1.375,
+    "max": 17.53125,
+    "lower": 1,
+    "equal": 0,
+    "higher": 3
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 66.3125,
+        "right_cost": 76.875,
+        "difference": -10.5625
+      },
+      {
+        "world": 1,
+        "left_cost": 67.78125,
+        "right_cost": 62.5625,
+        "difference": 5.21875
+      },
+      {
+        "world": 2,
+        "left_cost": 60.625,
+        "right_cost": 67.8125,
+        "difference": -7.1875
+      },
+      {
+        "world": 3,
+        "left_cost": 65.40625,
+        "right_cost": 70.5625,
+        "difference": -5.15625
+      }
+    ],
+    "mean": -4.421875,
+    "min": -10.5625,
+    "max": 5.21875,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "fast_iid",
+    "slots": 1,
+    "split": "replication",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 70.0625,
+        "right_cost": 71.25,
+        "difference": -1.1875
+      },
+      {
+        "world": 1,
+        "left_cost": 69.40625,
+        "right_cost": 62.40625,
+        "difference": 7.0
+      },
+      {
+        "world": 2,
+        "left_cost": 59.25,
+        "right_cost": 70.84375,
+        "difference": -11.59375
+      },
+      {
+        "world": 3,
+        "left_cost": 82.9375,
+        "right_cost": 78.40625,
+        "difference": 4.53125
+      }
+    ],
+    "mean": -0.3125,
+    "min": -11.59375,
+    "max": 7.0,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "discovery",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 58.90625,
+        "right_cost": 63.5,
+        "difference": -4.59375
+      },
+      {
+        "world": 1,
+        "left_cost": 58.1875,
+        "right_cost": 65.625,
+        "difference": -7.4375
+      },
+      {
+        "world": 2,
+        "left_cost": 57.375,
+        "right_cost": 59.25,
+        "difference": -1.875
+      },
+      {
+        "world": 3,
+        "left_cost": 61.96875,
+        "right_cost": 69.875,
+        "difference": -7.90625
+      }
+    ],
+    "mean": -5.453125,
+    "min": -7.90625,
+    "max": -1.875,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 72.8125,
+        "right_cost": 63.5,
+        "difference": 9.3125
+      },
+      {
+        "world": 1,
+        "left_cost": 74.15625,
+        "right_cost": 65.625,
+        "difference": 8.53125
+      },
+      {
+        "world": 2,
+        "left_cost": 62.125,
+        "right_cost": 59.25,
+        "difference": 2.875
+      },
+      {
+        "world": 3,
+        "left_cost": 67.21875,
+        "right_cost": 69.875,
+        "difference": -2.65625
+      }
+    ],
+    "mean": 4.515625,
+    "min": -2.65625,
+    "max": 9.3125,
+    "lower": 1,
+    "equal": 0,
+    "higher": 3
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "discovery",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 76.625,
+        "right_cost": 72.8125,
+        "difference": 3.8125
+      },
+      {
+        "world": 1,
+        "left_cost": 78.65625,
+        "right_cost": 74.15625,
+        "difference": 4.5
+      },
+      {
+        "world": 2,
+        "left_cost": 65.71875,
+        "right_cost": 62.125,
+        "difference": 3.59375
+      },
+      {
+        "world": 3,
+        "left_cost": 70.0625,
+        "right_cost": 67.21875,
+        "difference": 2.84375
+      }
+    ],
+    "mean": 3.6875,
+    "min": 2.84375,
+    "max": 4.5,
+    "lower": 0,
+    "equal": 0,
+    "higher": 4
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "discovery",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 72.8125,
+        "right_cost": 74.5625,
+        "difference": -1.75
+      },
+      {
+        "world": 1,
+        "left_cost": 74.15625,
+        "right_cost": 98.96875,
+        "difference": -24.8125
+      },
+      {
+        "world": 2,
+        "left_cost": 62.125,
+        "right_cost": 69.03125,
+        "difference": -6.90625
+      },
+      {
+        "world": 3,
+        "left_cost": 67.21875,
+        "right_cost": 56.25,
+        "difference": 10.96875
+      }
+    ],
+    "mean": -5.625,
+    "min": -24.8125,
+    "max": 10.96875,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "discovery",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 76.625,
+        "right_cost": 70.28125,
+        "difference": 6.34375
+      },
+      {
+        "world": 1,
+        "left_cost": 78.65625,
+        "right_cost": 90.9375,
+        "difference": -12.28125
+      },
+      {
+        "world": 2,
+        "left_cost": 65.71875,
+        "right_cost": 71.75,
+        "difference": -6.03125
+      },
+      {
+        "world": 3,
+        "left_cost": 70.0625,
+        "right_cost": 53.4375,
+        "difference": 16.625
+      }
+    ],
+    "mean": 1.1640625,
+    "min": -12.28125,
+    "max": 16.625,
+    "lower": 2,
+    "equal": 0,
+    "higher": 2
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "replication",
+    "left": "reservation_rule",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 60.53125,
+        "right_cost": 67.125,
+        "difference": -6.59375
+      },
+      {
+        "world": 1,
+        "left_cost": 61.71875,
+        "right_cost": 69.625,
+        "difference": -7.90625
+      },
+      {
+        "world": 2,
+        "left_cost": 56.65625,
+        "right_cost": 61.375,
+        "difference": -4.71875
+      },
+      {
+        "world": 3,
+        "left_cost": 65.75,
+        "right_cost": 69.875,
+        "difference": -4.125
+      }
+    ],
+    "mean": -5.8359375,
+    "min": -7.90625,
+    "max": -4.125,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "booked_rule",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 65.5,
+        "right_cost": 67.125,
+        "difference": -1.625
+      },
+      {
+        "world": 1,
+        "left_cost": 62.375,
+        "right_cost": 69.625,
+        "difference": -7.25
+      },
+      {
+        "world": 2,
+        "left_cost": 58.75,
+        "right_cost": 61.375,
+        "difference": -2.625
+      },
+      {
+        "world": 3,
+        "left_cost": 65.8125,
+        "right_cost": 69.875,
+        "difference": -4.0625
+      }
+    ],
+    "mean": -3.890625,
+    "min": -7.25,
+    "max": -1.625,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "replication",
+    "left": "id64",
+    "right": "fixed64",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 65.0625,
+        "right_cost": 65.5,
+        "difference": -0.4375
+      },
+      {
+        "world": 1,
+        "left_cost": 63.625,
+        "right_cost": 62.375,
+        "difference": 1.25
+      },
+      {
+        "world": 2,
+        "left_cost": 58.09375,
+        "right_cost": 58.75,
+        "difference": -0.65625
+      },
+      {
+        "world": 3,
+        "left_cost": 65.25,
+        "right_cost": 65.8125,
+        "difference": -0.5625
+      }
+    ],
+    "mean": -0.1015625,
+    "min": -0.65625,
+    "max": 1.25,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "replication",
+    "left": "fixed64",
+    "right": "fixed16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 65.5,
+        "right_cost": 65.59375,
+        "difference": -0.09375
+      },
+      {
+        "world": 1,
+        "left_cost": 62.375,
+        "right_cost": 61.6875,
+        "difference": 0.6875
+      },
+      {
+        "world": 2,
+        "left_cost": 58.75,
+        "right_cost": 64.78125,
+        "difference": -6.03125
+      },
+      {
+        "world": 3,
+        "left_cost": 65.8125,
+        "right_cost": 73.4375,
+        "difference": -7.625
+      }
+    ],
+    "mean": -3.265625,
+    "min": -7.625,
+    "max": 0.6875,
+    "lower": 3,
+    "equal": 0,
+    "higher": 1
+  },
+  {
+    "family": "fast_iid",
+    "slots": 4,
+    "split": "replication",
+    "left": "id64",
+    "right": "id16",
+    "pairs": [
+      {
+        "world": 0,
+        "left_cost": 65.0625,
+        "right_cost": 68.21875,
+        "difference": -3.15625
+      },
+      {
+        "world": 1,
+        "left_cost": 63.625,
+        "right_cost": 64.78125,
+        "difference": -1.15625
+      },
+      {
+        "world": 2,
+        "left_cost": 58.09375,
+        "right_cost": 65.9375,
+        "difference": -7.84375
+      },
+      {
+        "world": 3,
+        "left_cost": 65.25,
+        "right_cost": 83.5,
+        "difference": -18.25
+      }
+    ],
+    "mean": -7.6015625,
+    "min": -18.25,
+    "max": -1.15625,
+    "lower": 4,
+    "equal": 0,
+    "higher": 0
+  }
+]

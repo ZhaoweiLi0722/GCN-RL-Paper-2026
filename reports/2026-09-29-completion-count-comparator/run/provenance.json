@@ -1,0 +1,54 @@
+{
+  "execution_commit": "5650ac1eccfdbf39160d63b0c7c41b7dd5f46d65",
+  "sources": [
+    {
+      "path": "src/baselines/completion_count_control.py",
+      "sha256": "b771c5f25ce4208016764d90904bf91af628ea502e14785d82c97ce94838b401"
+    },
+    {
+      "path": "evaluation/audit_service_queue_completion_rule.py",
+      "sha256": "57bcf60b078bf1d00d8af293e927a4974fd6ee8f5f9abe1125663e15d3939dad"
+    },
+    {
+      "path": "tests/test_service_queue_completion_rule.py",
+      "sha256": "4932dd1bf7b827cb6baa59002b786f2ad26cac93706026c39e8bb7cfe7b37023"
+    },
+    {
+      "path": "specs/2026-09-29-completion-count-comparator/protocol.md",
+      "sha256": "af333e67ec7395a82d262caeea048a18ec70ae0f9a0bbaff11d21ad6ea7e8768"
+    },
+    {
+      "path": "experiments/configs/service_queue_boundary_20260929.json",
+      "sha256": "de1511daf738e753f9e977659ab36ae7fa470589a6567c341938c4d3dcc0c8d8"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/observation_contract/observation_contract.json",
+      "sha256": "45a4a4e3e525b719450bb56ed613de976019678563ed4e750966f6de5e2bbaf3"
+    }
+  ],
+  "upstream_audit_before_and_after": {
+    "audit": "passed",
+    "baseline_episodes": 60,
+    "decision_rows": 300,
+    "tree_edges": 16368,
+    "unique_closures": 9088,
+    "verified_hashes": 59,
+    "limitation": "nonanticipative optimizer is regression-tested, not independently reimplemented; planner query counts are implementation-reported"
+  },
+  "input_inventory_sha256": "f3e55f4febb0b2e7df3ee7525d4d782baeb5a43cf16274b867977f9069e95865",
+  "new_simulator_queries": 0,
+  "outputs": [
+    {
+      "path": "reports/2026-09-29-completion-count-comparator/run/summary.json",
+      "sha256": "165320948282804bcc7f88f8d13a226dd3d35f3d081fa70e9e47eddbcc2f67bf"
+    },
+    {
+      "path": "reports/2026-09-29-completion-count-comparator/run/episodes.json",
+      "sha256": "5ccd514b9fbe664a5ec093e04029de4b9a38ff95d378d3a331e9aeb1053f3ca5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-count-comparator/run/decisions.json",
+      "sha256": "bc0011ea5dd02411d5d0e7ec6e7ca1ce488f71cd59bfa8bc53aec8089194d9db"
+    }
+  ]
+}

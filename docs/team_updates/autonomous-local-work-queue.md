@@ -28,7 +28,7 @@ restricted synthetic fixture, not an excuse to train DDPG or claim PRM optimalit
 | M2 | Audit complete; findings open | `specs/2026-09-29-formal-replay-contract/readout.md` records mixed reward definitions, discontinuous cached multi-step windows, calibration discount mismatch, teacher support and missing label-horizon provenance. Manuscript limitations updated. No historical fixes/retraining; a corrected campaign needs separate authorization/protocol. |
 | G1 | Audit complete; parity gaps open | `specs/2026-09-29-formal-graph-contract/readout.md` records exact component counts, graph/flat input and head differences, and proposal-conditioned gate asymmetry. Formal package-level results preserved; encoder-only attribution and topology generalization are not established. No new experiment. |
 | E1 | Contract complete; domain inputs open | `specs/2026-09-29-qualified-support-contract/decision_contract.md` selects a proposed setup-support staffing decision, separates source evidence from assumptions, and specifies time-valid event observations. Companion dictionary has 12 unresolved domain inputs and explicitly forbids treating nulls as calibration or execution permission. No new experiment. |
-| C1 | Pending | Review the practical completion-only comparator gap using the existing queue evidence and information interface. Implement/test only a justified bounded software comparator if it can use the frozen fixture unchanged; otherwise document the exact missing assumption. Do not add arbitrary noise/scenarios to seek positive results. |
+| C1 | Bounded comparator complete; richer comparisons open | `specs/2026-09-29-completion-count-comparator/readout.md` reports a fixed count-only rule on unchanged recorded trees, with zero new simulator queries. It attains the completion-information bound in changed/nonbinding cells; bottleneck gaps do not identify an RL advantage. Censored-data ID-MPC/history-policy studies remain outside this packet. |
 | P1 | Pending | Consolidate a manuscript claim-to-evidence matrix, reproducibility instructions and unresolved approval/domain-input packet. Verify references, artifact links and test status. No journal-ready or online-gain claim beyond evidence. |
 
 If a packet needs an external scientific/engineering decision, record the
@@ -85,3 +85,12 @@ invent a new experimental campaign to keep the queue nonempty.
   calibration or RL headroom. Twelve inputs still need domain evidence; these
   consolidate existing questions and do not block the independent C1 packet.
   No patient model, historical artifact, training or evaluation was changed.
+- September 29, C1: committed the untuned count-only rule and protocol before
+  recorded-tree replay (`5650ac1`). It uses only epoch and support-stage counts.
+  Twelve paths/60 decisions extracted from existing edges; no new simulator or
+  planner queries. Changed/nonbinding costs equal the completion-view bounds
+  (103.25 batch, 93.25 booked flow); changed/bottleneck gaps are 6.25 synthetic
+  units, not evidence for online RL. All 59 upstream hashes/row audits passed
+  before and after; three output files reproduce byte for byte; a separate
+  direct walk verified all 12 paths. Fifty-seven focused tests and compilation
+  passed. P1 is next; do not tune the rule or weaken its information contract.

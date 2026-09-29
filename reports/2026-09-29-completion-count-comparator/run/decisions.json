@@ -1,0 +1,1190 @@
+[
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.5,
+    "closure_cost": 0.0,
+    "charged_cost": 10.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 31.75,
+    "charged_cost": 40.0,
+    "settlement_id": "batch__nonbinding__no_change/nominal/ebb521905e86fea4611e5c73751e95414b8da8374f4938611417df5b36691a72"
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.5,
+    "closure_cost": 0.0,
+    "charged_cost": 10.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        4,
+        3
+      ]
+    },
+    "action": "left",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        2
+      ]
+    },
+    "action": "left",
+    "decision_cost": 9.5,
+    "closure_cost": 52.0,
+    "charged_cost": 61.5,
+    "settlement_id": "batch__nonbinding__persistent_change/left_slow/01bbfc14c70db66aa0061909cf668381900b1d8cd9762458a3354a03f4ea8a7d"
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.5,
+    "closure_cost": 0.0,
+    "charged_cost": 10.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        4
+      ]
+    },
+    "action": "right",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        2,
+        3
+      ]
+    },
+    "action": "right",
+    "decision_cost": 9.5,
+    "closure_cost": 52.0,
+    "charged_cost": 61.5,
+    "settlement_id": "batch__nonbinding__persistent_change/right_slow/7289247380e50bf2fe96e333fd88fb3789d1bb0031dff45bc65048466e7a0aa0"
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.5,
+    "closure_cost": 0.0,
+    "charged_cost": 10.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 9.25,
+    "closure_cost": 58.75,
+    "charged_cost": 68.0,
+    "settlement_id": "batch__shared_bottleneck__no_change/nominal/fd74a4ebb9422d0054194264c49ab88bef69718b3738ddaed4e80f040394bf00"
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.5,
+    "closure_cost": 0.0,
+    "charged_cost": 10.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        4,
+        3
+      ]
+    },
+    "action": "left",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        2
+      ]
+    },
+    "action": "left",
+    "decision_cost": 9.5,
+    "closure_cost": 70.0,
+    "charged_cost": 79.5,
+    "settlement_id": "batch__shared_bottleneck__persistent_change/left_slow/c0730e51d98df25755f3d5877fae63c588143731eb6e89241136004c208ed5e3"
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.5,
+    "closure_cost": 0.0,
+    "charged_cost": 10.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        4,
+        4
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        4
+      ]
+    },
+    "action": "right",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        2,
+        3
+      ]
+    },
+    "action": "right",
+    "decision_cost": 9.5,
+    "closure_cost": 70.0,
+    "charged_cost": 79.5,
+    "settlement_id": "batch__shared_bottleneck__persistent_change/right_slow/c3ee61814912c293e62a1042d0d1bfbdb9ee4b5c303616c9ed8870311d3ae6da"
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.5,
+    "closure_cost": 0.0,
+    "charged_cost": 6.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.25,
+    "closure_cost": 0.0,
+    "charged_cost": 6.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 0.0,
+    "charged_cost": 8.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 31.75,
+    "charged_cost": 40.0,
+    "settlement_id": "booked_flow__nonbinding__no_change/nominal/ebb521905e86fea4611e5c73751e95414b8da8374f4938611417df5b36691a72"
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.5,
+    "closure_cost": 0.0,
+    "charged_cost": 6.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.25,
+    "closure_cost": 0.0,
+    "charged_cost": 6.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 0.0,
+    "charged_cost": 8.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        4,
+        3
+      ]
+    },
+    "action": "left",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        2
+      ]
+    },
+    "action": "left",
+    "decision_cost": 9.5,
+    "closure_cost": 52.0,
+    "charged_cost": 61.5,
+    "settlement_id": "booked_flow__nonbinding__persistent_change/left_slow/01bbfc14c70db66aa0061909cf668381900b1d8cd9762458a3354a03f4ea8a7d"
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.5,
+    "closure_cost": 0.0,
+    "charged_cost": 6.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.25,
+    "closure_cost": 0.0,
+    "charged_cost": 6.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 0.0,
+    "charged_cost": 8.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        4
+      ]
+    },
+    "action": "right",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        2,
+        3
+      ]
+    },
+    "action": "right",
+    "decision_cost": 9.5,
+    "closure_cost": 52.0,
+    "charged_cost": 61.5,
+    "settlement_id": "booked_flow__nonbinding__persistent_change/right_slow/7289247380e50bf2fe96e333fd88fb3789d1bb0031dff45bc65048466e7a0aa0"
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.5,
+    "closure_cost": 0.0,
+    "charged_cost": 6.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.25,
+    "closure_cost": 0.0,
+    "charged_cost": 6.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 0.0,
+    "charged_cost": 8.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 10.25,
+    "closure_cost": 0.0,
+    "charged_cost": 10.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 9.25,
+    "closure_cost": 58.75,
+    "charged_cost": 68.0,
+    "settlement_id": "booked_flow__shared_bottleneck__no_change/nominal/fd74a4ebb9422d0054194264c49ab88bef69718b3738ddaed4e80f040394bf00"
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.5,
+    "closure_cost": 0.0,
+    "charged_cost": 6.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.25,
+    "closure_cost": 0.0,
+    "charged_cost": 6.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 0.0,
+    "charged_cost": 8.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        4,
+        3
+      ]
+    },
+    "action": "left",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        3,
+        2
+      ]
+    },
+    "action": "left",
+    "decision_cost": 9.5,
+    "closure_cost": 70.0,
+    "charged_cost": 79.5,
+    "settlement_id": "booked_flow__shared_bottleneck__persistent_change/left_slow/c0730e51d98df25755f3d5877fae63c588143731eb6e89241136004c208ed5e3"
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [],
+    "public_input": {
+      "epoch": 0,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.5,
+    "closure_cost": 0.0,
+    "charged_cost": 6.5,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 1,
+      "support_by_site": [
+        2,
+        2
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 6.25,
+    "closure_cost": 0.0,
+    "charged_cost": 6.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 2,
+      "support_by_site": [
+        3,
+        3
+      ]
+    },
+    "action": "balanced",
+    "decision_cost": 8.25,
+    "closure_cost": 0.0,
+    "charged_cost": 8.25,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "public_input": {
+      "epoch": 3,
+      "support_by_site": [
+        3,
+        4
+      ]
+    },
+    "action": "right",
+    "decision_cost": 10.75,
+    "closure_cost": 0.0,
+    "charged_cost": 10.75,
+    "settlement_id": null
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "past_actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right"
+    ],
+    "public_input": {
+      "epoch": 4,
+      "support_by_site": [
+        2,
+        3
+      ]
+    },
+    "action": "right",
+    "decision_cost": 9.5,
+    "closure_cost": 70.0,
+    "charged_cost": 79.5,
+    "settlement_id": "booked_flow__shared_bottleneck__persistent_change/right_slow/c3ee61814912c293e62a1042d0d1bfbdb9ee4b5c303616c9ed8870311d3ae6da"
+  }
+]

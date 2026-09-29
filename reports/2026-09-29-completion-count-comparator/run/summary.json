@@ -1,0 +1,169 @@
+{
+  "classification": "post_run_fixed_rule_replay_not_new_simulation",
+  "new_simulator_queries": 0,
+  "online_weight_updates": false,
+  "operational_measurements_validated": false,
+  "independent_replications": 0,
+  "controller_prediction_queries": 0,
+  "replayed_world_paths": 12,
+  "decision_rows": 60,
+  "comparisons": {
+    "batch__nonbinding__no_change": {
+      "count_rule_cost": 81.25,
+      "fixed_balanced_cost": 81.25,
+      "completion_information_known_law_bound": 81.0,
+      "gap_to_completion_information_bound": 0.25,
+      "matches_bound": false,
+      "actions_by_world": {
+        "nominal": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced"
+        ]
+      }
+    },
+    "batch__nonbinding__persistent_change": {
+      "count_rule_cost": 103.25,
+      "fixed_balanced_cost": 109.0,
+      "completion_information_known_law_bound": 103.25,
+      "gap_to_completion_information_bound": 0.0,
+      "matches_bound": true,
+      "actions_by_world": {
+        "left_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "left",
+          "left"
+        ],
+        "right_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "right",
+          "right"
+        ]
+      }
+    },
+    "batch__shared_bottleneck__no_change": {
+      "count_rule_cost": 109.25,
+      "fixed_balanced_cost": 109.25,
+      "completion_information_known_law_bound": 102.25,
+      "gap_to_completion_information_bound": 7.0,
+      "matches_bound": false,
+      "actions_by_world": {
+        "nominal": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced"
+        ]
+      }
+    },
+    "batch__shared_bottleneck__persistent_change": {
+      "count_rule_cost": 121.25,
+      "fixed_balanced_cost": 125.0,
+      "completion_information_known_law_bound": 115.0,
+      "gap_to_completion_information_bound": 6.25,
+      "matches_bound": false,
+      "actions_by_world": {
+        "left_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "left",
+          "left"
+        ],
+        "right_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "right",
+          "right"
+        ]
+      }
+    },
+    "booked_flow__nonbinding__no_change": {
+      "count_rule_cost": 71.25,
+      "fixed_balanced_cost": 71.25,
+      "completion_information_known_law_bound": 71.0,
+      "gap_to_completion_information_bound": 0.25,
+      "matches_bound": false,
+      "actions_by_world": {
+        "nominal": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced"
+        ]
+      }
+    },
+    "booked_flow__nonbinding__persistent_change": {
+      "count_rule_cost": 93.25,
+      "fixed_balanced_cost": 99.0,
+      "completion_information_known_law_bound": 93.25,
+      "gap_to_completion_information_bound": 0.0,
+      "matches_bound": true,
+      "actions_by_world": {
+        "left_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "left",
+          "left"
+        ],
+        "right_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "right",
+          "right"
+        ]
+      }
+    },
+    "booked_flow__shared_bottleneck__no_change": {
+      "count_rule_cost": 99.25,
+      "fixed_balanced_cost": 99.25,
+      "completion_information_known_law_bound": 92.25,
+      "gap_to_completion_information_bound": 7.0,
+      "matches_bound": false,
+      "actions_by_world": {
+        "nominal": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced"
+        ]
+      }
+    },
+    "booked_flow__shared_bottleneck__persistent_change": {
+      "count_rule_cost": 111.25,
+      "fixed_balanced_cost": 115.0,
+      "completion_information_known_law_bound": 105.0,
+      "gap_to_completion_information_bound": 6.25,
+      "matches_bound": false,
+      "actions_by_world": {
+        "left_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "left",
+          "left"
+        ],
+        "right_slow": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "right",
+          "right"
+        ]
+      }
+    }
+  },
+  "limitation": "One untuned event-count rule, not an identification-MPC or frozen history-policy comparison. Known-law bound and common continuation are restricted synthetic diagnostics."
+}

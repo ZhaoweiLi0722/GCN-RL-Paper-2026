@@ -1,0 +1,170 @@
+[
+  {
+    "cell": "batch__nonbinding__no_change",
+    "world": "nominal",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "cost": 81.25,
+    "decision_cost": 49.5,
+    "closure_cost": 31.75
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "left_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "cost": 103.25,
+    "decision_cost": 51.25,
+    "closure_cost": 52.0
+  },
+  {
+    "cell": "batch__nonbinding__persistent_change",
+    "world": "right_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "cost": 103.25,
+    "decision_cost": 51.25,
+    "closure_cost": 52.0
+  },
+  {
+    "cell": "batch__shared_bottleneck__no_change",
+    "world": "nominal",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "cost": 109.25,
+    "decision_cost": 50.5,
+    "closure_cost": 58.75
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "cost": 121.25,
+    "decision_cost": 51.25,
+    "closure_cost": 70.0
+  },
+  {
+    "cell": "batch__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "cost": 121.25,
+    "decision_cost": 51.25,
+    "closure_cost": 70.0
+  },
+  {
+    "cell": "booked_flow__nonbinding__no_change",
+    "world": "nominal",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "cost": 71.25,
+    "decision_cost": 39.5,
+    "closure_cost": 31.75
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "left_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "cost": 93.25,
+    "decision_cost": 41.25,
+    "closure_cost": 52.0
+  },
+  {
+    "cell": "booked_flow__nonbinding__persistent_change",
+    "world": "right_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "cost": 93.25,
+    "decision_cost": 41.25,
+    "closure_cost": 52.0
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__no_change",
+    "world": "nominal",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced",
+      "balanced"
+    ],
+    "cost": 99.25,
+    "decision_cost": 40.5,
+    "closure_cost": 58.75
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "left_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "left",
+      "left"
+    ],
+    "cost": 111.25,
+    "decision_cost": 41.25,
+    "closure_cost": 70.0
+  },
+  {
+    "cell": "booked_flow__shared_bottleneck__persistent_change",
+    "world": "right_slow",
+    "actions": [
+      "balanced",
+      "balanced",
+      "balanced",
+      "right",
+      "right"
+    ],
+    "cost": 111.25,
+    "decision_cost": 41.25,
+    "closure_cost": 70.0
+  }
+]

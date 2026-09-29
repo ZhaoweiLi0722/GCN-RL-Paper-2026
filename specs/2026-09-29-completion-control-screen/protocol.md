@@ -86,8 +86,8 @@ power claim, operational benefit threshold, selected checkpoint or selective
 sample extension. Record discovery and independent replication separately.
 
 This comparison cannot establish headroom over a competent frozen neural policy,
-nor online weight-update value. A positive ID-minus-fixed contrast attributes
-benefit to ordinary identification/control. Negative, null or unstable results
+nor online weight-update value. A lower ID-than-fixed complete cost attributes
+benefit to ordinary identification/control. Negative, null or unstable findings
 remain reportable. Before any DDPG launch, require adequate planning checks,
 independent full-cost action-ranking replication, operational/synthetic study
 scope and a competent matched-information frozen-policy comparator.

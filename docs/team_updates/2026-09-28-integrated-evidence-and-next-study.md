@@ -168,3 +168,20 @@ This is a post-hoc sensitivity of already observed results, not new holdout
 testing. The original primary intervals and clinical analysis are unchanged.
 The manuscript now includes the labeled cost sensitivity. Historical reports
 are retained, including the September 15 machine-specific availability note.
+
+## September 29: executed-method reconciliation
+
+The [method-contract readout](../../specs/2026-09-29-formal-method-contract/readout.md)
+reconciles the manuscript with the historical training source and ten effective
+configs, linked to the byte-verified training manifest. The primary method uses
+separate actor/critic encoders, specimen-only residual corrections, request
+actions in replay, four-step anchor-relative online returns, regularized
+updates and fixed final/pretrain evaluation. Generic one-step DDPG equations,
+shared-weight wording and validation-selected deployment prose were corrected.
+
+This is a reporting improvement, not evidence of a new online gain. In
+particular, the shaped training objective is not proven equivalent to the
+evaluation cost, and a straight-through request gradient is not a derivative
+of the discrete patient executor. The teacher/replay mixture and full graph
+feature-parity checks remain the next independent audit packets. No historical
+artifact or experimental outcome changed.

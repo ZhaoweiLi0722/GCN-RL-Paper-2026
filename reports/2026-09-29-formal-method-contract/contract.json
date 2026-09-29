@@ -1,0 +1,721 @@
+{
+  "evaluation_commit": "62a344e7c8f501862c6ae1dcf3be5ef59964ea0d",
+  "evaluation_configs": [
+    {
+      "commit": "62a344e7c8f501862c6ae1dcf3be5ef59964ea0d",
+      "config": {
+        "algorithms": [
+          "gcn_residual_mdl2_network_ddpg_afd",
+          "flat_residual_mdl2_network_ddpg_afd"
+        ],
+        "checkpoint_variants": [
+          "final"
+        ],
+        "clinical_noninferiority": {
+          "margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "mode": "paired_ci",
+          "z_value": 1.96
+        },
+        "deployment_candidates": [
+          {
+            "group_thresholds": [
+              1.0
+            ],
+            "scale": 0.0
+          },
+          {
+            "scale": 1.0,
+            "use_checkpoint_group_thresholds": true
+          }
+        ],
+        "experimental_role": "prespecified fixed-policy final-checkpoint evaluation for the frozen five-seed matched GCN and flat DDPG confirmation; uses a new 100-replication paired CRN holdout with no deployment selection or tuning",
+        "fixed_checkpoint_variant": "final",
+        "fixed_deployment_candidate": {
+          "scale": 1.0,
+          "use_checkpoint_group_thresholds": true
+        },
+        "holdout_replications": 100,
+        "holdout_seed": 91100000,
+        "max_steps": 52,
+        "name": "patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_final_eval",
+        "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100_evaluation/formal_final",
+        "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+        "scenarios": [
+          "routing_nominal_history",
+          "routing_abrupt_regime_shift",
+          "routing_regional_drift",
+          "routing_compound_regional_stress"
+        ],
+        "strict_scenario_clinical_noninferiority": false,
+        "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/training_manifest.json",
+        "training_seeds": [
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "validation_replications": 1,
+        "validation_seed": 91000000
+      },
+      "path": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_final_eval.json",
+      "sha256": "8ee79d596e2b5d40f407382acf4d18a148cd9c90cae3082a53a1130860d0f01c"
+    },
+    {
+      "commit": "62a344e7c8f501862c6ae1dcf3be5ef59964ea0d",
+      "config": {
+        "algorithms": [
+          "gcn_residual_mdl2_network_ddpg_afd",
+          "flat_residual_mdl2_network_ddpg_afd"
+        ],
+        "checkpoint_variants": [
+          "pretrain"
+        ],
+        "clinical_noninferiority": {
+          "margins": {
+            "completion_service_level": 0.001,
+            "patient_ineligibility_during_manufacturing_rate": 0.001,
+            "patients_lost": 1.0
+          },
+          "mode": "paired_ci",
+          "z_value": 1.96
+        },
+        "deployment_candidates": [
+          {
+            "group_thresholds": [
+              1.0
+            ],
+            "scale": 0.0
+          },
+          {
+            "scale": 1.0,
+            "use_checkpoint_group_thresholds": true
+          }
+        ],
+        "experimental_role": "prespecified fixed-policy frozen-pretrain evaluation for the frozen five-seed matched GCN and flat DDPG confirmation; shares the final evaluation holdout CRN exactly and performs no deployment selection or tuning",
+        "fixed_checkpoint_variant": "pretrain",
+        "fixed_deployment_candidate": {
+          "scale": 1.0,
+          "use_checkpoint_group_thresholds": true
+        },
+        "holdout_replications": 100,
+        "holdout_seed": 91100000,
+        "max_steps": 52,
+        "name": "patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_pretrain_eval",
+        "output_root": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100_evaluation/formal_pretrain",
+        "plan": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+        "scenarios": [
+          "routing_nominal_history",
+          "routing_abrupt_regime_shift",
+          "routing_regional_drift",
+          "routing_compound_regional_stress"
+        ],
+        "strict_scenario_clinical_noninferiority": false,
+        "training_manifest": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/training_manifest.json",
+        "training_seeds": [
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "validation_replications": 1,
+        "validation_seed": 91000000
+      },
+      "path": "experiments/configs/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100_pretrain_eval.json",
+      "sha256": "30128a8436c38b7ffc7b5ca55ace908d0f961d1c426578f0bfb207b5481000ee"
+    }
+  ],
+  "followup": "teacher/replay mixture semantics and graph feature parity remain separate queue packets",
+  "historical_manifest_sha256_verified": "0311c648fc1570843daf659f5e45ad27cceb967a9265710d03bd45c60a5e31e2",
+  "historical_sources": [
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/models/gcn_ddpg.py",
+      "sha256": "07f5bf086118dba0ada251cb99d9ae228882c270cc7abb950ae76dcd5ea9964b",
+      "symbols": {
+        "_compose_actions_tensor": {
+          "end": 4373,
+          "source": "    def _compose_actions_tensor(\n        self,\n        states,\n        network_actions,\n        *,\n        apply_correction_gate: bool = True,\n        hard_correction_gate: bool = True,\n        differentiate_correction_gate: bool = False,\n    ):\n        if not self.residual_action_enabled:\n            return network_actions\n        base_actions = self._base_actions_from_states_tensor(states)\n        residual_actions = self._policy_residuals_tensor(\n            states,\n            network_actions,\n            apply_correction_gate=apply_correction_gate,\n            hard_correction_gate=hard_correction_gate,\n            differentiate_correction_gate=differentiate_correction_gate,\n        )\n        scale = torch.as_tensor(\n            self.residual_scale_vector,\n            dtype=network_actions.dtype,\n            device=network_actions.device,\n        )\n        return torch.clamp(base_actions + scale * residual_actions, -1.0, 1.0)",
+          "start": 4349
+        },
+        "_emit_n_step_reward_transition": {
+          "end": 1260,
+          "source": "    def _emit_n_step_reward_transition(self) -> None:\n        horizon = min(\n            len(self._n_step_reward_queue),\n            self.online_reward_n_step_horizon,\n        )\n        if horizon < 1:\n            return\n        transitions = list(self._n_step_reward_queue)[:horizon]\n        discounted_reward = sum(\n            (self.gamma**offset) * transition[2]\n            for offset, transition in enumerate(transitions)\n        )\n        state, action, _reward, _next_state, _done = transitions[0]\n        _last_state, _last_action, _last_reward, next_state, done = transitions[-1]\n        self.replay_buffer.add(\n            state,\n            action,\n            float(discounted_reward) * self.reward_scale,\n            next_state,\n            done,\n            discount_multiplier=self.gamma ** (horizon - 1),\n            one_step_reward=float(transitions[0][2]) * self.reward_scale,\n        )\n        self._n_step_reward_queue.popleft()",
+          "start": 1237
+        },
+        "_online_advantage_self_imitation_loss": {
+          "end": 2267,
+          "source": "    def _online_advantage_self_imitation_loss(\n        self,\n        actor_actions,\n        behavior_actions,\n        rewards,\n        one_step_rewards,\n        online_masks,\n        discount_multipliers,\n    ):\n        expected_multiplier = self.gamma ** (\n            self.online_reward_n_step_horizon - 1\n        )\n        full_horizon_mask = torch.isclose(\n            discount_multipliers.reshape(-1),\n            torch.as_tensor(\n                expected_multiplier,\n                dtype=discount_multipliers.dtype,\n                device=discount_multipliers.device,\n            ),\n            rtol=1e-5,\n            atol=1e-7,\n        )\n        online_mask = online_masks.reshape(-1) > 0.5\n        positive_mask = (\n            rewards.reshape(-1)\n            > self.online_advantage_self_imitation_minimum_return\n        )\n        positive_one_step_mask = (\n            one_step_rewards.reshape(-1)\n            > self.online_advantage_self_imitation_minimum_return\n        )\n        confirmed_positive_mask = (\n            positive_mask & positive_one_step_mask\n            if self.online_advantage_self_imitation_require_positive_one_step\n            else positive_mask\n        )\n        active_mask = (\n            online_mask & confirmed_positive_mask & full_horizon_mask\n        ).to(dtype=actor_actions.dtype)\n        eligible_mask = (online_mask & full_horizon_mask).to(\n            dtype=actor_actions.dtype\n        )\n\n        current_actions = self._critic_actions_tensor(\n            actor_actions,\n            straight_through=True,\n        )\n        with torch.no_grad():\n            target_actions = self._critic_actions_tensor(behavior_actions)\n        specimen_slice = self._facility_net_group_slices(\n            self.graph_spec.num_facilities\n        )[\"specimen_transfer\"]\n        per_sample_loss = (\n            current_actions[:, specimen_slice]\n            - target_actions[:, specimen_slice]\n        ).pow(2).mean(dim=1)\n        loss = self._masked_reference_loss(per_sample_loss, active_mask)\n        active_count = active_mask.sum()\n        positive_return_mean = (\n            rewards.reshape(-1) * active_mask\n        ).sum() / active_count.clamp_min(1.0)\n        return loss, active_mask, {\n            \"online_advantage_self_imitation_active_fraction\": float(\n                active_mask.mean().item()\n            ),\n            \"online_advantage_self_imitation_eligible_fraction\": float(\n                eligible_mask.mean().item()\n            ),\n            \"online_advantage_self_imitation_loss\": float(loss.item()),\n            \"online_advantage_self_imitation_weighted_loss\": float(\n                self.online_advantage_self_imitation_weight * loss.item()\n            ),\n            \"online_advantage_self_imitation_positive_return_mean\": float(\n                positive_return_mean.item()\n            ),\n            \"online_advantage_self_imitation_minimum_return\": float(\n                self.online_advantage_self_imitation_minimum_return\n            ),\n            \"online_advantage_self_imitation_one_step_confirmed_fraction\": float(\n                (\n                    online_mask\n                    & positive_mask\n                    & positive_one_step_mask\n                    & full_horizon_mask\n                )\n                .to(dtype=actor_actions.dtype)\n                .mean()\n                .item()\n            ),\n            \"pretrain_reference_realized_advantage_release_fraction\": float(\n                active_mask.mean().item()\n                if self.online_advantage_self_imitation_release_reference\n                else 0.0\n            ),\n        }",
+          "start": 2173
+        },
+        "_policy_residuals_tensor": {
+          "end": 4471,
+          "source": "    def _policy_residuals_tensor(\n        self,\n        states,\n        network_actions,\n        *,\n        apply_correction_gate: bool = True,\n        hard_correction_gate: bool = True,\n        differentiate_correction_gate: bool = False,\n    ):\n        residuals = self._ungated_policy_residuals_tensor(\n            states,\n            network_actions,\n        )\n        if apply_correction_gate and self.correction_gate is not None:\n            gate_node_features = self.correction_gate_node_features(\n                states,\n                residuals=residuals,\n                detach_proposed_residuals=(\n                    not differentiate_correction_gate\n                ),\n            )\n            gate_scores = self.correction_gate(gate_node_features)\n            if not differentiate_correction_gate:\n                gate_scores = gate_scores.detach()\n            gate_probabilities = (\n                torch.sigmoid(gate_scores)\n                if self.correction_gate_mode == \"classification\"\n                else gate_scores\n            )\n            if hard_correction_gate:\n                gate_probabilities = (\n                    gate_probabilities\n                    >= self._correction_gate_threshold_tensor(\n                        gate_probabilities,\n                    )\n                ).to(dtype=residuals.dtype)\n            elif self.correction_gate_mode == \"advantage\":\n                gate_probabilities = torch.sigmoid(\n                    gate_probabilities - self.correction_gate_threshold\n                )\n            if self.correction_safety_gate is not None:\n                safety_probabilities = torch.sigmoid(\n                    self.correction_safety_gate(\n                        gate_node_features\n                    ).detach()\n                )\n                if hard_correction_gate:\n                    safety_probabilities = (\n                        safety_probabilities\n                        >= self._correction_safety_gate_threshold_tensor(\n                            safety_probabilities\n                        )\n                    ).to(dtype=residuals.dtype)\n                gate_probabilities = (\n                    gate_probabilities * safety_probabilities\n                )\n            if gate_probabilities.ndim == 1:\n                residuals = residuals * gate_probabilities.unsqueeze(1)\n            else:\n                residuals = self._apply_group_gate_probabilities(\n                    residuals,\n                    gate_probabilities,\n                )\n        return torch.clamp(residuals, -1.0, 1.0)",
+          "start": 4408
+        },
+        "_pretrain_reference_action_loss": {
+          "end": 2120,
+          "source": "    def _pretrain_reference_action_loss(\n        self,\n        states,\n        network_actions,\n        reference_network_actions,\n        *,\n        sample_mask=None,\n    ):\n        if self.pretrain_reference_actor_loss_action_space == \"network\":\n            per_sample_loss = (network_actions - reference_network_actions).pow(\n                2\n            ).mean(dim=1)\n            return self._masked_reference_loss(per_sample_loss, sample_mask)\n\n        current_actions = self._compose_actions_tensor(\n            states,\n            network_actions,\n            apply_correction_gate=(\n                self.correction_gate_align_online_policy\n            ),\n            hard_correction_gate=True,\n        )\n        with torch.no_grad():\n            reference_actions = self._compose_actions_tensor(\n                states,\n                reference_network_actions,\n                apply_correction_gate=(\n                    self.correction_gate_align_online_policy\n                ),\n                hard_correction_gate=True,\n            )\n            reference_actions = self._critic_actions_tensor(\n                reference_actions\n            )\n        current_actions = self._critic_actions_tensor(\n            current_actions,\n            straight_through=True,\n        )\n        per_sample_loss = (current_actions - reference_actions).pow(2).mean(\n            dim=1\n        )\n        return self._masked_reference_loss(per_sample_loss, sample_mask)",
+          "start": 2079
+        },
+        "capture_training_reward_context": {
+          "end": 1183,
+          "source": "    def capture_training_reward_context(\n        self,\n        state: np.ndarray,\n        action: np.ndarray,\n        env,\n    ) -> dict[str, Any]:\n        \"\"\"Snapshot an exact-CRN one-step MDL-2 counterfactual.\"\"\"\n\n        del action\n        if self.online_reward_mode == \"environment\":\n            return {}\n        anchor_action = project_action(\n            self._base_action_from_state_np(state),\n            env_state=env,\n            action_space_info=self.action_dim,\n        ).action\n        return {\n            \"anchor_env\": copy.deepcopy(env),\n            \"anchor_action\": np.asarray(anchor_action, dtype=np.float32).copy(),\n        }",
+          "start": 1164
+        },
+        "observe": {
+          "end": 1299,
+          "source": "    def observe(\n        self,\n        state: np.ndarray,\n        action: np.ndarray,\n        reward: float,\n        next_state: np.ndarray,\n        done: bool,\n    ) -> None:\n        if self.online_reward_mode != \"n_step_anchor_relative\":\n            self.replay_buffer.add(\n                state,\n                action,\n                float(reward) * self.reward_scale,\n                next_state,\n                done,\n            )\n            return\n        self._n_step_reward_queue.append(\n            (\n                np.asarray(state, dtype=np.float32).copy(),\n                np.asarray(action, dtype=np.float32).copy(),\n                float(reward),\n                np.asarray(next_state, dtype=np.float32).copy(),\n                bool(done),\n            )\n        )\n        if len(self._n_step_reward_queue) >= self.online_reward_n_step_horizon:\n            self._emit_n_step_reward_transition()\n        if done:\n            self.finalize_training_episode()",
+          "start": 1270
+        },
+        "select_action": {
+          "end": 1162,
+          "source": "    def select_action(self, state: np.ndarray, explore: bool = True, env=None) -> np.ndarray:\n        self.actor.eval()\n        with torch.no_grad():\n            state_tensor = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)\n            node_features = flat_state_to_node_features(state_tensor, self.graph_spec)\n            network_action = self.actor(node_features).cpu().numpy()[0]\n        self.actor.train()\n        if explore:\n            network_action = network_action + self.noise.sample()\n        # The correction gate is a deployment safety layer. Exploration must\n        # reach the environment so the residual actor and critic can learn.\n        action = self._compose_action_np(\n            state,\n            network_action,\n            apply_correction_gate=(\n                not explore\n                or self.correction_gate_during_exploration\n                or self.correction_gate_align_online_policy\n            ),\n        )\n        return project_action(action, env_state=env, action_space_info=self.action_dim).action",
+          "start": 1142
+        },
+        "transform_training_reward": {
+          "end": 1212,
+          "source": "    def transform_training_reward(\n        self,\n        state: np.ndarray,\n        action: np.ndarray,\n        reward: float,\n        next_state: np.ndarray,\n        done: bool,\n        info: dict[str, Any],\n        context: dict[str, Any] | None,\n    ) -> float:\n        \"\"\"Return the immediate reward advantage over MDL-2 under exact CRN.\"\"\"\n\n        if self.online_reward_mode == \"environment\":\n            return float(reward)\n        del state, action, next_state, done, info\n        if context is None:\n            raise ValueError(\"Anchor-relative reward context is required\")\n        anchor_env = context[\"anchor_env\"]\n        anchor_action = np.asarray(context[\"anchor_action\"], dtype=np.float32)\n        _anchor_state, anchor_reward, _anchor_done, _anchor_info = anchor_env.step(\n            anchor_action\n        )\n        relative_reward = float(reward) - float(anchor_reward)\n        self.anchor_relative_reward_sum += relative_reward\n        self.anchor_relative_reward_abs_sum += abs(relative_reward)\n        self.anchor_relative_reward_positive_count += int(relative_reward > 0.0)\n        self.anchor_relative_reward_count += 1\n        return relative_reward",
+          "start": 1185
+        },
+        "update": {
+          "end": 2077,
+          "source": "    def update(self) -> dict[str, float]:\n        if len(self.replay_buffer) < self.batch_size:\n            return {}\n\n        self.total_updates += 1\n        batch = self.replay_buffer.sample(\n            self.batch_size,\n            online_fraction=self.online_replay_fraction,\n        )\n        states = torch.as_tensor(batch.states, dtype=torch.float32, device=self.device)\n        actions = torch.as_tensor(batch.actions, dtype=torch.float32, device=self.device)\n        rewards = torch.as_tensor(batch.rewards, dtype=torch.float32, device=self.device)\n        one_step_rewards = torch.as_tensor(\n            batch.one_step_rewards,\n            dtype=torch.float32,\n            device=self.device,\n        )\n        next_states = torch.as_tensor(batch.next_states, dtype=torch.float32, device=self.device)\n        dones = torch.as_tensor(batch.dones, dtype=torch.float32, device=self.device)\n        discount_multipliers = torch.as_tensor(\n            batch.discount_multipliers,\n            dtype=torch.float32,\n            device=self.device,\n        )\n        online_masks = torch.as_tensor(\n            batch.online_masks,\n            dtype=torch.float32,\n            device=self.device,\n        )\n\n        node_features = flat_state_to_node_features(states, self.graph_spec)\n        next_node_features = flat_state_to_node_features(next_states, self.graph_spec)\n        with torch.no_grad():\n            next_network_actions = self.actor_target(next_node_features)\n            next_actions = self._compose_actions_tensor(\n                next_states,\n                next_network_actions,\n                apply_correction_gate=(\n                    self.correction_gate_align_online_policy\n                ),\n                hard_correction_gate=True,\n            )\n            next_actions = self._critic_actions_tensor(next_actions)\n            target_q = self.critic_target(next_node_features, next_actions)\n            q_targets = (\n                rewards\n                + self.gamma\n                * discount_multipliers\n                * (1.0 - dones)\n                * target_q\n            )\n\n        q_expected = self.critic(\n            node_features,\n            self._critic_actions_tensor(actions),\n        )\n        bellman_critic_loss = torch.nn.functional.mse_loss(\n            q_expected,\n            q_targets,\n        )\n        critic_loss = bellman_critic_loss\n        ranking_loss = None\n        if self.critic_teacher_advantage_online_ranking_weight > 0.0:\n            ranking_loss = self._sample_critic_teacher_advantage_loss()\n            critic_loss = (\n                critic_loss\n                + self.critic_teacher_advantage_online_ranking_weight\n                * ranking_loss\n            )\n        self.critic_optimizer.zero_grad()\n        critic_loss.backward()\n        self.critic_optimizer.step()\n\n        actor_update_due = (\n            self.total_updates > self.critic_warmup_updates\n            and (\n                self.total_updates - self.critic_warmup_updates\n            )\n            % self.actor_update_frequency\n            == 0\n        )\n        metrics = {\n            \"critic_loss\": float(critic_loss.item()),\n            \"actor_updated\": float(actor_update_due),\n        }\n        metrics.update(self._anchor_relative_reward_metrics())\n        if self.online_replay_fraction is not None:\n            metrics[\"replay_online_fraction\"] = float(\n                batch.online_fraction\n            )\n        if ranking_loss is not None:\n            metrics.update(\n                {\n                    \"critic_bellman_loss\": float(\n                        bellman_critic_loss.item()\n                    ),\n                    \"critic_teacher_advantage_ranking_loss\": float(\n                        ranking_loss.item()\n                    ),\n                    \"critic_teacher_advantage_weighted_ranking_loss\": float(\n                        self.critic_teacher_advantage_online_ranking_weight\n                        * ranking_loss.item()\n                    ),\n                }\n            )\n        if not actor_update_due:\n            self._soft_update(self.critic, self.critic_target)\n            return metrics\n\n        network_actions = self.actor(node_features)\n        actor_actions = self._compose_actions_tensor(\n            states,\n            network_actions,\n            apply_correction_gate=(\n                self.correction_gate_align_online_policy\n            ),\n            hard_correction_gate=(\n                self.correction_gate_hard_actor_policy\n            ),\n            differentiate_correction_gate=(\n                self.correction_gate_differentiate_actor_proposal\n            ),\n        )\n        actor_loss, advantage_metrics = self._actor_objective(\n            node_features,\n            states,\n            actor_actions,\n        )\n        self_imitation_mask = None\n        self_imitation_metrics: dict[str, float] = {}\n        if self.online_advantage_self_imitation_enabled:\n            (\n                self_imitation_loss,\n                self_imitation_mask,\n                self_imitation_metrics,\n            ) = self._online_advantage_self_imitation_loss(\n                actor_actions,\n                actions,\n                rewards,\n                one_step_rewards,\n                online_masks,\n                discount_multipliers,\n            )\n            actor_loss = (\n                actor_loss\n                + self.online_advantage_self_imitation_weight\n                * self_imitation_loss\n            )\n        reference_loss_value = None\n        reference_filter_metrics: dict[str, float] = {}\n        if self.pretrain_reference_actor is not None:\n            with torch.no_grad():\n                reference_network_actions = self.pretrain_reference_actor(\n                    node_features\n                )\n            reference_mask = None\n            if self.pretrain_reference_actor_loss_mode == \"critic_q_filter\":\n                reference_mask, reference_filter_metrics = (\n                    self._pretrain_reference_q_filter(\n                        node_features,\n                        states,\n                        actor_actions,\n                        reference_network_actions,\n                    )\n                )\n            if (\n                self_imitation_mask is not None\n                and self.online_advantage_self_imitation_release_reference\n            ):\n                retained_reference_mask = 1.0 - self_imitation_mask\n                reference_mask = (\n                    retained_reference_mask\n                    if reference_mask is None\n                    else reference_mask * retained_reference_mask\n                )\n            reference_loss = self._pretrain_reference_action_loss(\n                states,\n                network_actions,\n                reference_network_actions,\n                sample_mask=reference_mask,\n            )\n            actor_loss = (\n                actor_loss\n                + self.pretrain_reference_actor_loss_weight\n                * reference_loss\n            )\n            reference_loss_value = float(reference_loss.item())\n        residual_l2_loss_value = None\n        if self.residual_action_enabled and self.residual_l2_weight > 0.0:\n            policy_residuals = self._policy_residuals_tensor(\n                states,\n                network_actions,\n                apply_correction_gate=(\n                    self.correction_gate_align_online_policy\n                ),\n                hard_correction_gate=(\n                    self.correction_gate_hard_actor_policy\n                ),\n                differentiate_correction_gate=(\n                    self.correction_gate_differentiate_actor_proposal\n                ),\n            )\n            residual_l2_loss = policy_residuals.pow(2).mean()\n            actor_loss = actor_loss + self.residual_l2_weight * residual_l2_loss\n            residual_l2_loss_value = float(residual_l2_loss.item())\n        elif self.patient_service_proxy_actor_loss_enabled:\n            policy_residuals = self._policy_residuals_tensor(\n                states,\n                network_actions,\n                apply_correction_gate=(\n                    self.correction_gate_align_online_policy\n                ),\n                hard_correction_gate=(\n                    self.correction_gate_hard_actor_policy\n                ),\n                differentiate_correction_gate=(\n                    self.correction_gate_differentiate_actor_proposal\n                ),\n            )\n        else:\n            policy_residuals = None\n        proxy_metrics = {}\n        if (\n            self.patient_service_proxy_actor_loss_enabled\n            and self.residual_action_enabled\n            and policy_residuals is not None\n        ):\n            proxy_loss, proxy_metrics = self._patient_service_proxy_actor_loss(\n                states,\n                policy_residuals,\n            )\n            actor_loss = actor_loss + proxy_loss\n        imitation_loss_value = None\n        if self.imitation_regularization_weight > 0.0 and self.imitation_states is not None:\n            imitation_loss = self._actor_imitation_loss()\n            actor_loss = actor_loss + self.imitation_regularization_weight * imitation_loss\n            imitation_loss_value = float(imitation_loss.item())\n        self.actor_optimizer.zero_grad()\n        actor_loss.backward()\n        self.actor_optimizer.step()\n\n        self._soft_update(self.actor, self.actor_target)\n        self._soft_update(self.critic, self.critic_target)\n        metrics[\"actor_loss\"] = float(actor_loss.item())\n        metrics.update(advantage_metrics)\n        metrics.update(reference_filter_metrics)\n        metrics.update(self_imitation_metrics)\n        metrics.update(proxy_metrics)\n        metrics.update(self._pretrain_reference_drift_metrics())\n        if residual_l2_loss_value is not None:\n            metrics[\"residual_l2_loss\"] = residual_l2_loss_value\n        if imitation_loss_value is not None:\n            metrics[\"imitation_loss\"] = imitation_loss_value\n        if reference_loss_value is not None:\n            metrics[\"pretrain_reference_action_mse\"] = (\n                reference_loss_value\n            )\n            metrics[\"pretrain_reference_weighted_loss\"] = (\n                self.pretrain_reference_actor_loss_weight\n                * reference_loss_value\n            )\n        return metrics",
+          "start": 1816
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/baselines/flat_ddpg.py",
+      "sha256": "16f2ffbaa452cb29b3770b62ae88d25d34e50e7256f380fa36990e5116879024",
+      "symbols": {
+        "_emit_n_step_reward_transition": {
+          "end": 986,
+          "source": "    def _emit_n_step_reward_transition(self) -> None:\n        horizon = min(\n            len(self._n_step_reward_queue),\n            self.online_reward_n_step_horizon,\n        )\n        if horizon < 1:\n            return\n        transitions = list(self._n_step_reward_queue)[:horizon]\n        discounted_reward = sum(\n            (self.gamma**offset) * transition[2]\n            for offset, transition in enumerate(transitions)\n        )\n        state, action, _reward, _next_state, _done = transitions[0]\n        _last_state, _last_action, _last_reward, next_state, done = transitions[-1]\n        self.replay_buffer.add(\n            state,\n            action,\n            float(discounted_reward) * self.reward_scale,\n            next_state,\n            done,\n            discount_multiplier=self.gamma ** (horizon - 1),\n            one_step_reward=float(transitions[0][2]) * self.reward_scale,\n        )\n        self._n_step_reward_queue.popleft()",
+          "start": 963
+        },
+        "transform_training_reward": {
+          "end": 938,
+          "source": "    def transform_training_reward(\n        self,\n        state: np.ndarray,\n        action: np.ndarray,\n        reward: float,\n        next_state: np.ndarray,\n        done: bool,\n        info: dict[str, Any],\n        context: dict[str, Any] | None,\n    ) -> float:\n        \"\"\"Return the immediate reward advantage over MDL-2 under exact CRN.\"\"\"\n\n        if self.online_reward_mode == \"environment\":\n            return float(reward)\n        del state, action, next_state, done, info\n        if context is None:\n            raise ValueError(\"Anchor-relative reward context is required\")\n        anchor_env = context[\"anchor_env\"]\n        anchor_action = np.asarray(context[\"anchor_action\"], dtype=np.float32)\n        _anchor_state, anchor_reward, _anchor_done, _anchor_info = anchor_env.step(\n            anchor_action\n        )\n        relative_reward = float(reward) - float(anchor_reward)\n        self.anchor_relative_reward_sum += relative_reward\n        self.anchor_relative_reward_abs_sum += abs(relative_reward)\n        self.anchor_relative_reward_positive_count += int(relative_reward > 0.0)\n        self.anchor_relative_reward_count += 1\n        return relative_reward",
+          "start": 911
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/rl/action_projection.py",
+      "sha256": "7022e16c8187a23a0cf11bd3ed0a3830d9c67b0ca267d31bda0e082b95766b0e",
+      "symbols": {
+        "project_action": {
+          "end": 66,
+          "source": "def project_action(\n    raw_action: Sequence[float],\n    env_state: Any | None = None,\n    action_space_info: Any | None = None,\n    graph_info: Any | None = None,\n) -> ProjectedAction:\n    \"\"\"Project raw continuous policy output to the normalized action domain.\n\n    Parameters are intentionally broad so future environment-specific feasibility\n    repair can use state, graph, and action metadata without changing callers.\n    The current environment handles operational feasibility during ``step``; this\n    shared layer guarantees common shape and normalized bounds before execution.\n    \"\"\"\n\n    del graph_info\n    action = np.asarray(raw_action, dtype=np.float32).reshape(-1)\n    expected_size = _infer_action_size(env_state, action_space_info)\n    if expected_size is not None and action.shape != (expected_size,):\n        raise ValueError(f\"Expected action shape {(expected_size,)}, got {action.shape}\")\n\n    projected = np.clip(action, -1.0, 1.0)\n    return ProjectedAction(\n        action=projected.astype(np.float32),\n        clipped=not np.allclose(action, projected),\n        repair_magnitude=float(np.linalg.norm(projected - action)),\n    )",
+          "start": 41
+        },
+        "quantize_facility_net_specimen_actions_tensor": {
+          "end": 149,
+          "source": "def quantize_facility_net_specimen_actions_tensor(\n    actions,\n    *,\n    num_facilities: int,\n    max_specimen_transfer: float,\n    straight_through: bool = False,\n):\n    \"\"\"Map normalized specimen requests to the patient-lot grid used by the env.\n\n    The first ``num_facilities`` entries of a facility-net action are signed\n    specimen requests. The routing environment scales these entries by\n    ``max_specimen_transfer`` and rounds half away from zero before matching\n    patients to qualified edges. With ``straight_through=True``, the forward\n    value remains exactly quantized while gradients pass through as identity.\n    \"\"\"\n\n    facilities = int(num_facilities)\n    transfer_scale = float(max_specimen_transfer)\n    if actions.ndim != 2:\n        raise ValueError(\n            \"facility-net action quantization requires a rank-2 tensor\"\n        )\n    if facilities <= 0 or int(actions.shape[1]) < facilities:\n        raise ValueError(\n            \"facility-net action quantization requires a positive facility \"\n            \"count within the action width\"\n        )\n    if not np.isfinite(transfer_scale) or transfer_scale <= 0.0:\n        raise ValueError(\"max_specimen_transfer must be finite and positive\")\n\n    specimen_actions = actions[:, :facilities]\n    requested_patients = specimen_actions * transfer_scale\n    rounded_patients = (\n        torch.sign(requested_patients)\n        * torch.floor(torch.abs(requested_patients) + 0.5)\n    )\n    quantized_specimen = rounded_patients / transfer_scale\n    if straight_through:\n        quantized_specimen = specimen_actions + (\n            quantized_specimen - specimen_actions\n        ).detach()\n    return torch.cat(\n        (quantized_specimen, actions[:, facilities:]),\n        dim=1,\n    )",
+          "start": 105
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/models/gcn.py",
+      "sha256": "63c92d66a14eca9b1e5a150ffc1f92a4cd5832d3aa94d062e5ada41d34806e69",
+      "symbols": {
+        "GCNCritic": {
+          "end": 1018,
+          "source": "    class GCNCritic(nn.Module):\n        \"\"\"GCN encoder followed by a state-action Q-value head.\"\"\"\n\n        def __init__(\n            self,\n            node_feature_dim: int,\n            num_facilities: int,\n            num_nodes: int,\n            action_dim: int,\n            edges: Sequence[Edge],\n            gcn_hidden_sizes: Sequence[int],\n            head_hidden_sizes: Sequence[int],\n            include_global_context: bool = True,\n            edge_weights: Sequence[float] | None = None,\n            temporal_sequence_start: int | None = None,\n            temporal_sequence_length: int = 0,\n            temporal_hidden_size: int = 0,\n        ):\n            super().__init__()\n            self.num_facilities = int(num_facilities)\n            self.include_global_context = bool(include_global_context)\n            self.encoder = _make_gcn_encoder(\n                node_feature_dim,\n                gcn_hidden_sizes,\n                num_nodes,\n                edges,\n                edge_weights=edge_weights,\n                temporal_sequence_start=temporal_sequence_start,\n                temporal_sequence_length=temporal_sequence_length,\n                temporal_hidden_size=temporal_hidden_size,\n            )\n            readout_dim = self.num_facilities * self.encoder.output_dim\n            if self.include_global_context:\n                readout_dim += self.encoder.output_dim\n            self.head = _build_mlp(\n                readout_dim + int(action_dim),\n                head_hidden_sizes,\n                1,\n                output_tanh=False,\n            )\n\n        def forward(self, node_features, action):\n            encoded = self.encoder(node_features)\n            readout = graph_readout(encoded, self.num_facilities, self.include_global_context)\n            return self.head(torch.cat((readout, action), dim=-1))",
+          "start": 974
+        },
+        "graph_readout": {
+          "end": 250,
+          "source": "    def graph_readout(encoded, num_facilities, include_global_context):\n        \"\"\"Flatten facility node embeddings, optionally with a mean global context.\"\"\"\n\n        facility_encoded = encoded[:, :num_facilities, :]\n        readout = facility_encoded.flatten(start_dim=1)\n        if include_global_context:\n            graph_context = encoded.mean(dim=1)\n            readout = torch.cat((readout, graph_context), dim=-1)\n        return readout",
+          "start": 242
+        }
+      }
+    }
+  ],
+  "manual_source_findings": {
+    "encoder_contract": "separate actor and critic encoders, not shared learned parameters",
+    "gate_contract": "hard behavior/target gate; soft detached actor gate by historical defaults",
+    "objective_equivalence": "not established between shaped training surrogate and undiscounted evaluation cost",
+    "online_return": "up to four discounted relative rewards, scaled by 1e-9; gamma^n bootstrap",
+    "online_reward": "one-step actual minus cloned-anchor environment reward at each actual visited state",
+    "reference_loss_default": "network output MSE, uniform mode except self-imitation release mask",
+    "replay_action": "bounded normalized request, not the final matched patient-event allocation"
+  },
+  "new_evaluation_runs": 0,
+  "new_training_runs": 0,
+  "runs": [
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "bf0e1ae86c4a4a42518263748dfa0c46948774833c20229b8146797125a20f25",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 607338,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 10
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "cf11db829e0d9923525aee4badf68ae99d1654650b7e2182c5f266f4c1a55a7e",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 607338,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 11
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "dfbff1ca593d43ec459bf18261434963ffcdc7a00dd5193805a9a92db41c9934",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 607338,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 12
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "9c6ee4f922ce786e981a7972ba60467e384a64a35656ada32f169a29e5caffdf",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 607338,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 13
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "0bf52379b016f9b96b99a93ed7ec1ce4ea62e2386dd0ebf59f713d94238a0606",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 607338,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 14
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "658c537bd87a0e3c232658606ff48f83d44ef0a1ba31e6f9fc69ef99d2dad5c5",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 613286,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 10
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "2f20cb9c6d23f73539dc33eebeaf02518132fd85fc1de1a32e15755e918f314a",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 613286,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 11
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "e9b0ededea605aecf85e5b14fc43be22051529e51832a40f5b2531c0a4fe5c87",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 613286,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 12
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "cfa514e8589d68d93fe5436931394e8833a8ab6ee5cdb3913b4bd49c0ea0c5ef",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 613286,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 13
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "config_current_sha256": "918b716f4f55530245c8ea0062ab56fb2d0831e35574dc3b365b3730fef2d605",
+      "config_path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/config.json",
+      "contract": {
+        "actor_lr": 1e-05,
+        "actor_update_frequency": 2,
+        "anchor_fallback.enabled": false,
+        "batch_size": 64,
+        "critic_lr": 0.0003,
+        "critic_teacher_advantage_calibration.enabled": true,
+        "critic_teacher_advantage_calibration.online_ranking_weight": 3.0,
+        "critic_warmup_updates": 500,
+        "exploration_noise.sigma": 0.005,
+        "exploration_noise.theta": 0.15,
+        "gamma": 0.99,
+        "imitation_pretrain.regularization_weight": 1.0,
+        "max_steps_per_episode": 52,
+        "num_episodes": 100,
+        "online_advantage_self_imitation.enabled": true,
+        "online_advantage_self_imitation.minimum_return": 0.0005,
+        "online_advantage_self_imitation.release_pretrain_reference": true,
+        "online_advantage_self_imitation.require_positive_one_step_return": true,
+        "online_advantage_self_imitation.weight": 1.0,
+        "pretrain_reference_actor_loss.enabled": true,
+        "pretrain_reference_actor_loss.weight": 500.0,
+        "residual_action.correction_gate.align_online_policy": true,
+        "residual_action.correction_gate.threshold": 0.5,
+        "residual_action.group_scales.capacity_transfer": 0.0,
+        "residual_action.group_scales.reagent_transfer": 0.0,
+        "residual_action.group_scales.replenishment": 0.0,
+        "residual_action.group_scales.specimen_transfer": 0.1,
+        "residual_action.l2_weight": 0.05,
+        "residual_action.online_reward_mode": "n_step_anchor_relative",
+        "residual_action.online_reward_n_step_horizon": 4,
+        "reward_scale": 1e-09,
+        "specimen_action_quantization.actor_gradient": "straight_through",
+        "specimen_action_quantization.enabled": true,
+        "tau": 0.005,
+        "update_frequency": 1,
+        "updates_per_update": 1
+      },
+      "parameter_count": 613286,
+      "provenance_limit": "current config hash; path and run identity linked to byte-verified historical manifest",
+      "seed": 14
+    }
+  ],
+  "scope": "read_only_method_reporting_audit_not_reexecution",
+  "status": "passed",
+  "training_commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693"
+}

@@ -433,9 +433,9 @@ None of these streams, however, addresses the problem that defines our setting. 
 
 \section{Graph-Aware Deep Reinforcement Learning Framework}
 \label{sec:method}
-\subsection*{Overview: a shared graph encoder with interchangeable actor--critic backbones}
+\subsection*{Overview: graph-encoded actors and critics}
 
-Distributed manufacturing networks for personalized regenerative medicine (PRM) comprise complex, interconnected facilities whose operating states are naturally represented as graphs. A flat controller can observe all facility features, but it must learn topology from position-dependent concatenation and lacks the permutation-equivariant neighborhood aggregation supplied by a GCN. We therefore adopt a two-part design. A graph convolutional network encoder maps the networked state to neighborhood-aware node embeddings, and a residual actor--critic maps those embeddings to proto-actions that are decoded and projected into feasible specimen, capacity, reagent, and replenishment decisions. Writing the controller as \emph{encoder $\circ$ backbone} lets matched experiments isolate graph-versus-flat representation and, separately, DDPG-versus-TD3 backbone effects while holding the anchor, action decoder, projection, training budget, and evaluation streams fixed.
+Distributed manufacturing networks for personalized regenerative medicine (PRM) comprise complex, interconnected facilities whose operating states are naturally represented as graphs. A flat controller can observe all facility features, but it lacks the neighborhood aggregation supplied by a GCN. We therefore adopt a two-part design: graph encoders map the networked state to neighborhood-aware node embeddings, and actor--critic heads map those embeddings to action requests and value estimates. The actor and critic have separate encoder parameters; they share the graph specification, not learned weights. The action interface supports specimen, capacity, reagent, and replenishment decisions, but the routing-primary experiment enables learned residual corrections only in the specimen channel. Writing the controller as \emph{encoder $\circ$ backbone} lets matched experiments isolate graph-versus-flat representation and, separately, DDPG-versus-TD3 backbone effects while holding the anchor, action decoder, training budget, and evaluation streams fixed.
 
 \subsection*{Primary AFR-GCN--DDPG controller and backbone variants}
 
@@ -465,7 +465,7 @@ AFR-Flat-DDPG; AFR-GCN--TD3 & \textbf{Matched comparisons.} The first removes th
 \begin{table}[htbp]
 \centering
 \small
-\caption{Continuous-control actor--critic backbones evaluated behind the shared GCN encoder.}
+\caption{Actor--critic backbones supported by the graph-encoded framework. Only DDPG and the matched development TD3 comparison supply routing-primary empirical evidence.}
 \label{tab:backbone_family}
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.15}
@@ -504,37 +504,75 @@ and $c_{ij}$ is a degree-based normalization factor. The resulting embedding
 $H_t = \{h_i^{(L)}\}_{i=1}^{N}$ captures the current global state of the network.
 \subsection*{Overview of the graph-aware actor--critic workflow (DDPG instantiation)}
 
-Training has two explicit stages. First, common-random-number look-ahead constructs advantage-filtered residual targets relative to MDL-2 and initializes the graph encoder and actor on those targets. Second, DDPG interacts with the simulator, stores feasibility-projected actions and rewards in replay, and updates the critic, actor, and shared encoder while retaining the filtered teacher loss as an actor regularizer. At execution time, the observed node features change with queues, patient condition, inventories, disruptions, and transit pipelines; the configured clinic topology supplies the graph over which the same learned encoder aggregates those dynamic features. The GCN therefore processes a time-varying network state but does not infer a new physical network at every epoch.
+Training has two stages. First, common-random-number look-ahead constructs advantage-filtered residual targets relative to MDL-2; supervised actor initialization, offline replay updates, and critic calibration precede online interaction. Second, DDPG interacts with the simulator and stores bounded normalized action requests, transformed rewards, and transition metadata in replay. Replay actions are not the final matched patient-routing events. The actor and critic update their own encoders while retaining teacher and frozen-reference regularization. At execution time, observed features change with queues, patient condition, inventories, disruptions, and transit pipelines; the configured clinic topology supplies the graph used to aggregate those features. The GCN processes a time-varying state but does not infer a new physical network at every epoch.
 
 This two-stage description is important for attribution. AFR-GCN--DDPG denotes the controller that results from the complete procedure, whereas final-versus-frozen comparisons separately test whether the online DDPG phase adds endpoint value beyond the advantage-filtered initialization.
 
 
 \subsection*{Initialization}
 \begin{itemize}
-\item Critic network \( Q(X_t, A_t|\theta_Q) \) initialized with weights \( \theta_Q \).
-\item Actor network \( \mu(X_t|\theta_\mu) \) initialized with weights \( \theta_\mu \).
-\item GCN initialized with weights \( \omega \) for processing graph states.
+\item Actor network \( \mu(X_t|\theta_\mu) \), including its graph encoder, initialized with weights \( \theta_\mu \).
+\item Critic network \( Q(X_t, a_t|\theta_Q) \), including a separate graph encoder, initialized with weights \( \theta_Q \).
+\item Corresponding target networks, replay buffer, and Ornstein--Uhlenbeck (OU) exploration process initialized independently of the environment's evaluation streams.
 \end{itemize}
 
 \subsection*{DDPG Component}
-The DDPG agent operates on the GCN-encoded state $H_t$ to generate a bounded residual action
-$\Delta A_t=\mu(H_t|\theta_\mu)$. Let $A_t^{\mathrm{anc}}$ denote the action produced by the
-transparent look-ahead anchor and let $\rho$ be a vector of decision-group-specific trust-region
-scales. The raw proposed action is
+The actor generates network outputs that are transformed into residual requests.
+Let $a^{\mathrm{anc}}(X)$ be the normalized MDL-2 request, $\rho$ the
+decision-group scales, and $\mathcal{C}$ componentwise clipping to $[-1,1]$.
+For the deterministic behavior policy, the request composer is
 \begin{equation}
-A_t^{\mathrm{raw}}=A_t^{\mathrm{anc}}+\rho\odot\Delta A_t.
+a^{\mathrm{hard}}_\theta(X)=\mathcal{C}\!\left[
+a^{\mathrm{anc}}(X)+\rho\odot\Delta^{\mathrm{hard}}_\theta(X)\right],
 \end{equation}
-This residual parameterization preserves the anchor's basic inventory logic while allowing the GCN
-policy to adapt patient-indexed specimen routing, replenishment, and fungible resource-sharing decisions to network-wide
-patient pressure, geographic connectivity, disruptions, and demand-prior drift. The critic network
-$Q(H_t,A_t|\theta_Q)$ estimates expected discounted return, where reward is the negative modeled
-cost. The optimization follows the standard DDPG updates:
+where $\Delta^{\mathrm{hard}}_\theta$ includes the checkpoint's correction gate.
+The routing-primary scales are $0.10$ for specimen transfer and zero for the
+other three groups: inventory and resource decisions therefore remain those
+of the anchor. During training, OU noise is added to the actor's network
+output \emph{before} residual transformation, gating, scaling, and clipping.
+The environment subsequently converts this request into feasible events.
+
+Let $\mathcal{Q}$ round the specimen request to the normalized integer-lot
+grid while leaving other components unchanged. The critic consumes this
+quantized request, not the executed donor--receiver assignment. For replay
+item $i$, let $R_i$ be its stored scaled reward/return, $\kappa_i$ its effective
+bootstrap discount, $d_i$ its terminal indicator, and $X_i^+$ its stored next
+state. The implemented target and critic objective are
 \begin{align}
-y_i &= r_i + \gamma Q'(H_{i+1},\mu'(H_{i+1}|\theta_{\mu'})|\theta_{Q'}),\\
-L_Q &= \frac{1}{N}\sum_i (y_i - Q(H_i,A_i|\theta_Q))^2,\\
-\nabla_{\theta_\mu} J &= \frac{1}{N}\sum_i \nabla_a Q(H_i,a|\theta_Q)|_{a=\mu(H_i)} 
-\nabla_{\theta_\mu} \mu(H_i|\theta_\mu).
+y_i &= R_i+\kappa_i(1-d_i)
+ Q'\!\left(X_i^+,\mathcal{Q}(a^{\mathrm{hard}}_{\theta'}(X_i^+))\right),
+ \label{eq:routing-critic-target}\\
+L_Q &= \frac{1}{B}\sum_{i=1}^{B}
+ \left[y_i-Q(X_i,\mathcal{Q}(a_i))\right]^2
+ +\lambda_{\mathrm{rank}}L_{\mathrm{teacher\mbox{-}rank}}.
 \end{align}
+For newly collected online items, $R_i$ is a discounted, scaled sum of at most
+four one-step anchor-relative rewards and $\kappa_i=\gamma^{n_i}$, with
+$n_i\leq4$; short episode tails are flushed without crossing resets. Offline
+replay items retain their serialized transition metadata rather than being
+retroactively converted into four-step online items. The actor objective is
+\begin{align}
+L_\mu={}&-\frac{1}{B}\sum_{i=1}^{B}
+ Q\!\left(X_i,\mathcal{Q}_{\mathrm{ST}}(a^{\mathrm{soft}}_\theta(X_i))\right)
+ +\lambda_{\mathrm{AFD}}L_{\mathrm{AFD}}
+ +\lambda_{\mathrm{ref}}L_{\mathrm{ref}} \nonumber\\
+&+\lambda_{\mathrm{SI}}L_{\mathrm{SI}}+\lambda_2L_2.
+\label{eq:routing-actor-loss}
+\end{align}
+Here $\mathcal{Q}_{\mathrm{ST}}$ has the same rounded forward value as
+$\mathcal{Q}$ but an identity straight-through derivative. The actor-training
+composer $a^{\mathrm{soft}}_\theta$ uses detached soft gate scores, whereas
+behavior and target actions use hard gates. This surrogate does not
+differentiate through the simulator's discrete matching operation.
+The frozen-reference term penalizes network-output drift; online
+self-imitation applies to full four-step online items whose scaled four-step
+and first-step returns both exceed $0.0005$, releasing the reference penalty
+on those items. The executed weights are
+$\lambda_{\mathrm{rank}}=3$, $\lambda_{\mathrm{AFD}}=1$,
+$\lambda_{\mathrm{ref}}=500$, $\lambda_{\mathrm{SI}}=1$, and $\lambda_2=0.05$.
+Their numerical magnitudes alone do not establish their relative gradient
+contributions. Actor updates occur every second eligible critic update after
+the configured 500-update critic warm-up; target networks use $\tau=0.005$.
 
 \subsection*{Advantage-filtered residual initialization and deployment}
 The useful residual corrections in AFR-GCN--DDPG are sparse because the MDL-2 anchor is already
@@ -551,66 +589,82 @@ examples receive equal total weight. The weighted advantage-filtered data remain
 loss during DDPG fine-tuning rather than being used only as a one-time warm
 start.
 
-Deployment uses two independent validation stages. First, checkpoints saved
-during training are compared on common validation scenarios. Second, the
-selected checkpoint is evaluated over a fixed set of residual trust-region
-scales, including zero. The nonzero residual is deployed only when it improves
-validation cost without reducing service; otherwise the controller falls back
-to MDL-2. This mechanism keeps the deployed controller within the residual
-GCN--DDPG family while preventing a poorly generalized correction from
-overriding the operational anchor.
+Earlier development screens compared checkpoint, residual-scale, and
+anchor-fallback alternatives on validation streams. The routing-primary
+formal comparison instead fixes the final episode-100 checkpoint and its
+frozen pre-online counterpart in advance. Both use deployment scale $1.0$
+on top of the configured specimen residual magnitude $0.10$, retain the
+checkpoint's group gate thresholds, and disable automatic anchor fallback.
+Formal evaluation does not select a checkpoint or residual scale from the
+holdout. This distinction prevents development-time calibration from being
+mistaken for a safeguard exercised in the reported formal comparison.
 
 \subsection*{Reward function}
-The agents optimize the negative of the immediate cost defined in Section~\ref{sec:problem-graph-mdp}. For each epoch $t$, the reward is
+The environment returns the negative immediate cost defined in Section~\ref{sec:problem-graph-mdp}. For each epoch $t$, this reward is
 \begin{equation}
-r_t = -\,c(\mathbf{A}_t;\tilde{\mathbf{X}}_t),
+r_t^{\mathrm{env}} = -\,c(\mathbf{A}_t;\tilde{\mathbf{X}}_t),
 \end{equation}
-where $c(\cdot)$ is the extended cost of Equation~\eqref{eq:cost}, comprising the operational base cost $c_{\mathrm{op}}$ (reagent purchase, holding, and shortage; bioreactor holding and shortage; specimen and reagent logistics; and capacity relocation) together with the patient-loss, material-and-product-expiry, and urgency terms. Optimizing this reward therefore requires the agent to trade current operating and logistics cost against the future risk of patient losses and expiry, rather than resource utilization alone.
+where $c(\cdot)$ is the extended cost of Equation~\eqref{eq:cost}, comprising the operational base cost $c_{\mathrm{op}}$ (reagent purchase, holding, and shortage; bioreactor holding and shortage; specimen and reagent logistics; and capacity relocation) together with the patient-loss, material-and-product-expiry, and urgency terms. Routing-primary online training uses an additional transformation. At each actual visited state, a cloned pre-step environment with the same random state executes one MDL-2 action, producing $r_{t,\mathrm{anc}}^{\mathrm{clone}}$. Define
+\begin{align}
+\widetilde r_t &= r_t^{\mathrm{env}}-r_{t,\mathrm{anc}}^{\mathrm{clone}},\\
+R_t^{(n_t)} &= s_r\sum_{k=0}^{n_t-1}\gamma^k\widetilde r_{t+k},
+\qquad s_r=10^{-9},\quad\gamma=0.99,\quad n_t\leq4.
+\end{align}
+Each anchor comparison starts from its corresponding actual visited state.
+Thus $R_t^{(n_t)}$ is not the difference between two independently evolving
+four-step trajectories. It supplies the online replay return in
+Equation~\eqref{eq:routing-critic-target}. Evaluation still reports the
+original accumulated modeled cost and patient outcomes. We do not assume
+that this state-dependent reward transformation preserves the optimal policy
+of the undiscounted evaluation objective; the final-versus-frozen experiment
+tests the resulting procedure empirically.
 
 
 \begin{algorithm}[p]
 \footnotesize
-\caption{Graph-aware actor--critic for distributed PRM capacity planning (DDPG instantiation; TD3/SAC/PPO swap the critic target, policy parameterization, or update schedule).}
+\caption{Routing-primary AFR-GCN--DDPG training and fixed-checkpoint evaluation.}
 \label{alg:ddpg_gcn}
 \begin{algorithmic}[1]
-\Require Anchor policy $\pi_{\mathrm{anc}}$, residual candidates $\mathcal{D}$, look-ahead horizon $L$, discount factor $\gamma$, soft-update rate $\tau$, actor and critic learning rates $\alpha_\mu,\alpha_Q$, exploration scale $\sigma$, minibatch size $N$.
-\State Initialize GCN encoder $g_\omega$, actor $\mu(\cdot\mid\theta_\mu)$, critic $Q(\cdot,\cdot\mid\theta_Q)$, target networks $\mu'$ and $Q'$, and replay buffer $\mathcal{R}$.
+\Require Anchor $\pi_{\mathrm{anc}}$, residual candidates $\mathcal{D}$, teacher horizon $L$, locked training configuration, discount $\gamma$, reward scale $s_r$, minibatch size $B$.
+\State Initialize actor $\mu$ and critic $Q$ with separate graph encoders, corresponding target networks, replay buffer $\mathcal{R}$, and OU exploration process.
 \State Build weighted teacher data by comparing $\pi_{\mathrm{anc}}(X)+\delta$, $\delta\in\mathcal{D}$, with $\pi_{\mathrm{anc}}(X)$ under common-random-number $L$-step rollouts; use target $\delta^*$ only when it improves the score and zero otherwise.
-\State Fit the residual actor to the weighted advantage-filtered targets and retain this loss as an actor regularizer.
+\State Complete configured supervised initialization, offline replay updates, and critic calibration; retain teacher data and the frozen pre-online actor reference.
 \For{each environment step $t$}
-    \State Observe raw graph state $X_t$ and compute graph embedding $Z_t=g_\omega(X_t)$.
-    \State Select exploratory residual action $A_t=\pi_{\mathrm{anc}}(X_t)+\rho\odot\mu(Z_t\mid\theta_\mu)+\epsilon_t$, where $\epsilon_t\sim\mathcal{N}(0,\sigma^2 I)$.
-    \State Project or clip $A_t$ to the feasible set and execute the resulting action $\hat{A}_t$.
-    \State Observe cost/reward $r_t$, next state $X_{t+1}$, and store $(X_t,\hat{A}_t,r_t,X_{t+1})$ in $\mathcal{R}$.
+    \State Observe $X_t$; add OU noise to the actor output, then compose, hard-gate, scale, and clip the normalized request $a_t$.
+    \State Clone the pre-step environment and random state; execute $a_t$ in the actual environment and MDL-2 in the clone.
+    \State Record $X_{t+1}$, terminal flag $d_t$, and relative reward $\widetilde r_t=r_t^{\mathrm{env}}-r_{t,\mathrm{anc}}^{\mathrm{clone}}$.
+    \State Emit available online replay items $(X_t,a_t,R_t^{(n_t)},X_{t+n_t},d_{t+n_t-1},\gamma^{n_t})$; keep first-step reward metadata and flush short tails at episode end.
     \If{an update is scheduled}
-        \State Sample minibatch $(X_i,A_i,r_i,X_{i+1})_{i=1}^{N}$ from $\mathcal{R}$ and compute $Z_i=g_\omega(X_i)$, $Z_{i+1}=g_\omega(X_{i+1})$.
-        \State Compute targets $y_i=r_i+\gamma Q'(Z_{i+1},\mu'(Z_{i+1}\mid\theta_{\mu'})\mid\theta_{Q'})$.
-        \State Update critic by minimizing $L_Q=N^{-1}\sum_i(y_i-Q(Z_i,A_i\mid\theta_Q))^2$.
-        \State Update actor using the deterministic policy gradient plus the weighted advantage-filtered regularizer.
-        \State Backpropagate through the GCN encoder and softly update target networks.
+        \State Sample $B$ replay items with their stored returns and discounts; compute composed, hard-gated, quantized target actions.
+        \State Update critic and its encoder using Equation~\eqref{eq:routing-critic-target} and the teacher-ranking penalty.
+        \If{the delayed actor update is eligible}
+            \State Update actor and its encoder with Equation~\eqref{eq:routing-actor-loss}, using soft detached gates and straight-through request quantization.
+            \State Softly update the target actor.
+        \EndIf
+        \State Softly update the target critic.
     \EndIf
 \EndFor
-\State Select checkpoint and residual scale on independent validation scenarios; return the calibrated residual policy or the MDL-2 fallback.
+\State Evaluate the prespecified final and frozen pre-online policies with fixed deployment settings; do not select policies or scales on the formal holdout.
 \end{algorithmic}
 \end{algorithm}
 
 \paragraph{Action decoding and feasibility projection.}
-Because the actor network outputs continuous residuals, an additional deterministic decoding and feasibility-projection step is used before actions are executed in the simulation environment. The raw anchor-plus-residual action $A_t^{\mathrm{raw}}$ is first scaled to the admissible range of each decision variable and then clipped to its variable-specific lower and upper bounds. The specimen block expresses signed facility pressure rather than anonymous divisible flow. It is scaled by the maximum route quantity and rounded half away from zero to integer requests; a shared executor then matches opposite requests only across qualified edges and selects specific eligible patient identities. Reagent transshipment, bioreactor relocation, and replenishment are decoded through their corresponding bounds and feasibility rules.
+The bounded normalized request $a_t$ is decoded and made feasible inside the simulation environment; clipping the policy output alone does not enforce operational feasibility. The specimen block expresses signed facility pressure rather than anonymous divisible flow. It is scaled by the maximum route quantity and rounded half away from zero to integer requests; a shared executor then matches opposite requests only across qualified edges and selects specific eligible patient identities. Reagent transshipment, bioreactor relocation, and replenishment are decoded through their corresponding bounds and feasibility rules.
 
 The decoded action is subsequently passed through a repair operator that enforces the operational constraints of the manufacturing network. First, nonnegativity constraints are imposed so that the resulting action cannot remove more reagents, idle bioreactors, or route-eligible waiting specimen lots from a facility than are available at that epoch. Second, replenishment quantities are capped by the maximum purchasable reagent quantity $P_t^n$ and by supplier availability. Third, network conservation is enforced separately for fungible resources and integer specimen lots. A specimen route is legal only for a waiting identity that has not previously moved; each executed donor event has one matched receiver event, and unmatched requests are recorded as blocked rather than repaired by substitution. Finally, all transfer and routing actions are restricted to their configured graph edges. Finished-product return is a deterministic identity-preserving lifecycle transition, not an actor decision.
 
-Equivalently, the executed action can be interpreted as the feasible action $\hat{A}_t$ obtained by projecting the decoded actor output onto the feasible action set $\mathcal{F}(X_t)$:
+Writing this deterministic decoder and rule-based executor as $\Pi_{\mathrm{env}}$, the executed events satisfy
 \begin{equation}
-\hat{A}_t = \Pi_{\mathcal{F}(X_t)}\!\left(A_t^{\mathrm{raw}}\right),
+\hat{A}_t = \Pi_{\mathrm{env}}(X_t,a_t)\in\mathcal{F}(X_t),
 \end{equation}
-where $\mathcal{F}(X_t)$ is determined by current facility states, patient lifecycle and route history, inventory availability, capacity availability, supplier limits, the autologous identity constraint, and graph connectivity. This projection step improves engineering credibility by ensuring that all actions executed in the simulation correspond to implementable specimen-routing, capacity, replenishment, and transshipment decisions.
+where $\mathcal{F}(X_t)$ is determined by current facility states, patient lifecycle and route history, inventory availability, capacity availability, supplier limits, the autologous identity constraint, and graph connectivity. Here ``projection'' denotes rule-based feasible execution, not a nearest-point optimization or a differentiable map. Replay stores $a_t$, while the critic's $\mathcal{Q}(a_t)$ represents integer requests rather than $\hat{A}_t$. Two distinct requests can consequently produce the same executed events. This distinction limits what an actor gradient through the request representation says about achievable operational improvement.
 
 
 Each stability-oriented backbone reuses this encoder and projection layer unchanged and alters only the reinforcement-learning update. TD3 replaces the single critic with clipped double-$Q$ targets, delays actor updates, and adds target-policy smoothing; SAC replaces the deterministic actor with an entropy-regularized stochastic policy and a soft value target; and PPO replaces off-policy replay with on-policy rollouts optimized under a clipped surrogate objective. In all cases the actor and critic operate on the GCN embedding $Z_t$ rather than on the flat state, and the executed action is the feasibility-projected $\hat{A}_t$.
 
 \subsection*{Summary}
 
-The proposed method is therefore a residual GCN--DDPG controller: a GCN encoder supplies a permutation-equivariant, network-aware state representation; a deterministic actor learns bounded corrections to a transparent look-ahead anchor; and a feasibility-projection layer guarantees that every executed action respects inventory, capacity, supplier, patient identity, route history, and connectivity constraints. The routing-primary architecture comparison holds specimen-routing availability, the anchor, residual action space, advantage-filtered teacher protocol, projection, training budget, and evaluation seeds fixed between GCN and parameter-matched flat encoders. The earlier backbone comparison instead holds the graph encoder fixed while replacing DDPG with TD3. Residual SAC and PPO are secondary family extensions because their stochastic residual distributions and likelihood calculations require additional matched implementation work. These variants test backbone robustness without redefining them as separate proposed methods.
+The proposed method is therefore an advantage-filtered residual GCN--DDPG controller: graph encoders provide neighborhood-aware state representations; a deterministic actor learns bounded corrections to a transparent look-ahead anchor; and the executor enforces inventory, capacity, supplier, patient identity, route history, and connectivity constraints. The primary readout concatenates facility embeddings in a fixed order, so neighborhood aggregation alone does not establish permutation equivariance or variable-network-size generalization of the complete policy. The routing-primary architecture comparison holds specimen-routing availability, the anchor, residual action space, advantage-filtered teacher protocol, executor, training budget, and evaluation seeds fixed between GCN and parameter-matched flat encoders. The earlier backbone comparison instead holds the graph architecture fixed while replacing DDPG with TD3. Residual SAC and PPO remain secondary family extensions requiring additional matched empirical evaluation, not evidence of backbone robustness in the routing-primary results.
 \section{Computational Experiments}
 \label{sec:experiments}
 \label{sec:casestudies}

@@ -1,0 +1,107 @@
+[
+  {
+    "rate": 0.5,
+    "hours": 0.0,
+    "declared_probability": 0.0,
+    "midpoint_frequency": 0.0,
+    "mean_derivative": 0.5
+  },
+  {
+    "rate": 0.5,
+    "hours": 0.25,
+    "declared_probability": 0.1175030974154046,
+    "midpoint_frequency": 0.118,
+    "mean_derivative": 0.4412484512922977
+  },
+  {
+    "rate": 0.5,
+    "hours": 0.5,
+    "declared_probability": 0.22119921692859512,
+    "midpoint_frequency": 0.221,
+    "mean_derivative": 0.38940039153570244
+  },
+  {
+    "rate": 0.5,
+    "hours": 0.75,
+    "declared_probability": 0.3127107212090278,
+    "midpoint_frequency": 0.313,
+    "mean_derivative": 0.3436446393954861
+  },
+  {
+    "rate": 0.5,
+    "hours": 1.0,
+    "declared_probability": 0.3934693402873666,
+    "midpoint_frequency": 0.393,
+    "mean_derivative": 0.3032653298563167
+  },
+  {
+    "rate": 1.0,
+    "hours": 0.0,
+    "declared_probability": 0.0,
+    "midpoint_frequency": 0.0,
+    "mean_derivative": 1.0
+  },
+  {
+    "rate": 1.0,
+    "hours": 0.25,
+    "declared_probability": 0.22119921692859512,
+    "midpoint_frequency": 0.221,
+    "mean_derivative": 0.7788007830714049
+  },
+  {
+    "rate": 1.0,
+    "hours": 0.5,
+    "declared_probability": 0.3934693402873666,
+    "midpoint_frequency": 0.393,
+    "mean_derivative": 0.6065306597126334
+  },
+  {
+    "rate": 1.0,
+    "hours": 0.75,
+    "declared_probability": 0.5276334472589853,
+    "midpoint_frequency": 0.528,
+    "mean_derivative": 0.4723665527410147
+  },
+  {
+    "rate": 1.0,
+    "hours": 1.0,
+    "declared_probability": 0.6321205588285577,
+    "midpoint_frequency": 0.632,
+    "mean_derivative": 0.36787944117144233
+  },
+  {
+    "rate": 1.5,
+    "hours": 0.0,
+    "declared_probability": 0.0,
+    "midpoint_frequency": 0.0,
+    "mean_derivative": 1.5
+  },
+  {
+    "rate": 1.5,
+    "hours": 0.25,
+    "declared_probability": 0.3127107212090278,
+    "midpoint_frequency": 0.313,
+    "mean_derivative": 1.0309339181864583
+  },
+  {
+    "rate": 1.5,
+    "hours": 0.5,
+    "declared_probability": 0.5276334472589853,
+    "midpoint_frequency": 0.528,
+    "mean_derivative": 0.708549829111522
+  },
+  {
+    "rate": 1.5,
+    "hours": 0.75,
+    "declared_probability": 0.6753475326416503,
+    "midpoint_frequency": 0.675,
+    "mean_derivative": 0.4869787010375246
+  },
+  {
+    "rate": 1.5,
+    "hours": 1.0,
+    "declared_probability": 0.7768698398515702,
+    "midpoint_frequency": 0.777,
+    "mean_derivative": 0.33469524022264474
+  }
+]

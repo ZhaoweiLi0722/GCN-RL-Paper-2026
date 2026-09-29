@@ -1,0 +1,578 @@
+[
+  {
+    "case": "unchanged__slots1__seed0",
+    "family": "unchanged",
+    "downstream_slots": 1,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 28.0,
+      "labor": 23.625,
+      "switching": 2.0,
+      "total": 53.625
+    },
+    "exposed_intervals": [
+      5,
+      8
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1705579635761643,
+      1.0902883505837995
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "unchanged__slots1__seed1",
+    "family": "unchanged",
+    "downstream_slots": 1,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 32.0,
+      "labor": 31.5,
+      "switching": 2.0,
+      "total": 65.5
+    },
+    "exposed_intervals": [
+      6,
+      14
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.9143825480821297
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  },
+  {
+    "case": "unchanged__slots4__seed0",
+    "family": "unchanged",
+    "downstream_slots": 4,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 23.0,
+      "labor": 23.625,
+      "switching": 2.0,
+      "total": 48.625
+    },
+    "exposed_intervals": [
+      5,
+      8
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1705579635761643,
+      1.0902883505837995
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "unchanged__slots4__seed1",
+    "family": "unchanged",
+    "downstream_slots": 4,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 30.0,
+      "labor": 31.5,
+      "switching": 2.0,
+      "total": 63.5
+    },
+    "exposed_intervals": [
+      6,
+      14
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.9143825480821297
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  },
+  {
+    "case": "persistent_left_slow__slots1__seed0",
+    "family": "persistent_left_slow",
+    "downstream_slots": 1,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 28.0,
+      "labor": 23.625,
+      "switching": 2.0,
+      "total": 53.625
+    },
+    "exposed_intervals": [
+      6,
+      7
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1553621632486262,
+      1.1084527267510067
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "persistent_left_slow__slots1__seed1",
+    "family": "persistent_left_slow",
+    "downstream_slots": 1,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 32.0,
+      "labor": 30.375,
+      "switching": 2.0,
+      "total": 64.375
+    },
+    "exposed_intervals": [
+      6,
+      13
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.9307438829376854
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  },
+  {
+    "case": "persistent_left_slow__slots4__seed0",
+    "family": "persistent_left_slow",
+    "downstream_slots": 4,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 23.0,
+      "labor": 23.625,
+      "switching": 2.0,
+      "total": 48.625
+    },
+    "exposed_intervals": [
+      6,
+      7
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1553621632486262,
+      1.1084527267510067
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "persistent_left_slow__slots4__seed1",
+    "family": "persistent_left_slow",
+    "downstream_slots": 4,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 29.0,
+      "labor": 30.375,
+      "switching": 2.0,
+      "total": 61.375
+    },
+    "exposed_intervals": [
+      6,
+      13
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.9307438829376854
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  },
+  {
+    "case": "persistent_right_slow__slots1__seed0",
+    "family": "persistent_right_slow",
+    "downstream_slots": 1,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 38.0,
+      "labor": 31.5,
+      "switching": 1.75,
+      "total": 71.25
+    },
+    "exposed_intervals": [
+      5,
+      16
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1705579635761643,
+      0.8769814353411962
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "persistent_right_slow__slots1__seed1",
+    "family": "persistent_right_slow",
+    "downstream_slots": 1,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 37.0,
+      "labor": 37.125,
+      "switching": 1.75,
+      "total": 75.875
+    },
+    "exposed_intervals": [
+      6,
+      20
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.8293052758980021
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  },
+  {
+    "case": "persistent_right_slow__slots4__seed0",
+    "family": "persistent_right_slow",
+    "downstream_slots": 4,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 34.0,
+      "labor": 31.5,
+      "switching": 1.75,
+      "total": 67.25
+    },
+    "exposed_intervals": [
+      5,
+      16
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1705579635761643,
+      0.8769814353411962
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "persistent_right_slow__slots4__seed1",
+    "family": "persistent_right_slow",
+    "downstream_slots": 4,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 36.0,
+      "labor": 37.125,
+      "switching": 1.75,
+      "total": 74.875
+    },
+    "exposed_intervals": [
+      6,
+      20
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.8293052758980021
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  },
+  {
+    "case": "rapid_alternating__slots1__seed0",
+    "family": "rapid_alternating",
+    "downstream_slots": 1,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 30.0,
+      "labor": 28.125,
+      "switching": 2.0,
+      "total": 60.125
+    },
+    "exposed_intervals": [
+      5,
+      12
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1705579635761643,
+      0.9488334374531417
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "rapid_alternating__slots1__seed1",
+    "family": "rapid_alternating",
+    "downstream_slots": 1,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 32.0,
+      "labor": 30.375,
+      "switching": 2.0,
+      "total": 64.375
+    },
+    "exposed_intervals": [
+      6,
+      13
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.9307438829376854
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  },
+  {
+    "case": "rapid_alternating__slots4__seed0",
+    "family": "rapid_alternating",
+    "downstream_slots": 4,
+    "engineering_seed": 0,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 27.0,
+      "labor": 28.125,
+      "switching": 2.0,
+      "total": 57.125
+    },
+    "exposed_intervals": [
+      5,
+      12
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1705579635761643,
+      0.9488334374531417
+    ],
+    "private_uniform_tape_sha256": "e32f7eddc0db079a5757cdf6fca36551bfae4d156c0d6b717e5957d26e6ea53c"
+  },
+  {
+    "case": "rapid_alternating__slots4__seed1",
+    "family": "rapid_alternating",
+    "downstream_slots": 4,
+    "engineering_seed": 1,
+    "intervals": 32,
+    "decision_intervals": 32,
+    "closure_intervals": 0,
+    "ledger": {
+      "settled": true,
+      "unfinished_jobs": [],
+      "pending_prepaid_hours": [
+        0.0,
+        0.0
+      ],
+      "previous_request": [
+        0.0,
+        0.0
+      ]
+    },
+    "accounting_cost_not_policy_comparison": {
+      "holding": 29.0,
+      "labor": 30.375,
+      "switching": 2.0,
+      "total": 61.375
+    },
+    "exposed_intervals": [
+      6,
+      13
+    ],
+    "final_filter_mean_not_accuracy_claim": [
+      1.1374347888443044,
+      0.9307438829376854
+    ],
+    "private_uniform_tape_sha256": "c39bcbb8889efef6beed915f6db683ee20e51a279b633aeb3d00687245c83d51"
+  }
+]

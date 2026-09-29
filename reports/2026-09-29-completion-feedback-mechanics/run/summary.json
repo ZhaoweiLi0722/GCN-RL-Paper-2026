@@ -1,0 +1,240 @@
+{
+  "classification": "synthetic_mechanics_pass_not_headroom_or_online_rl_evidence",
+  "cases": 16,
+  "recorded_intervals": 512,
+  "all_jobs_and_prepaid_requests_settled": true,
+  "total_completion_events": 128,
+  "case_audits": [
+    {
+      "case": "unchanged__slots1__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 5,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 49
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 10.5
+    },
+    {
+      "case": "unchanged__slots1__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 12,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 42
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 14.0
+    },
+    {
+      "case": "unchanged__slots4__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 5,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 49
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 10.5
+    },
+    {
+      "case": "unchanged__slots4__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 12,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 42
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 14.0
+    },
+    {
+      "case": "persistent_left_slow__slots1__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 5,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 49
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 10.5
+    },
+    {
+      "case": "persistent_left_slow__slots1__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 11,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 43
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 13.5
+    },
+    {
+      "case": "persistent_left_slow__slots4__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 5,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 49
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 10.5
+    },
+    {
+      "case": "persistent_left_slow__slots4__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 11,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 43
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 13.5
+    },
+    {
+      "case": "persistent_right_slow__slots1__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 13,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 41
+      },
+      "idle_paid_hours": 3.5,
+      "purchased_and_applied_hours": 14.0
+    },
+    {
+      "case": "persistent_right_slow__slots1__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 18,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 36
+      },
+      "idle_paid_hours": 3.5,
+      "purchased_and_applied_hours": 16.5
+    },
+    {
+      "case": "persistent_right_slow__slots4__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 13,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 41
+      },
+      "idle_paid_hours": 3.5,
+      "purchased_and_applied_hours": 14.0
+    },
+    {
+      "case": "persistent_right_slow__slots4__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 18,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 36
+      },
+      "idle_paid_hours": 3.5,
+      "purchased_and_applied_hours": 16.5
+    },
+    {
+      "case": "rapid_alternating__slots1__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 9,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 45
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 12.5
+    },
+    {
+      "case": "rapid_alternating__slots1__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 11,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 43
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 13.5
+    },
+    {
+      "case": "rapid_alternating__slots4__seed0",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 9,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 45
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 12.5
+    },
+    {
+      "case": "rapid_alternating__slots4__seed1",
+      "audit": "passed",
+      "intervals": 32,
+      "completion_events": 8,
+      "receipt_counts": {
+        "right_censored": 11,
+        "completed": 8,
+        "no_effort": 2,
+        "idle": 43
+      },
+      "idle_paid_hours": 4.0,
+      "purchased_and_applied_hours": 13.5
+    }
+  ],
+  "quadrature_function_evaluations": 15000,
+  "online_neural_updates": 0,
+  "policy_comparisons": 0,
+  "patient_environment_run": false,
+  "clinical_calibration": false,
+  "formal_holdout_used": false,
+  "statistical_replications_for_effect_claim": 0
+}

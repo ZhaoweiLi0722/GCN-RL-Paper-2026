@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "name": "cases.json",
+      "sha256": "d9626193aed620294a747f4ebb69693836446a0c65a28f9a635e05629d21c1d8",
+      "bytes": 13293
+    },
+    {
+      "name": "claim.json",
+      "sha256": "a6e814bd26431ec800bf7c941d30649d569aabc5dfe4b92ba2ab54d9c6321f84",
+      "bytes": 2981
+    },
+    {
+      "name": "quadrature.json",
+      "sha256": "1ce85d2478ecdfa13cbaf14f7c2653a516c8dce1310bfd0582ceaffe92e76971",
+      "bytes": 2422
+    },
+    {
+      "name": "status.json",
+      "sha256": "7851678a5dc7abc04a5067360604dd52f769e094d0074390513a84ee3a1068bd",
+      "bytes": 72
+    },
+    {
+      "name": "steps.jsonl",
+      "sha256": "75efda57b0cd8334648d1e87510dd731000d29b385f270fd3ad38495f06e746e",
+      "bytes": 688542
+    },
+    {
+      "name": "summary.json",
+      "sha256": "8aacaf8604103ac0e43c76fa6f5bd264b1ca033a5e0606e633f03a07a5c966b1",
+      "bytes": 5998
+    }
+  ]
+}

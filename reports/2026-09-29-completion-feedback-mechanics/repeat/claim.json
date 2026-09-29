@@ -1,0 +1,80 @@
+{
+  "source_locks": [
+    {
+      "path": "experiments/configs/completion_feedback_mechanics_20260929.json",
+      "sha256": "dd19e0d65e8456103f77d0a0090a1e05f77adc9e6a14a426f438e2dc21251e6b"
+    },
+    {
+      "path": "src/env/completion_feedback_queue.py",
+      "sha256": "807b3a6da7566dbeaacec72f1f2aafd2c9c326ddafbad8e5db0bdb50bb8c168a"
+    },
+    {
+      "path": "src/baselines/completion_response_filter.py",
+      "sha256": "5114094daace28bed10b01bed8a79d66131846a99030f8fe9e4ceef5283e88b9"
+    },
+    {
+      "path": "src/env/service_effort_mechanics.py",
+      "sha256": "bf8add6c56fe3cbf6e506769f1e509bb9f90a552ca59f7b7f6e08357d999f0ea"
+    },
+    {
+      "path": "evaluation/check_service_effort_mechanics.py",
+      "sha256": "db1df02b8f4fbbd9fc486edf227f158798bb638077ace9c14a72901889b90770"
+    },
+    {
+      "path": "evaluation/check_completion_feedback_mechanics.py",
+      "sha256": "276c7d266100b1603394220684dbcc8ba7d8ef8b7198dbd03d743a41570544b3"
+    },
+    {
+      "path": "tests/test_completion_feedback_queue.py",
+      "sha256": "4602931af4e138403eae007df147c76006e14ff760c63da06d8318e1bb6b07d7"
+    },
+    {
+      "path": "tests/test_completion_feedback_check.py",
+      "sha256": "13d0cefb1eed43196104cb8acc98ebbf58a2d50c29147f3c8165efd8782052b3"
+    },
+    {
+      "path": "specs/2026-09-29-completion-feedback-mechanics/protocol.md",
+      "sha256": "cabe5ea309f101f951eb41b44517c8de60210c34cafdbf11392d6e3624d56a8b"
+    }
+  ],
+  "immutable_locks": [
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4"
+    },
+    {
+      "path": "src/env/service_queue_network.py",
+      "sha256": "ba73464bba001b8e7496b244eecb18154987a7e3f5c85a94277102690a3da27a"
+    },
+    {
+      "path": "src/baselines/public_service_response.py",
+      "sha256": "2824a69290373a644a1b687a0526c7c93b872ec48b317887ed158de460bd0c7a"
+    },
+    {
+      "path": "specs/2026-09-29-qualified-support-contract/measurement_contract.json",
+      "sha256": "08ac7311fb39f64e6292d7311269d21124d5360516deea6e3dc71ae28491de06"
+    },
+    {
+      "path": "reports/2026-09-29-queue-cost-sensitivity/run/summary.json",
+      "sha256": "7defedeaa477d8e47aa199db8370d39fca509e848757824b6b1910f263bf65b6"
+    },
+    {
+      "path": "reports/2026-09-29-queue-cost-sensitivity/run/sensitivity.json",
+      "sha256": "456b683ec272c47be545b65b95d7ff1d156176d2bfe400434e0d0e7332dd6892"
+    },
+    {
+      "path": "reports/2026-09-29-prospective-closed-loop-engineering/check.json",
+      "sha256": "b7031b9e4a1ff18d090bbde58db503ed6a25f6da29e81bc653035a29d7aa0965"
+    }
+  ],
+  "reference_commit": "d4af765",
+  "execution_commit": "3f9db7ffbc6d2e209a73a93bcfb5a58bfbcd3dd8",
+  "python": "3.9.6",
+  "numpy": "2.0.2",
+  "training": false,
+  "patient_environment": false
+}

@@ -1,27 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: R1 read-only reward-objective bridge
+## Live checkpoint: R1 receipt accounting and next-study design complete
 
-Updated 2026-09-29 after the user's request to continue beyond S4. S4 and all
+Updated 2026-09-29 16:47 UTC after the user's request to continue beyond S4. S4 and all
 earlier scientific records remain closed; R1 is read-only accounting and design,
 not a changed experiment or authorization to train.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
-| Last verified stage | S4 completed once, independently audited; S1/S2/S3 evidence unchanged |
-| Current task | R1 JSON-only receipt accounting implemented; 15 new/48 related tests pass. Source freeze, recorded audit and readout pending |
-| Protocol commit | S4 `e4e9fef`; both protocol/config locks pass, 315 historical input/source locks pass |
+| Last verified stage | R1 complete; S4 and all earlier code/results unchanged |
+| Current task | Read-only accounting and non-executable reward-consistency study design complete |
+| Protocol commit | R1 source/protocol/config `541b73d`; recorded only after source commit |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
-| Implementation evidence | S4 `evaluation/check_completion_continuation_comparison.py`, additive tree and component-forecast modules; 154 combined tests/full compileall pass; S3 read-only audit passes; no historical changes |
-| Recorded execution | Source `6409afef49b667b7abef146ea117e59b7bb4cc5c`; PID 25554 / PPID 2465, exit 0 in 35.638s; 345,600 inner + 1,966,080 outer paths, 49,204,865 model queries; no actual episodes, updates or reward changes |
-| Independent verification | All 436 arrays and 6 source + 315 historical locks pass; independently recomputed comparisons and 9,240 scalar paths / 187,703 intervals pass; no full-matrix repeat |
-| Process/output check | Live matching PID/command and new block boundaries observed; later process check finds no related evaluator, both run and audit exit 0; no error artifact/nonfinite metrics |
-| Scientific result | 0/4 contexts pass the prospective conditional signal check; tree128 matches or loses to booked in all validation blocks, though it beats reservation. 64/180 inner actions change with sample budget. No online-RL or optimality claim |
-| Reward diagnosis | Historical absolute/relative reward mixing remains a concrete consistency concern, not a proven cause. Existing prospective contracts already address it. Read-only potential-shaping algebra on 288 archived episodes has exact common +2 offset and unchanged rankings; no weights tuned |
-| Evidence paths | `reports/2026-09-29-completion-continuation-comparison/run/`; `specs/2026-09-29-completion-continuation-comparison/readout.md` and `reward-diagnosis.md` |
-| Next concrete action | Compile and commit R1 auditor/tests/config; record one read-only receipt audit and verify independently; finish the finite accounting/design packet |
-| Approval needed now | No additional approval for this read-only packet. Asked once whether the next design should prioritize fixed-weight legacy-simulator consistency; no reply yet. Scientific endpoint/budget/launch remain unapproved; E1 missing inputs apply to the new task, not automatically to every legacy-simulator analysis |
+| Implementation evidence | New JSON-only auditor; 15 new/48 related tests, full compileall and diff checks pass. No production reward/learner/environment source changed |
+| Recorded execution | Six archived cases / 36 receipts, six matching resumed duplicates; exit 0. No new environment queries, optimizer updates or reward changes |
+| Independent verification | 9 input + 34 source locks unchanged; stdout repeat byte-identical; independent Decimal backward recurrence checks all segment costs and 36 window returns |
+| Process/output check | Read-only process check found no matching live evaluator; audit and verification returned exit 0, no background task |
+| Scientific result | No new performance evidence. S4 remains 0/4 passing contexts. R1 arithmetic passes but does not certify task closure, Q targets or online gain |
+| Reward diagnosis | No new cost/reward mismatch in N7 receipts. Intentional engineering gamma .9 / three-step targets differ from N5 proposed gamma 1 / one-step fully settled task. Zero active patients is not a closure certificate |
+| Evidence paths | `reports/2026-09-29-reward-objective-bridge/audit.json`; `specs/2026-09-29-reward-objective-bridge/readout.md` and `next-study.md` |
+| Next concrete action | Resolve study route and endpoint in `next-study.md`, then a separately scoped data/budget/initialization design. Do not expand S4 or rebuild N1-N7 |
+| Approval needed now | Asked once whether to prioritize fixed-weight legacy-simulator consistency; no reply yet. Scientific endpoint/budget/launch remain unapproved; E1 missing inputs apply to the new task, not automatically to every legacy-simulator analysis |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 
@@ -32,15 +32,12 @@ next action and any precise approval need. A running label needs fresh process
 and progress evidence, not the existence of the scheduler. Do not duplicate an
 active job. Continue adjacent unblocked steps within a run where feasible.
 
-S4 source of truth:
-`specs/2026-09-29-completion-continuation-comparison/protocol.md` and
-`experiments/configs/completion_continuation_comparison_20260929.json`.
-Proceed through protocol -> implementation/tests -> source lock -> one bounded
-run -> read-only audit -> readout/continuation-adequacy memo. Routine phases do
-not each need a new user reply. After this finite chain completes, or if only
-out-of-scope work remains, record the decision and disable this continuation
-automation. Do not fill the queue with invented experiments. Unchanged waits
-need no repeated message; report actual milestones, failures or required input.
+R1 source of truth:
+`specs/2026-09-29-reward-objective-bridge/protocol.md` and
+`experiments/configs/reward_objective_bridge_20260929.json`. The finite packet
+has completed; no automation remains to disable. Do not fill the queue with
+invented experiments or repeat the completed accounting check as new progress.
+Unchanged waits need no repeated message; report actual milestones or decisions.
 
 ## Authority and boundaries
 

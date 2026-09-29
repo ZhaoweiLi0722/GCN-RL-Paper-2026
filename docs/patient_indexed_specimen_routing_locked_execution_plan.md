@@ -1433,3 +1433,17 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Prepare a non-executable decision separating legacy-simulator consistency
   work from the uncalibrated E1 new-task proposal. Neither is authorized to run
   by this entry. Do not change costs, old sources/results, Stage E or holdout.
+
+### 2026-09-29: R1 accounting complete; no new performance result
+
+- Source `541b73d` audited six archived cases / 36 receipts and six resumed
+  duplicates; all incurred-cost/raw-reward/lineage/tail checks passed. Nine
+  input files and 34 historical source locks remain unchanged. A stdout repeat
+  is byte-identical, and separate Decimal recurrence verifies the arithmetic.
+- Fifteen new/48 relevant tests and full compileall pass. No environment query,
+  optimizer update, source reward change or Q-model reload was performed.
+- Readout: `specs/2026-09-29-reward-objective-bridge/readout.md`. N7's mechanics
+  objective is not silently promoted to N5's complete-settlement objective.
+  `next-study.md` separates fixed-weight legacy-task consistency research from
+  the E1-dependent new operational task. Endpoint, data, budget and scientific
+  launch remain explicit future decisions, not approved by a successful audit.

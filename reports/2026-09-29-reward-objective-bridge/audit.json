@@ -1,0 +1,464 @@
+{
+  "accounting_audit_passed": true,
+  "auditor_sha256": "9091f276bfd57db7b9fcd657f96ee2faaf7ca4884ab8abe09bdf38a4606f00b0",
+  "cases": [
+    {
+      "accounting_passed": true,
+      "active_patients_at_segment_end": 0.0,
+      "case": "case-0-online",
+      "complete_liability_settlement_verified": false,
+      "discount_weighting_difference": 1228.459288,
+      "discounted_segment_cost": 5790.540712,
+      "first_step_weight": 1.0,
+      "gamma": 0.9,
+      "last_step_weight": 0.5904900000000001,
+      "learned_q_targets_independently_recomputed": false,
+      "objective_differences": [
+        "discounted_engineering_return_not_proposed_undiscounted_objective",
+        "multi_step_fixture_not_proposed_one_step_replay",
+        "recorded_segment_has_bootstrap_continuation_not_complete_return"
+      ],
+      "raw_cost_sum": 7019.0,
+      "recomputed_windows": [
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.03939808,
+          "start": 0
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02509928,
+          "start": 1
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 2
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 3
+        },
+        {
+          "bootstrap_discount": 0.81,
+          "n_steps": 2,
+          "scaled_return": -0.0177992,
+          "start": 4
+        },
+        {
+          "bootstrap_discount": 0.9,
+          "n_steps": 1,
+          "scaled_return": -0.009368,
+          "start": 5
+        }
+      ],
+      "scale": 1e-05,
+      "scaled_undiscounted_segment_reward": -0.07019,
+      "settlement_reason": "active patient count is not a commitment/inventory/closure certificate",
+      "steps": 6,
+      "terminal_mask": false,
+      "top_level_components_sum": 7019.0,
+      "truncated": true
+    },
+    {
+      "accounting_passed": true,
+      "active_patients_at_segment_end": 0.0,
+      "case": "case-0-frozen",
+      "complete_liability_settlement_verified": false,
+      "discount_weighting_difference": 1228.459288,
+      "discounted_segment_cost": 5790.540712,
+      "first_step_weight": 1.0,
+      "gamma": 0.9,
+      "last_step_weight": 0.5904900000000001,
+      "learned_q_targets_independently_recomputed": false,
+      "objective_differences": [
+        "discounted_engineering_return_not_proposed_undiscounted_objective",
+        "multi_step_fixture_not_proposed_one_step_replay",
+        "recorded_segment_has_bootstrap_continuation_not_complete_return"
+      ],
+      "raw_cost_sum": 7019.0,
+      "recomputed_windows": [
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.03939808,
+          "start": 0
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02509928,
+          "start": 1
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 2
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 3
+        },
+        {
+          "bootstrap_discount": 0.81,
+          "n_steps": 2,
+          "scaled_return": -0.0177992,
+          "start": 4
+        },
+        {
+          "bootstrap_discount": 0.9,
+          "n_steps": 1,
+          "scaled_return": -0.009368,
+          "start": 5
+        }
+      ],
+      "scale": 1e-05,
+      "scaled_undiscounted_segment_reward": -0.07019,
+      "settlement_reason": "active patient count is not a commitment/inventory/closure certificate",
+      "steps": 6,
+      "terminal_mask": false,
+      "top_level_components_sum": 7019.0,
+      "truncated": true
+    },
+    {
+      "accounting_passed": true,
+      "active_patients_at_segment_end": 0.0,
+      "case": "case-1-online",
+      "complete_liability_settlement_verified": false,
+      "discount_weighting_difference": 1228.459288,
+      "discounted_segment_cost": 5790.540712,
+      "first_step_weight": 1.0,
+      "gamma": 0.9,
+      "last_step_weight": 0.5904900000000001,
+      "learned_q_targets_independently_recomputed": false,
+      "objective_differences": [
+        "discounted_engineering_return_not_proposed_undiscounted_objective",
+        "multi_step_fixture_not_proposed_one_step_replay",
+        "recorded_segment_has_bootstrap_continuation_not_complete_return"
+      ],
+      "raw_cost_sum": 7019.0,
+      "recomputed_windows": [
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.03939808,
+          "start": 0
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02509928,
+          "start": 1
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 2
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 3
+        },
+        {
+          "bootstrap_discount": 0.81,
+          "n_steps": 2,
+          "scaled_return": -0.0177992,
+          "start": 4
+        },
+        {
+          "bootstrap_discount": 0.9,
+          "n_steps": 1,
+          "scaled_return": -0.009368,
+          "start": 5
+        }
+      ],
+      "scale": 1e-05,
+      "scaled_undiscounted_segment_reward": -0.07019,
+      "settlement_reason": "active patient count is not a commitment/inventory/closure certificate",
+      "steps": 6,
+      "terminal_mask": false,
+      "top_level_components_sum": 7019.0,
+      "truncated": true
+    },
+    {
+      "accounting_passed": true,
+      "active_patients_at_segment_end": 0.0,
+      "case": "case-1-frozen",
+      "complete_liability_settlement_verified": false,
+      "discount_weighting_difference": 1228.459288,
+      "discounted_segment_cost": 5790.540712,
+      "first_step_weight": 1.0,
+      "gamma": 0.9,
+      "last_step_weight": 0.5904900000000001,
+      "learned_q_targets_independently_recomputed": false,
+      "objective_differences": [
+        "discounted_engineering_return_not_proposed_undiscounted_objective",
+        "multi_step_fixture_not_proposed_one_step_replay",
+        "recorded_segment_has_bootstrap_continuation_not_complete_return"
+      ],
+      "raw_cost_sum": 7019.0,
+      "recomputed_windows": [
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.03939808,
+          "start": 0
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02509928,
+          "start": 1
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 2
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 3
+        },
+        {
+          "bootstrap_discount": 0.81,
+          "n_steps": 2,
+          "scaled_return": -0.0177992,
+          "start": 4
+        },
+        {
+          "bootstrap_discount": 0.9,
+          "n_steps": 1,
+          "scaled_return": -0.009368,
+          "start": 5
+        }
+      ],
+      "scale": 1e-05,
+      "scaled_undiscounted_segment_reward": -0.07019,
+      "settlement_reason": "active patient count is not a commitment/inventory/closure certificate",
+      "steps": 6,
+      "terminal_mask": false,
+      "top_level_components_sum": 7019.0,
+      "truncated": true
+    },
+    {
+      "accounting_passed": true,
+      "active_patients_at_segment_end": 0.0,
+      "case": "case-2-online",
+      "complete_liability_settlement_verified": false,
+      "discount_weighting_difference": 1228.459288,
+      "discounted_segment_cost": 5790.540712,
+      "first_step_weight": 1.0,
+      "gamma": 0.9,
+      "last_step_weight": 0.5904900000000001,
+      "learned_q_targets_independently_recomputed": false,
+      "objective_differences": [
+        "discounted_engineering_return_not_proposed_undiscounted_objective",
+        "multi_step_fixture_not_proposed_one_step_replay"
+      ],
+      "raw_cost_sum": 7019.0,
+      "recomputed_windows": [
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.03939808,
+          "start": 0
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02509928,
+          "start": 1
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 2
+        },
+        {
+          "bootstrap_discount": 0.0,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 3
+        },
+        {
+          "bootstrap_discount": 0.0,
+          "n_steps": 2,
+          "scaled_return": -0.0177992,
+          "start": 4
+        },
+        {
+          "bootstrap_discount": 0.0,
+          "n_steps": 1,
+          "scaled_return": -0.009368,
+          "start": 5
+        }
+      ],
+      "scale": 1e-05,
+      "scaled_undiscounted_segment_reward": -0.07019,
+      "settlement_reason": "active patient count is not a commitment/inventory/closure certificate",
+      "steps": 6,
+      "terminal_mask": true,
+      "top_level_components_sum": 7019.0,
+      "truncated": false
+    },
+    {
+      "accounting_passed": true,
+      "active_patients_at_segment_end": 0.0,
+      "case": "case-2-frozen",
+      "complete_liability_settlement_verified": false,
+      "discount_weighting_difference": 1228.459288,
+      "discounted_segment_cost": 5790.540712,
+      "first_step_weight": 1.0,
+      "gamma": 0.9,
+      "last_step_weight": 0.5904900000000001,
+      "learned_q_targets_independently_recomputed": false,
+      "objective_differences": [
+        "discounted_engineering_return_not_proposed_undiscounted_objective",
+        "multi_step_fixture_not_proposed_one_step_replay"
+      ],
+      "raw_cost_sum": 7019.0,
+      "recomputed_windows": [
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.03939808,
+          "start": 0
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02509928,
+          "start": 1
+        },
+        {
+          "bootstrap_discount": 0.7290000000000001,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 2
+        },
+        {
+          "bootstrap_discount": 0.0,
+          "n_steps": 3,
+          "scaled_return": -0.02538728,
+          "start": 3
+        },
+        {
+          "bootstrap_discount": 0.0,
+          "n_steps": 2,
+          "scaled_return": -0.0177992,
+          "start": 4
+        },
+        {
+          "bootstrap_discount": 0.0,
+          "n_steps": 1,
+          "scaled_return": -0.009368,
+          "start": 5
+        }
+      ],
+      "scale": 1e-05,
+      "scaled_undiscounted_segment_reward": -0.07019,
+      "settlement_reason": "active patient count is not a commitment/inventory/closure certificate",
+      "steps": 6,
+      "terminal_mask": true,
+      "top_level_components_sum": 7019.0,
+      "truncated": false
+    }
+  ],
+  "config_sha256": "0eae89a07e4d0baae23c1cead0f02724e077d1313f2ba6e2c7e5ed51fdb8ae8e",
+  "design_evidence_note": "unfilled template entries are not proof engineering evidence is absent; N6/N7 exist",
+  "environment_queries": 0,
+  "execution_commit": "541b73dc2ce131212717b962aa666ba7ced210a6",
+  "input_sha256": {
+    "evaluation/__init__.py": "52396fcd74c86350f83abab4fd2bb5a718bf66c0b3a8fb9c35744345921fc394",
+    "evaluation/check_prospective_session.py": "22a5c7b1372b24c7c0e1bf3421a0731e5dfec9d459b79546a41bdc54f792fc12",
+    "experiments/configs/prospective_development_preflight_20260929.json": "278a84fb8b971b9a3bad046d46fef893825477c4a1e5160ab06f0c7daf8fa60e",
+    "experiments/scripts/check_prospective_collector.py": "2a166e295bfe78fc1ec873e508850c89fb75a61e8f9cfc204a3c642e749197a3",
+    "reports/2026-09-29-prospective-closed-loop-engineering/case-0-frozen-resumed.json": "637b16e105acc3777f2eb74666b9bff8e217a3e3f436df3782d186809035ece5",
+    "reports/2026-09-29-prospective-closed-loop-engineering/case-0-online-resumed.json": "b579cebe7e29a16195bc76e148ed2a9a400f95d2a6840d75fe5cc835a754af76",
+    "reports/2026-09-29-prospective-closed-loop-engineering/case-1-frozen-resumed.json": "0fd4d847fe5db4e285da5bfcbe1c8a5a0ebe1f4ebd74ea34b2dfbf7d888eb1a1",
+    "reports/2026-09-29-prospective-closed-loop-engineering/case-1-online-resumed.json": "8bcc8c5170c9a81c4267bc9dbaa012521623d577a724b45f8ce71270c0790773",
+    "reports/2026-09-29-prospective-closed-loop-engineering/case-2-frozen-resumed.json": "44f4ac4b25853606a2cc5b1a2c68a4b9647d20848af9ab14f2cf1b222e9596d4",
+    "reports/2026-09-29-prospective-closed-loop-engineering/case-2-online-resumed.json": "22eddb4b2a9b1fb6e651122958f87d44f76dd9f056e34b5143420b44b37d630f",
+    "reports/2026-09-29-prospective-closed-loop-engineering/check.json": "b7031b9e4a1ff18d090bbde58db503ed6a25f6da29e81bc653035a29d7aa0965",
+    "specs/2026-09-29-qualified-support-contract/measurement_contract.json": "08ac7311fb39f64e6292d7311269d21124d5360516deea6e3dc71ae28491de06",
+    "src/__init__.py": "f82eed60531648a40541e4ae7d9cc134bc9207478406056c1f0eb3b4bacbf91e",
+    "src/baselines/__init__.py": "0a1d8b4cbe59767073a89ca8a23c76cb9025fd7b6fbb36db80ec6cb10264a863",
+    "src/baselines/heuristics.py": "3ed3f944d47b52f76f8d7581ff706c6903e238c43ed077301ece1ddc0db0de35",
+    "src/baselines/ppo.py": "3ee6043dcdbee81be03f4d20f4b325b3065b88ab3a260568ef1f060c9c9586ca",
+    "src/baselines/sac.py": "d59ac860ef0cd45b0151a4ee7521ae7eb27c0f40dd318e1152c7c1e75db3e614",
+    "src/env/__init__.py": "afb22c7cb7f5c6974a33ff9d2b00260712e13c80d406e95e2c57bf35905a08fc",
+    "src/env/aging_inventory.py": "35a4eb55492391f34c16a207e459386d098cfd529055b1e1c62049b8baab2781",
+    "src/env/capacity_planning.py": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1",
+    "src/env/patient_capacity_planning.py": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4",
+    "src/env/patient_condition.py": "bc0e274e70562ae1ab1ae6d78f487e62c91b3ef2f46172d6ce7608fb6f70ec68",
+    "src/env/specimen_routing.py": "5d9de6539c212362f55d943b975c810e0f21aa11bea7872f28615c550157f2ec",
+    "src/graph/__init__.py": "272d346379c3fba6b177a56aebd8c790f1eb89effc9911b3b7b133d20687495c",
+    "src/graph/edges.py": "aa1a37c2a675406571c4ea764ba8f8df6d279d4da45c6eb6c554bc6b5628b0cc",
+    "src/graph/geography.py": "475937c83c63fe69f98afb56b7223e990bbef324fe7162e11f8088ccfd0dc088",
+    "src/models/__init__.py": "c9502037accdd78cc82cd8b3a1ba0081679b1f55b19fde5778ee223ff0f21107",
+    "src/models/gcn.py": "63c92d66a14eca9b1e5a150ffc1f92a4cd5832d3aa94d062e5ada41d34806e69",
+    "src/models/matched_inputs.py": "7f6b1995c2bb56a82c63161f5f1b63b2e11f9e7e827c0453687d20ed90544f14",
+    "src/models/prospective_forward_agent.py": "73987de49aaf2f6164f4bb2007c352b5270495144eb0931737533dc108897062",
+    "src/rl/__init__.py": "d87971792b5faf6b8ad1cc7a3d104fa74424b64d3b24c27c3aee44ac62b082ff",
+    "src/rl/action_projection.py": "7022e16c8187a23a0cf11bd3ed0a3830d9c67b0ca267d31bda0e082b95766b0e",
+    "src/rl/networks.py": "d381a850f6aab53a089a4b6601c1f43aa53f0345f45756a9e68ae189530d33e9",
+    "src/rl/noise.py": "3a2a0f7c7421128023809fef7db61f166b2662410d5aab073d0b3c526270e65b",
+    "src/rl/patient_replay_collector.py": "1f62db840b7176e2b92c6848330e30ad1feb32afd978a707cb76580dd9cbd58a",
+    "src/rl/preprocessing.py": "95bde7abc74d3ca4a8612cd2c1af40e20cd5e5e9ef595d8e8e552f0f5d99d1af",
+    "src/rl/prospective_adapter.py": "9274704705ee0029a23fcd26260d0ea3da4617f788bccd9ae418e880a8173bf6",
+    "src/rl/prospective_ddpg_kernel.py": "ffdb998ff56e5df76be3aed0a06a47e6c68d48b999cd509e455be0dc80a39332",
+    "src/rl/prospective_engineering_check.py": "b14189902412aaea3af51886d591499ad991451338e1e4dcdc68801456c73e42",
+    "src/rl/prospective_patient_session.py": "6fc909ac9eefef325bc2bb4f01ac0ae48ad2998d55642d7fc3ff9a069b705a6e",
+    "src/rl/replay_buffer.py": "86fda607c25fff3610f4fd89a80dc6d56e4df46f0da822658fb6a52cc13deefe",
+    "src/rl/training_state.py": "e7e473a19fb04aff77b12de92d8f01a18232dd33ddc34f7182c8e7d3d7e88ec4",
+    "src/rl/validated_returns.py": "45de110691e67ec56fcaf56ab80d8ddd0a15870f33186360994bccd12d3c36e2"
+  },
+  "kind": "read_only_reward_accounting_bridge_not_performance",
+  "missing_domain_input_ids": [
+    "sop_task_and_qualifications",
+    "preemption_and_parallelism",
+    "staffing_unit_and_granularity",
+    "booking_notice_and_acceptance",
+    "resource_coupling",
+    "decision_interval",
+    "measurement_availability",
+    "task_duration_and_staff_response",
+    "change_range_and_persistence",
+    "costs_and_delay_objective",
+    "closure_obligations",
+    "meaningful_benefit_and_precision"
+  ],
+  "optimizer_updates": 0,
+  "performance_or_reward_improvement_claimed": false,
+  "receipt_count": 36,
+  "resumed_duplicates_checked_not_extra_replicates": 6,
+  "scientific_launch_authorized": false,
+  "scope_limit": "JSON arithmetic and lineage, not model replay, physical calibration or full liability settlement",
+  "source_locks_verified": 34,
+  "unfilled_design_evidence_fields": [
+    "operational_task_measurement_and_calibration",
+    "complete_objective_units_and_terminal_accounting",
+    "replicated_safe_action_headroom_and_learnability",
+    "competent_frozen_and_adaptive_comparator_acceptance",
+    "optimizer_replay_and_exact_resume_acceptance",
+    "new_task_input_action_model_and_gate_lock",
+    "fresh_stream_budget_effect_margin_and_analysis_lock",
+    "explicit_scientific_launch_authorization"
+  ],
+  "unique_case_count": 6
+}

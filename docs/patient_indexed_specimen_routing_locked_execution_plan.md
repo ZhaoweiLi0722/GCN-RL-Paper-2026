@@ -1550,3 +1550,17 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   reducer, reuse seed60's completed inference without replay, and finish only
   seeds61/62 after a new source commit. No extra observation, tolerance change,
   simulation, fitting or scientific retry is allowed by this completion.
+
+### 2026-09-29: R5 saved-observation compatibility complete
+
+- All 48 fixed archived observations across three R4 replacements pass exact
+  CPU policy/full-state agreement and prespecified CPU/MPS tolerance checks.
+  Hard gate and rounded request decisions match; max normalized request
+  difference is 2.981e-8. All 24 input files and 83 existing source locks match.
+- The stdlib raw verifier independently reproduces comparisons and request-lot
+  arithmetic. Twenty-three new/69 related tests and full compileall pass.
+  Failed summary evidence remains, with seed60 reused without new inference.
+- This is not actual executed routing, performance, clinical safety, F1 recovery
+  or an online benefit. R3 collection needs its distinct explicit approval and
+  collector/action/stream acceptance. A question is pending; silence is not
+  approval. Preserve all scientific boundaries and closed Stage E.

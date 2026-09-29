@@ -15,6 +15,7 @@ import torch
 from evaluation.audit_replacement_policy_compatibility import (
     compare_outputs, sample_indices, summarize_rows, verify_completed_inference,
 )
+from evaluation.verify_replacement_policy_compatibility import check_rows
 from src.models.gcn_ddpg import GCNDDPGAgent
 from src.rl.strict_frozen_policy import POLICY_METADATA, StrictFrozenPolicy, load_policy_payload_strict
 from src.utils.research_archive import sha256_file
@@ -201,6 +202,41 @@ class FrozenFacadeTest(unittest.TestCase):
                     StrictFrozenPolicy(cp, cfg, checkpoint_sha256="bad", config_sha256=sha256_file(cfg))
                 with self.assertRaisesRegex(ValueError, "config hash"):
                     StrictFrozenPolicy(cp, cfg, checkpoint_sha256=sha256_file(cp), config_sha256="bad")
+
+
+class IndependentArithmeticTest(unittest.TestCase):
+    def setUp(self):
+        output = {"actor": [0.] * 80, "gate_scores": 0., "hard_gate": True,
+                  "gate_margin": 0., "request": [0.] * 80, "requested_lots": [0] * 20}
+        self.rows = [dict(replay_index=i * 1353 // 15, observation=[0.] * 561,
+                          time_coordinate=0., cpu_policy=copy.deepcopy(output),
+                          cpu_full_state=copy.deepcopy(output), mps_policy=copy.deepcopy(output))
+                     for i in range(16)]
+        self.expected = {"max_cpu_mps_absolute_difference": {"actor": 0., "gate_scores": 0., "request": 0.},
+                         "minimum_gate_margin": 0.}
+
+    def test_valid_arithmetic(self):
+        self.assertEqual(check_rows(self.rows, self.expected)["observations"], 16)
+
+    def test_changed_sample_is_rejected(self):
+        self.rows[0]["replay_index"] = 1
+        with self.assertRaisesRegex(ValueError, "selection"):
+            check_rows(self.rows, self.expected)
+
+    def test_time_coordinate_mismatch_rejected(self):
+        self.rows[0]["time_coordinate"] = .5
+        with self.assertRaisesRegex(ValueError, "time"):
+            check_rows(self.rows, self.expected)
+
+    def test_lot_arithmetic_mismatch_rejected(self):
+        self.rows[0]["mps_policy"]["requested_lots"][0] = 1
+        with self.assertRaisesRegex(ValueError, "lot"):
+            check_rows(self.rows, self.expected)
+
+    def test_incorrect_reducer_rejected(self):
+        self.expected["minimum_gate_margin"] = .1
+        with self.assertRaisesRegex(ValueError, "reducer"):
+            check_rows(self.rows, self.expected)
 
 
 if __name__ == "__main__":

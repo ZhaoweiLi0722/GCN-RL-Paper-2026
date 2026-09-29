@@ -1,30 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: R5 strict-loader preparation tested; recorded audit next
+## Live checkpoint: R5 inference checks complete; independent archive verification
 
-Updated 2026-09-29 following Zhaowei's request to keep progressing. R5 adds
-fail-closed frozen actor/gate loading and a saved-observation compatibility
-audit; 16 new/62 related tests and full compileall pass. The recorded three-seed
-CPU/MPS audit has not yet run. R4 remains complete and unchanged. Cloud sync
-and Howard access remain unverified. R3 scientific collection is not launched.
+Updated 2026-09-29 following Zhaowei's request to keep progressing. R5 strict
+loading and 48 saved-observation CPU/MPS checks pass across three replacements.
+Source `f089fd0` saved seed60 then failed on scalar summary formatting; source
+`91a1e5b` reused those bytes without re-inference and completed seeds61/62.
+Failure evidence remains unchanged. No simulator or optimizer step occurred.
+R3 scientific collection is not launched. Cloud sync/access remain unverified.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
-| Last verified stage | R4 replacement pretraining/archives complete; older campaigns unchanged |
-| Current task | R5 strict loading and archived-observation parity; source freeze before recording |
-| Protocol commit | R4 protocol/source `14fc8ae`, preflight verifier repair and production execution `1845339` |
+| Last verified stage | R5 raw inference checks complete; independent raw arithmetic also agrees; older campaigns unchanged |
+| Current task | Finish tracked verification/readout and verified Dropbox archival of both R5 roots |
+| Protocol commit | R5 protocol/source `f089fd0`; summary-only repair and unvisited-seed completion `91a1e5b` |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
-| Implementation evidence | 16 new/64 related tests, full compileall and diff checks pass; reuses existing trainer, adds archival helper and bounded runner |
-| Recorded execution | GCN seeds60/61/62: 3,120 heuristic demonstration steps, 900 distillation epochs, 1,500 offline updates, 0 online episodes. Separate smoke: one step/epoch/update; verifier failure repaired without rerunning training |
-| Independent verification | Three finite actor/gate checkpoints equal full-state tensors; three MPS RNG sidecars. All 10/17/24-member cumulative archives and Dropbox local copies hash-verified. Actor-only hashes differ from old G1 in 3/3 seeds |
-| Process/output check | Production PID35892 exited 0; subsequent scoped process check found no matching rebuild process. No background task |
-| Scientific result | New replacement baselines, no performance evaluation or online/frozen contrast; old findings remain unchanged |
+| Implementation evidence | 23 new/69 related tests, full compileall and diff checks pass; real-agent synthetic roundtrip forbids env reset/step and optimizer updates |
+| Recorded execution | R5: 48 saved observations, CPU policy/full-state and MPS routes; no new simulator/optimizer step. R4 remains 3,120 demonstration steps and 0 online episodes |
+| Independent verification | Exact CPU/full-state outputs, no hard-gate/lot mismatch, max request difference 2.981e-8. All 24 R4 files and 83 existing source files unchanged; stdlib raw arithmetic agrees |
+| Process/output check | Both R5 processes ended: original exit1 summary-only; unvisited completion exit0. No continuing job claimed |
+| Scientific result | Saved-observation compatibility only; no actual routing/cost or online/frozen performance contrast |
 | Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
-| Evidence paths | `specs/2026-09-29-frozen-baseline-rebuild/{protocol,preflight,readout}.md`; `reports/2026-09-29-frozen-baseline-rebuild/`; immutable payload in `results/frozen_baseline_rebuild_20260929/` |
-| Next concrete action | Commit R5 implementation/protocol, run the fixed 48-observation compatibility audit with no simulator or learning, independently verify raw outputs |
-| Data/approval needed now | No more pretraining required. Proposed R3 adoption of R4 replacements is explicit in R5; collector acceptance, fresh streams and capped scientific pilot approval remain separate. Cloud sync/access still unverified |
-| Latest verification | Production logs contain only the known missing actor-loss placeholder during 500 critic warmup updates; persisted actor-update indicators are zero and numeric metrics/tensors finite. No Traceback/error in production logs; preflight failure preserved separately |
+| Evidence paths | `specs/2026-09-29-replacement-policy-compatibility/`; `reports/2026-09-29-replacement-policy-compatibility/`; both named R5 result roots |
+| Next concrete action | Complete independent verifier tests and archive packet; then collector/action identity acceptance and new-stream locks for proposed R3 |
+| Data/approval needed now | Asked once: approve the fixed R3 data-only pilot using R4 replacements, after collector acceptance (12 states, 8+8 draws, max37,596 steps/1h, no training/reward change)? No answer recorded yet. Cloud sync/access still unverified |
+| Latest verification | Known scalar/list report bug repaired; failed summary/raw hashes preserved, seed60 inference not repeated; unvisited seed outputs and all model tensors finite |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 

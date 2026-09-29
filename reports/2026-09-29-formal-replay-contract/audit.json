@@ -1,0 +1,1277 @@
+{
+  "claim_limit": "static and numeric data-path evidence, not a causal explanation or an optimization experiment",
+  "historical_sources": [
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/models/gcn_ddpg.py",
+      "sha256": "07f5bf086118dba0ada251cb99d9ae228882c270cc7abb950ae76dcd5ea9964b",
+      "symbols": {
+        "_critic_replay_bellman_loss": {
+          "end": 1509,
+          "source": "    def _critic_replay_bellman_loss(self, indices=None):\n        size = len(self.replay_buffer)\n        if size < 1:\n            raise ValueError(\"Critic calibration requires replay transitions\")\n        if indices is None:\n            indices = np.arange(size)\n        states = torch.as_tensor(\n            self.replay_buffer.states[indices],\n            dtype=torch.float32,\n            device=self.device,\n        )\n        actions = torch.as_tensor(\n            self.replay_buffer.actions[indices],\n            dtype=torch.float32,\n            device=self.device,\n        )\n        rewards = torch.as_tensor(\n            self.replay_buffer.rewards[indices],\n            dtype=torch.float32,\n            device=self.device,\n        )\n        next_states = torch.as_tensor(\n            self.replay_buffer.next_states[indices],\n            dtype=torch.float32,\n            device=self.device,\n        )\n        dones = torch.as_tensor(\n            self.replay_buffer.dones[indices],\n            dtype=torch.float32,\n            device=self.device,\n        )\n        node_features = flat_state_to_node_features(states, self.graph_spec)\n        next_node_features = flat_state_to_node_features(\n            next_states,\n            self.graph_spec,\n        )\n        with torch.no_grad():\n            next_network_actions = self.actor_target(next_node_features)\n            next_actions = self._compose_actions_tensor(\n                next_states,\n                next_network_actions,\n                apply_correction_gate=(\n                    self.correction_gate_align_online_policy\n                ),\n                hard_correction_gate=True,\n            )\n            next_actions = self._critic_actions_tensor(next_actions)\n            targets = rewards + self.gamma * (1.0 - dones) * self.critic_target(\n                next_node_features,\n                next_actions,\n            )\n        return torch.nn.functional.mse_loss(\n            self.critic(\n                node_features,\n                self._critic_actions_tensor(actions),\n            ),\n            targets,\n        )",
+          "start": 1452
+        },
+        "_emit_n_step_reward_transition": {
+          "end": 1260,
+          "source": "    def _emit_n_step_reward_transition(self) -> None:\n        horizon = min(\n            len(self._n_step_reward_queue),\n            self.online_reward_n_step_horizon,\n        )\n        if horizon < 1:\n            return\n        transitions = list(self._n_step_reward_queue)[:horizon]\n        discounted_reward = sum(\n            (self.gamma**offset) * transition[2]\n            for offset, transition in enumerate(transitions)\n        )\n        state, action, _reward, _next_state, _done = transitions[0]\n        _last_state, _last_action, _last_reward, next_state, done = transitions[-1]\n        self.replay_buffer.add(\n            state,\n            action,\n            float(discounted_reward) * self.reward_scale,\n            next_state,\n            done,\n            discount_multiplier=self.gamma ** (horizon - 1),\n            one_step_reward=float(transitions[0][2]) * self.reward_scale,\n        )\n        self._n_step_reward_queue.popleft()",
+          "start": 1237
+        },
+        "configure_critic_teacher_advantage_calibration": {
+          "end": 1418,
+          "source": "    def configure_critic_teacher_advantage_calibration(\n        self,\n        demonstrations: dict[str, Any],\n    ) -> dict[str, float | str]:\n        \"\"\"Load frozen teacher pairs used to calibrate critic ranking.\"\"\"\n\n        if not self.critic_teacher_advantage_calibration_enabled:\n            return {\"critic_teacher_advantage_samples\": 0.0}\n        required = (\n            \"states\",\n            \"actions\",\n            \"option_advantages\",\n            \"option_feasible\",\n        )\n        if self.critic_teacher_advantage_allowed_option_groups:\n            required += (\"option_groups\",)\n        missing = [key for key in required if key not in demonstrations]\n        if missing:\n            raise ValueError(\n                \"Teacher advantage calibration is missing: \"\n                + \", \".join(missing)\n            )\n        states = np.asarray(demonstrations[\"states\"], dtype=np.float32)\n        actions = np.asarray(demonstrations[\"actions\"], dtype=np.float32)\n        advantages = np.asarray(\n            demonstrations[\"option_advantages\"],\n            dtype=np.float32,\n        )\n        feasible = np.asarray(\n            demonstrations[\"option_feasible\"],\n            dtype=bool,\n        )\n        source_sample_count = int(states.shape[0])\n        if states.ndim != 2 or states.shape[1] != self.state_dim:\n            raise ValueError(\"Teacher calibration states do not match the agent\")\n        if actions.shape != (states.shape[0], self.action_dim):\n            raise ValueError(\"Teacher calibration actions do not match the agent\")\n        if advantages.ndim != 2 or feasible.shape != advantages.shape:\n            raise ValueError(\"Teacher option advantages and feasibility must align\")\n        if advantages.shape[0] != states.shape[0]:\n            raise ValueError(\"Teacher option advantages must align with states\")\n        if not np.all(np.isfinite(advantages)):\n            raise ValueError(\"Teacher option advantages must be finite\")\n        if np.any(~np.any(feasible, axis=1)):\n            raise ValueError(\"Every teacher state requires a feasible option\")\n        if self.critic_teacher_advantage_allowed_option_groups:\n            supported = teacher_advantage_support_mask(\n                advantages,\n                feasible,\n                demonstrations[\"option_groups\"],\n                allowed_option_groups=(\n                    self.critic_teacher_advantage_allowed_option_groups\n                ),\n            )\n            if not np.any(supported):\n                raise ValueError(\n                    \"Teacher advantage calibration has no policy-supported rows\"\n                )\n            states = states[supported]\n            actions = actions[supported]\n            advantages = advantages[supported]\n            feasible = feasible[supported]\n        best_advantages = np.max(\n            np.where(feasible, advantages, -np.inf),\n            axis=1,\n        )\n        targets = (\n            np.maximum(best_advantages, 0.0)\n            * self.reward_scale\n            * self.critic_teacher_advantage_target_scale\n        ).astype(np.float32)\n        self.critic_teacher_advantage_states = torch.as_tensor(\n            states,\n            dtype=torch.float32,\n            device=self.device,\n        )\n        self.critic_teacher_advantage_actions = torch.as_tensor(\n            actions,\n            dtype=torch.float32,\n            device=self.device,\n        )\n        self.critic_teacher_advantage_targets = torch.as_tensor(\n            targets,\n            dtype=torch.float32,\n            device=self.device,\n        ).reshape(-1, 1)\n        self.critic_teacher_advantage_rng = np.random.default_rng(\n            self.seed + 650000\n        )\n        return {\n            \"critic_teacher_advantage_samples\": float(states.shape[0]),\n            \"critic_teacher_advantage_source_samples\": float(\n                source_sample_count\n            ),\n            \"critic_teacher_advantage_excluded_samples\": float(\n                source_sample_count - states.shape[0]\n            ),\n            \"critic_teacher_advantage_allowed_option_groups\": \"|\".join(\n                self.critic_teacher_advantage_allowed_option_groups\n            ),\n            \"critic_teacher_advantage_target_mean\": float(targets.mean()),\n            \"critic_teacher_advantage_target_positive_fraction\": float(\n                np.mean(targets > 0.0)\n            ),\n        }",
+          "start": 1314
+        },
+        "finalize_training_episode": {
+          "end": 1268,
+          "source": "    def finalize_training_episode(self) -> None:\n        \"\"\"Flush short n-step tails without crossing an episode boundary.\"\"\"\n\n        if self.online_reward_mode != \"n_step_anchor_relative\":\n            return\n        while self._n_step_reward_queue:\n            self._emit_n_step_reward_transition()",
+          "start": 1262
+        },
+        "observe": {
+          "end": 1299,
+          "source": "    def observe(\n        self,\n        state: np.ndarray,\n        action: np.ndarray,\n        reward: float,\n        next_state: np.ndarray,\n        done: bool,\n    ) -> None:\n        if self.online_reward_mode != \"n_step_anchor_relative\":\n            self.replay_buffer.add(\n                state,\n                action,\n                float(reward) * self.reward_scale,\n                next_state,\n                done,\n            )\n            return\n        self._n_step_reward_queue.append(\n            (\n                np.asarray(state, dtype=np.float32).copy(),\n                np.asarray(action, dtype=np.float32).copy(),\n                float(reward),\n                np.asarray(next_state, dtype=np.float32).copy(),\n                bool(done),\n            )\n        )\n        if len(self._n_step_reward_queue) >= self.online_reward_n_step_horizon:\n            self._emit_n_step_reward_transition()\n        if done:\n            self.finalize_training_episode()",
+          "start": 1270
+        },
+        "prepare_online_finetuning": {
+          "end": 1786,
+          "source": "    def prepare_online_finetuning(\n        self,\n        *,\n        start_episode: int = 0,\n    ) -> dict[str, float | str]:\n        \"\"\"Apply optimizer settings that begin only at online interaction.\"\"\"\n\n        summary: dict[str, float | str] = {}\n        if (\n            self.online_replay_fraction is not None\n            or self.online_advantage_self_imitation_enabled\n        ):\n            if int(start_episode) == 0:\n                self.replay_buffer.begin_online_collection()\n            elif not self.replay_buffer.collecting_online:\n                raise ValueError(\n                    \"Resumed online replay state lacks source labels\"\n                )\n        if self.online_replay_fraction is not None:\n            summary[\"online_replay_fraction\"] = float(\n                self.online_replay_fraction\n            )\n        if self.online_advantage_self_imitation_enabled:\n            summary[\"online_advantage_self_imitation\"] = (\n                \"positive_full_horizon_anchor_return|specimen_behavior_action\"\n            )\n            summary[\"online_advantage_self_imitation_weight\"] = float(\n                self.online_advantage_self_imitation_weight\n            )\n            summary[\"online_advantage_self_imitation_release_reference\"] = (\n                str(\n                    self.online_advantage_self_imitation_release_reference\n                ).lower()\n            )\n            summary[\n                \"online_advantage_self_imitation_require_positive_one_step_return\"\n            ] = str(\n                self.online_advantage_self_imitation_require_positive_one_step\n            ).lower()\n            summary[\n                \"online_advantage_self_imitation_minimum_return\"\n            ] = float(\n                self.online_advantage_self_imitation_minimum_return\n            )\n        if self.correction_gate_align_online_policy:\n            summary[\"online_correction_gate_alignment\"] = (\n                \"hard_behavior_target|hard_actor\"\n                if self.correction_gate_hard_actor_policy\n                else \"hard_behavior_target|soft_actor\"\n            )\n        if self.specimen_action_quantization_enabled:\n            summary[\"online_specimen_action_quantization\"] = (\n                \"critic_integer_patient_lots|actor_straight_through\"\n            )\n        if self.pretrain_reference_actor is not None:\n            summary[\"online_pretrain_reference_action_space\"] = (\n                self.pretrain_reference_actor_loss_action_space\n            )\n            summary[\"online_pretrain_reference_loss_mode\"] = (\n                self.pretrain_reference_actor_loss_mode\n            )\n        if self.correction_gate_differentiate_actor_proposal:\n            self.correction_gate.eval()\n            for parameter in self.correction_gate.parameters():\n                parameter.requires_grad_(False)\n            summary[\"online_correction_gate_actor_gradient\"] = (\n                \"frozen_gate|proposal_conditioned_soft_path\"\n            )\n        if (\n            self.critic_teacher_advantage_calibration_enabled\n            and int(start_episode) == 0\n        ):\n            summary.update(self._calibrate_critic_teacher_advantage())\n        if self.online_critic_lr is not None:\n            offline_lrs = tuple(\n                float(group[\"lr\"])\n                for group in self.critic_optimizer.param_groups\n            )\n            for group in self.critic_optimizer.param_groups:\n                group[\"lr\"] = self.online_critic_lr\n            summary.update(\n                {\n                    \"online_critic_lr\": float(self.online_critic_lr),\n                    \"offline_critic_lrs\": \"|\".join(\n                        f\"{value:.12g}\" for value in offline_lrs\n                    ),\n                }\n            )\n        if self.online_actor_lr is not None:\n            offline_lrs = tuple(\n                float(group[\"lr\"])\n                for group in self.actor_optimizer.param_groups\n            )\n            for group in self.actor_optimizer.param_groups:\n                group[\"lr\"] = self.online_actor_lr\n            summary.update(\n                {\n                    \"online_actor_lr\": float(self.online_actor_lr),\n                    \"offline_actor_lrs\": \"|\".join(\n                        f\"{value:.12g}\" for value in offline_lrs\n                    ),\n                }\n            )\n        return summary",
+          "start": 1683
+        },
+        "pretrain_with_heuristic": {
+          "end": 2461,
+          "source": "    def pretrain_with_heuristic(self, env, settings: dict[str, Any]) -> dict[str, Any]:\n        \"\"\"Warm-start the actor from deterministic heuristic demonstrations.\"\"\"\n\n        from src.baselines.heuristics import get_heuristic_class\n\n        policy_name = str(settings.get(\"policy\", \"mdl2\"))\n        episodes = int(settings.get(\"episodes\", 0))\n        epochs = int(settings.get(\"epochs\", 1))\n        batch_size = int(settings.get(\"batch_size\", self.batch_size))\n        max_steps = int(settings.get(\"max_steps_per_episode\", env.config.episode_horizon))\n        seed = int(settings.get(\"seed\", self.seed + 100000))\n        populate_replay = bool(settings.get(\"populate_replay_buffer\", True))\n        if episodes <= 0 or epochs <= 0:\n            return {\"policy\": policy_name, \"samples\": 0, \"final_loss\": 0.0}\n\n        policy_config = dict(settings.get(\"policy_config\", {}))\n        heuristic = get_heuristic_class(policy_name)(\n            state_dim=env.observation_size,\n            action_dim=env.action_size,\n            config=policy_config,\n        )\n        states: list[np.ndarray] = []\n        actions: list[np.ndarray] = []\n        for episode in range(episodes):\n            state = env.reset(seed=seed + episode)\n            heuristic.reset()\n            for _step in range(max_steps):\n                action = heuristic.select_action(state, explore=False, env=env)\n                next_state, reward, done, _info = env.step(action)\n                states.append(np.asarray(state, dtype=np.float32))\n                actions.append(np.asarray(action, dtype=np.float32))\n                if populate_replay:\n                    self.replay_buffer.add(\n                        state,\n                        action,\n                        float(reward) * self.reward_scale,\n                        next_state,\n                        done,\n                    )\n                state = next_state\n                if done:\n                    break\n\n        if not states:\n            return {\"policy\": policy_name, \"samples\": 0, \"final_loss\": 0.0}\n\n        state_tensor = torch.as_tensor(np.asarray(states), dtype=torch.float32, device=self.device)\n        action_tensor = torch.as_tensor(np.asarray(actions), dtype=torch.float32, device=self.device)\n        sample_count = int(state_tensor.shape[0])\n        batch_size = min(max(batch_size, 1), sample_count)\n        generator = torch.Generator().manual_seed(seed)\n        final_loss = 0.0\n\n        self.actor.train()\n        for _epoch in range(epochs):\n            permutation = torch.randperm(sample_count, generator=generator)\n            for start in range(0, sample_count, batch_size):\n                indices = permutation[start : start + batch_size].to(self.device)\n                node_features = flat_state_to_node_features(state_tensor[indices], self.graph_spec)\n                loss = self._supervised_action_loss(\n                    state_tensor[indices],\n                    self.actor(node_features),\n                    action_tensor[indices],\n                )\n                self.actor_optimizer.zero_grad()\n                loss.backward()\n                torch.nn.utils.clip_grad_norm_(self.actor.parameters(), max_norm=5.0)\n                self.actor_optimizer.step()\n                final_loss = float(loss.item())\n\n        self.actor_target.load_state_dict(self.actor.state_dict())\n        self.imitation_states = state_tensor.detach()\n        self.imitation_actions = action_tensor.detach()\n        with torch.no_grad():\n            self.imitation_node_features = flat_state_to_node_features(\n                self.imitation_states,\n                self.graph_spec,\n            ).detach()\n        self.imitation_weights = None\n        self.imitation_rng = np.random.default_rng(seed + 300000)\n        return {\"policy\": policy_name, \"samples\": sample_count, \"final_loss\": final_loss}",
+          "start": 2381
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/baselines/flat_ddpg.py",
+      "sha256": "16f2ffbaa452cb29b3770b62ae88d25d34e50e7256f380fa36990e5116879024",
+      "symbols": {
+        "_emit_n_step_reward_transition": {
+          "end": 986,
+          "source": "    def _emit_n_step_reward_transition(self) -> None:\n        horizon = min(\n            len(self._n_step_reward_queue),\n            self.online_reward_n_step_horizon,\n        )\n        if horizon < 1:\n            return\n        transitions = list(self._n_step_reward_queue)[:horizon]\n        discounted_reward = sum(\n            (self.gamma**offset) * transition[2]\n            for offset, transition in enumerate(transitions)\n        )\n        state, action, _reward, _next_state, _done = transitions[0]\n        _last_state, _last_action, _last_reward, next_state, done = transitions[-1]\n        self.replay_buffer.add(\n            state,\n            action,\n            float(discounted_reward) * self.reward_scale,\n            next_state,\n            done,\n            discount_multiplier=self.gamma ** (horizon - 1),\n            one_step_reward=float(transitions[0][2]) * self.reward_scale,\n        )\n        self._n_step_reward_queue.popleft()",
+          "start": 963
+        },
+        "finalize_training_episode": {
+          "end": 994,
+          "source": "    def finalize_training_episode(self) -> None:\n        \"\"\"Flush short n-step tails without crossing an episode boundary.\"\"\"\n\n        if self.online_reward_mode != \"n_step_anchor_relative\":\n            return\n        while self._n_step_reward_queue:\n            self._emit_n_step_reward_transition()",
+          "start": 988
+        },
+        "observe": {
+          "end": 1025,
+          "source": "    def observe(\n        self,\n        state: np.ndarray,\n        action: np.ndarray,\n        reward: float,\n        next_state: np.ndarray,\n        done: bool,\n    ) -> None:\n        if self.online_reward_mode != \"n_step_anchor_relative\":\n            self.replay_buffer.add(\n                state,\n                action,\n                float(reward) * self.reward_scale,\n                next_state,\n                done,\n            )\n            return\n        self._n_step_reward_queue.append(\n            (\n                np.asarray(state, dtype=np.float32).copy(),\n                np.asarray(action, dtype=np.float32).copy(),\n                float(reward),\n                np.asarray(next_state, dtype=np.float32).copy(),\n                bool(done),\n            )\n        )\n        if len(self._n_step_reward_queue) >= self.online_reward_n_step_horizon:\n            self._emit_n_step_reward_transition()\n        if done:\n            self.finalize_training_episode()",
+          "start": 996
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/rl/replay_buffer.py",
+      "sha256": "784401ec2bd91ee08c5bad3a6bcd7c7855c872997355de3c3d78e1edc83a7eb3",
+      "symbols": {
+        "add": {
+          "end": 66,
+          "source": "    def add(\n        self,\n        state: np.ndarray,\n        action: np.ndarray,\n        reward: float,\n        next_state: np.ndarray,\n        done: bool,\n        *,\n        discount_multiplier: float = 1.0,\n        one_step_reward: float | None = None,\n    ) -> None:\n        self.states[self.position] = np.asarray(state, dtype=np.float32)\n        self.actions[self.position] = np.asarray(action, dtype=np.float32)\n        self.rewards[self.position] = float(reward)\n        self.one_step_rewards[self.position] = float(\n            reward if one_step_reward is None else one_step_reward\n        )\n        self.next_states[self.position] = np.asarray(next_state, dtype=np.float32)\n        self.dones[self.position] = float(done)\n        self.discount_multipliers[self.position] = float(discount_multiplier)\n        self.online_mask[self.position] = bool(self.collecting_online)\n        self.position = (self.position + 1) % self.capacity\n        self.size = min(self.size + 1, self.capacity)",
+          "start": 44
+        },
+        "sample": {
+          "end": 147,
+          "source": "    def sample(\n        self,\n        batch_size: int,\n        *,\n        online_fraction: float | None = None,\n    ) -> ReplayBatch:\n        if self.size < batch_size:\n            raise ValueError(f\"Cannot sample batch_size={batch_size}; buffer has {self.size} items\")\n        if online_fraction is None:\n            indices = self.rng.choice(\n                self.size,\n                size=batch_size,\n                replace=False,\n            )\n        else:\n            requested = float(online_fraction)\n            if not 0.0 <= requested <= 1.0:\n                raise ValueError(\"online_fraction must be in [0, 1]\")\n            online_indices = np.flatnonzero(self.online_mask[:self.size])\n            offline_indices = np.flatnonzero(~self.online_mask[:self.size])\n            online_count = min(\n                int(round(batch_size * requested)),\n                int(online_indices.size),\n            )\n            offline_count = min(\n                batch_size - online_count,\n                int(offline_indices.size),\n            )\n            remaining = batch_size - online_count - offline_count\n            if remaining:\n                extra_online = min(\n                    remaining,\n                    int(online_indices.size) - online_count,\n                )\n                online_count += extra_online\n                remaining -= extra_online\n            if remaining:\n                offline_count += min(\n                    remaining,\n                    int(offline_indices.size) - offline_count,\n                )\n            chosen_online = (\n                self.rng.choice(\n                    online_indices,\n                    size=online_count,\n                    replace=False,\n                )\n                if online_count\n                else np.empty(0, dtype=np.int64)\n            )\n            chosen_offline = (\n                self.rng.choice(\n                    offline_indices,\n                    size=offline_count,\n                    replace=False,\n                )\n                if offline_count\n                else np.empty(0, dtype=np.int64)\n            )\n            indices = np.concatenate((chosen_online, chosen_offline))\n            self.rng.shuffle(indices)\n        sampled_online_fraction = float(\n            self.online_mask[indices].mean()\n        )\n        return ReplayBatch(\n            states=self.states[indices],\n            actions=self.actions[indices],\n            rewards=self.rewards[indices],\n            one_step_rewards=self.one_step_rewards[indices],\n            next_states=self.next_states[indices],\n            dones=self.dones[indices],\n            discount_multipliers=self.discount_multipliers[indices],\n            online_masks=self.online_mask[indices].reshape(-1, 1).copy(),\n            online_fraction=sampled_online_fraction,\n        )",
+          "start": 73
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/rl/critic_advantage.py",
+      "sha256": "e8a7d7ee3d7457378db3f0eacfb2f8b770b9fa98ae200cd469d92c951cdef3a8",
+      "symbols": {
+        "teacher_advantage_loss": {
+          "end": 86,
+          "source": "def teacher_advantage_loss(\n    predictions,\n    targets,\n    *,\n    positive_margin: float = 0.0,\n    positive_margin_weight: float = 0.0,\n    pairwise_difference_weight: float = 0.0,\n):\n    \"\"\"Return pointwise MSE plus optional sign and pairwise structure.\"\"\"\n\n    regression_loss = torch.nn.functional.mse_loss(predictions, targets)\n    margin_loss = predictions.sum() * 0.0\n    if float(positive_margin_weight) > 0.0:\n        material_positive = targets >= float(positive_margin)\n        if bool(material_positive.any().item()):\n            shortfall = torch.relu(\n                float(positive_margin) - predictions[material_positive]\n            )\n            margin_loss = torch.mean(shortfall.square())\n    pairwise_loss = predictions.sum() * 0.0\n    if float(pairwise_difference_weight) > 0.0:\n        predicted_values = predictions.reshape(-1)\n        target_values = targets.reshape(-1)\n        if int(predicted_values.numel()) > 1:\n            left, right = torch.triu_indices(\n                int(predicted_values.numel()),\n                int(predicted_values.numel()),\n                offset=1,\n                device=predictions.device,\n            )\n            target_differences = target_values[left] - target_values[right]\n            comparable = target_differences.abs() > 1e-15\n            if bool(comparable.any().item()):\n                predicted_differences = (\n                    predicted_values[left] - predicted_values[right]\n                )\n                pairwise_loss = torch.nn.functional.mse_loss(\n                    predicted_differences[comparable],\n                    target_differences[comparable],\n                )\n    total_loss = (\n        regression_loss\n        + float(positive_margin_weight) * margin_loss\n        + float(pairwise_difference_weight) * pairwise_loss\n    )\n    return total_loss, regression_loss, margin_loss, pairwise_loss",
+          "start": 41
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "evaluation/run_gcn_residual_sweep.py",
+      "sha256": "e9c9f5a4fefa0463bc6c8c38888caf2fe3394a6311fa10f6a6ab0e0642b1cdb8",
+      "symbols": {
+        "populate_agent_replay_from_demonstrations": {
+          "end": 1889,
+          "source": "def populate_agent_replay_from_demonstrations(agent, demos: dict[str, Any]) -> int:\n    \"\"\"Seed an off-policy critic with the same teacher trajectory used for actor fitting.\"\"\"\n\n    required = (\n        \"transition_states\",\n        \"transition_actions\",\n        \"transition_rewards\",\n        \"transition_next_states\",\n        \"transition_dones\",\n    )\n    if not all(key in demos for key in required):\n        return 0\n    if not hasattr(agent, \"observe\"):\n        raise ValueError(\"Replay population requires an agent.observe method\")\n    count = int(np.asarray(demos[\"transition_states\"]).shape[0])\n    explicit_labels = None\n    label_builder = getattr(agent, \"demonstration_option_labels\", None)\n    transition_adder = getattr(agent, \"add_option_transition\", None)\n    if (\n        callable(label_builder)\n        and callable(transition_adder)\n        and \"option_advantages\" in demos\n        and \"option_feasible\" in demos\n    ):\n        explicit_labels = np.asarray(label_builder(demos), dtype=np.int64)\n        if explicit_labels.shape != (count,):\n            raise ValueError(\n                \"Dense option labels must align with demonstration transitions\"\n            )\n    for index in range(count):\n        if explicit_labels is not None:\n            transition_adder(\n                demos[\"transition_states\"][index],\n                int(explicit_labels[index]),\n                float(demos[\"transition_rewards\"][index]),\n                demos[\"transition_next_states\"][index],\n                bool(demos[\"transition_dones\"][index]),\n            )\n        else:\n            agent.observe(\n                demos[\"transition_states\"][index],\n                demos[\"transition_actions\"][index],\n                float(demos[\"transition_rewards\"][index]),\n                demos[\"transition_next_states\"][index],\n                bool(demos[\"transition_dones\"][index]),\n            )\n    return count",
+          "start": 1843
+        }
+      }
+    }
+  ],
+  "input_current_sha256": {
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/config.json": "bf0e1ae86c4a4a42518263748dfa0c46948774833c20229b8146797125a20f25",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/summary.json": "71ead6c34ee2280c266c1d134ca2e80019684e327d5c1e4e912347a77a4926e3",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/training.csv": "f489ddc396b61948d915921e1cf8a2c12c54ee904dd5428856fee7066a5d38b5",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/config.json": "cf11db829e0d9923525aee4badf68ae99d1654650b7e2182c5f266f4c1a55a7e",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/summary.json": "18b32173ed2b64c954ef130bb6900b5abe9e2d3cf65a7ee0b52c86b15227a664",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/training.csv": "f77844e7e445c4cd0c78ca5566b714294860fbb1877670f9a3b985d406f3acd7",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/config.json": "dfbff1ca593d43ec459bf18261434963ffcdc7a00dd5193805a9a92db41c9934",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/summary.json": "23119e57694a4d71a99c1c1a285df67b0c3d51f8f6c95ecf5ba05af4c8e6c381",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/training.csv": "e8a3b0d106653f350eaaf72b508e26030092e81965d9e4823fe32922487f9883",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/config.json": "9c6ee4f922ce786e981a7972ba60467e384a64a35656ada32f169a29e5caffdf",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/summary.json": "005981bd22f51284052db6c270dbfdb4612affc4f8679ef7328b0f5b4f321823",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/training.csv": "9df664b2a7746d5447279bf847137b51f45cd1120d6b48b1c68783791d44bb82",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/config.json": "0bf52379b016f9b96b99a93ed7ec1ce4ea62e2386dd0ebf59f713d94238a0606",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/summary.json": "d7d99263897980790bcd032a3df65e2e59de86333eb6ece20438785c09c6e8f4",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/training.csv": "617b6e460ff689b23309c4deb795aeb47168dd6157eca6394b70c9b8e1f91cd6",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/config.json": "658c537bd87a0e3c232658606ff48f83d44ef0a1ba31e6f9fc69ef99d2dad5c5",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/summary.json": "f57327ab9b6abc0fc487a6c370dbecba4f7a282eb262872c9822b9edd2271e62",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/training.csv": "ba4ddf71e8da7ade4e7bdb71a870b00a5d0f180c560f29eeb8196b4ff7ce5414",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/config.json": "2f20cb9c6d23f73539dc33eebeaf02518132fd85fc1de1a32e15755e918f314a",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/summary.json": "478698a165b48f43d7f45176ec22fde9fb46b9fccc853ce2230cf33694f6fa65",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/training.csv": "5870413359f64a35cf5c81faf6bbdd89f0e6cd66418455f83b944647e92fbf3d",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/config.json": "e9b0ededea605aecf85e5b14fc43be22051529e51832a40f5b2531c0a4fe5c87",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/summary.json": "f73a693713f196e15bf8fba9664c70073ac07cb1fe66f5190abcb0ec731c9520",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/training.csv": "0781526a846f084c788bf999d5b87281e5ec574281c03f988d43457033f89e27",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/config.json": "cfa514e8589d68d93fe5436931394e8833a8ab6ee5cdb3913b4bd49c0ea0c5ef",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/summary.json": "82e19037ad91f7d8e0b373d6785065e791af7c2fb3f49ebc83306008d578b3c4",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/training.csv": "ea5783c40b09e75893c0e18a9ac308cec732433217b16f97a1f1678fdd5316a0",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/config.json": "918b716f4f55530245c8ea0062ab56fb2d0831e35574dc3b365b3730fef2d605",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/summary.json": "c7bd5ebcd1d8293eaf4bc1ab8e263dc3ee222bd36b0a60d401ba0cdc76d8ee93",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/training.csv": "8010896a07ebcf18bc8748ffea5bb6472cf234577838497b0bf02542ead9c924",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/training_manifest.json": "0311c648fc1570843daf659f5e45ad27cceb967a9265710d03bd45c60a5e31e2",
+    "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/teachers/bounded_gain01_dagger1/teacher_train_dagger.npz": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92"
+  },
+  "new_evaluation_runs": 0,
+  "new_training_runs": 0,
+  "replay_probes": [
+    {
+      "agent_source": "src/models/gcn_ddpg.py",
+      "emitted_rows": 314,
+      "emitted_windows_with_discontinuous_observed_state": 153,
+      "horizon_counts": {
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "4": 290
+      },
+      "independent_recurrence_matches": true,
+      "loader_reported_rows": 314,
+      "pending_tail": 0,
+      "scope": "numeric replay insertion only; no environment steps or network updates"
+    },
+    {
+      "agent_source": "src/baselines/flat_ddpg.py",
+      "emitted_rows": 314,
+      "emitted_windows_with_discontinuous_observed_state": 153,
+      "horizon_counts": {
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "4": 290
+      },
+      "independent_recurrence_matches": true,
+      "loader_reported_rows": 314,
+      "pending_tail": 0,
+      "scope": "numeric replay insertion only; no environment steps or network updates"
+    }
+  ],
+  "runs": [
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.3811225698487115,
+            "first_episode_mean": 0.45724314336593336,
+            "last_episode_mean": 0.18792862731676835,
+            "max_episode_mean": 0.5862590533036453,
+            "min_episode_mean": 0.18792862731676835
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.009943178488890855,
+            "first_episode_mean": 0.006714804595013937,
+            "last_episode_mean": 0.007630951165293272,
+            "max_episode_mean": 0.015081149875186384,
+            "min_episode_mean": 0.006040226175593069
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 0.00012841034276824266,
+            "first_episode_mean": 6.58857127641218e-05,
+            "last_episode_mean": 0.0001439890214756955,
+            "max_episode_mean": 0.0001785573365570879,
+            "min_episode_mean": 6.58857127641218e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.05234691244693329,
+            "first_episode_mean": 0.05094263817255314,
+            "last_episode_mean": 0.05273138459485311,
+            "max_episode_mean": 0.05828419829217287,
+            "min_episode_mean": 0.0477617340019116
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.11274639423076921,
+            "first_episode_mean": 0.002403846153846154,
+            "last_episode_mean": 0.1388221153846154,
+            "max_episode_mean": 0.16526442307692307,
+            "min_episode_mean": 0.002403846153846154
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5554447115384615,
+            "first_episode_mean": 0.018629807692307692,
+            "last_episode_mean": 0.7512019230769231,
+            "max_episode_mean": 0.7512019230769231,
+            "min_episode_mean": 0.018629807692307692
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 2.8281568597689185e-05,
+            "first_episode_mean": 5.074787290700792e-06,
+            "last_episode_mean": 2.635897278826003e-05,
+            "max_episode_mean": 3.5238180806537945e-05,
+            "min_episode_mean": 5.074787290700792e-06
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.0003473953848925008,
+            "first_episode_mean": 1.5107588630049396e-05,
+            "last_episode_mean": 0.000604052047034801,
+            "max_episode_mean": 0.000604052047034801,
+            "min_episode_mean": 1.5107588630049396e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.0001876298767043388,
+            "first_episode_mean": 0.0017693937649072215,
+            "last_episode_mean": 0.000222629129080605,
+            "max_episode_mean": 0.0017693937649072215,
+            "min_episode_mean": 3.563427351484559e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.006831577348504932,
+            "first_episode_mean": 0.006828749337448523,
+            "last_episode_mean": 0.006471530086575792,
+            "max_episode_mean": 0.007584753088079966,
+            "min_episode_mean": 0.006179573963611172
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 10
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.3406970239860507,
+            "first_episode_mean": 0.374399157670828,
+            "last_episode_mean": 0.16737907895675072,
+            "max_episode_mean": 0.5140665001594104,
+            "min_episode_mean": 0.16737907895675072
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.008399287245791549,
+            "first_episode_mean": 0.004815700016199396,
+            "last_episode_mean": 0.0058915726997209,
+            "max_episode_mean": 0.013180757093673142,
+            "min_episode_mean": 0.004184877717097362
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 0.00011708452463687116,
+            "first_episode_mean": 8.122471270920729e-05,
+            "last_episode_mean": 9.361080149644225e-05,
+            "max_episode_mean": 0.00014802935538682505,
+            "min_episode_mean": 8.050881470248547e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.05382125378514712,
+            "first_episode_mean": 0.05630662277914011,
+            "last_episode_mean": 0.052552241688737504,
+            "max_episode_mean": 0.059048617545228735,
+            "min_episode_mean": 0.04957761615514755
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.11057091346153847,
+            "first_episode_mean": 0.0030048076923076925,
+            "last_episode_mean": 0.1580528846153846,
+            "max_episode_mean": 0.16706730769230768,
+            "min_episode_mean": 0.0030048076923076925
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5555108173076924,
+            "first_episode_mean": 0.01141826923076923,
+            "last_episode_mean": 0.7361778846153846,
+            "max_episode_mean": 0.7614182692307693,
+            "min_episode_mean": 0.01141826923076923
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 2.709387959656012e-05,
+            "first_episode_mean": 2.1367525190586234e-06,
+            "last_episode_mean": 2.7131292671793533e-05,
+            "max_episode_mean": 3.5768081313737916e-05,
+            "min_episode_mean": 2.1367525190586234e-06
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.00038009843039122,
+            "first_episode_mean": 1.4864526903661648e-05,
+            "last_episode_mean": 0.0006424272027774814,
+            "max_episode_mean": 0.0006424272027774814,
+            "min_episode_mean": 1.4864526903661648e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.000239209430528302,
+            "first_episode_mean": 0.0010499272510545552,
+            "last_episode_mean": 0.00029860652425930733,
+            "max_episode_mean": 0.0010499272510545552,
+            "min_episode_mean": 7.259520123498602e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.008434826899140787,
+            "first_episode_mean": 0.009549283780730687,
+            "last_episode_mean": 0.008384586240236577,
+            "max_episode_mean": 0.009724063637594763,
+            "min_episode_mean": 0.007519963269050305
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 11
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.36539505964001784,
+            "first_episode_mean": 0.3978827183063214,
+            "last_episode_mean": 0.18749575603466767,
+            "max_episode_mean": 0.5593205105799895,
+            "min_episode_mean": 0.1773731318803934
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.009699799121456007,
+            "first_episode_mean": 0.005438002829368298,
+            "last_episode_mean": 0.007380535933547295,
+            "max_episode_mean": 0.018042890596776627,
+            "min_episode_mean": 0.005438002829368298
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 0.00011321953873387148,
+            "first_episode_mean": 8.155295446298484e-05,
+            "last_episode_mean": 9.469232222377636e-05,
+            "max_episode_mean": 0.00015212752959296966,
+            "min_episode_mean": 7.729745087859695e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.051268651422399725,
+            "first_episode_mean": 0.05042858350162323,
+            "last_episode_mean": 0.05024993390991138,
+            "max_episode_mean": 0.055404545166171514,
+            "min_episode_mean": 0.04680349183483766
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.11742187499999998,
+            "first_episode_mean": 0.002403846153846154,
+            "last_episode_mean": 0.16045673076923078,
+            "max_episode_mean": 0.17487980769230768,
+            "min_episode_mean": 0.002403846153846154
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5563882211538462,
+            "first_episode_mean": 0.0078125,
+            "last_episode_mean": 0.7518028846153846,
+            "max_episode_mean": 0.7590144230769231,
+            "min_episode_mean": 0.0078125
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 3.4441522009755176e-05,
+            "first_episode_mean": 1.8696582016603386e-06,
+            "last_episode_mean": 3.015286249417561e-05,
+            "max_episode_mean": 4.300638556742342e-05,
+            "min_episode_mean": 1.8696582016603386e-06
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.0003470962365197101,
+            "first_episode_mean": 1.3599647312035296e-05,
+            "last_episode_mean": 0.0005911010824972523,
+            "max_episode_mean": 0.0005911010824972523,
+            "min_episode_mean": 1.3599647312035296e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.00019361548386297723,
+            "first_episode_mean": 0.001247534447438411,
+            "last_episode_mean": 0.00022367775843489513,
+            "max_episode_mean": 0.001247534447438411,
+            "min_episode_mean": 4.023224782383313e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.006851253353793603,
+            "first_episode_mean": 0.007159179560123728,
+            "last_episode_mean": 0.006622878064473088,
+            "max_episode_mean": 0.007626863303952492,
+            "min_episode_mean": 0.00627830855620022
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 12
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.3911567188713413,
+            "first_episode_mean": 0.4828469283305682,
+            "last_episode_mean": 0.20097826077387884,
+            "max_episode_mean": 0.6216169549868658,
+            "min_episode_mean": 0.1829170137643814
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.009841451414529448,
+            "first_episode_mean": 0.00575667031807825,
+            "last_episode_mean": 0.007291119474057968,
+            "max_episode_mean": 0.017759568953456786,
+            "min_episode_mean": 0.0056294551737105045
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 0.00011093851591593964,
+            "first_episode_mean": 7.897409237172654e-05,
+            "last_episode_mean": 9.293170830040672e-05,
+            "max_episode_mean": 0.0001590265562229503,
+            "min_episode_mean": 7.31642902652451e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.051543834746743615,
+            "first_episode_mean": 0.05278216517315461,
+            "last_episode_mean": 0.0506922949392062,
+            "max_episode_mean": 0.055990090450415246,
+            "min_episode_mean": 0.04619789983217533
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.11399038461538462,
+            "first_episode_mean": 0.002403846153846154,
+            "last_episode_mean": 0.15384615384615385,
+            "max_episode_mean": 0.17067307692307693,
+            "min_episode_mean": 0.002403846153846154
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5555528846153845,
+            "first_episode_mean": 0.019831730769230768,
+            "last_episode_mean": 0.7289663461538461,
+            "max_episode_mean": 0.7716346153846154,
+            "min_episode_mean": 0.019831730769230768
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 2.8757502174567686e-05,
+            "first_episode_mean": 1.8696582978568936e-06,
+            "last_episode_mean": 3.0927121000646505e-05,
+            "max_episode_mean": 3.524067133534677e-05,
+            "min_episode_mean": 1.8696582978568936e-06
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.0003769153324344774,
+            "first_episode_mean": 1.5756948741735303e-05,
+            "last_episode_mean": 0.0006479571865877771,
+            "max_episode_mean": 0.0006479571865877771,
+            "min_episode_mean": 1.5756948741735303e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.00017110309270011018,
+            "first_episode_mean": 0.0007850885646886773,
+            "last_episode_mean": 0.0002236710345143295,
+            "max_episode_mean": 0.0007850885646886773,
+            "min_episode_mean": 3.7933302584528625e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.006609760418247717,
+            "first_episode_mean": 0.006825792012163079,
+            "last_episode_mean": 0.006556554607903728,
+            "max_episode_mean": 0.007470698848080177,
+            "min_episode_mean": 0.005978327289295311
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 13
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.41278378224143625,
+            "first_episode_mean": 0.4856887482679807,
+            "last_episode_mean": 0.19344247247164065,
+            "max_episode_mean": 0.6514567182614253,
+            "min_episode_mean": 0.1891143906574983
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.010157037291411635,
+            "first_episode_mean": 0.006717773870779918,
+            "last_episode_mean": 0.009062121998375425,
+            "max_episode_mean": 0.014523340093616683,
+            "min_episode_mean": 0.00618883968071224
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 0.00012287098430682327,
+            "first_episode_mean": 6.673306976468806e-05,
+            "last_episode_mean": 0.0001051528050503783,
+            "max_episode_mean": 0.00016340297588612884,
+            "min_episode_mean": 6.673306976468806e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.05303143586676854,
+            "first_episode_mean": 0.04953791946172714,
+            "last_episode_mean": 0.05201376430117167,
+            "max_episode_mean": 0.05839699148558653,
+            "min_episode_mean": 0.04863390885293484
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.1003966346153846,
+            "first_episode_mean": 0.001201923076923077,
+            "last_episode_mean": 0.12800480769230768,
+            "max_episode_mean": 0.1502403846153846,
+            "min_episode_mean": 0.001201923076923077
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5557451923076924,
+            "first_episode_mean": 0.020432692307692308,
+            "last_episode_mean": 0.7439903846153846,
+            "max_episode_mean": 0.7596153846153846,
+            "min_episode_mean": 0.020432692307692308
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 3.340389179321882e-05,
+            "first_episode_mean": 7.211539083912682e-06,
+            "last_episode_mean": 3.436030174970465e-05,
+            "max_episode_mean": 4.419050404836665e-05,
+            "min_episode_mean": 7.211539083912682e-06
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.00039141344540137693,
+            "first_episode_mean": 1.633814138072336e-05,
+            "last_episode_mean": 0.0006620975340668767,
+            "max_episode_mean": 0.0006620975340668767,
+            "min_episode_mean": 1.633814138072336e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.00021490547291741916,
+            "first_episode_mean": 0.0010492816347078408,
+            "last_episode_mean": 0.0002597954710162972,
+            "max_episode_mean": 0.0010492816347078408,
+            "min_episode_mean": 6.144108032602756e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.005051897133324439,
+            "first_episode_mean": 0.0049885355580884675,
+            "last_episode_mean": 0.005014068124672541,
+            "max_episode_mean": 0.005546057543072563,
+            "min_episode_mean": 0.004608502781663377
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 14
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.3429132719882406,
+            "first_episode_mean": 0.38746180213414705,
+            "last_episode_mean": 0.254335448718988,
+            "max_episode_mean": 0.4712315098597453,
+            "min_episode_mean": 0.21864673953789932
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.011568024825280118,
+            "first_episode_mean": 0.0012945837224833667,
+            "last_episode_mean": 0.028159179778483052,
+            "max_episode_mean": 0.02820681750129622,
+            "min_episode_mean": 0.0012945837224833667
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 5.590365226225913e-05,
+            "first_episode_mean": 5.392300532163902e-05,
+            "last_episode_mean": 6.375615127860958e-05,
+            "max_episode_mean": 6.779995923212622e-05,
+            "min_episode_mean": 4.411431384946459e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.012096589508717162,
+            "first_episode_mean": 0.012286853295965837,
+            "last_episode_mean": 0.012132369483319612,
+            "max_episode_mean": 0.013489920269841185,
+            "min_episode_mean": 0.011191562283784151
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.08705528846153845,
+            "first_episode_mean": 0.002403846153846154,
+            "last_episode_mean": 0.1015625,
+            "max_episode_mean": 0.1310096153846154,
+            "min_episode_mean": 0.002403846153846154
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5554447115384615,
+            "first_episode_mean": 0.018629807692307692,
+            "last_episode_mean": 0.7512019230769231,
+            "max_episode_mean": 0.7512019230769231,
+            "min_episode_mean": 0.018629807692307692
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 1.571498818564648e-05,
+            "first_episode_mean": 3.872863229704448e-06,
+            "last_episode_mean": 1.1957983343353799e-05,
+            "max_episode_mean": 2.7541844386947698e-05,
+            "min_episode_mean": 3.872863229704448e-06
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.0003243002936110463,
+            "first_episode_mean": 4.933971542602169e-05,
+            "last_episode_mean": 0.0005699836253869512,
+            "max_episode_mean": 0.0005699836253869512,
+            "min_episode_mean": 4.933971542602169e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.00044400782435821256,
+            "first_episode_mean": 0.019411595744145416,
+            "last_episode_mean": 0.00030809204623402853,
+            "max_episode_mean": 0.019411595744145416,
+            "min_episode_mean": 5.5012861001666984e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.009601593112143187,
+            "first_episode_mean": 0.012721321939562377,
+            "last_episode_mean": 0.00858850023136116,
+            "max_episode_mean": 0.012936320943901172,
+            "min_episode_mean": 0.007820530687100612
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 10
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.4424958204191464,
+            "first_episode_mean": 0.6602886456709641,
+            "last_episode_mean": 0.27227244411523527,
+            "max_episode_mean": 0.6775361139040726,
+            "min_episode_mean": 0.24345377460122108
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.013343151426278595,
+            "first_episode_mean": 0.002152020980317432,
+            "last_episode_mean": 0.02077386170052565,
+            "max_episode_mean": 0.037801971265043206,
+            "min_episode_mean": 0.002152020980317432
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 5.500803309670434e-05,
+            "first_episode_mean": 7.324452046147529e-05,
+            "last_episode_mean": 5.046260086881095e-05,
+            "max_episode_mean": 7.324452046147529e-05,
+            "min_episode_mean": 4.4357688282686395e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.013133668657392262,
+            "first_episode_mean": 0.014455435940852532,
+            "last_episode_mean": 0.01235631126194046,
+            "max_episode_mean": 0.014455435940852532,
+            "min_episode_mean": 0.011997081196078887
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.08161658653846153,
+            "first_episode_mean": 0.001201923076923077,
+            "last_episode_mean": 0.0907451923076923,
+            "max_episode_mean": 0.11478365384615384,
+            "min_episode_mean": 0.001201923076923077
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5555108173076924,
+            "first_episode_mean": 0.01141826923076923,
+            "last_episode_mean": 0.7361778846153846,
+            "max_episode_mean": 0.7614182692307693,
+            "min_episode_mean": 0.01141826923076923
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 1.4856449454765214e-05,
+            "first_episode_mean": 9.348291489284468e-07,
+            "last_episode_mean": 2.287549045831838e-05,
+            "max_episode_mean": 2.3880749845025443e-05,
+            "min_episode_mean": 9.348291489284468e-07
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.0003336459580458964,
+            "first_episode_mean": 4.925792784350901e-05,
+            "last_episode_mean": 0.0006147576940127916,
+            "max_episode_mean": 0.0006147576940127916,
+            "min_episode_mean": 4.925792784350901e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.0006771370907967019,
+            "first_episode_mean": 0.04515601988412772,
+            "last_episode_mean": 0.00031186833491749264,
+            "max_episode_mean": 0.04515601988412772,
+            "min_episode_mean": 4.6475408752236e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.007533168401569127,
+            "first_episode_mean": 0.009482877597642632,
+            "last_episode_mean": 0.006611558250509775,
+            "max_episode_mean": 0.00976203579025773,
+            "min_episode_mean": 0.006128875762582398
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 11
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": -0.048936774559999605,
+            "first_episode_mean": -0.763917340682103,
+            "last_episode_mean": 0.1571631910136113,
+            "max_episode_mean": 0.16399796679615974,
+            "min_episode_mean": -0.7719938823809991
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.007363581583329226,
+            "first_episode_mean": 0.005951412778813392,
+            "last_episode_mean": 0.00673419945479299,
+            "max_episode_mean": 0.01721295420653545,
+            "min_episode_mean": 0.0030756680644117296
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 5.345995167855423e-05,
+            "first_episode_mean": 6.494710316054316e-05,
+            "last_episode_mean": 4.983862066427928e-05,
+            "max_episode_mean": 7.255709942035956e-05,
+            "min_episode_mean": 3.997951596200157e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.011920959160734828,
+            "first_episode_mean": 0.01236080496500318,
+            "last_episode_mean": 0.011498768957188496,
+            "max_episode_mean": 0.012924431536633234,
+            "min_episode_mean": 0.010740925880292287
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.0802764423076923,
+            "first_episode_mean": 0.0006009615384615385,
+            "last_episode_mean": 0.10877403846153846,
+            "max_episode_mean": 0.11838942307692307,
+            "min_episode_mean": 0.0006009615384615385
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5563882211538462,
+            "first_episode_mean": 0.0078125,
+            "last_episode_mean": 0.7518028846153846,
+            "max_episode_mean": 0.7590144230769231,
+            "min_episode_mean": 0.0078125
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 2.1632215923852107e-05,
+            "first_episode_mean": 1.3354698379631512e-07,
+            "last_episode_mean": 2.1968590422497633e-05,
+            "max_episode_mean": 3.879540752048062e-05,
+            "min_episode_mean": 1.3354698379631512e-07
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.00027835895321937375,
+            "first_episode_mean": 4.7164729006830886e-05,
+            "last_episode_mean": 0.0005146504623908973,
+            "max_episode_mean": 0.0005146504623908973,
+            "min_episode_mean": 4.7164729006830886e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.0005109343519164119,
+            "first_episode_mean": 0.031676314237599326,
+            "last_episode_mean": 0.00024649523830624697,
+            "max_episode_mean": 0.031676314237599326,
+            "min_episode_mean": 3.3416867290397404e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.008931106003538634,
+            "first_episode_mean": 0.011096556259032626,
+            "last_episode_mean": 0.007682804448100237,
+            "max_episode_mean": 0.012207684250405202,
+            "min_episode_mean": 0.007219798809203964
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 12
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.40820120725207604,
+            "first_episode_mean": 0.6373008673007672,
+            "last_episode_mean": 0.2826831999879617,
+            "max_episode_mean": 0.6373008673007672,
+            "min_episode_mean": 0.23551861884502265
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.012308034224373002,
+            "first_episode_mean": 0.0018175609091905733,
+            "last_episode_mean": 0.025035326942228354,
+            "max_episode_mean": 0.02695507724554493,
+            "min_episode_mean": 0.0018175609091905733
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 5.561838813640371e-05,
+            "first_episode_mean": 6.933918935968765e-05,
+            "last_episode_mean": 5.256925796332395e-05,
+            "max_episode_mean": 6.98925401033753e-05,
+            "min_episode_mean": 4.540072345312533e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.01188434594579471,
+            "first_episode_mean": 0.012808412743302492,
+            "last_episode_mean": 0.011433380799224744,
+            "max_episode_mean": 0.012868530618456693,
+            "min_episode_mean": 0.010754665109114004
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.08588942307692307,
+            "first_episode_mean": 0.0006009615384615385,
+            "last_episode_mean": 0.11177884615384616,
+            "max_episode_mean": 0.12319711538461539,
+            "min_episode_mean": 0.0006009615384615385
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5555528846153845,
+            "first_episode_mean": 0.019831730769230768,
+            "last_episode_mean": 0.7289663461538461,
+            "max_episode_mean": 0.7716346153846154,
+            "min_episode_mean": 0.019831730769230768
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 2.4484484971699557e-05,
+            "first_episode_mean": 2.6709402356153496e-06,
+            "last_episode_mean": 2.3717362060219435e-05,
+            "max_episode_mean": 6.40803095585887e-05,
+            "min_episode_mean": 2.6709402356153496e-06
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.0002388598015030326,
+            "first_episode_mean": 4.99528328052622e-05,
+            "last_episode_mean": 0.0004730891956375725,
+            "max_episode_mean": 0.0004730891956375725,
+            "min_episode_mean": 4.99528328052622e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.0008319207543913044,
+            "first_episode_mean": 0.06760723045969777,
+            "last_episode_mean": 0.0002001008179665685,
+            "max_episode_mean": 0.06760723045969777,
+            "min_episode_mean": 2.6777049432470132e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.009276018232160893,
+            "first_episode_mean": 0.010605041582423907,
+            "last_episode_mean": 0.009184641441187033,
+            "max_episode_mean": 0.011407831862855416,
+            "min_episode_mean": 0.007925291885980047
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 13
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "heuristic_pretrain_samples": 1040,
+      "logged_but_not_verified_cache_generation_metadata": {
+        "advantage_distillation_candidate_groups": "specimen_transfer|reagent_transfer|capacity_transfer|combined_routing_network",
+        "advantage_distillation_epsilons": "0.32|0.48|0.64|0.8|1",
+        "advantage_distillation_lookahead": 52
+      },
+      "losses": {
+        "aggregation": "arithmetic average of 100 persisted episode means; equal update counts checked",
+        "metrics": {
+          "actor_loss": {
+            "episode_mean_average": 0.3937527624431711,
+            "first_episode_mean": 0.4467833156769092,
+            "last_episode_mean": 0.26306586827223116,
+            "max_episode_mean": 0.5885325028346136,
+            "min_episode_mean": 0.23955968710092398
+          },
+          "critic_bellman_loss": {
+            "episode_mean_average": 0.015552779961278877,
+            "first_episode_mean": 0.0029714015478160805,
+            "last_episode_mean": 0.029749856151353855,
+            "max_episode_mean": 0.03870365584197526,
+            "min_episode_mean": 0.0029714015478160805
+          },
+          "critic_teacher_advantage_weighted_ranking_loss": {
+            "episode_mean_average": 6.260643315674595e-05,
+            "first_episode_mean": 5.7631203879701876e-05,
+            "last_episode_mean": 7.080345596058088e-05,
+            "max_episode_mean": 7.873200864266367e-05,
+            "min_episode_mean": 4.8459895791753435e-05
+          },
+          "imitation_loss": {
+            "episode_mean_average": 0.012145301594685479,
+            "first_episode_mean": 0.0120506975083397,
+            "last_episode_mean": 0.011777059389994694,
+            "max_episode_mean": 0.013474224099459557,
+            "min_episode_mean": 0.011147649654258903
+          },
+          "online_advantage_self_imitation_active_fraction": {
+            "episode_mean_average": 0.08870793269230769,
+            "first_episode_mean": 0.0,
+            "last_episode_mean": 0.1141826923076923,
+            "max_episode_mean": 0.1388221153846154,
+            "min_episode_mean": 0.0
+          },
+          "online_advantage_self_imitation_eligible_fraction": {
+            "episode_mean_average": 0.5557451923076924,
+            "first_episode_mean": 0.020432692307692308,
+            "last_episode_mean": 0.7439903846153846,
+            "max_episode_mean": 0.7596153846153846,
+            "min_episode_mean": 0.020432692307692308
+          },
+          "online_advantage_self_imitation_weighted_loss": {
+            "episode_mean_average": 2.461674487576077e-05,
+            "first_episode_mean": 0.0,
+            "last_episode_mean": 2.8225955212782046e-05,
+            "max_episode_mean": 3.461761193298466e-05,
+            "min_episode_mean": 0.0
+          },
+          "pretrain_reference_parameter_drift_rms": {
+            "episode_mean_average": 0.00030206275729578323,
+            "first_episode_mean": 4.804979170935088e-05,
+            "last_episode_mean": 0.000541210384424075,
+            "max_episode_mean": 0.000541210384424075,
+            "min_episode_mean": 4.804979170935088e-05
+          },
+          "pretrain_reference_weighted_loss": {
+            "episode_mean_average": 0.0005431368228988511,
+            "first_episode_mean": 0.031167177250123447,
+            "last_episode_mean": 0.00023789528678609993,
+            "max_episode_mean": 0.031167177250123447,
+            "min_episode_mean": 4.876104634595672e-05
+          },
+          "residual_l2_loss": {
+            "episode_mean_average": 0.009607902404207452,
+            "first_episode_mean": 0.011820564046502113,
+            "last_episode_mean": 0.008464297960297419,
+            "max_episode_mean": 0.012823823015563764,
+            "min_episode_mean": 0.008129521452177029
+          }
+        },
+        "not_measured": [
+          "gradient norms",
+          "gradient interference",
+          "causal loss ablations",
+          "per-minibatch online fraction"
+        ],
+        "online_actor_updates": 2600,
+        "online_critic_updates": 5200
+      },
+      "pretrain_checks": {
+        "advantage_distillation_replay_transitions": 314,
+        "critic_teacher_advantage_excluded_samples": 0,
+        "critic_teacher_advantage_samples": 314,
+        "offline_rl_actor_updated_mean": 0,
+        "offline_rl_updates": 500
+      },
+      "seed": 14
+    }
+  ],
+  "status": "completed_with_methodology_findings",
+  "teacher": {
+    "best_option_groups": {
+      "anchor": 29,
+      "combined_routing_network": 42,
+      "reagent_transfer": 89,
+      "specimen_transfer": 154
+    },
+    "best_option_outside_anchor_or_specimen": 131,
+    "cached_reward_min_mean_max": [
+      -125730528.0,
+      -54684496.0,
+      -616025.1875
+    ],
+    "critic_target_mean": 0.00262347306124866,
+    "critic_target_positive_fraction": 0.9076433121019108,
+    "improved_rows": 285,
+    "label_horizon_serialized_in_cache": false,
+    "limitation": "observed-state continuity is necessary but not sufficient for full simulator-state continuity",
+    "nonterminal_adjacent_pairs": 306,
+    "nonterminal_state_discontinuities": 153,
+    "options": [
+      {
+        "epsilon": 0.0,
+        "group": "anchor",
+        "sign": 0.0
+      },
+      {
+        "epsilon": 0.05000000074505806,
+        "group": "specimen_transfer",
+        "sign": 1.0
+      },
+      {
+        "epsilon": 0.05000000074505806,
+        "group": "specimen_transfer",
+        "sign": -1.0
+      },
+      {
+        "epsilon": 0.10000000149011612,
+        "group": "specimen_transfer",
+        "sign": 1.0
+      },
+      {
+        "epsilon": 0.10000000149011612,
+        "group": "specimen_transfer",
+        "sign": -1.0
+      },
+      {
+        "epsilon": 0.05000000074505806,
+        "group": "reagent_transfer",
+        "sign": 1.0
+      },
+      {
+        "epsilon": 0.05000000074505806,
+        "group": "reagent_transfer",
+        "sign": -1.0
+      },
+      {
+        "epsilon": 0.10000000149011612,
+        "group": "reagent_transfer",
+        "sign": 1.0
+      },
+      {
+        "epsilon": 0.10000000149011612,
+        "group": "reagent_transfer",
+        "sign": -1.0
+      },
+      {
+        "epsilon": 0.05000000074505806,
+        "group": "combined_routing_network",
+        "sign": 1.0
+      },
+      {
+        "epsilon": 0.05000000074505806,
+        "group": "combined_routing_network",
+        "sign": -1.0
+      },
+      {
+        "epsilon": 0.10000000149011612,
+        "group": "combined_routing_network",
+        "sign": 1.0
+      },
+      {
+        "epsilon": 0.10000000149011612,
+        "group": "combined_routing_network",
+        "sign": -1.0
+      }
+    ],
+    "rows": 314,
+    "states_shape": [
+      314,
+      561
+    ],
+    "terminal_rows": 8
+  },
+  "teacher_sha256_verified": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92",
+  "training_commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693"
+}

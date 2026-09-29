@@ -549,8 +549,15 @@ L_Q &= \frac{1}{B}\sum_{i=1}^{B}
 For newly collected online items, $R_i$ is a discounted, scaled sum of at most
 four one-step anchor-relative rewards and $\kappa_i=\gamma^{n_i}$, with
 $n_i\leq4$; short episode tails are flushed without crossing resets. Offline
-replay items retain their serialized transition metadata rather than being
-retroactively converted into four-step online items. The actor objective is
+replay instead contains one-step absolute-reward heuristic transitions and
+cached teacher transitions inserted through the multi-step queue. Those
+cached rewards are not converted to anchor-relative rewards. Both sources
+remain in the uniformly sampled replay buffer; the consistency limitations
+of this mixture are reported in Section~\ref{sec:conclusion}.
+The teacher term called ``ranking'' in the implementation is pointwise MSE
+between $Q(X,a^{\mathrm{teacher}})-Q(X,a^{\mathrm{anc}})$ and the scaled
+nonnegative best feasible teacher advantage; its optional pairwise and
+margin penalties are disabled here. The actor objective is
 \begin{align}
 L_\mu={}&-\frac{1}{B}\sum_{i=1}^{B}
  Q\!\left(X_i,\mathcal{Q}_{\mathrm{ST}}(a^{\mathrm{soft}}_\theta(X_i))\right)
@@ -571,8 +578,12 @@ on those items. The executed weights are
 $\lambda_{\mathrm{rank}}=3$, $\lambda_{\mathrm{AFD}}=1$,
 $\lambda_{\mathrm{ref}}=500$, $\lambda_{\mathrm{SI}}=1$, and $\lambda_2=0.05$.
 Their numerical magnitudes alone do not establish their relative gradient
-contributions. Actor updates occur every second eligible critic update after
-the configured 500-update critic warm-up; target networks use $\tau=0.005$.
+contributions. The 500 offline critic updates consume the configured
+500-update actor warm-up; online logs then record an actor update every second
+critic update, totaling 5,200 critic and 2,600 actor updates per run. Target
+networks use $\tau=0.005$. A separate 100-update pre-online critic calibration
+combines Bellman fitting and teacher advantage regression with weight 10;
+the discount-convention limitation of that helper is discussed below.
 
 \subsection*{Advantage-filtered residual initialization and deployment}
 The useful residual corrections in AFR-GCN--DDPG are sparse because the MDL-2 anchor is already
@@ -1515,10 +1526,10 @@ noninferior material headroom.
 This study develops a patient-condition and geography-aware simulation of a
 20-clinic PRM network, including identity-preserving pre-manufacturing specimen
 routing, and a residual GCN--DDPG controller that learns around a
-strong MDL-2 anchor. Advantage-filtered distillation identifies sparse
-state-dependent corrections, while checkpoint selection, residual-scale
-calibration, and fallback prevent an unsupported correction from being
-deployed. This structure preserves the interpretability of the anchor while
+strong MDL-2 anchor. Advantage-filtered distillation identifies
+state-dependent corrections. Checkpoint, residual-scale, and fallback options
+were examined during development; formal comparisons fix deployment in
+advance and do not exercise automatic fallback. This structure preserves the interpretability of the anchor while
 allowing the graph actor to respond to patient pressure, transfer pipelines,
 regional disruptions, and demand-prior drift.
 
@@ -1580,7 +1591,25 @@ control, not by itself evidence for updating neural policy parameters. Future
 attribution studies must compare online updates against a competent frozen,
 history-aware policy as well as adaptive non-RL alternatives.
 
-Several limitations remain. The routing-primary DDPG comparison has five
+An additional source-and-cache audit limits interpretation of the online
+null result. Historical replay mixes absolute-cost offline targets with
+anchor-relative online targets. Reconstructing the cached-teacher insertion
+path also identifies 153 of 314 multi-step windows with discontinuous adjacent
+observations: independently generated one-step teacher counterfactuals were
+joined as if they formed a trajectory. The separate pre-online calibration
+helper uses a one-step bootstrap discount even for multi-step cached items.
+Furthermore, 131 of 314 best feasible teacher options have reagent or combined
+group labels outside the actor's specimen-only correction set, without group
+filtering in that critic supervision. These are limitations of the executed
+training procedure, not demonstrated causes of the endpoint null and not
+grounds for silently replacing the original results. The archived teacher
+cache also lacks generation-horizon metadata; echoed training-call settings
+are not an independent provenance check. Future learning studies should first
+verify consistent reward and discount semantics, actual trajectory adjacency,
+teacher support, and cached-label provenance. Positive online-update value
+after those corrections remains untested by this audit.
+
+Several further limitations remain. The routing-primary DDPG comparison has five
 training seeds, but the matched TD3 and mechanism-diagnostic screens have only
 three and use development streams. The formal comparison isolates graph versus
 flat representation and policy versus MDL-2, but it does not isolate routing

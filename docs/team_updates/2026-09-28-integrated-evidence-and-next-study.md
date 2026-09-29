@@ -185,3 +185,22 @@ evaluation cost, and a straight-through request gradient is not a derivative
 of the discrete patient executor. The teacher/replay mixture and full graph
 feature-parity checks remain the next independent audit packets. No historical
 artifact or experimental outcome changed.
+
+## September 29: teacher/replay audit findings
+
+The [teacher/replay readout](../../specs/2026-09-29-formal-replay-contract/readout.md)
+checks the byte-verified teacher cache, historical data-loading functions,
+ten summaries and 1,000 training rows. Numeric replay reconstruction found
+153/314 cached multi-step windows with discontinuous adjacent observations.
+Offline absolute-reward and online anchor-relative targets share a critic;
+the pre-online calibration helper also ignores multi-step discount metadata.
+The teacher's action-group support exceeds the specimen-only actor support,
+and cached label-generation horizon cannot be verified from echoed call settings.
+
+Every run nevertheless performed 5,200 online critic and 2,600 actor updates.
+Loss coefficients alone do not show which gradient dominated. These findings
+limit the interpretation of the null result; they do not prove that fixing
+the path will improve performance. The manuscript now discloses them. No
+historical source, checkpoint, output, primary estimate or formal status changed.
+Any corrected learning campaign needs its own development protocol and fresh
+streams; it must not overwrite or retune on the completed formal comparison.

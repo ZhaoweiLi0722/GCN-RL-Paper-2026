@@ -25,7 +25,7 @@ restricted synthetic fixture, not an excuse to train DDPG or claim PRM optimalit
 | ID | Status | Deliverable and completion boundary |
 | --- | --- | --- |
 | M1 | Complete | Historical source/config audit and manuscript corrections are in `specs/2026-09-29-formal-method-contract/readout.md`. Ten configs and the historical manifest checked; 87 focused tests and full compilation pass. PDF rendering remains unavailable without a TeX engine. No dynamics changes. |
-| M2 | Pending | Audit teacher-cache metadata, offline/online replay reward semantics, critic supervision and effective loss weights against frozen code. Distinguish intended objective from actual surrogate; document limitations without rerunning historical training. |
+| M2 | Audit complete; findings open | `specs/2026-09-29-formal-replay-contract/readout.md` records mixed reward definitions, discontinuous cached multi-step windows, calibration discount mismatch, teacher support and missing label-horizon provenance. Manuscript limitations updated. No historical fixes/retraining; a corrected campaign needs separate authorization/protocol. |
 | G1 | Pending | Verify executed graph/readout and matched-flat feature access, parameter counting and available topology evidence. Add claim-to-code/evidence matrix; do not claim full-policy equivariance or topology generalization without tests. |
 | E1 | Pending | Produce a source-backed operational decision/measurement contract for recurrent qualified-personnel/support work. Separate literature-supported constraints, synthetic assumptions and missing domain inputs. No fabricated calibration or new patient-simulator experiment. |
 | C1 | Pending | Review the practical completion-only comparator gap using the existing queue evidence and information interface. Implement/test only a justified bounded software comparator if it can use the frozen fixture unchanged; otherwise document the exact missing assumption. Do not add arbitrary noise/scenarios to seek positive results. |
@@ -49,4 +49,16 @@ invent a new experimental campaign to keep the queue nonempty.
   description. A second read-only audit reproduced the JSON byte for byte.
   Eighty-seven focused tests, full compilation and `git diff --check` passed.
   No TeX engine is available, so PDF layout is not verified. No new training or
-  evaluation has been launched. M2 is the next unblocked packet.
+  evaluation has been launched. Saved in local commit `39604fd`.
+- September 29, M2: teacher hash verified; all ten summaries and 1,000 training
+  rows audited. Historical numeric GCN/flat replay insertion was reconstructed
+  without model or environment imports. Both emit 153/314 windows with
+  discontinuous adjacent observations; an independent index recurrence agrees.
+  Also documented absolute/relative reward mixing, calibration discount
+  mismatch, broader teacher support and unavailable generation-horizon metadata.
+  Logged updates and losses are not a causal explanation of the null increment.
+  Ninety-four focused tests, full compilation and diff checks passed. A second
+  audit reproduced the JSON byte for byte. No training/evaluation launched;
+  G1 is the next unblocked packet. Preserve these findings as prerequisites
+  for any future corrected development protocol, not a reason to silently
+  repair or replace the historical formal campaign.

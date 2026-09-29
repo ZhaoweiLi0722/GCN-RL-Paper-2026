@@ -1,0 +1,21 @@
+{
+  "kind": "independent_read_only_recursive_tensor_verification",
+  "report_sha256": "b7031b9e4a1ff18d090bbde58db503ed6a25f6da29e81bc653035a29d7aa0965",
+  "diagnostic_json_files_byte_equal": 13,
+  "checkpoint_files_tensor_equal": 18,
+  "source_hashes_verified": 34,
+  "continuous_resumed_full_states_equal": 6,
+  "both_binary_file_inventories_verified": true,
+  "prefix_cursor": 4,
+  "prefix_pending_records": 2,
+  "prefix_replay_windows": 2,
+  "prefix_online_updates": 1,
+  "final_cursor": 6,
+  "final_pending_records": 0,
+  "final_replay_position": 2,
+  "final_online_updates": 3,
+  "final_frozen_updates": 0,
+  "worker_stderr_empty": true,
+  "checkpoint_container_byte_equality_claimed": false,
+  "performance_comparison_performed": false
+}

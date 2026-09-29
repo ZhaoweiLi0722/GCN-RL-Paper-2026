@@ -1,0 +1,3027 @@
+{
+  "events": [
+    {
+      "deterministic_request": [
+        -0.9911929368972778,
+        0.9952203035354614,
+        0.025396782904863358,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "kernel_state_sha256": "173475293b1ef14f123d72f9ecdf85aad632d259acb3162a0231460ab9e2d248",
+      "noise": [
+        0.006286511197686195,
+        -0.006605243310332298,
+        0.03202113136649132
+      ],
+      "receipt": {
+        "clone_verified": true,
+        "execution": {
+          "at_risk_unserved": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "average_turnaround_time": 0.0,
+          "average_waiting_time": 0.0,
+          "base_cost": 2363.8,
+          "bioreactor_holding_cost": 28.8,
+          "bioreactor_shortage_cost": 0.0,
+          "bioreactor_shortage_frequency": 0.0,
+          "bioreactor_utilization": 0.0,
+          "bioreactors_released_after_cleaning": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_specimen_inbound_requests": 0.0,
+          "blocked_specimen_outbound_requests": 0.0,
+          "blocked_specimen_requests": 0.0,
+          "capacity_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "capacity_transfer_cost": 0.0,
+          "capacity_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_service_level": 0.0,
+          "cost": 2363.8,
+          "demand": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eligibility_rate": 0.0,
+          "expiry_cost": 0.0,
+          "finished_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "finished_product_return_assumption": "return_to_collection_facility",
+          "finished_product_return_lead_time_epochs": 0.0,
+          "identity_active_count": 2.0,
+          "identity_terminal_count": 0.0,
+          "in_production_patients": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "in_production_risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "manufacturing_loss_rate": 0.0,
+          "material_wasted": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patient_loss_cost": 0.0,
+          "patients_completed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_manufacturing": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_return_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_transport": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_started": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "production": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_holding_cost": 1135.0,
+          "reagent_purchase_cost": 0.0,
+          "reagent_shortage_cost": 0.0,
+          "reagent_shortage_frequency": 0.0,
+          "reagent_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_transfer_cost": 0.0,
+          "reagent_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "replenishment": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "risk_type_count_recoveries": 0.0,
+          "risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "service_level": 0.0,
+          "specimen_edge_flows": [
+            2.0,
+            0.0
+          ],
+          "specimen_in_transit": [
+            0.0,
+            2.0,
+            0.0
+          ],
+          "specimen_requested_integer_net": [
+            -2.0,
+            2.0,
+            0.0
+          ],
+          "specimen_route_cost": 1200.0,
+          "specimen_route_count": 2.0,
+          "specimen_route_count_cumulative": 2.0,
+          "specimen_route_distance_miles": 0.0,
+          "specimen_route_events": [
+            {
+              "collection_facility": 0,
+              "destination_facility": 1,
+              "distance_miles": 0.0,
+              "lead_time_epochs": 1,
+              "origin_facility": 0,
+              "patient_id": "seed0:patient00000000",
+              "route_epoch": 0,
+              "specimen_id": "seed0:patient00000000",
+              "transfer_cost": 600.0,
+              "transfer_count": 1,
+              "transport_time_hours": 0.0
+            },
+            {
+              "collection_facility": 0,
+              "destination_facility": 1,
+              "distance_miles": 0.0,
+              "lead_time_epochs": 1,
+              "origin_facility": 0,
+              "patient_id": "seed0:patient00000001",
+              "route_epoch": 0,
+              "specimen_id": "seed0:patient00000001",
+              "transfer_cost": 600.0,
+              "transfer_count": 1,
+              "transport_time_hours": 0.0
+            }
+          ],
+          "specimen_route_time_hours": 0.0,
+          "specimen_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_transfer_cost": 1200.0,
+          "specimen_transfers": [
+            -2.0,
+            2.0,
+            0.0
+          ],
+          "therapies_discarded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transferred_patient_ids": [
+            "seed0:patient00000000",
+            "seed0:patient00000001"
+          ],
+          "transit_expiry": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transit_loss": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transshipment_cost": 1200.0,
+          "under_bioreactors": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "under_reagents": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "urgency_cost": 0.0,
+          "waiting_patients": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gate": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "proposal": [
+          -0.9817572236061096,
+          0.9897801280021667,
+          0.05399567633867264,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "record": {
+          "action": [
+            -0.9908785820007324,
+            0.9948900938034058,
+            0.02699783816933632,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            10.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1666666716337204,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state_token": "a670c0b68b90efdb590f8edddf24dfb74ece83078920f902fb626d4143869d53",
+          "origin": "trajectory",
+          "raw_reward": -2363.8,
+          "semantics": {
+            "action_dim": 12,
+            "action_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/action",
+            "bootstrap_on_truncation": true,
+            "gamma": 0.9,
+            "reward_definition_id": "patient-negative-total-cost/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+            "reward_kind": "absolute_environment",
+            "reward_scale": 1e-05,
+            "state_dim": 82,
+            "state_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/actor-flat"
+          },
+          "source_id": "live-patient-collector-v1/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+          "state": [
+            0.0,
+            2.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            0.0,
+            0.0,
+            10.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "state_token": "e7063b1ad53e7f0e4b4cd54dd2e871d6d707a7d0bba3fd056a25fbd347f52c21",
+          "step_index": 0,
+          "terminated": false,
+          "trajectory_id": "n7-fixture-2-frozen",
+          "truncated": false
+        }
+      },
+      "update": null
+    },
+    {
+      "deterministic_request": [
+        0.004547692369669676,
+        0.0006797870737500489,
+        0.0262625552713871,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "kernel_state_sha256": "173475293b1ef14f123d72f9ecdf85aad632d259acb3162a0231460ab9e2d248",
+      "noise": [
+        0.010588540695607662,
+        -0.03239792585372925,
+        0.045297715812921524
+      ],
+      "receipt": {
+        "clone_verified": true,
+        "execution": {
+          "at_risk_unserved": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "average_turnaround_time": 0.0,
+          "average_waiting_time": 0.0,
+          "base_cost": 908.0,
+          "bioreactor_holding_cost": 0.0,
+          "bioreactor_shortage_cost": 0.0,
+          "bioreactor_shortage_frequency": 0.0,
+          "bioreactor_utilization": 0.5,
+          "bioreactors_released_after_cleaning": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_specimen_inbound_requests": 0.0,
+          "blocked_specimen_outbound_requests": 0.0,
+          "blocked_specimen_requests": 0.0,
+          "capacity_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "capacity_transfer_cost": 0.0,
+          "capacity_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_service_level": 0.0,
+          "cost": 908.0,
+          "demand": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eligibility_rate": 0.0,
+          "expiry_cost": 0.0,
+          "finished_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "finished_product_return_assumption": "return_to_collection_facility",
+          "finished_product_return_lead_time_epochs": 0.0,
+          "identity_active_count": 2.0,
+          "identity_terminal_count": 0.0,
+          "in_production_patients": [
+            0.0,
+            2.0,
+            0.0
+          ],
+          "in_production_risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              2.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "manufacturing_loss_rate": 0.0,
+          "material_wasted": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patient_loss_cost": 0.0,
+          "patients_completed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_manufacturing": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_return_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_transport": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_started": [
+            0.0,
+            2.0,
+            0.0
+          ],
+          "production": [
+            0.0,
+            2.0,
+            0.0
+          ],
+          "reagent_holding_cost": 908.0,
+          "reagent_purchase_cost": 0.0,
+          "reagent_shortage_cost": 0.0,
+          "reagent_shortage_frequency": 0.0,
+          "reagent_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_transfer_cost": 0.0,
+          "reagent_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "replenishment": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "risk_type_count_recoveries": 0.0,
+          "risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "service_level": 2.0,
+          "specimen_edge_flows": [
+            0.0,
+            0.0
+          ],
+          "specimen_in_transit": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_requested_integer_net": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "specimen_route_cost": 0.0,
+          "specimen_route_count": 0.0,
+          "specimen_route_count_cumulative": 2.0,
+          "specimen_route_distance_miles": 0.0,
+          "specimen_route_events": [],
+          "specimen_route_time_hours": 0.0,
+          "specimen_transfer_arrivals": [
+            0.0,
+            2.0,
+            0.0
+          ],
+          "specimen_transfer_cost": 0.0,
+          "specimen_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "therapies_discarded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transferred_patient_ids": [],
+          "transit_expiry": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transit_loss": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transshipment_cost": 0.0,
+          "under_bioreactors": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "under_reagents": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "urgency_cost": 0.0,
+          "waiting_patients": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gate": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "proposal": [
+          0.010154238902032375,
+          -0.0018802185077220201,
+          0.05705488473176956,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "record": {
+          "action": [
+            0.005077119451016188,
+            -0.0009401092538610101,
+            0.02852744236588478,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            0.0,
+            2.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.3333333432674408,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state_token": "ff0793574950849a277a19b18f1e4dd517b5af2f7410f2633994419edb08c30e",
+          "origin": "trajectory",
+          "raw_reward": -908.0,
+          "semantics": {
+            "action_dim": 12,
+            "action_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/action",
+            "bootstrap_on_truncation": true,
+            "gamma": 0.9,
+            "reward_definition_id": "patient-negative-total-cost/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+            "reward_kind": "absolute_environment",
+            "reward_scale": 1e-05,
+            "state_dim": 82,
+            "state_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/actor-flat"
+          },
+          "source_id": "live-patient-collector-v1/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+          "state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            10.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1666666716337204,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "state_token": "a670c0b68b90efdb590f8edddf24dfb74ece83078920f902fb626d4143869d53",
+          "step_index": 1,
+          "terminated": false,
+          "trajectory_id": "n7-fixture-2-frozen",
+          "truncated": false
+        }
+      },
+      "update": null
+    },
+    {
+      "deterministic_request": [
+        0.004164349753409624,
+        0.0024047987535595894,
+        0.019250115379691124,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "kernel_state_sha256": "74adaf0d096d709bbb35e4312e0e1fe5ef526914cf7c90289d48fcf3b4c3de93",
+      "noise": [
+        0.07420026510953903,
+        0.01981581188738346,
+        0.003316296497359872
+      ],
+      "receipt": {
+        "clone_verified": true,
+        "execution": {
+          "at_risk_unserved": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "average_turnaround_time": 3.0,
+          "average_waiting_time": 0.0,
+          "base_cost": 936.8,
+          "bioreactor_holding_cost": 28.8,
+          "bioreactor_shortage_cost": 0.0,
+          "bioreactor_shortage_frequency": 0.0,
+          "bioreactor_utilization": 0.3333333333333333,
+          "bioreactors_released_after_cleaning": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_specimen_inbound_requests": 0.0,
+          "blocked_specimen_outbound_requests": 0.0,
+          "blocked_specimen_requests": 0.0,
+          "capacity_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "capacity_transfer_cost": 0.0,
+          "capacity_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_service_level": 1.0,
+          "cost": 936.8,
+          "demand": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eligibility_rate": 1.0,
+          "expiry_cost": 0.0,
+          "finished_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "finished_product_return_assumption": "return_to_collection_facility",
+          "finished_product_return_lead_time_epochs": 0.0,
+          "identity_active_count": 0.0,
+          "identity_terminal_count": 2.0,
+          "in_production_patients": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "in_production_risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "manufacturing_loss_rate": 0.0,
+          "material_wasted": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patient_loss_cost": 0.0,
+          "patients_completed": [
+            2.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_manufacturing": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_return_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_transport": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_started": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "production": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_holding_cost": 908.0,
+          "reagent_purchase_cost": 0.0,
+          "reagent_shortage_cost": 0.0,
+          "reagent_shortage_frequency": 0.0,
+          "reagent_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_transfer_cost": 0.0,
+          "reagent_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "replenishment": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "risk_type_count_recoveries": 0.0,
+          "risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "service_level": 2.0,
+          "specimen_edge_flows": [
+            0.0,
+            0.0
+          ],
+          "specimen_in_transit": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_requested_integer_net": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_route_cost": 0.0,
+          "specimen_route_count": 0.0,
+          "specimen_route_count_cumulative": 2.0,
+          "specimen_route_distance_miles": 0.0,
+          "specimen_route_events": [],
+          "specimen_route_time_hours": 0.0,
+          "specimen_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_transfer_cost": 0.0,
+          "specimen_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "therapies_discarded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transferred_patient_ids": [],
+          "transit_expiry": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transit_loss": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transshipment_cost": 0.0,
+          "under_bioreactors": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "under_reagents": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "urgency_cost": 0.0,
+          "waiting_patients": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gate": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "proposal": [
+          0.015748726204037666,
+          0.006791179068386555,
+          0.03883185610175133,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "record": {
+          "action": [
+            0.007874363102018833,
+            0.0033955895341932774,
+            0.019415928050875664,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state_token": "92e8071a0f38d0dde7b35394f61e3ec5811266c784bad63f76e6d298637cdc7e",
+          "origin": "trajectory",
+          "raw_reward": -936.8,
+          "semantics": {
+            "action_dim": 12,
+            "action_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/action",
+            "bootstrap_on_truncation": true,
+            "gamma": 0.9,
+            "reward_definition_id": "patient-negative-total-cost/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+            "reward_kind": "absolute_environment",
+            "reward_scale": 1e-05,
+            "state_dim": 82,
+            "state_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/actor-flat"
+          },
+          "source_id": "live-patient-collector-v1/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+          "state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            0.0,
+            2.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.3333333432674408,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "state_token": "ff0793574950849a277a19b18f1e4dd517b5af2f7410f2633994419edb08c30e",
+          "step_index": 2,
+          "terminated": false,
+          "trajectory_id": "n7-fixture-2-frozen",
+          "truncated": false
+        }
+      },
+      "update": null
+    },
+    {
+      "deterministic_request": [
+        0.006049232091754675,
+        0.001493718707934022,
+        0.023228004574775696,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "kernel_state_sha256": "9a04f4312ac478bd2a0951fd830172a40ff2726e6be337dd656fac54764416d0",
+      "noise": [
+        -0.00020084895368199795,
+        -0.014320283196866512,
+        0.0048851510509848595
+      ],
+      "receipt": {
+        "clone_verified": true,
+        "execution": {
+          "at_risk_unserved": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "average_turnaround_time": 3.0,
+          "average_waiting_time": 0.0,
+          "base_cost": 936.8,
+          "bioreactor_holding_cost": 28.8,
+          "bioreactor_shortage_cost": 0.0,
+          "bioreactor_shortage_frequency": 0.0,
+          "bioreactor_utilization": 0.25,
+          "bioreactors_released_after_cleaning": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_specimen_inbound_requests": 0.0,
+          "blocked_specimen_outbound_requests": 0.0,
+          "blocked_specimen_requests": 0.0,
+          "capacity_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "capacity_transfer_cost": 0.0,
+          "capacity_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_service_level": 1.0,
+          "cost": 936.8,
+          "demand": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eligibility_rate": 1.0,
+          "expiry_cost": 0.0,
+          "finished_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "finished_product_return_assumption": "return_to_collection_facility",
+          "finished_product_return_lead_time_epochs": 0.0,
+          "identity_active_count": 0.0,
+          "identity_terminal_count": 2.0,
+          "in_production_patients": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "in_production_risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "manufacturing_loss_rate": 0.0,
+          "material_wasted": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patient_loss_cost": 0.0,
+          "patients_completed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_manufacturing": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_return_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_transport": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_started": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "production": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_holding_cost": 908.0,
+          "reagent_purchase_cost": 0.0,
+          "reagent_shortage_cost": 0.0,
+          "reagent_shortage_frequency": 0.0,
+          "reagent_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_transfer_cost": 0.0,
+          "reagent_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "replenishment": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "risk_type_count_recoveries": 0.0,
+          "risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "service_level": 2.0,
+          "specimen_edge_flows": [
+            0.0,
+            0.0
+          ],
+          "specimen_in_transit": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_requested_integer_net": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_route_cost": 0.0,
+          "specimen_route_count": 0.0,
+          "specimen_route_count_cumulative": 2.0,
+          "specimen_route_distance_miles": 0.0,
+          "specimen_route_events": [],
+          "specimen_route_time_hours": 0.0,
+          "specimen_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_transfer_cost": 0.0,
+          "specimen_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "therapies_discarded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transferred_patient_ids": [],
+          "transit_expiry": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transit_loss": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transshipment_cost": 0.0,
+          "under_bioreactors": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "under_reagents": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "urgency_cost": 0.0,
+          "waiting_patients": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gate": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "proposal": [
+          0.012078379280865192,
+          0.001555409049615264,
+          0.046944525092840195,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "record": {
+          "action": [
+            0.006039189640432596,
+            0.000777704524807632,
+            0.023472262546420097,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6666666865348816,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state_token": "e43f6d21609bfa68fa6255fad913fb93459fcf3c7fdde312da8c755ca3c29c17",
+          "origin": "trajectory",
+          "raw_reward": -936.8,
+          "semantics": {
+            "action_dim": 12,
+            "action_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/action",
+            "bootstrap_on_truncation": true,
+            "gamma": 0.9,
+            "reward_definition_id": "patient-negative-total-cost/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+            "reward_kind": "absolute_environment",
+            "reward_scale": 1e-05,
+            "state_dim": 82,
+            "state_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/actor-flat"
+          },
+          "source_id": "live-patient-collector-v1/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+          "state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "state_token": "92e8071a0f38d0dde7b35394f61e3ec5811266c784bad63f76e6d298637cdc7e",
+          "step_index": 3,
+          "terminated": false,
+          "trajectory_id": "n7-fixture-2-frozen",
+          "truncated": false
+        }
+      },
+      "update": null
+    },
+    {
+      "deterministic_request": [
+        0.005943147465586662,
+        0.001347605837509036,
+        0.023065729066729546,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "kernel_state_sha256": "08b01dc400eb2f1e586ac5785977cc784e99ff42ade061cc8e97e7fd596ee401",
+      "noise": [
+        -0.11642225831747055,
+        -0.023111823946237564,
+        -0.058143168687820435
+      ],
+      "receipt": {
+        "clone_verified": true,
+        "execution": {
+          "at_risk_unserved": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "average_turnaround_time": 3.0,
+          "average_waiting_time": 0.0,
+          "base_cost": 936.8,
+          "bioreactor_holding_cost": 28.8,
+          "bioreactor_shortage_cost": 0.0,
+          "bioreactor_shortage_frequency": 0.0,
+          "bioreactor_utilization": 0.2,
+          "bioreactors_released_after_cleaning": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_specimen_inbound_requests": 0.0,
+          "blocked_specimen_outbound_requests": 0.0,
+          "blocked_specimen_requests": 0.0,
+          "capacity_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "capacity_transfer_cost": 0.0,
+          "capacity_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_service_level": 1.0,
+          "cost": 936.8,
+          "demand": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eligibility_rate": 1.0,
+          "expiry_cost": 0.0,
+          "finished_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "finished_product_return_assumption": "return_to_collection_facility",
+          "finished_product_return_lead_time_epochs": 0.0,
+          "identity_active_count": 0.0,
+          "identity_terminal_count": 2.0,
+          "in_production_patients": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "in_production_risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "manufacturing_loss_rate": 0.0,
+          "material_wasted": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patient_loss_cost": 0.0,
+          "patients_completed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_manufacturing": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_return_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_transport": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_started": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "production": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_holding_cost": 908.0,
+          "reagent_purchase_cost": 0.0,
+          "reagent_shortage_cost": 0.0,
+          "reagent_shortage_frequency": 0.0,
+          "reagent_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_transfer_cost": 0.0,
+          "reagent_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "replenishment": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "risk_type_count_recoveries": 0.0,
+          "risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "service_level": 2.0,
+          "specimen_edge_flows": [
+            0.0,
+            0.0
+          ],
+          "specimen_in_transit": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_requested_integer_net": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_route_cost": 0.0,
+          "specimen_route_count": 0.0,
+          "specimen_route_count_cumulative": 2.0,
+          "specimen_route_distance_miles": 0.0,
+          "specimen_route_events": [],
+          "specimen_route_time_hours": 0.0,
+          "specimen_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_transfer_cost": 0.0,
+          "specimen_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "therapies_discarded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transferred_patient_ids": [],
+          "transit_expiry": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transit_loss": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transshipment_cost": 0.0,
+          "under_bioreactors": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "under_reagents": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "urgency_cost": 0.0,
+          "waiting_patients": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gate": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "proposal": [
+          0.00024406910233665258,
+          0.00038402920472435653,
+          0.040317144244909286,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "record": {
+          "action": [
+            0.00012203455116832629,
+            0.00019201460236217827,
+            0.020158572122454643,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.8333333134651184,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state_token": "bff0c88f7cf0857107ca250d53a5488c67f0abb918398fea8cfd0ee9d26919c7",
+          "origin": "trajectory",
+          "raw_reward": -936.8,
+          "semantics": {
+            "action_dim": 12,
+            "action_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/action",
+            "bootstrap_on_truncation": true,
+            "gamma": 0.9,
+            "reward_definition_id": "patient-negative-total-cost/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+            "reward_kind": "absolute_environment",
+            "reward_scale": 1e-05,
+            "state_dim": 82,
+            "state_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/actor-flat"
+          },
+          "source_id": "live-patient-collector-v1/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+          "state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6666666865348816,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "state_token": "e43f6d21609bfa68fa6255fad913fb93459fcf3c7fdde312da8c755ca3c29c17",
+          "step_index": 4,
+          "terminated": false,
+          "trajectory_id": "n7-fixture-2-frozen",
+          "truncated": false
+        }
+      },
+      "update": null
+    },
+    {
+      "deterministic_request": [
+        0.005837011616677046,
+        0.001201473525725305,
+        0.022902837023139,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "kernel_state_sha256": "fbff3906ffdb88f4b4f8008cee4f15d4b6e61a5f79c0b8283b2f4a88018d1349",
+      "noise": [
+        -0.13557228446006775,
+        -0.04685799777507782,
+        -0.06523670256137848
+      ],
+      "receipt": {
+        "clone_verified": true,
+        "execution": {
+          "at_risk_unserved": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "average_turnaround_time": 3.0,
+          "average_waiting_time": 0.0,
+          "base_cost": 936.8,
+          "bioreactor_holding_cost": 28.8,
+          "bioreactor_shortage_cost": 0.0,
+          "bioreactor_shortage_frequency": 0.0,
+          "bioreactor_utilization": 0.16666666666666666,
+          "bioreactors_released_after_cleaning": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_specimen_inbound_requests": 0.0,
+          "blocked_specimen_outbound_requests": 0.0,
+          "blocked_specimen_requests": 0.0,
+          "capacity_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "capacity_transfer_cost": 0.0,
+          "capacity_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "completion_service_level": 1.0,
+          "cost": 936.8,
+          "demand": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eligibility_rate": 1.0,
+          "expiry_cost": 0.0,
+          "finished_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "finished_product_return_assumption": "return_to_collection_facility",
+          "finished_product_return_lead_time_epochs": 0.0,
+          "identity_active_count": 0.0,
+          "identity_terminal_count": 2.0,
+          "in_production_patients": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "in_production_risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "manufacturing_loss_rate": 0.0,
+          "material_wasted": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patient_ineligibility_during_manufacturing_rate": 0.0,
+          "patient_loss_cost": 0.0,
+          "patients_completed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_manufacturing": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_return_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_transit_transport": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_expired": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_lost_waiting_ineligible": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "patients_started": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "production": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_holding_cost": 908.0,
+          "reagent_purchase_cost": 0.0,
+          "reagent_shortage_cost": 0.0,
+          "reagent_shortage_frequency": 0.0,
+          "reagent_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "reagent_transfer_cost": 0.0,
+          "reagent_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "replenishment": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "risk_type_count_recoveries": 0.0,
+          "risk_type_counts": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "service_level": 2.0,
+          "specimen_edge_flows": [
+            0.0,
+            0.0
+          ],
+          "specimen_in_transit": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_requested_integer_net": [
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "specimen_route_cost": 0.0,
+          "specimen_route_count": 0.0,
+          "specimen_route_count_cumulative": 2.0,
+          "specimen_route_distance_miles": 0.0,
+          "specimen_route_events": [],
+          "specimen_route_time_hours": 0.0,
+          "specimen_transfer_arrivals": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specimen_transfer_cost": 0.0,
+          "specimen_transfers": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "therapies_discarded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transferred_patient_ids": [],
+          "transit_expiry": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transit_loss": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "transshipment_cost": 0.0,
+          "under_bioreactors": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "under_reagents": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "urgency_cost": 0.0,
+          "waiting_patients": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gate": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "proposal": [
+          -0.0018832058412954211,
+          -0.0022828527726233006,
+          0.03928200528025627,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "record": {
+          "action": [
+            -0.0009416029206477106,
+            -0.0011414263863116503,
+            0.019641002640128136,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "next_state_token": "5483fec55225a0fcea4333950b76415cda0643145502f77aca7792df4d41411d",
+          "origin": "trajectory",
+          "raw_reward": -936.8,
+          "semantics": {
+            "action_dim": 12,
+            "action_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/action",
+            "bootstrap_on_truncation": true,
+            "gamma": 0.9,
+            "reward_definition_id": "patient-negative-total-cost/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+            "reward_kind": "absolute_environment",
+            "reward_scale": 1e-05,
+            "state_dim": 82,
+            "state_schema_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa/actor-flat"
+          },
+          "source_id": "live-patient-collector-v1/08f90ed3b2865c54f2d8e35c57a422e001ff71e22e7c95e13e37c0bec4782459",
+          "state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            8.0,
+            2.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.8333333134651184,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "state_token": "bff0c88f7cf0857107ca250d53a5488c67f0abb918398fea8cfd0ee9d26919c7",
+          "step_index": 5,
+          "terminated": true,
+          "trajectory_id": "n7-fixture-2-frozen",
+          "truncated": false
+        }
+      },
+      "update": null
+    }
+  ],
+  "final": {
+    "all_clone_steps_exact": true,
+    "closed": true,
+    "emitted_lengths": [
+      3,
+      3,
+      3,
+      3,
+      2,
+      1
+    ],
+    "environment_sha256": "5483fec55225a0fcea4333950b76415cda0643145502f77aca7792df4d41411d",
+    "kernel_state_sha256": "fbff3906ffdb88f4b4f8008cee4f15d4b6e61a5f79c0b8283b2f4a88018d1349",
+    "pending_count": 0,
+    "replay_position": 2,
+    "replay_size": 4,
+    "routing_count": 2.0,
+    "state_sha256": "cdc6734f4b6daf7875a3edb5dfe38bb2828cf03b45617e94a734ce021b063199",
+    "steps": 6,
+    "updates": 0,
+    "weights_sha256": "651e61510d2a55bf0c7c09c7723c3060f3edb723cfdf2cb8e0fc3c4a868bb8f0"
+  },
+  "fresh_process": true
+}

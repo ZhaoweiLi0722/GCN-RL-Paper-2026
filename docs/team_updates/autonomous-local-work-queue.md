@@ -55,6 +55,7 @@ contracts, but do not fabricate that data to launch a patient scenario.
 | N4 | Complete; production learning and scientific campaign remain outside scope | Actual patient collection plus frozen graph/flat actor, gate, critic and target forwards. Nine bounded engineering cases/36 steps reproduce exactly, weights unchanged, 171 tests pass. Readout: `specs/2026-09-29-prospective-collector-engineering/readout.md`. Parameter counts are not matched, no optimizer/resume framework, no online benefit claim. |
 | N5 | Complete; scientific design remains non-executable | Count-only graph64/flat68 matching on the N4 schema: every component <1%, total gap 0.3340%. Isolated physical/self-only operator check, 15 new/95 combined tests and repeat-identical metadata report. `specs/2026-09-29-prospective-development-design/readout.md`. Eight named launch dependencies remain missing; no environment/update/performance run. |
 | N6 | Complete within kernel scope; live-collector resume remains open | Default-off DDPG kernel, 18 new/113 combined tests, three exact fresh-process resume cases and repeat-identical diagnostics. `specs/2026-09-29-prospective-learner-engineering/readout.md`. Two synthetic matrices total 72 kernel updates / 144 Adam steps, plus bounded unit tests; zero environment/performance runs. No scientific-launch gate is automatically passed. |
+| N7 | Complete within single-episode CPU scope; scientific launch remains closed | Six exact fresh-process live-session cases, 14 new/144 combined tests, 13 repeat-identical diagnostic JSON files and 18 tensor-identical checkpoints. `specs/2026-09-29-prospective-closed-loop-engineering/readout.md`. Actual collection/OU/pending replay/kernel recover together. No performance comparison or new-task calibration claim. |
 
 For N2/N3, implement only the smallest independent prototype/tests needed to
 answer the contract question. Do not create a duplicate full training framework.
@@ -64,12 +65,17 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
-- September 29, N7 in progress: user requested the next named real-collector
-  closed-loop/resume check. Six finite cases join existing collector, OU process
-  and N6 kernel, with at most six decisions and three online updates per path.
-  Restore pending windows, identities, environment/OU/replay RNG and optimizers
-  together. The protocol is `specs/2026-09-29-prospective-closed-loop-engineering/protocol.md`.
-  No performance comparison, scientific launch, historical change or remote action.
+- September 29, N7 complete: six bounded online/frozen CPU paths recover exactly
+  from a live four-step checkpoint, including two pending records and one online
+  update. No tail loss or duplicate insertion; all three boundary masks pass.
+  Two matrices total 144 primary plus 144 clone steps and 36 kernel updates,
+  with additional bounded unit tests. Fourteen new/144 combined tests and full
+  compilation pass. Thirteen repeated diagnostic JSONs are byte-identical;
+  eighteen checkpoints match tensor for tensor; 34 source hashes reconcile.
+  The next work is resolving operational/synthetic-scope assumptions and action
+  leverage, not an automatically authorized learning campaign. Readout:
+  `specs/2026-09-29-prospective-closed-loop-engineering/readout.md`. Old evidence,
+  manuscript conclusions and remote state are unchanged; no automation added.
 
 - September 29, N6 complete: real actor/critic Adam updates on invented numeric
   windows pass alongside fixed gate/reference and exact fresh-process kernel

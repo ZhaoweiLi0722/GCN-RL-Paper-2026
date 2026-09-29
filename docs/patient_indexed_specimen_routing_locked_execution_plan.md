@@ -1447,3 +1447,16 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `next-study.md` separates fixed-weight legacy-task consistency research from
   the E1-dependent new operational task. Endpoint, data, budget and scientific
   launch remain explicit future decisions, not approved by a successful audit.
+
+### 2026-09-29: Continued archived decision-cost diagnosis (R2)
+
+- Zhaowei accepted the recommended legacy-task direction and asked to see the
+  next result. Proceed with existing-evidence arithmetic in
+  `specs/2026-09-29-g1-decision-cost/protocol.md`. No new simulation, fitting,
+  reward intervention or scientific campaign is authorized by this entry.
+- Reconcile the immutable G1 labels/predictions and quantify independent
+  validation cost consequences, rather than relying only on top-1 accuracy.
+  Respect the published nominal-history reconstruction correction, overlapping
+  cost horizons and unavailable replication-level rows. No replacement gate.
+- Preserve all old failures, code, costs and decisions. Source/config commit
+  precedes the recorded audit; local artifacts only, no remote action.

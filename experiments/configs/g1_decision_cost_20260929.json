@@ -1,0 +1,15 @@
+{
+  "kind": "retrospective_archived_g1_decision_cost_not_online_performance",
+  "primary_horizon": "remaining",
+  "top1_atol": 1e-9,
+  "excess_cost_boundaries": [250000.0, 1000000.0],
+  "inputs": {
+    "cost_rows": {"path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/legal_action_rows.csv", "sha256": "160450c7752d3097f37319635b0a8cb810a9ac95c0c985bd43a8aedbd41dfeb3"},
+    "prediction_rows": {"path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/fold_prediction_rows.csv", "sha256": "96d84e7a1f458227214690f1816388c142a207821373a8eea3d362d39ee47af9"},
+    "arrays": {"path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/legal_action_dataset.npz", "sha256": "837f010a323e90a115a0ddf8dbdf832b675dc30f8bcc04087eb76de6a7bbbb2b"},
+    "summary": {"path": "experiments/evidence/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1/summary.json", "sha256": "9e96deec850d6033fb5a2fb9e2f5090f8a040468df9faf8634015a14875d1c41"},
+    "original_config": {"path": "experiments/configs/patient_indexed_specimen_routing_ddpg_legal_action_ranker_g1.json", "sha256": "556e5f5b58b7ce1b807f1d5890ccf85eda1d581391141af2020e8da828f1b9c0"},
+    "scenario_correction": {"path": "docs/patient_indexed_specimen_routing_stage_g1_results.md", "sha256": "944dfb8e845f9833c38929d4eb3754d8cd04370092c0ee2d5580d7c94fb06161"},
+    "original_metric_source": {"path": "evaluation/audit_ddpg_legal_action_ranker_feasibility.py", "sha256": "b6426ed5a3685d6bfab0b4b778ba0ff288c5855c248a94c8533fb86060fa3507"}
+  }
+}

@@ -1,8 +1,8 @@
 # Autonomous local research queue
 
-## Live checkpoint: S4 authorized, protocol preparation
+## Live checkpoint: S4 implementation tested, recording pending
 
-Updated 2026-09-29 after explicit S4 continuation. The historical M/N completion records below remain valid;
+Updated 2026-09-29 16:27 UTC after explicit S4 continuation. The historical M/N completion records below remain valid;
 their old automation stop notices do not cancel the newly requested finite S3
 continuation. Use this section as the current queue, not an old completed packet.
 
@@ -10,16 +10,16 @@ continuation. Use this section as the current queue, not an old completed packet
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | S2 complete at `efe5a86`: 288/288 episodes, 9,364 audited steps, six probes, 123 relevant tests; no online-RL evidence |
-| Current task | S3 complete at `838249d`; S4 finite continuation comparison now explicitly authorized. Protocol/config prepared, implementation and recorded run not yet executed |
-| Protocol commit | `b91dd3b`; archived S2 probe/summary hashes reverified, config JSON and full compilation pass |
+| Current task | S3 complete at `838249d`; S4 implementation and 14 new tests complete. Recorded S4 run not yet executed |
+| Protocol commit | S4 `e4e9fef`; both protocol/config locks pass, 315 historical input/source locks pass |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
-| Implementation evidence | `evaluation/check_completion_action_ranking.py`; 17 new tests, 140 combined regression tests and full compileall pass; S2 read-only audit replays all 288 archived episodes; 40 historical input locks pass |
+| Implementation evidence | S4 `evaluation/check_completion_continuation_comparison.py`, additive tree and component-forecast modules; 154 combined tests/full compileall pass; S3 read-only audit passes; no historical changes |
 | Recorded execution | Source `a6d450906f57d1fac1718562ba99145b175e8af7`; PID 23324 returned exit 0 in 8.998s; 491,520 model paths, 10,409,928 transition queries, 16 blocks, 256 raw chunks; zero new actual episodes or neural updates |
 | Independent verification | Read-only audit passes all costs/hashes/identities, 48 budget records, 5,040 paired contrasts, 960 scalar path checks / 20,085 intervals; no full-matrix repeat |
 | Process/output check | Prelaunch and post-exit read-only `ps` found no competing/remaining related evaluator; stdout reached 16/16, successful process exit and completed status agree; no error artifact |
 | Scientific result | Two unchanged contexts agree on the existing booked rule; both changed public contexts have block argmin disagreements; the one non-rule frozen choice changes benefit sign across validation blocks. No stable improvement over the public rule or online-RL evidence |
 | Evidence paths | `reports/2026-09-29-completion-action-ranking/run/`; `specs/2026-09-29-completion-action-ranking/readout.md` and `decision.md` |
-| Next concrete action | Commit S4 protocol/config, implement/test the bounded continuation comparison, source-lock and run once, audit/read out; if no stable conditional signal, document reward/objective diagnosis |
+| Next concrete action | Commit S4 source, recheck no active duplicate/output, run the one capped matrix, audit/read out; if no stable conditional signal, document reward/objective diagnosis |
 | Approval needed now | None inside the newly approved S4 packet. Considering reward defects is allowed; changing rewards, tuning cost weights or training is not |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |

@@ -119,3 +119,18 @@ depends on archives, domain inputs, claim-scope decisions or a new approved
 protocol. Stop the continuation automation at this checkpoint; do not invent
 more scenarios or request the same facts hourly. Original formal results and
 Howard's reports remain preserved.
+
+## Later approved engineering continuation
+
+After this manuscript checkpoint, N1/N2/N3 added isolated replay/input contracts.
+Zhaowei then approved N4's bounded real collector/agent engineering check:
+`specs/2026-09-29-prospective-collector-engineering/readout.md`. Nine tiny
+real-patient-environment cases now exercise 36 actual steps, frozen neural
+forwards and target construction, with exact cloned-step reproduction and
+byte-identical repeated evidence. The combined 171 tests and full compilation
+pass. No optimizer updates, trained-policy evaluation or formal holdout use.
+
+This is progress on prospective reproducibility, not a new performance result
+for the manuscript. Existing numerical claims and limitations above remain
+unchanged. Engineering graph/flat heads are not parameter matched; training,
+resume, operational calibration and online-attribution evidence remain open.

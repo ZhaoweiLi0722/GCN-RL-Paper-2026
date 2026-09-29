@@ -51,7 +51,8 @@ contracts, but do not fabricate that data to launch a patient scenario.
 | --- | --- | --- |
 | N1 | Complete; production integration not authorized | Opt-in `src/rl/validated_returns.py`, 19 synthetic failure/return tests and `specs/2026-09-29-replay-repair-preparation/contract.md`. Combined 109-test suite and full compilation pass. Not wired into old agents. Reject disconnected windows, mixed semantics and implicit legacy migration; one explicit gamma-to-n target reference. |
 | N2 | Complete; producer/model integration remains open | Separate `src/models/matched_inputs.py` common-input graph/flat/gate fixture, 21 new synthetic tests and `specs/2026-09-29-matched-input-preparation/contract.md`. Combined 140-test suite and full compilation pass. Explicit shared information/order/proposals, neural-only message ablation and parameter-count scope. No existing agent/default changes or environment/learning run. |
-| N3 | Complete; actual collector/agent integration needs approval | `src/rl/prospective_adapter.py` joins N1/N2 with a typed no-training acceptance harness. Fourteen new tests, combined 154-test suite and full compilation pass. Covers current/bootstrap state and anchor mapping, rewards, short tails and termination/truncation. `specs/2026-09-29-prospective-integration-acceptance/decision_packet.md` records legacy non-migration and the next prospective approval. No experiment seeds, tuning or execution. |
+| N3 | Complete; bounded forward integration subsequently approved as N4 | `src/rl/prospective_adapter.py` joins N1/N2 with a typed no-training acceptance harness. Fourteen new tests, combined 154-test suite and full compilation pass. Covers current/bootstrap state and anchor mapping, rewards, short tails and termination/truncation. `specs/2026-09-29-prospective-integration-acceptance/decision_packet.md` records legacy non-migration and the next prospective approval. No experiment seeds, tuning or execution in N3. |
+| N4 | Complete; production learning and scientific campaign remain outside scope | Actual patient collection plus frozen graph/flat actor, gate, critic and target forwards. Nine bounded engineering cases/36 steps reproduce exactly, weights unchanged, 171 tests pass. Readout: `specs/2026-09-29-prospective-collector-engineering/readout.md`. Parameter counts are not matched, no optimizer/resume framework, no online benefit claim. |
 
 For N2/N3, implement only the smallest independent prototype/tests needed to
 answer the contract question. Do not create a duplicate full training framework.
@@ -61,11 +62,18 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
-- September 29, N4 in progress: the user approved the specifically requested
+- September 29, N4 complete: the user approved the specifically requested
   bounded actual collector/agent engineering check. Protocol:
-  `specs/2026-09-29-prospective-collector-engineering/protocol.md`. Complete this
-  real dataflow check locally, without training, historical migration, new
-  scientific scenarios, external action or restarting an automation.
+  `specs/2026-09-29-prospective-collector-engineering/protocol.md`. The real
+  dataflow check is complete locally: 36 exact cloned steps, lossless input
+  views, requested-versus-executed actions, endpoint targets and short tails,
+  unchanged frozen weights, byte-identical repeat JSON and 28 source hashes.
+  Seventeen new tests and the 171-test combined suite pass, as do full
+  compilation and diff checks. A wrapper-only virtual-filename failure and its
+  tested fix are disclosed in the readout. No training, historical migration,
+  new scientific scenario, remote action or automation was started. Stop at
+  this approved packet's boundary; scientific launch and domain calibration
+  are not inferred from software acceptance.
 
 - September 29, N1: implemented explicit replay semantics, immutable one-step
   records, lineage-checked multi-step returns and a shared numeric Bellman-target

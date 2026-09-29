@@ -5,6 +5,7 @@ from dataclasses import replace
 import json
 from pathlib import Path
 import unittest
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -221,6 +222,14 @@ class PatientReplayCollectorTests(unittest.TestCase):
         self.assertEqual(first["optimizer_updates"], 0)
         self.assertFalse(first["online_gain_claimed"])
         self.assertTrue(all(c["all_clone_steps_exact"] for c in first["cases"]))
+
+    def test_source_inventory_excludes_dynamic_pseudo_files(self):
+        from experiments.scripts.check_prospective_collector import local_source_hashes
+        modules = [SimpleNamespace(__file__="_ops.py"), SimpleNamespace(__file__="<generated>"),
+                   SimpleNamespace(__file__=str(Path(__file__).resolve())), SimpleNamespace()]
+        hashes = local_source_hashes(modules, ROOT)
+        self.assertEqual(list(hashes), ["tests/test_patient_replay_collector.py"])
+        self.assertEqual(len(next(iter(hashes.values()))), 64)
 
 
 if __name__ == "__main__":

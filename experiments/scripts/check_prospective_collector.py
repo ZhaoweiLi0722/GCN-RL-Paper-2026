@@ -17,6 +17,19 @@ from src.rl.prospective_engineering_check import run_engineering_check
 from src.rl.networks import torch
 
 
+def local_source_hashes(modules, root):
+    sources = {}
+    for module in modules:
+        name = getattr(module, "__file__", None)
+        # Torch dynamic namespaces expose relative pseudo filenames (e.g. _ops.py).
+        # Only absolute loader filenames establish local file provenance.
+        if name and Path(name).is_absolute():
+            path = Path(name).resolve()
+            if path.suffix == ".py" and path.is_relative_to(root):
+                sources[str(path.relative_to(root))] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return dict(sorted(sources.items()))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
@@ -39,14 +52,7 @@ def main():
     result["execution_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     result["config_file_sha256"] = hashlib.sha256(args.config.read_bytes()).hexdigest()
     # Capture loaded local code, including transitive environment/heuristic helpers.
-    sources = {}
-    for module in tuple(sys.modules.values()):
-        path = getattr(module, "__file__", None)
-        if path:
-            path = Path(path).resolve()
-            if path.suffix == ".py" and path.is_relative_to(ROOT):
-                sources[str(path.relative_to(ROOT))] = hashlib.sha256(path.read_bytes()).hexdigest()
-    result["source_sha256"] = dict(sorted(sources.items()))
+    result["source_sha256"] = local_source_hashes(tuple(sys.modules.values()), ROOT)
     result["runtime"] = {"python": sys.version.split()[0], "numpy": np.__version__, "torch": torch.__version__}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as stream:

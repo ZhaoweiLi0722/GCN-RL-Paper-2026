@@ -1526,3 +1526,16 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   permissions or remote Git state changed.
 - R3 must explicitly adopt replacement baselines before use; its collection
   and online learning remain outside this completed packet. Stage E unchanged.
+
+### 2026-09-29: R5 replacement-policy engineering preparation
+
+- After the archived R4 result, Zhaowei asked to continue progressing. Prepare
+  strict actor/gate loading and archived-observation compatibility under
+  `specs/2026-09-29-replacement-policy-compatibility/protocol.md`.
+- Inspect all three R4 replacements on fixed saved observations only, with
+  CPU/full-state and CPU/MPS output checks. No new environment step or optimizer
+  update. Preserve R3's historical design and label this proposed substitution
+  explicitly; it is not recovered F1 or a new performance result.
+- Commit protocol/config/source before the recorded check. Scientific R3
+  collection, fresh scenario/reward changes, online training, remote operations
+  and formal holdout remain outside scope. Do not infer Howard approval.

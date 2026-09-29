@@ -1,18 +1,18 @@
 # Autonomous local research queue
 
-## Live checkpoint: R4 rebuild complete; local Dropbox copies verified
+## Live checkpoint: R5 strict-loader preparation tested; recorded audit next
 
-Updated 2026-09-29 after the authorized R4 replacement rebuild completed.
-Three seeds finished in 398.235 seconds, exit 0, source `1845339`. All archive
-members and Dropbox local copies independently verify. Cloud sync and Howard
-access remain unverified after a client-UI timeout. R3 collection and online
-training remain unlaunched; historical F1 weights are still not recovered.
+Updated 2026-09-29 following Zhaowei's request to keep progressing. R5 adds
+fail-closed frozen actor/gate loading and a saved-observation compatibility
+audit; 16 new/62 related tests and full compileall pass. The recorded three-seed
+CPU/MPS audit has not yet run. R4 remains complete and unchanged. Cloud sync
+and Howard access remain unverified. R3 scientific collection is not launched.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | R4 replacement pretraining/archives complete; older campaigns unchanged |
-| Current task | Completed packet and archive index; no background task |
+| Current task | R5 strict loading and archived-observation parity; source freeze before recording |
 | Protocol commit | R4 protocol/source `14fc8ae`, preflight verifier repair and production execution `1845339` |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | 16 new/64 related tests, full compileall and diff checks pass; reuses existing trainer, adds archival helper and bounded runner |
@@ -22,8 +22,8 @@ training remain unlaunched; historical F1 weights are still not recovered.
 | Scientific result | New replacement baselines, no performance evaluation or online/frozen contrast; old findings remain unchanged |
 | Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
 | Evidence paths | `specs/2026-09-29-frozen-baseline-rebuild/{protocol,preflight,readout}.md`; `reports/2026-09-29-frozen-baseline-rebuild/`; immutable payload in `results/frozen_baseline_rebuild_20260929/` |
-| Next concrete action | Confirm off-device cloud sync; prepare an explicit R3 replacement-baseline amendment and compatibility checks before any value-label pilot |
-| Data/approval needed now | No more pretraining required. Cloud upload and Howard access unverified; no sharing changes authorized. Scientific collector implementation, fresh streams and capped pilot launch remain separate |
+| Next concrete action | Commit R5 implementation/protocol, run the fixed 48-observation compatibility audit with no simulator or learning, independently verify raw outputs |
+| Data/approval needed now | No more pretraining required. Proposed R3 adoption of R4 replacements is explicit in R5; collector acceptance, fresh streams and capped scientific pilot approval remain separate. Cloud sync/access still unverified |
 | Latest verification | Production logs contain only the known missing actor-loss placeholder during 500 critic warmup updates; persisted actor-update indicators are zero and numeric metrics/tensors finite. No Traceback/error in production logs; preflight failure preserved separately |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |

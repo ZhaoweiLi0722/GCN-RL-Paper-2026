@@ -1205,3 +1205,22 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   calibrate the synthetic response model. Domain measurement decisions and
   collaborator sign-offs are not fabricated. Formal Stage E remains closed;
   old source/evidence, scientific CRNs, checkpoints and teachers are untouched.
+
+### 2026-09-29: Bounded support-queue mechanism check, local only
+
+- Zhaowei explicitly requested continued stepwise work without waiting for
+  routine local confirmations. The bounded scope is now documented in
+  `specs/2026-09-29-service-queue-boundary/protocol.md`: booked arrivals and a
+  mandatory downstream workstation, eight predeclared synthetic cells, five
+  common-information non-neural controllers, and finite-grid diagnostics.
+- This is isolated generic queue software and a synthetic mechanism boundary
+  check. Divisible support work, productivity and measurement assumptions are
+  not clinically calibrated. No integration into patient dynamics, DDPG launch,
+  formal confirmation, remote push, main merge or Howard approval is inferred.
+- Commit the source/config/protocol before recorded comparisons. Retain all
+  cells and negative outcomes without post-result retuning. Finish and charge
+  every booked job and prepaid commitment under a common declared continuation;
+  do not improve the apparent objective by dropping terminal liabilities.
+- Preserve the prior service-effort result where best open loop equaled optimal
+  feedback. Any new feedback benefit is not evidence of online weight-update
+  value: the exact nonanticipative policy itself is a frozen history-action map.

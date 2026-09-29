@@ -1,0 +1,28 @@
+{
+  "role": "synthetic_mechanism_boundary_not_prm_or_rl_confirmation",
+  "horizon": 5,
+  "effort": {
+    "site_hour_caps": [1.0, 1.0],
+    "shared_hour_budget": 1.0,
+    "commitment_lead_steps": 1,
+    "hourly_cost": 2.0,
+    "quadratic_cost": 0.5,
+    "switching_cost": 0.25
+  },
+  "job_work": 1.0,
+  "downstream_steps": 2,
+  "holding_cost": 1.0,
+  "max_settlement_steps": 64,
+  "prior": [1.0, 1.0],
+  "estimator_alpha": 1.0,
+  "actions": {"idle": [0.0, 0.0], "left": [1.0, 0.0], "right": [0.0, 1.0], "balanced": [0.5, 0.5]},
+  "release_patterns": {"batch": [0, 0, 0, 0], "booked_flow": [0, 0, 2, 3]},
+  "downstream_regimes": {"nonbinding": 8, "shared_bottleneck": 1},
+  "families": [
+    {"name": "no_change", "worlds": [{"name": "nominal", "probability": 1.0, "change_epoch": 2, "after": [1.0, 1.0]}]},
+    {"name": "persistent_change", "worlds": [
+      {"name": "left_slow", "probability": 0.5, "change_epoch": 2, "after": [0.5, 1.5]},
+      {"name": "right_slow", "probability": 0.5, "change_epoch": 2, "after": [1.5, 0.5]}
+    ]}
+  ]
+}

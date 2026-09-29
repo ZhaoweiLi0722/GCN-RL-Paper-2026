@@ -1491,3 +1491,20 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   37,596 transitions / 3,600 seconds are caps for a future data-only pilot, not
   consumed budget. F1 checkpoint provenance, runtime parity, new streams,
   implementation and explicit launch approval remain outstanding.
+
+### 2026-09-29: R4 replacement-baseline rebuild authorized after missing artifacts
+
+- Zhaowei explicitly permits retraining when original files cannot be located
+  and requests Dropbox preservation. The scoped local/archive/Dropbox search
+  found no F1 weights. Follow the bounded R4 protocol in
+  `specs/2026-09-29-frozen-baseline-rebuild/protocol.md`.
+- Rebuild only three GCN pretraining baselines using the original fixed recipe,
+  seeds 60-62, locked teacher, zero online episodes, no new performance test.
+  Initial heuristic demonstrations are training data, not zero trajectories.
+  Preserve current source identity; do not claim recovery of historical bytes.
+- Save in the persistent worktree, hash-verify per-seed archives and copies to
+  the existing Dropbox project directory. No sharing-permission changes or
+  remote Git action. Dropbox copy and cloud verification remain distinct.
+- No reward tuning, fresh scientific scenario, formal stream, R3 collection,
+  or online-training campaign is opened. Old conclusions and Stage E remain
+  unchanged. Commit source/config/protocol before the single bounded attempt.

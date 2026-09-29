@@ -1,0 +1,17 @@
+{
+  "name": "frozen_baseline_rebuild_20260929",
+  "source_config": "experiments/configs/patient_indexed_specimen_routing_ddpg_online_paired_advantage_control_100.json",
+  "source_config_sha256": "af46bf7e88f02b5fe444e0df09771030565d9b47cdfbeddd82bd59f9f806ade2",
+  "teacher_sha256": "9ba2ac0873c0f68e6ecc4b443e0eace8230f8e151cceb485fafe218a7ac78d92",
+  "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+  "seeds": [60, 61, 62],
+  "online_episodes": 0,
+  "pretrain_epochs": 300,
+  "offline_updates": 500,
+  "maximum_environment_steps_per_seed": 1040,
+  "maximum_seconds": 3600,
+  "campaign_root": "results/frozen_baseline_rebuild_20260929",
+  "dropbox_directory": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929",
+  "historical_reproduction_claim": false,
+  "scientific_evaluation_authorized": false
+}

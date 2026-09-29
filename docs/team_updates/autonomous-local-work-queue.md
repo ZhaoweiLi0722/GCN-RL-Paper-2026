@@ -1,26 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: S4 implementation tested, recording pending
+## Live checkpoint: S4 and reward diagnosis complete
 
-Updated 2026-09-29 16:27 UTC after explicit S4 continuation. The historical M/N completion records below remain valid;
-their old automation stop notices do not cancel the newly requested finite S3
-continuation. Use this section as the current queue, not an old completed packet.
+Updated 2026-09-29 16:34 UTC after explicit S4 continuation. The historical M/N
+and S3 completion records below remain valid. S4 and its reward diagnosis are
+now complete; use this section as the current queue and approval boundary.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
-| Last verified stage | S2 complete at `efe5a86`: 288/288 episodes, 9,364 audited steps, six probes, 123 relevant tests; no online-RL evidence |
-| Current task | S3 complete at `838249d`; S4 implementation and 14 new tests complete. Recorded S4 run not yet executed |
+| Last verified stage | S4 completed once, independently audited; S1/S2/S3 evidence unchanged |
+| Current task | S4 implementation, test, source freeze, one matrix, audit, readout and conditional reward diagnosis complete |
 | Protocol commit | S4 `e4e9fef`; both protocol/config locks pass, 315 historical input/source locks pass |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | S4 `evaluation/check_completion_continuation_comparison.py`, additive tree and component-forecast modules; 154 combined tests/full compileall pass; S3 read-only audit passes; no historical changes |
-| Recorded execution | Source `a6d450906f57d1fac1718562ba99145b175e8af7`; PID 23324 returned exit 0 in 8.998s; 491,520 model paths, 10,409,928 transition queries, 16 blocks, 256 raw chunks; zero new actual episodes or neural updates |
-| Independent verification | Read-only audit passes all costs/hashes/identities, 48 budget records, 5,040 paired contrasts, 960 scalar path checks / 20,085 intervals; no full-matrix repeat |
-| Process/output check | Prelaunch and post-exit read-only `ps` found no competing/remaining related evaluator; stdout reached 16/16, successful process exit and completed status agree; no error artifact |
-| Scientific result | Two unchanged contexts agree on the existing booked rule; both changed public contexts have block argmin disagreements; the one non-rule frozen choice changes benefit sign across validation blocks. No stable improvement over the public rule or online-RL evidence |
-| Evidence paths | `reports/2026-09-29-completion-action-ranking/run/`; `specs/2026-09-29-completion-action-ranking/readout.md` and `decision.md` |
-| Next concrete action | Commit S4 source, recheck no active duplicate/output, run the one capped matrix, audit/read out; if no stable conditional signal, document reward/objective diagnosis |
-| Approval needed now | None inside the newly approved S4 packet. Considering reward defects is allowed; changing rewards, tuning cost weights or training is not |
+| Recorded execution | Source `6409afef49b667b7abef146ea117e59b7bb4cc5c`; PID 25554 / PPID 2465, exit 0 in 35.638s; 345,600 inner + 1,966,080 outer paths, 49,204,865 model queries; no actual episodes, updates or reward changes |
+| Independent verification | All 436 arrays and 6 source + 315 historical locks pass; independently recomputed comparisons and 9,240 scalar paths / 187,703 intervals pass; no full-matrix repeat |
+| Process/output check | Live matching PID/command and new block boundaries observed; later process check finds no related evaluator, both run and audit exit 0; no error artifact/nonfinite metrics |
+| Scientific result | 0/4 contexts pass the prospective conditional signal check; tree128 matches or loses to booked in all validation blocks, though it beats reservation. 64/180 inner actions change with sample budget. No online-RL or optimality claim |
+| Reward diagnosis | Historical absolute/relative reward mixing remains a concrete consistency concern, not a proven cause. Existing prospective contracts already address it. Read-only potential-shaping algebra on 288 archived episodes has exact common +2 offset and unchanged rankings; no weights tuned |
+| Evidence paths | `reports/2026-09-29-completion-continuation-comparison/run/`; `specs/2026-09-29-completion-continuation-comparison/readout.md` and `reward-diagnosis.md` |
+| Next concrete action | User/coauthor/domain decision on a grounded, consistent-objective development study; do not keep enlarging this synthetic screen or rebuild completed N1-N7 mechanics |
+| Approval needed now | No routine S4 work remains. A reward intervention, new performance study, neural training, actual/patient episodes or changed objective requires new explicit scope/protocol; E1 domain inputs still missing |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 

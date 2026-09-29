@@ -1,0 +1,1304 @@
+{
+  "pid": 25554,
+  "ppid": 2465,
+  "execution_commit": "6409afef49b667b7abef146ea117e59b7bb4cc5c",
+  "source_locks": [
+    {
+      "path": "experiments/configs/completion_continuation_comparison_20260929.json",
+      "sha256": "e314032724d21d575d9e7207d5d7e402a2afc4974f181b79f0906a3cc9fb60fd"
+    },
+    {
+      "path": "specs/2026-09-29-completion-continuation-comparison/protocol.md",
+      "sha256": "9a2f55061bc38f058c408638f806dab2fa6a68fe82143941928c9fc6b8c68da0"
+    },
+    {
+      "path": "evaluation/check_completion_continuation_comparison.py",
+      "sha256": "1c46b41a643e602633978636e943de6e85c8e44a4b3bcf6a9c3a619856d57163"
+    },
+    {
+      "path": "src/env/completion_continuations.py",
+      "sha256": "bb5265ab98ef48b274c5d20cc3a9542ffb78a17eeb472c6c511f1ef3e60d4743"
+    },
+    {
+      "path": "src/baselines/completion_feedback_tree.py",
+      "sha256": "4615600c33797a18d30558bc624b261cf6ce1098b9b46e19018bd13af4edbccf"
+    },
+    {
+      "path": "tests/test_completion_continuation_comparison.py",
+      "sha256": "b946dc86072474964235ae1d9273dabf1c62319cde8565047b492268ff3bd402"
+    }
+  ],
+  "input_locks": [
+    {
+      "path": "experiments/configs/completion_action_ranking_20260929.json",
+      "sha256": "480e34486d63beb27078042d1c3361f935ef954e486417fde4490641c24414b9"
+    },
+    {
+      "path": "specs/2026-09-29-completion-action-ranking/protocol.md",
+      "sha256": "99f5d816afdef6bb08a6324dba5a4be2372db3ab9d58adb8ea95234b7afeac28"
+    },
+    {
+      "path": "evaluation/check_completion_action_ranking.py",
+      "sha256": "e8672031f2cec4a81f65659000334296c22cdd4f1bdc77cfac9154be9fed43c7"
+    },
+    {
+      "path": "tests/test_completion_action_ranking.py",
+      "sha256": "3b86a0ec6734bda5bced974624aeb30e42d24e7eab1d4b9dd5cbcf0cb2556bc2"
+    },
+    {
+      "path": "experiments/configs/completion_control_screen_20260929.json",
+      "sha256": "93561b12cd2417607a0099b37d222c7a9513782d8fdcbab910c996962980148f"
+    },
+    {
+      "path": "evaluation/run_completion_control_screen.py",
+      "sha256": "1dce9cfdd5923ac9bcfce6616ebd8181dd7483a96a8c88d522cb2013b813c4f8"
+    },
+    {
+      "path": "src/env/completion_feedback_batch.py",
+      "sha256": "33f6a88cb3ec354949db2651ca2f2e1f011fad91b38a0e554dc6d078ff82c8c1"
+    },
+    {
+      "path": "src/baselines/completion_rollout_control.py",
+      "sha256": "2a4461219055a85ed3e648d2c8885d3c8523b43ef7b6c5f456e6c50f8e4d2960"
+    },
+    {
+      "path": "tests/test_completion_rollout_control.py",
+      "sha256": "45779ea93f3d10ac3e2ad5ccc634495f5e95c4bf0107ce311cb32baf7f847d82"
+    },
+    {
+      "path": "tests/test_completion_control_screen.py",
+      "sha256": "4fc52098e87da95fdc7adf6689af60f787cb6e6e158c42a52ef9796c4b58f84b"
+    },
+    {
+      "path": "specs/2026-09-29-completion-control-screen/protocol.md",
+      "sha256": "4e9838608a2d86d10a79fc30b151e03e9df92d46b8c507e036a210d25ad1ae1c"
+    },
+    {
+      "path": "experiments/configs/completion_feedback_mechanics_20260929.json",
+      "sha256": "dd19e0d65e8456103f77d0a0090a1e05f77adc9e6a14a426f438e2dc21251e6b"
+    },
+    {
+      "path": "src/env/completion_feedback_queue.py",
+      "sha256": "807b3a6da7566dbeaacec72f1f2aafd2c9c326ddafbad8e5db0bdb50bb8c168a"
+    },
+    {
+      "path": "src/baselines/completion_response_filter.py",
+      "sha256": "5114094daace28bed10b01bed8a79d66131846a99030f8fe9e4ceef5283e88b9"
+    },
+    {
+      "path": "src/env/service_effort_mechanics.py",
+      "sha256": "bf8add6c56fe3cbf6e506769f1e509bb9f90a552ca59f7b7f6e08357d999f0ea"
+    },
+    {
+      "path": "evaluation/check_service_effort_mechanics.py",
+      "sha256": "db1df02b8f4fbbd9fc486edf227f158798bb638077ace9c14a72901889b90770"
+    },
+    {
+      "path": "evaluation/check_completion_feedback_mechanics.py",
+      "sha256": "276c7d266100b1603394220684dbcc8ba7d8ef8b7198dbd03d743a41570544b3"
+    },
+    {
+      "path": "tests/test_completion_feedback_queue.py",
+      "sha256": "4602931af4e138403eae007df147c76006e14ff760c63da06d8318e1bb6b07d7"
+    },
+    {
+      "path": "tests/test_completion_feedback_check.py",
+      "sha256": "13d0cefb1eed43196104cb8acc98ebbf58a2d50c29147f3c8165efd8782052b3"
+    },
+    {
+      "path": "specs/2026-09-29-completion-feedback-mechanics/protocol.md",
+      "sha256": "cabe5ea309f101f951eb41b44517c8de60210c34cafdbf11392d6e3624d56a8b"
+    },
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4"
+    },
+    {
+      "path": "src/env/service_queue_network.py",
+      "sha256": "ba73464bba001b8e7496b244eecb18154987a7e3f5c85a94277102690a3da27a"
+    },
+    {
+      "path": "src/baselines/public_service_response.py",
+      "sha256": "2824a69290373a644a1b687a0526c7c93b872ec48b317887ed158de460bd0c7a"
+    },
+    {
+      "path": "specs/2026-09-29-qualified-support-contract/measurement_contract.json",
+      "sha256": "08ac7311fb39f64e6292d7311269d21124d5360516deea6e3dc71ae28491de06"
+    },
+    {
+      "path": "reports/2026-09-29-queue-cost-sensitivity/run/summary.json",
+      "sha256": "7defedeaa477d8e47aa199db8370d39fca509e848757824b6b1910f263bf65b6"
+    },
+    {
+      "path": "reports/2026-09-29-queue-cost-sensitivity/run/sensitivity.json",
+      "sha256": "456b683ec272c47be545b65b95d7ff1d156176d2bfe400434e0d0e7332dd6892"
+    },
+    {
+      "path": "reports/2026-09-29-prospective-closed-loop-engineering/check.json",
+      "sha256": "b7031b9e4a1ff18d090bbde58db503ed6a25f6da29e81bc653035a29d7aa0965"
+    },
+    {
+      "path": "tests/test_completion_feedback_closure.py",
+      "sha256": "770a5e5a65bf7b4371548e8cac51dc4fa3221e21b61d208ab149afba3af39558"
+    },
+    {
+      "path": "reports/2026-09-29-completion-feedback-mechanics/run/summary.json",
+      "sha256": "8aacaf8604103ac0e43c76fa6f5bd264b1ca033a5e0606e633f03a07a5c966b1"
+    },
+    {
+      "path": "reports/2026-09-29-completion-feedback-mechanics/run/steps.jsonl",
+      "sha256": "75efda57b0cd8334648d1e87510dd731000d29b385f270fd3ad38495f06e746e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-feedback-mechanics/repeat/summary.json",
+      "sha256": "8aacaf8604103ac0e43c76fa6f5bd264b1ca033a5e0606e633f03a07a5c966b1"
+    },
+    {
+      "path": "reports/2026-09-29-completion-feedback-mechanics/repeat/steps.jsonl",
+      "sha256": "75efda57b0cd8334648d1e87510dd731000d29b385f270fd3ad38495f06e746e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/audit.json",
+      "sha256": "ae116a924115bdf85db1f6f560b701d58cc8c1cda2cd43679264577e8f176afb"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/cases.json",
+      "sha256": "01d0230d3da5d62667fbf72252edb215432ad52335d84d159f4cd2b6eb4d9bf2"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/claim.json",
+      "sha256": "1a38845f4c783ad35a99fdf891fa614930d77d60564751d01a712a430b131368"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/contrasts.json",
+      "sha256": "fd6701e716732b5f17e340e75557faee8ae80634aeea6327eca473ded0c34210"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/inventory.json",
+      "sha256": "df16e2ac794ed1cbe222b95fb453fc2c7528c3e084380bd9410d25882dac3b81"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/mechanics.json",
+      "sha256": "43e7393b94e6926f647d60c39987f6eb9d41359274d962d10e1f2f9f39df3803"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/probes.json",
+      "sha256": "90d05ca4781722c6ae9d1c6cdb7e7666a797e1390c73a483f57a70cb183abdec"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/screen.json",
+      "sha256": "180199b06ffb1e31e721ce3cf4d06830946ca507b81dfc2683f1317093e66a68"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/status.json",
+      "sha256": "78e998cb62b077eb49e63d51bbcf340df2883f0baf730b12a15ef79c77e6de7c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/steps.jsonl",
+      "sha256": "ed6167ca9cbbd384204a5ba35b00c3c784fe7b638f6c20ddd2ba762cdca94448"
+    },
+    {
+      "path": "reports/2026-09-29-completion-control-screen/run/summary.json",
+      "sha256": "e74e61d552086636d54c60cc4904d716ca3eff5a3acaca3e94e70e6ef9e62051"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/actions.json",
+      "sha256": "a10f7488b7ce997c6db239a83378ce3c4f9fb3beb3c73e1c2b932bd1af62d72f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/audit.json",
+      "sha256": "81729918dbf37c60f523cc7ee314309b9ed17813ce03e670819df3447ad4b3d1"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/blocks.json",
+      "sha256": "b8279d95d0ccc7a401b848b6e2fdc6193e5788210d56124fc95e5655abba5aff"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/chunks.jsonl",
+      "sha256": "9a30280b7158074255f91045159c40ac571fbc9a4b8749e2782416110dafb571"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/claim.json",
+      "sha256": "9e4a626a8a7f77db033eabcc0b33bd33dcb6d70cd2ea8f672657102f7320ca27"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/config.json",
+      "sha256": "33d1318a510d8f79f3292df362aa2efe90033a5b68087038e89db3b55fce4965"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/contexts.json",
+      "sha256": "01d1d5d1cb7004e8e1b62869db2e61779738323f420e3b9bfffc46091df6418a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/events.jsonl",
+      "sha256": "0387478c8ddeeca8b8c7b5b99e561c52d35330167a755cde80b51d7a43bcc4ce"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/inventory.json",
+      "sha256": "debb344e650cb4fea0ba31181c2f0a67d1547b88681ba5133e6bca6caae46377"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0000.npy",
+      "sha256": "00b176ab76e3ea81385a8f33cea388aaa4fa33c86f5037f0a1967c94ea5e9708"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0128.npy",
+      "sha256": "c73a71954674b0631270d3dea12aebe1632c6142e5e468d2d466c33d945d87be"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0256.npy",
+      "sha256": "9b4e558aa7fb039831cce5dfbcec8239c0b0686c725d7c1e3e8dee46ac6910d5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0384.npy",
+      "sha256": "2bd7a50aaff2b19e2f94ed3f5f742af39e44b03f5b27b19fcddc956622f23e86"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0512.npy",
+      "sha256": "5deb80f1491c06e33fb43d2fd6c762b791ff73a20f82cd4ab0e5c1af85d61365"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0640.npy",
+      "sha256": "1215bc358fcd23b2f93f25c3e5d624343cd926d255ac8d7c888b54e9d37bca97"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0768.npy",
+      "sha256": "69b047a5be2d328c1477548066ce93286d6c2ff551a7ee60d4b1e77408f6c813"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/0896.npy",
+      "sha256": "c91aa738306892283850b0179584d6918661079cc85be3007ad5fb8a5cf4e5c2"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1024.npy",
+      "sha256": "8919f2c527c6e38ba0e0894532c717b6254cc270a41c51ec1c3f19fda85939a6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1152.npy",
+      "sha256": "8c2266474ab22d554a85f9fc447a4895056864fae401983f7cd845016e574ff5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1280.npy",
+      "sha256": "ac87e86eeda28d0c7b63e1dacb0c03174252fe394aff4014cd7726d82248612e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1408.npy",
+      "sha256": "c33e0fbb46647d5342b194e8fce4f3ddeaec159369418eb4ececb7c93b5f34fa"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1536.npy",
+      "sha256": "76efdddd81ce8fc65472a903a570aa99dc336012e56cc22353067d745f696bd9"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1664.npy",
+      "sha256": "e916f2595c35002132794d0aa33d4059cf72bec8f2165a10ae3f9ff65f5bfb4e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1792.npy",
+      "sha256": "7db26310ebc00edbb8671f7024cece0e237090ec3e512dbe9cebde0ac3bd3039"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/selection/1920.npy",
+      "sha256": "ec0c3151f95900708917cbd92132fe6c21bd40f69696de72128909324b794e33"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0000.npy",
+      "sha256": "c431cb8e958629106f17b14451f43a8bc15f2870b063d6450c023b7ec52f4279"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0128.npy",
+      "sha256": "e111b986f0dfc62b028ae12c1756caca347850d723b8315853b56dd10d77cc3a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0256.npy",
+      "sha256": "a5d376e135154b4b045bd54c1bb063d720693948ad934f45b5fee74317277475"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0384.npy",
+      "sha256": "1fc239d90eac4ffe573513028de0339e27392d9e0f70626f0dc43b0b3b64b40b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0512.npy",
+      "sha256": "3b9b278052e16aa64c70e68c425ed1580f283d70a86c559ee188f4a35de4780c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0640.npy",
+      "sha256": "38a416e829f8d91ee697e9383dd2cc379ad6c9ed2016be1032d722de294fda0a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0768.npy",
+      "sha256": "ddb165f8455ef23b3141ca8f6a54b7161ef03ba163884ac48c21837fe9f392ca"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/0896.npy",
+      "sha256": "e5bb5094dfe7277bdecaabd36f2a4cd76a6c00fe59a523e73b2f70450c5d65b8"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1024.npy",
+      "sha256": "9aec476e9dc4405dec5ab37dbdd7bd679827dfdf5323b99cf4d8e606c039dcca"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1152.npy",
+      "sha256": "e41dbf09798adb3ae2f913f7a7a3094fb58c0ffb73f6e31f4a99e13028e6c1c6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1280.npy",
+      "sha256": "e409309a9a699d6e33d9ef668a0a2e3a85e58c123cb40948771af74d0d254657"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1408.npy",
+      "sha256": "01aa4bf8d512e09a2ce9b091db498083bc1e0d7d45b8f63872bd704a60a55c39"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1536.npy",
+      "sha256": "3f7119624cd5234e6690287c2fd62d3a696684c078ed09620a73ed005923a8ed"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1664.npy",
+      "sha256": "aa673788974f2714dc118931d02a5465c5eea319e53a88cf1ae90743575f9522"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1792.npy",
+      "sha256": "1e480e9127feadcabca8aade3b9b5e199eb37d7da3cfe5160f5881dfe2e48c59"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_a/1920.npy",
+      "sha256": "453f908f94fe766613744012d1f1fc58937586b9b5f7328a56a099afdd4c0409"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0000.npy",
+      "sha256": "531d949811cc3000704a4ff81f34b0df6de05d44bdab5cadc886e1b2e4f8765d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0128.npy",
+      "sha256": "a4b39252be85f3f17a874aa3adf90a5b9c8b7227b50c591187544f397723820a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0256.npy",
+      "sha256": "f3ed0263c54b9cc0cfa073105f1fb34cf6b947437c600138c9137b3e94d00660"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0384.npy",
+      "sha256": "36bf04091507973bc7387df695fbf988ab07f88f2b73bf3c47d76488a301b139"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0512.npy",
+      "sha256": "6f90967998e33985ee51935084be09f0307263e6bf14422186a6e2491ea35ffb"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0640.npy",
+      "sha256": "c649c0b129998edd47c7b8594e5111ba90871bf55fac7063759d5208483c4593"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0768.npy",
+      "sha256": "a68ded0d4bcec59d40869bf33a3a01abc8ced3f4059f799faf02aec08ed85aec"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/0896.npy",
+      "sha256": "e18c708c15ed5b99befe58a1b7f51edbf68ab3e49a4b9302996bc24996c85640"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1024.npy",
+      "sha256": "b23cde62089049c6d3b14dd3e75c328c63caa03a99ad7dcabc75bc844208f056"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1152.npy",
+      "sha256": "e536ec5c1b528ef61488f3829bbdfa0b308a5aba929af3d49d503e249792c641"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1280.npy",
+      "sha256": "dd6f9edee386999b2d22c36fa7c9ce78ff72ff2b5e1a35a9af7a15cfc39fbdf3"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1408.npy",
+      "sha256": "70949de3e5fdb716fbed65a18e38df1b05400f1ceac14eb950b57a0f70b77e7f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1536.npy",
+      "sha256": "0b640e8b8db308af267c941c5d37a5e86f27bdfcd266a10f6b4153e74fe3ca8e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1664.npy",
+      "sha256": "b6ffe9b1507e351e4b7e4eab8080ae52e19c85d10d35b3efb37048c9638dfe38"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1792.npy",
+      "sha256": "495311da3b5fa70cc0b6965c6d64679a1b6f625b19c0149cc8f959679db1b68d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_b/1920.npy",
+      "sha256": "a979aa027f361a94b9779b24ef4887e1a3b503637cf16d40f599a9408f72ea54"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0000.npy",
+      "sha256": "d481e403d5418b8ee1cc81de3426626c43c71c0a84a03a88374345566d1b7323"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0128.npy",
+      "sha256": "5bf9f3fc05d52a6c590567e5e7690db2326f453c4e04019377326f807aceb69e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0256.npy",
+      "sha256": "3113980e35060e5fb5ef513686aebf809cb3ce381d77fd71ddd0ebd6cf5da09e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0384.npy",
+      "sha256": "728db37c9362626365c1be428aac4ac8780f24d0b6121b3f1c08c69e27562c2b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0512.npy",
+      "sha256": "4efb5c5e92376f02a247d2ea004b53d4e2814d307ef3fe79b6a2c4bffd699510"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0640.npy",
+      "sha256": "6bf4a4b5752be86faf81c9234cf8de3ebe3855fb6e3bf56a3e51c6fb57446e12"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0768.npy",
+      "sha256": "98d901f262e07ef4eab23ab92c25d7da110fd4929e915e8dea470d005e294beb"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/0896.npy",
+      "sha256": "99930c43e85cbb292b40d8ad8b002e4f4f56e6632f450afd7cfc868ac8171f70"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1024.npy",
+      "sha256": "d1d146e41a0be842e8ca6a0c5a10b32caee3473b5cde428b47b3fb281f63349c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1152.npy",
+      "sha256": "00c83d5383523ed75b106fb54149f984de2d8139b90d636da035ab77f2718de2"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1280.npy",
+      "sha256": "ba8ca76fc4fdab295bca022d22943a6a6d0227ee9b4445b6064ef664e099db1b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1408.npy",
+      "sha256": "e25c0898110531b4a0a12626848424e8e80a4ec640669959bc38a348e2c46849"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1536.npy",
+      "sha256": "b036eceaf1e1cfba87e1b8533c6cdbbc089364fdf1bfa0a58298c8413aabbd48"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1664.npy",
+      "sha256": "24f510f37030a143d0470f5ed7a5b06bed8480352845b1d66581906b8e33bfaf"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1792.npy",
+      "sha256": "91438cb4336face063c1767dcf02b868b01f642491d4397532b2316881d5553f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24/validation_c/1920.npy",
+      "sha256": "fd4d1646409e3f1bd16a0d4005f6521b237228a9a57bacddaf6af5826b7952cc"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0000.npy",
+      "sha256": "dcc439020d446b6b47a3aa6d0b424c88060b5de7ad2659e696fe653076eeb37b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0128.npy",
+      "sha256": "f66581c2bf1c38c1ec9393505830a26f1ea97eeb39da94e0fd0e0867cf708d90"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0256.npy",
+      "sha256": "0815c8042848a26716bd318c425888b64ccb38b861f3e2f58dd621c6c2130f3c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0384.npy",
+      "sha256": "70f0d6c054dbbad23eaef014630f690f3bc6e6e233c748e33577fa7fc5c7099d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0512.npy",
+      "sha256": "5c7d60dab57dd6a8f2fe81059305e32227d67f3c5f4d81dbc25d010b4163a8b2"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0640.npy",
+      "sha256": "7f1c5e072de14450729e0f123e3052790ec78a083c12eacf0a927b984339dd3c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0768.npy",
+      "sha256": "dea6d22c2025e4a6b41aee550fa2a51328e5f7e0f5b7fff489104348e6e377b5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/0896.npy",
+      "sha256": "b2bdadf2bd0cb9116bd77ebbad198ffaf22baf40d9698964942fa27ced7fefd6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1024.npy",
+      "sha256": "21decb05a64133a888fdde226cd70a6fa80fac95f00ce06e22a49ccb28e40da5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1152.npy",
+      "sha256": "670d42fd7481ea453731fa243fa2025149c043f2004faff7195845c301e51ab6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1280.npy",
+      "sha256": "abdb6aa1027725c72906deeffab0abf60262cd9fc150073eebe08ff0a843a59f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1408.npy",
+      "sha256": "6c4e7614b933345b2b5980809b2934c75eb5753ca3b63c5941a94a6780ebed0e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1536.npy",
+      "sha256": "db0b380dfbcc5753a63d405cb4a3e9eaea9c2cfabe10b2c9d931a440bc167a0a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1664.npy",
+      "sha256": "0d64561ee83b9e36c9c7ca651fd7dcbf116dc8bdcdf861ce8859d038bcf579eb"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1792.npy",
+      "sha256": "b8471f60f82e51eeb61f5e8d698b1e9499f3bd4810e5364b6bae918fac29bbce"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/selection/1920.npy",
+      "sha256": "969f25f3b8d0af0de8030ea97d1fc61ba902fcdc5ea7076f372ced3f0c3665e4"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0000.npy",
+      "sha256": "75a2b1a5fa6f0c3468210e36f7a4eb7b89255cd7289116af780110eff54fc833"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0128.npy",
+      "sha256": "26a858fab50a81c92f8a92d65863c90e3fb177652e42686a8a283cf23b701942"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0256.npy",
+      "sha256": "6a30527e9ace264430f0fe25edcb46318acb43e07037f9c90955997423604139"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0384.npy",
+      "sha256": "7c36ed12f90e70b6eced79f56ee16c3767eb38a636b0b42d7a9b3228f8e01449"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0512.npy",
+      "sha256": "3031338e7481ed7e6d40b969372c3ae8d3195840201970ed298d224275184d48"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0640.npy",
+      "sha256": "62998ee1c8c89e3aac63243c975af95540a0b1b1d13ed819bbf58f99dcbe8a8d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0768.npy",
+      "sha256": "b14fb31efababfc1b5052fa52aaa45ea990c3abd1498b2ea433d039f400a216f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/0896.npy",
+      "sha256": "1165d86ec5aebcf61cbd0a199e660621d2be81cfde921064e9b7018c041cb9c9"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1024.npy",
+      "sha256": "e53b858fd5065455c2805d736421ae31565f2fb8d5b7cf924bab3d065898ff71"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1152.npy",
+      "sha256": "3f186d47a4e7c5e92e703fa580f7bd2ef95585208bef7536e896a0666e1c849c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1280.npy",
+      "sha256": "b4d62059315a930fbb6b68e01ffd3fb18e7a8550cfa0b5ebcf8aff10fc9a43ab"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1408.npy",
+      "sha256": "8df1b739ce13b41fe331a193d1993b4282359bb2759dea0571d3fca43e1a6fdd"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1536.npy",
+      "sha256": "1f599c264394ac663f07e384cc789cde1db48c98ee221d82a42b10d2b1c75de2"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1664.npy",
+      "sha256": "1eeb6c4f10c6ac84b02d5c325d7a5c7e65d9ae2c8f2a38545230850ac91a8afe"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1792.npy",
+      "sha256": "21295b7fcf550cca7184a9626def516f92bf2d2b47f3ecf68e1cbbf5539bea1c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_a/1920.npy",
+      "sha256": "bf1bdef73a3b4f4ed603fa682856b2a9177624801cdd3e0154a6a627bd9e2974"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0000.npy",
+      "sha256": "f29a80693049c90409eeae975aeb510d292a3389cbd938b1c05997e2256e327e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0128.npy",
+      "sha256": "25f15ba062ab43e7031a1b2b3b14e475ccd699de8992ee73c259eb96dbb257a5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0256.npy",
+      "sha256": "a2dbdca20e4eef9dac136d18448e799869d64a2e5ab42f812b5f411307747b6f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0384.npy",
+      "sha256": "b332ff36124a4f333d9542583a50e73583781429865e12ac55318a79e641f41c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0512.npy",
+      "sha256": "94c6340af741b94cb321caf00e23d93e8d832bb92409e0c0ece5e1c21eb937d8"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0640.npy",
+      "sha256": "4bfff907e834349afbcc1a3f2c7513e316e009891c3ff7b1c8ba43a51cc48505"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0768.npy",
+      "sha256": "3df44d5828f52617fe54d53daee1b6c681641a2253ac6e42eb7dd4e6c30e1f7f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/0896.npy",
+      "sha256": "12b959d8cf635ef06dfad6047ce457e0e48c634be485f6339300c1ac303b62db"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1024.npy",
+      "sha256": "331ecc2c48219a700982170087167ac3dce5b19053cae9cec21e8d72be0b0b1c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1152.npy",
+      "sha256": "c8fd81f6894c54fa98c7b1fae75cd124fb44e8199230f1ae7bbd54cbf9db9006"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1280.npy",
+      "sha256": "5ebcba7a445b01c28a1525a59e4b8bb00a0da9eb1b7ac67831a563150069302d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1408.npy",
+      "sha256": "ec65772fc9a7be53ecab8ce6ed7de7d7ef78520c5178db2b74a37144211a659c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1536.npy",
+      "sha256": "e24518c0ca98581885dad9ce41e0589e70c4d079e32bde2b3bca7d6930d9b20e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1664.npy",
+      "sha256": "35cf6450b3a3be35e8ee98a380b931583294b8e15c7853c40408dfa00574009a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1792.npy",
+      "sha256": "a70318b9cee5b53623ef70884ea85cb6b04418e11ffb320a87c53c005360fb86"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_b/1920.npy",
+      "sha256": "55ae2ed4f0fefca2dcba6d6db9278d0a5a6ede2b945a478707ae2b35df92e0ca"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0000.npy",
+      "sha256": "bddcd0a3be5f7533b0af2e942980b98686bef60c28b5ada3df80be9a7c84229c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0128.npy",
+      "sha256": "3610dd7d58a7fb7b68031a6e40470856b606592e264cdf7ef9c0e86dd98bd589"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0256.npy",
+      "sha256": "d569566e6a5d302a8b0c4985ea7095fa80a3b49cf5c41fcbc2cd0121f6a783de"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0384.npy",
+      "sha256": "34441994585d7905ce9dc5f91456f8093db1f9e1e4f68f6c698de644bf6fabfc"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0512.npy",
+      "sha256": "ef53cb25a4e4b14acd370e31ac305ec1e66b466ff1c180a356dd178dd9874107"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0640.npy",
+      "sha256": "c8bdb785b9c632d2939c665657aa557f187edb1512964573167cf93d4fc45c52"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0768.npy",
+      "sha256": "b9aa12910e35d0e4b81773a4c5235f010b258a4c541acebdeb5c0317f6deb0d3"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/0896.npy",
+      "sha256": "0191b0c558e68c5eb412b7ac09deded5dbaf4d8ee2e5b5925709d0d02f609505"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1024.npy",
+      "sha256": "254aeac0a652202caf3c275f57215a6ea1b7b0b3dfec76b0ad0b282c0329e353"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1152.npy",
+      "sha256": "b1e488f64cf58edfbca827ba64fcc55d264389912b08bccf8d9f0bb08921e242"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1280.npy",
+      "sha256": "c4cd5efda3bd89230e707f3875829d410f7c271955935213a627be8f0aa88d57"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1408.npy",
+      "sha256": "ddd21b8a307ac49cf10dc6f53c11875b592ffcd8369cea854257a32c07495134"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1536.npy",
+      "sha256": "7692279b03f16891658f5bf241328fc3d717c499e7b38ba53061acdc57bb0714"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1664.npy",
+      "sha256": "938d89a01c3084d341fa695ec9a5172be171ba33e2351380c9c9cff733c6046d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1792.npy",
+      "sha256": "5db2ba1668c5b72a102892afc1da78480eabbb4e594947de82d4ff20b8cb343d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77/validation_c/1920.npy",
+      "sha256": "1799e9660694d3d1ec86879f0f1d8b42abca1f91478b2ae609001ea224774d27"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0000.npy",
+      "sha256": "210bbefa765ad1cda2982bcb5d3fa86e36bc41670a0832b7cc6e99d2389b191f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0128.npy",
+      "sha256": "ecaa48e94e4ef5c7ac643f21a09745a52f54e129ad6249b06c7c6115eeb2557b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0256.npy",
+      "sha256": "a16e0da5b682323f4b5550f8f0a8fec484e00cfaa78e47dfb0c8476f3facd6b1"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0384.npy",
+      "sha256": "f5204c5ccb37186fe8c1e88edd4231ca3d260c12c66ba21149a142afbfa7abd9"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0512.npy",
+      "sha256": "d783eb4e5dea9a71734deb8c30e27079c8fcb1d30943266f9ba099b8467da853"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0640.npy",
+      "sha256": "cb14abf8e1db7cfc471a07768cbfbde537b7cfe7f997b1fbfcce364bc3f3d840"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0768.npy",
+      "sha256": "67f83d4d3d9c777561a0afa217e4980588115b36c2992e102b60b0f9808e8dcc"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/0896.npy",
+      "sha256": "c17558960da5328dec3fe6f54321eb078db134f5a313edf612c30fdbe86fe33d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1024.npy",
+      "sha256": "bed90afb358b046cccf06f637694614143f4f35d802cdac0b8bab38b32fa7afe"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1152.npy",
+      "sha256": "2c17e0fdb3a1bfa82591ee3008b3f29ec3ffb1a69eb7fb9e64bc619b3ae44d48"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1280.npy",
+      "sha256": "895e1cefa2a81b925f7573caf55ed133dac79641aaec0281da8cd8a005363819"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1408.npy",
+      "sha256": "8b971ef663d39f747de34ab9967b2ff733593be81df1856a9ac6d366fd6c7495"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1536.npy",
+      "sha256": "a95d875d65539241a3f68d7377c80c5ce3a06c5f8b4680e132f424c612c8f3fa"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1664.npy",
+      "sha256": "3be5c3000a437103f698bff29ce68519df93c7e0a682227bb391b212bd396f24"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1792.npy",
+      "sha256": "c2c14580306a5053242d67b45bf9f0599d5f1863ec1f706e8407f871e122d3e8"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/selection/1920.npy",
+      "sha256": "1e19ae0fa668d2fb51cb7811f075a8f74b3121ed64f75a749b1579b1e5c69cf1"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0000.npy",
+      "sha256": "0a5e31b118a34b0dd12aa98e4856f1c0deba323ebba1ef60fbf1406e30c841c7"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0128.npy",
+      "sha256": "2dc052899c4386f620698f1f16ea0010ee3b0304a3c6e8975fa4591a048f890c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0256.npy",
+      "sha256": "4052a41b747841a80fddf09091ce5156d6c2d209147ec1252c028e0faf2dff73"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0384.npy",
+      "sha256": "a376995fbb5a8a5a39f84a7e4c3247296c6fe8e9551ca480eded80ec7ce1a808"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0512.npy",
+      "sha256": "4d491ab9ca72413f433c78b5a42fc28c32dfc4e65623516d2bd9cdb7ab9506f4"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0640.npy",
+      "sha256": "2d7a3be3a435d4873fb5d4c1e8aeac509a360069611e51b7888181f164dc456b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0768.npy",
+      "sha256": "0aaaf2a38c2dda2dfe01affdc868f404a0e1e99c14ba3d4794cae37a42f3f5e8"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/0896.npy",
+      "sha256": "1ac24798cc2d4079ffdcb64ea25a83e6a62b794b66d5c19deb81eb3cb81d5fdf"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1024.npy",
+      "sha256": "d4fc73d826b0f33e6545972a9bef0a242e3389fd855da953b2dbcdabe255babe"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1152.npy",
+      "sha256": "c0d1c06a82d342cdbbccee03f000d27581e7b90d2f8504dcd80d70ba9bc44142"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1280.npy",
+      "sha256": "08e3dc4ae2e5cc46cf73e451bd1bd7ca62a5771c022578ba35346eac0c5f3184"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1408.npy",
+      "sha256": "7eafe0712ed6aeb234bf0c726ca759066103024f128d561a274f7598c1754135"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1536.npy",
+      "sha256": "319ca4725881144b84b0c248dc0520a3c1e1168b07073308103cd5decc482078"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1664.npy",
+      "sha256": "9ffb88580712fbc1a50c3322804aff6346b910c732b8108d6444c72f3cdff836"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1792.npy",
+      "sha256": "f732e71a17be759d86bec43c4bc29a8a1f7c483ffb608b3eda7d71d6b559e473"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_a/1920.npy",
+      "sha256": "a639b9d4309d469aa6457fd33dbaa853077ee97beb2dc632bfc01810b44c4523"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0000.npy",
+      "sha256": "efb46ce45ad08ca835dc2fd31fd1f95f603382a8a9a25cf13f3cef592fd4f348"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0128.npy",
+      "sha256": "31c876c05dd68a9dd05a647ad801faa1d9c0d9ce392711d5b0ed77bce4ffed6b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0256.npy",
+      "sha256": "9ed50712ee1f392654cef7d739afe1795334cd7391ea17beaccadb8ecc0ad8da"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0384.npy",
+      "sha256": "854ac1963a1745e7b3e90066d07a1f4d678fc87318dab228f09a7f6309fc0e82"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0512.npy",
+      "sha256": "09728d05ae5388c80e7e9cc1a9306bc990141e1dbe7320e8092f48310e21e829"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0640.npy",
+      "sha256": "a16298580cca26b619ef5314f790ad7d7e66ce9e2a5363ad8b48992eb3653d76"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0768.npy",
+      "sha256": "967d1be9c5d539f64f74af345a4c5e2870f49f7efad29452902c8d3c225f26fe"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/0896.npy",
+      "sha256": "121dd11c5beb183f3aa7f521306aa7000764b96de5bd4fb13478d8820dcb3208"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1024.npy",
+      "sha256": "9f8df0a0856fd57f1c54d5278e9f8f8d24984d4e332545270d645552ef071ac1"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1152.npy",
+      "sha256": "d896bf800402b5cfc596bf9c202b8cfeebd8dd29e2b40df2e57d451ceccf1796"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1280.npy",
+      "sha256": "18288ca64798a8065c4b567d4884be6eda73eadaed01b4a260190345b5bdb9ff"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1408.npy",
+      "sha256": "a83de8f3ca0d388821fffe9eb106585d4bde80e0f84dd080fcfe38aa6ba2107a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1536.npy",
+      "sha256": "d18c54cb8101ca70c54e19142840e6780b26aa2b3805e8db478ed9bc30940024"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1664.npy",
+      "sha256": "a93c965be83be62b9f6f54b1e22d7ac6a4d7f417fd9f0146a66c8d71d1dd7fa9"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1792.npy",
+      "sha256": "e4297a8c1d891e2f27a6b73faaec64d44e0203d8dfd0ed45f54e3f782645b481"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_b/1920.npy",
+      "sha256": "0ba503a5a83f6ed2841b96c3c7adaa6650c9658f784d6ee6342de5edf5613d0b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0000.npy",
+      "sha256": "b6d763046146d86a875b63724d074af902bbd59aa917370e6cef770ad668cadf"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0128.npy",
+      "sha256": "93b39bcfb78183918dd7e9407a7a4b881f3d95899132c453b225eb73b3792945"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0256.npy",
+      "sha256": "d635585f2be827f268bbe30fd027535dadd8ae608b85bf9906e66a60723f3da0"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0384.npy",
+      "sha256": "03af863919867e0ef76de2c0f3be9c0c85976afe4d594da9401bbc9087e31639"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0512.npy",
+      "sha256": "4317dd99921023e7226cfe1d8e330ffbd9d9e5a6ce3f7596064d7994ab47322d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0640.npy",
+      "sha256": "7657d466076ab2b02ac04e50fa932ee3030e74179daf1b52d1c74011e90df2bc"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0768.npy",
+      "sha256": "77dc1a2dc46b4ed2cfaa1b91cb57bac7cf546a07ab6adae5a48bfb30ff82052f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/0896.npy",
+      "sha256": "93970d497e35dfd9d99421b289bfc12a2c5f69ca188620b1982b0b04061f5206"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1024.npy",
+      "sha256": "4fb5ae75e20316ada9b6bd15bbb7466abd3eb871cf400523f953895ba3772125"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1152.npy",
+      "sha256": "ed3801eab7d4f7f4ba2a4402a9b1e0ac870f440c5f6e2a61160bc03ad69c478f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1280.npy",
+      "sha256": "a15ad196b89d4325a6cdf5463b769c0971e484563716b2df458a6872f56ca7e6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1408.npy",
+      "sha256": "1deae3d60306f6508de5fe0c6421ab1df930aace22ac0434817d6d5cc4b434af"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1536.npy",
+      "sha256": "13b9defc686264371a49a14b84fa1872a25651c183e9aa652194223df91530d6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1664.npy",
+      "sha256": "f382317c549963ea3350b888a7a3e49aeb558cea312d0c62e6040c09def87584"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1792.npy",
+      "sha256": "e6d05fd99cb4fdd061f0c76d67b2f2a7e75ec47c04993beea172e1161b4e1d30"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539/validation_c/1920.npy",
+      "sha256": "4bac31598e46e0ed287ff11ceb01755892e9d0b4546330154d9b03d176c0220b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0000.npy",
+      "sha256": "3130cfe5d4a00079a38a15bb99c9a09753f43ba0b00c3bd5e1dcdc364fc9643b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0128.npy",
+      "sha256": "c78481f794fccf7906a8148289e7d58ee422f125ae826515c01159f0e45b4648"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0256.npy",
+      "sha256": "60580965c6bea2bdbd4d52c5fe2770c22aa97c726cd1b83442f0a6be21243430"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0384.npy",
+      "sha256": "6407b691eb4731c8d8ed1ab06ed1ff6038466556be8248d15689d4e35a5adef6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0512.npy",
+      "sha256": "43e0fbfaa143d0637112396762d0be2f8cd1456d2c41fa0b054f8b0101d464ae"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0640.npy",
+      "sha256": "9e14abb1dda451f97b6d063ad28dc83a0433046ca8053d48bae0eb6d1acc8d27"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0768.npy",
+      "sha256": "d399a291689f505d48f9ed406285d4b635116485b1e4468b937cb811c86c2071"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/0896.npy",
+      "sha256": "a5ff3cfff401bf155295bf4a09fc64adf92e8f559fd51b497b5217fb246e9f8b"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1024.npy",
+      "sha256": "4a4f7b07eef8c42d5b1e04088a6889125cdddd011cf1fb4feb177f16270f6582"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1152.npy",
+      "sha256": "032698fd9f93d487502ea5f12a0e328637f048dde8d346ae6e22d7af33818a75"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1280.npy",
+      "sha256": "20ffac2b59c1895fd6d6a0454935fcd07eea7470711693970ce9e40cf16aa4e5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1408.npy",
+      "sha256": "7ed50a3e088e8b639514367a592e1b48cf318c91bfb8a5208f99a1ab06283909"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1536.npy",
+      "sha256": "75b4302c193caf543ce69935bb104731d1b686b2d9ca17ffc81af585bc4621e9"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1664.npy",
+      "sha256": "a48841dc422fe82a8729e270b227ce34a42f3c0facb6109f8e2ff44da1d8f17d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1792.npy",
+      "sha256": "a596f6e07b7ee753c6c0a5f1afbef4ddb3d8d866a0c7c1b8f262240543d14615"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/selection/1920.npy",
+      "sha256": "a9b089584fd36f3dce0b714fb1bf316ae925f86de900e47ec5e392ad9b68376c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0000.npy",
+      "sha256": "781cb9f261f2228b56d59dd0c1faffc2a35ead770e440f0a34b39dcf3a0dee7e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0128.npy",
+      "sha256": "ec3182faf99a713126ec45a36f027169213ebf380e9010cb560c6330c65772a3"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0256.npy",
+      "sha256": "b6acfb5122b82a0ee7fea89c9ae6942264300820e419d9aebbd069fd42d4f715"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0384.npy",
+      "sha256": "51f0bb20bcfee2c1bff566a20beea75dab2d00511576dffd2834f59bf8ad6d91"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0512.npy",
+      "sha256": "18b028de4794852c54d68ccbccb6a097b2cf6ca8a46d9ed7e7e5374f23892285"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0640.npy",
+      "sha256": "40fdc75c665782550c60cef9db871cac89b930a73e021d3f663cd4a5e189019d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0768.npy",
+      "sha256": "377375560dec58b116e1b160690479832f9e0ce8e97fa29cb8365a52625927c3"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/0896.npy",
+      "sha256": "4ec4801a1b0d9c871b52984479b0539ea83dc552f43f4a0eee82a57781a60a15"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1024.npy",
+      "sha256": "e568d35993732c7488505ee8e6ad066c059bb9772238561c9a6a70baa841c063"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1152.npy",
+      "sha256": "0a051a00d057b6b140a5a7abb70977fb8baf8b9621305852b69cf379ee485067"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1280.npy",
+      "sha256": "7a6cda95ccbdb52e5521afd0b65fa4ecf31ad9f1ba3457fe9026d6837085fc29"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1408.npy",
+      "sha256": "d2dbad493a23c3917dc53bc440126da032b3cd84d9aa1040654f9ea613098978"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1536.npy",
+      "sha256": "90d1d8ac78d0fd9760532b81b8344d6147f27c219751f555fd7a26fcc880ad23"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1664.npy",
+      "sha256": "159861050977cbf072be0fd327e43956f8167c973b2b3d9135bb37d7d523876a"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1792.npy",
+      "sha256": "9c4119f67a9c5b1cd096772901ab1e9ed83b1328449ffa1e282b8f435a56d95d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_a/1920.npy",
+      "sha256": "b82c250c5bbc43b0560d7c8372cfd0c10839e5e61cfbdffec076cbce24692550"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0000.npy",
+      "sha256": "201a244e60c161ac0d52c028dd282dfe94fa37b1cbceeef7f0c5dfa407248b82"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0128.npy",
+      "sha256": "434151b104c270c6f1032eb33daa47130d77fbef5c12aaa90c4b20d1d1be2acd"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0256.npy",
+      "sha256": "a58120b1337ee73dbd5fe83b4938444a8434c65f6474c42971b70fa25486367e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0384.npy",
+      "sha256": "f762819039a6cac8d53c11ab8ae0c000ffea28d6e653139cf3bafed75c090bef"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0512.npy",
+      "sha256": "7effa97dd30bea0a3affad757e587ea56e0b85088661d5319301d494a4ad075e"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0640.npy",
+      "sha256": "593f41b73f55043aa5b165b4fc3859276adcdfec1546184ca57716251f8c90b6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0768.npy",
+      "sha256": "8c9d0fe231a0791e1c1089a0fe81e72fb499f79af19bb77714e18db9df79fc2d"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/0896.npy",
+      "sha256": "1dc665c17525c8f66186390596ee3b7900dad48e50f6473cb3492c122cebde73"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1024.npy",
+      "sha256": "8d0797a9cf8f130e338d597a8d10c29efca95d0a0978c2269b90976878ad6cf7"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1152.npy",
+      "sha256": "03b006756f700e6ed3af7d5efbd9d216e5b379b755880ca5572d025eaf8351c6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1280.npy",
+      "sha256": "a8830610b599a4a84dedd16e1a82e3b9bcb94f503a51146ef9f07155bb6274c6"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1408.npy",
+      "sha256": "73b809de619a556f0b58f4142b6a037a8256819e900023d65276cd3e08dd2f0c"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1536.npy",
+      "sha256": "2c065a4cf64478127d9dd579f8114ba1ed6801b4e5793c9827cb75c8ee83b7ae"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1664.npy",
+      "sha256": "013872af0ac47f9c02795c7dfe1b78883fa2ed489d82fc35435a9c159ad8c1c5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1792.npy",
+      "sha256": "7c8e301c43c080a3608923a0dfab8577c7cbcab81a29f1de1e1a9d27aecc2d70"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_b/1920.npy",
+      "sha256": "1505ff014ed039a10c5ac8bb9d1e8b3d47cbbba67cd15cbafd45e574eeb7fd25"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0000.npy",
+      "sha256": "dd4a09382f0eb9652e2ab7a7cb1a8ec7ed9d539cbe93a18a005034131a7c50d7"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0128.npy",
+      "sha256": "563e7ba22f309d1fbba53c9cda19b05fc62824d76bf99d9a60cc387c91174074"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0256.npy",
+      "sha256": "cffe7670a7c5921f2113a4616783e14de665a7175539bbb3af25842b2a6fe6d7"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0384.npy",
+      "sha256": "b40b66a829ba9a7ceb1854d9e92db3b2ee6f6d9e9a10c59c97bdd74d85f075e5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0512.npy",
+      "sha256": "b815fe5990eb3943ee5ee412c99687c027dd1ca71c6f924ae89f2c1785c685c5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0640.npy",
+      "sha256": "586645c8170f7d170041d60f14b330e5033540e5130f045eeb9068e69489f592"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0768.npy",
+      "sha256": "e73a7cb47880fa464991cbb3627af2e7904f14c243717fd9abd8665f22b59a83"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/0896.npy",
+      "sha256": "6cc2c82ab255a79b5d7ce1991c0ae6caaeb6b1b1812f14fde4fb89e0a1d6c2cd"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1024.npy",
+      "sha256": "0f9403e88250930d72e5f518620f318eaf3a760536557b09e3f975f3e72e5aff"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1152.npy",
+      "sha256": "c29dc160cafd6ed08473760a9bcb2a46dfd978c66282c03af27ad90366fbf17f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1280.npy",
+      "sha256": "70df9f34c99d26fd02244f7b610a569e83b329046987925996e2ec28f0b34a92"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1408.npy",
+      "sha256": "d0edfc50a8fd40aff86fb892d3a5492a50cb05d7b956f8d25b629c7118618c82"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1536.npy",
+      "sha256": "f1317ac22393171a0ba21a18f4b122363ae2420d0bdf0bb984bc91fbe9634836"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1664.npy",
+      "sha256": "d2687ed1dae3d3365e14522a2c14d99ec632ae3805daf34b3cad2a79ef901aba"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1792.npy",
+      "sha256": "6db1f6c951ca2f3574d6b29aae52e05dcf106022cf30d13a8744cd36a6e8e130"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/raw/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd/validation_c/1920.npy",
+      "sha256": "f1cb779d30e2a372164f85e92bf91d515f19c876253d0cc8a4efd258131f606f"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/selection/30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24.json",
+      "sha256": "05bb27ea9b1c77b77417e428814bf0c4ea3ad20d62231fbd838eb350caca00cd"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/selection/56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77.json",
+      "sha256": "8889a28e40a643221829436413d10a0259dba0942a0a6e8a795cc4841ab99ca9"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/selection/79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539.json",
+      "sha256": "8889a28e40a643221829436413d10a0259dba0942a0a6e8a795cc4841ab99ca9"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/selection/8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd.json",
+      "sha256": "6723614378b1f7d61f04b91ba531e51794ba86fa51f360ef7ec5af28a1948dc1"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/status.json",
+      "sha256": "4fbaf9ae3eaed593d8e42770f492083a4c350f400c64f7551a60bf297b94a6a5"
+    },
+    {
+      "path": "reports/2026-09-29-completion-action-ranking/run/summary.json",
+      "sha256": "252a032c7b82c8575dfe06e0c26c9c93669fd3d140d8f360466e5cf8ba6a2815"
+    }
+  ],
+  "python": "3.9.6",
+  "numpy": "2.0.2",
+  "component_axis": [
+    "holding",
+    "labor",
+    "switching"
+  ],
+  "seed_policy": "PCG64; named_seed(namespace, context, tree_fit/outer, branch/block)",
+  "new_actual_episodes": 0,
+  "neural_updates": 0,
+  "reward_changes": false
+}

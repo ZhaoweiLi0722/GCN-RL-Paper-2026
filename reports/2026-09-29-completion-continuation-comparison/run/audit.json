@@ -1,0 +1,12 @@
+{
+  "audit": "passed",
+  "raw_arrays": 436,
+  "inner_paths": 345600,
+  "outer_paths": 1966080,
+  "scalar_replayed_paths": 9240,
+  "scalar_replayed_steps": 187703,
+  "source_locks": 6,
+  "input_locks": 315,
+  "numerical_audit": "independent fmean/stdev on every raw comparison",
+  "full_matrix_rerun": false
+}

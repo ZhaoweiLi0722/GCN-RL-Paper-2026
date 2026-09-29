@@ -1400,3 +1400,23 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   episodes, expand/retry after outcomes, use formal holdout, perform remote
   operations or imply Howard approval. Stage E remains closed. Reward revision
   is a separate scientific decision, not an automatic response to a null result.
+
+### 2026-09-29: S4 completed; reward diagnosis retained without intervention
+
+- Source `6409afef49b667b7abef146ea117e59b7bb4cc5c` completed the one S4 matrix:
+  345,600 inner + 1,966,080 outer model paths, 49,204,865 transition queries,
+  exit 0 in 35.638s. Independent arithmetic, all 436 arrays, 321 file locks and
+  9,240 bounded scalar paths verify. The 154-test suite and compileall pass.
+- No context passes the declared stable conditional-signal check. Tree128
+  matches or loses to booked in all validation contexts/blocks; it beats the
+  weaker reservation continuation. Inner actions change in 64/180 entries
+  between budgets, so no optimality or strong-MPC bound is claimed.
+- `specs/2026-09-29-completion-continuation-comparison/reward-diagnosis.md`
+  separates historical reward/return inconsistency, missing operational cost
+  calibration and untested neural learning signal. Read-only telescoping on
+  all 288 archived S2 episodes gives a common +2 reward offset, no ranking
+  change and no new simulator queries. No reward or historical result changed.
+- The finite S4 packet is closed. Do not train on an unpassed headroom screen,
+  tune costs to rescue it, or automatically repeat it. A corrected reward
+  intervention/development study needs new scope and a prospective design;
+  existing N1-N7 engineering is preparation, not performance evidence.

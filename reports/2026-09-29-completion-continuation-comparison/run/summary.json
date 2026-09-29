@@ -1,0 +1,183 @@
+{
+  "classification": "conditional_continuation_diagnostic_not_online_rl",
+  "contexts": [
+    {
+      "context": "30dca63c2a9692ca8f2889130fd9c095a95e98b584234c1901527bf4c012be24",
+      "aliases": [
+        {
+          "source_probe_index": 3,
+          "family": "persistent",
+          "slots": 4
+        },
+        {
+          "source_probe_index": 5,
+          "family": "fast_iid",
+          "slots": 4
+        }
+      ],
+      "direction_stable_conditional_signal": false,
+      "validation_differences": {
+        "tree128_minus_booked_selected": [
+          0.1237030029296875,
+          0.2429962158203125,
+          0.21539306640625
+        ],
+        "tree128_minus_reservation_selected": [
+          -0.765625,
+          -0.5517120361328125,
+          -0.58917236328125
+        ],
+        "tree32_minus_booked_selected": [
+          0.1122283935546875,
+          0.191986083984375,
+          0.1047821044921875
+        ],
+        "tree32_minus_reservation_selected": [
+          -0.777099609375,
+          -0.60272216796875,
+          -0.6997833251953125
+        ]
+      },
+      "continuation_argmins_differ_by_block": {
+        "selection": true,
+        "validation_a": true,
+        "validation_b": true,
+        "validation_c": true
+      }
+    },
+    {
+      "context": "56bae2f89520a10048c3ad14bd301ca8c0d8df5520b6dbda017806659df4db77",
+      "aliases": [
+        {
+          "source_probe_index": 0,
+          "family": "unchanged",
+          "slots": 1
+        }
+      ],
+      "direction_stable_conditional_signal": false,
+      "validation_differences": {
+        "tree128_minus_booked_selected": [
+          0.1068267822265625,
+          0.0602264404296875,
+          0.194610595703125
+        ],
+        "tree128_minus_reservation_selected": [
+          -0.283843994140625,
+          -0.74151611328125,
+          -0.59735107421875
+        ],
+        "tree32_minus_booked_selected": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tree32_minus_reservation_selected": [
+          -0.3906707763671875,
+          -0.8017425537109375,
+          -0.791961669921875
+        ]
+      },
+      "continuation_argmins_differ_by_block": {
+        "selection": false,
+        "validation_a": true,
+        "validation_b": false,
+        "validation_c": true
+      }
+    },
+    {
+      "context": "79200794f165b7328cffa4063e6c0d1ea158230cef1024a3bfbf6ae2a75f5539",
+      "aliases": [
+        {
+          "source_probe_index": 1,
+          "family": "unchanged",
+          "slots": 4
+        }
+      ],
+      "direction_stable_conditional_signal": false,
+      "validation_differences": {
+        "tree128_minus_booked_selected": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tree128_minus_reservation_selected": [
+          -1.009002685546875,
+          -0.9728240966796875,
+          -0.8406524658203125
+        ],
+        "tree32_minus_booked_selected": [
+          0.155242919921875,
+          0.197540283203125,
+          0.1060028076171875
+        ],
+        "tree32_minus_reservation_selected": [
+          -0.853759765625,
+          -0.7752838134765625,
+          -0.734649658203125
+        ]
+      },
+      "continuation_argmins_differ_by_block": {
+        "selection": true,
+        "validation_a": true,
+        "validation_b": true,
+        "validation_c": true
+      }
+    },
+    {
+      "context": "8cbb0365a17533a2728fc15ade4b8af101368f5281ae043a6fb7362c1d2b7bcd",
+      "aliases": [
+        {
+          "source_probe_index": 2,
+          "family": "persistent",
+          "slots": 1
+        },
+        {
+          "source_probe_index": 4,
+          "family": "fast_iid",
+          "slots": 1
+        }
+      ],
+      "direction_stable_conditional_signal": false,
+      "validation_differences": {
+        "tree128_minus_booked_selected": [
+          0.102020263671875,
+          0.07171630859375,
+          0.2554931640625
+        ],
+        "tree128_minus_reservation_selected": [
+          -0.7288818359375,
+          -0.5115509033203125,
+          -0.7862396240234375
+        ],
+        "tree32_minus_booked_selected": [
+          0.1460418701171875,
+          0.1216278076171875,
+          0.252105712890625
+        ],
+        "tree32_minus_reservation_selected": [
+          -0.6848602294921875,
+          -0.461639404296875,
+          -0.7896270751953125
+        ]
+      },
+      "continuation_argmins_differ_by_block": {
+        "selection": true,
+        "validation_a": true,
+        "validation_b": true,
+        "validation_c": true
+      }
+    }
+  ],
+  "contexts_with_signal": 0,
+  "tree_branch_first_rows": 180,
+  "tree_budget_action_disagreements": 64,
+  "inner_model_paths": 345600,
+  "outer_model_paths": 1966080,
+  "transition_queries": 49204865,
+  "actual_environment_episodes": 0,
+  "neural_updates": 0,
+  "reward_weights_changed": false,
+  "model_validated": false,
+  "online_rl_evidence": false,
+  "strong_mpc_bound": false
+}

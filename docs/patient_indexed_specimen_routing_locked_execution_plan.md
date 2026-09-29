@@ -1191,3 +1191,17 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   sequential headroom, clinical noninferiority, graph benefit or online RL
   gain. A scientifically justified process/measurement contract is required
   before integrating any new mechanism into patient simulation.
+
+### 2026-09-29: Service-effort comparator software, no scientific reopening
+
+- Continued local progress adds the deterministic decision fixture specified
+  in `specs/2026-09-29-service-effort-decisions/protocol.md`: fixed and adaptive
+  rules, fixed-model and identification MPC, plus a same-grid exact diagnostic.
+- This is generic service-work software validation, not a patient experiment,
+  a new clinical headroom claim, or permission to train DDPG. Source/config and
+  terminal closure are committed before the recorded run. All signs of the
+  adaptive-baseline comparison are retained.
+- Literature supports examining personnel/resource scheduling, but does not
+  calibrate the synthetic response model. Domain measurement decisions and
+  collaborator sign-offs are not fabricated. Formal Stage E remains closed;
+  old source/evidence, scientific CRNs, checkpoints and teachers are untouched.

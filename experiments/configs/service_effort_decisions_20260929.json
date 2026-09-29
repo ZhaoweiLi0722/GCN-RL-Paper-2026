@@ -1,0 +1,27 @@
+{
+  "role": "decision_fixture_only_not_prm_performance",
+  "horizon": 5,
+  "config": {
+    "site_hour_caps": [1.0, 1.0],
+    "shared_hour_budget": 1.0,
+    "commitment_lead_steps": 1,
+    "hourly_cost": 2.0,
+    "quadratic_cost": 0.5,
+    "switching_cost": 0.25
+  },
+  "jobs": [[1.0, 1.0], [1.0, 1.0]],
+  "holding_weights": [1.0, 1.0],
+  "terminal_work_cost": 3.0,
+  "prior": [1.0, 1.0],
+  "estimator_alpha": 1.0,
+  "actions": {"idle": [0.0, 0.0], "left": [1.0, 0.0], "right": [0.0, 1.0], "balanced": [0.5, 0.5]},
+  "families": [
+    {"name": "no_change", "worlds": [
+      {"name": "nominal", "probability": 1.0, "response_tape": [[1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0]]}
+    ]},
+    {"name": "persistent_change", "worlds": [
+      {"name": "left_slow", "probability": 0.5, "response_tape": [[1.0, 1.0], [1.0, 1.0], [0.5, 1.5], [0.5, 1.5], [0.5, 1.5], [0.5, 1.5]]},
+      {"name": "right_slow", "probability": 0.5, "response_tape": [[1.0, 1.0], [1.0, 1.0], [1.5, 0.5], [1.5, 0.5], [1.5, 0.5], [1.5, 0.5]]}
+    ]}
+  ]
+}

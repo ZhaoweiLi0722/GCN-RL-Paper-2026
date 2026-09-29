@@ -4,6 +4,13 @@ Status: non-executable design for review, not scientific launch authorization.
 No new rollout, optimizer budget, seed stream or reward intervention is assigned.
 Howard's approval is not asserted. Stage E and all earlier evidence stay closed.
 
+September 29 update: Zhaowei accepted the recommended legacy-simulator route.
+The subsequent archived-cost readout in
+`specs/2026-09-29-g1-decision-cost/readout.md` distinguishes costly action
+selection errors from exact top-1 disagreement. It is not a reward intervention
+or an approval to train. Recommend the original 52-step finite-window endpoint
+for the next protocol draft; explicit endpoint approval remains pending.
+
 ## Separate two routes
 
 | Route | Question | What is still needed |
@@ -89,7 +96,8 @@ license cost-weight tuning. All negative, failed and inconclusive runs remain.
 
 ## Decisions needed before execution
 
-1. Choose the legacy simulator-consistency route or the new operational route.
+1. Legacy simulator-consistency route accepted by Zhaowei; new operational
+   scenario remains separate and uncalibrated. This is not Howard's sign-off.
 2. For the former, approve the endpoint: explicitly finite-window versus fully
    settled. Review its implications for comparability with the current paper.
 3. Identify acceptable actor/gate initialization and corrected critic data with

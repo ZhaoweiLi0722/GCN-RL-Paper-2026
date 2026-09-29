@@ -1,0 +1,12 @@
+{
+  "absolute_float_reconciliation_tolerance": "0.000002",
+  "arithmetic": "independent stdlib Decimal from CSV; all decisions and pooled/per-seed summaries",
+  "audit_sha256": "a96fb9989da9b263020ade124a7c6ac2e60a4c92a04303eb391d0a7e6efda532",
+  "environment_queries": 0,
+  "input_hashes_verified": 7,
+  "optimizer_updates": 0,
+  "passed": true,
+  "raw_cost_states": 156,
+  "selector_choices": 624,
+  "verifier_sha256": "885d2f22898b069db00a654ef93fee430aceec8b8c8c6abf685c67da5dac452b"
+}

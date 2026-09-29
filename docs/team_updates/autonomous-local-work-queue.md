@@ -1,27 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: R1 receipt accounting and next-study design complete
+## Live checkpoint: R2 archived decision-cost diagnosis complete
 
-Updated 2026-09-29 16:47 UTC after the user's request to continue beyond S4. S4 and all
-earlier scientific records remain closed; R1 is read-only accounting and design,
-not a changed experiment or authorization to train.
+Updated 2026-09-29 17:36 UTC after the user's acceptance of the recommended
+legacy-simulator direction. R2 is retrospective archived-cost analysis, not a
+changed experiment, reward intervention or authorization to train.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
-| Last verified stage | R1 complete; S4 and all earlier code/results unchanged |
-| Current task | Read-only accounting and non-executable reward-consistency study design complete |
-| Protocol commit | R1 source/protocol/config `541b73d`; recorded only after source commit |
+| Last verified stage | R2 complete; R1/S4 and all earlier scientific code/results unchanged |
+| Current task | Archived action-cost audit and independent Decimal verification complete |
+| Protocol commit | R2 protocol/config `5594989`, auditor `1441c32`, verifier `dd62d6f`; outputs recorded after the corresponding source commit |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
-| Implementation evidence | New JSON-only auditor; 15 new/48 related tests, full compileall and diff checks pass. No production reward/learner/environment source changed |
-| Recorded execution | Six archived cases / 36 receipts, six matching resumed duplicates; exit 0. No new environment queries, optimizer updates or reward changes |
-| Independent verification | 9 input + 34 source locks unchanged; stdout repeat byte-identical; independent Decimal backward recurrence checks all segment costs and 36 window returns |
-| Process/output check | Read-only process check found no matching live evaluator; audit and verification returned exit 0, no background task |
-| Scientific result | No new performance evidence. S4 remains 0/4 passing contexts. R1 arithmetic passes but does not certify task closure, Q targets or online gain |
-| Reward diagnosis | No new cost/reward mismatch in N7 receipts. Intentional engineering gamma .9 / three-step targets differ from N5 proposed gamma 1 / one-step fully settled task. Zero active patients is not a closure certificate |
-| Evidence paths | `reports/2026-09-29-reward-objective-bridge/audit.json`; `specs/2026-09-29-reward-objective-bridge/readout.md` and `next-study.md` |
-| Next concrete action | Resolve study route and endpoint in `next-study.md`, then a separately scoped data/budget/initialization design. Do not expand S4 or rebuild N1-N7 |
-| Approval needed now | Asked once whether to prioritize fixed-weight legacy-simulator consistency; no reply yet. Scientific endpoint/budget/launch remain unapproved; E1 missing inputs apply to the new task, not automatically to every legacy-simulator analysis |
+| Implementation evidence | New read-only CSV/NPZ auditor and separate stdlib Decimal verifier; 14 new/29 combined tests, full compileall and diff checks pass. No production reward/learner/environment source changed |
+| Recorded execution | 1,560 cost rows, 1,560 predictions, all 156 archived states; exit 0. Zero environment queries, optimizer updates or reward changes |
+| Independent verification | Seven locked inputs unchanged; all 624 selections and pooled/per-seed cost summaries match independent Decimal reconstruction; original G1 metrics reproduce |
+| Process/output check | Fresh read-only ps check found no related research Python process; audit and verification exited 0, no background task |
+| Scientific result | Descriptive validation cost differences vs MDL-2: frozen critic argmax +4.488M, fitted offline critic +3.181M, discovery-cost selector -0.932M per diagnostic state. These are NOT frozen/online actor comparisons or episode savings |
+| Reward diagnosis | 40/71 discovery-validation top-action disagreements exceed the legacy 1M cost threshold. Wrong actions are not uniformly near-ties; no evidence yet that changing cost weights or repairing targets causes online gain |
+| Evidence paths | `reports/2026-09-29-g1-decision-cost/{audit,verification}.json`; `specs/2026-09-29-g1-decision-cost/{protocol,readout}.md` |
+| Next concrete action | Obtain endpoint decision, then draft a separately bounded fixed-weight reward/replay/TD-consistency feasibility protocol with raw replication costs and clinical outcomes. Reuse N1-N7; do not start training or choose a favorable gate from old validation data |
+| Approval needed now | Legacy route accepted. Recommend original 52-step finite-window cost for the next protocol, not full settlement. This endpoint choice is pending; data/initialization/budget and scientific launch still require a committed protocol and authorization |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 
@@ -32,11 +32,13 @@ next action and any precise approval need. A running label needs fresh process
 and progress evidence, not the existence of the scheduler. Do not duplicate an
 active job. Continue adjacent unblocked steps within a run where feasible.
 
-R1 source of truth:
-`specs/2026-09-29-reward-objective-bridge/protocol.md` and
-`experiments/configs/reward_objective_bridge_20260929.json`. The finite packet
-has completed; no automation remains to disable. Do not fill the queue with
-invented experiments or repeat the completed accounting check as new progress.
+R2 source of truth:
+`specs/2026-09-29-g1-decision-cost/protocol.md` and
+`experiments/configs/g1_decision_cost_20260929.json`. The finite read-only packet
+has completed; no automation remains to disable. G1's nominal-history correction
+and failed decision remain in force; its favorable discovery-selector mean is
+not grounds to reopen it. Do not fill the queue with invented experiments or
+repeat the completed arithmetic as new progress.
 Unchanged waits need no repeated message; report actual milestones or decisions.
 
 ## Authority and boundaries

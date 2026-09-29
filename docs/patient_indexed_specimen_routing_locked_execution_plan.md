@@ -1460,3 +1460,19 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   cost horizons and unavailable replication-level rows. No replacement gate.
 - Preserve all old failures, code, costs and decisions. Source/config commit
   precedes the recorded audit; local artifacts only, no remote action.
+
+### 2026-09-29: R2 complete; cost-sensitive diagnostics do not reopen G1
+
+- Auditor `1441c32` reconciles all 1,560 cost / 1,560 prediction rows and NPZ,
+  reproducing G1 ranking and label-stability metrics. Independent verifier
+  `dd62d6f` checks all 624 choices and cost summaries using Decimal. Seven input
+  locks, 14 new/29 combined tests, whole-repository compileall and diff checks
+  pass. Both recorded processes exit 0; zero new simulation or fitting.
+- `specs/2026-09-29-g1-decision-cost/readout.md` reports favorable descriptive
+  validation cost for discovery-cost-selected actions, but unfavorable mean
+  cost for both critic selectors relative to MDL-2. Forty of 71 best-action
+  disagreements exceed the old 1M reporting threshold. This does not prove
+  true headroom, clinical noninferiority, a deployable selector or online gain.
+- Keep nominal-history provenance, mean-only/no-CI limits, failed G1/H0/H1
+  decisions and closed Stage E. The next prospective endpoint/data/budget/gate
+  decision remains separate; no reward-weight change or neural launch follows.

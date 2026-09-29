@@ -50,7 +50,7 @@ contracts, but do not fabricate that data to launch a patient scenario.
 | ID | Status | Concrete completion boundary |
 | --- | --- | --- |
 | N1 | Complete; production integration not authorized | Opt-in `src/rl/validated_returns.py`, 19 synthetic failure/return tests and `specs/2026-09-29-replay-repair-preparation/contract.md`. Combined 109-test suite and full compilation pass. Not wired into old agents. Reject disconnected windows, mixed semantics and implicit legacy migration; one explicit gamma-to-n target reference. |
-| N2 | Pending | Build a separate common-input graph/flat/gate contract fixture with synthetic tensors and tests. Enumerate shared information, state ordering, proposal conditioning, head/edge-ablation treatment and parameter-count scope. Reuse existing feature helpers only if their contract is explicit. No existing agent/default changes or environment/learning run. |
+| N2 | Complete; producer/model integration remains open | Separate `src/models/matched_inputs.py` common-input graph/flat/gate fixture, 21 new synthetic tests and `specs/2026-09-29-matched-input-preparation/contract.md`. Combined 140-test suite and full compilation pass. Explicit shared information/order/proposals, neural-only message ablation and parameter-count scope. No existing agent/default changes or environment/learning run. |
 | N3 | Pending | Prepare and test a no-training adapter/acceptance harness for the N1/N2 contracts, including reward scaling, short tails, termination/truncation and negative cases. Mark genuine legacy provenance gaps as non-migratable, not inferred. Draft a prospective development decision packet with unresolved scientific choices and required approval; do not choose new seeds, tune or execute it. |
 
 For N2/N3, implement only the smallest independent prototype/tests needed to
@@ -71,6 +71,19 @@ report once and remove the renewed automation rather than adding new packets.
   unchanged from `04d8c67`. No agent imports the prototype. Lineage assertions
   still require collector verification; this is neither a historical repair
   nor evidence of improved online learning. N2 is the next independent packet.
+- September 29, N2: implemented canonical ordered input schemas with graph and
+  flat views of exactly the same numerical blocks. Critic includes the anchor;
+  both gate views include the proposal with explicit gradient-detach policy.
+  Preserves all supplied node-feature slots and rejects implicit broadcasting,
+  order/definition mismatches and invalid values. Physical-link metadata remains
+  unchanged under neural self-only message ablation. A synthetic forward fixture
+  reuses the existing GraphConvolution with a common dense head; normalization
+  agrees with the existing helper. Parameter inventory separately reports unique,
+  shared and trainable weights. Twenty-one new tests, the combined 140-test suite,
+  full compilation and diff checks pass. Existing tracked source, configs and
+  evidence are unchanged from `e17474a`; no agent imports the prototype. Actual
+  producer provenance, head parity, directed/multirelation support and scientific
+  integration remain open. N3 is next; no training/evaluation or remote action.
 
 ## Historical progress
 

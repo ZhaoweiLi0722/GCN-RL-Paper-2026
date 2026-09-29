@@ -1269,3 +1269,16 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   launch is authorized by this preflight. Scenario/calibration/closure and
   scientific launch evidence remain unfilled, not assumed. Old results,
   checkpoints, teacher, streams and Howard's work remain unchanged.
+
+### 2026-09-29: Bounded prospective update/resume engineering after N5
+
+- N5 completed component-count/operator checks and a non-executable development
+  design. Zhaowei explicitly requested its next named task: actual DDPG update
+  and checkpoint/resume mechanics, documented in
+  `specs/2026-09-29-prospective-learner-engineering/protocol.md`.
+- Permit the declared tiny optimizer checks on invented numeric records only.
+  Hash-lock prior schema/count evidence, commit protocol/config and source
+  before recorded execution, and preserve every old result and default.
+- This does not reopen Stage E or permit environment training, performance
+  evaluation, formal data use, remote operations or a claim of online gain.
+  Kernel-boundary resumption is distinct from full environment/collector resume.

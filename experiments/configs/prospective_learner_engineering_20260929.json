@@ -1,0 +1,33 @@
+{
+  "kind": "bounded_ddpg_update_resume_engineering",
+  "enabled": true,
+  "device": "cpu",
+  "dtype": "float32",
+  "fixture_seed": 0,
+  "schema_source": "reports/2026-09-29-prospective-collector-engineering/check.json",
+  "schema_source_sha256": "67c35b480a7ca647f791e6a401660eb4ced8d413ef7c3421ac68b7fab1ec3c61",
+  "count_source": "reports/2026-09-29-prospective-development-design/preflight.json",
+  "count_source_sha256": "4e4caf4018e44301add56f79f790cfcc8ca4ab6e7ff49fb9dab6134958109a2c",
+  "cases": [
+    {"architecture": "graph", "message_mode": "physical", "hidden_width": 64},
+    {"architecture": "graph", "message_mode": "self_only", "hidden_width": 64},
+    {"architecture": "flat", "message_mode": "physical", "hidden_width": 68}
+  ],
+  "synthetic_records": 12,
+  "prefix_records": 6,
+  "interruption_after_updates": 3,
+  "residual_scale": 0.1,
+  "learner": {
+    "actor_lr": 0.001,
+    "critic_lr": 0.002,
+    "tau": 0.05,
+    "batch_size": 4,
+    "replay_capacity": 8,
+    "max_updates": 6,
+    "max_return_steps": 1,
+    "differentiate_gate_proposal": true
+  },
+  "environment_steps": 0,
+  "performance_evaluation": false,
+  "scientific_launch_authorized": false
+}

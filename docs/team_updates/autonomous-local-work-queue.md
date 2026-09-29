@@ -63,6 +63,12 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
+- September 29, N6 in progress: user requested the next named update/resume
+  engineering task. Scope: explicit opt-in DDPG kernel on synthetic numerical
+  windows, frozen reference, complete kernel-state resume in a fresh process.
+  See `specs/2026-09-29-prospective-learner-engineering/protocol.md`. No environment
+  training or new performance claim; preserve N4/N5 and historical defaults.
+
 - September 29, N5 complete: following the user's continuation, specified
   primary frozen/online and separate operator/representation contrasts. The
   precommitted shape-only search finds graph64/flat68 with 0.3340% total gap and

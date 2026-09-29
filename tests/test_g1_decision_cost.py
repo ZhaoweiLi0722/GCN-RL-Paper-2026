@@ -4,6 +4,8 @@ import unittest
 
 import numpy as np
 
+from evaluation.verify_g1_decision_cost import D, check, histogram, stats
+
 from evaluation.audit_g1_decision_cost import (
     audit, bins, compare_metrics, decisions, describe, ranking_metrics,
     stability, summarize, validate_tables,
@@ -154,6 +156,19 @@ class DecisionCostTest(unittest.TestCase):
             path.write_text("synthetic")
             with self.assertRaisesRegex(ValueError, "hash mismatch"):
                 audit({"inputs": {"cost_rows": {"path": "x", "sha256": "wrong"}}}, Path(name))
+
+    def test_decimal_stats_and_bins(self):
+        self.assertEqual(stats([D("3"), D("-1"), D("2")])["median"], D("2"))
+        self.assertEqual(stats([D("3"), D("-1")])["mean"], D("1"))
+        self.assertEqual(histogram([D("0"), D("250000"), D("1000000"), D("1000001")]),
+                         bins([0, 250000, 1000000, 1000001], [250000, 1000000], 1e-9))
+
+    def test_decimal_verifier_detects_numeric_and_identity_errors(self):
+        check(D("1.0000001"), D("1"))
+        with self.assertRaises(AssertionError):
+            check(D("1.01"), D("1"))
+        with self.assertRaises(AssertionError):
+            check({"action_index": 0}, {"action_index": 1})
 
 
 if __name__ == "__main__":

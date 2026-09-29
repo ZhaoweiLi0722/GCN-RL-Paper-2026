@@ -1294,3 +1294,16 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - This is engineering acceptance, not a scientific gain screen or new scenario.
   Preserve old evidence/defaults; do not use formal streams, tune outcomes,
   infer clinical terminal adequacy or Howard approval, or perform remote actions.
+
+### 2026-09-29: Existing-row queue cost sensitivity after N7
+
+- Following N7, Zhaowei requested the next step. Review the solved synthetic
+  queue's dependence on cost ratios with the additive post-hoc protocol in
+  `specs/2026-09-29-queue-cost-sensitivity/protocol.md`, without new simulation,
+  training, evaluation trajectories, scenario selection or reward tuning.
+- Reprice all recorded decision and closure costs over nine declared positive
+  multiplier pairs. Recompute finite-tree bounds and unchanged archived paths;
+  never describe an archived MPC path as reoptimized for another objective.
+- Preserve every original file and Stage E. This is not a scientific launch,
+  calibrated patient evidence, online-RL benefit or collaborator approval.
+  Commit protocol/config and source before recording this local analysis.

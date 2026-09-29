@@ -1,0 +1,15 @@
+{
+  "classification": "post_hoc_repricing_of_existing_synthetic_rows",
+  "input_root": "reports/2026-09-29-service-queue-boundary/run",
+  "holding_multiplier": 1.0,
+  "labor_multipliers": [0.5, 1.0, 2.0],
+  "switching_multipliers": [0.5, 1.0, 2.0],
+  "expected_cells": 8,
+  "expected_settings_per_cell": 9,
+  "expected_records": 72,
+  "new_environment_queries": 0,
+  "new_planner_queries": 0,
+  "online_updates": 0,
+  "select_reward_from_results": false,
+  "manufacturing_calibration": false
+}

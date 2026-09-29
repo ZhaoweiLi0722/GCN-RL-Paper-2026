@@ -1,29 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: R5 inference checks complete; independent archive verification
+## Live checkpoint: R5 complete and archived; R3 pilot approval pending
 
 Updated 2026-09-29 following Zhaowei's request to keep progressing. R5 strict
 loading and 48 saved-observation CPU/MPS checks pass across three replacements.
 Source `f089fd0` saved seed60 then failed on scalar summary formatting; source
 `91a1e5b` reused those bytes without re-inference and completed seeds61/62.
 Failure evidence remains unchanged. No simulator or optimizer step occurred.
-R3 scientific collection is not launched. Cloud sync/access remain unverified.
+Independent stdlib verification and the 16-file archive are complete; Dropbox
+local copies hash-verify. R3 scientific collection is not launched. Cloud
+sync/access remain unverified. No background task or automation is active.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | R5 raw inference checks complete; independent raw arithmetic also agrees; older campaigns unchanged |
-| Current task | Finish tracked verification/readout and verified Dropbox archival of both R5 roots |
+| Current task | R5 finite engineering packet complete; pending R3 data-only scope decision |
 | Protocol commit | R5 protocol/source `f089fd0`; summary-only repair and unvisited-seed completion `91a1e5b` |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | 23 new/69 related tests, full compileall and diff checks pass; real-agent synthetic roundtrip forbids env reset/step and optimizer updates |
 | Recorded execution | R5: 48 saved observations, CPU policy/full-state and MPS routes; no new simulator/optimizer step. R4 remains 3,120 demonstration steps and 0 online episodes |
-| Independent verification | Exact CPU/full-state outputs, no hard-gate/lot mismatch, max request difference 2.981e-8. All 24 R4 files and 83 existing source files unchanged; stdlib raw arithmetic agrees |
+| Independent verification | Exact CPU/full-state outputs, no hard-gate/lot mismatch, max request difference 2.981e-8. All 24 R4 files and 83 existing source files unchanged; stdlib verifier `c7567e8` agrees. All 16 archive members and two Dropbox copies hash-verify |
 | Process/output check | Both R5 processes ended: original exit1 summary-only; unvisited completion exit0. No continuing job claimed |
 | Scientific result | Saved-observation compatibility only; no actual routing/cost or online/frozen performance contrast |
 | Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
 | Evidence paths | `specs/2026-09-29-replacement-policy-compatibility/`; `reports/2026-09-29-replacement-policy-compatibility/`; both named R5 result roots |
-| Next concrete action | Complete independent verifier tests and archive packet; then collector/action identity acceptance and new-stream locks for proposed R3 |
+| Next concrete action | Once R3 pilot scope is approved, commit explicit replacement-baseline amendment; implement/test collector and action identity, allocate/check fresh streams, freeze source before one capped run. No further pretraining |
 | Data/approval needed now | Asked once: approve the fixed R3 data-only pilot using R4 replacements, after collector acceptance (12 states, 8+8 draws, max37,596 steps/1h, no training/reward change)? No answer recorded yet. Cloud sync/access still unverified |
 | Latest verification | Known scalar/list report bug repaired; failed summary/raw hashes preserved, seed60 inference not repeated; unvisited seed outputs and all model tensors finite |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
@@ -44,6 +46,15 @@ are NOT consumed budget or execution permission. G1's correction/failure remain
 in force. Do not fill the queue with invented experiments, repeat arithmetic as
 new progress, or recreate missing pretrained weights without a new decision.
 Unchanged waits need no repeated message; report actual milestones or decisions.
+
+R5 handoff: `specs/2026-09-29-replacement-policy-compatibility/readout.md` and
+`reports/2026-09-29-replacement-policy-compatibility/verification.json` describe
+completed sampled compatibility, not a value-label pilot. The versioned local
+Dropbox destination is in `dropbox_receipts.json`; archive SHA256
+`aa2bda7640ea5e26a760737232aa81a7569c9d8b9b4901a6bb3561e6b9d6c69b`.
+No approval response is recorded at this checkpoint. Do not rerun the 48 checks
+or create an automation while waiting. The old scalar-summary failure and
+unvisited-only continuation stay visible; no completed inference was repeated.
 
 September 29 R4 amendment: follow
 `specs/2026-09-29-frozen-baseline-rebuild/protocol.md` and

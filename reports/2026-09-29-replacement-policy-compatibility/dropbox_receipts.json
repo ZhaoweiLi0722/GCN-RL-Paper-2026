@@ -1,0 +1,20 @@
+{
+  "archive_file_count": 16,
+  "archive_sha256": "aa2bda7640ea5e26a760737232aa81a7569c9d8b9b4901a6bb3561e6b9d6c69b",
+  "cloud_sync_verified": false,
+  "copies": [
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/replacement_policy_compatibility_20260929/r5_compatibility.tar.gz",
+      "sha256": "aa2bda7640ea5e26a760737232aa81a7569c9d8b9b4901a6bb3561e6b9d6c69b"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/replacement_policy_compatibility_20260929/r5_compatibility.tar.gz.manifest.json",
+      "sha256": "200aa9e19459f2d984888e6c79db881c29eadcd0386f28334aa3a6f92b068a7b"
+    }
+  ],
+  "howard_access_verified": false
+}

@@ -51,7 +51,7 @@ contracts, but do not fabricate that data to launch a patient scenario.
 | --- | --- | --- |
 | N1 | Complete; production integration not authorized | Opt-in `src/rl/validated_returns.py`, 19 synthetic failure/return tests and `specs/2026-09-29-replay-repair-preparation/contract.md`. Combined 109-test suite and full compilation pass. Not wired into old agents. Reject disconnected windows, mixed semantics and implicit legacy migration; one explicit gamma-to-n target reference. |
 | N2 | Complete; producer/model integration remains open | Separate `src/models/matched_inputs.py` common-input graph/flat/gate fixture, 21 new synthetic tests and `specs/2026-09-29-matched-input-preparation/contract.md`. Combined 140-test suite and full compilation pass. Explicit shared information/order/proposals, neural-only message ablation and parameter-count scope. No existing agent/default changes or environment/learning run. |
-| N3 | Pending | Prepare and test a no-training adapter/acceptance harness for the N1/N2 contracts, including reward scaling, short tails, termination/truncation and negative cases. Mark genuine legacy provenance gaps as non-migratable, not inferred. Draft a prospective development decision packet with unresolved scientific choices and required approval; do not choose new seeds, tune or execute it. |
+| N3 | Complete; actual collector/agent integration needs approval | `src/rl/prospective_adapter.py` joins N1/N2 with a typed no-training acceptance harness. Fourteen new tests, combined 154-test suite and full compilation pass. Covers current/bootstrap state and anchor mapping, rewards, short tails and termination/truncation. `specs/2026-09-29-prospective-integration-acceptance/decision_packet.md` records legacy non-migration and the next prospective approval. No experiment seeds, tuning or execution. |
 
 For N2/N3, implement only the smallest independent prototype/tests needed to
 answer the contract question. Do not create a duplicate full training framework.
@@ -84,6 +84,21 @@ report once and remove the renewed automation rather than adding new packets.
   evidence are unchanged from `e17474a`; no agent imports the prototype. Actual
   producer provenance, head parity, directed/multirelation support and scientific
   integration remain open. N3 is next; no training/evaluation or remote action.
+- September 29, N3: joined the replay and input contracts in an isolated adapter.
+  Current critic uses the first recorded action; bootstrap inputs include the
+  endpoint's own state and anchor. Closed-segment windows preserve all short
+  tails and enforce lineage even for one-step requests. Tensor Bellman targets
+  match the NumPy reference and independent backward recursion across float32/
+  float64, discount and terminal/truncation cases, with detached target Q.
+  Invalid/missing legacy metadata and mixed semantics fail rather than being
+  guessed. Fourteen new acceptance tests, the combined 154-test suite, full
+  compilation and diff checks pass. Existing tracked source, config, evidence
+  and reports are unchanged from `1472083`; no existing agent imports the adapter.
+  The decision packet separates actual producer/agent verification, scenario
+  calibration and scientific launch approval from these completed prototypes.
+  N1/N2/N3 are complete within scope. Ask once about the bounded prospective
+  integration/engineering-verification amendment and remove the preparation
+  automation; do not infer approval, launch a campaign or create more packets.
 
 ## Historical progress
 

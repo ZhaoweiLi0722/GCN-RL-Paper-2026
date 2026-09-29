@@ -1307,3 +1307,18 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Preserve every original file and Stage E. This is not a scientific launch,
   calibrated patient evidence, online-RL benefit or collaborator approval.
   Commit protocol/config and source before recording this local analysis.
+
+### 2026-09-29: Completion-feedback synthetic mechanism after cost sensitivity
+
+- The cost sensitivity is complete: 66/72 dependent records still have an
+  optimal archived non-neural path; no online-RL opportunity was established.
+  Zhaowei requested continuation of the next design. Scope is the isolated
+  hypothetical mechanism and bounded checks in
+  `specs/2026-09-29-completion-feedback-mechanics/protocol.md`.
+- Add noisy completion-only service, recurrent booked work, fixed downstream
+  obligations and a shared receipt-only likelihood filter. Freeze source/config
+  before the 16-case mechanics matrix and its single repeat. No neural update,
+  policy performance comparison or patient-simulator amendment is authorized.
+- Keep all old evidence and defaults, E1's missing domain data, and Stage E
+  unchanged. This does not assert clinical realism, Howard sign-off, approval
+  for a calibrated study, headroom or any guaranteed benefit/publication result.

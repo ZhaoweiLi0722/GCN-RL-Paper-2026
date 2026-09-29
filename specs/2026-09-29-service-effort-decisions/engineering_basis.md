@@ -24,6 +24,12 @@ and handling their availability, rather than accelerating biological growth.
 This is an inference for model design, not a finding of those papers about our
 system. The actual operation still needs to be named and justified.
 
+E1 now names a proposed first task in the
+[qualified setup-support contract](../2026-09-29-qualified-support-contract/decision_contract.md):
+pre-run setup/material-connection support with site-local qualified staffing.
+This closes the choice of candidate operation for discussion, not its domain
+validation. The linked dictionary keeps all calibration inputs explicitly null.
+
 The previous continuous-work primitive can verify effort accounting. Real
 operations may instead require fixed-duration, nonpreemptible tasks, qualified
 teams, equipment occupancy, and windows relative to cell processing. If so,

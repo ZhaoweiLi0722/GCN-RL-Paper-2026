@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "artifact_kind": "proposed_data_dictionary_not_executable_config",
+  "status": "domain_inputs_missing",
+  "operational_measurements_validated": false,
+  "patient_model_execution_authorized": false,
+  "primary_task": "SOP-defined pre-run setup and material-connection support",
+  "action": "book site-local qualified staffing availability for a future service window",
+  "observation_rule": "Use only record versions with known_at <= decision time; retain earlier versions and never backfill future corrections into the earlier controller view.",
+  "progress_view": "recorded task events; no exact continuous remaining work",
+  "record_envelope": {
+    "record_id": "stable pseudonymous record ID",
+    "revision": "monotone revision within a record; retain prior versions",
+    "site_id": "pseudonymous facility ID",
+    "event_at": "event occurrence or booking creation timestamp, not future scheduled time",
+    "known_at": "timestamp this version became available to the controller",
+    "source": "system/SOP/log source and version"
+  },
+  "record_types": [
+    {
+      "name": "task_booking",
+      "fields": ["task_id", "batch_id", "task_type", "sop_version", "scheduled_release_at", "window_start_at", "window_end_at"],
+      "restriction": "Future appointments are usable only if their booking version was already known. Actual future arrival/completion is not a booking."
+    },
+    {
+      "name": "staff_request",
+      "fields": ["commitment_id", "qualification_class", "requested_staffing", "staffing_unit", "service_window_start_at", "service_window_end_at", "cutoff_at", "cancellation_terms_id"],
+      "restriction": "Requested staffing is not evidence of acceptance or delivery. No arbitrary fractional crews."
+    },
+    {
+      "name": "staff_acceptance",
+      "fields": ["commitment_id", "accepted_staffing", "staffing_unit", "qualification_class", "service_window_start_at", "service_window_end_at"],
+      "restriction": "Acceptance is not actual attendance. A revision does not erase existing obligations."
+    },
+    {
+      "name": "resource_status",
+      "fields": ["resource_class", "resource_id", "observed_status", "observed_block_reason", "required_qualification_class", "required_crew_size", "material_readiness"],
+      "restriction": "Unknown is permitted. Do not substitute a hidden simulator causal-blocking label."
+    },
+    {
+      "name": "task_event",
+      "fields": ["task_id", "event_type", "resource_ids", "qualification_classes", "observed_reason"],
+      "event_types": ["eligible", "started", "completed", "blocked", "cancelled"],
+      "restriction": "No future completion timestamps, exact remaining work or latent response coefficients. Unfinished observations are censored."
+    },
+    {
+      "name": "staff_delivery",
+      "fields": ["commitment_id", "qualification_class", "actual_presence_start_at", "actual_presence_end_at", "allocated_task_ids", "allocation_known"],
+      "restriction": "Use recorded availability time, not retroactively reconstructed timesheets. Paid presence is not necessarily productive task service."
+    },
+    {
+      "name": "cost_record",
+      "fields": ["commitment_id", "task_id", "cost_component", "cost_status", "amount", "unit", "coverage_start_at", "coverage_end_at"],
+      "cost_statuses": ["committed", "settled"],
+      "restriction": "Forecasts require a separate label. Analysis-only future totals are not immediate controller observations or rewards. Avoid double counting commitment and settlement."
+    }
+  ],
+  "excluded_observations": [
+    "latent service-response regime and change time",
+    "exact continuous remaining manual work without an independently validated measurement",
+    "future unbooked demand and schedule revisions",
+    "future actual staff attendance and future task completion",
+    "retrospective costs or outcomes not yet available",
+    "employee names, patient names and direct clinical identifiers"
+  ],
+  "domain_inputs": [
+    {"id": "sop_task_and_qualifications", "value": null, "unit": "documented task/resource classes", "evidence_needed": "process-owner/SOP definition including crew, equipment, materials and permitted windows"},
+    {"id": "preemption_and_parallelism", "value": null, "unit": "task-specific execution rules", "evidence_needed": "whether interruption or parallel teams are permissible; conservative default is no preemption"},
+    {"id": "staffing_unit_and_granularity", "value": null, "unit": "documented booking unit", "evidence_needed": "integer crew/slot or justified aggregate hours; no continuous default"},
+    {"id": "booking_notice_and_acceptance", "value": null, "unit": "time and operational rules", "evidence_needed": "cutoff, accepted availability and cancellation policy"},
+    {"id": "resource_coupling", "value": null, "unit": "documented resource pool/constraints", "evidence_needed": "site-local capacity, shared equipment or qualified travel/notice constraints if a shared pool exists"},
+    {"id": "decision_interval", "value": null, "unit": "time", "evidence_needed": "actual booking/service cadence"},
+    {"id": "measurement_availability", "value": null, "unit": "timestamped field dictionary", "evidence_needed": "example record versions with event_at and known_at including blocked and censored work"},
+    {"id": "task_duration_and_staff_response", "value": null, "unit": "time conditional on known covariates", "evidence_needed": "event/roster data and causal assumptions; not an automatic linear hours-to-output multiplier"},
+    {"id": "change_range_and_persistence", "value": null, "unit": "response-specific units and time", "evidence_needed": "empirical evidence or an explicitly hypothetical ex-ante sensitivity range"},
+    {"id": "costs_and_delay_objective", "value": null, "unit": "declared accounting units", "evidence_needed": "staffing, cancellation, switching and delay definitions without importing clinical benefit or monetary units"},
+    {"id": "closure_obligations", "value": null, "unit": "task and commitment settlement rules", "evidence_needed": "accounting for unfinished work and accepted commitments beyond the horizon"},
+    {"id": "meaningful_benefit_and_precision", "value": null, "unit": "same units as declared outcome", "evidence_needed": "operationally justified target chosen before scenario screening"}
+  ],
+  "execution_preconditions": [
+    "Resolve every domain input with source/version and domain review; do not interpret null as a synthetic default.",
+    "Verify feasible staffing leverage and a temporally valid observation interface.",
+    "Review and approve a separate prospective protocol under the locked change-control plan.",
+    "Do not assume the current synthetic queue is an operational calibration or an RL-positive scenario."
+  ]
+}

@@ -27,7 +27,7 @@ restricted synthetic fixture, not an excuse to train DDPG or claim PRM optimalit
 | M1 | Complete | Historical source/config audit and manuscript corrections are in `specs/2026-09-29-formal-method-contract/readout.md`. Ten configs and the historical manifest checked; 87 focused tests and full compilation pass. PDF rendering remains unavailable without a TeX engine. No dynamics changes. |
 | M2 | Audit complete; findings open | `specs/2026-09-29-formal-replay-contract/readout.md` records mixed reward definitions, discontinuous cached multi-step windows, calibration discount mismatch, teacher support and missing label-horizon provenance. Manuscript limitations updated. No historical fixes/retraining; a corrected campaign needs separate authorization/protocol. |
 | G1 | Audit complete; parity gaps open | `specs/2026-09-29-formal-graph-contract/readout.md` records exact component counts, graph/flat input and head differences, and proposal-conditioned gate asymmetry. Formal package-level results preserved; encoder-only attribution and topology generalization are not established. No new experiment. |
-| E1 | Pending | Produce a source-backed operational decision/measurement contract for recurrent qualified-personnel/support work. Separate literature-supported constraints, synthetic assumptions and missing domain inputs. No fabricated calibration or new patient-simulator experiment. |
+| E1 | Contract complete; domain inputs open | `specs/2026-09-29-qualified-support-contract/decision_contract.md` selects a proposed setup-support staffing decision, separates source evidence from assumptions, and specifies time-valid event observations. Companion dictionary has 12 unresolved domain inputs and explicitly forbids treating nulls as calibration or execution permission. No new experiment. |
 | C1 | Pending | Review the practical completion-only comparator gap using the existing queue evidence and information interface. Implement/test only a justified bounded software comparator if it can use the frozen fixture unchanged; otherwise document the exact missing assumption. Do not add arbitrary noise/scenarios to seek positive results. |
 | P1 | Pending | Consolidate a manuscript claim-to-evidence matrix, reproducibility instructions and unresolved approval/domain-input packet. Verify references, artifact links and test status. No journal-ready or online-gain claim beyond evidence. |
 
@@ -75,3 +75,13 @@ invent a new experimental campaign to keep the queue nonempty.
   repeated audit JSON is byte-identical. TeX rendering remains unavailable.
   E1 is the next independent packet; parity/replay repairs need a separately
   approved prospective scientific protocol, not silent historical retraining.
+- September 29, E1: narrowed the proposed lever to booking site-local qualified
+  staff for pre-run setup/material-connection support. Preserved nonpreemption,
+  qualifications and equipment constraints; no assumption that overtime speeds
+  biological growth or mandatory tests. Added a seven-record measurement
+  dictionary separating request/acceptance/delivery and event/availability time.
+  Future corrections, latent response and exact unmeasured progress cannot leak
+  into policy inputs. Literature supports investigating the channel, not its
+  calibration or RL headroom. Twelve inputs still need domain evidence; these
+  consolidate existing questions and do not block the independent C1 packet.
+  No patient model, historical artifact, training or evaluation was changed.

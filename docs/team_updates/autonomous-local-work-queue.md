@@ -11,6 +11,8 @@ continuation. Use this section as the current queue, not an old completed packet
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | S2 complete at `efe5a86`: 288/288 episodes, 9,364 audited steps, six probes, 123 relevant tests; no online-RL evidence |
 | Current task | S3 protocol/config prepared; implementation, tests and recorded forecast diagnostic not yet executed |
+| Protocol commit | `b91dd3b`; archived S2 probe/summary hashes reverified, config JSON and full compilation pass |
+| Automatic continuation | Created and confirmed ACTIVE: `gcn-rl` (GCN-RL local research continuation), attached to this task, every 30 minutes; local host/app must remain available |
 | Next concrete action | Implement the frozen S3 protocol, with paired raw-cost storage and scalar/prefix/duplicate-context tests |
 | Approval needed now | None for the declared S3 implementation, tests, one bounded forecast matrix, audit and decision memo |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |

@@ -78,6 +78,11 @@ No other worktree or remote service was modified. An asynchronous question has
 asked Zhaowei for the current local/backup location; no response is recorded yet.
 Do not silently substitute the formal-holdout actors or a newly randomized one.
 
+Follow-up: `artifact-recovery.md` records the expanded local/archive search,
+its permission-denied coverage limits, retained historical Git source, exact
+ten-file minimum recovery package plus authenticated hash mapping, and the
+environment-source compatibility gap. No F1 weights were recovered or loaded.
+
 ## Exact next action
 
 When the artifact location is supplied, first perform read-only file/source

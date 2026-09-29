@@ -2,26 +2,29 @@
 
 ## Live checkpoint: R3 value-target design complete; F1 artifacts needed
 
-Updated 2026-09-29 17:52 UTC after the user's continuation following the
-52-step endpoint question. R3 completes a non-executable design and synthetic
-tests. No scientific pilot, reward intervention or training was launched.
+Updated 2026-09-29 18:32 UTC evidence check after the user's continuation.
+The expanded local/archive search and source-identity check are complete;
+F1 weights remain unavailable in the inspected scope. R3 remains a
+non-executable design. No scientific pilot, reward intervention or training
+was launched.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | R3 design/test packet complete; R2 and all earlier scientific code/results unchanged |
-| Current task | Fixed-window value-label pilot design, continuation compatibility and synthetic acceptance tests complete |
+| Current task | Expanded F1 artifact-location audit and exact recovery-package handoff complete; checkpoint bytes still needed |
 | Protocol commit | R3 protocol/config/tests `1318149`; not an execution commit or launch authorization |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | 11 new/59 combined tests, full compileall and diff checks pass; existing return helpers reused, no production source change or duplicate learner framework |
 | Recorded execution | Synthetic numeric tests only. Zero new environment queries, historical-checkpoint inference or optimizer updates; proposed pilot NOT run |
 | Independent verification | 52-step returns agree with independent suffix sums; eight source locks and proposed budget arithmetic verified |
-| Process/output check | Fresh read-only ps check found no related research Python process; tests/compileall exited 0, no background task |
+| Process/output check | Scoped ps initially denied in sandbox, then approved read-only check found no matching research Python process; no new task launched |
 | Scientific result | No new performance result. R2's archived cost differences remain descriptive; no online/frozen actor comparison established |
 | Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
-| Evidence paths | `specs/2026-09-29-fixed-window-value-contract/{protocol,readout}.md`; `experiments/configs/fixed_window_value_contract_20260929.json`; `tests/test_fixed_window_objective.py` |
+| Evidence paths | `specs/2026-09-29-fixed-window-value-contract/{protocol,readout,artifact-recovery}.md`; `experiments/configs/fixed_window_value_contract_20260929.json`; `tests/test_fixed_window_objective.py` |
 | Next concrete action | Locate F1 seed60-62 control-pretrain checkpoints and config/summary/manifest, then perform read-only provenance/strict policy-parity checks; do not substitute random N7 or formal actors |
-| Data/approval needed now | Artifact location asked once, no reply yet. Scoped worktree and two persistent-root searches found no F1 checkpoint; former temp worktree absent, remote location unverified. Pilot implementation, fresh streams and explicit capped data-only launch approval remain separate |
+| Data/approval needed now | Artifact location asked once, no reply yet. Expanded project/worktree/archive search found no matching F1 weights; old CUDA extraction has explicit permission-denied coverage limits. Historical source remains in Git, not the ignored binaries. Full 151-file control tree or ten-file subset with authenticated path/hash mapping needed. Pilot implementation, fresh streams and explicit capped data-only launch approval remain separate |
+| Latest verification | Recovery 2 spec and G1 summary hashes match. Actor/graph/config bytes match F1 training commit; environment source differs, runtime parity untested. Seven documented identity/hash checks and git diff check pass. Documentation-only follow-up; no new unit-test/performance result claimed |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 

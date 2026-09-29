@@ -15,7 +15,7 @@ formal evidence remain unchanged. This integration is not a merge to main.
 
 | Evidence | Current interpretation | Trace |
 | --- | --- | --- |
-| Formal routing-primary GCN-DDPG: approximately -0.658% vs MDL-2 and -0.321% vs matched flat | Package and matched-encoder benefits; online final-vs-frozen increment unestablished | Existing manuscript/formal evidence |
+| Formal routing-primary GCN-DDPG: approximately -0.658% vs MDL-2 and -0.321% vs matched flat | Complete-controller benefits; isolated encoder value and online final-vs-frozen increment unestablished | Existing manuscript/formal evidence; September 29 graph/flat interface audit |
 | Our local overtime reallocation screen: 0.189611% prospective validation saving, 0/54 material clinically noninferior states | Failed prespecified local first-action gate; not a global optimality certificate | `specs/2026-09-08-user-authorized-residual-screen/results.md` and independent audit |
 | Our P0 finite-tree fixture | Feedback can matter without updating any policy parameters; software verification only | `specs/2026-09-09-online-adaptation-mechanics/readout.md` and independent audit |
 | Howard restricted planner: reported -1.83% vs MDL-2 on 40 worlds; full planner: -6.64% on 12 worlds | Promising development reports of sequential control, not online RL; not independently reproduced here | `specs/2026-09-16-measurement-a-rollout-planner/results.md` |
@@ -204,3 +204,23 @@ the path will improve performance. The manuscript now discloses them. No
 historical source, checkpoint, output, primary estimate or formal status changed.
 Any corrected learning campaign needs its own development protocol and fresh
 streams; it must not overwrite or retune on the completed formal comparison.
+
+## September 29: completed local audit queue
+
+The [graph/flat contract](../../specs/2026-09-29-formal-graph-contract/readout.md)
+establishes parameter matching but not feature/head/gate parity. Earlier
+"matched-encoder" wording in this note is narrowed to the complete-controller
+comparison; the measured cost differences are unchanged.
+
+The [qualified setup-support contract](../../specs/2026-09-29-qualified-support-contract/decision_contract.md)
+names a candidate staffing lever without assuming that labor speeds biological
+growth. Twelve operational inputs remain unresolved. The
+[completion-count replay](../../specs/2026-09-29-completion-count-comparator/readout.md)
+adds one fixed, reduced-information practical rule using only existing queue
+edges. It reaches the restricted bound under changed response and nonbinding
+downstream capacity; its bottleneck gap does not establish online-RL value.
+
+The [manuscript evidence checkpoint](2026-09-29-manuscript-evidence-checkpoint.md)
+consolidates claims, provenance, reproduction commands and remaining decisions.
+This completes the finite routine queue, not the scientific work needed for
+submission. No new patient experiment or neural training was launched.

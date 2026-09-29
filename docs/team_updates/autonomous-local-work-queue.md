@@ -29,7 +29,7 @@ restricted synthetic fixture, not an excuse to train DDPG or claim PRM optimalit
 | G1 | Audit complete; parity gaps open | `specs/2026-09-29-formal-graph-contract/readout.md` records exact component counts, graph/flat input and head differences, and proposal-conditioned gate asymmetry. Formal package-level results preserved; encoder-only attribution and topology generalization are not established. No new experiment. |
 | E1 | Contract complete; domain inputs open | `specs/2026-09-29-qualified-support-contract/decision_contract.md` selects a proposed setup-support staffing decision, separates source evidence from assumptions, and specifies time-valid event observations. Companion dictionary has 12 unresolved domain inputs and explicitly forbids treating nulls as calibration or execution permission. No new experiment. |
 | C1 | Bounded comparator complete; richer comparisons open | `specs/2026-09-29-completion-count-comparator/readout.md` reports a fixed count-only rule on unchanged recorded trees, with zero new simulator queries. It attains the completion-information bound in changed/nonbinding cells; bottleneck gaps do not identify an RL advantage. Censored-data ID-MPC/history-policy studies remain outside this packet. |
-| P1 | Pending | Consolidate a manuscript claim-to-evidence matrix, reproducibility instructions and unresolved approval/domain-input packet. Verify references, artifact links and test status. No journal-ready or online-gain claim beyond evidence. |
+| P1 | Complete; coauthor/domain decisions open | `docs/team_updates/2026-09-29-manuscript-evidence-checkpoint.md` consolidates supported claims, raw-evidence limits, reproducibility commands and remaining decisions. Manuscript wording and future operational scope tightened; no submission-ready or online-gain claim. |
 
 If a packet needs an external scientific/engineering decision, record the
 specific missing fact and move to an independent unblocked packet. Ask once
@@ -94,3 +94,16 @@ invent a new experimental campaign to keep the queue nonempty.
   before and after; three output files reproduce byte for byte; a separate
   direct walk verified all 12 paths. Fifty-seven focused tests and compilation
   passed. P1 is next; do not tune the rule or weaken its information contract.
+- September 29, P1: assembled the manuscript claim-to-evidence checkpoint and
+  a short unsent coauthor draft. Corrected the integration note's isolated-
+  encoder implication; narrowed abstract online-null wording and future
+  staffing assumptions, and disclosed the tracked cost-only projection.
+  Eighty-five combined focused tests and full compilation passed. A fresh
+  independent 40-CSV/five-contrast bootstrap verification exactly matches the
+  archived verifier output; all new formal/queue table values reconcile.
+  Twenty-eight local links, 47 unique TeX labels, 39 bibliography keys and
+  comparator provenance hashes pass. No TeX engine: PDF rendering unverified.
+  All finite local packets are complete within scope. Remaining methodology,
+  provenance and domain gaps are listed in the checkpoint; no new campaign,
+  remote action or sign-off is implied. End the continuation automation rather
+  than manufacturing more tasks while those dependencies remain unresolved.

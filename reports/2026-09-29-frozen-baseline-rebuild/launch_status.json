@@ -1,0 +1,100 @@
+{
+  "backups": [
+    {
+      "archive": "results/frozen_baseline_rebuild_20260929/archives/through_seed60.tar.gz",
+      "copies": [
+        {
+          "cloud_sync_verified": false,
+          "local_copy_verified": true,
+          "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/through_seed60.tar.gz",
+          "sha256": "0260439089afbfdf71d358ffdb26964bd9f6871b561d28f3ec9ebce2c517ed64"
+        },
+        {
+          "cloud_sync_verified": false,
+          "local_copy_verified": true,
+          "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/through_seed60.tar.gz.manifest.json",
+          "sha256": "d3835fbb4784a647ab223f1d79bb51d4046307054035a1269859f0bc229bebaf"
+        }
+      ],
+      "sha256": "0260439089afbfdf71d358ffdb26964bd9f6871b561d28f3ec9ebce2c517ed64"
+    },
+    {
+      "archive": "results/frozen_baseline_rebuild_20260929/archives/through_seed61.tar.gz",
+      "copies": [
+        {
+          "cloud_sync_verified": false,
+          "local_copy_verified": true,
+          "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/through_seed61.tar.gz",
+          "sha256": "509c16b9a39c6ff158a54af5f916612b52c0f4f5ebbe0b1076e6e38b4c9ce18a"
+        },
+        {
+          "cloud_sync_verified": false,
+          "local_copy_verified": true,
+          "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/through_seed61.tar.gz.manifest.json",
+          "sha256": "8b0882c355e67201704b9e0ba405f10ff78e3ffa70b354b129a0801a8c094cf6"
+        }
+      ],
+      "sha256": "509c16b9a39c6ff158a54af5f916612b52c0f4f5ebbe0b1076e6e38b4c9ce18a"
+    },
+    {
+      "archive": "results/frozen_baseline_rebuild_20260929/archives/through_seed62.tar.gz",
+      "copies": [
+        {
+          "cloud_sync_verified": false,
+          "local_copy_verified": true,
+          "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/through_seed62.tar.gz",
+          "sha256": "5959575f4b99ab98dcd12a9b893a942fc25f0872e783b496c628af4fbc7bf731"
+        },
+        {
+          "cloud_sync_verified": false,
+          "local_copy_verified": true,
+          "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/through_seed62.tar.gz.manifest.json",
+          "sha256": "011a13fe83d2085a2b14d2733cf307a43c5a0e30d1a0bd76b2984631b3f87c0d"
+        }
+      ],
+      "sha256": "5959575f4b99ab98dcd12a9b893a942fc25f0872e783b496c628af4fbc7bf731"
+    }
+  ],
+  "commit": "1845339fc0d0bf99eb91cb02f355e6f244d5e356",
+  "completed_at_unix": 1790708591.844733,
+  "completed_seeds": [
+    {
+      "actor_gate_match_full_state": true,
+      "checkpoint_sha256": "2cc16c4208c0ace7370748695ee8191d54e8161bcb20cb16a8de494bfd12f675",
+      "finite_saved_tensors": true,
+      "full_state_sha256": "b0129f2f4117a2d0a747dbd2e87f91a401eb6549914476d619b2122bab8dc4d0",
+      "heuristic_demonstration_steps": 1040,
+      "online_episodes": 0,
+      "replacement_not_historical_recovery": true,
+      "seed": 60,
+      "supplemental_mps_rng_sha256": "65a8c3a681f33ba7d7278ffd1b46eb8b29ea0a392bccef281b284c45659b26ab"
+    },
+    {
+      "actor_gate_match_full_state": true,
+      "checkpoint_sha256": "a875c3455b29c422216c02a85d7ae52277be32598e4b9442c241738554c1371a",
+      "finite_saved_tensors": true,
+      "full_state_sha256": "96b3f38b8162b8809182cc54bfd42ca95bd18caddf6fa7da5a0e64ae9a20cd7c",
+      "heuristic_demonstration_steps": 1040,
+      "online_episodes": 0,
+      "replacement_not_historical_recovery": true,
+      "seed": 61,
+      "supplemental_mps_rng_sha256": "725b75ff938823ec926993d458e4d71929ca374e349286d27a2bd439a19953ef"
+    },
+    {
+      "actor_gate_match_full_state": true,
+      "checkpoint_sha256": "4a2fec7fd0ff1c3a58fbea1375418bc1fd3208a77fac55ef172df3a7d1cd784d",
+      "finite_saved_tensors": true,
+      "full_state_sha256": "38057946cb0b6427d8b73d3f559a917ec55fa4b612fbac292e482462777b3fbb",
+      "heuristic_demonstration_steps": 1040,
+      "online_episodes": 0,
+      "replacement_not_historical_recovery": true,
+      "seed": 62,
+      "supplemental_mps_rng_sha256": "81d7f1aa1be3b18677d35b1577dacc3ca519d6f9e439a8d0953d46fdf3fb1f17"
+    }
+  ],
+  "current_seed": 62,
+  "exit_code": 0,
+  "pid": 35892,
+  "started_at_unix": 1790708193.610053,
+  "status": "completed"
+}

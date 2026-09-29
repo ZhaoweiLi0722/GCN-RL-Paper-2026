@@ -1,0 +1,60 @@
+{
+  "cloud_sync_verified": false,
+  "files": [
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/README.md",
+      "sha256": "813d92c452d31dd1ea31046165ba78308d3495de86de446652a321393b27eaad"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/verification.json",
+      "sha256": "aa52b1c9093715d7e8830a348db0d9e05d38e80109bf24f3221e8e9ff24c1a9f"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/launch_status.json",
+      "sha256": "d6e10bb5955e6d4fbbb3284a79f78811e98c4cd0fc5928ac9832565680aad728"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/smoke_receipt.json",
+      "sha256": "d4d39c79a85d2944399f150f799ada93de815e47d361766e75e639c94ddf9cea"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/protocol.md",
+      "sha256": "4e8f9a911cb5a7f21b4be7107c6fb6f18876b5a9e8d91dce93071bc1ff910f26"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/preflight.md",
+      "sha256": "2d755160b37602b35b29df006d00fe535ad2c582d0cce81723d745c04057bc3d"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/readout.md",
+      "sha256": "5773c055f34402fef7f57285492eb5a7041efaa688d30c10084b1897704bf536"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/preflight/smoke.tar.gz",
+      "sha256": "3bcc715070fbc2ec2e2787d2874c59f3712a8b6d127fccd45ab311a705988729"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/frozen_baseline_rebuild_20260929/preflight/smoke.tar.gz.manifest.json",
+      "sha256": "998684ee998fc89a387c3b0e8f8269fb90268305e77527c77adc2df1bc1e5486"
+    }
+  ],
+  "sharing_permissions_changed": false
+}

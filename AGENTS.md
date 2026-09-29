@@ -29,6 +29,27 @@ user approval, an appended change-control entry, and a committed plan update
 before the amended experiment is launched. Existing result roots, checkpoints,
 teacher artifacts, CRN streams, and provenance remain immutable.
 
+## Research Artifact Preservation
+
+- Run research jobs in a persistent project worktree, never a temporary
+  `/tmp` checkout. Use a new run directory; preserve failed and old artifacts.
+- Freeze source/config before execution. Save the execution commit, runtime
+  versions, teacher/input hashes, effective configs, raw logs, summaries,
+  checkpoints and full resume state. Record any RNG state absent from the
+  existing checkpoint format separately; do not promise bitwise GPU recovery.
+- Archive completed run boundaries with per-file and archive SHA256 checks.
+  Use `src/utils/research_archive.py` or the campaign's established equivalent;
+  verify all archive members and destination bytes, never overwrite a different
+  backup. Keep originals after copying.
+- Zhaowei requested Dropbox preservation on 2026-09-29. The current project
+  destination is documented in the R4 protocol/config. Use versioned run
+  subdirectories there for authorized research artifacts. Do not change sharing
+  permissions, create public links, or send files to collaborators implicitly.
+- Distinguish local archive verified, Dropbox local copy verified, cloud sync
+  verified, and collaborator access verified. A sync-folder copy alone is not
+  an independent off-device backup. Do not claim old campaigns were archived
+  unless their payloads and checksums have actually been verified.
+
 ## Validation
 
 Before finishing any coding task, run at least:

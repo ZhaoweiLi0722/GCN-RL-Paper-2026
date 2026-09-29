@@ -1,0 +1,14 @@
+{
+  "actor_gate_match_state": true,
+  "demonstration_steps": 1,
+  "device": "mps",
+  "distillation_epochs": 1,
+  "fallback": "0",
+  "offline_updates": 1,
+  "online_episodes": 0,
+  "original_verifier_error": "KeyError: local_search_demonstration_source",
+  "original_verifier_exit_code": 1,
+  "saved_artifact_recheck": "passed",
+  "scope": "engineering only; not a production baseline",
+  "training_rerun": false
+}

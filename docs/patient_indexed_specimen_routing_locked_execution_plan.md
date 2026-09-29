@@ -1508,3 +1508,21 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - No reward tuning, fresh scientific scenario, formal stream, R3 collection,
   or online-training campaign is opened. Old conclusions and Stage E remain
   unchanged. Commit source/config/protocol before the single bounded attempt.
+
+### 2026-09-29: R4 completed and archived, not a new performance result
+
+- Production execution `1845339` completed the three authorized GCN seeds in
+  398.235 seconds, exit 0. Each used 1,040 heuristic demonstration steps,
+  300 distillation epochs and 500 offline updates; zero online episodes.
+- Three finite actor/gate checkpoints exactly match their full saved states;
+  MPS RNG sidecars retained. All three actor-only digests differ from archived
+  G1, so the outputs remain replacement baselines, not historical recovery.
+- Independent verification checks all members of the 10/17/24-file cumulative
+  archives and Dropbox local copies. Final archive SHA256:
+  `5959575f4b99ab98dcd12a9b893a942fc25f0872e783b496c628af4fbc7bf731`.
+- `specs/2026-09-29-frozen-baseline-rebuild/readout.md` and the companion
+  reports preserve provenance and the preflight-verifier failure. No production
+  retry occurred. Cloud sync and Howard access are not verified; no sharing
+  permissions or remote Git state changed.
+- R3 must explicitly adopt replacement baselines before use; its collection
+  and online learning remain outside this completed packet. Stage E unchanged.

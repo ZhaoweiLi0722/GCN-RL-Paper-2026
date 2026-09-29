@@ -1,0 +1,87 @@
+{
+  "archives": [
+    {
+      "all_member_hashes_verified": true,
+      "archive": "results/frozen_baseline_rebuild_20260929/archives/through_seed60.tar.gz",
+      "bytes": 14535466,
+      "cloud_sync_verified": false,
+      "dropbox_local_copy_hash_verified": true,
+      "file_count": 10,
+      "sha256": "0260439089afbfdf71d358ffdb26964bd9f6871b561d28f3ec9ebce2c517ed64"
+    },
+    {
+      "all_member_hashes_verified": true,
+      "archive": "results/frozen_baseline_rebuild_20260929/archives/through_seed61.tar.gz",
+      "bytes": 27192983,
+      "cloud_sync_verified": false,
+      "dropbox_local_copy_hash_verified": true,
+      "file_count": 17,
+      "sha256": "509c16b9a39c6ff158a54af5f916612b52c0f4f5ebbe0b1076e6e38b4c9ce18a"
+    },
+    {
+      "all_member_hashes_verified": true,
+      "archive": "results/frozen_baseline_rebuild_20260929/archives/through_seed62.tar.gz",
+      "bytes": 39963591,
+      "cloud_sync_verified": false,
+      "dropbox_local_copy_hash_verified": true,
+      "file_count": 24,
+      "sha256": "5959575f4b99ab98dcd12a9b893a942fc25f0872e783b496c628af4fbc7bf731"
+    }
+  ],
+  "cloud_sync_verified": false,
+  "completed_at_unix": 1790708591.844733,
+  "historical_checkpoint_recovery_claim": false,
+  "howard_access_verified": false,
+  "online_performance_claim": false,
+  "runtime_seconds": 398.23467993736267,
+  "seeds": [
+    {
+      "actor_gate_matches_full_state": true,
+      "actor_only_sha256": "35ef5aed02e91b9b73b34fb3edf365145d0fbae6c6e6ad63ddb6766d75fa8776",
+      "all_persisted_metrics_and_saved_numeric_arrays_finite": true,
+      "checkpoint_sha256": "2cc16c4208c0ace7370748695ee8191d54e8161bcb20cb16a8de494bfd12f675",
+      "demonstration_steps": 1040,
+      "equals_historical_g1_actor_digest": false,
+      "full_state_sha256": "b0129f2f4117a2d0a747dbd2e87f91a401eb6549914476d619b2122bab8dc4d0",
+      "mps_rng_sha256": "65a8c3a681f33ba7d7278ffd1b46eb8b29ea0a392bccef281b284c45659b26ab",
+      "offline_actor_updates": null,
+      "offline_critic_updates": null,
+      "offline_updates": 500,
+      "online_episodes": 0,
+      "seed": 60
+    },
+    {
+      "actor_gate_matches_full_state": true,
+      "actor_only_sha256": "86ffdb506d7c77cdc1f5b74854d7e4bd9a8d0038f4c8162c723b6d7124c3c9cc",
+      "all_persisted_metrics_and_saved_numeric_arrays_finite": true,
+      "checkpoint_sha256": "a875c3455b29c422216c02a85d7ae52277be32598e4b9442c241738554c1371a",
+      "demonstration_steps": 1040,
+      "equals_historical_g1_actor_digest": false,
+      "full_state_sha256": "96b3f38b8162b8809182cc54bfd42ca95bd18caddf6fa7da5a0e64ae9a20cd7c",
+      "mps_rng_sha256": "725b75ff938823ec926993d458e4d71929ca374e349286d27a2bd439a19953ef",
+      "offline_actor_updates": null,
+      "offline_critic_updates": null,
+      "offline_updates": 500,
+      "online_episodes": 0,
+      "seed": 61
+    },
+    {
+      "actor_gate_matches_full_state": true,
+      "actor_only_sha256": "73dd1407ac0edb37055689ca3985820ba19bb52a6b07b1e8d69e052a7d815037",
+      "all_persisted_metrics_and_saved_numeric_arrays_finite": true,
+      "checkpoint_sha256": "4a2fec7fd0ff1c3a58fbea1375418bc1fd3208a77fac55ef172df3a7d1cd784d",
+      "demonstration_steps": 1040,
+      "equals_historical_g1_actor_digest": false,
+      "full_state_sha256": "38057946cb0b6427d8b73d3f559a917ec55fa4b612fbac292e482462777b3fbb",
+      "mps_rng_sha256": "81d7f1aa1be3b18677d35b1577dacc3ca519d6f9e439a8d0953d46fdf3fb1f17",
+      "offline_actor_updates": null,
+      "offline_critic_updates": null,
+      "offline_updates": 500,
+      "online_episodes": 0,
+      "seed": 62
+    }
+  ],
+  "source_commit": "1845339fc0d0bf99eb91cb02f355e6f244d5e356",
+  "started_at_unix": 1790708193.610053,
+  "status": "verified"
+}

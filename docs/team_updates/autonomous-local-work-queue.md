@@ -1,31 +1,30 @@
 # Autonomous local research queue
 
-## Live checkpoint: R4 replacement-baseline rebuild authorized; preflight
+## Live checkpoint: R4 rebuild complete; local Dropbox copies verified
 
-Updated 2026-09-29 after explicit user permission to retrain if artifacts
-cannot be found and preserve data in Dropbox. Original F1 artifacts remain
-unavailable in the scoped local/Dropbox search. The finite R4 rebuild is now
-authorized; its source/config/protocol must be committed before execution.
-This changes the earlier no-retraining boundary only for three replacement
-pretraining baselines. R3 collection and online training remain unlaunched.
+Updated 2026-09-29 after the authorized R4 replacement rebuild completed.
+Three seeds finished in 398.235 seconds, exit 0, source `1845339`. All archive
+members and Dropbox local copies independently verify. Cloud sync and Howard
+access remain unverified after a client-UI timeout. R3 collection and online
+training remain unlaunched; historical F1 weights are still not recovered.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
-| Last verified stage | R3 design/test packet complete; R2 and all earlier scientific code/results unchanged |
-| Current task | R4 bounded replacement pretraining and per-seed local/Dropbox archive verification |
-| Protocol commit | R3 protocol/config/tests `1318149`; not an execution commit or launch authorization |
+| Last verified stage | R4 replacement pretraining/archives complete; older campaigns unchanged |
+| Current task | Completed packet and archive index; no background task |
+| Protocol commit | R4 protocol/source `14fc8ae`, preflight verifier repair and production execution `1845339` |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
-| Implementation evidence | 11 new/59 combined tests, full compileall and diff checks pass; existing return helpers reused, no production source change or duplicate learner framework |
-| Recorded execution | R4 not yet run. MPS tensor probe succeeds outside sandbox with fallback disabled. Tiny engineering smoke and three fixed-budget pretraining runs are next; no R3 value-label pilot authorized |
-| Independent verification | 52-step returns agree with independent suffix sums; eight source locks and proposed budget arithmetic verified |
-| Process/output check | Scoped ps initially denied in sandbox, then approved read-only check found no matching research Python process; no new task launched |
-| Scientific result | No new performance result. R2's archived cost differences remain descriptive; no online/frozen actor comparison established |
+| Implementation evidence | 16 new/64 related tests, full compileall and diff checks pass; reuses existing trainer, adds archival helper and bounded runner |
+| Recorded execution | GCN seeds60/61/62: 3,120 heuristic demonstration steps, 900 distillation epochs, 1,500 offline updates, 0 online episodes. Separate smoke: one step/epoch/update; verifier failure repaired without rerunning training |
+| Independent verification | Three finite actor/gate checkpoints equal full-state tensors; three MPS RNG sidecars. All 10/17/24-member cumulative archives and Dropbox local copies hash-verified. Actor-only hashes differ from old G1 in 3/3 seeds |
+| Process/output check | Production PID35892 exited 0; subsequent scoped process check found no matching rebuild process. No background task |
+| Scientific result | New replacement baselines, no performance evaluation or online/frozen contrast; old findings remain unchanged |
 | Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
-| Evidence paths | `specs/2026-09-29-fixed-window-value-contract/{protocol,readout,artifact-recovery}.md`; `experiments/configs/fixed_window_value_contract_20260929.json`; `tests/test_fixed_window_objective.py` |
-| Next concrete action | Commit R4 source/config/protocol, run bounded MPS smoke, then one serial three-seed rebuild and verify each archived copy before the next seed |
-| Data/approval needed now | Rebuild and Dropbox copy now authorized by user. No Howard sign-off or sharing-permission change. Cloud upload/access remain to verify; subsequent R3 replacement-baseline amendment, fresh streams and pilot authorization remain separate |
-| Latest verification | Recovery 2 spec and G1 summary hashes match. Actor/graph/config bytes match F1 training commit; environment source differs, runtime parity untested. Seven documented identity/hash checks and git diff check pass. Documentation-only follow-up; no new unit-test/performance result claimed |
+| Evidence paths | `specs/2026-09-29-frozen-baseline-rebuild/{protocol,preflight,readout}.md`; `reports/2026-09-29-frozen-baseline-rebuild/`; immutable payload in `results/frozen_baseline_rebuild_20260929/` |
+| Next concrete action | Confirm off-device cloud sync; prepare an explicit R3 replacement-baseline amendment and compatibility checks before any value-label pilot |
+| Data/approval needed now | No more pretraining required. Cloud upload and Howard access unverified; no sharing changes authorized. Scientific collector implementation, fresh streams and capped pilot launch remain separate |
+| Latest verification | Production logs contain only the known missing actor-loss placeholder during 500 critic warmup updates; persisted actor-update indicators are zero and numeric metrics/tensors finite. No Traceback/error in production logs; preflight failure preserved separately |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 
@@ -49,8 +48,9 @@ September 29 R4 amendment: follow
 `specs/2026-09-29-frozen-baseline-rebuild/protocol.md` and
 `experiments/configs/frozen_baseline_rebuild_20260929.json` for the newly
 authorized recovery-preparation work. These are new baselines, not a silent
-substitution into the historical G1 evidence. Fourteen new/62 related tests,
-compileall and diff checks pass before recording; no remote Git action.
+substitution into the historical G1 evidence. Sixteen new/64 related tests,
+compileall and diff checks pass before production recording. The finite packet
+is complete; do not rerun it or create an automation. No remote Git action.
 
 ## Authority and boundaries
 

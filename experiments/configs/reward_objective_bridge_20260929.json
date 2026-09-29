@@ -1,0 +1,20 @@
+{
+  "kind": "read_only_reward_accounting_bridge_not_performance",
+  "inputs": {
+    "receipts": {"path": "reports/2026-09-29-prospective-closed-loop-engineering/check.json", "sha256": "b7031b9e4a1ff18d090bbde58db503ed6a25f6da29e81bc653035a29d7aa0965"},
+    "design": {"path": "experiments/configs/prospective_development_preflight_20260929.json", "sha256": "278a84fb8b971b9a3bad046d46fef893825477c4a1e5160ab06f0c7daf8fa60e"},
+    "domain": {"path": "specs/2026-09-29-qualified-support-contract/measurement_contract.json", "sha256": "08ac7311fb39f64e6292d7311269d21124d5360516deea6e3dc71ae28491de06"}
+  },
+  "expected_case_ids": ["case-0-online", "case-0-frozen", "case-1-online", "case-1-frozen", "case-2-online", "case-2-frozen"],
+  "expected_steps_per_case": 6,
+  "archived_return_steps": 3,
+  "top_level_cost_components": ["base_cost", "patient_loss_cost", "expiry_cost", "urgency_cost"],
+  "resumed_sha256": {
+    "case-0-online": "b579cebe7e29a16195bc76e148ed2a9a400f95d2a6840d75fe5cc835a754af76",
+    "case-0-frozen": "637b16e105acc3777f2eb74666b9bff8e217a3e3f436df3782d186809035ece5",
+    "case-1-online": "8bcc8c5170c9a81c4267bc9dbaa012521623d577a724b45f8ce71270c0790773",
+    "case-1-frozen": "0fd4d847fe5db4e285da5bfcbe1c8a5a0ebe1f4ebd74ea34b2dfbf7d888eb1a1",
+    "case-2-online": "22eddb4b2a9b1fb6e651122958f87d44f76dd9f056e34b5143420b44b37d630f",
+    "case-2-frozen": "44f4ac4b25853606a2cc5b1a2c68a4b9647d20848af9ab14f2cf1b222e9596d4"
+  }
+}

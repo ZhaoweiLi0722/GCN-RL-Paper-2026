@@ -1420,3 +1420,16 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   tune costs to rescue it, or automatically repeat it. A corrected reward
   intervention/development study needs new scope and a prospective design;
   existing N1-N7 engineering is preparation, not performance evidence.
+
+### 2026-09-29: Continued read-only reward-objective preparation (R1)
+
+- Following S4, Zhaowei requested further progress. Continue read-only reward
+  accounting and development-design preparation in
+  `specs/2026-09-29-reward-objective-bridge/protocol.md`, not a scientific launch.
+- Add an independent JSON-only check of all six N7 case receipts and resumed
+  duplicates, including disjoint costs, raw rewards, scaling, lineage, short
+  tails and engineering-vs-proposed objective differences. No model or binary
+  checkpoint is loaded; source and evidence hashes are preserved.
+- Prepare a non-executable decision separating legacy-simulator consistency
+  work from the uncalibrated E1 new-task proposal. Neither is authorized to run
+  by this entry. Do not change costs, old sources/results, Stage E or holdout.

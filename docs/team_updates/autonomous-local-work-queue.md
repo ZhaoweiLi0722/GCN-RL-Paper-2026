@@ -1,16 +1,16 @@
 # Autonomous local research queue
 
-## Live checkpoint: S4 and reward diagnosis complete
+## Live checkpoint: R1 read-only reward-objective bridge
 
-Updated 2026-09-29 16:34 UTC after explicit S4 continuation. The historical M/N
-and S3 completion records below remain valid. S4 and its reward diagnosis are
-now complete; use this section as the current queue and approval boundary.
+Updated 2026-09-29 after the user's request to continue beyond S4. S4 and all
+earlier scientific records remain closed; R1 is read-only accounting and design,
+not a changed experiment or authorization to train.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | S4 completed once, independently audited; S1/S2/S3 evidence unchanged |
-| Current task | S4 implementation, test, source freeze, one matrix, audit, readout and conditional reward diagnosis complete |
+| Current task | R1 JSON-only receipt accounting implemented; 15 new/48 related tests pass. Source freeze, recorded audit and readout pending |
 | Protocol commit | S4 `e4e9fef`; both protocol/config locks pass, 315 historical input/source locks pass |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | S4 `evaluation/check_completion_continuation_comparison.py`, additive tree and component-forecast modules; 154 combined tests/full compileall pass; S3 read-only audit passes; no historical changes |
@@ -20,8 +20,8 @@ now complete; use this section as the current queue and approval boundary.
 | Scientific result | 0/4 contexts pass the prospective conditional signal check; tree128 matches or loses to booked in all validation blocks, though it beats reservation. 64/180 inner actions change with sample budget. No online-RL or optimality claim |
 | Reward diagnosis | Historical absolute/relative reward mixing remains a concrete consistency concern, not a proven cause. Existing prospective contracts already address it. Read-only potential-shaping algebra on 288 archived episodes has exact common +2 offset and unchanged rankings; no weights tuned |
 | Evidence paths | `reports/2026-09-29-completion-continuation-comparison/run/`; `specs/2026-09-29-completion-continuation-comparison/readout.md` and `reward-diagnosis.md` |
-| Next concrete action | User/coauthor/domain decision on a grounded, consistent-objective development study; do not keep enlarging this synthetic screen or rebuild completed N1-N7 mechanics |
-| Approval needed now | No routine S4 work remains. A reward intervention, new performance study, neural training, actual/patient episodes or changed objective requires new explicit scope/protocol; E1 domain inputs still missing |
+| Next concrete action | Compile and commit R1 auditor/tests/config; record one read-only receipt audit and verify independently; finish the finite accounting/design packet |
+| Approval needed now | No additional approval for this read-only packet. Asked once whether the next design should prioritize fixed-weight legacy-simulator consistency; no reply yet. Scientific endpoint/budget/launch remain unapproved; E1 missing inputs apply to the new task, not automatically to every legacy-simulator analysis |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 

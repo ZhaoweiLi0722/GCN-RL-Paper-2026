@@ -1,0 +1,50 @@
+{
+  "kind": "prospective_design_preflight_not_training",
+  "schema_source": "reports/2026-09-29-prospective-collector-engineering/check.json",
+  "schema_source_sha256": "67c35b480a7ca647f791e6a401660eb4ced8d413ef7c3421ac68b7fab1ec3c61",
+  "graph_hidden_width": 64,
+  "flat_hidden_width_range": [1, 256],
+  "max_component_gap_fraction": 0.01,
+  "max_total_gap_fraction": 0.01,
+  "selection_rule": "min_max_component_gap_then_total_gap_then_width",
+  "permissions": {
+    "environment_steps": false,
+    "optimizer_updates": false,
+    "performance_evaluation": false,
+    "remote_actions": false,
+    "formal_holdout": false
+  },
+  "primary_contrast": "same_initial_graph_policy_online_minus_frozen",
+  "secondary_contrasts": [
+    "physical_messages_minus_self_only_same_architecture",
+    "common_information_parameter_matched_graph_minus_flat"
+  ],
+  "required_deployable_comparators": [
+    "competent_frozen_history_policy",
+    "online_ddpg",
+    "adaptive_rule",
+    "online_identification_mpc"
+  ],
+  "proposed_training_objective": {
+    "reward_kind": "absolute_environment",
+    "reward_definition": "negative_complete_step_cost",
+    "reward_scale_rule": "single_positive_constant_frozen_from_pretraining_units",
+    "gamma": 1.0,
+    "return_steps": 1,
+    "task": "finite_fully_settled_episode",
+    "terminal_bootstrap": false,
+    "collector_cut_bootstrap": true,
+    "legacy_cache_import": false,
+    "online_gate_parameter_updates": false
+  },
+  "scientific_launch_evidence": {
+    "operational_task_measurement_and_calibration": null,
+    "complete_objective_units_and_terminal_accounting": null,
+    "replicated_safe_action_headroom_and_learnability": null,
+    "competent_frozen_and_adaptive_comparator_acceptance": null,
+    "optimizer_replay_and_exact_resume_acceptance": null,
+    "new_task_input_action_model_and_gate_lock": null,
+    "fresh_stream_budget_effect_margin_and_analysis_lock": null,
+    "explicit_scientific_launch_authorization": null
+  }
+}

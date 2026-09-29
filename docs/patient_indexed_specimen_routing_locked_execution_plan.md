@@ -1255,3 +1255,17 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - This does not authorize a patient scenario campaign, performance evaluation,
   formal confirmation, remote actions or imply Howard's sign-off. Raw-observation
   equality and return plumbing are engineering acceptance, not proof of RL gain.
+
+### 2026-09-29: Prospective design/count preflight after N4
+
+- N4's 36 real engineering steps, repeated report and 171 tests passed, without
+  updates or performance claims. Zhaowei requested continuation of the next
+  proposed step: specify the small development design before training.
+- `specs/2026-09-29-prospective-development-design/protocol.md` fixes an
+  outcome-independent component-count search and separates online-weight,
+  message-passing and representation contrasts. Run only frozen module/shape
+  checks on the locked N4 schema; commit source/config before recording them.
+- No environment rollout, optimizer update, scientific seed allocation or
+  launch is authorized by this preflight. Scenario/calibration/closure and
+  scientific launch evidence remain unfilled, not assumed. Old results,
+  checkpoints, teacher, streams and Howard's work remain unchanged.

@@ -62,6 +62,12 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
+- September 29, N5 in progress: the user requested continuation after N4.
+  Prepare the bounded development design and an outcome-independent actual
+  module-count/operator preflight. No environment steps or optimizer updates;
+  unknown scientific launch evidence stays null. Protocol:
+  `specs/2026-09-29-prospective-development-design/protocol.md`.
+
 - September 29, N4 complete: the user approved the specifically requested
   bounded actual collector/agent engineering check. Protocol:
   `specs/2026-09-29-prospective-collector-engineering/protocol.md`. The real

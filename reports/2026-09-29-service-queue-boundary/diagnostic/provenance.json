@@ -1,0 +1,25 @@
+{
+  "execution_commit": "425bb20a5b20bd08450477aaae2ed22a1257ef45",
+  "source_locks": [
+    {
+      "path": "evaluation/diagnose_service_queue_evidence.py",
+      "sha256": "423e62bd84a3b835f7950ba2944fd81e91445b7ea209e13f0af76b3bd9915935"
+    },
+    {
+      "path": "tests/test_service_queue_evidence.py",
+      "sha256": "eae251ee81dd348c5bcc6892fe61974b3446e306e4af0acf0766a273c3d0efe2"
+    }
+  ],
+  "upstream_audit": {
+    "audit": "passed",
+    "baseline_episodes": 60,
+    "decision_rows": 300,
+    "tree_edges": 16368,
+    "unique_closures": 9088,
+    "verified_hashes": 59,
+    "limitation": "nonanticipative optimizer is regression-tested, not independently reimplemented; planner query counts are implementation-reported"
+  },
+  "input_inventory_sha256": "f3e55f4febb0b2e7df3ee7525d4d782baeb5a43cf16274b867977f9069e95865",
+  "diagnosis_sha256": "ccd18fbd6f9e55c51714e60de0e58a1c66f472cb40448277edeacf57780895e8",
+  "new_simulator_queries": 0
+}

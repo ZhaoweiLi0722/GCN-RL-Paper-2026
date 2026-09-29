@@ -1,0 +1,705 @@
+{
+  "classification": "post_run_measurement_contract_diagnostic",
+  "new_simulator_queries": 0,
+  "online_weight_updates": false,
+  "operational_measurements_validated": false,
+  "results": {
+    "batch__nonbinding__no_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 81.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "balanced"
+              ],
+              "cost": 81.0,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 81.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 81.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "balanced"
+              ],
+              "cost": 81.0,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 81.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 81.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "balanced"
+              ],
+              "cost": 81.0,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 81.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.0,
+      "completion_feedback_value_over_open_loop": 0.0
+    },
+    "batch__nonbinding__persistent_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 103.25,
+          "root_action": "balanced",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "left",
+                "left"
+              ],
+              "cost": 103.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "right",
+                "right"
+              ],
+              "cost": 103.25,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 103.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 103.25,
+          "root_action": "balanced",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "left",
+                "left"
+              ],
+              "cost": 103.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "right",
+                "right"
+              ],
+              "cost": 103.25,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 103.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 107.75,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "left",
+                "left",
+                "right",
+                "right"
+              ],
+              "cost": 100.25,
+              "first_distinguishable_decision_epoch": null
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "left",
+                "left",
+                "right",
+                "right"
+              ],
+              "cost": 115.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 107.75,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.0,
+      "completion_feedback_value_over_open_loop": 4.5
+    },
+    "batch__shared_bottleneck__no_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 102.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 102.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 102.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 102.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 102.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 102.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 102.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 102.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 102.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.0,
+      "completion_feedback_value_over_open_loop": 0.0
+    },
+    "batch__shared_bottleneck__persistent_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 114.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "left",
+                "left"
+              ],
+              "cost": 109.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "right",
+                "right"
+              ],
+              "cost": 119.25,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 114.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 115.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "left",
+                "left"
+              ],
+              "cost": 110.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "right"
+              ],
+              "cost": 119.75,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 115.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 119.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 115.75,
+              "first_distinguishable_decision_epoch": null
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 122.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 119.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.75,
+      "completion_feedback_value_over_open_loop": 4.0
+    },
+    "booked_flow__nonbinding__no_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 71.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "balanced"
+              ],
+              "cost": 71.0,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 71.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 71.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "balanced"
+              ],
+              "cost": 71.0,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 71.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 71.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "balanced"
+              ],
+              "cost": 71.0,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 71.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.0,
+      "completion_feedback_value_over_open_loop": 0.0
+    },
+    "booked_flow__nonbinding__persistent_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 93.25,
+          "root_action": "balanced",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "left",
+                "left"
+              ],
+              "cost": 93.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "right",
+                "right"
+              ],
+              "cost": 93.25,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 93.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 93.25,
+          "root_action": "balanced",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "left",
+                "left"
+              ],
+              "cost": 93.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "balanced",
+                "balanced",
+                "balanced",
+                "right",
+                "right"
+              ],
+              "cost": 93.25,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 93.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 97.75,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "left",
+                "left",
+                "right",
+                "right"
+              ],
+              "cost": 90.25,
+              "first_distinguishable_decision_epoch": null
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "left",
+                "left",
+                "right",
+                "right"
+              ],
+              "cost": 105.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 97.75,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.0,
+      "completion_feedback_value_over_open_loop": 4.5
+    },
+    "booked_flow__shared_bottleneck__no_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 92.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 92.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 92.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 92.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 92.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 92.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 92.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "nominal",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 92.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 92.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.0,
+      "completion_feedback_value_over_open_loop": 0.0
+    },
+    "booked_flow__shared_bottleneck__persistent_change": {
+      "contracts": {
+        "exact_progress": {
+          "cost": 104.25,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "left",
+                "left"
+              ],
+              "cost": 99.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "right",
+                "right"
+              ],
+              "cost": 109.25,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 104.25,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "completion_events": {
+          "cost": 105.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "left",
+                "left"
+              ],
+              "cost": 100.25,
+              "first_distinguishable_decision_epoch": 3
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "left",
+                "right",
+                "right",
+                "right"
+              ],
+              "cost": 109.75,
+              "first_distinguishable_decision_epoch": 3
+            }
+          ],
+          "replayed_expected_cost": 105.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        },
+        "no_feedback": {
+          "cost": 109.0,
+          "root_action": "left",
+          "witness": [
+            {
+              "world": "left_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 105.75,
+              "first_distinguishable_decision_epoch": null
+            },
+            {
+              "world": "right_slow",
+              "actions": [
+                "left",
+                "balanced",
+                "balanced",
+                "balanced",
+                "right"
+              ],
+              "cost": 112.25,
+              "first_distinguishable_decision_epoch": null
+            }
+          ],
+          "replayed_expected_cost": 109.0,
+          "online_parameter_updates": false,
+          "scope": "known finite-law history policy, five decisions then the declared common continuation"
+        }
+      },
+      "cost_of_hiding_exact_progress": 0.75,
+      "completion_feedback_value_over_open_loop": 4.0
+    }
+  },
+  "limitation": "Known finite-world law and fixed continuation; completion-only practical baselines and independent deployment validation have not been run."
+}

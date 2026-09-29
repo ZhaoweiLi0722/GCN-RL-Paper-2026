@@ -1,0 +1,42 @@
+{
+  "alpha": 0.05,
+  "bootstrap_seed": 0,
+  "contrasts": {
+    "flat_residual_mdl2_network_ddpg_afd_final_vs_frozen": {
+      "mean_difference": -139378.245312616,
+      "two_way_max_endpoint_error": 0.0,
+      "two_way_width_increase_vs_seed0_nested_pct": 13.794231611612107
+    },
+    "flat_residual_mdl2_network_ddpg_afd_vs_anchor": {
+      "mean_difference": -9085675.18874516,
+      "two_way_max_endpoint_error": 5.587935447692871e-09,
+      "two_way_width_increase_vs_seed0_nested_pct": 17.537123249527696
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_final_vs_frozen": {
+      "mean_difference": 72902.60952168942,
+      "two_way_max_endpoint_error": 0.0,
+      "two_way_width_increase_vs_seed0_nested_pct": 26.6779377746885
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_vs_anchor": {
+      "mean_difference": -17689540.214226212,
+      "two_way_max_endpoint_error": 3.725290298461914e-09,
+      "two_way_width_increase_vs_seed0_nested_pct": 21.49793347766844
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_vs_flat_residual_mdl2_network_ddpg_afd": {
+      "mean_difference": -8603865.025481053,
+      "two_way_max_endpoint_error": 3.725290298461914e-09,
+      "two_way_width_increase_vs_seed0_nested_pct": 9.992294964363225
+    }
+  },
+  "input_hashes": {
+    "formal_crossed_bootstrap.json": "355619506e7a7353734866ca4b46a1b189342812b7da1a9701d1ce1f053c2254",
+    "formal_crossed_bootstrap.md": "48c6f40fe4e7daa7ed4757a667fbcbf0442313a5b38c324f3bcac309fd11717f",
+    "projection/provenance.json": "04bebb501331ce842d4381672c5a07447d87c26f5fd121d67e5d72be51933b2d"
+  },
+  "method": "independent paired-key arithmetic and multiplicity-weighted crossed resampling",
+  "projection_csv_hashes_verified": 40,
+  "resamples": 20000,
+  "scope_limit": "checks arithmetic and crossed implementation, not finite-sample coverage or clinical claims",
+  "status": "passed",
+  "verification_source_sha256": "8a9f152a0a8a76e8c59d761c777417bfbbf5141b5a6a25992e701ac81297ee45"
+}

@@ -1342,7 +1342,7 @@ continuous geographic travel time, and the reversal precludes a blanket
 transport-timing robustness claim.
 
 Finally, the formal final-minus-frozen GCN point estimate is $+0.073$ million
-units ($+0.00273\%$), indicating no material online increment. On the separate
+units ($+0.00273\%$), not establishing an online improvement. On the separate
 paired development checkpoint curve, episode 100 minus episode 75 is $+0.069$
 million with interval $[-0.345,+0.502]$ million. Howard's matched three-seed
 TD3 development ablation corroborates graph and anchor value: final GCN--TD3 is
@@ -1353,6 +1353,40 @@ exploration screen achieved the intended action coverage but produced a GCN
 final-minus-frozen effect of $+0.00416\%$ with interval
 $[-0.02766,+0.04091]\%$. Thus neither actor--critic backbone establishes an
 independent online-learning gain at the tested budget.
+
+\paragraph{Shared-world statistical sensitivity.}
+Every training seed was evaluated on the same scenario--replication worlds.
+The 2,000 paired outcomes therefore do not constitute 2,000 independent policy
+training runs. In a post-hoc reporting sensitivity, we resampled the five
+training seeds and the 100 worlds within each of the four fixed scenarios,
+using the same world draw for every selected seed. This crossed resampling
+follows the separate-factor principle of \citet{Owen2007CrossedBootstrap}; it
+does not guarantee exact finite-sample coverage with only five training seeds.
+Table~\ref{tab:routing_crossed_cost} reports 20,000-resample percentile intervals.
+Both GCN cost contrasts remain favorable, whereas neither final-minus-frozen
+contrast excludes zero. This audit analyzes the existing fixed policies and
+raw holdout rows without new simulation or policy selection. It supplements,
+rather than replaces, the declared primary intervals and does not re-estimate
+clinical noninferiority or establish equivalence of final and frozen policies.
+
+\begin{table}[htbp]
+\centering
+\caption{Post-hoc crossed seed/world sensitivity for total cost. Differences
+and intervals are in millions of modeled objective units; negative differences
+favor the first policy. All five contrasts are reported.}
+\label{tab:routing_crossed_cost}
+\begin{tabular}{lrr}
+\hline
+Comparison & Mean difference & Crossed 95\% interval \\
+\hline
+GCN final vs.\ MDL-2 & $-17.690$ & $[-19.806,-15.355]$ \\
+Flat final vs.\ MDL-2 & $-9.086$ & $[-10.896,-7.239]$ \\
+GCN final vs.\ flat final & $-8.604$ & $[-11.284,-6.088]$ \\
+GCN final vs.\ frozen pretraining & $+0.073$ & $[-0.180,+0.313]$ \\
+Flat final vs.\ frozen pretraining & $-0.139$ & $[-0.546,+0.278]$ \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Prospective online-DDPG attribution and action-geometry audits}
 

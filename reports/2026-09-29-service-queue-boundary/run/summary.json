@@ -1,0 +1,293 @@
+{
+  "classification": "synthetic_mechanism_boundary_not_prm_or_rl_confirmation",
+  "online_weight_updates": false,
+  "patient_model_run": false,
+  "operational_calibration_validated": false,
+  "independent_replications": 0,
+  "comparisons": {
+    "batch__nonbinding__no_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 81.25,
+        "backlog_rule": 81.25,
+        "adaptive_backlog_rule": 81.25,
+        "fixed_model_mpc": 81.0,
+        "identification_mpc": 81.0
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 81.0,
+        "policy_replay_cost": 81.0,
+        "clairvoyant_cost": 81.0,
+        "best_open_loop_cost": 81.0,
+        "best_open_loop_actions": [
+          "left",
+          "left",
+          "right",
+          "right",
+          "balanced"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "left"
+        ],
+        "policy_information_sets": 5,
+        "unique_transition_queries": 1364,
+        "action_count": 4,
+        "world_count": 1,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 0.0,
+      "identification_gain_over_fixed_mpc": 0.0,
+      "identification_gap_to_diagnostic": 0.0
+    },
+    "batch__nonbinding__persistent_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 109.0,
+        "backlog_rule": 103.25,
+        "adaptive_backlog_rule": 103.25,
+        "fixed_model_mpc": 106.375,
+        "identification_mpc": 106.0
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 103.25,
+        "policy_replay_cost": 103.25,
+        "clairvoyant_cost": 96.75,
+        "best_open_loop_cost": 107.75,
+        "best_open_loop_actions": [
+          "left",
+          "left",
+          "left",
+          "right",
+          "right"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "balanced"
+        ],
+        "policy_information_sets": 7,
+        "unique_transition_queries": 2728,
+        "action_count": 4,
+        "world_count": 2,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 4.5,
+      "identification_gain_over_fixed_mpc": 0.375,
+      "identification_gap_to_diagnostic": 2.75
+    },
+    "batch__shared_bottleneck__no_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 109.25,
+        "backlog_rule": 109.25,
+        "adaptive_backlog_rule": 109.25,
+        "fixed_model_mpc": 102.25,
+        "identification_mpc": 102.25
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 102.25,
+        "policy_replay_cost": 102.25,
+        "clairvoyant_cost": 102.25,
+        "best_open_loop_cost": 102.25,
+        "best_open_loop_actions": [
+          "left",
+          "balanced",
+          "balanced",
+          "balanced",
+          "right"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "left"
+        ],
+        "policy_information_sets": 5,
+        "unique_transition_queries": 1364,
+        "action_count": 4,
+        "world_count": 1,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 0.0,
+      "identification_gain_over_fixed_mpc": 0.0,
+      "identification_gap_to_diagnostic": 0.0
+    },
+    "batch__shared_bottleneck__persistent_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 125.0,
+        "backlog_rule": 121.25,
+        "adaptive_backlog_rule": 121.25,
+        "fixed_model_mpc": 117.625,
+        "identification_mpc": 114.25
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 114.25,
+        "policy_replay_cost": 114.25,
+        "clairvoyant_cost": 109.0,
+        "best_open_loop_cost": 119.0,
+        "best_open_loop_actions": [
+          "left",
+          "balanced",
+          "balanced",
+          "balanced",
+          "right"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "left"
+        ],
+        "policy_information_sets": 7,
+        "unique_transition_queries": 2728,
+        "action_count": 4,
+        "world_count": 2,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 4.75,
+      "identification_gain_over_fixed_mpc": 3.375,
+      "identification_gap_to_diagnostic": 0.0
+    },
+    "booked_flow__nonbinding__no_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 71.25,
+        "backlog_rule": 71.25,
+        "adaptive_backlog_rule": 71.25,
+        "fixed_model_mpc": 71.0,
+        "identification_mpc": 71.0
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 71.0,
+        "policy_replay_cost": 71.0,
+        "clairvoyant_cost": 71.0,
+        "best_open_loop_cost": 71.0,
+        "best_open_loop_actions": [
+          "left",
+          "left",
+          "right",
+          "right",
+          "balanced"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "left"
+        ],
+        "policy_information_sets": 5,
+        "unique_transition_queries": 1364,
+        "action_count": 4,
+        "world_count": 1,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 0.0,
+      "identification_gain_over_fixed_mpc": 0.0,
+      "identification_gap_to_diagnostic": 0.0
+    },
+    "booked_flow__nonbinding__persistent_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 99.0,
+        "backlog_rule": 93.25,
+        "adaptive_backlog_rule": 93.25,
+        "fixed_model_mpc": 96.375,
+        "identification_mpc": 96.0
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 93.25,
+        "policy_replay_cost": 93.25,
+        "clairvoyant_cost": 86.75,
+        "best_open_loop_cost": 97.75,
+        "best_open_loop_actions": [
+          "left",
+          "left",
+          "left",
+          "right",
+          "right"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "balanced"
+        ],
+        "policy_information_sets": 7,
+        "unique_transition_queries": 2728,
+        "action_count": 4,
+        "world_count": 2,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 4.5,
+      "identification_gain_over_fixed_mpc": 0.375,
+      "identification_gap_to_diagnostic": 2.75
+    },
+    "booked_flow__shared_bottleneck__no_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 99.25,
+        "backlog_rule": 99.25,
+        "adaptive_backlog_rule": 99.25,
+        "fixed_model_mpc": 92.25,
+        "identification_mpc": 92.25
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 92.25,
+        "policy_replay_cost": 92.25,
+        "clairvoyant_cost": 92.25,
+        "best_open_loop_cost": 92.25,
+        "best_open_loop_actions": [
+          "left",
+          "balanced",
+          "balanced",
+          "balanced",
+          "right"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "left"
+        ],
+        "policy_information_sets": 5,
+        "unique_transition_queries": 1364,
+        "action_count": 4,
+        "world_count": 1,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 0.0,
+      "identification_gain_over_fixed_mpc": 0.0,
+      "identification_gap_to_diagnostic": 0.0
+    },
+    "booked_flow__shared_bottleneck__persistent_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 115.0,
+        "backlog_rule": 111.25,
+        "adaptive_backlog_rule": 111.25,
+        "fixed_model_mpc": 107.625,
+        "identification_mpc": 104.25
+      },
+      "diagnostic": {
+        "nonanticipative_cost": 104.25,
+        "policy_replay_cost": 104.25,
+        "clairvoyant_cost": 99.0,
+        "best_open_loop_cost": 109.0,
+        "best_open_loop_actions": [
+          "left",
+          "balanced",
+          "balanced",
+          "balanced",
+          "right"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "left"
+        ],
+        "policy_information_sets": 7,
+        "unique_transition_queries": 2728,
+        "action_count": 4,
+        "world_count": 2,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "feedback_value_over_open_loop": 4.75,
+      "identification_gain_over_fixed_mpc": 3.375,
+      "identification_gap_to_diagnostic": 0.0
+    }
+  },
+  "baseline_episodes": 60,
+  "decision_rows": 300,
+  "exact_tree_edges": 16368,
+  "distinct_tree_closures": 9088
+}

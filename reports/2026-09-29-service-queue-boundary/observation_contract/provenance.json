@@ -1,0 +1,29 @@
+{
+  "execution_commit": "92069931a044e83792795e1fd95bee346bdd498b",
+  "sources": [
+    {
+      "path": "evaluation/check_service_queue_observation_contract.py",
+      "sha256": "03e00d0a142ddb201b1983f70a862dec7bd5f9a842c503f87b816d5e7b7bcb3d"
+    },
+    {
+      "path": "tests/test_service_queue_observation_contract.py",
+      "sha256": "59758cc24ced5a4d02f16a7d8755b7a8aa568d0fd08c97125034bf5f79c26204"
+    },
+    {
+      "path": "evaluation/diagnose_service_queue_evidence.py",
+      "sha256": "423e62bd84a3b835f7950ba2944fd81e91445b7ea209e13f0af76b3bd9915935"
+    }
+  ],
+  "upstream_audit": {
+    "audit": "passed",
+    "baseline_episodes": 60,
+    "decision_rows": 300,
+    "tree_edges": 16368,
+    "unique_closures": 9088,
+    "verified_hashes": 59,
+    "limitation": "nonanticipative optimizer is regression-tested, not independently reimplemented; planner query counts are implementation-reported"
+  },
+  "input_inventory_sha256": "f3e55f4febb0b2e7df3ee7525d4d782baeb5a43cf16274b867977f9069e95865",
+  "result_sha256": "45a4a4e3e525b719450bb56ed613de976019678563ed4e750966f6de5e2bbaf3",
+  "new_simulator_queries": 0
+}

@@ -1,0 +1,301 @@
+{
+  "alpha": 0.05,
+  "contrasts": {
+    "flat_residual_mdl2_network_ddpg_afd_final_vs_frozen": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 360078.2188063224,
+        "analytic_se_of_mean": 183716.7513313114,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.05611519738680587,
+        "variance_component_residual": 18816990950577.625,
+        "variance_component_seed": 107878607581.89503,
+        "variance_component_world": 1107051091225.2358
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": 226523.3465346702,
+          "ci_low": -498011.9985355313,
+          "excludes_zero": false,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 724535.3450702014
+        },
+        "seed_cluster": {
+          "ci_high": 172318.3864463227,
+          "ci_low": -451074.87707155466,
+          "excludes_zero": false,
+          "width": 623393.2635178773
+        },
+        "two_way": {
+          "ci_high": 278095.37543508067,
+          "ci_low": -546384.0532420974,
+          "excludes_zero": false,
+          "width": 824479.428677178
+        },
+        "world_cluster": {
+          "ci_high": 77526.52820327046,
+          "ci_low": -355696.48612385296,
+          "excludes_zero": false,
+          "width": 433223.0143271234
+        }
+      },
+      "mean_difference": -139378.245312616,
+      "mean_gap_pct": -0.00520554190735942,
+      "n_training_seeds": 5,
+      "n_worlds_per_scenario": 100,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -167759.18258902835,
+        "routing_compound_regional_stress": -68438.16421838856,
+        "routing_nominal_history": 43296.95459062529,
+        "routing_regional_drift": -364612.58903367235
+      },
+      "per_seed_mean_difference": [
+        262634.3750773269,
+        -599978.548874476,
+        -161925.84543689011,
+        -446745.72108596563,
+        249124.51375692486
+      ],
+      "ties": 100,
+      "wins": 962
+    },
+    "flat_residual_mdl2_network_ddpg_afd_vs_anchor": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 1961395.696672469,
+        "analytic_se_of_mean": 1000730.470902766,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.6138211017105465,
+        "variance_component_residual": 95357164486912.73,
+        "variance_component_seed": 2921309980224.1914,
+        "variance_component_world": 147808358841990.84
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": -7468509.847111044,
+          "ci_low": -10579347.248253185,
+          "excludes_zero": true,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 3110837.401142141
+        },
+        "seed_cluster": {
+          "ci_high": -7553062.598703384,
+          "ci_low": -10436712.483064255,
+          "excludes_zero": true,
+          "width": 2883649.8843608703
+        },
+        "two_way": {
+          "ci_high": -7239470.504206968,
+          "ci_low": -10895859.29447981,
+          "excludes_zero": true,
+          "width": 3656388.790272842
+        },
+        "world_cluster": {
+          "ci_high": -7938467.082013653,
+          "ci_low": -10238911.842874799,
+          "excludes_zero": true,
+          "width": 2300444.7608611463
+        }
+      },
+      "mean_difference": -9085675.18874516,
+      "mean_gap_pct": -0.33820457332868725,
+      "n_training_seeds": 5,
+      "n_worlds_per_scenario": 100,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -1179758.1176440478,
+        "routing_compound_regional_stress": -15224647.679216355,
+        "routing_nominal_history": -12050366.741153546,
+        "routing_regional_drift": -7887928.216966691
+      },
+      "per_seed_mean_difference": [
+        -6440093.26973762,
+        -9578770.649446638,
+        -11387025.195389869,
+        -9222516.592152031,
+        -8799970.23699964
+      ],
+      "ties": 0,
+      "wins": 1491
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_final_vs_frozen": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 178919.14788212502,
+        "analytic_se_of_mean": 91286.95623089251,
+        "mean_pairwise_seed_correlation_of_world_differences": -0.022309459019006463,
+        "variance_component_residual": 16666616755801.77,
+        "variance_component_seed": 0.0,
+        "variance_component_world": 0.0
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": 263604.36296133074,
+          "ci_low": -125961.04278981467,
+          "excludes_zero": false,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 389565.40575114544
+        },
+        "seed_cluster": {
+          "ci_high": 140992.22604044128,
+          "ci_low": -14960.341510660171,
+          "excludes_zero": false,
+          "width": 155952.56755110144
+        },
+        "two_way": {
+          "ci_high": 313171.8080448239,
+          "ci_low": -180321.61424432488,
+          "excludes_zero": false,
+          "width": 493493.4222891488
+        },
+        "world_cluster": {
+          "ci_high": 242001.0205867517,
+          "ci_low": -94502.37831871054,
+          "excludes_zero": false,
+          "width": 336503.39890546224
+        }
+      },
+      "mean_difference": 72902.60952168942,
+      "mean_gap_pct": 0.002731784152286645,
+      "n_training_seeds": 5,
+      "n_worlds_per_scenario": 100,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -125034.41128950071,
+        "routing_compound_regional_stress": 285283.97464403155,
+        "routing_nominal_history": 42824.14478951073,
+        "routing_regional_drift": 88536.72994271612
+      },
+      "per_seed_mean_difference": [
+        87361.78007596254,
+        121656.59072043776,
+        66352.37932979882,
+        176745.8566834271,
+        -87603.55920117915
+      ],
+      "ties": 41,
+      "wins": 982
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_vs_anchor": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 2358067.8217511517,
+        "analytic_se_of_mean": 1203117.925508403,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.642663740952507,
+        "variance_component_residual": 124142202220432.44,
+        "variance_component_seed": 4161547118961.257,
+        "variance_component_world": 221244887110870.1
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": -15724864.954293778,
+          "ci_low": -19388282.74068585,
+          "excludes_zero": true,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 3663417.786392072
+        },
+        "seed_cluster": {
+          "ci_high": -15849229.077092383,
+          "ci_low": -19171696.792432215,
+          "excludes_zero": true,
+          "width": 3322467.715339832
+        },
+        "two_way": {
+          "ci_high": -15354808.899588693,
+          "ci_low": -19805785.804708406,
+          "excludes_zero": true,
+          "width": 4450976.905119713
+        },
+        "world_cluster": {
+          "ci_high": -16289524.792381553,
+          "ci_low": -19108471.498300787,
+          "excludes_zero": true,
+          "width": 2818946.705919234
+        }
+      },
+      "mean_difference": -17689540.214226212,
+      "mean_gap_pct": -0.6584742769523672,
+      "n_training_seeds": 5,
+      "n_worlds_per_scenario": 100,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -9465213.12920282,
+        "routing_compound_regional_stress": -26864724.573425733,
+        "routing_nominal_history": -18260615.47743102,
+        "routing_regional_drift": -16167607.676845277
+      },
+      "per_seed_mean_difference": [
+        -19307775.702086624,
+        -19321569.58673856,
+        -18599793.384510707,
+        -16858658.755005118,
+        -14359903.642790055
+      ],
+      "ties": 0,
+      "wins": 1718
+    },
+    "gcn_residual_mdl2_network_ddpg_afd_vs_flat_residual_mdl2_network_ddpg_afd": {
+      "dependence": {
+        "analytic_normal_ci_halfwidth": 2716335.214694464,
+        "analytic_se_of_mean": 1385910.7691235472,
+        "mean_pairwise_seed_correlation_of_world_differences": 0.3835783017707336,
+        "variance_component_residual": 215553402672172.6,
+        "variance_component_seed": 7364733240049.491,
+        "variance_component_world": 136010124250655.2
+      },
+      "intervals": {
+        "nested_seed_then_row": {
+          "ci_high": -6397597.889719956,
+          "ci_low": -11122135.772207368,
+          "excludes_zero": true,
+          "source": "evaluation.aggregate_stats.paired_two_level_summary",
+          "width": 4724537.882487413
+        },
+        "seed_cluster": {
+          "ci_high": -6636309.070535118,
+          "ci_low": -10781155.92802587,
+          "excludes_zero": true,
+          "width": 4144846.857490752
+        },
+        "two_way": {
+          "ci_high": -6087716.172484697,
+          "ci_low": -11284343.815893332,
+          "excludes_zero": true,
+          "width": 5196627.643408635
+        },
+        "world_cluster": {
+          "ci_high": -7322891.217331143,
+          "ci_low": -9908928.054339124,
+          "excludes_zero": true,
+          "width": 2586036.837007981
+        }
+      },
+      "mean_difference": -8603865.025481053,
+      "mean_gap_pct": -0.3213565461594824,
+      "n_training_seeds": 5,
+      "n_worlds_per_scenario": 100,
+      "per_scenario_mean_difference": {
+        "routing_abrupt_regime_shift": -8285455.011558773,
+        "routing_compound_regional_stress": -11640076.894209377,
+        "routing_nominal_history": -6210248.736277478,
+        "routing_regional_drift": -8279679.459878586
+      },
+      "per_seed_mean_difference": [
+        -12867682.432349004,
+        -9742798.937291922,
+        -7212768.189120838,
+        -7636142.162853084,
+        -5559933.405790415
+      ],
+      "ties": 0,
+      "wins": 1380
+    }
+  },
+  "crn_checks": {
+    "anchor max abs diff gcn_residual_mdl2_network_ddpg_afd vs flat_residual_mdl2_network_ddpg_afd": 0.0,
+    "flat_residual_mdl2_network_ddpg_afd: anchor max spread across training seeds": 0.0,
+    "gcn_residual_mdl2_network_ddpg_afd: anchor max spread across training seeds": 0.0
+  },
+  "frozen_root": "reports/2026-09-29-formal-crossed-audit/projection/formal_pretrain",
+  "metric": "total_cost",
+  "mode": "row_level",
+  "resamples": 20000,
+  "root": "reports/2026-09-29-formal-crossed-audit/projection/formal_final",
+  "scenarios": [
+    "routing_nominal_history",
+    "routing_abrupt_regime_shift",
+    "routing_regional_drift",
+    "routing_compound_regional_stress"
+  ]
+}

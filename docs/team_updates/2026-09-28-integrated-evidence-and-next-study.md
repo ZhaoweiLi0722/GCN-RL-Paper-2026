@@ -128,3 +128,43 @@ continuous overtime-to-biological-output law. Actual intervention constraints
 and available measurements remain unresolved. Operational grounding and a
 shared information interface come before patient-model integration or training.
 This remains local-only work; no main merge or external publication occurred.
+
+## September 29: queue boundary and information audit
+
+The [queue readout](../../specs/2026-09-29-service-queue-boundary/readout.md)
+records all eight prespecified synthetic cells. Coupled queues create feedback
+value over optimized open-loop schedules, but each cell has a prespecified
+non-neural comparator attaining its restricted optimum. This is not evidence
+for online neural updates. The known-law optimum is itself a frozen history
+policy, independently reproduced from logged edges.
+
+The arrival factor proved redundant: batch/flow differ only by a fixed holding
+charge, not decisions or service events. Completion-only observation retains
+some feedback value, but has not been tested against practical baselines with
+the same reduced information. These qualifications are part of the result,
+not reasons to retune the completed packet or reopen formal testing.
+
+Keep the adaptive-control baselines strong. Before a larger learning run,
+establish the real operational decision and measurement contract. A possible
+fast-policy-versus-expensive-planning contribution is distinct from online
+learning and currently remains a hypothesis, not a measured result.
+
+## September 29: formal raw cost evidence recovered
+
+The [formal crossed-audit readout](../../specs/2026-09-29-formal-crossed-audit/readout.md)
+closes the local raw-row availability gap for the existing DDPG cost contrasts.
+Forty CSVs and 16,000 rows passed identity, pairing and historical-summary
+reconciliation. Two summary hashes and ten historically recorded GCN-final
+CSV hashes match; the other thirty CSVs have current hashes and summary
+reconciliation, not historical byte-level proof.
+
+The crossed 95% interval remains favorable for GCN vs MDL-2
+[-19.806, -15.355] million and GCN vs flat [-11.284, -6.088] million objective
+units. GCN final vs frozen remains inconclusive [+0.073 mean; -0.180, +0.313
+interval], as does flat [-0.139 mean; -0.546, +0.278 interval]. All five
+contrasts were independently checked by a multiplicity-weighted bootstrap.
+
+This is a post-hoc sensitivity of already observed results, not new holdout
+testing. The original primary intervals and clinical analysis are unchanged.
+The manuscript now includes the labeled cost sensitivity. Historical reports
+are retained, including the September 15 machine-specific availability note.

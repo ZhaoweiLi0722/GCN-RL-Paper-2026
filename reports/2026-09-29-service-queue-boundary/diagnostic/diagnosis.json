@@ -1,0 +1,454 @@
+{
+  "classification": "post_run_structural_diagnosis_no_new_simulations",
+  "nonanticipative_check": "independent shared-prefix-until-disambiguation recurrence plus witness replay",
+  "comparisons": {
+    "batch__nonbinding__no_change": {
+      "independent_exact_check": {
+        "cost": 81.0,
+        "root_action": "left",
+        "witness": [
+          {
+            "world": "nominal",
+            "actions": [
+              "left",
+              "left",
+              "right",
+              "right",
+              "balanced"
+            ],
+            "cost": 81.0,
+            "first_distinguishable_decision_epoch": null
+          }
+        ],
+        "replayed_expected_cost": 81.0,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "fixed_model_mpc",
+        "identification_mpc"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          11969
+        ],
+        "identification_mpc": [
+          11969
+        ]
+      }
+    },
+    "batch__nonbinding__persistent_change": {
+      "independent_exact_check": {
+        "cost": 103.25,
+        "root_action": "balanced",
+        "witness": [
+          {
+            "world": "left_slow",
+            "actions": [
+              "balanced",
+              "balanced",
+              "balanced",
+              "left",
+              "left"
+            ],
+            "cost": 103.25,
+            "first_distinguishable_decision_epoch": 3
+          },
+          {
+            "world": "right_slow",
+            "actions": [
+              "balanced",
+              "balanced",
+              "balanced",
+              "right",
+              "right"
+            ],
+            "cost": 103.25,
+            "first_distinguishable_decision_epoch": 3
+          }
+        ],
+        "replayed_expected_cost": 103.25,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "backlog_rule",
+        "adaptive_backlog_rule"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          11970,
+          11974
+        ],
+        "identification_mpc": [
+          11997,
+          12045
+        ]
+      }
+    },
+    "batch__shared_bottleneck__no_change": {
+      "independent_exact_check": {
+        "cost": 102.25,
+        "root_action": "left",
+        "witness": [
+          {
+            "world": "nominal",
+            "actions": [
+              "left",
+              "balanced",
+              "balanced",
+              "balanced",
+              "right"
+            ],
+            "cost": 102.25,
+            "first_distinguishable_decision_epoch": null
+          }
+        ],
+        "replayed_expected_cost": 102.25,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "fixed_model_mpc",
+        "identification_mpc"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          16930
+        ],
+        "identification_mpc": [
+          16930
+        ]
+      }
+    },
+    "batch__shared_bottleneck__persistent_change": {
+      "independent_exact_check": {
+        "cost": 114.25,
+        "root_action": "left",
+        "witness": [
+          {
+            "world": "left_slow",
+            "actions": [
+              "left",
+              "balanced",
+              "balanced",
+              "left",
+              "left"
+            ],
+            "cost": 109.25,
+            "first_distinguishable_decision_epoch": 3
+          },
+          {
+            "world": "right_slow",
+            "actions": [
+              "left",
+              "balanced",
+              "balanced",
+              "right",
+              "right"
+            ],
+            "cost": 119.25,
+            "first_distinguishable_decision_epoch": 3
+          }
+        ],
+        "replayed_expected_cost": 114.25,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "identification_mpc"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          16931
+        ],
+        "identification_mpc": [
+          16934,
+          16994
+        ]
+      }
+    },
+    "booked_flow__nonbinding__no_change": {
+      "independent_exact_check": {
+        "cost": 71.0,
+        "root_action": "left",
+        "witness": [
+          {
+            "world": "nominal",
+            "actions": [
+              "left",
+              "left",
+              "right",
+              "right",
+              "balanced"
+            ],
+            "cost": 71.0,
+            "first_distinguishable_decision_epoch": null
+          }
+        ],
+        "replayed_expected_cost": 71.0,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "fixed_model_mpc",
+        "identification_mpc"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          11969
+        ],
+        "identification_mpc": [
+          11969
+        ]
+      }
+    },
+    "booked_flow__nonbinding__persistent_change": {
+      "independent_exact_check": {
+        "cost": 93.25,
+        "root_action": "balanced",
+        "witness": [
+          {
+            "world": "left_slow",
+            "actions": [
+              "balanced",
+              "balanced",
+              "balanced",
+              "left",
+              "left"
+            ],
+            "cost": 93.25,
+            "first_distinguishable_decision_epoch": 3
+          },
+          {
+            "world": "right_slow",
+            "actions": [
+              "balanced",
+              "balanced",
+              "balanced",
+              "right",
+              "right"
+            ],
+            "cost": 93.25,
+            "first_distinguishable_decision_epoch": 3
+          }
+        ],
+        "replayed_expected_cost": 93.25,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "backlog_rule",
+        "adaptive_backlog_rule"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          11970,
+          11974
+        ],
+        "identification_mpc": [
+          11997,
+          12045
+        ]
+      }
+    },
+    "booked_flow__shared_bottleneck__no_change": {
+      "independent_exact_check": {
+        "cost": 92.25,
+        "root_action": "left",
+        "witness": [
+          {
+            "world": "nominal",
+            "actions": [
+              "left",
+              "balanced",
+              "balanced",
+              "balanced",
+              "right"
+            ],
+            "cost": 92.25,
+            "first_distinguishable_decision_epoch": null
+          }
+        ],
+        "replayed_expected_cost": 92.25,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "fixed_model_mpc",
+        "identification_mpc"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          16930
+        ],
+        "identification_mpc": [
+          16930
+        ]
+      }
+    },
+    "booked_flow__shared_bottleneck__persistent_change": {
+      "independent_exact_check": {
+        "cost": 104.25,
+        "root_action": "left",
+        "witness": [
+          {
+            "world": "left_slow",
+            "actions": [
+              "left",
+              "balanced",
+              "balanced",
+              "left",
+              "left"
+            ],
+            "cost": 99.25,
+            "first_distinguishable_decision_epoch": 3
+          },
+          {
+            "world": "right_slow",
+            "actions": [
+              "left",
+              "balanced",
+              "balanced",
+              "right",
+              "right"
+            ],
+            "cost": 109.25,
+            "first_distinguishable_decision_epoch": 3
+          }
+        ],
+        "replayed_expected_cost": 104.25,
+        "online_parameter_updates": false,
+        "scope": "known finite-law history policy, five decisions then the declared common continuation"
+      },
+      "prespecified_baselines_matching_restricted_optimum": [
+        "identification_mpc"
+      ],
+      "planning_queries_per_episode": {
+        "fixed_balanced": [
+          0
+        ],
+        "backlog_rule": [
+          0
+        ],
+        "adaptive_backlog_rule": [
+          0
+        ],
+        "fixed_model_mpc": [
+          16931
+        ],
+        "identification_mpc": [
+          16934,
+          16994
+        ]
+      }
+    }
+  },
+  "arrival_factor_checks": {
+    "nonbinding__no_change": {
+      "matched_edges": 1364,
+      "support_progress_difference_edges": 0,
+      "downstream_event_difference_edges": 0,
+      "local_cost_offset_violations": 0,
+      "matched_complete_sequences": 1024,
+      "complete_cost_offset_violations": 0,
+      "expected_removed_holding_cost": 10.0,
+      "cost_equivalent_up_to_release_offset": true
+    },
+    "nonbinding__persistent_change": {
+      "matched_edges": 2728,
+      "support_progress_difference_edges": 0,
+      "downstream_event_difference_edges": 0,
+      "local_cost_offset_violations": 0,
+      "matched_complete_sequences": 2048,
+      "complete_cost_offset_violations": 0,
+      "expected_removed_holding_cost": 10.0,
+      "cost_equivalent_up_to_release_offset": true
+    },
+    "shared_bottleneck__no_change": {
+      "matched_edges": 1364,
+      "support_progress_difference_edges": 0,
+      "downstream_event_difference_edges": 0,
+      "local_cost_offset_violations": 0,
+      "matched_complete_sequences": 1024,
+      "complete_cost_offset_violations": 0,
+      "expected_removed_holding_cost": 10.0,
+      "cost_equivalent_up_to_release_offset": true
+    },
+    "shared_bottleneck__persistent_change": {
+      "matched_edges": 2728,
+      "support_progress_difference_edges": 0,
+      "downstream_event_difference_edges": 0,
+      "local_cost_offset_violations": 0,
+      "matched_complete_sequences": 2048,
+      "complete_cost_offset_violations": 0,
+      "expected_removed_holding_cost": 10.0,
+      "cost_equivalent_up_to_release_offset": true
+    }
+  },
+  "all_cells_have_at_least_one_matching_prespecified_baseline": true,
+  "qualification": "Per-cell best-baseline summary is descriptive; not a prospectively deployed hybrid controller or an RL result."
+}

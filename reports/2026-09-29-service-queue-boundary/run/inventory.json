@@ -1,0 +1,240 @@
+{
+  "files": [
+    {
+      "path": "experiments/configs/service_queue_boundary_20260929.json",
+      "sha256": "de1511daf738e753f9e977659ab36ae7fa470589a6567c341938c4d3dcc0c8d8"
+    },
+    {
+      "path": "src/env/service_queue_network.py",
+      "sha256": "ba73464bba001b8e7496b244eecb18154987a7e3f5c85a94277102690a3da27a"
+    },
+    {
+      "path": "src/baselines/service_queue_control.py",
+      "sha256": "88e57221ba307c7d62112eaa2e52163b3e611aff5ea8b3b86c7e94e6aa2035d6"
+    },
+    {
+      "path": "evaluation/check_service_queue_boundary.py",
+      "sha256": "0cf93c518c86afc6c38ffe4f205dd8f3b06e4f21d116ff71e261c8779200a37f"
+    },
+    {
+      "path": "evaluation/audit_service_queue_boundary.py",
+      "sha256": "63889c51bb24486ab860730e609852d525923d3aa2e78d14882da3bedb985b1a"
+    },
+    {
+      "path": "tests/test_service_queue_network.py",
+      "sha256": "c00fc25e3bb843710b059bfc95234df972da7ad69dc1d1da8561ebf0ffd59194"
+    },
+    {
+      "path": "specs/2026-09-29-service-queue-boundary/protocol.md",
+      "sha256": "c29c688e7ca4306795e65e0e8062cdb9805f9db9d2f246583ac2769d87b51dcb"
+    },
+    {
+      "path": "evaluation/audit_service_effort_decisions.py",
+      "sha256": "c1a9b52b02bae43db94ea8e54a3ad186ef928794e13cbb0f16c47a1e5201ce56"
+    },
+    {
+      "path": "evaluation/check_service_effort_decisions.py",
+      "sha256": "ac80299933f8d770e9414b3ff84f6d83980649b98d081ed149096c25be9c2f80"
+    },
+    {
+      "path": "evaluation/check_service_effort_mechanics.py",
+      "sha256": "db1df02b8f4fbbd9fc486edf227f158798bb638077ace9c14a72901889b90770"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/episodes.jsonl",
+      "sha256": "1bd0d6d6c39866b55505425e63572713f1ba8135c650e932339e297f7ea2d1ae"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/execution.json",
+      "sha256": "bf91ff9146c677715436c7f76e00808b11bc4f7a1ab8d6319ca1698cde659713"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/inventory.json",
+      "sha256": "98055ee590b9c975845148a9797c5284ec0594dc8dabb192ffe2e156a4de665d"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/status.json",
+      "sha256": "4e38d321fecd33c0240a9ae9ce5ebe773b0bcc16a872cfec76cd73f0407ff212"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/steps.jsonl",
+      "sha256": "3880db662571bf7e6b2aaa6db127ac2b35d6f36e6724d13eb10edc4aa0739021"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/pilot/summary.json",
+      "sha256": "bbc124c2ea4bc290cb44d242fe14b5eeff48c3e73d8de655de94e11bbf00e9cd"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke-r2/episodes.jsonl",
+      "sha256": "b59f23c3aa6bb97ebb51ef26173b9502fd77150024dab0f2580f8435668a7669"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke-r2/execution.json",
+      "sha256": "21abb4a933cee4b6eb2b170a579a922872c99eca326927fde737b0338ddb4277"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke-r2/inventory.json",
+      "sha256": "80d960101775f73f72cf5c3dfa75ae5ec6d2d2d735c5fd0fae219e72665ecc44"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke-r2/status.json",
+      "sha256": "b7ed40606b1e80ef152f168e16fcf00b49904c44d63453191fb326e5d6774d6c"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke-r2/steps.jsonl",
+      "sha256": "022e2f1d075e107da5a121cfc2f350e2e80f3842a17ce67ee6ddc90e976ce317"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke-r2/summary.json",
+      "sha256": "1bc6e082c7453026d537421c6518c639a8dac78a43957a1b877cb3bd83a53b28"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke/episodes.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke/execution.json",
+      "sha256": "243ff273dd2ed1b2cadb74c24bf1ae29bf684bc0571119eb17bcdf6cf422256d"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke/status.json",
+      "sha256": "f64e43eb4293bae31ba64448f274d0a07c5b1fd9fdd9488da87d071d15d503ed"
+    },
+    {
+      "path": "reports/2026-09-28-disruption-feasibility/smoke/steps.jsonl",
+      "sha256": "7d93984d7d804cd462594f7fe64fa20f506c673eaee2348cf18f438c27483ca6"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/claim.json",
+      "sha256": "f28fe09f5812115eb497f9dcea30e8c5e1614854655d82ba9da4abc729c43c0f"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/inventory.json",
+      "sha256": "861a990a4125e41d37739941280ef8702566b991870c7c35a3c01111e700d06a"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/status.json",
+      "sha256": "59c31bb2e1febbfb8836a0b3f2cf278b798f53fb2bac7deeb35ddca5398c936e"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/summary.json",
+      "sha256": "cba214ff2ac2f6153be3c279bc84f6518794af40a61aa243f4d13b41cd2c8b4f"
+    },
+    {
+      "path": "reports/2026-09-28-service-effort-mechanics/fixture/transitions.jsonl",
+      "sha256": "801d1fa50f0081d19fbb9847289b88e7391727c82ae621f3514335868a782f5e"
+    },
+    {
+      "path": "reports/2026-09-29-service-effort-decisions/fixture/claim.json",
+      "sha256": "5e2a0689e90d9e3cd469e7ea764452745494c0b97477b00c3026c35774b0a687"
+    },
+    {
+      "path": "reports/2026-09-29-service-effort-decisions/fixture/decisions.jsonl",
+      "sha256": "d6687be990f3432cf46f293b136621b15953568deb1e2977783ac8c25bfa81c6"
+    },
+    {
+      "path": "reports/2026-09-29-service-effort-decisions/fixture/episodes.jsonl",
+      "sha256": "9d6f729d57ffd07e7ad809fef72983d6a8cada62a024381507ed0629e74a70fe"
+    },
+    {
+      "path": "reports/2026-09-29-service-effort-decisions/fixture/inventory.json",
+      "sha256": "4f0f672bf9cfea2dfc17c936e205e32fe712a597c88d152a3b5c0a9d539e42e9"
+    },
+    {
+      "path": "reports/2026-09-29-service-effort-decisions/fixture/status.json",
+      "sha256": "59c31bb2e1febbfb8836a0b3f2cf278b798f53fb2bac7deeb35ddca5398c936e"
+    },
+    {
+      "path": "reports/2026-09-29-service-effort-decisions/fixture/summary.json",
+      "sha256": "b7b05843c39a778848bf822b2b116a313593e412fde369b96e90cee085d68cdc"
+    },
+    {
+      "path": "reports/2026-09-29-service-effort-decisions/fixture/tree_transitions.jsonl",
+      "sha256": "6de5ca54bd9182a8fa8a8c00340b137d470b64f07584a63184f4d011c201bd39"
+    },
+    {
+      "path": "src/baselines/public_service_response.py",
+      "sha256": "2824a69290373a644a1b687a0526c7c93b872ec48b317887ed158de460bd0c7a"
+    },
+    {
+      "path": "src/baselines/service_effort_control.py",
+      "sha256": "81f7a6d039a26915e46b974ec2e5f24dc7e55032ef32cecbeff24934a1492269"
+    },
+    {
+      "path": "src/env/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "src/env/__init__.py",
+      "sha256": "afb22c7cb7f5c6974a33ff9d2b00260712e13c80d406e95e2c57bf35905a08fc"
+    },
+    {
+      "path": "src/env/aging_inventory.py",
+      "sha256": "35a4eb55492391f34c16a207e459386d098cfd529055b1e1c62049b8baab2781"
+    },
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1"
+    },
+    {
+      "path": "src/env/development_disruption.py",
+      "sha256": "5e3c3d53c89b95aa34ae34f246bc8c61ffe29108f3c581f4305c0f9cc917be79"
+    },
+    {
+      "path": "src/env/multi_scenario.py",
+      "sha256": "868165582b98104cf07615f2afcd68595ca9747088eb5fae4b61711e6c35b93b"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4"
+    },
+    {
+      "path": "src/env/patient_condition.py",
+      "sha256": "bc0e274e70562ae1ab1ae6d78f487e62c91b3ef2f46172d6ce7608fb6f70ec68"
+    },
+    {
+      "path": "src/env/public_demand_information.py",
+      "sha256": "641835d783566a2028ea82952e4cf5cfba12266aae0ebb04ef550ce3357a5829"
+    },
+    {
+      "path": "src/env/service_effort_mechanics.py",
+      "sha256": "bf8add6c56fe3cbf6e506769f1e509bb9f90a552ca59f7b7f6e08357d999f0ea"
+    },
+    {
+      "path": "src/env/specimen_routing.py",
+      "sha256": "5d9de6539c212362f55d943b975c810e0f21aa11bea7872f28615c550157f2ec"
+    },
+    {
+      "path": "src/utils/finite_scenario_tree.py",
+      "sha256": "83d1d23f39910f6daa044b0c6683c35925495df74a27dabb00adce6de0ac6984"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/claim.json",
+      "sha256": "f555ef2e2359e36b4205d2428c72b2b2de33a5408fc9429eff251d797824f871"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/decisions.jsonl.gz",
+      "sha256": "876b8d68e557bb4b2c2b9d694408f23933e70323819ed15e9513e9e064eca445"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/episodes.jsonl.gz",
+      "sha256": "0a7d6e47827bd280f09d9afaf1f2b8ac58fcb2f11120d13fca7855bf28b124d6"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/status.json",
+      "sha256": "371136d073e548bebba3a61c4ab2ed551a7a33abfa0cda0368300a1103293a60"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/summary.json",
+      "sha256": "e108db0471cc18bddee3363badd6d929237aef22f8c8a4cb06fbbfa5e1c99d98"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/tree_closures.jsonl.gz",
+      "sha256": "0230d9d3be908344918123414e29c47eaf38b1340a092a3de78c6404558ddd97"
+    },
+    {
+      "path": "reports/2026-09-29-service-queue-boundary/run/tree_transitions.jsonl.gz",
+      "sha256": "8aeb7ea52e03db87f64fc909a117b5c983b63cc7912c2dbe478ff9f646e93d18"
+    }
+  ]
+}

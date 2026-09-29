@@ -394,3 +394,30 @@ The first readout must answer: what is controllable, what changed, what was
 observable, which feasible actions mattered, what a capable adaptive baseline
 already achieved, and how much operating experience was required. Only then
 decide whether spending a larger budget on online DDPG is justified.
+
+## 13. September 29 evidence checkpoint
+
+The bounded software packets now answer part of that question. The static
+service-effort fixture had no feedback value beyond its best open-loop
+sequence. The coupled-queue fixture has feedback value, independently verified
+from logged trees, but a prespecified non-neural baseline attains the restricted
+optimum in every cell. Its arrival factor is redundant. Removing exact progress
+still leaves completion-feedback value under the diagnostic's known finite
+law; operational measurement availability and matched practical reduced-
+information baselines remain open. See
+`../2026-09-29-service-queue-boundary/readout.md`.
+
+These are completed synthetic software checks, not completed clinical G0-G3
+gates or authorization to train on a solved toy. The next learning study needs
+a defensible, unresolved decision problem after accounting for a strong frozen
+history policy and adaptive control. Do not add arbitrary noise or weaken
+comparators merely to create an online-RL result. A computational advantage of
+a fast learned controller is a separate possible claim that needs measured
+latency, query budgets and matched performance, not just planner query counts.
+
+In parallel, the original formal final/pretrain cost rows have been recovered
+and audited. The crossed-inference sensitivity preserves favorable GCN cost
+contrasts and null online attribution. See
+`../2026-09-29-formal-crossed-audit/readout.md`. This advances the reproducibility
+and statistical-reporting workstream without any new training or holdout
+simulation, while the operational extension remains explicitly uncalibrated.

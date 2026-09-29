@@ -1,0 +1,956 @@
+{
+  "historical_manifest_sha256_verified": "0311c648fc1570843daf659f5e45ad27cceb967a9265710d03bd45c60a5e31e2",
+  "historical_sources": [
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/models/gcn.py",
+      "sha256": "63c92d66a14eca9b1e5a150ffc1f92a4cd5832d3aa94d062e5ada41d34806e69",
+      "symbols": {
+        "GCNActor": {
+          "end": 881,
+          "source": "    class GCNActor(nn.Module):\n        \"\"\"GCN encoder followed by a deterministic DDPG actor head.\"\"\"\n\n        def __init__(\n            self,\n            node_feature_dim: int,\n            num_facilities: int,\n            num_nodes: int,\n            action_dim: int,\n            edges: Sequence[Edge],\n            gcn_hidden_sizes: Sequence[int],\n            head_hidden_sizes: Sequence[int],\n            include_global_context: bool = True,\n            readout_mode: str = \"global_flat\",\n            edge_weights: Sequence[float] | None = None,\n            specimen_routing_enabled: bool = False,\n            specimen_edges: Sequence[Edge] | None = None,\n            resource_edges: Sequence[Edge] | None = None,\n            capacity_edges: Sequence[Edge] | None = None,\n            specimen_edge_features: Sequence[Sequence[float]] | None = None,\n            resource_edge_features: Sequence[Sequence[float]] | None = None,\n            capacity_edge_features: Sequence[Sequence[float]] | None = None,\n            edge_selector_enabled: bool = False,\n            edge_selector_top_k: int = 2,\n            edge_selector_temperature: float = 1.0,\n            edge_selector_training_gate: str = \"soft\",\n            temporal_sequence_start: int | None = None,\n            temporal_sequence_length: int = 0,\n            temporal_hidden_size: int = 0,\n        ):\n            super().__init__()\n            self.node_feature_dim = int(node_feature_dim)\n            self.num_facilities = int(num_facilities)\n            self.include_global_context = bool(include_global_context)\n            self.readout_mode = str(readout_mode)\n            self.specimen_routing_enabled = bool(specimen_routing_enabled)\n            self.last_edge_flows = {}\n            self.last_edge_selector_logits = {}\n            self.edge_selector_enabled = bool(edge_selector_enabled)\n            self.edge_selector_top_k = max(int(edge_selector_top_k), 1)\n            self.edge_selector_temperature = max(\n                float(edge_selector_temperature),\n                1e-6,\n            )\n            self.edge_selector_training_gate = str(\n                edge_selector_training_gate\n            )\n            if self.edge_selector_training_gate not in (\n                \"none\",\n                \"soft\",\n                \"straight_through\",\n            ):\n                raise ValueError(\n                    \"edge_selector_training_gate must be none, soft, \"\n                    \"or straight_through\"\n                )\n            self.encoder = _make_gcn_encoder(\n                node_feature_dim,\n                gcn_hidden_sizes,\n                num_nodes,\n                edges,\n                edge_weights=edge_weights,\n                temporal_sequence_start=temporal_sequence_start,\n                temporal_sequence_length=temporal_sequence_length,\n                temporal_hidden_size=temporal_hidden_size,\n            )\n            if self.readout_mode == \"global_flat\":\n                readout_dim = self.num_facilities * self.encoder.output_dim\n                if self.include_global_context:\n                    readout_dim += self.encoder.output_dim\n                self.head = _build_mlp(readout_dim, head_hidden_sizes, action_dim, output_tanh=True)\n            elif self.readout_mode == \"facility_action\":\n                if int(action_dim) % self.num_facilities != 0:\n                    raise ValueError(\n                        \"facility_action readout requires action_dim divisible by num_facilities\"\n                    )\n                self.facility_action_dim = int(action_dim) // self.num_facilities\n                facility_input_dim = self.encoder.output_dim\n                if self.include_global_context:\n                    facility_input_dim += self.encoder.output_dim\n                self.head = _build_mlp(\n                    facility_input_dim,\n                    head_hidden_sizes,\n                    self.facility_action_dim,\n                    output_tanh=True,\n                )\n            elif self.readout_mode == \"pressure_intensity\":\n                if int(action_dim) != 4 * self.num_facilities:\n                    raise ValueError(\n                        \"pressure_intensity readout requires a facility-net action layout\"\n                    )\n                self.head = _build_mlp(\n                    self.encoder.output_dim,\n                    head_hidden_sizes,\n                    3,\n                    output_tanh=True,\n                )\n                if self.specimen_routing_enabled:\n                    specimen_input_dim = self.encoder.output_dim\n                    if self.include_global_context:\n                        specimen_input_dim += self.encoder.output_dim\n                    self.specimen_pressure_head = _build_mlp(\n                        specimen_input_dim,\n                        head_hidden_sizes,\n                        1,\n                        output_tanh=True,\n                    )\n            elif self.readout_mode == \"network_residual\":\n                if int(action_dim) != 4 * self.num_facilities:\n                    raise ValueError(\n                        \"network_residual readout requires a facility-net action layout\"\n                    )\n                resource_edges = tuple(resource_edges or ())\n                capacity_edges = tuple(capacity_edges or ())\n                if self.specimen_routing_enabled:\n                    specimen_edges = tuple(specimen_edges or ())\n                    specimen_edge_features = tuple(\n                        specimen_edge_features\n                        if specimen_edge_features is not None\n                        else (() for _edge in specimen_edges)\n                    )\n                else:\n                    specimen_edges = ()\n                    specimen_edge_features = ()\n                resource_edge_features = tuple(\n                    resource_edge_features\n                    if resource_edge_features is not None\n                    else (() for _edge in resource_edges)\n                )\n                capacity_edge_features = tuple(\n                    capacity_edge_features\n                    if capacity_edge_features is not None\n                    else (() for _edge in capacity_edges)\n                )\n                edge_feature_dim = _validate_network_edge_metadata(\n                    specimen_edges,\n                    resource_edges,\n                    capacity_edges,\n                    specimen_edge_features,\n                    resource_edge_features,\n                    capacity_edge_features,\n                )\n                if self.specimen_routing_enabled:\n                    self.register_buffer(\n                        \"specimen_edge_pairs\",\n                        _edge_pair_tensor(specimen_edges),\n                    )\n                    self.register_buffer(\n                        \"specimen_static_edge_features\",\n                        _edge_feature_tensor(\n                            specimen_edge_features,\n                            edge_feature_dim,\n                        ),\n                    )\n                self.register_buffer(\n                    \"resource_edge_pairs\",\n                    _edge_pair_tensor(resource_edges),\n                )\n                self.register_buffer(\n                    \"capacity_edge_pairs\",\n                    _edge_pair_tensor(capacity_edges),\n                )\n                self.register_buffer(\n                    \"resource_static_edge_features\",\n                    _edge_feature_tensor(\n                        resource_edge_features,\n                        edge_feature_dim,\n                    ),\n                )\n                self.register_buffer(\n                    \"capacity_static_edge_features\",\n                    _edge_feature_tensor(\n                        capacity_edge_features,\n                        edge_feature_dim,\n                    ),\n                )\n                context_dim = (\n                    self.encoder.output_dim if self.include_global_context else 0\n                )\n                node_input_dim = (\n                    self.encoder.output_dim\n                    + self.node_feature_dim\n                    + context_dim\n                )\n                edge_input_dim = (\n                    3 * self.encoder.output_dim\n                    + self.node_feature_dim\n                    + context_dim\n                    + edge_feature_dim\n                )\n                self.replenishment_head = _build_mlp(\n                    node_input_dim,\n                    head_hidden_sizes,\n                    1,\n                    output_tanh=True,\n                )\n                self.reagent_edge_head = _build_mlp(\n                    edge_input_dim,\n                    head_hidden_sizes,\n                    1,\n                    output_tanh=True,\n                )\n                self.capacity_edge_head = _build_mlp(\n                    edge_input_dim,\n                    head_hidden_sizes,\n                    1,\n                    output_tanh=True,\n                )\n                if self.specimen_routing_enabled:\n                    self.specimen_edge_head = _build_mlp(\n                        edge_input_dim,\n                        head_hidden_sizes,\n                        1,\n                        output_tanh=True,\n                    )\n                if self.edge_selector_enabled:\n                    self.reagent_edge_selector_head = _build_mlp(\n                        edge_input_dim,\n                        head_hidden_sizes,\n                        1,\n                        output_tanh=False,\n                    )\n                    self.capacity_edge_selector_head = _build_mlp(\n                        edge_input_dim,\n                        head_hidden_sizes,\n                        1,\n                        output_tanh=False,\n                    )\n                    if self.specimen_routing_enabled:\n                        self.specimen_edge_selector_head = _build_mlp(\n                            edge_input_dim,\n                            head_hidden_sizes,\n                            1,\n                            output_tanh=False,\n                        )\n                else:\n                    self.reagent_edge_selector_head = None\n                    self.capacity_edge_selector_head = None\n                    if self.specimen_routing_enabled:\n                        self.specimen_edge_selector_head = None\n            else:\n                raise ValueError(f\"Unsupported GCN actor readout_mode: {self.readout_mode}\")\n\n        def forward(self, node_features):\n            encoded = self.encoder(node_features)\n            facility_encoded = encoded[:, : self.num_facilities, :]\n            if self.readout_mode == \"network_residual\":\n                facility_features = node_features[:, : self.num_facilities, :]\n                graph_context = (\n                    encoded.mean(dim=1)\n                    if self.include_global_context\n                    else None\n                )\n                node_inputs = [facility_encoded, facility_features]\n                if graph_context is not None:\n                    node_inputs.append(\n                        graph_context.unsqueeze(1).expand(\n                            -1,\n                            self.num_facilities,\n                            -1,\n                        )\n                    )\n                replenishment = self.replenishment_head(\n                    torch.cat(node_inputs, dim=-1)\n                ).squeeze(-1)\n                (\n                    reagent_net,\n                    reagent_edge_flow,\n                    reagent_selector_logits,\n                ) = self._edge_net_actions(\n                    facility_encoded,\n                    facility_features,\n                    graph_context,\n                    self.resource_edge_pairs,\n                    self.resource_static_edge_features,\n                    self.reagent_edge_head,\n                    self.reagent_edge_selector_head,\n                )\n                (\n                    capacity_net,\n                    capacity_edge_flow,\n                    capacity_selector_logits,\n                ) = self._edge_net_actions(\n                    facility_encoded,\n                    facility_features,\n                    graph_context,\n                    self.capacity_edge_pairs,\n                    self.capacity_static_edge_features,\n                    self.capacity_edge_head,\n                    self.capacity_edge_selector_head,\n                )\n                if self.specimen_routing_enabled:\n                    (\n                        specimen_net,\n                        specimen_edge_flow,\n                        specimen_selector_logits,\n                    ) = self._edge_net_actions(\n                        facility_encoded,\n                        facility_features,\n                        graph_context,\n                        self.specimen_edge_pairs,\n                        self.specimen_static_edge_features,\n                        self.specimen_edge_head,\n                        self.specimen_edge_selector_head,\n                    )\n                else:\n                    specimen_net = torch.zeros_like(reagent_net)\n                self.last_edge_flows = {\n                    \"reagent_transfer\": reagent_edge_flow,\n                    \"capacity_transfer\": capacity_edge_flow,\n                }\n                self.last_edge_selector_logits = {\n                    \"reagent_transfer\": reagent_selector_logits,\n                    \"capacity_transfer\": capacity_selector_logits,\n                }\n                if self.specimen_routing_enabled:\n                    self.last_edge_flows[\"specimen_transfer\"] = specimen_edge_flow\n                    self.last_edge_selector_logits[\"specimen_transfer\"] = (\n                        specimen_selector_logits\n                    )\n                return torch.cat(\n                    (\n                        specimen_net,\n                        reagent_net,\n                        capacity_net,\n                        replenishment,\n                    ),\n                    dim=1,\n                )\n            if self.readout_mode == \"pressure_intensity\":\n                intensities = self.head(encoded.mean(dim=1))\n                if self.specimen_routing_enabled:\n                    specimen_inputs = [facility_encoded]\n                    if self.include_global_context:\n                        specimen_inputs.append(\n                            encoded.mean(dim=1, keepdim=True).expand(\n                                -1,\n                                self.num_facilities,\n                                -1,\n                            )\n                        )\n                    specimen_pressure = self.specimen_pressure_head(\n                        torch.cat(specimen_inputs, dim=-1)\n                    ).squeeze(-1)\n                    specimen_net = 0.5 * (\n                        specimen_pressure\n                        - specimen_pressure.mean(dim=1, keepdim=True)\n                    )\n                else:\n                    specimen_net = torch.zeros(\n                        encoded.shape[0],\n                        self.num_facilities,\n                        dtype=encoded.dtype,\n                        device=encoded.device,\n                    )\n                reagent_intensity = intensities[:, 0:1].expand(\n                    -1,\n                    self.num_facilities,\n                )\n                capacity_intensity = intensities[:, 1:2].expand(\n                    -1,\n                    self.num_facilities,\n                )\n                replenishment_intensity = intensities[:, 2:3].expand(\n                    -1,\n                    self.num_facilities,\n                )\n                return torch.cat(\n                    (\n                        specimen_net,\n                        reagent_intensity,\n                        capacity_intensity,\n                        replenishment_intensity,\n                    ),\n                    dim=1,\n                )\n            if self.readout_mode == \"facility_action\":\n                if self.include_global_context:\n                    graph_context = encoded.mean(dim=1, keepdim=True).expand(\n                        -1, self.num_facilities, -1\n                    )\n                    facility_encoded = torch.cat((facility_encoded, graph_context), dim=-1)\n                facility_actions = self.head(facility_encoded)\n                return facility_actions.transpose(1, 2).flatten(start_dim=1)\n\n            readout = graph_readout(encoded, self.num_facilities, self.include_global_context)\n            return self.head(readout)\n\n        def _edge_net_actions(\n            self,\n            facility_encoded,\n            facility_features,\n            graph_context,\n            edge_pairs,\n            static_edge_features,\n            edge_head,\n            selector_head,\n        ):\n            batch_size = facility_encoded.shape[0]\n            if edge_pairs.shape[1] == 0:\n                net = torch.zeros(\n                    batch_size,\n                    self.num_facilities,\n                    dtype=facility_encoded.dtype,\n                    device=facility_encoded.device,\n                )\n                edge_flow = torch.zeros(\n                    batch_size,\n                    0,\n                    dtype=facility_encoded.dtype,\n                    device=facility_encoded.device,\n                )\n                return net, edge_flow, edge_flow\n            source = edge_pairs[0]\n            target = edge_pairs[1]\n            source_encoded = facility_encoded[:, source, :]\n            target_encoded = facility_encoded[:, target, :]\n            edge_inputs = [\n                source_encoded,\n                target_encoded,\n                target_encoded - source_encoded,\n                facility_features[:, target, :] - facility_features[:, source, :],\n            ]\n            if graph_context is not None:\n                edge_inputs.append(\n                    graph_context.unsqueeze(1).expand(\n                        -1,\n                        source.shape[0],\n                        -1,\n                    )\n                )\n            if static_edge_features.shape[1] > 0:\n                edge_inputs.append(\n                    static_edge_features.unsqueeze(0).expand(\n                        batch_size,\n                        -1,\n                        -1,\n                    )\n                )\n            edge_inputs = torch.cat(edge_inputs, dim=-1)\n            edge_flow = edge_head(edge_inputs).squeeze(-1)\n            if selector_head is None:\n                selector_logits = torch.zeros_like(edge_flow)\n            else:\n                selector_logits = selector_head(edge_inputs).squeeze(-1)\n                edge_flow = edge_flow * self._edge_selector_gate(\n                    selector_logits\n                )\n            net = torch.zeros(\n                batch_size,\n                self.num_facilities,\n                dtype=edge_flow.dtype,\n                device=edge_flow.device,\n            )\n            source_index = source.unsqueeze(0).expand(batch_size, -1)\n            target_index = target.unsqueeze(0).expand(batch_size, -1)\n            net.scatter_add_(1, source_index, -edge_flow)\n            net.scatter_add_(1, target_index, edge_flow)\n            normalizer = net.abs().amax(dim=1, keepdim=True).clamp_min(1.0)\n            return net / normalizer, edge_flow, selector_logits\n\n        def _edge_selector_gate(self, selector_logits):\n            edge_count = int(selector_logits.shape[1])\n            if edge_count == 0:\n                return selector_logits\n            top_k = min(self.edge_selector_top_k, edge_count)\n            if self.training:\n                if self.edge_selector_training_gate == \"none\":\n                    return torch.ones_like(selector_logits)\n                probabilities = torch.softmax(\n                    selector_logits / self.edge_selector_temperature,\n                    dim=1,\n                )\n                soft_gate = torch.clamp(\n                    probabilities * float(top_k),\n                    max=1.0,\n                )\n                if self.edge_selector_training_gate == \"soft\":\n                    return soft_gate\n                selected = torch.topk(\n                    selector_logits,\n                    k=top_k,\n                    dim=1,\n                ).indices\n                hard_gate = torch.zeros_like(selector_logits).scatter(\n                    1,\n                    selected,\n                    1.0,\n                )\n                return hard_gate + soft_gate - soft_gate.detach()\n            selected = torch.topk(\n                selector_logits,\n                k=top_k,\n                dim=1,\n            ).indices\n            mask = torch.zeros_like(selector_logits)\n            return mask.scatter(1, selected, 1.0)\n\n        def zero_initialize_output_heads(self) -> None:\n            \"\"\"Initialize every actor output head to the zero residual policy.\"\"\"\n\n            if self.readout_mode == \"network_residual\":\n                heads = [\n                    self.replenishment_head,\n                    self.reagent_edge_head,\n                    self.capacity_edge_head,\n                ]\n                if self.specimen_routing_enabled:\n                    heads.append(self.specimen_edge_head)\n                if self.edge_selector_enabled:\n                    heads.extend(\n                        (\n                            self.reagent_edge_selector_head,\n                            self.capacity_edge_selector_head,\n                        )\n                    )\n                    if self.specimen_routing_enabled:\n                        heads.append(self.specimen_edge_selector_head)\n            elif (\n                self.readout_mode == \"pressure_intensity\"\n                and self.specimen_routing_enabled\n            ):\n                heads = [self.head, self.specimen_pressure_head]\n            else:\n                heads = [self.head]\n            for head in heads:\n                output_layer = next(\n                    module\n                    for module in reversed(tuple(head.modules()))\n                    if isinstance(module, nn.Linear)\n                )\n                nn.init.zeros_(output_layer.weight)\n                nn.init.zeros_(output_layer.bias)",
+          "start": 349
+        },
+        "GCNCorrectionGate": {
+          "end": 942,
+          "source": "    class GCNCorrectionGate(nn.Module):\n        \"\"\"Graph classifier deciding whether a residual correction is admissible.\"\"\"\n\n        def __init__(\n            self,\n            node_feature_dim: int,\n            num_facilities: int,\n            num_nodes: int,\n            edges: Sequence[Edge],\n            gcn_hidden_sizes: Sequence[int],\n            head_hidden_sizes: Sequence[int],\n            include_global_context: bool = True,\n            edge_weights: Sequence[float] | None = None,\n            output_dim: int = 1,\n            temporal_sequence_start: int | None = None,\n            temporal_sequence_length: int = 0,\n            temporal_hidden_size: int = 0,\n        ):\n            super().__init__()\n            self.num_facilities = int(num_facilities)\n            self.include_global_context = bool(include_global_context)\n            self.encoder = _make_gcn_encoder(\n                node_feature_dim,\n                gcn_hidden_sizes,\n                num_nodes,\n                edges,\n                edge_weights=edge_weights,\n                temporal_sequence_start=temporal_sequence_start,\n                temporal_sequence_length=temporal_sequence_length,\n                temporal_hidden_size=temporal_hidden_size,\n            )\n            readout_dim = graph_readout_dim(\n                self.num_facilities,\n                self.encoder.output_dim,\n                self.include_global_context,\n            )\n            self.head = _build_mlp(\n                readout_dim,\n                head_hidden_sizes,\n                int(output_dim),\n                output_tanh=False,\n            )\n            output_layer = next(\n                module\n                for module in reversed(tuple(self.head.modules()))\n                if isinstance(module, nn.Linear)\n            )\n            nn.init.zeros_(output_layer.weight)\n            nn.init.zeros_(output_layer.bias)\n\n        def forward(self, node_features):\n            encoded = self.encoder(node_features)\n            readout = graph_readout(\n                encoded,\n                self.num_facilities,\n                self.include_global_context,\n            )\n            output = self.head(readout)\n            return output.squeeze(-1) if output.shape[-1] == 1 else output",
+          "start": 884
+        },
+        "GCNCritic": {
+          "end": 1018,
+          "source": "    class GCNCritic(nn.Module):\n        \"\"\"GCN encoder followed by a state-action Q-value head.\"\"\"\n\n        def __init__(\n            self,\n            node_feature_dim: int,\n            num_facilities: int,\n            num_nodes: int,\n            action_dim: int,\n            edges: Sequence[Edge],\n            gcn_hidden_sizes: Sequence[int],\n            head_hidden_sizes: Sequence[int],\n            include_global_context: bool = True,\n            edge_weights: Sequence[float] | None = None,\n            temporal_sequence_start: int | None = None,\n            temporal_sequence_length: int = 0,\n            temporal_hidden_size: int = 0,\n        ):\n            super().__init__()\n            self.num_facilities = int(num_facilities)\n            self.include_global_context = bool(include_global_context)\n            self.encoder = _make_gcn_encoder(\n                node_feature_dim,\n                gcn_hidden_sizes,\n                num_nodes,\n                edges,\n                edge_weights=edge_weights,\n                temporal_sequence_start=temporal_sequence_start,\n                temporal_sequence_length=temporal_sequence_length,\n                temporal_hidden_size=temporal_hidden_size,\n            )\n            readout_dim = self.num_facilities * self.encoder.output_dim\n            if self.include_global_context:\n                readout_dim += self.encoder.output_dim\n            self.head = _build_mlp(\n                readout_dim + int(action_dim),\n                head_hidden_sizes,\n                1,\n                output_tanh=False,\n            )\n\n        def forward(self, node_features, action):\n            encoded = self.encoder(node_features)\n            readout = graph_readout(encoded, self.num_facilities, self.include_global_context)\n            return self.head(torch.cat((readout, action), dim=-1))",
+          "start": 974
+        },
+        "graph_readout": {
+          "end": 250,
+          "source": "    def graph_readout(encoded, num_facilities, include_global_context):\n        \"\"\"Flatten facility node embeddings, optionally with a mean global context.\"\"\"\n\n        facility_encoded = encoded[:, :num_facilities, :]\n        readout = facility_encoded.flatten(start_dim=1)\n        if include_global_context:\n            graph_context = encoded.mean(dim=1)\n            readout = torch.cat((readout, graph_context), dim=-1)\n        return readout",
+          "start": 242
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/models/graph_features.py",
+      "sha256": "53f0c20fe2734ef8d313dbaf39189964c6a5582fddd0a579e860692d8affab9a",
+      "symbols": {
+        "build_graph_spec": {
+          "end": 287,
+          "source": "def build_graph_spec(config: dict[str, Any], state_dim: int) -> GraphStateSpec:\n    \"\"\"Build fixed graph metadata from an experiment config.\"\"\"\n\n    env_config = dict(config.get(\"env\", {}))\n    if \"num_facilities\" in env_config:\n        num_facilities = int(env_config[\"num_facilities\"])\n    else:\n        num_facilities = _infer_num_facilities(state_dim)\n    production_lead_time = int(env_config.get(\"production_lead_time\", 3))\n    include_supplier_state = bool(env_config.get(\"include_supplier_state\", False))\n    include_forecast = bool(env_config.get(\"include_demand_forecast_state\", False))\n    include_demand_history = bool(\n        env_config.get(\"include_demand_history_state\", False)\n    )\n    sequence_length = demand_sequence_length(env_config)\n    include_hub = bool(env_config.get(\"include_central_capacity_hub\", False))\n    include_transfer_pipeline = bool(env_config.get(\"include_transfer_pipeline_state\", False))\n    include_adaptive_demand_features = bool(\n        config.get(\"include_adaptive_demand_features\", False)\n    )\n    include_time_state = bool(env_config.get(\"include_time_state\", False))\n    features_per_facility = facility_state_width(env_config)\n    summary_width = _patient_summary_width(env_config)\n    expected_state_dim = (\n        num_facilities * (features_per_facility + summary_width)\n        + int(include_time_state)\n    )\n    if state_dim != expected_state_dim:\n        raise ValueError(\n            f\"GCN agent expected state_dim={expected_state_dim} from config, got {state_dim}\"\n        )\n\n    default_dense_edges = complete_undirected_edges(num_facilities)\n    clinic_coordinates = normalize_coordinates(\n        env_config.get(\"clinic_coordinates\"),\n        num_facilities,\n    )\n    geographic_edges = (\n        geographic_knn_edges(\n            clinic_coordinates,\n            k=int(env_config.get(\"geographic_neighbor_k\", 3)),\n        )\n        if clinic_coordinates\n        else ()\n    )\n    action_mode = str(env_config.get(\"action_mode\", \"edge_transfer\"))\n    if action_mode == \"facility_net\":\n        default_specimen_edges = geographic_edges or ring_edges(num_facilities)\n        default_resource_edges = geographic_edges or ring_edges(num_facilities)\n        default_capacity_edges = default_dense_edges\n    else:\n        default_specimen_edges = default_dense_edges\n        default_resource_edges = default_dense_edges\n        default_capacity_edges = default_dense_edges\n\n    information_edges = _configured_edges(\n        env_config.get(\"information_edges\"),\n        geographic_edges or k_nearest_ring_edges(num_facilities, k=2),\n        num_facilities,\n    )\n    specimen_edges = _configured_edges(\n        env_config.get(\"specimen_edges\"), default_specimen_edges, num_facilities\n    )\n    capacity_edges = _configured_edges(\n        env_config.get(\"capacity_edges\"), default_capacity_edges, num_facilities\n    )\n    resource_edges = _configured_edges(\n        env_config.get(\"resource_edges\"), default_resource_edges, num_facilities\n    )\n\n    ablation = env_config.get(\"graph_ablation\", config.get(\"graph_ablation\", \"full_graph\"))\n    if ablation == \"no_capacity_sharing_edges\":\n        capacity_edges = ()\n    elif ablation == \"no_resource_sharing_edges\":\n        resource_edges = ()\n    elif ablation == \"no_interfacility_edges\":\n        specimen_edges = ()\n        capacity_edges = ()\n        resource_edges = ()\n    elif ablation == \"flat_state_no_graph\":\n        information_edges = ()\n        specimen_edges = ()\n        capacity_edges = ()\n        resource_edges = ()\n\n    num_nodes = num_facilities + int(include_hub)\n    capacity_graph_edges = capacity_edges\n    if include_hub:\n        capacity_graph_edges = tuple((i, num_facilities) for i in range(num_facilities)) if capacity_edges else ()\n\n    edge_sets = {\n        \"information_edges\": information_edges,\n        \"specimen_edges\": specimen_edges,\n        \"capacity_edges\": capacity_graph_edges,\n        \"resource_edges\": resource_edges,\n    }\n    selected_edge_types = tuple(\n        config.get(\n            \"gcn_edge_types\",\n            (\"information_edges\", \"specimen_edges\", \"capacity_edges\", \"resource_edges\"),\n        )\n    )\n    graph_edges: list[Edge] = []\n    for edge_type in selected_edge_types:\n        if edge_type not in edge_sets:\n            raise ValueError(f\"Unsupported GCN edge type: {edge_type}\")\n        graph_edges.extend(edge_sets[edge_type])\n    graph_edges = list(_dedupe_edges(graph_edges, num_nodes))\n    edge_weights = _geographic_edge_weights(env_config, graph_edges, num_facilities)\n    resource_edge_features = _network_edge_features(\n        env_config,\n        resource_edges,\n        num_facilities,\n    )\n    specimen_edge_features = _network_edge_features(\n        env_config,\n        specimen_edges,\n        num_facilities,\n    )\n    capacity_edge_features = _network_edge_features(\n        env_config,\n        capacity_edges,\n        num_facilities,\n    )\n    edge_feature_dim = (\n        len(specimen_edge_features[0])\n        if specimen_edge_features\n        else (\n            len(resource_edge_features[0])\n            if resource_edge_features\n            else (\n                len(capacity_edge_features[0])\n                if capacity_edge_features\n                else 0\n            )\n        )\n    )\n\n    residual_config = dict(config.get(\"residual_action\", {}))\n    include_base_action_features = bool(\n        residual_config.get(\"enabled\", False)\n        and residual_config.get(\"include_base_action_features\", False)\n    )\n    base_action_width = 4 * int(include_base_action_features)\n    node_feature_dim = (\n        5\n        + int(include_supplier_state)\n        + int(include_forecast)\n        + 3 * int(include_transfer_pipeline)\n        + 3 * int(include_demand_history)\n        + 3 * sequence_length\n        + 3 * int(include_adaptive_demand_features)\n        + int(include_time_state)\n        + base_action_width\n        + int(include_hub)\n        + summary_width\n    )\n    demand_sequence_feature_start = (\n        5\n        + int(include_supplier_state)\n        + int(include_forecast)\n        + 3 * int(include_transfer_pipeline)\n        + 3 * int(include_demand_history)\n        if sequence_length\n        else -1\n    )\n    normalize_node_features = bool(config.get(\"normalize_observations\", False))\n    node_feature_scale = graph_node_feature_scale(config, node_feature_dim)\n    return GraphStateSpec(\n        num_facilities=num_facilities,\n        production_lead_time=production_lead_time,\n        include_supplier_state=include_supplier_state,\n        include_demand_forecast_state=include_forecast,\n        include_demand_history_state=include_demand_history,\n        include_central_capacity_hub=include_hub,\n        include_transfer_pipeline_state=include_transfer_pipeline,\n        include_adaptive_demand_features=include_adaptive_demand_features,\n        include_time_state=include_time_state,\n        features_per_facility=features_per_facility,\n        node_feature_dim=node_feature_dim,\n        num_nodes=num_nodes,\n        edge_index=tuple(graph_edges),\n        edge_weights=edge_weights,\n        specimen_edge_index=tuple(specimen_edges),\n        resource_edge_index=tuple(resource_edges),\n        capacity_edge_index=tuple(capacity_edges),\n        specimen_edge_features=specimen_edge_features,\n        resource_edge_features=resource_edge_features,\n        capacity_edge_features=capacity_edge_features,\n        edge_feature_dim=edge_feature_dim,\n        normalize_node_features=normalize_node_features,\n        node_feature_scale=node_feature_scale,\n        patient_summary_width=summary_width,\n        include_base_action_features=include_base_action_features,\n        base_action_policy=str(residual_config.get(\"base_policy\", \"\")),\n        base_action_policy_config=dict(residual_config.get(\"base_policy_config\", {})),\n        env_config=env_config,\n        include_demand_sequence_state=bool(sequence_length),\n        demand_sequence_length=sequence_length,\n        demand_sequence_feature_start=demand_sequence_feature_start,\n    )",
+          "start": 87
+        },
+        "flat_state_to_node_features": {
+          "end": 428,
+          "source": "def flat_state_to_node_features(state, graph_spec: GraphStateSpec):\n    \"\"\"Convert replay-buffer flat states into GCN node features.\n\n    For the patient env the flat state is ``[base | per-clinic summary]``; the\n    summary block is reshaped and hstacked onto the clinic nodes (hub row\n    zero-padded), reproducing ``PatientConditionCapacityEnv.graph_observation``.\n    \"\"\"\n\n    require_torch()\n    if state.dim() == 1:\n        state = state.unsqueeze(0)\n    batch_size = state.shape[0]\n    n = graph_spec.num_facilities\n    lead_time = graph_spec.production_lead_time\n    summary_width = graph_spec.patient_summary_width\n\n    base_width = n * graph_spec.features_per_facility\n    summary_end = base_width + n * summary_width\n    if summary_width > 0:\n        base_state = state[:, :base_width]\n        summary_state = state[:, base_width:summary_end].reshape(\n            batch_size,\n            n,\n            summary_width,\n        )\n    else:\n        base_state = state[:, :base_width]\n        summary_state = None\n    time_state = (\n        state[:, summary_end : summary_end + 1]\n        if graph_spec.include_time_state\n        else None\n    )\n    facility_state = base_state.reshape(batch_size, n, graph_spec.features_per_facility)\n\n    demand = facility_state[:, :, 0:1]\n    specimens = facility_state[:, :, 1:2]\n    reagents = facility_state[:, :, 2:3]\n    idle_bioreactors = facility_state[:, :, 3:4]\n    total_bioreactors = facility_state[:, :, 3 : 3 + lead_time].sum(dim=-1, keepdim=True)\n    feature_parts = [demand, specimens, reagents, idle_bioreactors, total_bioreactors]\n    if graph_spec.include_supplier_state:\n        feature_parts.append(facility_state[:, :, 3 + lead_time : 4 + lead_time])\n    if graph_spec.include_demand_forecast_state:\n        forecast_start = 3 + lead_time + int(graph_spec.include_supplier_state)\n        feature_parts.append(facility_state[:, :, forecast_start : forecast_start + 1])\n    if graph_spec.include_transfer_pipeline_state:\n        pending_start = (\n            3\n            + lead_time\n            + int(graph_spec.include_supplier_state)\n            + int(graph_spec.include_demand_forecast_state)\n        )\n        feature_parts.append(facility_state[:, :, pending_start : pending_start + 3])\n    if graph_spec.include_demand_history_state:\n        history_start = (\n            3\n            + lead_time\n            + int(graph_spec.include_supplier_state)\n            + int(graph_spec.include_demand_forecast_state)\n            + 3 * int(graph_spec.include_transfer_pipeline_state)\n        )\n        feature_parts.append(\n            facility_state[:, :, history_start : history_start + 3]\n        )\n    if bool(\n        getattr(\n            graph_spec,\n            \"include_demand_sequence_state\",\n            False,\n        )\n    ):\n        sequence_start = (\n            3\n            + lead_time\n            + int(graph_spec.include_supplier_state)\n            + int(graph_spec.include_demand_forecast_state)\n            + 3 * int(graph_spec.include_transfer_pipeline_state)\n            + 3 * int(graph_spec.include_demand_history_state)\n        )\n        sequence_width = 3 * int(\n            getattr(\n                graph_spec,\n                \"demand_sequence_length\",\n                0,\n            )\n        )\n        feature_parts.append(\n            facility_state[\n                :,\n                :,\n                sequence_start : sequence_start + sequence_width,\n            ]\n        )\n    if graph_spec.include_adaptive_demand_features:\n        feature_parts.append(\n            adaptive_demand_node_features(\n                demand,\n                (\n                    facility_state[:, :, forecast_start : forecast_start + 1]\n                    if graph_spec.include_demand_forecast_state\n                    else demand\n                ),\n                graph_spec,\n            )\n        )\n    time_feature_col = None\n    if time_state is not None:\n        time_feature_col = sum(part.shape[-1] for part in feature_parts)\n        feature_parts.append(\n            time_state.unsqueeze(1).expand(-1, n, -1)\n        )\n    if graph_spec.include_base_action_features:\n        feature_parts.append(_base_action_node_features(state, graph_spec))\n    if graph_spec.include_central_capacity_hub:\n        feature_parts.append(torch.zeros_like(demand))\n    if summary_state is not None:\n        feature_parts.append(summary_state)\n\n    node_features = torch.cat(feature_parts, dim=-1)\n    if not graph_spec.include_central_capacity_hub:\n        return _normalize_node_features(node_features, graph_spec)\n\n    hub_features = torch.zeros(\n        batch_size,\n        1,\n        graph_spec.node_feature_dim,\n        dtype=node_features.dtype,\n        device=node_features.device,\n    )\n    # Hub aggregates capacity; columns 3/4 are idle/total bioreactors, last flags the hub.\n    hub_features[:, 0, 3] = idle_bioreactors.sum(dim=1).squeeze(-1)\n    hub_features[:, 0, 4] = total_bioreactors.sum(dim=1).squeeze(-1)\n    if time_feature_col is not None:\n        hub_features[:, 0, time_feature_col] = time_state[:, 0]\n    hub_flag_col = graph_spec.node_feature_dim - 1 - summary_width\n    hub_features[:, 0, hub_flag_col] = 1.0\n    node_features = torch.cat((node_features, hub_features), dim=1)\n    return _normalize_node_features(node_features, graph_spec)",
+          "start": 290
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/models/gcn_ddpg.py",
+      "sha256": "07f5bf086118dba0ada251cb99d9ae228882c270cc7abb950ae76dcd5ea9964b",
+      "symbols": {
+        "correction_gate_node_features": {
+          "end": 4553,
+          "source": "    def correction_gate_node_features(\n        self,\n        states,\n        *,\n        residuals=None,\n        detach_proposed_residuals: bool = True,\n    ):\n        \"\"\"Build graph-gate inputs with the actor's signed proposal per node.\"\"\"\n\n        node_features = flat_state_to_node_features(\n            states,\n            self.graph_spec,\n        )\n        if not self.correction_gate_include_proposed_residual_features:\n            return node_features\n        if residuals is None:\n            actor_was_training = self.actor.training\n            self.actor.eval()\n            with torch.no_grad():\n                network_actions = self.actor(node_features)\n                residuals = self._ungated_policy_residuals_tensor(\n                    states,\n                    network_actions,\n                )\n            if actor_was_training:\n                self.actor.train()\n        if residuals.ndim != 2 or residuals.shape[1] != self.action_dim:\n            raise ValueError(\n                \"Proposed residuals must align with gate states and actions\"\n            )\n        scale = torch.as_tensor(\n            self.residual_scale_vector,\n            dtype=residuals.dtype,\n            device=residuals.device,\n        ).reshape(1, -1)\n        scaled = residuals * scale\n        if (\n            self.correction_gate_proposed_residual_feature_mode\n            == \"clipped_action_delta\"\n        ):\n            base_actions = self._base_actions_from_states_tensor(states)\n            scaled = (\n                torch.clamp(base_actions + scaled, -1.0, 1.0)\n                - base_actions\n            )\n        if detach_proposed_residuals:\n            scaled = scaled.detach()\n        n = self.graph_spec.num_facilities\n        facility_proposals = torch.stack(\n            [\n                scaled[:, group_index * n : (group_index + 1) * n]\n                for group_index in range(4)\n            ],\n            dim=2,\n        )\n        proposal_features = torch.zeros(\n            (\n                scaled.shape[0],\n                self.graph_spec.num_nodes,\n                self.correction_gate_proposed_residual_feature_dim,\n            ),\n            dtype=scaled.dtype,\n            device=scaled.device,\n        )\n        proposal_features[:, :n, :] = facility_proposals\n        return torch.cat(\n            (node_features, proposal_features),\n            dim=2,\n        )",
+          "start": 4485
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/baselines/flat_ddpg.py",
+      "sha256": "16f2ffbaa452cb29b3770b62ae88d25d34e50e7256f380fa36990e5116879024",
+      "symbols": {
+        "_actor_input_tensor": {
+          "end": 2016,
+          "source": "    def _actor_input_tensor(self, raw_states, *, normalized_states=None):\n        if self.temporal_demand_encoder_enabled:\n            return raw_states\n        normalized_states = (\n            self.observation_scaler.normalize_tensor(raw_states)\n            if normalized_states is None\n            else normalized_states\n        )\n        if not self.include_base_action_features:\n            return normalized_states\n        base_actions = self._base_actions_from_states_tensor(raw_states)\n        return torch.cat((normalized_states, base_actions), dim=1)",
+          "start": 2005
+        },
+        "_policy_residuals_tensor": {
+          "end": 3149,
+          "source": "    def _policy_residuals_tensor(\n        self,\n        states,\n        network_actions,\n        *,\n        apply_correction_gate: bool = False,\n        hard_correction_gate: bool = True,\n    ):\n        residuals = self._transform_network_residuals_tensor(network_actions)\n        if self.residual_pressure_projection_groups:\n            residuals = self._project_residuals_to_pressure_patterns(states, residuals)\n            residuals = self._apply_positive_residual_slices_tensor(residuals)\n        residuals = self._apply_state_gate_residuals_tensor(states, residuals)\n        residuals = self.residual_endpoint_projection.apply_tensor(residuals)\n        if apply_correction_gate and self.correction_gate is not None:\n            gate_scores = self.correction_gate(\n                self._actor_input_tensor(states)\n            ).detach()\n            gate_probabilities = (\n                torch.sigmoid(gate_scores)\n                if self.correction_gate_mode == \"classification\"\n                else gate_scores\n            )\n            if hard_correction_gate:\n                gate_probabilities = (\n                    gate_probabilities\n                    >= self._correction_gate_threshold_tensor(\n                        gate_probabilities,\n                    )\n                ).to(dtype=residuals.dtype)\n            elif self.correction_gate_mode == \"advantage\":\n                gate_probabilities = torch.sigmoid(\n                    gate_probabilities - self.correction_gate_threshold\n                )\n            if gate_probabilities.ndim == 1:\n                residuals = residuals * gate_probabilities.unsqueeze(1)\n            else:\n                residuals = self._apply_group_gate_probabilities(\n                    residuals,\n                    gate_probabilities,\n                )\n        return torch.clamp(residuals, -1.0, 1.0)",
+          "start": 3108
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "src/rl/experiment.py",
+      "sha256": "894ae1b1a441c5afc3e324e706a135abdfc5996e74856ce05e6a0c67bbd3bc94",
+      "symbols": {
+        "apply_graph_ablation": {
+          "end": 78,
+          "source": "def apply_graph_ablation(config: CapacityPlanningConfig, ablation: str) -> CapacityPlanningConfig:\n    if ablation in (\"full_graph\", \"\", None):\n        return config\n    if ablation == \"no_capacity_sharing_edges\":\n        return with_graph_ablation(config, remove_capacity_edges=True)\n    if ablation == \"no_resource_sharing_edges\":\n        return with_graph_ablation(config, remove_resource_edges=True)\n    if ablation == \"no_interfacility_edges\":\n        return with_graph_ablation(\n            config,\n            remove_specimen_edges=True,\n            remove_capacity_edges=True,\n            remove_resource_edges=True,\n        )\n    if ablation == \"flat_state_no_graph\":\n        return config\n    raise ValueError(f\"Unsupported graph_ablation setting: {ablation}\")",
+          "start": 62
+        }
+      }
+    },
+    {
+      "commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693",
+      "path": "evaluation/train_multiscenario_network_residual.py",
+      "sha256": "247eb8166a5f50efb7638bf92188db1809b1472b54460b6b477c146083c81b6f",
+      "symbols": {
+        "agent_parameter_count": {
+          "end": 740,
+          "source": "def agent_parameter_count(agent: Any) -> int:\n    modules = [\n        getattr(agent, name, None)\n        for name in (\n            \"actor\",\n            \"critic\",\n            \"correction_gate\",\n            \"q_network\",\n        )\n    ]\n    unique_modules = {\n        id(module): module\n        for module in modules\n        if module is not None\n    }\n    return int(\n        sum(\n            parameter.numel()\n            for module in unique_modules.values()\n            for parameter in module.parameters()\n        )\n    )",
+          "start": 719
+        }
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/training_manifest.json",
+      "sha256": "0311c648fc1570843daf659f5e45ad27cceb967a9265710d03bd45c60a5e31e2"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/config.json",
+      "sha256": "658c537bd87a0e3c232658606ff48f83d44ef0a1ba31e6f9fc69ef99d2dad5c5"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/summary.json",
+      "sha256": "f57327ab9b6abc0fc487a6c370dbecba4f7a282eb262872c9822b9edd2271e62"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/config.json",
+      "sha256": "bf0e1ae86c4a4a42518263748dfa0c46948774833c20229b8146797125a20f25"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/summary.json",
+      "sha256": "71ead6c34ee2280c266c1d134ca2e80019684e327d5c1e4e912347a77a4926e3"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/config.json",
+      "sha256": "2f20cb9c6d23f73539dc33eebeaf02518132fd85fc1de1a32e15755e918f314a"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/summary.json",
+      "sha256": "478698a165b48f43d7f45176ec22fde9fb46b9fccc853ce2230cf33694f6fa65"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/config.json",
+      "sha256": "cf11db829e0d9923525aee4badf68ae99d1654650b7e2182c5f266f4c1a55a7e"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/summary.json",
+      "sha256": "18b32173ed2b64c954ef130bb6900b5abe9e2d3cf65a7ee0b52c86b15227a664"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/config.json",
+      "sha256": "e9b0ededea605aecf85e5b14fc43be22051529e51832a40f5b2531c0a4fe5c87"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/summary.json",
+      "sha256": "f73a693713f196e15bf8fba9664c70073ac07cb1fe66f5190abcb0ec731c9520"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/config.json",
+      "sha256": "dfbff1ca593d43ec459bf18261434963ffcdc7a00dd5193805a9a92db41c9934"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/summary.json",
+      "sha256": "23119e57694a4d71a99c1c1a285df67b0c3d51f8f6c95ecf5ba05af4c8e6c381"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/config.json",
+      "sha256": "cfa514e8589d68d93fe5436931394e8833a8ab6ee5cdb3913b4bd49c0ea0c5ef"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/summary.json",
+      "sha256": "82e19037ad91f7d8e0b373d6785065e791af7c2fb3f49ebc83306008d578b3c4"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/config.json",
+      "sha256": "9c6ee4f922ce786e981a7972ba60467e384a64a35656ada32f169a29e5caffdf"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/summary.json",
+      "sha256": "005981bd22f51284052db6c270dbfdb4612affc4f8679ef7328b0f5b4f321823"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/config.json",
+      "sha256": "918b716f4f55530245c8ea0062ab56fb2d0831e35574dc3b365b3730fef2d605"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/summary.json",
+      "sha256": "c7bd5ebcd1d8293eaf4bc1ab8e263dc3ee222bd36b0a60d401ba0cdc76d8ee93"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/config.json",
+      "sha256": "0bf52379b016f9b96b99a93ed7ec1ce4ea62e2386dd0ebf59f713d94238a0606"
+    },
+    {
+      "path": "/Users/lizhaowei/gcnrl-patient-routing-persistent/results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/summary.json",
+      "sha256": "d7d99263897980790bcd032a3df65e2e59de86333eb6ece20438785c09c6e8f4"
+    },
+    {
+      "path": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/experiments/evidence/patient_indexed_specimen_routing_publication_evidence_map.json",
+      "sha256": "3430440f6ee151b9972002c6f4f3617007105473a3c1499e3fab334497c77566"
+    }
+  ],
+  "interface_probes": {
+    "anchor_block_excluded_from_pipeline_probe": true,
+    "capacity_pipeline_redistribution_preserves_explicit_graph_raw_block": true,
+    "flat_ablation_preserves_physical_config": true,
+    "flat_actor_gate_feature_width": 641,
+    "flat_actor_gate_raw_state_preserved": true,
+    "flat_source_references_adaptive_feature_helper": false,
+    "flat_source_references_proposed_residual_config": false,
+    "gcn_nonzero_proposal_features": 1,
+    "gcn_proposal_changes_gate_input": true,
+    "raw_flat_states_differ": true,
+    "scope": "synthetic layout and gate-input probes, not trained-policy outcomes"
+  },
+  "interpretation": "formal package advantage remains; message passing alone is not isolated",
+  "loaded_source_hashes": {
+    "src/graph/edges.py": "aa1a37c2a675406571c4ea764ba8f8df6d279d4da45c6eb6c554bc6b5628b0cc",
+    "src/graph/geography.py": "475937c83c63fe69f98afb56b7223e990bbef324fe7162e11f8088ccfd0dc088",
+    "src/models/gcn.py": "63c92d66a14eca9b1e5a150ffc1f92a4cd5832d3aa94d062e5ada41d34806e69",
+    "src/models/graph_features.py": "53f0c20fe2734ef8d313dbaf39189964c6a5582fddd0a579e860692d8affab9a",
+    "src/rl/networks.py": "d381a850f6aab53a089a4b6601c1f43aa53f0345f45756a9e68ae189530d33e9",
+    "src/rl/preprocessing.py": "1060208a391a38a814935a831c671a1b778d1050753056003f8e904325bc2bb1",
+    "src/rl/tensor_conversion.py": "faf79e0466917940f9c9ff07a743a5c283b777b569d2ecda646b3cd3e004cfdb"
+  },
+  "new_evaluation_runs": 0,
+  "new_training_runs": 0,
+  "paired_config_checks": [
+    {
+      "config_differences": {
+        "algorithm": {
+          "flat": "flat_residual_mdl2_network_ddpg_afd",
+          "gcn": "gcn_residual_mdl2_network_ddpg_afd"
+        },
+        "checkpoint_dir": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/checkpoints",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/checkpoints"
+        },
+        "config_snapshot_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/config.json",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/config.json"
+        },
+        "env.graph_ablation": {
+          "flat": "flat_state_no_graph",
+          "gcn": "full_graph"
+        },
+        "evaluation_replications": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": 500,
+          "gcn_present": true
+        },
+        "gcn_hidden_sizes": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": [
+            64,
+            32
+          ],
+          "gcn_present": true
+        },
+        "hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "flat_present": true,
+          "gcn": null,
+          "gcn_present": false
+        },
+        "history_screen.gcn_hidden_sizes": {
+          "flat": [],
+          "gcn": [
+            64,
+            32
+          ]
+        },
+        "history_screen.hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "gcn": []
+        },
+        "include_global_context": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": true,
+          "gcn_present": true
+        },
+        "result_csv_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/training.csv",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/training.csv"
+        },
+        "training_state_checkpoint_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed10/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed10_training_state.pt",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed10/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed10_training_state.pt"
+        }
+      },
+      "seed": 10
+    },
+    {
+      "config_differences": {
+        "algorithm": {
+          "flat": "flat_residual_mdl2_network_ddpg_afd",
+          "gcn": "gcn_residual_mdl2_network_ddpg_afd"
+        },
+        "checkpoint_dir": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/checkpoints",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/checkpoints"
+        },
+        "config_snapshot_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/config.json",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/config.json"
+        },
+        "env.graph_ablation": {
+          "flat": "flat_state_no_graph",
+          "gcn": "full_graph"
+        },
+        "evaluation_replications": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": 500,
+          "gcn_present": true
+        },
+        "gcn_hidden_sizes": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": [
+            64,
+            32
+          ],
+          "gcn_present": true
+        },
+        "hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "flat_present": true,
+          "gcn": null,
+          "gcn_present": false
+        },
+        "history_screen.gcn_hidden_sizes": {
+          "flat": [],
+          "gcn": [
+            64,
+            32
+          ]
+        },
+        "history_screen.hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "gcn": []
+        },
+        "include_global_context": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": true,
+          "gcn_present": true
+        },
+        "result_csv_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/training.csv",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/training.csv"
+        },
+        "training_state_checkpoint_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed11/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed11_training_state.pt",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed11/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed11_training_state.pt"
+        }
+      },
+      "seed": 11
+    },
+    {
+      "config_differences": {
+        "algorithm": {
+          "flat": "flat_residual_mdl2_network_ddpg_afd",
+          "gcn": "gcn_residual_mdl2_network_ddpg_afd"
+        },
+        "checkpoint_dir": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/checkpoints",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/checkpoints"
+        },
+        "config_snapshot_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/config.json",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/config.json"
+        },
+        "env.graph_ablation": {
+          "flat": "flat_state_no_graph",
+          "gcn": "full_graph"
+        },
+        "evaluation_replications": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": 500,
+          "gcn_present": true
+        },
+        "gcn_hidden_sizes": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": [
+            64,
+            32
+          ],
+          "gcn_present": true
+        },
+        "hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "flat_present": true,
+          "gcn": null,
+          "gcn_present": false
+        },
+        "history_screen.gcn_hidden_sizes": {
+          "flat": [],
+          "gcn": [
+            64,
+            32
+          ]
+        },
+        "history_screen.hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "gcn": []
+        },
+        "include_global_context": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": true,
+          "gcn_present": true
+        },
+        "result_csv_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/training.csv",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/training.csv"
+        },
+        "training_state_checkpoint_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed12/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed12_training_state.pt",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed12/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed12_training_state.pt"
+        }
+      },
+      "seed": 12
+    },
+    {
+      "config_differences": {
+        "algorithm": {
+          "flat": "flat_residual_mdl2_network_ddpg_afd",
+          "gcn": "gcn_residual_mdl2_network_ddpg_afd"
+        },
+        "checkpoint_dir": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/checkpoints",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/checkpoints"
+        },
+        "config_snapshot_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/config.json",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/config.json"
+        },
+        "env.graph_ablation": {
+          "flat": "flat_state_no_graph",
+          "gcn": "full_graph"
+        },
+        "evaluation_replications": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": 500,
+          "gcn_present": true
+        },
+        "gcn_hidden_sizes": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": [
+            64,
+            32
+          ],
+          "gcn_present": true
+        },
+        "hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "flat_present": true,
+          "gcn": null,
+          "gcn_present": false
+        },
+        "history_screen.gcn_hidden_sizes": {
+          "flat": [],
+          "gcn": [
+            64,
+            32
+          ]
+        },
+        "history_screen.hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "gcn": []
+        },
+        "include_global_context": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": true,
+          "gcn_present": true
+        },
+        "result_csv_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/training.csv",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/training.csv"
+        },
+        "training_state_checkpoint_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed13/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed13_training_state.pt",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed13/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed13_training_state.pt"
+        }
+      },
+      "seed": 13
+    },
+    {
+      "config_differences": {
+        "algorithm": {
+          "flat": "flat_residual_mdl2_network_ddpg_afd",
+          "gcn": "gcn_residual_mdl2_network_ddpg_afd"
+        },
+        "checkpoint_dir": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/checkpoints",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/checkpoints"
+        },
+        "config_snapshot_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/config.json",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/config.json"
+        },
+        "env.graph_ablation": {
+          "flat": "flat_state_no_graph",
+          "gcn": "full_graph"
+        },
+        "evaluation_replications": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": 500,
+          "gcn_present": true
+        },
+        "gcn_hidden_sizes": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": [
+            64,
+            32
+          ],
+          "gcn_present": true
+        },
+        "hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "flat_present": true,
+          "gcn": null,
+          "gcn_present": false
+        },
+        "history_screen.gcn_hidden_sizes": {
+          "flat": [],
+          "gcn": [
+            64,
+            32
+          ]
+        },
+        "history_screen.hidden_sizes": {
+          "flat": [
+            292,
+            212,
+            128
+          ],
+          "gcn": []
+        },
+        "include_global_context": {
+          "flat": null,
+          "flat_present": false,
+          "gcn": true,
+          "gcn_present": true
+        },
+        "result_csv_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/training.csv",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/training.csv"
+        },
+        "training_state_checkpoint_path": {
+          "flat": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/flat_residual_mdl2_network_ddpg_afd/seed14/checkpoints/flat_residual_mdl2_network_ddpg_afd_seed14_training_state.pt",
+          "gcn": "results/patient_indexed_specimen_routing_mac_mps_primary/confirmation/ddpg_routing_primary_100/patient_indexed_specimen_routing_mac_mps_ddpg_confirmation_100/gcn_residual_mdl2_network_ddpg_afd/seed14/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed14_training_state.pt"
+        }
+      },
+      "seed": 14
+    }
+  ],
+  "parameter_count_scope": "actor + critic + correction gate; excludes target/reference copies, buffers and optimizer state; not compute matching",
+  "parameter_gap_relative_to_flat": 0.009793558117555628,
+  "provenance_limit": "current config/summary hashes; counts linked to locked historical manifest, not independent historical config hashes",
+  "publication_evidence_claim_ids_reviewed": [
+    "anchor_improvement",
+    "graph_attribution",
+    "online_learning_attribution",
+    "paired_online_ddpg_attribution",
+    "continuous_action_geometry",
+    "transport_timing_robustness",
+    "td3_backbone_ablation"
+  ],
+  "runs": [
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_critic_node_features": 36,
+        "capacity_head_edges": 190,
+        "critic_gate_ordered_readout": 672,
+        "demand_sequence_length": 0,
+        "edge_features": 4,
+        "gate_node_features": 40,
+        "message_edges": 56,
+        "nodes": 21,
+        "raw_state": 561,
+        "reagent_head_edges": 36,
+        "specimen_head_edges": 36
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 324964,
+        "correction_gate": 49889,
+        "critic": 238433
+      },
+      "seed": 10,
+      "total_parameters": 613286
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_gate_input": 641,
+        "critic_state_action_input": 641,
+        "critic_state_input": 561,
+        "raw_state": 561
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 287164,
+        "correction_gate": 43201,
+        "critic": 276973
+      },
+      "seed": 10,
+      "total_parameters": 607338
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_critic_node_features": 36,
+        "capacity_head_edges": 190,
+        "critic_gate_ordered_readout": 672,
+        "demand_sequence_length": 0,
+        "edge_features": 4,
+        "gate_node_features": 40,
+        "message_edges": 56,
+        "nodes": 21,
+        "raw_state": 561,
+        "reagent_head_edges": 36,
+        "specimen_head_edges": 36
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 324964,
+        "correction_gate": 49889,
+        "critic": 238433
+      },
+      "seed": 11,
+      "total_parameters": 613286
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_gate_input": 641,
+        "critic_state_action_input": 641,
+        "critic_state_input": 561,
+        "raw_state": 561
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 287164,
+        "correction_gate": 43201,
+        "critic": 276973
+      },
+      "seed": 11,
+      "total_parameters": 607338
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_critic_node_features": 36,
+        "capacity_head_edges": 190,
+        "critic_gate_ordered_readout": 672,
+        "demand_sequence_length": 0,
+        "edge_features": 4,
+        "gate_node_features": 40,
+        "message_edges": 56,
+        "nodes": 21,
+        "raw_state": 561,
+        "reagent_head_edges": 36,
+        "specimen_head_edges": 36
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 324964,
+        "correction_gate": 49889,
+        "critic": 238433
+      },
+      "seed": 12,
+      "total_parameters": 613286
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_gate_input": 641,
+        "critic_state_action_input": 641,
+        "critic_state_input": 561,
+        "raw_state": 561
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 287164,
+        "correction_gate": 43201,
+        "critic": 276973
+      },
+      "seed": 12,
+      "total_parameters": 607338
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_critic_node_features": 36,
+        "capacity_head_edges": 190,
+        "critic_gate_ordered_readout": 672,
+        "demand_sequence_length": 0,
+        "edge_features": 4,
+        "gate_node_features": 40,
+        "message_edges": 56,
+        "nodes": 21,
+        "raw_state": 561,
+        "reagent_head_edges": 36,
+        "specimen_head_edges": 36
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 324964,
+        "correction_gate": 49889,
+        "critic": 238433
+      },
+      "seed": 13,
+      "total_parameters": 613286
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_gate_input": 641,
+        "critic_state_action_input": 641,
+        "critic_state_input": 561,
+        "raw_state": 561
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 287164,
+        "correction_gate": 43201,
+        "critic": 276973
+      },
+      "seed": 13,
+      "total_parameters": 607338
+    },
+    {
+      "algorithm": "gcn_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_critic_node_features": 36,
+        "capacity_head_edges": 190,
+        "critic_gate_ordered_readout": 672,
+        "demand_sequence_length": 0,
+        "edge_features": 4,
+        "gate_node_features": 40,
+        "message_edges": 56,
+        "nodes": 21,
+        "raw_state": 561,
+        "reagent_head_edges": 36,
+        "specimen_head_edges": 36
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 324964,
+        "correction_gate": 49889,
+        "critic": 238433
+      },
+      "seed": 14,
+      "total_parameters": 613286
+    },
+    {
+      "algorithm": "flat_residual_mdl2_network_ddpg_afd",
+      "dimensions": {
+        "action": 80,
+        "actor_gate_input": 641,
+        "critic_state_action_input": 641,
+        "critic_state_input": 561,
+        "raw_state": 561
+      },
+      "finite_untrained_cpu_forward": true,
+      "forward_shapes": [
+        [
+          2,
+          80
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "parameters": {
+        "actor": 287164,
+        "correction_gate": 43201,
+        "critic": 276973
+      },
+      "seed": 14,
+      "total_parameters": 607338
+    }
+  ],
+  "status": "audit_complete_with_methodological_differences",
+  "topology_evidence_limit": "the frozen publication map supplies no isolated feature/head/gate-matched message-edge ablation or held-out-topology result",
+  "training_commit": "9c0718b0da49d34f7f878ed2f036e96bf7bb3693"
+}

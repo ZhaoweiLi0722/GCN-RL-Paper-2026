@@ -63,11 +63,13 @@ Source locations for these defaults and masks:
 The JSON's manual source findings are reviewer interpretations, clearly
 separated from automated config equality checks.
 
-The primary readout flattens facility embeddings in a fixed order
-(`src/models/gcn.py:242-250`). The revised summary therefore does not infer
-whole-policy permutation equivariance or network-size generalization from
-the existence of graph convolutions. A broader feature/readout parity audit
-remains packet G1.
+Correction from September queue packet G1: the **critic and correction gate**
+flatten facility embeddings in a fixed order (`src/models/gcn.py:242-250`).
+The formal actor instead uses shared network-residual edge heads. M1's earlier
+phrase "primary readout" was too broad. Whole-policy permutation equivariance
+or network-size generalization still does not follow from graph convolutions.
+The completed input/head/gate audit and narrower package-level attribution are
+in `specs/2026-09-29-formal-graph-contract/readout.md`.
 
 ## Reproduction
 

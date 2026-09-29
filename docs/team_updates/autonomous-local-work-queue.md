@@ -26,7 +26,7 @@ restricted synthetic fixture, not an excuse to train DDPG or claim PRM optimalit
 | --- | --- | --- |
 | M1 | Complete | Historical source/config audit and manuscript corrections are in `specs/2026-09-29-formal-method-contract/readout.md`. Ten configs and the historical manifest checked; 87 focused tests and full compilation pass. PDF rendering remains unavailable without a TeX engine. No dynamics changes. |
 | M2 | Audit complete; findings open | `specs/2026-09-29-formal-replay-contract/readout.md` records mixed reward definitions, discontinuous cached multi-step windows, calibration discount mismatch, teacher support and missing label-horizon provenance. Manuscript limitations updated. No historical fixes/retraining; a corrected campaign needs separate authorization/protocol. |
-| G1 | Pending | Verify executed graph/readout and matched-flat feature access, parameter counting and available topology evidence. Add claim-to-code/evidence matrix; do not claim full-policy equivariance or topology generalization without tests. |
+| G1 | Audit complete; parity gaps open | `specs/2026-09-29-formal-graph-contract/readout.md` records exact component counts, graph/flat input and head differences, and proposal-conditioned gate asymmetry. Formal package-level results preserved; encoder-only attribution and topology generalization are not established. No new experiment. |
 | E1 | Pending | Produce a source-backed operational decision/measurement contract for recurrent qualified-personnel/support work. Separate literature-supported constraints, synthetic assumptions and missing domain inputs. No fabricated calibration or new patient-simulator experiment. |
 | C1 | Pending | Review the practical completion-only comparator gap using the existing queue evidence and information interface. Implement/test only a justified bounded software comparator if it can use the frozen fixture unchanged; otherwise document the exact missing assumption. Do not add arbitrary noise/scenarios to seek positive results. |
 | P1 | Pending | Consolidate a manuscript claim-to-evidence matrix, reproducibility instructions and unresolved approval/domain-input packet. Verify references, artifact links and test status. No journal-ready or online-gain claim beyond evidence. |
@@ -62,3 +62,16 @@ invent a new experimental campaign to keep the queue nonempty.
   G1 is the next unblocked packet. Preserve these findings as prerequisites
   for any future corrected development protocol, not a reason to silently
   repair or replace the historical formal campaign.
+- September 29, G1: reconstructed all ten historical graph/flat model shapes
+  and parameter totals from pinned source without full agents or rollouts.
+  Totals 613,286/607,338 match the locked manifest (0.97936% gap). The graph actor
+  uses shared edge heads; only graph critic/gate use fixed-order flattening.
+  GCN features include derived demand and anchor blocks; flat critic lacks the
+  latter. The graph gate consumes proposed action deltas, while the flat gate
+  ignores that config field. Physical feasibility is unchanged by the flat
+  graph-ablation flag. Added claim-to-code matrix and narrowed manuscript claims
+  to the measured package comparison. Corrected M1's overbroad actor-readout
+  description. Fifty focused tests, full compilation and diff checks pass;
+  repeated audit JSON is byte-identical. TeX rendering remains unavailable.
+  E1 is the next independent packet; parity/replay repairs need a separately
+  approved prospective scientific protocol, not silent historical retraining.

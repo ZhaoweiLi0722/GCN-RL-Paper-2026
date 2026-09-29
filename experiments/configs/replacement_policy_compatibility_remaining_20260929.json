@@ -1,0 +1,13 @@
+{
+  "kind": "engineering_unvisited_seed_continuation_no_inference_retry",
+  "prior_root": "results/replacement_policy_compatibility_20260929",
+  "prior_commit": "f089fd0b56b3e7eed36b26b79438234a103addca",
+  "prior_files": {
+    "seed60_raw.json": "6c8ce99fbc17c2e9cc57e94aa1ba99d89b51b6fee87d1af5ff6066204f2e5324",
+    "summary.json": "bfa21c370017ee89dc0bce5beb3e377ef154792969a69320886c594d334db740",
+    "execution.json": "719530f1b75a29c5fe264db19bc86e1e737dd207087b79eca2dd499e2604ef23"
+  },
+  "reused_seed": 60,
+  "remaining_seeds": [61, 62],
+  "output_root": "results/replacement_policy_compatibility_remaining_20260929"
+}

@@ -12,7 +12,9 @@ from unittest.mock import patch
 import numpy as np
 import torch
 
-from evaluation.audit_replacement_policy_compatibility import compare_outputs, sample_indices
+from evaluation.audit_replacement_policy_compatibility import (
+    compare_outputs, sample_indices, summarize_rows, verify_completed_inference,
+)
 from src.models.gcn_ddpg import GCNDDPGAgent
 from src.rl.strict_frozen_policy import POLICY_METADATA, StrictFrozenPolicy, load_policy_payload_strict
 from src.utils.research_archive import sha256_file
@@ -152,6 +154,20 @@ class OutputCheckTest(unittest.TestCase):
         self.assertEqual(len(set(indices)), 16)
         with self.assertRaises(ValueError):
             sample_indices(4, 16)
+
+    def test_scalar_and_vector_gate_margins_summarize_identically(self):
+        summaries = []
+        for margin in (.3, [.3]):
+            output = dict(self.output, gate_margin=margin)
+            rows = [{"cpu_policy": output, "cpu_full_state": output, "mps_policy": output,
+                     "time_coordinate": 0.25}]
+            summaries.append(summarize_rows(rows, {"network_gate_atol": 1e-5, "request_atol": 1e-6}))
+        self.assertEqual(summaries[0], summaries[1])
+        self.assertEqual(summaries[0]["minimum_gate_margin"], .3)
+
+    def test_continuation_rejects_repeated_completed_seed(self):
+        with self.assertRaisesRegex(ValueError, "unvisited"):
+            verify_completed_inference({"remaining_seeds": [60, 61, 62], "reused_seed": 60}, {})
 
 
 class FrozenFacadeTest(unittest.TestCase):

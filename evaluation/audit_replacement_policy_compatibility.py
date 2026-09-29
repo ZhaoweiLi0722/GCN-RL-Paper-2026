@@ -184,12 +184,39 @@ def summarize_rows(rows, spec):
         maxima = {k: max(maxima[k], diff[k]) for k in maxima}
     return {"observations": len(rows), "max_cpu_mps_absolute_difference": maxima,
             "cpu_full_state_exact": True, "hard_gate_and_requested_lots_identical": True,
-            "minimum_gate_margin": min(float(x) for r in rows for x in r["cpu_policy"]["gate_margin"]),
+            "minimum_gate_margin": min(float(x) for r in rows
+                                       for x in np.asarray(r["cpu_policy"]["gate_margin"]).reshape(-1)),
             "sampled_time_range": [min(r["time_coordinate"] for r in rows),
                                    max(r["time_coordinate"] for r in rows)]}
 
 
-def run(config_path, expected_commit):
+def verify_completed_inference(continuation, spec):
+    """Reuse one immutable completed seed, never redo its model inference."""
+    if continuation["remaining_seeds"] != [61, 62] or continuation["reused_seed"] != 60:
+        raise ValueError("Continuation must consume only the two unvisited seeds")
+    prior = Path(continuation["prior_root"])
+    for name, digest in continuation["prior_files"].items():
+        if sha256_file(prior / name) != digest:
+            raise ValueError(f"Prior audit changed: {name}")
+    failure = json.loads((prior / "summary.json").read_text())
+    if (failure["status"] != "failed" or failure["exit_code"] != 1 or failure["seeds"]
+            or failure["error"] != "TypeError: 'float' object is not iterable"):
+        raise ValueError("Not the declared summary-only failure")
+    if list(prior.glob("seed61*")) or list(prior.glob("seed62*")):
+        raise ValueError("An unvisited seed already has prior evidence")
+    execution = json.loads((prior / "execution.json").read_text())
+    if execution["commit"] != continuation["prior_commit"]:
+        raise ValueError("Prior implementation mismatch")
+    rows = json.loads((prior / "seed60_raw.json").read_text())
+    if len(rows) != spec["recorded_observations_per_seed"]:
+        raise ValueError("Incomplete saved inference")
+    info = {"seed": 60, "raw_sha256": continuation["prior_files"]["seed60_raw.json"],
+            "raw_path": str(prior / "seed60_raw.json"), "reused_without_new_inference": True}
+    info.update(summarize_rows(rows, spec))
+    return rows, info
+
+
+def run(config_path, expected_commit, continuation_path=None):
     spec = json.loads(Path(config_path).read_text())
     if (spec["seeds"] != [60, 61, 62] or spec["recorded_observations_per_seed"] != 16
             or spec["maximum_environment_steps"] != 0 or spec["optimizer_updates"] != 0
@@ -201,15 +228,21 @@ def run(config_path, expected_commit):
     if os.environ.get("PYTORCH_ENABLE_MPS_FALLBACK") != "0" or not torch.backends.mps.is_available():
         raise RuntimeError("Explicit MPS inference required, no fallback")
     manifest, sources = verify_inputs(spec)
-    root = Path(spec["output_root"])
+    continuation = None if continuation_path is None else json.loads(Path(continuation_path).read_text())
+    reused = None if continuation is None else verify_completed_inference(continuation, spec)
+    root = Path(spec["output_root"] if continuation is None else continuation["output_root"])
     root.mkdir(parents=True, exist_ok=False)
     write_new(root / "execution.json", {"commit": head, "spec_sha256": sha256_file(Path(config_path)),
                                         "pid": os.getpid(), "torch_version": torch.__version__,
-                                        "mps_fallback": "0", "source_locks": sources})
+                                        "mps_fallback": "0", "source_locks": sources,
+                                        "continuation": continuation})
     summary = {"status": "failed", "seeds": [], "environment_steps": 0, "optimizer_updates": 0,
                "historical_output_parity_claim": False, "scientific_pilot_authorized": False}
     try:
-        for seed in spec["seeds"]:
+        if reused is not None:
+            write_new(root / "seed60_raw.json", reused[0])
+            summary["seeds"].append(reused[1])
+        for seed in (spec["seeds"] if continuation is None else continuation["remaining_seeds"]):
             rows, info = audit_seed(spec, manifest, seed)
             raw = root / f"seed{seed}_raw.json"
             write_new(raw, rows)
@@ -217,6 +250,8 @@ def run(config_path, expected_commit):
             info["raw_sha256"] = sha256_file(raw)
             summary["seeds"].append(info)
         verify_inputs(spec)
+        if continuation is not None:
+            verify_completed_inference(continuation, spec)
         summary.update(status="completed", exit_code=0, verified_payload_files=len(manifest["files"]),
                        verified_existing_source_files=len(sources))
     except BaseException as error:
@@ -231,8 +266,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default=DEFAULT_CONFIG)
     parser.add_argument("--expected-commit", required=True)
+    parser.add_argument("--continuation-config")
     args = parser.parse_args()
-    print(json.dumps(run(args.config, args.expected_commit), indent=2, sort_keys=True))
+    print(json.dumps(run(args.config, args.expected_commit, args.continuation_config), indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":

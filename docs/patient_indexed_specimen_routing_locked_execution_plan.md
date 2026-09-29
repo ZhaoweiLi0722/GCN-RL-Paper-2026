@@ -1539,3 +1539,14 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Commit protocol/config/source before the recorded check. Scientific R3
   collection, fresh scenario/reward changes, online training, remote operations
   and formal holdout remain outside scope. Do not infer Howard approval.
+
+### 2026-09-29: R5 reporting repair, no inference retry
+
+- The engineering checker at `f089fd0` saved all seed60 raw outputs, then failed
+  only on scalar gate-margin formatting. No seed61/62 inference was attempted.
+  Preserve the failure and raw hashes in R5 `summary-failure.md` and the new
+  unvisited-seed continuation config.
+- Under the ongoing routine engineering authorization, fix/test the scalar
+  reducer, reuse seed60's completed inference without replay, and finish only
+  seeds61/62 after a new source commit. No extra observation, tolerance change,
+  simulation, fitting or scientific retry is allowed by this completion.

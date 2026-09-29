@@ -1,0 +1,78 @@
+{
+  "classification": "decision_software_fixture_not_prm_or_rl_evidence",
+  "clinical_model_validated": false,
+  "online_policy_training": false,
+  "graph_benefit_tested": false,
+  "independent_statistical_replications": 0,
+  "comparisons": {
+    "no_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 21.75,
+        "backlog_rule": 21.75,
+        "adaptive_backlog_rule": 21.75,
+        "fixed_model_mpc": 19.5,
+        "identification_mpc": 19.5
+      },
+      "finite_grid_diagnostic": {
+        "nonanticipative_cost": 19.5,
+        "policy_replay_cost": 19.5,
+        "clairvoyant_cost": 19.5,
+        "best_open_loop_cost": 19.5,
+        "best_open_loop_actions": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "balanced",
+          "idle"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "balanced"
+        ],
+        "policy_information_sets": 5,
+        "unique_transition_queries": 1364,
+        "action_count": 4,
+        "world_count": 1,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "identification_minus_fixed_mpc": 0.0
+    },
+    "persistent_change": {
+      "expected_synthetic_cost": {
+        "fixed_balanced": 24.5,
+        "backlog_rule": 23.0,
+        "adaptive_backlog_rule": 23.0,
+        "fixed_model_mpc": 23.25,
+        "identification_mpc": 22.25
+      },
+      "finite_grid_diagnostic": {
+        "nonanticipative_cost": 22.25,
+        "policy_replay_cost": 22.25,
+        "clairvoyant_cost": 21.25,
+        "best_open_loop_cost": 22.25,
+        "best_open_loop_actions": [
+          "balanced",
+          "balanced",
+          "balanced",
+          "idle",
+          "idle"
+        ],
+        "root_information_sets": 1,
+        "root_actions": [
+          "balanced"
+        ],
+        "policy_information_sets": 7,
+        "unique_transition_queries": 2728,
+        "action_count": 4,
+        "world_count": 2,
+        "horizon": 5,
+        "scope": "exact only for the declared finite action grid, known finite-world distribution and horizon"
+      },
+      "identification_minus_fixed_mpc": -1.0
+    }
+  },
+  "baseline_episodes": 15,
+  "baseline_decision_rows": 75,
+  "exact_tree_transition_rows": 4092
+}

@@ -103,3 +103,28 @@ commitment delays and a receipt-only estimator are implemented outside the
 patient simulator. This verifies mechanics only: a simple estimator identifies
 the noiseless response, so it provides no evidence that online DDPG is needed.
 No patient experiment, new neural training, remote push or main merge occurred.
+
+## September 29: decision comparators checked
+
+The [decision-fixture readout](../../specs/2026-09-29-service-effort-decisions/readout.md)
+adds public-observation fixed/adaptive rules and fixed-model/identification MPC,
+with recorded finite-grid diagnostic transitions and a separate evidence audit.
+All costs are synthetic software-fixture units, not manuscript performance.
+
+Under the persistent response change, identification MPC costs 22.25 versus
+23.25 for fixed-model MPC. But a scenario-law-optimized open-loop sequence and
+the optimal nonanticipative policy both cost 22.25. This fixture therefore does
+not establish residual value for feedback beyond that schedule, much less for
+online DDPG. The diagnostic has privileged model-law knowledge; its result
+does not certify global optimality in the original patient simulator.
+
+The run has 15 baseline episodes, 75 decisions and 4,092 exact-tree transitions;
+31 audited hashes, 72 relevant tests and full compilation passed. No neural
+training was launched, and the null diagnostic was retained without retuning.
+
+The [primary-source engineering review](../../specs/2026-09-29-service-effort-decisions/engineering_basis.md)
+supports investigating qualified-personnel scheduling, but not a calibrated
+continuous overtime-to-biological-output law. Actual intervention constraints
+and available measurements remain unresolved. Operational grounding and a
+shared information interface come before patient-model integration or training.
+This remains local-only work; no main merge or external publication occurred.

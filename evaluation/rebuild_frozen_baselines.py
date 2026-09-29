@@ -64,6 +64,18 @@ def require_finite(value, path="root") -> None:
         raise ValueError(f"Nonfinite metric: {path}")
 
 
+def validate_pretrain_summary(run: dict, *, updates: int, epochs: int) -> None:
+    require_finite(run)
+    if run["online_episodes"] != 0 or run["scenario_episode_counts"]:
+        raise RuntimeError("Unexpected online trajectory")
+    if run["pretrain"]["offline_rl_updates"] != updates:
+        raise RuntimeError("Offline update budget not completed")
+    if run["pretrain"].get("advantage_distillation_demonstration_source") != "cache":
+        raise RuntimeError("Teacher cache not used")
+    if run["pretrain"]["advantage_distillation_epochs"] != epochs:
+        raise RuntimeError("Distillation budget changed")
+
+
 def train_seed(spec: dict, source: dict, seed: int, payload: Path) -> dict:
     from src.env.multi_scenario import EpisodeScenarioEnv
     from evaluation.train_multiscenario_network_residual import train_multiscenario_agents
@@ -84,13 +96,7 @@ def train_seed(spec: dict, source: dict, seed: int, payload: Path) -> dict:
         result = train_multiscenario_agents(config, algorithm_filter=spec["algorithm"],
                                            seed_filter=seed)
     run = next(x for x in result["runs"] if x["seed"] == seed)
-    require_finite(run)
-    if run["online_episodes"] != 0 or run["scenario_episode_counts"]:
-        raise RuntimeError("Unexpected online trajectory")
-    if run["pretrain"]["offline_rl_updates"] != 500:
-        raise RuntimeError("Offline update budget not completed")
-    if run["pretrain"].get("local_search_demonstration_source") != "cache":
-        raise RuntimeError("Teacher cache not used")
+    validate_pretrain_summary(run, updates=500, epochs=300)
     import torch
     state = torch.load(run["preonline_training_state"], map_location="cpu", weights_only=False)
     if state["training"]["global_step"] != 0 or state["training"]["next_episode"] != 0:

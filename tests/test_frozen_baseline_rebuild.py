@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import unittest
 
-from evaluation.rebuild_frozen_baselines import build_config, require_finite
+from evaluation.rebuild_frozen_baselines import build_config, require_finite, validate_pretrain_summary
 
 
 class FrozenBaselineRebuildTests(unittest.TestCase):
@@ -47,6 +47,26 @@ class FrozenBaselineRebuildTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 require_finite({"pretrain": [{"loss": value}]})
         require_finite({"loss": 0.12, "path": "pretrain.pt"})
+
+    def test_summary_uses_public_distillation_prefix_not_local_search(self):
+        run = {"online_episodes": 0, "scenario_episode_counts": {}, "pretrain": {
+            "offline_rl_updates": 500, "advantage_distillation_epochs": 300,
+            "advantage_distillation_demonstration_source": "cache"}}
+        validate_pretrain_summary(run, updates=500, epochs=300)
+        run["pretrain"]["local_search_demonstration_source"] = run["pretrain"].pop(
+            "advantage_distillation_demonstration_source")
+        with self.assertRaisesRegex(RuntimeError, "Teacher cache"):
+            validate_pretrain_summary(run, updates=500, epochs=300)
+
+    def test_online_run_and_short_update_budget_rejected(self):
+        for key, value in (("online_episodes", 1), ("scenario_episode_counts", {"nominal": 1})):
+            run = {"online_episodes": 0, "scenario_episode_counts": {}, "pretrain": {}}
+            run[key] = value
+            with self.assertRaises(RuntimeError):
+                validate_pretrain_summary(run, updates=500, epochs=300)
+        with self.assertRaises(RuntimeError):
+            validate_pretrain_summary({"online_episodes": 0, "scenario_episode_counts": {},
+                                       "pretrain": {"offline_rl_updates": 499}}, updates=500, epochs=300)
 
 
 if __name__ == "__main__":

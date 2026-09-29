@@ -1,0 +1,4529 @@
+{
+  "audited_source_sha256": {
+    "evaluation/audit_prospective_design.py": "87558340c736d8bcb3dbb17b502c9233d3b8571d593b47e0c1b39fe7e4ab5def",
+    "src/models/gcn.py": "63c92d66a14eca9b1e5a150ffc1f92a4cd5832d3aa94d062e5ada41d34806e69",
+    "src/models/matched_inputs.py": "7f6b1995c2bb56a82c63161f5f1b63b2e11f9e7e827c0453687d20ed90544f14",
+    "src/models/prospective_forward_agent.py": "73987de49aaf2f6164f4bb2007c352b5270495144eb0931737533dc108897062",
+    "src/rl/networks.py": "d381a850f6aab53a089a4b6601c1f43aa53f0345f45756a9e68ae189530d33e9",
+    "src/rl/prospective_adapter.py": "9274704705ee0029a23fcd26260d0ea3da4617f788bccd9ae418e880a8173bf6",
+    "src/rl/validated_returns.py": "45de110691e67ec56fcaf56ab80d8ddd0a15870f33186360994bccd12d3c36e2"
+  },
+  "config_sha256": "278a84fb8b971b9a3bad046d46fef893825477c4a1e5160ab06f0c7daf8fa60e",
+  "current_engineering_schema_only": true,
+  "environment_steps": 0,
+  "execution_commit": "9cc32621b33debd02f8e650117247b33fcfd71b8",
+  "input_schema": {
+    "action_names": [
+      "specimen_net_0",
+      "specimen_net_1",
+      "specimen_net_2",
+      "reagent_net_0",
+      "reagent_net_1",
+      "reagent_net_2",
+      "capacity_net_0",
+      "capacity_net_1",
+      "capacity_net_2",
+      "replenishment_0",
+      "replenishment_1",
+      "replenishment_2"
+    ],
+    "definition_id": "patient-raw-request-v1/27816835dcd8e2c28619951b48a66b31052bdd207c8568fab77e42923bca50fa",
+    "global_feature_names": [
+      "normalized_time"
+    ],
+    "node_feature_names": [
+      "demand",
+      "waiting_specimens",
+      "reagents",
+      "bioreactor_slot_0",
+      "bioreactor_slot_1",
+      "supplier_available",
+      "waiting_count",
+      "waiting_mean_survival",
+      "near_expiry_count",
+      "production_count",
+      "production_mean_survival",
+      "production_at_risk_count",
+      "waiting_survival_bucket_0",
+      "waiting_survival_bucket_1",
+      "waiting_survival_bucket_2",
+      "waiting_survival_bucket_3",
+      "in_transit_count",
+      "in_transit_mean_survival",
+      "transferred_waiting_count",
+      "route_eligible_waiting_count"
+    ],
+    "node_ids": [
+      "facility_0",
+      "facility_1",
+      "facility_2"
+    ]
+  },
+  "kind": "count_and_operator_preflight_not_performance",
+  "launch_authorized": false,
+  "matching": {
+    "candidates": [
+      {
+        "counts": {
+          "actor": 107,
+          "critic": 97,
+          "gate": 119,
+          "total": 323
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9835687960687961,
+          "critic": 0.9852246763137852,
+          "gate": 0.9836538461538461,
+          "total": 0.9841332219875227
+        },
+        "max_component_gap_fraction": 0.9852246763137852,
+        "width": 1
+      },
+      {
+        "counts": {
+          "actor": 202,
+          "critic": 193,
+          "gate": 226,
+          "total": 621
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9689803439803439,
+          "critic": 0.9706016755521706,
+          "gate": 0.968956043956044,
+          "total": 0.9694945227685808
+        },
+        "max_component_gap_fraction": 0.9706016755521706,
+        "width": 2
+      },
+      {
+        "counts": {
+          "actor": 297,
+          "critic": 289,
+          "gate": 333,
+          "total": 919
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9543918918918919,
+          "critic": 0.955978674790556,
+          "gate": 0.9542582417582418,
+          "total": 0.9548558235496389
+        },
+        "max_component_gap_fraction": 0.955978674790556,
+        "width": 3
+      },
+      {
+        "counts": {
+          "actor": 392,
+          "critic": 385,
+          "gate": 440,
+          "total": 1217
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9398034398034398,
+          "critic": 0.9413556740289414,
+          "gate": 0.9395604395604396,
+          "total": 0.940217124330697
+        },
+        "max_component_gap_fraction": 0.9413556740289414,
+        "width": 4
+      },
+      {
+        "counts": {
+          "actor": 487,
+          "critic": 481,
+          "gate": 547,
+          "total": 1515
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9252149877149877,
+          "critic": 0.9267326732673268,
+          "gate": 0.9248626373626374,
+          "total": 0.9255784251117551
+        },
+        "max_component_gap_fraction": 0.9267326732673268,
+        "width": 5
+      },
+      {
+        "counts": {
+          "actor": 582,
+          "critic": 577,
+          "gate": 654,
+          "total": 1813
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9106265356265356,
+          "critic": 0.9121096725057121,
+          "gate": 0.9101648351648352,
+          "total": 0.9109397258928132
+        },
+        "max_component_gap_fraction": 0.9121096725057121,
+        "width": 6
+      },
+      {
+        "counts": {
+          "actor": 677,
+          "critic": 673,
+          "gate": 761,
+          "total": 2111
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8960380835380836,
+          "critic": 0.8974866717440975,
+          "gate": 0.895467032967033,
+          "total": 0.8963010266738713
+        },
+        "max_component_gap_fraction": 0.8974866717440975,
+        "width": 7
+      },
+      {
+        "counts": {
+          "actor": 772,
+          "critic": 769,
+          "gate": 868,
+          "total": 2409
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8814496314496314,
+          "critic": 0.8828636709824829,
+          "gate": 0.8807692307692307,
+          "total": 0.8816623274549296
+        },
+        "max_component_gap_fraction": 0.8828636709824829,
+        "width": 8
+      },
+      {
+        "counts": {
+          "actor": 867,
+          "critic": 865,
+          "gate": 975,
+          "total": 2707
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8668611793611793,
+          "critic": 0.8682406702208683,
+          "gate": 0.8660714285714286,
+          "total": 0.8670236282359877
+        },
+        "max_component_gap_fraction": 0.8682406702208683,
+        "width": 9
+      },
+      {
+        "counts": {
+          "actor": 962,
+          "critic": 961,
+          "gate": 1082,
+          "total": 3005
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8522727272727273,
+          "critic": 0.8536176694592537,
+          "gate": 0.8513736263736263,
+          "total": 0.8523849290170458
+        },
+        "max_component_gap_fraction": 0.8536176694592537,
+        "width": 10
+      },
+      {
+        "counts": {
+          "actor": 1057,
+          "critic": 1057,
+          "gate": 1189,
+          "total": 3303
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8376842751842751,
+          "critic": 0.838994668697639,
+          "gate": 0.8366758241758242,
+          "total": 0.8377462297981039
+        },
+        "max_component_gap_fraction": 0.838994668697639,
+        "width": 11
+      },
+      {
+        "counts": {
+          "actor": 1152,
+          "critic": 1153,
+          "gate": 1296,
+          "total": 3601
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8230958230958231,
+          "critic": 0.8243716679360243,
+          "gate": 0.8219780219780219,
+          "total": 0.823107530579162
+        },
+        "max_component_gap_fraction": 0.8243716679360243,
+        "width": 12
+      },
+      {
+        "counts": {
+          "actor": 1247,
+          "critic": 1249,
+          "gate": 1403,
+          "total": 3899
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.808507371007371,
+          "critic": 0.8097486671744097,
+          "gate": 0.8072802197802198,
+          "total": 0.8084688313602201
+        },
+        "max_component_gap_fraction": 0.8097486671744097,
+        "width": 13
+      },
+      {
+        "counts": {
+          "actor": 1342,
+          "critic": 1345,
+          "gate": 1510,
+          "total": 4197
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.793918918918919,
+          "critic": 0.7951256664127951,
+          "gate": 0.7925824175824175,
+          "total": 0.7938301321412782
+        },
+        "max_component_gap_fraction": 0.7951256664127951,
+        "width": 14
+      },
+      {
+        "counts": {
+          "actor": 1437,
+          "critic": 1441,
+          "gate": 1617,
+          "total": 4495
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7793304668304668,
+          "critic": 0.7805026656511805,
+          "gate": 0.7778846153846154,
+          "total": 0.7791914329223363
+        },
+        "max_component_gap_fraction": 0.7805026656511805,
+        "width": 15
+      },
+      {
+        "counts": {
+          "actor": 1532,
+          "critic": 1537,
+          "gate": 1724,
+          "total": 4793
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7647420147420148,
+          "critic": 0.7658796648895658,
+          "gate": 0.7631868131868131,
+          "total": 0.7645527337033944
+        },
+        "max_component_gap_fraction": 0.7658796648895658,
+        "width": 16
+      },
+      {
+        "counts": {
+          "actor": 1627,
+          "critic": 1633,
+          "gate": 1831,
+          "total": 5091
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7501535626535627,
+          "critic": 0.7512566641279512,
+          "gate": 0.748489010989011,
+          "total": 0.7499140344844525
+        },
+        "max_component_gap_fraction": 0.7512566641279512,
+        "width": 17
+      },
+      {
+        "counts": {
+          "actor": 1722,
+          "critic": 1729,
+          "gate": 1938,
+          "total": 5389
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7355651105651105,
+          "critic": 0.7366336633663366,
+          "gate": 0.7337912087912087,
+          "total": 0.7352753352655106
+        },
+        "max_component_gap_fraction": 0.7366336633663366,
+        "width": 18
+      },
+      {
+        "counts": {
+          "actor": 1817,
+          "critic": 1825,
+          "gate": 2045,
+          "total": 5687
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7209766584766585,
+          "critic": 0.722010662604722,
+          "gate": 0.7190934065934066,
+          "total": 0.7206366360465688
+        },
+        "max_component_gap_fraction": 0.722010662604722,
+        "width": 19
+      },
+      {
+        "counts": {
+          "actor": 1912,
+          "critic": 1921,
+          "gate": 2152,
+          "total": 5985
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7063882063882064,
+          "critic": 0.7073876618431074,
+          "gate": 0.7043956043956044,
+          "total": 0.7059979368276269
+        },
+        "max_component_gap_fraction": 0.7073876618431074,
+        "width": 20
+      },
+      {
+        "counts": {
+          "actor": 2007,
+          "critic": 2017,
+          "gate": 2259,
+          "total": 6283
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6917997542997543,
+          "critic": 0.6927646610814928,
+          "gate": 0.6896978021978022,
+          "total": 0.691359237608685
+        },
+        "max_component_gap_fraction": 0.6927646610814928,
+        "width": 21
+      },
+      {
+        "counts": {
+          "actor": 2102,
+          "critic": 2113,
+          "gate": 2366,
+          "total": 6581
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6772113022113022,
+          "critic": 0.6781416603198781,
+          "gate": 0.675,
+          "total": 0.6767205383897431
+        },
+        "max_component_gap_fraction": 0.6781416603198781,
+        "width": 22
+      },
+      {
+        "counts": {
+          "actor": 2197,
+          "critic": 2209,
+          "gate": 2473,
+          "total": 6879
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6626228501228502,
+          "critic": 0.6635186595582635,
+          "gate": 0.6603021978021978,
+          "total": 0.6620818391708012
+        },
+        "max_component_gap_fraction": 0.6635186595582635,
+        "width": 23
+      },
+      {
+        "counts": {
+          "actor": 2292,
+          "critic": 2305,
+          "gate": 2580,
+          "total": 7177
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.648034398034398,
+          "critic": 0.6488956587966489,
+          "gate": 0.6456043956043956,
+          "total": 0.6474431399518593
+        },
+        "max_component_gap_fraction": 0.6488956587966489,
+        "width": 24
+      },
+      {
+        "counts": {
+          "actor": 2387,
+          "critic": 2401,
+          "gate": 2687,
+          "total": 7475
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6334459459459459,
+          "critic": 0.6342726580350343,
+          "gate": 0.6309065934065934,
+          "total": 0.6328044407329174
+        },
+        "max_component_gap_fraction": 0.6342726580350343,
+        "width": 25
+      },
+      {
+        "counts": {
+          "actor": 2482,
+          "critic": 2497,
+          "gate": 2794,
+          "total": 7773
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6188574938574939,
+          "critic": 0.6196496572734197,
+          "gate": 0.6162087912087912,
+          "total": 0.6181657415139755
+        },
+        "max_component_gap_fraction": 0.6196496572734197,
+        "width": 26
+      },
+      {
+        "counts": {
+          "actor": 2577,
+          "critic": 2593,
+          "gate": 2901,
+          "total": 8071
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6042690417690417,
+          "critic": 0.605026656511805,
+          "gate": 0.601510989010989,
+          "total": 0.6035270422950336
+        },
+        "max_component_gap_fraction": 0.605026656511805,
+        "width": 27
+      },
+      {
+        "counts": {
+          "actor": 2672,
+          "critic": 2689,
+          "gate": 3008,
+          "total": 8369
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5896805896805897,
+          "critic": 0.5904036557501904,
+          "gate": 0.5868131868131868,
+          "total": 0.5888883430760917
+        },
+        "max_component_gap_fraction": 0.5904036557501904,
+        "width": 28
+      },
+      {
+        "counts": {
+          "actor": 2767,
+          "critic": 2785,
+          "gate": 3115,
+          "total": 8667
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5750921375921376,
+          "critic": 0.5757806549885758,
+          "gate": 0.5721153846153846,
+          "total": 0.5742496438571498
+        },
+        "max_component_gap_fraction": 0.5757806549885758,
+        "width": 29
+      },
+      {
+        "counts": {
+          "actor": 2862,
+          "critic": 2881,
+          "gate": 3222,
+          "total": 8965
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5605036855036855,
+          "critic": 0.5611576542269612,
+          "gate": 0.5574175824175824,
+          "total": 0.559610944638208
+        },
+        "max_component_gap_fraction": 0.5611576542269612,
+        "width": 30
+      },
+      {
+        "counts": {
+          "actor": 2957,
+          "critic": 2977,
+          "gate": 3329,
+          "total": 9263
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5459152334152334,
+          "critic": 0.5465346534653466,
+          "gate": 0.5427197802197802,
+          "total": 0.5449722454192661
+        },
+        "max_component_gap_fraction": 0.5465346534653466,
+        "width": 31
+      },
+      {
+        "counts": {
+          "actor": 3052,
+          "critic": 3073,
+          "gate": 3436,
+          "total": 9561
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5313267813267813,
+          "critic": 0.5319116527037319,
+          "gate": 0.528021978021978,
+          "total": 0.5303335462003242
+        },
+        "max_component_gap_fraction": 0.5319116527037319,
+        "width": 32
+      },
+      {
+        "counts": {
+          "actor": 3147,
+          "critic": 3169,
+          "gate": 3543,
+          "total": 9859
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5167383292383292,
+          "critic": 0.5172886519421173,
+          "gate": 0.5133241758241758,
+          "total": 0.5156948469813823
+        },
+        "max_component_gap_fraction": 0.5172886519421173,
+        "width": 33
+      },
+      {
+        "counts": {
+          "actor": 3242,
+          "critic": 3265,
+          "gate": 3650,
+          "total": 10157
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5021498771498771,
+          "critic": 0.5026656511805027,
+          "gate": 0.49862637362637363,
+          "total": 0.5010561477624405
+        },
+        "max_component_gap_fraction": 0.5026656511805027,
+        "width": 34
+      },
+      {
+        "counts": {
+          "actor": 3337,
+          "critic": 3361,
+          "gate": 3757,
+          "total": 10455
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4875614250614251,
+          "critic": 0.48804265041888806,
+          "gate": 0.48392857142857143,
+          "total": 0.48641744854349855
+        },
+        "max_component_gap_fraction": 0.48804265041888806,
+        "width": 35
+      },
+      {
+        "counts": {
+          "actor": 3432,
+          "critic": 3457,
+          "gate": 3864,
+          "total": 10753
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.47297297297297297,
+          "critic": 0.4734196496572734,
+          "gate": 0.46923076923076923,
+          "total": 0.47177874932455666
+        },
+        "max_component_gap_fraction": 0.4734196496572734,
+        "width": 36
+      },
+      {
+        "counts": {
+          "actor": 3527,
+          "critic": 3553,
+          "gate": 3971,
+          "total": 11051
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.45838452088452086,
+          "critic": 0.4587966488956588,
+          "gate": 0.45453296703296703,
+          "total": 0.45714005010561476
+        },
+        "max_component_gap_fraction": 0.4587966488956588,
+        "width": 37
+      },
+      {
+        "counts": {
+          "actor": 3622,
+          "critic": 3649,
+          "gate": 4078,
+          "total": 11349
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4437960687960688,
+          "critic": 0.4441736481340442,
+          "gate": 0.4398351648351648,
+          "total": 0.44250135088667286
+        },
+        "max_component_gap_fraction": 0.4441736481340442,
+        "width": 38
+      },
+      {
+        "counts": {
+          "actor": 3717,
+          "critic": 3745,
+          "gate": 4185,
+          "total": 11647
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4292076167076167,
+          "critic": 0.42955064737242954,
+          "gate": 0.4251373626373626,
+          "total": 0.427862651667731
+        },
+        "max_component_gap_fraction": 0.42955064737242954,
+        "width": 39
+      },
+      {
+        "counts": {
+          "actor": 3812,
+          "critic": 3841,
+          "gate": 4292,
+          "total": 11945
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4146191646191646,
+          "critic": 0.41492764661081494,
+          "gate": 0.4104395604395604,
+          "total": 0.4132239524487891
+        },
+        "max_component_gap_fraction": 0.41492764661081494,
+        "width": 40
+      },
+      {
+        "counts": {
+          "actor": 3907,
+          "critic": 3937,
+          "gate": 4399,
+          "total": 12243
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.40003071253071254,
+          "critic": 0.4003046458492003,
+          "gate": 0.3957417582417582,
+          "total": 0.3985852532298472
+        },
+        "max_component_gap_fraction": 0.4003046458492003,
+        "width": 41
+      },
+      {
+        "counts": {
+          "actor": 4002,
+          "critic": 4033,
+          "gate": 4506,
+          "total": 12541
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.38544226044226043,
+          "critic": 0.3856816450875857,
+          "gate": 0.381043956043956,
+          "total": 0.3839465540109053
+        },
+        "max_component_gap_fraction": 0.3856816450875857,
+        "width": 42
+      },
+      {
+        "counts": {
+          "actor": 4097,
+          "critic": 4129,
+          "gate": 4613,
+          "total": 12839
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.3708538083538084,
+          "critic": 0.3710586443259711,
+          "gate": 0.3663461538461538,
+          "total": 0.36930785479196343
+        },
+        "max_component_gap_fraction": 0.3710586443259711,
+        "width": 43
+      },
+      {
+        "counts": {
+          "actor": 4192,
+          "critic": 4225,
+          "gate": 4720,
+          "total": 13137
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.35626535626535627,
+          "critic": 0.3564356435643564,
+          "gate": 0.3516483516483517,
+          "total": 0.3546691555730216
+        },
+        "max_component_gap_fraction": 0.3564356435643564,
+        "width": 44
+      },
+      {
+        "counts": {
+          "actor": 4287,
+          "critic": 4321,
+          "gate": 4827,
+          "total": 13435
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.34167690417690416,
+          "critic": 0.3418126428027418,
+          "gate": 0.3369505494505495,
+          "total": 0.3400304563540797
+        },
+        "max_component_gap_fraction": 0.3418126428027418,
+        "width": 45
+      },
+      {
+        "counts": {
+          "actor": 4382,
+          "critic": 4417,
+          "gate": 4934,
+          "total": 13733
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.3270884520884521,
+          "critic": 0.3271896420411272,
+          "gate": 0.3222527472527473,
+          "total": 0.3253917571351378
+        },
+        "max_component_gap_fraction": 0.3271896420411272,
+        "width": 46
+      },
+      {
+        "counts": {
+          "actor": 4477,
+          "critic": 4513,
+          "gate": 5041,
+          "total": 14031
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.3125,
+          "critic": 0.31256664127951256,
+          "gate": 0.3075549450549451,
+          "total": 0.3107530579161959
+        },
+        "max_component_gap_fraction": 0.31256664127951256,
+        "width": 47
+      },
+      {
+        "counts": {
+          "actor": 4572,
+          "critic": 4609,
+          "gate": 5148,
+          "total": 14329
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.2979115479115479,
+          "critic": 0.29794364051789796,
+          "gate": 0.29285714285714287,
+          "total": 0.296114358697254
+        },
+        "max_component_gap_fraction": 0.29794364051789796,
+        "width": 48
+      },
+      {
+        "counts": {
+          "actor": 4667,
+          "critic": 4705,
+          "gate": 5255,
+          "total": 14627
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.28332309582309584,
+          "critic": 0.2833206397562833,
+          "gate": 0.27815934065934067,
+          "total": 0.2814756594783121
+        },
+        "max_component_gap_fraction": 0.28332309582309584,
+        "width": 49
+      },
+      {
+        "counts": {
+          "actor": 4762,
+          "critic": 4801,
+          "gate": 5362,
+          "total": 14925
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.26873464373464373,
+          "critic": 0.2686976389946687,
+          "gate": 0.26346153846153847,
+          "total": 0.26683696025937026
+        },
+        "max_component_gap_fraction": 0.26873464373464373,
+        "width": 50
+      },
+      {
+        "counts": {
+          "actor": 4857,
+          "critic": 4897,
+          "gate": 5469,
+          "total": 15223
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.2541461916461916,
+          "critic": 0.2540746382330541,
+          "gate": 0.24876373626373627,
+          "total": 0.25219826104042836
+        },
+        "max_component_gap_fraction": 0.2541461916461916,
+        "width": 51
+      },
+      {
+        "counts": {
+          "actor": 4952,
+          "critic": 4993,
+          "gate": 5576,
+          "total": 15521
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.23955773955773957,
+          "critic": 0.23945163747143944,
+          "gate": 0.23406593406593407,
+          "total": 0.23755956182148646
+        },
+        "max_component_gap_fraction": 0.23955773955773957,
+        "width": 52
+      },
+      {
+        "counts": {
+          "actor": 5047,
+          "critic": 5089,
+          "gate": 5683,
+          "total": 15819
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.22496928746928746,
+          "critic": 0.22482863670982484,
+          "gate": 0.21936813186813187,
+          "total": 0.22292086260254457
+        },
+        "max_component_gap_fraction": 0.22496928746928746,
+        "width": 53
+      },
+      {
+        "counts": {
+          "actor": 5142,
+          "critic": 5185,
+          "gate": 5790,
+          "total": 16117
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.21038083538083538,
+          "critic": 0.2102056359482102,
+          "gate": 0.20467032967032966,
+          "total": 0.2082821633836027
+        },
+        "max_component_gap_fraction": 0.21038083538083538,
+        "width": 54
+      },
+      {
+        "counts": {
+          "actor": 5237,
+          "critic": 5281,
+          "gate": 5897,
+          "total": 16415
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.1957923832923833,
+          "critic": 0.19558263518659558,
+          "gate": 0.18997252747252746,
+          "total": 0.1936434641646608
+        },
+        "max_component_gap_fraction": 0.1957923832923833,
+        "width": 55
+      },
+      {
+        "counts": {
+          "actor": 5332,
+          "critic": 5377,
+          "gate": 6004,
+          "total": 16713
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.18120393120393122,
+          "critic": 0.18095963442498095,
+          "gate": 0.17527472527472526,
+          "total": 0.17900476494571893
+        },
+        "max_component_gap_fraction": 0.18120393120393122,
+        "width": 56
+      },
+      {
+        "counts": {
+          "actor": 5427,
+          "critic": 5473,
+          "gate": 6111,
+          "total": 17011
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.1666154791154791,
+          "critic": 0.16633663366336635,
+          "gate": 0.1605769230769231,
+          "total": 0.16436606572677703
+        },
+        "max_component_gap_fraction": 0.1666154791154791,
+        "width": 57
+      },
+      {
+        "counts": {
+          "actor": 5522,
+          "critic": 5569,
+          "gate": 6218,
+          "total": 17309
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.15202702702702703,
+          "critic": 0.15171363290175172,
+          "gate": 0.1458791208791209,
+          "total": 0.14972736650783514
+        },
+        "max_component_gap_fraction": 0.15202702702702703,
+        "width": 58
+      },
+      {
+        "counts": {
+          "actor": 5617,
+          "critic": 5665,
+          "gate": 6325,
+          "total": 17607
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.13743857493857495,
+          "critic": 0.1370906321401371,
+          "gate": 0.1311813186813187,
+          "total": 0.13508866728889327
+        },
+        "max_component_gap_fraction": 0.13743857493857495,
+        "width": 59
+      },
+      {
+        "counts": {
+          "actor": 5712,
+          "critic": 5761,
+          "gate": 6432,
+          "total": 17905
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.12285012285012285,
+          "critic": 0.12246763137852247,
+          "gate": 0.11648351648351649,
+          "total": 0.12044996806995137
+        },
+        "max_component_gap_fraction": 0.12285012285012285,
+        "width": 60
+      },
+      {
+        "counts": {
+          "actor": 5807,
+          "critic": 5857,
+          "gate": 6539,
+          "total": 18203
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.10826167076167076,
+          "critic": 0.10784463061690784,
+          "gate": 0.10178571428571428,
+          "total": 0.10581126885100949
+        },
+        "max_component_gap_fraction": 0.10826167076167076,
+        "width": 61
+      },
+      {
+        "counts": {
+          "actor": 5902,
+          "critic": 5953,
+          "gate": 6646,
+          "total": 18501
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.09367321867321868,
+          "critic": 0.09322162985529323,
+          "gate": 0.08708791208791208,
+          "total": 0.09117256963206759
+        },
+        "max_component_gap_fraction": 0.09367321867321868,
+        "width": 62
+      },
+      {
+        "counts": {
+          "actor": 5997,
+          "critic": 6049,
+          "gate": 6753,
+          "total": 18799
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.07908476658476658,
+          "critic": 0.0785986290936786,
+          "gate": 0.0723901098901099,
+          "total": 0.0765338704131257
+        },
+        "max_component_gap_fraction": 0.07908476658476658,
+        "width": 63
+      },
+      {
+        "counts": {
+          "actor": 6092,
+          "critic": 6145,
+          "gate": 6860,
+          "total": 19097
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.0644963144963145,
+          "critic": 0.06397562833206398,
+          "gate": 0.057692307692307696,
+          "total": 0.06189517119418382
+        },
+        "max_component_gap_fraction": 0.0644963144963145,
+        "width": 64
+      },
+      {
+        "counts": {
+          "actor": 6187,
+          "critic": 6241,
+          "gate": 6967,
+          "total": 19395
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.04990786240786241,
+          "critic": 0.04935262757044935,
+          "gate": 0.042994505494505494,
+          "total": 0.04725647197524193
+        },
+        "max_component_gap_fraction": 0.04990786240786241,
+        "width": 65
+      },
+      {
+        "counts": {
+          "actor": 6282,
+          "critic": 6337,
+          "gate": 7074,
+          "total": 19693
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.03531941031941032,
+          "critic": 0.03472962680883473,
+          "gate": 0.028296703296703297,
+          "total": 0.03261777275630005
+        },
+        "max_component_gap_fraction": 0.03531941031941032,
+        "width": 66
+      },
+      {
+        "counts": {
+          "actor": 6377,
+          "critic": 6433,
+          "gate": 7181,
+          "total": 19991
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.020730958230958232,
+          "critic": 0.020106626047220105,
+          "gate": 0.0135989010989011,
+          "total": 0.017979073537358156
+        },
+        "max_component_gap_fraction": 0.020730958230958232,
+        "width": 67
+      },
+      {
+        "counts": {
+          "actor": 6472,
+          "critic": 6529,
+          "gate": 7288,
+          "total": 20289
+        },
+        "eligible": true,
+        "gaps_fraction": {
+          "actor": 0.006142506142506142,
+          "critic": 0.0054836252856054835,
+          "gate": 0.001098901098901099,
+          "total": 0.0033403743184162696
+        },
+        "max_component_gap_fraction": 0.006142506142506142,
+        "width": 68
+      },
+      {
+        "counts": {
+          "actor": 6567,
+          "critic": 6625,
+          "gate": 7395,
+          "total": 20587
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.008445945945945946,
+          "critic": 0.00913937547600914,
+          "gate": 0.015796703296703296,
+          "total": 0.011298324900525618
+        },
+        "max_component_gap_fraction": 0.015796703296703296,
+        "width": 69
+      },
+      {
+        "counts": {
+          "actor": 6662,
+          "critic": 6721,
+          "gate": 7502,
+          "total": 20885
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.023034398034398034,
+          "critic": 0.023762376237623763,
+          "gate": 0.030494505494505494,
+          "total": 0.025937024119467505
+        },
+        "max_component_gap_fraction": 0.030494505494505494,
+        "width": 70
+      },
+      {
+        "counts": {
+          "actor": 6757,
+          "critic": 6817,
+          "gate": 7609,
+          "total": 21183
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.037622850122850125,
+          "critic": 0.038385376999238385,
+          "gate": 0.04519230769230769,
+          "total": 0.04057572333840939
+        },
+        "max_component_gap_fraction": 0.04519230769230769,
+        "width": 71
+      },
+      {
+        "counts": {
+          "actor": 6852,
+          "critic": 6913,
+          "gate": 7716,
+          "total": 21481
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.05221130221130221,
+          "critic": 0.05300837776085301,
+          "gate": 0.05989010989010989,
+          "total": 0.05521442255735128
+        },
+        "max_component_gap_fraction": 0.05989010989010989,
+        "width": 72
+      },
+      {
+        "counts": {
+          "actor": 6947,
+          "critic": 7009,
+          "gate": 7823,
+          "total": 21779
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.0667997542997543,
+          "critic": 0.06763137852246763,
+          "gate": 0.07458791208791209,
+          "total": 0.06985312177629317
+        },
+        "max_component_gap_fraction": 0.07458791208791209,
+        "width": 73
+      },
+      {
+        "counts": {
+          "actor": 7042,
+          "critic": 7105,
+          "gate": 7930,
+          "total": 22077
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.08138820638820639,
+          "critic": 0.08225437928408226,
+          "gate": 0.08928571428571429,
+          "total": 0.08449182099523506
+        },
+        "max_component_gap_fraction": 0.08928571428571429,
+        "width": 74
+      },
+      {
+        "counts": {
+          "actor": 7137,
+          "critic": 7201,
+          "gate": 8037,
+          "total": 22375
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.09597665847665848,
+          "critic": 0.09687738004569688,
+          "gate": 0.10398351648351649,
+          "total": 0.09913052021417694
+        },
+        "max_component_gap_fraction": 0.10398351648351649,
+        "width": 75
+      },
+      {
+        "counts": {
+          "actor": 7232,
+          "critic": 7297,
+          "gate": 8144,
+          "total": 22673
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.11056511056511056,
+          "critic": 0.1115003808073115,
+          "gate": 0.11868131868131868,
+          "total": 0.11376921943311882
+        },
+        "max_component_gap_fraction": 0.11868131868131868,
+        "width": 76
+      },
+      {
+        "counts": {
+          "actor": 7327,
+          "critic": 7393,
+          "gate": 8251,
+          "total": 22971
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.12515356265356264,
+          "critic": 0.12612338156892614,
+          "gate": 0.13337912087912088,
+          "total": 0.12840791865206072
+        },
+        "max_component_gap_fraction": 0.13337912087912088,
+        "width": 77
+      },
+      {
+        "counts": {
+          "actor": 7422,
+          "critic": 7489,
+          "gate": 8358,
+          "total": 23269
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.13974201474201475,
+          "critic": 0.14074638233054074,
+          "gate": 0.14807692307692308,
+          "total": 0.1430466178710026
+        },
+        "max_component_gap_fraction": 0.14807692307692308,
+        "width": 78
+      },
+      {
+        "counts": {
+          "actor": 7517,
+          "critic": 7585,
+          "gate": 8465,
+          "total": 23567
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.15433046683046683,
+          "critic": 0.15536938309215537,
+          "gate": 0.16277472527472528,
+          "total": 0.1576853170899445
+        },
+        "max_component_gap_fraction": 0.16277472527472528,
+        "width": 79
+      },
+      {
+        "counts": {
+          "actor": 7612,
+          "critic": 7681,
+          "gate": 8572,
+          "total": 23865
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.16891891891891891,
+          "critic": 0.16999238385377,
+          "gate": 0.17747252747252748,
+          "total": 0.17232401630888639
+        },
+        "max_component_gap_fraction": 0.17747252747252748,
+        "width": 80
+      },
+      {
+        "counts": {
+          "actor": 7707,
+          "critic": 7777,
+          "gate": 8679,
+          "total": 24163
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.183507371007371,
+          "critic": 0.18461538461538463,
+          "gate": 0.19217032967032968,
+          "total": 0.18696271552782825
+        },
+        "max_component_gap_fraction": 0.19217032967032968,
+        "width": 81
+      },
+      {
+        "counts": {
+          "actor": 7802,
+          "critic": 7873,
+          "gate": 8786,
+          "total": 24461
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.1980958230958231,
+          "critic": 0.19923838537699923,
+          "gate": 0.20686813186813185,
+          "total": 0.20160141474677015
+        },
+        "max_component_gap_fraction": 0.20686813186813185,
+        "width": 82
+      },
+      {
+        "counts": {
+          "actor": 7897,
+          "critic": 7969,
+          "gate": 8893,
+          "total": 24759
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.21268427518427518,
+          "critic": 0.21386138613861386,
+          "gate": 0.22156593406593406,
+          "total": 0.21624011396571205
+        },
+        "max_component_gap_fraction": 0.22156593406593406,
+        "width": 83
+      },
+      {
+        "counts": {
+          "actor": 7992,
+          "critic": 8065,
+          "gate": 9000,
+          "total": 25057
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.22727272727272727,
+          "critic": 0.2284843869002285,
+          "gate": 0.23626373626373626,
+          "total": 0.23087881318465392
+        },
+        "max_component_gap_fraction": 0.23626373626373626,
+        "width": 84
+      },
+      {
+        "counts": {
+          "actor": 8087,
+          "critic": 8161,
+          "gate": 9107,
+          "total": 25355
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.24186117936117937,
+          "critic": 0.24310738766184312,
+          "gate": 0.25096153846153846,
+          "total": 0.24551751240359582
+        },
+        "max_component_gap_fraction": 0.25096153846153846,
+        "width": 85
+      },
+      {
+        "counts": {
+          "actor": 8182,
+          "critic": 8257,
+          "gate": 9214,
+          "total": 25653
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.25644963144963145,
+          "critic": 0.25773038842345775,
+          "gate": 0.26565934065934066,
+          "total": 0.2601562116225377
+        },
+        "max_component_gap_fraction": 0.26565934065934066,
+        "width": 86
+      },
+      {
+        "counts": {
+          "actor": 8277,
+          "critic": 8353,
+          "gate": 9321,
+          "total": 25951
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.27103808353808356,
+          "critic": 0.27235338918507235,
+          "gate": 0.28035714285714286,
+          "total": 0.2747949108414796
+        },
+        "max_component_gap_fraction": 0.28035714285714286,
+        "width": 87
+      },
+      {
+        "counts": {
+          "actor": 8372,
+          "critic": 8449,
+          "gate": 9428,
+          "total": 26249
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.2856265356265356,
+          "critic": 0.28697638994668695,
+          "gate": 0.29505494505494506,
+          "total": 0.28943361006042145
+        },
+        "max_component_gap_fraction": 0.29505494505494506,
+        "width": 88
+      },
+      {
+        "counts": {
+          "actor": 8467,
+          "critic": 8545,
+          "gate": 9535,
+          "total": 26547
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.3002149877149877,
+          "critic": 0.3015993907083016,
+          "gate": 0.30975274725274726,
+          "total": 0.30407230927936335
+        },
+        "max_component_gap_fraction": 0.30975274725274726,
+        "width": 89
+      },
+      {
+        "counts": {
+          "actor": 8562,
+          "critic": 8641,
+          "gate": 9642,
+          "total": 26845
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.3148034398034398,
+          "critic": 0.3162223914699162,
+          "gate": 0.32445054945054946,
+          "total": 0.31871100849830525
+        },
+        "max_component_gap_fraction": 0.32445054945054946,
+        "width": 90
+      },
+      {
+        "counts": {
+          "actor": 8657,
+          "critic": 8737,
+          "gate": 9749,
+          "total": 27143
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.3293918918918919,
+          "critic": 0.33084539223153087,
+          "gate": 0.33914835164835166,
+          "total": 0.33334970771724715
+        },
+        "max_component_gap_fraction": 0.33914835164835166,
+        "width": 91
+      },
+      {
+        "counts": {
+          "actor": 8752,
+          "critic": 8833,
+          "gate": 9856,
+          "total": 27441
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.343980343980344,
+          "critic": 0.34546839299314547,
+          "gate": 0.35384615384615387,
+          "total": 0.34798840693618904
+        },
+        "max_component_gap_fraction": 0.35384615384615387,
+        "width": 92
+      },
+      {
+        "counts": {
+          "actor": 8847,
+          "critic": 8929,
+          "gate": 9963,
+          "total": 27739
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.35856879606879605,
+          "critic": 0.36009139375476007,
+          "gate": 0.36854395604395607,
+          "total": 0.36262710615513094
+        },
+        "max_component_gap_fraction": 0.36854395604395607,
+        "width": 93
+      },
+      {
+        "counts": {
+          "actor": 8942,
+          "critic": 9025,
+          "gate": 10070,
+          "total": 28037
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.37315724815724816,
+          "critic": 0.3747143945163747,
+          "gate": 0.38324175824175827,
+          "total": 0.3772658053740728
+        },
+        "max_component_gap_fraction": 0.38324175824175827,
+        "width": 94
+      },
+      {
+        "counts": {
+          "actor": 9037,
+          "critic": 9121,
+          "gate": 10177,
+          "total": 28335
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.38774570024570026,
+          "critic": 0.38933739527798933,
+          "gate": 0.3979395604395604,
+          "total": 0.3919045045930147
+        },
+        "max_component_gap_fraction": 0.3979395604395604,
+        "width": 95
+      },
+      {
+        "counts": {
+          "actor": 9132,
+          "critic": 9217,
+          "gate": 10284,
+          "total": 28633
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4023341523341523,
+          "critic": 0.403960396039604,
+          "gate": 0.4126373626373626,
+          "total": 0.4065432038119566
+        },
+        "max_component_gap_fraction": 0.4126373626373626,
+        "width": 96
+      },
+      {
+        "counts": {
+          "actor": 9227,
+          "critic": 9313,
+          "gate": 10391,
+          "total": 28931
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4169226044226044,
+          "critic": 0.4185833968012186,
+          "gate": 0.4273351648351648,
+          "total": 0.4211819030308985
+        },
+        "max_component_gap_fraction": 0.4273351648351648,
+        "width": 97
+      },
+      {
+        "counts": {
+          "actor": 9322,
+          "critic": 9409,
+          "gate": 10498,
+          "total": 29229
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.43151105651105653,
+          "critic": 0.4332063975628332,
+          "gate": 0.442032967032967,
+          "total": 0.43582060224984037
+        },
+        "max_component_gap_fraction": 0.442032967032967,
+        "width": 98
+      },
+      {
+        "counts": {
+          "actor": 9417,
+          "critic": 9505,
+          "gate": 10605,
+          "total": 29527
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4460995085995086,
+          "critic": 0.44782939832444785,
+          "gate": 0.4567307692307692,
+          "total": 0.4504593014687822
+        },
+        "max_component_gap_fraction": 0.4567307692307692,
+        "width": 99
+      },
+      {
+        "counts": {
+          "actor": 9512,
+          "critic": 9601,
+          "gate": 10712,
+          "total": 29825
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.4606879606879607,
+          "critic": 0.46245239908606245,
+          "gate": 0.4714285714285714,
+          "total": 0.4650980006877241
+        },
+        "max_component_gap_fraction": 0.4714285714285714,
+        "width": 100
+      },
+      {
+        "counts": {
+          "actor": 9607,
+          "critic": 9697,
+          "gate": 10819,
+          "total": 30123
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.47527641277641275,
+          "critic": 0.47707539984767705,
+          "gate": 0.4861263736263736,
+          "total": 0.479736699906666
+        },
+        "max_component_gap_fraction": 0.4861263736263736,
+        "width": 101
+      },
+      {
+        "counts": {
+          "actor": 9702,
+          "critic": 9793,
+          "gate": 10926,
+          "total": 30421
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.48986486486486486,
+          "critic": 0.4916984006092917,
+          "gate": 0.5008241758241758,
+          "total": 0.4943753991256079
+        },
+        "max_component_gap_fraction": 0.5008241758241758,
+        "width": 102
+      },
+      {
+        "counts": {
+          "actor": 9797,
+          "critic": 9889,
+          "gate": 11033,
+          "total": 30719
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.504453316953317,
+          "critic": 0.5063214013709063,
+          "gate": 0.515521978021978,
+          "total": 0.5090140983445498
+        },
+        "max_component_gap_fraction": 0.515521978021978,
+        "width": 103
+      },
+      {
+        "counts": {
+          "actor": 9892,
+          "critic": 9985,
+          "gate": 11140,
+          "total": 31017
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.519041769041769,
+          "critic": 0.5209444021325209,
+          "gate": 0.5302197802197802,
+          "total": 0.5236527975634917
+        },
+        "max_component_gap_fraction": 0.5302197802197802,
+        "width": 104
+      },
+      {
+        "counts": {
+          "actor": 9987,
+          "critic": 10081,
+          "gate": 11247,
+          "total": 31315
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5336302211302212,
+          "critic": 0.5355674028941355,
+          "gate": 0.5449175824175824,
+          "total": 0.5382914967824336
+        },
+        "max_component_gap_fraction": 0.5449175824175824,
+        "width": 105
+      },
+      {
+        "counts": {
+          "actor": 10082,
+          "critic": 10177,
+          "gate": 11354,
+          "total": 31613
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5482186732186732,
+          "critic": 0.5501904036557502,
+          "gate": 0.5596153846153846,
+          "total": 0.5529301960013755
+        },
+        "max_component_gap_fraction": 0.5596153846153846,
+        "width": 106
+      },
+      {
+        "counts": {
+          "actor": 10177,
+          "critic": 10273,
+          "gate": 11461,
+          "total": 31911
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5628071253071253,
+          "critic": 0.5648134044173648,
+          "gate": 0.5743131868131868,
+          "total": 0.5675688952203173
+        },
+        "max_component_gap_fraction": 0.5743131868131868,
+        "width": 107
+      },
+      {
+        "counts": {
+          "actor": 10272,
+          "critic": 10369,
+          "gate": 11568,
+          "total": 32209
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5773955773955773,
+          "critic": 0.5794364051789794,
+          "gate": 0.589010989010989,
+          "total": 0.5822075944392592
+        },
+        "max_component_gap_fraction": 0.589010989010989,
+        "width": 108
+      },
+      {
+        "counts": {
+          "actor": 10367,
+          "critic": 10465,
+          "gate": 11675,
+          "total": 32507
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.5919840294840295,
+          "critic": 0.594059405940594,
+          "gate": 0.6037087912087912,
+          "total": 0.5968462936582011
+        },
+        "max_component_gap_fraction": 0.6037087912087912,
+        "width": 109
+      },
+      {
+        "counts": {
+          "actor": 10462,
+          "critic": 10561,
+          "gate": 11782,
+          "total": 32805
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6065724815724816,
+          "critic": 0.6086824067022086,
+          "gate": 0.6184065934065934,
+          "total": 0.611484992877143
+        },
+        "max_component_gap_fraction": 0.6184065934065934,
+        "width": 110
+      },
+      {
+        "counts": {
+          "actor": 10557,
+          "critic": 10657,
+          "gate": 11889,
+          "total": 33103
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6211609336609336,
+          "critic": 0.6233054074638233,
+          "gate": 0.6331043956043956,
+          "total": 0.6261236920960849
+        },
+        "max_component_gap_fraction": 0.6331043956043956,
+        "width": 111
+      },
+      {
+        "counts": {
+          "actor": 10652,
+          "critic": 10753,
+          "gate": 11996,
+          "total": 33401
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6357493857493858,
+          "critic": 0.637928408225438,
+          "gate": 0.6478021978021978,
+          "total": 0.6407623913150268
+        },
+        "max_component_gap_fraction": 0.6478021978021978,
+        "width": 112
+      },
+      {
+        "counts": {
+          "actor": 10747,
+          "critic": 10849,
+          "gate": 12103,
+          "total": 33699
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6503378378378378,
+          "critic": 0.6525514089870526,
+          "gate": 0.6625,
+          "total": 0.6554010905339687
+        },
+        "max_component_gap_fraction": 0.6625,
+        "width": 113
+      },
+      {
+        "counts": {
+          "actor": 10842,
+          "critic": 10945,
+          "gate": 12210,
+          "total": 33997
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6649262899262899,
+          "critic": 0.6671744097486672,
+          "gate": 0.6771978021978022,
+          "total": 0.6700397897529106
+        },
+        "max_component_gap_fraction": 0.6771978021978022,
+        "width": 114
+      },
+      {
+        "counts": {
+          "actor": 10937,
+          "critic": 11041,
+          "gate": 12317,
+          "total": 34295
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.679514742014742,
+          "critic": 0.6817974105102818,
+          "gate": 0.6918956043956044,
+          "total": 0.6846784889718525
+        },
+        "max_component_gap_fraction": 0.6918956043956044,
+        "width": 115
+      },
+      {
+        "counts": {
+          "actor": 11032,
+          "critic": 11137,
+          "gate": 12424,
+          "total": 34593
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.6941031941031941,
+          "critic": 0.6964204112718965,
+          "gate": 0.7065934065934066,
+          "total": 0.6993171881907944
+        },
+        "max_component_gap_fraction": 0.7065934065934066,
+        "width": 116
+      },
+      {
+        "counts": {
+          "actor": 11127,
+          "critic": 11233,
+          "gate": 12531,
+          "total": 34891
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7086916461916462,
+          "critic": 0.7110434120335111,
+          "gate": 0.7212912087912088,
+          "total": 0.7139558874097363
+        },
+        "max_component_gap_fraction": 0.7212912087912088,
+        "width": 117
+      },
+      {
+        "counts": {
+          "actor": 11222,
+          "critic": 11329,
+          "gate": 12638,
+          "total": 35189
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7232800982800983,
+          "critic": 0.7256664127951257,
+          "gate": 0.735989010989011,
+          "total": 0.728594586628678
+        },
+        "max_component_gap_fraction": 0.735989010989011,
+        "width": 118
+      },
+      {
+        "counts": {
+          "actor": 11317,
+          "critic": 11425,
+          "gate": 12745,
+          "total": 35487
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7378685503685504,
+          "critic": 0.7402894135567403,
+          "gate": 0.7506868131868132,
+          "total": 0.7432332858476199
+        },
+        "max_component_gap_fraction": 0.7506868131868132,
+        "width": 119
+      },
+      {
+        "counts": {
+          "actor": 11412,
+          "critic": 11521,
+          "gate": 12852,
+          "total": 35785
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7524570024570024,
+          "critic": 0.7549124143183549,
+          "gate": 0.7653846153846153,
+          "total": 0.7578719850665618
+        },
+        "max_component_gap_fraction": 0.7653846153846153,
+        "width": 120
+      },
+      {
+        "counts": {
+          "actor": 11507,
+          "critic": 11617,
+          "gate": 12959,
+          "total": 36083
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7670454545454546,
+          "critic": 0.7695354150799696,
+          "gate": 0.7800824175824176,
+          "total": 0.7725106842855037
+        },
+        "max_component_gap_fraction": 0.7800824175824176,
+        "width": 121
+      },
+      {
+        "counts": {
+          "actor": 11602,
+          "critic": 11713,
+          "gate": 13066,
+          "total": 36381
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7816339066339066,
+          "critic": 0.7841584158415842,
+          "gate": 0.7947802197802197,
+          "total": 0.7871493835044456
+        },
+        "max_component_gap_fraction": 0.7947802197802197,
+        "width": 122
+      },
+      {
+        "counts": {
+          "actor": 11697,
+          "critic": 11809,
+          "gate": 13173,
+          "total": 36679
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.7962223587223587,
+          "critic": 0.7987814166031988,
+          "gate": 0.809478021978022,
+          "total": 0.8017880827233875
+        },
+        "max_component_gap_fraction": 0.809478021978022,
+        "width": 123
+      },
+      {
+        "counts": {
+          "actor": 11792,
+          "critic": 11905,
+          "gate": 13280,
+          "total": 36977
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8108108108108109,
+          "critic": 0.8134044173648134,
+          "gate": 0.8241758241758241,
+          "total": 0.8164267819423294
+        },
+        "max_component_gap_fraction": 0.8241758241758241,
+        "width": 124
+      },
+      {
+        "counts": {
+          "actor": 11887,
+          "critic": 12001,
+          "gate": 13387,
+          "total": 37275
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8253992628992629,
+          "critic": 0.828027418126428,
+          "gate": 0.8388736263736264,
+          "total": 0.8310654811612713
+        },
+        "max_component_gap_fraction": 0.8388736263736264,
+        "width": 125
+      },
+      {
+        "counts": {
+          "actor": 11982,
+          "critic": 12097,
+          "gate": 13494,
+          "total": 37573
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.839987714987715,
+          "critic": 0.8426504188880426,
+          "gate": 0.8535714285714285,
+          "total": 0.8457041803802132
+        },
+        "max_component_gap_fraction": 0.8535714285714285,
+        "width": 126
+      },
+      {
+        "counts": {
+          "actor": 12077,
+          "critic": 12193,
+          "gate": 13601,
+          "total": 37871
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8545761670761671,
+          "critic": 0.8572734196496573,
+          "gate": 0.8682692307692308,
+          "total": 0.8603428795991551
+        },
+        "max_component_gap_fraction": 0.8682692307692308,
+        "width": 127
+      },
+      {
+        "counts": {
+          "actor": 12172,
+          "critic": 12289,
+          "gate": 13708,
+          "total": 38169
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8691646191646192,
+          "critic": 0.8718964204112719,
+          "gate": 0.8829670329670329,
+          "total": 0.874981578818097
+        },
+        "max_component_gap_fraction": 0.8829670329670329,
+        "width": 128
+      },
+      {
+        "counts": {
+          "actor": 12267,
+          "critic": 12385,
+          "gate": 13815,
+          "total": 38467
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8837530712530712,
+          "critic": 0.8865194211728865,
+          "gate": 0.8976648351648352,
+          "total": 0.8896202780370388
+        },
+        "max_component_gap_fraction": 0.8976648351648352,
+        "width": 129
+      },
+      {
+        "counts": {
+          "actor": 12362,
+          "critic": 12481,
+          "gate": 13922,
+          "total": 38765
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.8983415233415234,
+          "critic": 0.9011424219345011,
+          "gate": 0.9123626373626373,
+          "total": 0.9042589772559807
+        },
+        "max_component_gap_fraction": 0.9123626373626373,
+        "width": 130
+      },
+      {
+        "counts": {
+          "actor": 12457,
+          "critic": 12577,
+          "gate": 14029,
+          "total": 39063
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9129299754299754,
+          "critic": 0.9157654226961157,
+          "gate": 0.9270604395604396,
+          "total": 0.9188976764749226
+        },
+        "max_component_gap_fraction": 0.9270604395604396,
+        "width": 131
+      },
+      {
+        "counts": {
+          "actor": 12552,
+          "critic": 12673,
+          "gate": 14136,
+          "total": 39361
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9275184275184275,
+          "critic": 0.9303884234577304,
+          "gate": 0.9417582417582417,
+          "total": 0.9335363756938645
+        },
+        "max_component_gap_fraction": 0.9417582417582417,
+        "width": 132
+      },
+      {
+        "counts": {
+          "actor": 12647,
+          "critic": 12769,
+          "gate": 14243,
+          "total": 39659
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9421068796068796,
+          "critic": 0.945011424219345,
+          "gate": 0.956456043956044,
+          "total": 0.9481750749128064
+        },
+        "max_component_gap_fraction": 0.956456043956044,
+        "width": 133
+      },
+      {
+        "counts": {
+          "actor": 12742,
+          "critic": 12865,
+          "gate": 14350,
+          "total": 39957
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9566953316953317,
+          "critic": 0.9596344249809596,
+          "gate": 0.9711538461538461,
+          "total": 0.9628137741317483
+        },
+        "max_component_gap_fraction": 0.9711538461538461,
+        "width": 134
+      },
+      {
+        "counts": {
+          "actor": 12837,
+          "critic": 12961,
+          "gate": 14457,
+          "total": 40255
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9712837837837838,
+          "critic": 0.9742574257425742,
+          "gate": 0.9858516483516484,
+          "total": 0.9774524733506902
+        },
+        "max_component_gap_fraction": 0.9858516483516484,
+        "width": 135
+      },
+      {
+        "counts": {
+          "actor": 12932,
+          "critic": 13057,
+          "gate": 14564,
+          "total": 40553
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 0.9858722358722358,
+          "critic": 0.9888804265041888,
+          "gate": 1.0005494505494505,
+          "total": 0.9920911725696321
+        },
+        "max_component_gap_fraction": 1.0005494505494505,
+        "width": 136
+      },
+      {
+        "counts": {
+          "actor": 13027,
+          "critic": 13153,
+          "gate": 14671,
+          "total": 40851
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.0004606879606879,
+          "critic": 1.0035034272658034,
+          "gate": 1.0152472527472527,
+          "total": 1.006729871788574
+        },
+        "max_component_gap_fraction": 1.0152472527472527,
+        "width": 137
+      },
+      {
+        "counts": {
+          "actor": 13122,
+          "critic": 13249,
+          "gate": 14778,
+          "total": 41149
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.0150491400491402,
+          "critic": 1.018126428027418,
+          "gate": 1.0299450549450548,
+          "total": 1.0213685710075158
+        },
+        "max_component_gap_fraction": 1.0299450549450548,
+        "width": 138
+      },
+      {
+        "counts": {
+          "actor": 13217,
+          "critic": 13345,
+          "gate": 14885,
+          "total": 41447
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.0296375921375922,
+          "critic": 1.0327494287890326,
+          "gate": 1.0446428571428572,
+          "total": 1.0360072702264578
+        },
+        "max_component_gap_fraction": 1.0446428571428572,
+        "width": 139
+      },
+      {
+        "counts": {
+          "actor": 13312,
+          "critic": 13441,
+          "gate": 14992,
+          "total": 41745
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.0442260442260443,
+          "critic": 1.0473724295506475,
+          "gate": 1.0593406593406594,
+          "total": 1.0506459694453996
+        },
+        "max_component_gap_fraction": 1.0593406593406594,
+        "width": 140
+      },
+      {
+        "counts": {
+          "actor": 13407,
+          "critic": 13537,
+          "gate": 15099,
+          "total": 42043
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.0588144963144963,
+          "critic": 1.061995430312262,
+          "gate": 1.0740384615384615,
+          "total": 1.0652846686643416
+        },
+        "max_component_gap_fraction": 1.0740384615384615,
+        "width": 141
+      },
+      {
+        "counts": {
+          "actor": 13502,
+          "critic": 13633,
+          "gate": 15206,
+          "total": 42341
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.0734029484029484,
+          "critic": 1.0766184310738767,
+          "gate": 1.0887362637362636,
+          "total": 1.0799233678832834
+        },
+        "max_component_gap_fraction": 1.0887362637362636,
+        "width": 142
+      },
+      {
+        "counts": {
+          "actor": 13597,
+          "critic": 13729,
+          "gate": 15313,
+          "total": 42639
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.0879914004914004,
+          "critic": 1.0912414318354913,
+          "gate": 1.103434065934066,
+          "total": 1.0945620671022254
+        },
+        "max_component_gap_fraction": 1.103434065934066,
+        "width": 143
+      },
+      {
+        "counts": {
+          "actor": 13692,
+          "critic": 13825,
+          "gate": 15420,
+          "total": 42937
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.1025798525798525,
+          "critic": 1.1058644325971059,
+          "gate": 1.1181318681318682,
+          "total": 1.1092007663211672
+        },
+        "max_component_gap_fraction": 1.1181318681318682,
+        "width": 144
+      },
+      {
+        "counts": {
+          "actor": 13787,
+          "critic": 13921,
+          "gate": 15527,
+          "total": 43235
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.1171683046683047,
+          "critic": 1.1204874333587205,
+          "gate": 1.1328296703296703,
+          "total": 1.1238394655401092
+        },
+        "max_component_gap_fraction": 1.1328296703296703,
+        "width": 145
+      },
+      {
+        "counts": {
+          "actor": 13882,
+          "critic": 14017,
+          "gate": 15634,
+          "total": 43533
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.1317567567567568,
+          "critic": 1.135110434120335,
+          "gate": 1.1475274725274724,
+          "total": 1.138478164759051
+        },
+        "max_component_gap_fraction": 1.1475274725274724,
+        "width": 146
+      },
+      {
+        "counts": {
+          "actor": 13977,
+          "critic": 14113,
+          "gate": 15741,
+          "total": 43831
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.1463452088452089,
+          "critic": 1.1497334348819497,
+          "gate": 1.1622252747252748,
+          "total": 1.1531168639779927
+        },
+        "max_component_gap_fraction": 1.1622252747252748,
+        "width": 147
+      },
+      {
+        "counts": {
+          "actor": 14072,
+          "critic": 14209,
+          "gate": 15848,
+          "total": 44129
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.160933660933661,
+          "critic": 1.1643564356435643,
+          "gate": 1.176923076923077,
+          "total": 1.1677555631969347
+        },
+        "max_component_gap_fraction": 1.176923076923077,
+        "width": 148
+      },
+      {
+        "counts": {
+          "actor": 14167,
+          "critic": 14305,
+          "gate": 15955,
+          "total": 44427
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.175522113022113,
+          "critic": 1.1789794364051789,
+          "gate": 1.191620879120879,
+          "total": 1.1823942624158765
+        },
+        "max_component_gap_fraction": 1.191620879120879,
+        "width": 149
+      },
+      {
+        "counts": {
+          "actor": 14262,
+          "critic": 14401,
+          "gate": 16062,
+          "total": 44725
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.190110565110565,
+          "critic": 1.1936024371667937,
+          "gate": 1.2063186813186813,
+          "total": 1.1970329616348185
+        },
+        "max_component_gap_fraction": 1.2063186813186813,
+        "width": 150
+      },
+      {
+        "counts": {
+          "actor": 14357,
+          "critic": 14497,
+          "gate": 16169,
+          "total": 45023
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.2046990171990173,
+          "critic": 1.2082254379284083,
+          "gate": 1.2210164835164836,
+          "total": 1.2116716608537603
+        },
+        "max_component_gap_fraction": 1.2210164835164836,
+        "width": 151
+      },
+      {
+        "counts": {
+          "actor": 14452,
+          "critic": 14593,
+          "gate": 16276,
+          "total": 45321
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.2192874692874693,
+          "critic": 1.222848438690023,
+          "gate": 1.2357142857142858,
+          "total": 1.2263103600727023
+        },
+        "max_component_gap_fraction": 1.2357142857142858,
+        "width": 152
+      },
+      {
+        "counts": {
+          "actor": 14547,
+          "critic": 14689,
+          "gate": 16383,
+          "total": 45619
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.2338759213759214,
+          "critic": 1.2374714394516375,
+          "gate": 1.250412087912088,
+          "total": 1.2409490592916441
+        },
+        "max_component_gap_fraction": 1.250412087912088,
+        "width": 153
+      },
+      {
+        "counts": {
+          "actor": 14642,
+          "critic": 14785,
+          "gate": 16490,
+          "total": 45917
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.2484643734643734,
+          "critic": 1.2520944402132521,
+          "gate": 1.26510989010989,
+          "total": 1.2555877585105861
+        },
+        "max_component_gap_fraction": 1.26510989010989,
+        "width": 154
+      },
+      {
+        "counts": {
+          "actor": 14737,
+          "critic": 14881,
+          "gate": 16597,
+          "total": 46215
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.2630528255528255,
+          "critic": 1.2667174409748667,
+          "gate": 1.2798076923076922,
+          "total": 1.270226457729528
+        },
+        "max_component_gap_fraction": 1.2798076923076922,
+        "width": 155
+      },
+      {
+        "counts": {
+          "actor": 14832,
+          "critic": 14977,
+          "gate": 16704,
+          "total": 46513
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.2776412776412776,
+          "critic": 1.2813404417364813,
+          "gate": 1.2945054945054946,
+          "total": 1.28486515694847
+        },
+        "max_component_gap_fraction": 1.2945054945054946,
+        "width": 156
+      },
+      {
+        "counts": {
+          "actor": 14927,
+          "critic": 15073,
+          "gate": 16811,
+          "total": 46811
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.2922297297297298,
+          "critic": 1.295963442498096,
+          "gate": 1.3092032967032967,
+          "total": 1.2995038561674117
+        },
+        "max_component_gap_fraction": 1.3092032967032967,
+        "width": 157
+      },
+      {
+        "counts": {
+          "actor": 15022,
+          "critic": 15169,
+          "gate": 16918,
+          "total": 47109
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.3068181818181819,
+          "critic": 1.3105864432597105,
+          "gate": 1.3239010989010989,
+          "total": 1.3141425553863535
+        },
+        "max_component_gap_fraction": 1.3239010989010989,
+        "width": 158
+      },
+      {
+        "counts": {
+          "actor": 15117,
+          "critic": 15265,
+          "gate": 17025,
+          "total": 47407
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.321406633906634,
+          "critic": 1.3252094440213251,
+          "gate": 1.338598901098901,
+          "total": 1.3287812546052955
+        },
+        "max_component_gap_fraction": 1.338598901098901,
+        "width": 159
+      },
+      {
+        "counts": {
+          "actor": 15212,
+          "critic": 15361,
+          "gate": 17132,
+          "total": 47705
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.335995085995086,
+          "critic": 1.3398324447829397,
+          "gate": 1.3532967032967034,
+          "total": 1.3434199538242373
+        },
+        "max_component_gap_fraction": 1.3532967032967034,
+        "width": 160
+      },
+      {
+        "counts": {
+          "actor": 15307,
+          "critic": 15457,
+          "gate": 17239,
+          "total": 48003
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.350583538083538,
+          "critic": 1.3544554455445545,
+          "gate": 1.3679945054945055,
+          "total": 1.3580586530431793
+        },
+        "max_component_gap_fraction": 1.3679945054945055,
+        "width": 161
+      },
+      {
+        "counts": {
+          "actor": 15402,
+          "critic": 15553,
+          "gate": 17346,
+          "total": 48301
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.36517199017199,
+          "critic": 1.3690784463061692,
+          "gate": 1.3826923076923077,
+          "total": 1.372697352262121
+        },
+        "max_component_gap_fraction": 1.3826923076923077,
+        "width": 162
+      },
+      {
+        "counts": {
+          "actor": 15497,
+          "critic": 15649,
+          "gate": 17453,
+          "total": 48599
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.3797604422604424,
+          "critic": 1.3837014470677838,
+          "gate": 1.3973901098901098,
+          "total": 1.387336051481063
+        },
+        "max_component_gap_fraction": 1.3973901098901098,
+        "width": 163
+      },
+      {
+        "counts": {
+          "actor": 15592,
+          "critic": 15745,
+          "gate": 17560,
+          "total": 48897
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.3943488943488944,
+          "critic": 1.3983244478293984,
+          "gate": 1.4120879120879122,
+          "total": 1.4019747507000049
+        },
+        "max_component_gap_fraction": 1.4120879120879122,
+        "width": 164
+      },
+      {
+        "counts": {
+          "actor": 15687,
+          "critic": 15841,
+          "gate": 17667,
+          "total": 49195
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.4089373464373465,
+          "critic": 1.412947448591013,
+          "gate": 1.4267857142857143,
+          "total": 1.4166134499189469
+        },
+        "max_component_gap_fraction": 1.4267857142857143,
+        "width": 165
+      },
+      {
+        "counts": {
+          "actor": 15782,
+          "critic": 15937,
+          "gate": 17774,
+          "total": 49493
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.4235257985257985,
+          "critic": 1.4275704493526276,
+          "gate": 1.4414835164835165,
+          "total": 1.4312521491378887
+        },
+        "max_component_gap_fraction": 1.4414835164835165,
+        "width": 166
+      },
+      {
+        "counts": {
+          "actor": 15877,
+          "critic": 16033,
+          "gate": 17881,
+          "total": 49791
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.4381142506142506,
+          "critic": 1.4421934501142422,
+          "gate": 1.4561813186813186,
+          "total": 1.4458908483568307
+        },
+        "max_component_gap_fraction": 1.4561813186813186,
+        "width": 167
+      },
+      {
+        "counts": {
+          "actor": 15972,
+          "critic": 16129,
+          "gate": 17988,
+          "total": 50089
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.4527027027027026,
+          "critic": 1.4568164508758568,
+          "gate": 1.470879120879121,
+          "total": 1.4605295475757725
+        },
+        "max_component_gap_fraction": 1.470879120879121,
+        "width": 168
+      },
+      {
+        "counts": {
+          "actor": 16067,
+          "critic": 16225,
+          "gate": 18095,
+          "total": 50387
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.4672911547911547,
+          "critic": 1.4714394516374714,
+          "gate": 1.4855769230769231,
+          "total": 1.4751682467947143
+        },
+        "max_component_gap_fraction": 1.4855769230769231,
+        "width": 169
+      },
+      {
+        "counts": {
+          "actor": 16162,
+          "critic": 16321,
+          "gate": 18202,
+          "total": 50685
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.481879606879607,
+          "critic": 1.486062452399086,
+          "gate": 1.5002747252747253,
+          "total": 1.4898069460136563
+        },
+        "max_component_gap_fraction": 1.5002747252747253,
+        "width": 170
+      },
+      {
+        "counts": {
+          "actor": 16257,
+          "critic": 16417,
+          "gate": 18309,
+          "total": 50983
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.496468058968059,
+          "critic": 1.5006854531607008,
+          "gate": 1.5149725274725274,
+          "total": 1.504445645232598
+        },
+        "max_component_gap_fraction": 1.5149725274725274,
+        "width": 171
+      },
+      {
+        "counts": {
+          "actor": 16352,
+          "critic": 16513,
+          "gate": 18416,
+          "total": 51281
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.511056511056511,
+          "critic": 1.5153084539223154,
+          "gate": 1.5296703296703296,
+          "total": 1.51908434445154
+        },
+        "max_component_gap_fraction": 1.5296703296703296,
+        "width": 172
+      },
+      {
+        "counts": {
+          "actor": 16447,
+          "critic": 16609,
+          "gate": 18523,
+          "total": 51579
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.5256449631449631,
+          "critic": 1.52993145468393,
+          "gate": 1.544368131868132,
+          "total": 1.5337230436704818
+        },
+        "max_component_gap_fraction": 1.544368131868132,
+        "width": 173
+      },
+      {
+        "counts": {
+          "actor": 16542,
+          "critic": 16705,
+          "gate": 18630,
+          "total": 51877
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.5402334152334152,
+          "critic": 1.5445544554455446,
+          "gate": 1.559065934065934,
+          "total": 1.5483617428894239
+        },
+        "max_component_gap_fraction": 1.559065934065934,
+        "width": 174
+      },
+      {
+        "counts": {
+          "actor": 16637,
+          "critic": 16801,
+          "gate": 18737,
+          "total": 52175
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.5548218673218672,
+          "critic": 1.5591774562071592,
+          "gate": 1.5737637362637362,
+          "total": 1.5630004421083656
+        },
+        "max_component_gap_fraction": 1.5737637362637362,
+        "width": 175
+      },
+      {
+        "counts": {
+          "actor": 16732,
+          "critic": 16897,
+          "gate": 18844,
+          "total": 52473
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.5694103194103195,
+          "critic": 1.5738004569687738,
+          "gate": 1.5884615384615384,
+          "total": 1.5776391413273076
+        },
+        "max_component_gap_fraction": 1.5884615384615384,
+        "width": 176
+      },
+      {
+        "counts": {
+          "actor": 16827,
+          "critic": 16993,
+          "gate": 18951,
+          "total": 52771
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.5839987714987716,
+          "critic": 1.5884234577303884,
+          "gate": 1.6031593406593407,
+          "total": 1.5922778405462494
+        },
+        "max_component_gap_fraction": 1.6031593406593407,
+        "width": 177
+      },
+      {
+        "counts": {
+          "actor": 16922,
+          "critic": 17089,
+          "gate": 19058,
+          "total": 53069
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.5985872235872236,
+          "critic": 1.603046458492003,
+          "gate": 1.6178571428571429,
+          "total": 1.6069165397651914
+        },
+        "max_component_gap_fraction": 1.6178571428571429,
+        "width": 178
+      },
+      {
+        "counts": {
+          "actor": 17017,
+          "critic": 17185,
+          "gate": 19165,
+          "total": 53367
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.6131756756756757,
+          "critic": 1.6176694592536176,
+          "gate": 1.632554945054945,
+          "total": 1.6215552389841332
+        },
+        "max_component_gap_fraction": 1.632554945054945,
+        "width": 179
+      },
+      {
+        "counts": {
+          "actor": 17112,
+          "critic": 17281,
+          "gate": 19272,
+          "total": 53665
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.6277641277641277,
+          "critic": 1.6322924600152322,
+          "gate": 1.6472527472527472,
+          "total": 1.636193938203075
+        },
+        "max_component_gap_fraction": 1.6472527472527472,
+        "width": 180
+      },
+      {
+        "counts": {
+          "actor": 17207,
+          "critic": 17377,
+          "gate": 19379,
+          "total": 53963
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.6423525798525798,
+          "critic": 1.6469154607768468,
+          "gate": 1.6619505494505495,
+          "total": 1.650832637422017
+        },
+        "max_component_gap_fraction": 1.6619505494505495,
+        "width": 181
+      },
+      {
+        "counts": {
+          "actor": 17302,
+          "critic": 17473,
+          "gate": 19486,
+          "total": 54261
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.656941031941032,
+          "critic": 1.6615384615384616,
+          "gate": 1.6766483516483517,
+          "total": 1.6654713366409588
+        },
+        "max_component_gap_fraction": 1.6766483516483517,
+        "width": 182
+      },
+      {
+        "counts": {
+          "actor": 17397,
+          "critic": 17569,
+          "gate": 19593,
+          "total": 54559
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.671529484029484,
+          "critic": 1.6761614623000762,
+          "gate": 1.6913461538461538,
+          "total": 1.6801100358599008
+        },
+        "max_component_gap_fraction": 1.6913461538461538,
+        "width": 183
+      },
+      {
+        "counts": {
+          "actor": 17492,
+          "critic": 17665,
+          "gate": 19700,
+          "total": 54857
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.6861179361179361,
+          "critic": 1.6907844630616908,
+          "gate": 1.706043956043956,
+          "total": 1.6947487350788426
+        },
+        "max_component_gap_fraction": 1.706043956043956,
+        "width": 184
+      },
+      {
+        "counts": {
+          "actor": 17587,
+          "critic": 17761,
+          "gate": 19807,
+          "total": 55155
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.7007063882063882,
+          "critic": 1.7054074638233054,
+          "gate": 1.7207417582417583,
+          "total": 1.7093874342977846
+        },
+        "max_component_gap_fraction": 1.7207417582417583,
+        "width": 185
+      },
+      {
+        "counts": {
+          "actor": 17682,
+          "critic": 17857,
+          "gate": 19914,
+          "total": 55453
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.7152948402948403,
+          "critic": 1.72003046458492,
+          "gate": 1.7354395604395605,
+          "total": 1.7240261335167264
+        },
+        "max_component_gap_fraction": 1.7354395604395605,
+        "width": 186
+      },
+      {
+        "counts": {
+          "actor": 17777,
+          "critic": 17953,
+          "gate": 20021,
+          "total": 55751
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.7298832923832923,
+          "critic": 1.7346534653465346,
+          "gate": 1.7501373626373626,
+          "total": 1.7386648327356684
+        },
+        "max_component_gap_fraction": 1.7501373626373626,
+        "width": 187
+      },
+      {
+        "counts": {
+          "actor": 17872,
+          "critic": 18049,
+          "gate": 20128,
+          "total": 56049
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.7444717444717446,
+          "critic": 1.7492764661081492,
+          "gate": 1.7648351648351648,
+          "total": 1.7533035319546102
+        },
+        "max_component_gap_fraction": 1.7648351648351648,
+        "width": 188
+      },
+      {
+        "counts": {
+          "actor": 17967,
+          "critic": 18145,
+          "gate": 20235,
+          "total": 56347
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.7590601965601966,
+          "critic": 1.7638994668697638,
+          "gate": 1.779532967032967,
+          "total": 1.7679422311735522
+        },
+        "max_component_gap_fraction": 1.779532967032967,
+        "width": 189
+      },
+      {
+        "counts": {
+          "actor": 18062,
+          "critic": 18241,
+          "gate": 20342,
+          "total": 56645
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.7736486486486487,
+          "critic": 1.7785224676313784,
+          "gate": 1.7942307692307693,
+          "total": 1.782580930392494
+        },
+        "max_component_gap_fraction": 1.7942307692307693,
+        "width": 190
+      },
+      {
+        "counts": {
+          "actor": 18157,
+          "critic": 18337,
+          "gate": 20449,
+          "total": 56943
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.7882371007371007,
+          "critic": 1.793145468392993,
+          "gate": 1.8089285714285714,
+          "total": 1.7972196296114358
+        },
+        "max_component_gap_fraction": 1.8089285714285714,
+        "width": 191
+      },
+      {
+        "counts": {
+          "actor": 18252,
+          "critic": 18433,
+          "gate": 20556,
+          "total": 57241
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.8028255528255528,
+          "critic": 1.8077684691546079,
+          "gate": 1.8236263736263736,
+          "total": 1.8118583288303778
+        },
+        "max_component_gap_fraction": 1.8236263736263736,
+        "width": 192
+      },
+      {
+        "counts": {
+          "actor": 18347,
+          "critic": 18529,
+          "gate": 20663,
+          "total": 57539
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.8174140049140048,
+          "critic": 1.8223914699162225,
+          "gate": 1.8383241758241757,
+          "total": 1.8264970280493196
+        },
+        "max_component_gap_fraction": 1.8383241758241757,
+        "width": 193
+      },
+      {
+        "counts": {
+          "actor": 18442,
+          "critic": 18625,
+          "gate": 20770,
+          "total": 57837
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.832002457002457,
+          "critic": 1.837014470677837,
+          "gate": 1.853021978021978,
+          "total": 1.8411357272682616
+        },
+        "max_component_gap_fraction": 1.853021978021978,
+        "width": 194
+      },
+      {
+        "counts": {
+          "actor": 18537,
+          "critic": 18721,
+          "gate": 20877,
+          "total": 58135
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.8465909090909092,
+          "critic": 1.8516374714394517,
+          "gate": 1.8677197802197802,
+          "total": 1.8557744264872034
+        },
+        "max_component_gap_fraction": 1.8677197802197802,
+        "width": 195
+      },
+      {
+        "counts": {
+          "actor": 18632,
+          "critic": 18817,
+          "gate": 20984,
+          "total": 58433
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.8611793611793612,
+          "critic": 1.8662604722010663,
+          "gate": 1.8824175824175824,
+          "total": 1.8704131257061454
+        },
+        "max_component_gap_fraction": 1.8824175824175824,
+        "width": 196
+      },
+      {
+        "counts": {
+          "actor": 18727,
+          "critic": 18913,
+          "gate": 21091,
+          "total": 58731
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.8757678132678133,
+          "critic": 1.8808834729626809,
+          "gate": 1.8971153846153845,
+          "total": 1.8850518249250872
+        },
+        "max_component_gap_fraction": 1.8971153846153845,
+        "width": 197
+      },
+      {
+        "counts": {
+          "actor": 18822,
+          "critic": 19009,
+          "gate": 21198,
+          "total": 59029
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.8903562653562653,
+          "critic": 1.8955064737242955,
+          "gate": 1.911813186813187,
+          "total": 1.8996905241440292
+        },
+        "max_component_gap_fraction": 1.911813186813187,
+        "width": 198
+      },
+      {
+        "counts": {
+          "actor": 18917,
+          "critic": 19105,
+          "gate": 21305,
+          "total": 59327
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.9049447174447174,
+          "critic": 1.91012947448591,
+          "gate": 1.926510989010989,
+          "total": 1.914329223362971
+        },
+        "max_component_gap_fraction": 1.926510989010989,
+        "width": 199
+      },
+      {
+        "counts": {
+          "actor": 19012,
+          "critic": 19201,
+          "gate": 21412,
+          "total": 59625
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.9195331695331694,
+          "critic": 1.9247524752475247,
+          "gate": 1.9412087912087912,
+          "total": 1.928967922581913
+        },
+        "max_component_gap_fraction": 1.9412087912087912,
+        "width": 200
+      },
+      {
+        "counts": {
+          "actor": 19107,
+          "critic": 19297,
+          "gate": 21519,
+          "total": 59923
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.9341216216216217,
+          "critic": 1.9393754760091393,
+          "gate": 1.9559065934065933,
+          "total": 1.9436066218008548
+        },
+        "max_component_gap_fraction": 1.9559065934065933,
+        "width": 201
+      },
+      {
+        "counts": {
+          "actor": 19202,
+          "critic": 19393,
+          "gate": 21626,
+          "total": 60221
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.9487100737100738,
+          "critic": 1.953998476770754,
+          "gate": 1.9706043956043957,
+          "total": 1.9582453210197965
+        },
+        "max_component_gap_fraction": 1.9706043956043957,
+        "width": 202
+      },
+      {
+        "counts": {
+          "actor": 19297,
+          "critic": 19489,
+          "gate": 21733,
+          "total": 60519
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.9632985257985258,
+          "critic": 1.9686214775323687,
+          "gate": 1.9853021978021979,
+          "total": 1.9728840202387385
+        },
+        "max_component_gap_fraction": 1.9853021978021979,
+        "width": 203
+      },
+      {
+        "counts": {
+          "actor": 19392,
+          "critic": 19585,
+          "gate": 21840,
+          "total": 60817
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.9778869778869779,
+          "critic": 1.9832444782939833,
+          "gate": 2.0,
+          "total": 1.9875227194576803
+        },
+        "max_component_gap_fraction": 2.0,
+        "width": 204
+      },
+      {
+        "counts": {
+          "actor": 19487,
+          "critic": 19681,
+          "gate": 21947,
+          "total": 61115
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 1.99247542997543,
+          "critic": 1.997867479055598,
+          "gate": 2.0146978021978024,
+          "total": 2.0021614186766223
+        },
+        "max_component_gap_fraction": 2.0146978021978024,
+        "width": 205
+      },
+      {
+        "counts": {
+          "actor": 19582,
+          "critic": 19777,
+          "gate": 22054,
+          "total": 61413
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.007063882063882,
+          "critic": 2.0124904798172123,
+          "gate": 2.0293956043956043,
+          "total": 2.0168001178955643
+        },
+        "max_component_gap_fraction": 2.0293956043956043,
+        "width": 206
+      },
+      {
+        "counts": {
+          "actor": 19677,
+          "critic": 19873,
+          "gate": 22161,
+          "total": 61711
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.0216523341523343,
+          "critic": 2.027113480578827,
+          "gate": 2.0440934065934067,
+          "total": 2.031438817114506
+        },
+        "max_component_gap_fraction": 2.0440934065934067,
+        "width": 207
+      },
+      {
+        "counts": {
+          "actor": 19772,
+          "critic": 19969,
+          "gate": 22268,
+          "total": 62009
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.036240786240786,
+          "critic": 2.041736481340442,
+          "gate": 2.0587912087912086,
+          "total": 2.046077516333448
+        },
+        "max_component_gap_fraction": 2.0587912087912086,
+        "width": 208
+      },
+      {
+        "counts": {
+          "actor": 19867,
+          "critic": 20065,
+          "gate": 22375,
+          "total": 62307
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.0508292383292384,
+          "critic": 2.0563594821020565,
+          "gate": 2.073489010989011,
+          "total": 2.06071621555239
+        },
+        "max_component_gap_fraction": 2.073489010989011,
+        "width": 209
+      },
+      {
+        "counts": {
+          "actor": 19962,
+          "critic": 20161,
+          "gate": 22482,
+          "total": 62605
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.0654176904176906,
+          "critic": 2.070982482863671,
+          "gate": 2.0881868131868133,
+          "total": 2.075354914771332
+        },
+        "max_component_gap_fraction": 2.0881868131868133,
+        "width": 210
+      },
+      {
+        "counts": {
+          "actor": 20057,
+          "critic": 20257,
+          "gate": 22589,
+          "total": 62903
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.0800061425061425,
+          "critic": 2.0856054836252857,
+          "gate": 2.1028846153846152,
+          "total": 2.0899936139902735
+        },
+        "max_component_gap_fraction": 2.1028846153846152,
+        "width": 211
+      },
+      {
+        "counts": {
+          "actor": 20152,
+          "critic": 20353,
+          "gate": 22696,
+          "total": 63201
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.0945945945945947,
+          "critic": 2.1002284843869004,
+          "gate": 2.1175824175824176,
+          "total": 2.1046323132092155
+        },
+        "max_component_gap_fraction": 2.1175824175824176,
+        "width": 212
+      },
+      {
+        "counts": {
+          "actor": 20247,
+          "critic": 20449,
+          "gate": 22803,
+          "total": 63499
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.1091830466830466,
+          "critic": 2.114851485148515,
+          "gate": 2.13228021978022,
+          "total": 2.1192710124281575
+        },
+        "max_component_gap_fraction": 2.13228021978022,
+        "width": 213
+      },
+      {
+        "counts": {
+          "actor": 20342,
+          "critic": 20545,
+          "gate": 22910,
+          "total": 63797
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.123771498771499,
+          "critic": 2.1294744859101296,
+          "gate": 2.146978021978022,
+          "total": 2.133909711647099
+        },
+        "max_component_gap_fraction": 2.146978021978022,
+        "width": 214
+      },
+      {
+        "counts": {
+          "actor": 20437,
+          "critic": 20641,
+          "gate": 23017,
+          "total": 64095
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.1383599508599507,
+          "critic": 2.144097486671744,
+          "gate": 2.1616758241758243,
+          "total": 2.148548410866041
+        },
+        "max_component_gap_fraction": 2.1616758241758243,
+        "width": 215
+      },
+      {
+        "counts": {
+          "actor": 20532,
+          "critic": 20737,
+          "gate": 23124,
+          "total": 64393
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.152948402948403,
+          "critic": 2.1587204874333588,
+          "gate": 2.176373626373626,
+          "total": 2.163187110084983
+        },
+        "max_component_gap_fraction": 2.176373626373626,
+        "width": 216
+      },
+      {
+        "counts": {
+          "actor": 20627,
+          "critic": 20833,
+          "gate": 23231,
+          "total": 64691
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.1675368550368552,
+          "critic": 2.1733434881949734,
+          "gate": 2.1910714285714286,
+          "total": 2.177825809303925
+        },
+        "max_component_gap_fraction": 2.1910714285714286,
+        "width": 217
+      },
+      {
+        "counts": {
+          "actor": 20722,
+          "critic": 20929,
+          "gate": 23338,
+          "total": 64989
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.182125307125307,
+          "critic": 2.187966488956588,
+          "gate": 2.205769230769231,
+          "total": 2.1924645085228667
+        },
+        "max_component_gap_fraction": 2.205769230769231,
+        "width": 218
+      },
+      {
+        "counts": {
+          "actor": 20817,
+          "critic": 21025,
+          "gate": 23445,
+          "total": 65287
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.1967137592137593,
+          "critic": 2.2025894897182026,
+          "gate": 2.220467032967033,
+          "total": 2.2071032077418087
+        },
+        "max_component_gap_fraction": 2.220467032967033,
+        "width": 219
+      },
+      {
+        "counts": {
+          "actor": 20912,
+          "critic": 21121,
+          "gate": 23552,
+          "total": 65585
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.211302211302211,
+          "critic": 2.217212490479817,
+          "gate": 2.235164835164835,
+          "total": 2.2217419069607507
+        },
+        "max_component_gap_fraction": 2.235164835164835,
+        "width": 220
+      },
+      {
+        "counts": {
+          "actor": 21007,
+          "critic": 21217,
+          "gate": 23659,
+          "total": 65883
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.2258906633906634,
+          "critic": 2.2318354912414318,
+          "gate": 2.249862637362637,
+          "total": 2.2363806061796927
+        },
+        "max_component_gap_fraction": 2.249862637362637,
+        "width": 221
+      },
+      {
+        "counts": {
+          "actor": 21102,
+          "critic": 21313,
+          "gate": 23766,
+          "total": 66181
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.2404791154791153,
+          "critic": 2.2464584920030464,
+          "gate": 2.2645604395604395,
+          "total": 2.2510193053986343
+        },
+        "max_component_gap_fraction": 2.2645604395604395,
+        "width": 222
+      },
+      {
+        "counts": {
+          "actor": 21197,
+          "critic": 21409,
+          "gate": 23873,
+          "total": 66479
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.2550675675675675,
+          "critic": 2.261081492764661,
+          "gate": 2.279258241758242,
+          "total": 2.2656580046175763
+        },
+        "max_component_gap_fraction": 2.279258241758242,
+        "width": 223
+      },
+      {
+        "counts": {
+          "actor": 21292,
+          "critic": 21505,
+          "gate": 23980,
+          "total": 66777
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.26965601965602,
+          "critic": 2.2757044935262756,
+          "gate": 2.293956043956044,
+          "total": 2.2802967038365183
+        },
+        "max_component_gap_fraction": 2.293956043956044,
+        "width": 224
+      },
+      {
+        "counts": {
+          "actor": 21387,
+          "critic": 21601,
+          "gate": 24087,
+          "total": 67075
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.2842444717444716,
+          "critic": 2.29032749428789,
+          "gate": 2.308653846153846,
+          "total": 2.29493540305546
+        },
+        "max_component_gap_fraction": 2.308653846153846,
+        "width": 225
+      },
+      {
+        "counts": {
+          "actor": 21482,
+          "critic": 21697,
+          "gate": 24194,
+          "total": 67373
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.298832923832924,
+          "critic": 2.3049504950495048,
+          "gate": 2.3233516483516485,
+          "total": 2.309574102274402
+        },
+        "max_component_gap_fraction": 2.3233516483516485,
+        "width": 226
+      },
+      {
+        "counts": {
+          "actor": 21577,
+          "critic": 21793,
+          "gate": 24301,
+          "total": 67671
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.3134213759213758,
+          "critic": 2.3195734958111194,
+          "gate": 2.3380494505494505,
+          "total": 2.324212801493344
+        },
+        "max_component_gap_fraction": 2.3380494505494505,
+        "width": 227
+      },
+      {
+        "counts": {
+          "actor": 21672,
+          "critic": 21889,
+          "gate": 24408,
+          "total": 67969
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.328009828009828,
+          "critic": 2.334196496572734,
+          "gate": 2.352747252747253,
+          "total": 2.338851500712286
+        },
+        "max_component_gap_fraction": 2.352747252747253,
+        "width": 228
+      },
+      {
+        "counts": {
+          "actor": 21767,
+          "critic": 21985,
+          "gate": 24515,
+          "total": 68267
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.3425982800982803,
+          "critic": 2.348819497334349,
+          "gate": 2.3674450549450547,
+          "total": 2.3534901999312274
+        },
+        "max_component_gap_fraction": 2.3674450549450547,
+        "width": 229
+      },
+      {
+        "counts": {
+          "actor": 21862,
+          "critic": 22081,
+          "gate": 24622,
+          "total": 68565
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.357186732186732,
+          "critic": 2.3634424980959636,
+          "gate": 2.382142857142857,
+          "total": 2.3681288991501694
+        },
+        "max_component_gap_fraction": 2.382142857142857,
+        "width": 230
+      },
+      {
+        "counts": {
+          "actor": 21957,
+          "critic": 22177,
+          "gate": 24729,
+          "total": 68863
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.3717751842751844,
+          "critic": 2.3780654988575782,
+          "gate": 2.3968406593406595,
+          "total": 2.3827675983691115
+        },
+        "max_component_gap_fraction": 2.3968406593406595,
+        "width": 231
+      },
+      {
+        "counts": {
+          "actor": 22052,
+          "critic": 22273,
+          "gate": 24836,
+          "total": 69161
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.3863636363636362,
+          "critic": 2.392688499619193,
+          "gate": 2.4115384615384614,
+          "total": 2.3974062975880535
+        },
+        "max_component_gap_fraction": 2.4115384615384614,
+        "width": 232
+      },
+      {
+        "counts": {
+          "actor": 22147,
+          "critic": 22369,
+          "gate": 24943,
+          "total": 69459
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.4009520884520885,
+          "critic": 2.4073115003808074,
+          "gate": 2.4262362637362638,
+          "total": 2.412044996806995
+        },
+        "max_component_gap_fraction": 2.4262362637362638,
+        "width": 233
+      },
+      {
+        "counts": {
+          "actor": 22242,
+          "critic": 22465,
+          "gate": 25050,
+          "total": 69757
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.4155405405405403,
+          "critic": 2.421934501142422,
+          "gate": 2.440934065934066,
+          "total": 2.426683696025937
+        },
+        "max_component_gap_fraction": 2.440934065934066,
+        "width": 234
+      },
+      {
+        "counts": {
+          "actor": 22337,
+          "critic": 22561,
+          "gate": 25157,
+          "total": 70055
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.4301289926289926,
+          "critic": 2.4365575019040366,
+          "gate": 2.455631868131868,
+          "total": 2.441322395244879
+        },
+        "max_component_gap_fraction": 2.455631868131868,
+        "width": 235
+      },
+      {
+        "counts": {
+          "actor": 22432,
+          "critic": 22657,
+          "gate": 25264,
+          "total": 70353
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.444717444717445,
+          "critic": 2.4511805026656512,
+          "gate": 2.4703296703296704,
+          "total": 2.4559610944638206
+        },
+        "max_component_gap_fraction": 2.4703296703296704,
+        "width": 236
+      },
+      {
+        "counts": {
+          "actor": 22527,
+          "critic": 22753,
+          "gate": 25371,
+          "total": 70651
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.4593058968058967,
+          "critic": 2.465803503427266,
+          "gate": 2.4850274725274724,
+          "total": 2.4705997936827626
+        },
+        "max_component_gap_fraction": 2.4850274725274724,
+        "width": 237
+      },
+      {
+        "counts": {
+          "actor": 22622,
+          "critic": 22849,
+          "gate": 25478,
+          "total": 70949
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.473894348894349,
+          "critic": 2.4804265041888804,
+          "gate": 2.4997252747252747,
+          "total": 2.4852384929017046
+        },
+        "max_component_gap_fraction": 2.4997252747252747,
+        "width": 238
+      },
+      {
+        "counts": {
+          "actor": 22717,
+          "critic": 22945,
+          "gate": 25585,
+          "total": 71247
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.488482800982801,
+          "critic": 2.495049504950495,
+          "gate": 2.514423076923077,
+          "total": 2.4998771921206466
+        },
+        "max_component_gap_fraction": 2.514423076923077,
+        "width": 239
+      },
+      {
+        "counts": {
+          "actor": 22812,
+          "critic": 23041,
+          "gate": 25692,
+          "total": 71545
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.503071253071253,
+          "critic": 2.5096725057121096,
+          "gate": 2.529120879120879,
+          "total": 2.514515891339588
+        },
+        "max_component_gap_fraction": 2.529120879120879,
+        "width": 240
+      },
+      {
+        "counts": {
+          "actor": 22907,
+          "critic": 23137,
+          "gate": 25799,
+          "total": 71843
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.517659705159705,
+          "critic": 2.5242955064737242,
+          "gate": 2.5438186813186814,
+          "total": 2.52915459055853
+        },
+        "max_component_gap_fraction": 2.5438186813186814,
+        "width": 241
+      },
+      {
+        "counts": {
+          "actor": 23002,
+          "critic": 23233,
+          "gate": 25906,
+          "total": 72141
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.532248157248157,
+          "critic": 2.538918507235339,
+          "gate": 2.5585164835164833,
+          "total": 2.543793289777472
+        },
+        "max_component_gap_fraction": 2.5585164835164833,
+        "width": 242
+      },
+      {
+        "counts": {
+          "actor": 23097,
+          "critic": 23329,
+          "gate": 26013,
+          "total": 72439
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.5468366093366095,
+          "critic": 2.5535415079969535,
+          "gate": 2.5732142857142857,
+          "total": 2.558431988996414
+        },
+        "max_component_gap_fraction": 2.5732142857142857,
+        "width": 243
+      },
+      {
+        "counts": {
+          "actor": 23192,
+          "critic": 23425,
+          "gate": 26120,
+          "total": 72737
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.5614250614250613,
+          "critic": 2.568164508758568,
+          "gate": 2.587912087912088,
+          "total": 2.573070688215356
+        },
+        "max_component_gap_fraction": 2.587912087912088,
+        "width": 244
+      },
+      {
+        "counts": {
+          "actor": 23287,
+          "critic": 23521,
+          "gate": 26227,
+          "total": 73035
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.5760135135135136,
+          "critic": 2.5827875095201827,
+          "gate": 2.60260989010989,
+          "total": 2.587709387434298
+        },
+        "max_component_gap_fraction": 2.60260989010989,
+        "width": 245
+      },
+      {
+        "counts": {
+          "actor": 23382,
+          "critic": 23617,
+          "gate": 26334,
+          "total": 73333
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.5906019656019654,
+          "critic": 2.5974105102817973,
+          "gate": 2.6173076923076923,
+          "total": 2.60234808665324
+        },
+        "max_component_gap_fraction": 2.6173076923076923,
+        "width": 246
+      },
+      {
+        "counts": {
+          "actor": 23477,
+          "critic": 23713,
+          "gate": 26441,
+          "total": 73631
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.6051904176904177,
+          "critic": 2.612033511043412,
+          "gate": 2.6320054945054947,
+          "total": 2.6169867858721814
+        },
+        "max_component_gap_fraction": 2.6320054945054947,
+        "width": 247
+      },
+      {
+        "counts": {
+          "actor": 23572,
+          "critic": 23809,
+          "gate": 26548,
+          "total": 73929
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.61977886977887,
+          "critic": 2.6266565118050265,
+          "gate": 2.6467032967032966,
+          "total": 2.6316254850911234
+        },
+        "max_component_gap_fraction": 2.6467032967032966,
+        "width": 248
+      },
+      {
+        "counts": {
+          "actor": 23667,
+          "critic": 23905,
+          "gate": 26655,
+          "total": 74227
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.634367321867322,
+          "critic": 2.641279512566641,
+          "gate": 2.661401098901099,
+          "total": 2.6462641843100654
+        },
+        "max_component_gap_fraction": 2.661401098901099,
+        "width": 249
+      },
+      {
+        "counts": {
+          "actor": 23762,
+          "critic": 24001,
+          "gate": 26762,
+          "total": 74525
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.648955773955774,
+          "critic": 2.655902513328256,
+          "gate": 2.676098901098901,
+          "total": 2.6609028835290074
+        },
+        "max_component_gap_fraction": 2.676098901098901,
+        "width": 250
+      },
+      {
+        "counts": {
+          "actor": 23857,
+          "critic": 24097,
+          "gate": 26869,
+          "total": 74823
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.663544226044226,
+          "critic": 2.6705255140898707,
+          "gate": 2.6907967032967033,
+          "total": 2.675541582747949
+        },
+        "max_component_gap_fraction": 2.6907967032967033,
+        "width": 251
+      },
+      {
+        "counts": {
+          "actor": 23952,
+          "critic": 24193,
+          "gate": 26976,
+          "total": 75121
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.678132678132678,
+          "critic": 2.6851485148514853,
+          "gate": 2.7054945054945057,
+          "total": 2.690180281966891
+        },
+        "max_component_gap_fraction": 2.7054945054945057,
+        "width": 252
+      },
+      {
+        "counts": {
+          "actor": 24047,
+          "critic": 24289,
+          "gate": 27083,
+          "total": 75419
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.69272113022113,
+          "critic": 2.6997715156131,
+          "gate": 2.7201923076923076,
+          "total": 2.704818981185833
+        },
+        "max_component_gap_fraction": 2.7201923076923076,
+        "width": 253
+      },
+      {
+        "counts": {
+          "actor": 24142,
+          "critic": 24385,
+          "gate": 27190,
+          "total": 75717
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.7073095823095823,
+          "critic": 2.7143945163747145,
+          "gate": 2.73489010989011,
+          "total": 2.719457680404775
+        },
+        "max_component_gap_fraction": 2.73489010989011,
+        "width": 254
+      },
+      {
+        "counts": {
+          "actor": 24237,
+          "critic": 24481,
+          "gate": 27297,
+          "total": 76015
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.7218980343980346,
+          "critic": 2.729017517136329,
+          "gate": 2.749587912087912,
+          "total": 2.7340963796237165
+        },
+        "max_component_gap_fraction": 2.749587912087912,
+        "width": 255
+      },
+      {
+        "counts": {
+          "actor": 24332,
+          "critic": 24577,
+          "gate": 27404,
+          "total": 76313
+        },
+        "eligible": false,
+        "gaps_fraction": {
+          "actor": 2.7364864864864864,
+          "critic": 2.7436405178979437,
+          "gate": 2.7642857142857142,
+          "total": 2.7487350788426586
+        },
+        "max_component_gap_fraction": 2.7642857142857142,
+        "width": 256
+      }
+    ],
+    "reference_counts": {
+      "actor": 6512,
+      "critic": 6565,
+      "gate": 7280,
+      "total": 20357
+    },
+    "selected": {
+      "counts": {
+        "actor": 6472,
+        "critic": 6529,
+        "gate": 7288,
+        "total": 20289
+      },
+      "eligible": true,
+      "gaps_fraction": {
+        "actor": 0.006142506142506142,
+        "critic": 0.0054836252856054835,
+        "gate": 0.001098901098901099,
+        "total": 0.0033403743184162696
+      },
+      "max_component_gap_fraction": 0.006142506142506142,
+      "width": 68
+    }
+  },
+  "module_verification": {
+    "actual_inventory": {
+      "flat": {
+        "components": {
+          "actor": 6472,
+          "critic": 6529,
+          "gate": 7288
+        },
+        "shared_duplicate_numel": 0,
+        "total_unique": 20289,
+        "trainable_unique": 0
+      },
+      "graph": {
+        "components": {
+          "actor": 6512,
+          "critic": 6565,
+          "gate": 7280
+        },
+        "shared_duplicate_numel": 0,
+        "total_unique": 20357,
+        "trainable_unique": 0
+      }
+    },
+    "backward_participation_numel": {
+      "flat": {
+        "actor": 6472,
+        "critic": 6529,
+        "gate": 7288
+      },
+      "graph": {
+        "actor": 6512,
+        "critic": 6565,
+        "gate": 7280
+      }
+    },
+    "flat_outputs_invariant_to_neural_adjacency": true,
+    "nonzero_or_useful_gradient_claimed": false,
+    "operator_only_change": true,
+    "physical_self_only_weights_identical": true,
+    "target_copies_in_count": false,
+    "weights_unchanged": true
+  },
+  "online_gain_claimed": false,
+  "optimizer_updates": 0,
+  "parameter_preflight_passed": true,
+  "runtime": {
+    "device": "cpu",
+    "python": "3.9.6",
+    "torch": "2.8.0"
+  },
+  "schema_source_sha256": "67c35b480a7ca647f791e6a401660eb4ced8d413ef7c3421ac68b7fab1ec3c61",
+  "scientific_launch_blockers": [
+    {
+      "requirement": "operational_task_measurement_and_calibration",
+      "status": "missing"
+    },
+    {
+      "requirement": "complete_objective_units_and_terminal_accounting",
+      "status": "missing"
+    },
+    {
+      "requirement": "replicated_safe_action_headroom_and_learnability",
+      "status": "missing"
+    },
+    {
+      "requirement": "competent_frozen_and_adaptive_comparator_acceptance",
+      "status": "missing"
+    },
+    {
+      "requirement": "optimizer_replay_and_exact_resume_acceptance",
+      "status": "missing"
+    },
+    {
+      "requirement": "new_task_input_action_model_and_gate_lock",
+      "status": "missing"
+    },
+    {
+      "requirement": "fresh_stream_budget_effect_margin_and_analysis_lock",
+      "status": "missing"
+    },
+    {
+      "requirement": "explicit_scientific_launch_authorization",
+      "status": "missing"
+    }
+  ],
+  "state": "preparation_only"
+}

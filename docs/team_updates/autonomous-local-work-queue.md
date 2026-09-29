@@ -53,6 +53,7 @@ contracts, but do not fabricate that data to launch a patient scenario.
 | N2 | Complete; producer/model integration remains open | Separate `src/models/matched_inputs.py` common-input graph/flat/gate fixture, 21 new synthetic tests and `specs/2026-09-29-matched-input-preparation/contract.md`. Combined 140-test suite and full compilation pass. Explicit shared information/order/proposals, neural-only message ablation and parameter-count scope. No existing agent/default changes or environment/learning run. |
 | N3 | Complete; bounded forward integration subsequently approved as N4 | `src/rl/prospective_adapter.py` joins N1/N2 with a typed no-training acceptance harness. Fourteen new tests, combined 154-test suite and full compilation pass. Covers current/bootstrap state and anchor mapping, rewards, short tails and termination/truncation. `specs/2026-09-29-prospective-integration-acceptance/decision_packet.md` records legacy non-migration and the next prospective approval. No experiment seeds, tuning or execution in N3. |
 | N4 | Complete; production learning and scientific campaign remain outside scope | Actual patient collection plus frozen graph/flat actor, gate, critic and target forwards. Nine bounded engineering cases/36 steps reproduce exactly, weights unchanged, 171 tests pass. Readout: `specs/2026-09-29-prospective-collector-engineering/readout.md`. Parameter counts are not matched, no optimizer/resume framework, no online benefit claim. |
+| N5 | Complete; scientific design remains non-executable | Count-only graph64/flat68 matching on the N4 schema: every component <1%, total gap 0.3340%. Isolated physical/self-only operator check, 15 new/95 combined tests and repeat-identical metadata report. `specs/2026-09-29-prospective-development-design/readout.md`. Eight named launch dependencies remain missing; no environment/update/performance run. |
 
 For N2/N3, implement only the smallest independent prototype/tests needed to
 answer the contract question. Do not create a duplicate full training framework.
@@ -62,11 +63,18 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
-- September 29, N5 in progress: the user requested continuation after N4.
-  Prepare the bounded development design and an outcome-independent actual
-  module-count/operator preflight. No environment steps or optimizer updates;
-  unknown scientific launch evidence stays null. Protocol:
-  `specs/2026-09-29-prospective-development-design/protocol.md`.
+- September 29, N5 complete: following the user's continuation, specified
+  primary frozen/online and separate operator/representation contrasts. The
+  precommitted shape-only search finds graph64/flat68 with 0.3340% total gap and
+  all component gaps below 1%; these are engineering dimensions only. Counts,
+  backward participation and operator isolation pass without changing weights.
+  Fifteen new tests and the 95-test focused suite, full compilation and diff
+  checks pass; two reports are byte-identical and all seven source hashes match.
+  No environment, optimizer or performance execution. The proposed finite-task
+  objective is not a calibrated launch protocol. Next independent engineering
+  dependency is the actual learner/resume contract; operational calibration,
+  replicated leverage and scientific locks/authorization remain unresolved.
+  No automatic campaign or continuation automation is opened by this packet.
 
 - September 29, N4 complete: the user approved the specifically requested
   bounded actual collector/agent engineering check. Protocol:

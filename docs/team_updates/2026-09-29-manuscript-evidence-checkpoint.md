@@ -134,3 +134,13 @@ This is progress on prospective reproducibility, not a new performance result
 for the manuscript. Existing numerical claims and limitations above remain
 unchanged. Engineering graph/flat heads are not parameter matched; training,
 resume, operational calibration and online-attribution evidence remain open.
+
+N5 subsequently completed a count-only preflight on N4's engineering schema:
+graph width 64 versus flat width 68 gives a 0.3340% total gap and <1% in every
+actor/critic/gate component. Physical/self-only message variants keep weights
+and numeric information identical. See
+`specs/2026-09-29-prospective-development-design/readout.md`. This is prospective
+software/design evidence only, with no new simulated trajectory or training.
+Actual-task model parity, learner/resume acceptance and the eight named
+scientific launch dependencies remain open. No new manuscript effect size or
+online-RL contribution is asserted.

@@ -61,6 +61,12 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
+- September 29, N4 in progress: the user approved the specifically requested
+  bounded actual collector/agent engineering check. Protocol:
+  `specs/2026-09-29-prospective-collector-engineering/protocol.md`. Complete this
+  real dataflow check locally, without training, historical migration, new
+  scientific scenarios, external action or restarting an automation.
+
 - September 29, N1: implemented explicit replay semantics, immutable one-step
   records, lineage-checked multi-step returns and a shared numeric Bellman-target
   reference. Independent counterfactuals remain one-step. Reward scaling occurs

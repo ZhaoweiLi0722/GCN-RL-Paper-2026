@@ -1241,3 +1241,17 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   are additive reproducibility artifacts. Formal Stage E remains closed; no
   new scientific launch, external publication, or collaborator approval is
   implied by this reporting task.
+
+### 2026-09-29: Approved bounded prospective collector engineering
+
+- Following the N1/N2/N3 contracts and 154 passing tests, Zhaowei answered
+  "continue" to the explicit request for default-off real collector/agent
+  integration and small engineering verification. The bounded protocol is
+  `specs/2026-09-29-prospective-collector-engineering/protocol.md`.
+- This opens tiny real-environment mechanics and frozen neural forwards only,
+  with zero optimizer updates. Protocol/config are committed before execution;
+  source is committed before the recorded smoke. Preserve all historical files
+  and defaults; do not use a teacher, historical checkpoint or scientific CRN.
+- This does not authorize a patient scenario campaign, performance evaluation,
+  formal confirmation, remote actions or imply Howard's sign-off. Raw-observation
+  equality and return plumbing are engineering acceptance, not proof of RL gain.

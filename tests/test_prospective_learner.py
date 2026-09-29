@@ -303,6 +303,18 @@ class ProspectiveLearnerTests(unittest.TestCase):
                 learner.load(corrupt)
             self.assertEqual(before, state_digest(learner.state_dict()))
 
+    def test_nonfinite_actor_gradient_rolls_back_before_optimizer_step(self):
+        learner = self.loaded()
+        before = state_digest(learner.state_dict())
+        parameter = next(learner.agent.actor.parameters())
+        hook = parameter.register_hook(lambda gradient: torch.full_like(gradient, float("nan")))
+        try:
+            with self.assertRaisesRegex(ValueError, "nonfinite gradient"):
+                learner.update()
+        finally:
+            hook.remove()
+        self.assertEqual(before, state_digest(learner.state_dict()))
+
     def test_global_rng_and_original_prototype_are_untouched(self):
         torch_before = torch.get_rng_state().clone()
         numpy_before, python_before = np.random.get_state(), random.getstate()

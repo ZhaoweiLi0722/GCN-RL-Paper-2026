@@ -54,6 +54,7 @@ contracts, but do not fabricate that data to launch a patient scenario.
 | N3 | Complete; bounded forward integration subsequently approved as N4 | `src/rl/prospective_adapter.py` joins N1/N2 with a typed no-training acceptance harness. Fourteen new tests, combined 154-test suite and full compilation pass. Covers current/bootstrap state and anchor mapping, rewards, short tails and termination/truncation. `specs/2026-09-29-prospective-integration-acceptance/decision_packet.md` records legacy non-migration and the next prospective approval. No experiment seeds, tuning or execution in N3. |
 | N4 | Complete; production learning and scientific campaign remain outside scope | Actual patient collection plus frozen graph/flat actor, gate, critic and target forwards. Nine bounded engineering cases/36 steps reproduce exactly, weights unchanged, 171 tests pass. Readout: `specs/2026-09-29-prospective-collector-engineering/readout.md`. Parameter counts are not matched, no optimizer/resume framework, no online benefit claim. |
 | N5 | Complete; scientific design remains non-executable | Count-only graph64/flat68 matching on the N4 schema: every component <1%, total gap 0.3340%. Isolated physical/self-only operator check, 15 new/95 combined tests and repeat-identical metadata report. `specs/2026-09-29-prospective-development-design/readout.md`. Eight named launch dependencies remain missing; no environment/update/performance run. |
+| N6 | Complete within kernel scope; live-collector resume remains open | Default-off DDPG kernel, 18 new/113 combined tests, three exact fresh-process resume cases and repeat-identical diagnostics. `specs/2026-09-29-prospective-learner-engineering/readout.md`. Two synthetic matrices total 72 kernel updates / 144 Adam steps, plus bounded unit tests; zero environment/performance runs. No scientific-launch gate is automatically passed. |
 
 For N2/N3, implement only the smallest independent prototype/tests needed to
 answer the contract question. Do not create a duplicate full training framework.
@@ -63,11 +64,16 @@ report once and remove the renewed automation rather than adding new packets.
 
 ## Renewed progress
 
-- September 29, N6 in progress: user requested the next named update/resume
-  engineering task. Scope: explicit opt-in DDPG kernel on synthetic numerical
-  windows, frozen reference, complete kernel-state resume in a fresh process.
-  See `specs/2026-09-29-prospective-learner-engineering/protocol.md`. No environment
-  training or new performance claim; preserve N4/N5 and historical defaults.
+- September 29, N6 complete: real actor/critic Adam updates on invented numeric
+  windows pass alongside fixed gate/reference and exact fresh-process kernel
+  resume for graph physical/self-only and matched flat heads. Repeated reports
+  are byte-identical; nine checkpoint payloads agree tensor for tensor and all
+  ten source hashes reconcile. Eighteen new/113 combined tests, compilation and
+  diff checks pass. Readout and local checkpoint inventory are retained; binary
+  checkpoints follow the existing ignored-file policy. No environment training,
+  old-evidence changes, performance claim, remote operation or automation.
+  The next distinct mechanics question is live collector/exploration/episode
+  resume. N5's domain, baseline, objective and scientific-launch gaps remain.
 
 - September 29, N5 complete: following the user's continuation, specified
   primary frozen/online and separate operator/representation contrasts. The

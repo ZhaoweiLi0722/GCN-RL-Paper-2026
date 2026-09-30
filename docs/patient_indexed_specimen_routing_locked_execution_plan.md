@@ -1734,3 +1734,28 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - New scientific execution still needs a committed bounded protocol and explicit
   approval; R6 test evidence is not untouched validation. No automatic training,
   Howard sign-off, remote Git, formal holdout or Stage E reopening.
+
+### 2026-09-30: PPO objective acceptance and finite automatic continuation
+
+- Zhaowei explicitly requested continued work plus automatic continuation. A
+  newly scoped in-thread heartbeat `gcn-rl` is active every30min, verified after
+  creation. It authorizes a finite local engineering chain, not a new scientific
+  campaign. Other automations, including the paused historical monitor, remain
+  unchanged; earlier deletion records are preserved.
+- Added a checked categorical PPO objective adapted from existing PPO arithmetic:
+  clipped surrogate, value MSE, entropy bonus and full-rollout normalization.
+  Sealed-support integration uses invented graph/self-only/flat fixtures. The
+  shared candidate encoder differs from the legacy separate actor/critic layout.
+- Readout: `specs/2026-09-30-candidate-ppo-update/readout.md`. All156 related
+  tests pass in4.746s; full compileall and eight preservation fingerprints pass.
+  New tests calculate gradients without optimizer steps; existing DDPG fixture
+  tests contain bounded optimizer steps. No patient simulation or scientific fit.
+- Remaining finite chain: capped PPO update/recovery adapter; public-collector
+  source audit and mocked preparation; one bounded pilot decision packet. Update
+  the Live checkpoint and make local commits; delete the heartbeat at completion
+  or when only new-scope approval remains. Do not invent experiments to continue.
+- Scientific execution still requires a committed protocol and specific approval
+  of named arms, initialization, metrics, fresh streams and query/update/time caps.
+  No automatic reward/scenario/model search, real episodes, research training,
+  formal holdout, external compute, remote Git, messages, Howard sign-off or Stage
+  E reopening. Inspected R6 test labels are not untouched confirmation.

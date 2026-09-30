@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: Candidate scorer and on-policy receipts verified
+## Live checkpoint: PPO objective verified; finite automatic continuation active
+
+Updated 2026-09-30T14:51:37Z. Zhaowei explicitly requested continued work and an
+automatic continuation. The new heartbeat is active; this is engineering work,
+not a scientific experiment or evidence of positive RL performance. Historical
+automation deletion records below remain true for their earlier finite tasks.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only; base3fd16bf |
+| Completed work | Checked categorical PPO clipped surrogate, value MSE, entropy sign, full-rollout advantage normalization and detached old quantities; sealed candidate-policy integration on invented data |
+| Evidence | `specs/2026-09-30-candidate-ppo-update/readout.md`; `src/rl/candidate_ppo_objective.py`;13 new tests |
+| Validation |156 related tests pass in4.746s; full compileall passes; eight preservation fingerprints unchanged. No new scientific fit or patient episode; existing DDPG tests include invented-tensor optimizer steps |
+| Automation | Newly created `gcn-rl`, ACTIVE, in-thread every30min; creation and saved configuration verified. No other automation modified |
+| Finite chain | Capped PPO update/recovery adapter; mocked public-input collector audit/preparation; one bounded scientific pilot decision packet. Delete automation at completion or when only new-scope approval remains |
+| Process check | Read-only host scan found only its own matching shell/filter; related tests and compileall exited0. Automation is not a running learner |
+| Next concrete action | Implement capped optimizer adapter and atomic update-boundary recovery for policy, optimizer, rollout and private RNG; validate failure rollback and exact continuation with invented fixtures |
+| Known limits | Loss arithmetic only, no complete PPO updater yet. Shared candidate encoder differs from legacy separate actor/critic networks; flat fixture is not parameter-matched; real public collector and patient-route feasibility remain unverified |
+| Approval needed | None for this finite engineering chain. Before scientific collection/fitting, ask one specific question covering committed named arms, initialization, outcomes, fresh streams and query/update/time caps |
+| Unchanged limits | No automatic real environment steps, research training, reward/scenario/model search, formal holdout, external compute, remote Git or messaging. R6 test data not untouched validation; Stage E closed; no Howard approval inferred |
+| Preservation | New source/tests/readout and appended local status/ledger only; historical evidence and paused monitoring task unchanged. No new archive/cloud-sync/collaborator-access claim |
+
+## Previous checkpoint: Candidate scorer and on-policy receipts verified
 
 Updated 2026-09-30T14:32:52Z. Zhaowei requested the next local engineering packet.
 Graph/flat candidate scoring and sealed trajectory preparation now exist; no

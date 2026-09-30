@@ -1,35 +1,33 @@
 # Autonomous local research queue
 
-## Live checkpoint: R3 replacement pilot approved; collector acceptance in progress
+## Live checkpoint: R3 replacement pilot verified and archived; no training authorized
 
-Updated 2026-09-29: Zhaowei replied "continue" to the explicit bounded R3
-data-only pilot question. The replacement amendment, collector, stream mapping
-and tests are being prepared; no R3 scientific run has started. R5 strict
-loading and 48 saved-observation CPU/MPS checks pass across three replacements.
-Source `f089fd0` saved seed60 then failed on scalar summary formatting; source
-`91a1e5b` reused those bytes without re-inference and completed seeds61/62.
-Failure evidence remains unchanged. No simulator or optimizer step occurred.
-Independent stdlib verification and the 16-file archive are complete; Dropbox
-local copies hash-verify. R3 scientific collection is not launched. Cloud
-sync/access remain unverified. No background task or automation is active.
+Updated 2026-09-29 local time after the approved single bounded R3 attempt.
+Source `195d0eb` passed81 tests/compileall and24-step mechanical acceptance.
+Pilot PID42153/PPID30450 ran from2026-09-30T00:05:38Z for600.139s, exit0:
+12 states,1,152 logical continuations,24,348 actual steps, zero updates.
+Independent stdlib trace/alias/selection/cost verification passes; no collector
+remains. The1215-file archive and its Dropbox local copies hash-verify. Cloud
+sync/access remain unverified. No automation or new scientific phase is active.
+R4/R5 files, failures and historical research conclusions remain unchanged.
 
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
-| Last verified stage | R5 raw inference checks complete; independent raw arithmetic also agrees; older campaigns unchanged |
-| Current task | R3 replacement pilot collector/seed acceptance, then one approved capped attempt |
-| Protocol commit | R3 replacement amendment/source being frozen in the next local commit; R5 `f089fd0`/`91a1e5b` unchanged |
+| Last verified stage | R3 replacement fixed-window value pilot, independent raw verification and archive complete |
+| Current task | Finite approved chain complete; decision memo records the next scientific question |
+| Protocol commit | R3 implementation/config/protocol `195d0eb3f7d095c3f53c211a42bcdbac8fd1e67a`; R5 unchanged |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
 | Implementation evidence | R3:12 new/81 related tests, full compileall and diff checks pass. Preflight scans1,259 prior files, zero namespace hits;195 fresh starts. All24 input/83 source locks match |
-| Recorded execution | R5: 48 saved observations, CPU policy/full-state and MPS routes; no new simulator/optimizer step. R4 remains 3,120 demonstration steps and 0 online episodes |
-| Independent verification | Exact CPU/full-state outputs, no hard-gate/lot mismatch, max request difference 2.981e-8. All 24 R4 files and 83 existing source files unchanged; stdlib verifier `c7567e8` agrees. All 16 archive members and two Dropbox copies hash-verify |
-| Process/output check | Fresh PID/command scan finds no related process; R3 smoke and scientific pilot not launched yet |
-| Scientific result | Saved-observation compatibility only; no actual routing/cost or online/frozen performance contrast |
-| Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
-| Evidence paths | `specs/2026-09-29-replacement-policy-compatibility/`; `reports/2026-09-29-replacement-policy-compatibility/`; both named R5 result roots |
-| Next concrete action | Complete tests and full compileall, freeze amendment/collector/config, pass distinct24-step smoke, then run one 12-state/8+8-draw matrix; independently verify and archive |
-| Data/approval needed now | Named R3 pilot approved by direct user continuation; no further routine approval needed. Training, scope expansion/retry and formal use remain outside scope. Cloud sync/access unverified |
-| Latest verification | Known scalar/list report bug repaired; failed summary/raw hashes preserved, seed60 inference not repeated; unvisited seed outputs and all model tensors finite |
+| Recorded execution | Smoke24 steps; pilot1152/1152 records,12/12 states,24,348 steps,600.139s, exit0; zero optimizer updates |
+| Independent verification | All raw costs/lineage/272 aliases/discovery choices and paired contrasts reconcile. All24 R4/83 source locks unchanged;1215 archive members and both Dropbox files verify |
+| Process/output check | Production and verifier sessions ended exit0; fresh process scan found no remaining collector or duplicate |
+| Scientific result | 8/9 noninitial choices lower mean validation cost;3 increase mean patient loss;2 selected actions have uncertified map witnesses. Three non-anchor states have favorable cost/clinical means and certified maps. No online RL benefit or clinical-safety claim |
+| Target diagnosis | Local fixed-policy headroom exists in sampled states; not global optimality, causal explanation of historical null, learned-critic evidence, or a deployed selector |
+| Evidence paths | `specs/2026-09-29-replacement-fixed-window-pilot/readout.md`; `reports/2026-09-29-replacement-fixed-window-pilot/`; both named raw result roots |
+| Next concrete action | Discuss a separately predeclared clean-critic ranking/generalization study with trajectory-disjoint states and a clinical admissibility rule; keep actor frozen. Do not launch it from this checkpoint |
+| Data/approval needed now | New scientific protocol plus explicit data/compute authorization required before critic fitting/new trajectories. Clinical priorities need a domain/scientific decision, not post-hoc cost tuning. Cloud sync/access unverified |
+| Latest verification | Archive SHA256 `3e0ca30f1b0db3a5d6dfa7987e5a4e40c27526f9aad529b9483a52c31d5dce43`,326,479,438 bytes; Dropbox local receipt saved |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
 
@@ -45,8 +43,10 @@ R3 source of truth:
 config above preserve the original design. The approved replacement execution
 amendment is `specs/2026-09-29-replacement-fixed-window-pilot/protocol.md` with
 `experiments/configs/replacement_fixed_window_pilot_20260929.json`. Its fixed
-1,152 records / 37,596 transitions / 3,600 s are caps, not consumed budget.
-G1's correction/failure remain in force. Do not create extra experiments.
+1,152 records / 37,596 transitions / 3,600 s were caps; the recorded consumption
+is1,152 records /24,348 transitions /600.139s, plus24 engineering transitions.
+The attempt is complete and immutable. G1's correction/failure remain in force.
+Do not create extra experiments, rerun this packet, or start a continuation job.
 Unchanged waits need no repeated message; report actual milestones or decisions.
 
 R5 handoff: `specs/2026-09-29-replacement-policy-compatibility/readout.md` and
@@ -54,7 +54,7 @@ R5 handoff: `specs/2026-09-29-replacement-policy-compatibility/readout.md` and
 completed sampled compatibility, not a value-label pilot. The versioned local
 Dropbox destination is in `dropbox_receipts.json`; archive SHA256
 `aa2bda7640ea5e26a760737232aa81a7569c9d8b9b4901a6bb3561e6b9d6c69b`.
-The named R3 pilot is now approved; do not rerun the 48 R5 checks or create an
+The named R3 pilot is now complete; do not rerun the 48 R5 checks or create an
 automation. The old scalar-summary failure and
 unvisited-only continuation stay visible; no completed inference was repeated.
 

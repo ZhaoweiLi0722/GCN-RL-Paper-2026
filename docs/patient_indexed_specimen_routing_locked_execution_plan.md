@@ -1580,3 +1580,25 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Independently verify calculations and preserve an archive plus local Dropbox
   checksum receipts. Finish with a decision memo, not automatic online training.
   Historical results, Stage E and remote Git state remain unchanged.
+
+### 2026-09-29: R3 replacement pilot complete; conditional headroom only
+
+- Source `195d0eb` passes12 new/81 related tests and24-step exact-clone smoke.
+  The single scientific attempt exits0:12 states,1,152 logical records,
+  24,348 steps,600.139s, zero optimizer updates. No retry or expansion.
+- Independent stdlib verification reconciles raw costs, chronology,272 safe
+  execution aliases, discovery selections and paired validation differences.
+  All24 R4 input files and83 prior source hashes remain unchanged.
+- Eight of nine noninitial selections lower mean validation cost, but three
+  raise mean patient loss and two have uncertified action-map witnesses.
+  Three non-anchor rows have favorable cost/clinical directions and certified
+  maps. These are conditional descriptive observations, not a trained-policy,
+  safety, optimality, or online-RL attribution result. Report all12 rows.
+- Readout: `specs/2026-09-29-replacement-fixed-window-pilot/readout.md`.
+  The1215-file archive and Dropbox local copies verify; cloud sync and Howard
+  access are unverified. Archive SHA256:
+  `3e0ca30f1b0db3a5d6dfa7987e5a4e40c27526f9aad529b9483a52c31d5dce43`.
+- Stop here. A clean-critic generalization study needs separate prospective
+  sampling, clinical rules, compute caps and authorization. Do not fit on these
+  states then call new draws on the same states generalization. No reward
+  tuning, actor updates, formal holdout, remote Git or reopening Stage E.

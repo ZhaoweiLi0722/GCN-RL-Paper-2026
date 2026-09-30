@@ -1,0 +1,1020 @@
+{
+  "actual_steps": 24348,
+  "aliased_continuations": 272,
+  "contrasts": [
+    {
+      "discovery_means": [
+        2427975943.768579,
+        2427975943.768579,
+        2427975943.768579,
+        2427975943.768579,
+        2427975943.768579,
+        2427975943.768579
+      ],
+      "map_reachable_certified": true,
+      "seed": 60,
+      "selected_action": 0,
+      "selected_label": "frozen",
+      "step": 0,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0,
+          "manufacturing_loss_rate": 0.0,
+          "patients_completed": 0.0,
+          "patients_lost": 0.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "se": 0.0
+        },
+        "paired_cost_deltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0,
+          "manufacturing_loss_rate": 0.0,
+          "patients_completed": 0.0,
+          "patients_lost": 0.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "se": 0.0
+        },
+        "paired_cost_deltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        2297160866.495138,
+        2297160866.495138,
+        2295317247.331957,
+        2294681128.2865977,
+        2298324396.223284,
+        2288214739.103032
+      ],
+      "map_reachable_certified": false,
+      "seed": 60,
+      "selected_action": 5,
+      "selected_label": "specimen_plus_010",
+      "step": 13,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0012787690739816948,
+          "manufacturing_loss_rate": -0.0022026079831781497,
+          "patients_completed": 7.625,
+          "patients_lost": -9.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -9796707.539686328,
+            1987534.9466542657
+          ],
+          "mean": -3904586.296516031,
+          "se": 2491779.081043645
+        },
+        "paired_cost_deltas": [
+          -428805.5654416084,
+          -7562800.479708672,
+          -7787886.817235947,
+          -13371361.524161339,
+          2369340.74241066,
+          -10051487.573024273,
+          7825005.312162161,
+          -2228694.4671292305
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0012787690739816948,
+          "manufacturing_loss_rate": -0.0022026079831781497,
+          "patients_completed": 7.625,
+          "patients_lost": -9.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -9796707.539686328,
+            1987534.9466542657
+          ],
+          "mean": -3904586.296516031,
+          "se": 2491779.081043645
+        },
+        "paired_cost_deltas": [
+          -428805.5654416084,
+          -7562800.479708672,
+          -7787886.817235947,
+          -13371361.524161339,
+          2369340.74241066,
+          -10051487.573024273,
+          7825005.312162161,
+          -2228694.4671292305
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        1448365298.2118587,
+        1446174578.3991184,
+        1435525329.3098695,
+        1446893471.7150364,
+        1431962619.5729086,
+        1448131100.0112526
+      ],
+      "map_reachable_certified": true,
+      "seed": 60,
+      "selected_action": 4,
+      "selected_label": "specimen_minus_010",
+      "step": 26,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0011417186922361294,
+          "manufacturing_loss_rate": -0.001639847584909827,
+          "patients_completed": 6.75,
+          "patients_lost": -8.875
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -16175276.400366371,
+            -5403060.014065975
+          ],
+          "mean": -10789168.207216173,
+          "se": 2277786.0756830233
+        },
+        "paired_cost_deltas": [
+          -15031374.96023941,
+          -19599056.28650689,
+          -10100075.531918049,
+          -937235.6430399418,
+          -9019047.210481644,
+          -13055333.902557611,
+          -2781410.3720829487,
+          -15789811.750902891
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0006190378824567147,
+          "manufacturing_loss_rate": -0.001832531574673126,
+          "patients_completed": 3.625,
+          "patients_lost": -7.625
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -13187322.953868229,
+            -5092344.745918552
+          ],
+          "mean": -9139833.849893391,
+          "se": 1711683.8340227439
+        },
+        "paired_cost_deltas": [
+          -12841200.871231556,
+          -9927908.653964281,
+          -11607672.601994038,
+          -3400418.6442034245,
+          -8932645.146497726,
+          -12510492.59586358,
+          -251493.62202835083,
+          -13646838.663364172
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        925968777.3034486,
+        925514391.9621109,
+        924826979.4558008,
+        925524548.0910254,
+        924179086.765357,
+        926592061.747858
+      ],
+      "map_reachable_certified": true,
+      "seed": 60,
+      "selected_action": 4,
+      "selected_label": "specimen_minus_010",
+      "step": 39,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": -5.999828588321848e-05,
+          "manufacturing_loss_rate": -0.0010751312580953472,
+          "patients_completed": -0.375,
+          "patients_lost": 1.375
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -4174257.4777080724,
+            -326566.3823844483
+          ],
+          "mean": -2250411.9300462604,
+          "se": 813594.6110035104
+        },
+        "paired_cost_deltas": [
+          2015751.9693996906,
+          -2803626.5872199535,
+          -2653763.9383192062,
+          -2361620.3207632303,
+          -2563625.9460496902,
+          -5258487.503938317,
+          -40358.32421815395,
+          -4337564.789261222
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.00020414357501845337,
+          "manufacturing_loss_rate": -0.0008635343442788095,
+          "patients_completed": 1.25,
+          "patients_lost": 1.625
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -5650955.533513742,
+            580030.4014856978
+          ],
+          "mean": -2535462.5660140216,
+          "se": 1317542.5085749573
+        },
+        "paired_cost_deltas": [
+          1798418.202355504,
+          -5572988.84861207,
+          -8920943.581778169,
+          -2583186.6503955126,
+          2722251.6730923653,
+          -2979790.425272584,
+          -1857790.5193231106,
+          -2889670.3781785965
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        2620960617.264936,
+        2620960617.264936,
+        2620960617.264936,
+        2620960617.264936,
+        2620960617.264936,
+        2620960617.264936
+      ],
+      "map_reachable_certified": true,
+      "seed": 61,
+      "selected_action": 0,
+      "selected_label": "frozen",
+      "step": 0,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0,
+          "manufacturing_loss_rate": 0.0,
+          "patients_completed": 0.0,
+          "patients_lost": 0.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "se": 0.0
+        },
+        "paired_cost_deltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0,
+          "manufacturing_loss_rate": 0.0,
+          "patients_completed": 0.0,
+          "patients_lost": 0.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "se": 0.0
+        },
+        "paired_cost_deltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        2162306352.8253727,
+        2163137049.184338,
+        2165065010.695208,
+        2158450254.363184,
+        2161515320.6558237,
+        2157760778.582409
+      ],
+      "map_reachable_certified": true,
+      "seed": 61,
+      "selected_action": 5,
+      "selected_label": "specimen_plus_010",
+      "step": 13,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0025161945564995125,
+          "manufacturing_loss_rate": -0.002907484895309672,
+          "patients_completed": 14.0,
+          "patients_lost": -9.5
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -14845500.154078228,
+            -2609825.753647046
+          ],
+          "mean": -8727662.953862637,
+          "se": 2587234.397866112
+        },
+        "paired_cost_deltas": [
+          -17919133.206027746,
+          -2316144.8955578804,
+          -8473744.577695847,
+          -20976865.99293351,
+          -7953424.286241531,
+          -6259623.841854811,
+          -6563849.684828281,
+          641482.8542385101
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0030728822307075354,
+          "manufacturing_loss_rate": -0.0042785281826684994,
+          "patients_completed": 17.125,
+          "patients_lost": -13.125
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -16892741.92118239,
+            -6126525.389983061
+          ],
+          "mean": -11509633.655582726,
+          "se": 2276517.4058090406
+        },
+        "paired_cost_deltas": [
+          -23597846.14885974,
+          -3860918.432963133,
+          -9652557.9932549,
+          -16845677.40430069,
+          -8467830.265159845,
+          -14161210.31479907,
+          -5618153.283908844,
+          -9872875.401415586
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        1565624473.6310782,
+        1563090561.0841236,
+        1560165082.608385,
+        1565372893.7154553,
+        1565978158.153457,
+        1564323490.686439
+      ],
+      "map_reachable_certified": true,
+      "seed": 61,
+      "selected_action": 2,
+      "selected_label": "specimen_minus_005",
+      "step": 26,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": -0.00128535978825451,
+          "manufacturing_loss_rate": 0.0012727982491034292,
+          "patients_completed": -7.625,
+          "patients_lost": 6.5
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -4671946.401095354,
+            316347.25185390655
+          ],
+          "mean": -2177799.5746207237,
+          "se": 1054775.119311178
+        },
+        "paired_cost_deltas": [
+          -3784161.73400259,
+          -3422262.0445313454,
+          -5504250.474884272,
+          -4315066.651874065,
+          3770846.428376913,
+          -2151236.3754258156,
+          -2494272.719501734,
+          478006.97487711906
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": -0.00164441416774095,
+          "manufacturing_loss_rate": 0.0010332891421002723,
+          "patients_completed": -9.75,
+          "patients_lost": 10.125
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -2768144.4480263055,
+            3986203.377828485
+          ],
+          "mean": 609029.4649010897,
+          "se": 1428207.4251328462
+        },
+        "paired_cost_deltas": [
+          824099.9828672409,
+          7761547.324029207,
+          -6873946.242420673,
+          -256693.93499851227,
+          1307485.884133339,
+          689604.2127718925,
+          -987511.3741545677,
+          2407649.866980791
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        807667016.6728741,
+        805707217.3015467,
+        803085597.815062,
+        806294318.3285723,
+        806429189.8687224,
+        807961883.3821318
+      ],
+      "map_reachable_certified": true,
+      "seed": 61,
+      "selected_action": 2,
+      "selected_label": "specimen_minus_005",
+      "step": 39,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0007772505901819174,
+          "manufacturing_loss_rate": -0.000695346520319164,
+          "patients_completed": 4.5,
+          "patients_lost": -3.25
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -8822141.189377073,
+            -757443.8339731656
+          ],
+          "mean": -4789792.511675119,
+          "se": 1705280.9451635594
+        },
+        "paired_cost_deltas": [
+          452181.4931230545,
+          -13664488.45662415,
+          -7354449.504675388,
+          1220596.720731616,
+          -4178565.12774837,
+          -6782640.862483144,
+          -6046439.986233711,
+          -1964534.369490862
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": -0.00017602551118177379,
+          "manufacturing_loss_rate": 0.00033359190435099367,
+          "patients_completed": -1.0,
+          "patients_lost": 1.125
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -4024320.472047294,
+            2707535.9037679085
+          ],
+          "mean": -658392.2841396928,
+          "se": 1423451.6060994256
+        },
+        "paired_cost_deltas": [
+          1349652.4285036325,
+          -6723808.671768546,
+          -5091860.289271355,
+          2800473.545897007,
+          2177379.8442686796,
+          -1433775.3208539486,
+          -2912193.417800665,
+          4566993.607907653
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        2563974259.89614,
+        2563974259.89614,
+        2563974259.89614,
+        2563974259.89614,
+        2563974259.89614,
+        2563974259.89614
+      ],
+      "map_reachable_certified": true,
+      "seed": 62,
+      "selected_action": 0,
+      "selected_label": "frozen",
+      "step": 0,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0,
+          "manufacturing_loss_rate": 0.0,
+          "patients_completed": 0.0,
+          "patients_lost": 0.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "se": 0.0
+        },
+        "paired_cost_deltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0,
+          "manufacturing_loss_rate": 0.0,
+          "patients_completed": 0.0,
+          "patients_lost": 0.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "se": 0.0
+        },
+        "paired_cost_deltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        2315651176.4135447,
+        2316853948.644194,
+        2313310761.482532,
+        2318651659.8764277,
+        2315896306.3062267,
+        2318069510.048337
+      ],
+      "map_reachable_certified": true,
+      "seed": 62,
+      "selected_action": 2,
+      "selected_label": "specimen_minus_005",
+      "step": 13,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 2.0037844738453325e-05,
+          "manufacturing_loss_rate": -0.00024378919946902843,
+          "patients_completed": 0.0,
+          "patients_lost": -1.125
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -6664709.652449052,
+            6669836.412507097
+          ],
+          "mean": 2563.3800290226936,
+          "se": 2819590.9052605224
+        },
+        "paired_cost_deltas": [
+          6723960.344335079,
+          -4744944.083600044,
+          -10666413.334523678,
+          10246913.971709251,
+          2126331.8370780945,
+          7756587.583067417,
+          -9505126.25860405,
+          -1916803.019229889
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": -0.00042918875817922475,
+          "manufacturing_loss_rate": 0.0003009240663703599,
+          "patients_completed": -2.5,
+          "patients_lost": 1.375
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -3540949.646404899,
+            4403523.970951475
+          ],
+          "mean": 431287.1622732878,
+          "se": 1679859.6254767866
+        },
+        "paired_cost_deltas": [
+          1170388.7715053558,
+          -1472958.93536067,
+          -3202564.7892723083,
+          1808745.2942967415,
+          -5281855.204521656,
+          10674460.76247263,
+          -659761.6583378315,
+          413843.0574040413
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        1514612457.8095527,
+        1514612457.8095527,
+        1514928391.0961585,
+        1515962649.2876601,
+        1510088302.1662457,
+        1515764051.613821
+      ],
+      "map_reachable_certified": false,
+      "seed": 62,
+      "selected_action": 4,
+      "selected_label": "specimen_minus_010",
+      "step": 26,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": -0.0009960542224910496,
+          "manufacturing_loss_rate": 0.0013935602182425632,
+          "patients_completed": -5.875,
+          "patients_lost": 4.75
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -8900640.138815291,
+            2287155.2485428536
+          ],
+          "mean": -3306742.4451362193,
+          "se": 2365660.2909800205
+        },
+        "paired_cost_deltas": [
+          4297475.367340326,
+          7950153.104159117,
+          -1082646.25385499,
+          -10084611.943959475,
+          -4188453.5675492287,
+          -5746259.053696156,
+          -11133421.300666332,
+          -6466175.912863016
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": -0.0009960542224910496,
+          "manufacturing_loss_rate": 0.0013935602182425632,
+          "patients_completed": -5.875,
+          "patients_lost": 4.75
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -8900640.138815291,
+            2287155.2485428536
+          ],
+          "mean": -3306742.4451362193,
+          "se": 2365660.2909800205
+        },
+        "paired_cost_deltas": [
+          4297475.367340326,
+          7950153.104159117,
+          -1082646.25385499,
+          -10084611.943959475,
+          -4188453.5675492287,
+          -5746259.053696156,
+          -11133421.300666332,
+          -6466175.912863016
+        ]
+      }
+    },
+    {
+      "discovery_means": [
+        924713334.8964088,
+        919536644.1133595,
+        922339760.835257,
+        922465264.1011422,
+        922458120.8337826,
+        924415578.176096
+      ],
+      "map_reachable_certified": true,
+      "seed": 62,
+      "selected_action": 1,
+      "selected_label": "mdl2_first",
+      "step": 39,
+      "vs_frozen": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0010730681067916276,
+          "manufacturing_loss_rate": -0.0015045542609510047,
+          "patients_completed": 6.5,
+          "patients_lost": -6.125
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            -6324133.070588132,
+            -3041161.839229116
+          ],
+          "mean": -4682647.454908624,
+          "se": 694184.547496425
+        },
+        "paired_cost_deltas": [
+          -4227075.498684645,
+          -5246595.855488181,
+          -2400163.1576616764,
+          -7543549.486862302,
+          -4159509.604622245,
+          -6958320.349013329,
+          -4985868.253708243,
+          -1940097.4332283735
+        ]
+      },
+      "vs_mdl2_first": {
+        "clinical_mean_deltas": {
+          "completion_service_level": 0.0,
+          "manufacturing_loss_rate": 0.0,
+          "patients_completed": 0.0,
+          "patients_lost": 0.0
+        },
+        "cost": {
+          "conditional_descriptive_t7_interval": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "se": 0.0
+        },
+        "paired_cost_deltas": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ],
+  "cost_delta_negative_means_improvement": true,
+  "limitations": [
+    "dependent states",
+    "conditional RNG/keyed-loss uncertainty",
+    "replacement baselines",
+    "not clinical noninferiority",
+    "not a learned selector",
+    "no online/frozen learning contrast"
+  ],
+  "logical_records": 1152,
+  "per_seed_descriptive_mean_cost_delta": {
+    "60": -4236041.608444616,
+    "61": -3923813.76003962,
+    "62": -1996706.6300039552
+  },
+  "unique_executed_choices_per_draw": {
+    "(60, 0, 'discovery', 0)": 1,
+    "(60, 0, 'discovery', 1)": 1,
+    "(60, 0, 'discovery', 2)": 1,
+    "(60, 0, 'discovery', 3)": 1,
+    "(60, 0, 'discovery', 4)": 1,
+    "(60, 0, 'discovery', 5)": 1,
+    "(60, 0, 'discovery', 6)": 1,
+    "(60, 0, 'discovery', 7)": 1,
+    "(60, 0, 'validation', 0)": 1,
+    "(60, 0, 'validation', 1)": 1,
+    "(60, 0, 'validation', 2)": 1,
+    "(60, 0, 'validation', 3)": 1,
+    "(60, 0, 'validation', 4)": 1,
+    "(60, 0, 'validation', 5)": 1,
+    "(60, 0, 'validation', 6)": 1,
+    "(60, 0, 'validation', 7)": 1,
+    "(60, 13, 'discovery', 0)": 5,
+    "(60, 13, 'discovery', 1)": 5,
+    "(60, 13, 'discovery', 2)": 5,
+    "(60, 13, 'discovery', 3)": 5,
+    "(60, 13, 'discovery', 4)": 5,
+    "(60, 13, 'discovery', 5)": 5,
+    "(60, 13, 'discovery', 6)": 5,
+    "(60, 13, 'discovery', 7)": 5,
+    "(60, 13, 'validation', 0)": 5,
+    "(60, 13, 'validation', 1)": 5,
+    "(60, 13, 'validation', 2)": 5,
+    "(60, 13, 'validation', 3)": 5,
+    "(60, 13, 'validation', 4)": 5,
+    "(60, 13, 'validation', 5)": 5,
+    "(60, 13, 'validation', 6)": 5,
+    "(60, 13, 'validation', 7)": 5,
+    "(60, 26, 'discovery', 0)": 6,
+    "(60, 26, 'discovery', 1)": 6,
+    "(60, 26, 'discovery', 2)": 6,
+    "(60, 26, 'discovery', 3)": 6,
+    "(60, 26, 'discovery', 4)": 6,
+    "(60, 26, 'discovery', 5)": 6,
+    "(60, 26, 'discovery', 6)": 6,
+    "(60, 26, 'discovery', 7)": 6,
+    "(60, 26, 'validation', 0)": 6,
+    "(60, 26, 'validation', 1)": 6,
+    "(60, 26, 'validation', 2)": 6,
+    "(60, 26, 'validation', 3)": 6,
+    "(60, 26, 'validation', 4)": 6,
+    "(60, 26, 'validation', 5)": 6,
+    "(60, 26, 'validation', 6)": 6,
+    "(60, 26, 'validation', 7)": 6,
+    "(60, 39, 'discovery', 0)": 6,
+    "(60, 39, 'discovery', 1)": 6,
+    "(60, 39, 'discovery', 2)": 6,
+    "(60, 39, 'discovery', 3)": 6,
+    "(60, 39, 'discovery', 4)": 6,
+    "(60, 39, 'discovery', 5)": 6,
+    "(60, 39, 'discovery', 6)": 6,
+    "(60, 39, 'discovery', 7)": 6,
+    "(60, 39, 'validation', 0)": 6,
+    "(60, 39, 'validation', 1)": 6,
+    "(60, 39, 'validation', 2)": 6,
+    "(60, 39, 'validation', 3)": 6,
+    "(60, 39, 'validation', 4)": 6,
+    "(60, 39, 'validation', 5)": 6,
+    "(60, 39, 'validation', 6)": 6,
+    "(60, 39, 'validation', 7)": 6,
+    "(61, 0, 'discovery', 0)": 1,
+    "(61, 0, 'discovery', 1)": 1,
+    "(61, 0, 'discovery', 2)": 1,
+    "(61, 0, 'discovery', 3)": 1,
+    "(61, 0, 'discovery', 4)": 1,
+    "(61, 0, 'discovery', 5)": 1,
+    "(61, 0, 'discovery', 6)": 1,
+    "(61, 0, 'discovery', 7)": 1,
+    "(61, 0, 'validation', 0)": 1,
+    "(61, 0, 'validation', 1)": 1,
+    "(61, 0, 'validation', 2)": 1,
+    "(61, 0, 'validation', 3)": 1,
+    "(61, 0, 'validation', 4)": 1,
+    "(61, 0, 'validation', 5)": 1,
+    "(61, 0, 'validation', 6)": 1,
+    "(61, 0, 'validation', 7)": 1,
+    "(61, 13, 'discovery', 0)": 6,
+    "(61, 13, 'discovery', 1)": 6,
+    "(61, 13, 'discovery', 2)": 6,
+    "(61, 13, 'discovery', 3)": 6,
+    "(61, 13, 'discovery', 4)": 6,
+    "(61, 13, 'discovery', 5)": 6,
+    "(61, 13, 'discovery', 6)": 6,
+    "(61, 13, 'discovery', 7)": 6,
+    "(61, 13, 'validation', 0)": 6,
+    "(61, 13, 'validation', 1)": 6,
+    "(61, 13, 'validation', 2)": 6,
+    "(61, 13, 'validation', 3)": 6,
+    "(61, 13, 'validation', 4)": 6,
+    "(61, 13, 'validation', 5)": 6,
+    "(61, 13, 'validation', 6)": 6,
+    "(61, 13, 'validation', 7)": 6,
+    "(61, 26, 'discovery', 0)": 6,
+    "(61, 26, 'discovery', 1)": 6,
+    "(61, 26, 'discovery', 2)": 6,
+    "(61, 26, 'discovery', 3)": 6,
+    "(61, 26, 'discovery', 4)": 6,
+    "(61, 26, 'discovery', 5)": 6,
+    "(61, 26, 'discovery', 6)": 6,
+    "(61, 26, 'discovery', 7)": 6,
+    "(61, 26, 'validation', 0)": 6,
+    "(61, 26, 'validation', 1)": 6,
+    "(61, 26, 'validation', 2)": 6,
+    "(61, 26, 'validation', 3)": 6,
+    "(61, 26, 'validation', 4)": 6,
+    "(61, 26, 'validation', 5)": 6,
+    "(61, 26, 'validation', 6)": 6,
+    "(61, 26, 'validation', 7)": 6,
+    "(61, 39, 'discovery', 0)": 6,
+    "(61, 39, 'discovery', 1)": 6,
+    "(61, 39, 'discovery', 2)": 6,
+    "(61, 39, 'discovery', 3)": 6,
+    "(61, 39, 'discovery', 4)": 6,
+    "(61, 39, 'discovery', 5)": 6,
+    "(61, 39, 'discovery', 6)": 6,
+    "(61, 39, 'discovery', 7)": 6,
+    "(61, 39, 'validation', 0)": 6,
+    "(61, 39, 'validation', 1)": 6,
+    "(61, 39, 'validation', 2)": 6,
+    "(61, 39, 'validation', 3)": 6,
+    "(61, 39, 'validation', 4)": 6,
+    "(61, 39, 'validation', 5)": 6,
+    "(61, 39, 'validation', 6)": 6,
+    "(61, 39, 'validation', 7)": 6,
+    "(62, 0, 'discovery', 0)": 1,
+    "(62, 0, 'discovery', 1)": 1,
+    "(62, 0, 'discovery', 2)": 1,
+    "(62, 0, 'discovery', 3)": 1,
+    "(62, 0, 'discovery', 4)": 1,
+    "(62, 0, 'discovery', 5)": 1,
+    "(62, 0, 'discovery', 6)": 1,
+    "(62, 0, 'discovery', 7)": 1,
+    "(62, 0, 'validation', 0)": 1,
+    "(62, 0, 'validation', 1)": 1,
+    "(62, 0, 'validation', 2)": 1,
+    "(62, 0, 'validation', 3)": 1,
+    "(62, 0, 'validation', 4)": 1,
+    "(62, 0, 'validation', 5)": 1,
+    "(62, 0, 'validation', 6)": 1,
+    "(62, 0, 'validation', 7)": 1,
+    "(62, 13, 'discovery', 0)": 6,
+    "(62, 13, 'discovery', 1)": 6,
+    "(62, 13, 'discovery', 2)": 6,
+    "(62, 13, 'discovery', 3)": 6,
+    "(62, 13, 'discovery', 4)": 6,
+    "(62, 13, 'discovery', 5)": 6,
+    "(62, 13, 'discovery', 6)": 6,
+    "(62, 13, 'discovery', 7)": 6,
+    "(62, 13, 'validation', 0)": 6,
+    "(62, 13, 'validation', 1)": 6,
+    "(62, 13, 'validation', 2)": 6,
+    "(62, 13, 'validation', 3)": 6,
+    "(62, 13, 'validation', 4)": 6,
+    "(62, 13, 'validation', 5)": 6,
+    "(62, 13, 'validation', 6)": 6,
+    "(62, 13, 'validation', 7)": 6,
+    "(62, 26, 'discovery', 0)": 5,
+    "(62, 26, 'discovery', 1)": 5,
+    "(62, 26, 'discovery', 2)": 5,
+    "(62, 26, 'discovery', 3)": 5,
+    "(62, 26, 'discovery', 4)": 5,
+    "(62, 26, 'discovery', 5)": 5,
+    "(62, 26, 'discovery', 6)": 5,
+    "(62, 26, 'discovery', 7)": 5,
+    "(62, 26, 'validation', 0)": 5,
+    "(62, 26, 'validation', 1)": 5,
+    "(62, 26, 'validation', 2)": 5,
+    "(62, 26, 'validation', 3)": 5,
+    "(62, 26, 'validation', 4)": 5,
+    "(62, 26, 'validation', 5)": 5,
+    "(62, 26, 'validation', 6)": 5,
+    "(62, 26, 'validation', 7)": 5,
+    "(62, 39, 'discovery', 0)": 6,
+    "(62, 39, 'discovery', 1)": 6,
+    "(62, 39, 'discovery', 2)": 6,
+    "(62, 39, 'discovery', 3)": 6,
+    "(62, 39, 'discovery', 4)": 6,
+    "(62, 39, 'discovery', 5)": 6,
+    "(62, 39, 'discovery', 6)": 6,
+    "(62, 39, 'discovery', 7)": 6,
+    "(62, 39, 'validation', 0)": 6,
+    "(62, 39, 'validation', 1)": 6,
+    "(62, 39, 'validation', 2)": 6,
+    "(62, 39, 'validation', 3)": 6,
+    "(62, 39, 'validation', 4)": 6,
+    "(62, 39, 'validation', 5)": 6,
+    "(62, 39, 'validation', 6)": 6,
+    "(62, 39, 'validation', 7)": 6
+  },
+  "verified": true
+}

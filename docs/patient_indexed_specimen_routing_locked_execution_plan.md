@@ -1714,3 +1714,23 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   on-policy receipts. New scientific trajectories or fitting still require a
   committed bounded protocol and specific execution approval. No broad algorithm
   search, remote Git, Howard sign-off, holdout use or Stage E reopening.
+
+### 2026-09-30: Candidate scoring and on-policy receipts accepted
+
+- Zhaowei's continuation authorizes the next local synthetic-only engineering
+  packet. Added graph/self-only/flat candidate scorer and value heads plus sealed
+  behavior-policy receipts and closed-segment GAE preparation. Exposed the
+  existing precision guard before returning a selected action for collection.
+- Shared numerical information and candidate heads are checked; graph/self-only
+  fixture parameters match, flat does not. This is not graph superiority, a
+  complete PPO learner, exact feasibility certification or a scientific fit.
+- Readout: `specs/2026-09-30-candidate-policy-receipts/readout.md`.32 new and111
+  prior related tests pass,143 total; full compileall and eight prior fingerprints
+  pass. No new scientific trajectory, reward change, historical-agent change or
+  experimental performance claim. Development-test failures remain documented.
+- Next prepare a bounded update/recovery adapter and source-audited collector
+  using invented-data tests. A real categorical model is not the historical
+  continuous actor, so specify its no-RL initialization comparator prospectively.
+- New scientific execution still needs a committed bounded protocol and explicit
+  approval; R6 test evidence is not untouched validation. No automatic training,
+  Howard sign-off, remote Git, formal holdout or Stage E reopening.

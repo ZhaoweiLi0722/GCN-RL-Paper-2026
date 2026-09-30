@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: Routing request-class interface implemented and tested
+## Live checkpoint: Candidate scorer and on-policy receipts verified
+
+Updated 2026-09-30T14:32:52Z. Zhaowei requested the next local engineering packet.
+Graph/flat candidate scoring and sealed trajectory preparation now exist; no
+new scientific training or performance comparison was run. Stage E and prior
+studies remain closed, and Howard approval is not inferred.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only; basec090af7 |
+| Completed work | Opt-in CPU graph/self-only/flat scoring and value heads; sealed behavior/input/reward/support receipts; explicit-RNG sampling; pre-action precision guard; differentiable new-policy likelihood; closed-segment GAE adapter |
+| Information boundary | Same numerical inputs/candidate heads; physical links retained in self-only control. Fixture counts graph/self-only348, flat360, so graph/flat is not parameter-matched. Public producer and exact patient-route feasibility remain unverified |
+| Probability/return checks | Old-policy likelihood reproduces; unchanged ratio1; finite-difference gradient agrees; candidate support/operator/precision cannot change during re-evaluation; terminal/truncation and reward scale are explicit |
+| Evidence | `specs/2026-09-30-candidate-policy-receipts/readout.md`; new model/rollout modules and32 tests |
+| Validation |143 related tests and full compileall pass;8 prior fingerprints unchanged. No new scientific fits/episodes; existing DDPG unit tests include invented-tensor optimizer steps |
+| Process check | Read-only host scan found only its own matching shell/filter, no related workload; tests ended exit0. No detached job or campaign was launched |
+| Next concrete action | Capped categorical PPO update adapter and full update-boundary recovery, with clipping/value/entropy and failure-rollback tests on invented data; then source-audit the real public-input collector and freeze one bounded pilot |
+| Recovery limits | Model and sampling-RNG restoration tested in isolation; complete optimizer/rollout/environment resume not implemented. Stable Baselines3 absent; no dependency installed |
+| Approval needed | Continue this engineering preparation without routine-step approval. Before scientific fitting/collection, obtain approval of named arms, initialization, metrics, fresh streams and query/update/time caps in a committed protocol |
+| Unchanged limits | No new patient scenario, reward tuning, historical holdout, remote Git, messaging, cloud actions or reuse of R6 test labels as untouched confirmation. Operational calibration remains missing |
+| Preservation | Local code/tests/readout and appended ledger only; historical agents/configs/evidence untouched. No new archive/cloud-sync/access claim |
+
+## Previous checkpoint: Routing request-class interface implemented and tested
 
 Updated 2026-09-30T14:00:47Z. Zhaowei requested continued local preparation.
 This packet implements an opt-in request-identity and replay boundary, not a

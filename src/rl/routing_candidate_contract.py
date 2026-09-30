@@ -177,16 +177,28 @@ def class_distribution(logits, candidates: RequestCandidates):
     return torch.distributions.Categorical(logits=centered)
 
 
+def validate_choice_precision(choice, candidates, *, replay_dtype):
+    """Check the selected request before collection, without inventing a transition."""
+    if not isinstance(choice, CandidateChoice):
+        raise TypeError("CandidateChoice required")
+    if choice != choose_candidate(candidates, choice.class_index):
+        raise ValueError("choice differs from candidate/state seal")
+    dtype = np.dtype(replay_dtype)
+    if dtype not in (np.dtype(np.float32), np.dtype(np.float64)):
+        raise ValueError("replay precision must be float32 or float64")
+    cast = np.asarray(choice.submitted_request, dtype=dtype).astype(np.float64)
+    n = candidates.schema.num_facilities
+    if _decoder_key(cast, candidates.schema)[:n] != _decoder_key(choice.submitted_request, candidates.schema)[:n]:
+        raise ValueError("replay precision conversion changes specimen integer requests")
+
+
 def validate_candidate_transition(choice, candidates, record, semantics, *, replay_dtype):
     """Check a collector receipt before existing typed replay consumes it.
 
     Does not reconstruct observations or certify their producer. No return
     labels or category IDs are converted into environment rewards/actions.
     """
-    if not isinstance(choice, CandidateChoice):
-        raise TypeError("CandidateChoice required")
-    if choice != choose_candidate(candidates, choice.class_index):
-        raise ValueError("choice differs from candidate/state seal")
+    validate_choice_precision(choice, candidates, replay_dtype=replay_dtype)
     if not isinstance(record, OneStepRecord) or not isinstance(semantics, ReplaySemantics):
         raise TypeError("typed one-step record and expected replay semantics required")
     if (record.semantics != semantics or semantics.action_dim != candidates.schema.action_dim
@@ -196,10 +208,3 @@ def validate_candidate_transition(choice, candidates, record, semantics, *, repl
         raise ValueError("a selected behavior action requires an actual trajectory receipt")
     if record.state_token != choice.state_token or record.action != choice.submitted_request:
         raise ValueError("replay must retain the sealed state and original submitted request")
-    dtype = np.dtype(replay_dtype)
-    if dtype not in (np.dtype(np.float32), np.dtype(np.float64)):
-        raise ValueError("replay precision must be float32 or float64")
-    cast = np.asarray(record.action, dtype=dtype).astype(np.float64)
-    n = candidates.schema.num_facilities
-    if _decoder_key(cast, candidates.schema)[:n] != _decoder_key(record.action, candidates.schema)[:n]:
-        raise ValueError("replay precision conversion changes specimen integer requests")

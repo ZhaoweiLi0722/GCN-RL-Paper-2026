@@ -1,6 +1,30 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 scope approved; collector/BC/budget components verified; orchestration next
+## Live checkpoint: P1 serial transactions and raw verifier pass; full application binding next
+
+Updated 2026-09-30T16:49Z. Continuing the exact approved bounded P1 scope.
+No real P1 preflight, patient simulation or scientific fit has run. New tests
+exercise invented tensors/accounting and artificial watchdog children only.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent integration worktree; `codex/september-research-integration`; this packet based on14f533c; local only |
+| Completed |66-job fixed serial cursor,27-model pre-test seal barrier, qualified same-weight/fresh-optimizer forks; actual PPO/BC episode/update transactions and budget-prefix recovery; step-flushed raw evidence and independent raw cost/identity/outcome readback; outer subprocess global/scope watchdog |
+| Evidence | `specs/2026-09-30-candidate-return-pilot/integration_readout.md`; `src/rl/candidate_pilot_{driver,recording,verification,watchdog}.py`; four associated test modules; `reports/2026-09-30-candidate-pilot-integration/readiness-after-driver.json` |
+| Validation |31 new/261 combined tests pass in7.576s; full compileall exits0. Includes exact next update after mid-episode/post-update restore, irreversible failed-update debits, test barrier, raw bytes/IDs/rounding/expiry, trade-offs and hung artificial child termination |
+| Preservation |Original protocol/config,7 R4 locks and8 historical fingerprints unchanged;888 prior local JSON/JSONL files scanned, zero seed collisions. Earlier partial non-seed reports preserved. No old results overwritten |
+| Engineering failures |First driver fixture suite had4 errors from unencoded NumPy-event hashing and macOS temporary-path symlink spelling; corrected in invented tests before science. Final suites pass. Not a scientific attempt/retry |
+| Still missing |Full application binding: reference/environment factories, concrete preflight cases, demos/initialization/qualification, serial arm recording, all-model seal, final evaluation and archive flow; fake end-to-end application test; exclusive scientific claim and committed source/runtime/effective-config locks |
+| Approved limits |Unchanged3 blocks, graph/self-only/flat, frozen/PPO/BC plus R4/MDL2;32 episodes/continued model,396 evals,52,728 environment calls,4,608 optimizer steps,6h with nontransferable subcaps; one attempt |
+| Current phase |Engineering integration; `ready_to_execute=false`; result root absent. No performance conclusion from tests |
+| Process |Default sandbox ps denied; approved host scan returned only its shell/filter PIDs77029/77032. Test/compile/audit commands ended; no related research workload observed |
+| Automation |Existing `gcn-rl-p1` saved configuration rechecked ACTIVE every15min, unchanged. No other automation touched; heartbeat is not a training process |
+| Next action |Connect tested modules into full locked campaign application, test whole stage order/failure with invented fixtures, commit effective config bound to actual implementation; only then run the single budgeted real preflight |
+| Exact approval need |None for remaining original P1 gates/attempt. New scope, changed parameters/caps, or a retry after scientific terminal failure requires a new explicit decision |
+| Interpretation |GCN/distillation evidence remains distinct from unproven extra online-DDPG gain. P1 tests simulation return training, not deployment adaptation or PPO-over-clean-DDPG superiority. Flat parameters remain unmatched |
+| External status |No push/PR/merge/messages, Dropbox copy/cloud sync/access, formal holdout, Howard sign-off or Stage E reopening |
+
+## Previous checkpoint: P1 scope approved; collector/BC/budget components verified; orchestration next
 
 Updated 2026-09-30T16:02Z. Zhaowei requested continued, faster progress after
 the concrete bounded P1 scope question. Approval is recorded in

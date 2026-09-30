@@ -1868,3 +1868,23 @@ outcome verification remain gates, not waived by speed requests. New in-thread
 `gcn-rl-p1` is ACTIVE every15min for this finite approved chain only; delete it
 on completion/terminal failure/new-scope approval boundary. The old `gcn-rl`
 remains deleted. No other automation changed.
+
+#### P1 serial transactions and independent raw verification checkpoint
+
+2026-09-30T16:49Z: added the fixed phase cursor/all-model seal barrier,
+qualified tensor-identical fresh-optimizer forks, actual PPO/BC continuation
+transactions, prefix-verified non-refundable budget restoration, step-flushed
+raw recording, independent raw cost/identity/paired-outcome analysis and an
+outer subprocess/scope watchdog.31 new/261 combined invented-fixture tests
+and full compileall pass. Fresh audit again verifies7 R4 locks,888 prior
+JSON/JSONL files with no stream collision, and8 preservation fingerprints.
+Original proposal/protocol stay byte-identical. Details and engineering-only
+failures are retained in the P1 integration readout.
+
+Full application/factory binding, end-to-end fake application acceptance,
+exclusive scientific claim and source/runtime/effective-config freeze still
+precede any real preflight. P1 result root remains absent and no research
+process was observed. This checkpoint is not new scientific scope, launch
+readiness or an experiment result. Existing gcn-rl-p1 remains active/unchanged
+for the finite approved remainder; do not expand the design or retry a failed
+scientific attempt. No remote, cloud, holdout or Stage E action occurred.

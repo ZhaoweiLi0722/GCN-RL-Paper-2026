@@ -1,5 +1,95 @@
 # P1 integration checkpoint
 
+## Current: serial transactions, raw verification and outer watchdog
+
+Updated 2026-09-30T16:49Z; based on14f533c9f0a962be43aacf4f0942b004a97450ee.
+This is engineering progress, NOT an executed P1 preflight or performance result.
+The scientific result root remains absent and the approved host process scan
+returned only its own shell/filter. All test/compile/readiness commands ended.
+
+Implemented in this packet:
+
+- `src/rl/candidate_pilot_driver.py`: fixed66-job serial cursor; qualification
+  gate; byte-verified27-model seal barrier before any evaluation; completed
+  evidence and failed-state restoration. Prototype parameter-count checks,
+  initializer construction and tensor-identical frozen/PPO/BC forks discard
+  initializer optimizer moments and clone continuation sampling RNGs.
+- Actual PPO and BC continuation transactions join the existing patient-session
+  interface, whole-rollout admission and irreversible external ledger. Mid-episode,
+  pre-update and post-update bundles restore the next decision/update exactly in
+  invented fixtures. A post-update bundle retains the old closed collector and
+  the new kernel separately. Snapshot budget must be an exact verified prefix
+  of the live ledger; later spend/time stays charged. Restoration cannot reopen
+  a closed budget scope or imply permission to resume a failed scientific run.
+- `src/rl/candidate_pilot_recording.py`: exclusive per-episode directories,
+  start-state/header, step-flushed/fsynced raw JSONL, endpoint snapshot, collector
+  checkpoint and independently recomputed outcome. Failed/partial episodes keep
+  bytes but cannot publish an outcome. Read-only prefix checking never truncates
+  later records. Decision-path timing excludes simulator step and I/O, and is
+  observational metadata rather than part of bitwise stochastic recovery.
+- `src/rl/candidate_pilot_verification.py`: no learner/environment imports.
+  Reopens/hash-checks raw files; independently sums11 cost components and all
+  disjoint patient-loss causes, including finished-product expiry; recounts
+  registry IDs/physical compartments; checks enrollment, completion denominators,
+  finite-window terminal liabilities, requests/half-away rounding/canonical
+  representatives, fixed greedy evaluation, exact starting streams and absence
+  of missing/duplicate test rows. Reports the prespecified primary and all12
+  contrasts, raw paired differences, three-block descriptive t intervals,
+  within-block10,000-draw bootstrap, and cost/clinical trade-off triage.
+- `src/rl/candidate_pilot_watchdog.py`: one owned subprocess group, incremental
+  hash-chained ledger reading and outer global/active-scope wall deadlines.
+  Artificial hanging/error children were terminated/reaped without retry; logs
+  and supervisor outcome remain. Polling/OS scheduling plus bounded termination
+  grace are disclosed, not claimed instantaneous. This utility still needs to
+  be bound to the locked scientific entrypoint; it is not itself authorization.
+
+### Tests and preserved evidence
+
+**31 new tests;261 related tests pass in7.576s** on the final combined run.
+Full repository `compileall -q .` exits0. All dynamics in these tests are mocked
+or handwritten; no real patient constructor/reset/step or scientific fit ran.
+The last integration test passes the actual session's serialized receipt shape
+through the raw recorder/verifier using four invented accounting steps. Small
+optimizer transactions use invented tensors only. Watchdog tests own only tiny
+artificial Python children, not research workloads.
+
+The first driver suite exposed two fixture/integration issues: NumPy events were
+sent to the tensor-state digest without explicit array encoding, and the macOS
+temporary-directory symlink spelling failed the deliberate no-symlink evidence
+check. Tests now encode raw arrays and resolve the fixture root; subsequent
+runs pass. No scientific attempt was consumed. Source review also kept the
+independent verifier's lot rounding half-away-from-zero and included finished
+expiry in disjoint losses; handcrafted boundary/expiry tests cover both.
+
+Fresh read-only audit:
+`reports/2026-09-30-candidate-pilot-integration/readiness-after-driver.json`.
+Seven R4 locks match; environments agree;888 historical JSON/JSONL files have
+zero numeric stream collisions. The two previously documented truncated
+non-seed prefixes remain preserved/hash-locked. Original protocol/config and
+all eight preservation fingerprints from the direction memo are unchanged.
+`ready_to_execute` remains false, correctly: the audit is a readiness subset.
+
+### Next concrete work
+
+Bind these tested components into the full campaign application: all reference/
+prototype loading and9 preflight recovery cases, demonstration collection,
+initialization/qualification,18 serial continuations, all-model sealing,396
+final evaluations, independent raw-bundle readback and versioned archive/copy.
+The original protocol gives a624-call preflight cap, not a requirement to spend
+it; any concrete case allocation must stay inside that cap, including clones.
+Complete fake full-application tests, runtime/source locks and exclusive claim;
+then commit the effective config binding the unchanged protocol and actual
+implementation commit before the first budgeted real preflight. These bindings
+are still missing; individual component acceptance is not launch readiness.
+
+No further approval is needed for the original approved P1 after these gates.
+Any scientific terminal failure closes the single attempt, without repair/retry.
+No new scenario/reward/search, DDPG fit, remote Git, Howard approval, formal
+holdout or Stage E reopening. No Dropbox/cloud/access claim. `gcn-rl-p1` remains
+ACTIVE every15min (saved config rechecked); no automation was changed this turn.
+
+## Previous: collector, imitation and resource components
+
 Updated 2026-09-30T16:02Z. Base `c6cde24d8b332935f250c3b66c24e3f4cdf61c92`,
 persistent local integration branch. Engineering/readiness only, not a scientific
 result. No real patient constructor/reset/step, scientific initialization/fit,

@@ -7,6 +7,7 @@ from dataclasses import asdict
 import os
 from pathlib import Path
 import tempfile
+import time
 
 import numpy as np
 
@@ -99,6 +100,7 @@ class CandidatePatientSession:
         self.initial_rng = None if learner.sampling_rng is None else learner.sampling_rng.get_state().clone()
         self.expected_rng = state_digest(self.initial_rng)
         self.events, self.examples, self.index = [], [], 0
+        self.last_inference_seconds = None  # Timing is observational, not restorable stochastic state.
         self.manifest = {"format": "candidate-patient-session-v1", "contract": asdict(producer.contract),
                          "initial_token": self.initial_token, "initial_weights": self.initial_weights,
                          "initial_rng_sha256": state_digest(self.initial_rng),
@@ -122,6 +124,7 @@ class CandidatePatientSession:
         if state_digest(before_rng) != self.expected_rng:
             raise ValueError("sampling RNG drift between steps")
         try:
+            inference_start = time.perf_counter()
             raw = self.env.observation()
             obs, bank = context_from_public(self.producer, self.reference, raw, self.options,
                                              self.expected_token, full_anchor=self.selection == "anchor")
@@ -133,6 +136,7 @@ class CandidatePatientSession:
                          if self.selection == "anchor" else int(np.argmax(evaluation.log_probs)))
                 decision = CandidateDecision(evaluation, choose_candidate(bank, index))
             action = candidate_submission(self.learner.policy, obs, decision, current_state_token=self.expected_token)
+            inference_seconds = time.perf_counter() - inference_start
             example = public_example(obs, bank, self.learner.contract,
                                      split="test" if self.split == "preflight" else self.split,
                                      identity=f"{self.trajectory_id}/{self.index}")
@@ -157,6 +161,7 @@ class CandidatePatientSession:
         self.examples.append(example)
         self.expected_token, self.index = token, self.index + 1
         self.expected_rng = state_digest(None if sampler is None else sampler.get_state())
+        self.last_inference_seconds = inference_seconds
         return copy.deepcopy(event)
 
     def segment(self, gae_lambda):

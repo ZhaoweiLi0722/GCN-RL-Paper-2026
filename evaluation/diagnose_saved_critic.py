@@ -37,6 +37,7 @@ def pair_diagnostic(draw_differences, prediction_difference):
     values = finite(draw_differences)
     if values.shape != (8,) or not math.isfinite(prediction_difference):
         raise ValueError("Expected eight paired draws and a finite prediction")
+    prediction_difference = float(prediction_difference)
     means = [float(values[:4].mean()), float(values[4:].mean())]
     signs = np.sign(means)
     if signs[0] == 0 and signs[1] == 0:
@@ -246,8 +247,8 @@ if __name__ == "__main__":
     result = analyze(args.root)
     result["analysis_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     result["analysis_script_sha256"] = sha256_file(Path(__file__))
+    serialized = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x") as handle:
-        json.dump(result, handle, indent=2, sort_keys=True, allow_nan=False)
-        handle.write("\n")
+        handle.write(serialized)
     print(json.dumps(result["aggregate_label_stability"], indent=2))

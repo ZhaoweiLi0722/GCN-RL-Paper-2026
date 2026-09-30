@@ -1,3 +1,4 @@
+import json
 import unittest
 
 import numpy as np
@@ -30,6 +31,10 @@ class SavedCriticDiagnosisTests(unittest.TestCase):
         for values in ([1] * 7, [float("nan")] * 8, [float("inf")] * 8):
             with self.assertRaises(ValueError):
                 pair_diagnostic(values, 1)
+
+    def test_numpy_predictions_serialize_without_custom_encoder(self):
+        row = pair_diagnostic(np.arange(8), np.float64(1))
+        json.dumps({"row": row, "summary": pair_summary([row])}, allow_nan=False)
 
     def test_parent_exclusion_and_train_only_distance_scale(self):
         train = np.array([[0, 1], [0, 1], [2, 1], [2, 1]])

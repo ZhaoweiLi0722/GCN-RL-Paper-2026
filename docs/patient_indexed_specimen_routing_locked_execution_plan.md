@@ -1647,3 +1647,24 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   `bce84b741c3dc714a9439cc49f8226e8be7dee646450a4ca53ca23eaca0977f0`.
 - Finite packet closed; no actor follow-on, new experiment, remote Git, formal
   holdout or Stage E reopening. No Howard sign-off is inferred.
+
+### 2026-09-30: R6 saved-data postmortem, no experiment extension
+
+- Following Zhaowei's continuation request, fixed post-run diagnostics used
+  only saved R6 labels/states/predictions/traces. Zero new simulation, model
+  inference, fitting or action selection; R6 and Stage E remain closed.
+- 70/215 non-tied test pairs reverse sign between fixed four-draw halves.
+  On145 same-sign pairs, the saved critic ranks62 correctly (42.8%). This is
+  descriptive and dependent, not a new validation or statistical test.
+- Three of24 sealed choices reduce mean cost while increasing mean patient
+  loss. Independent raw component reconciliation shows capacity-shortage
+  savings can outweigh patient-loss charges. No reward weights were changed.
+- Forty sampled execution-equivalent action pairs verified; ten in one test
+  state have differing quantized requests and unequal saved value predictions.
+  This motivates investigation, not a proven global representation diagnosis.
+- Readout: `specs/2026-09-30-critic-saved-data-diagnosis/readout.md`.
+  Identical repeated output and independent660-pair/192-contrast verification
+  pass. Retain the initial JSON-serialization failure and its corrected v2.
+- A24-critic, zero-simulation input-normalization control is a bounded proposal
+  only. New fitting, clinical-objective changes or prospective data collection
+  require explicit approval. No automatic launch, Howard sign-off or remote Git.

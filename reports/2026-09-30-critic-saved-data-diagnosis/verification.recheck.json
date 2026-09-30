@@ -1,0 +1,31 @@
+{
+  "cheaper_but_more_loss_states": [
+    "seed60/test1/t39",
+    "seed61/test1/t39",
+    "seed62/test1/t26"
+  ],
+  "checked_execution_equivalences": 40,
+  "checked_pairs": 660,
+  "checked_sealed_choice_draws": 192,
+  "diagnosis_sha256": "18c00b8e1c37f4c07eeb5e1924d8c2dbf0fe46d1c524be835a461eb51296b665",
+  "groups": {
+    "test": {
+      "both_tied": 19,
+      "comparable": 215,
+      "correct": 89,
+      "opposite_sign": 70,
+      "same_sign": 145
+    },
+    "train": {
+      "both_tied": 21,
+      "comparable": 405,
+      "correct": 309,
+      "opposite_sign": 130,
+      "same_sign": 275
+    }
+  },
+  "new_steps_or_fitting": 0,
+  "repeat_byte_identical": true,
+  "scope": "independent raw pair arithmetic and all selected cost components; coverage descriptive, not an OOD test",
+  "status": "passed"
+}

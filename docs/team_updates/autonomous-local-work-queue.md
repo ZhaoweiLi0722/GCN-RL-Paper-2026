@@ -1,6 +1,6 @@
 # Autonomous local research queue
 
-## Live checkpoint: R6 saved-data diagnosis prepared
+## Live checkpoint: R6 saved-data diagnosis verified and archived
 
 Updated 2026-09-30. User requested continuation after the closed R6 diagnostic.
 The next packet is post-run descriptive analysis of saved evidence only, not
@@ -9,10 +9,15 @@ new training, simulation or a reward change. No Howard approval is inferred.
 | Item | Current state |
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only |
-| Phase | Independent label-split, feature-coverage, execution-equivalence and raw cost-component analysis implemented; derived report not yet run |
-| Validation | 71 related tests and full compileall passed; no source under `src/` modified |
+| Phase | Saved-data diagnosis complete; zero new simulator steps/model inferences/updates/choices. Analysis execution `42d4792`; R6 not reopened |
+| Validation | 72 related tests, full compileall and exact repeated output passed; independent660-pair/40-equivalence/192-contrast checks pass; all reported choices match original seals;3649 R6 files and83 source locks unchanged |
 | Evidence contract | `specs/2026-09-30-critic-saved-data-diagnosis/protocol.md`; immutable R6 inventory checked before/after analysis |
-| Next concrete action | Freeze analysis code locally; derive the report twice, check exact repeatability and independently recompute headline counts and clinical-cost conflicts |
+| Result | Test70/215 non-tied pairs reverse direction across fixed halves; critic correct62/145 on same-sign pairs. Three sealed choices cost less but lose more patients; capacity-shortage savings offset loss penalties. One state has differing predictions for identical sampled execution. Coverage-distance estimates fragile, not OOD proof |
+| Evidence | `specs/2026-09-30-critic-saved-data-diagnosis/readout.md`; canonical `reports/2026-09-30-critic-saved-data-diagnosis/diagnosis.v2.json`; independent `verification.recheck.json` |
+| Failure preserved | Initial JSON serialization at51eb657 failed on NumPy integer; partial `diagnosis.json` and failure note retained. Serialization-only fix tested; no experiment retried |
+| Preservation | Twelve-file archive124697 bytes and Dropbox local archive/manifest hashes verified; archiveSHA8272e73778e7062945420ba9090d935ec67c0fd2cb4307cd7efac27f53173023; cloud sync/Howard access unverified |
+| Next concrete action | Await response to concrete scope question for24-critic raw-vs-existing-normalization leave-one-parent-out diagnostic on original R6 training trajectories only. At most1000 updates/critic,60min,single attempt,zero new simulation; not launched |
+| Scientific decision | Team must justify clinical priority/constraints independently of observed cost gains. No reward weights, clinical margins, manuscript performance claims or actor behavior changed |
 | Approval boundary | No new trajectories, fitting, actor/DDPG updates, reward changes, formal holdout, remote Git or messages; a new prospective experiment needs explicit bounded approval |
 
 ## Previous checkpoint: R6 negative generalization screen verified and archived

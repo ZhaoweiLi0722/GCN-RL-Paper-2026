@@ -1,6 +1,21 @@
 # Autonomous local research queue
 
-## Live checkpoint: R6 negative generalization screen verified and archived
+## Live checkpoint: R6 saved-data diagnosis prepared
+
+Updated 2026-09-30. User requested continuation after the closed R6 diagnostic.
+The next packet is post-run descriptive analysis of saved evidence only, not
+new training, simulation or a reward change. No Howard approval is inferred.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only |
+| Phase | Independent label-split, feature-coverage, execution-equivalence and raw cost-component analysis implemented; derived report not yet run |
+| Validation | 71 related tests and full compileall passed; no source under `src/` modified |
+| Evidence contract | `specs/2026-09-30-critic-saved-data-diagnosis/protocol.md`; immutable R6 inventory checked before/after analysis |
+| Next concrete action | Freeze analysis code locally; derive the report twice, check exact repeatability and independently recompute headline counts and clinical-cost conflicts |
+| Approval boundary | No new trajectories, fitting, actor/DDPG updates, reward changes, formal holdout, remote Git or messages; a new prospective experiment needs explicit bounded approval |
+
+## Previous checkpoint: R6 negative generalization screen verified and archived
 
 Updated 2026-09-30. Zhaowei explicitly approved the bounded18-trajectory,
 three-critic/1000-update diagnostic in response to the concrete scope question.

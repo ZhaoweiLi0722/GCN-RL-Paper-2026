@@ -1,6 +1,29 @@
 # Autonomous local research queue
 
-## Live checkpoint: Algorithm agnostic GCN and RL direction reviewed
+## Live checkpoint: Routing request-class interface implemented and tested
+
+Updated 2026-09-30T14:00:47Z. Zhaowei requested continued local preparation.
+This packet implements an opt-in request-identity and replay boundary, not a
+scientific training run. It does not certify a physical-feasibility mask or
+claim that PPO or repaired DDPG improves performance. Previous stages remain
+closed, and no Howard approval is inferred.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only; base4e2d9cd |
+| Completed work | Canonical integer-request classes, retained reference/specimen-anchor, original-request receipts, categorical alias handling and replay precision guard; no historical agents or dynamics changed |
+| Important boundary | Public observations do not establish exact individual-patient route feasibility; module groups decoder inputs, not sampled equal outcomes. Specimen-anchor keeps reference's other action groups, not a full MDL-2 comparator |
+| DDPG compatibility | Synthetic receipt passes typed replay adapter with original action and unchanged terminal target under physical/self-only graph views. Clean kernel remains opt-in CPUfloat32; no scientific learner integrated |
+| PPO finding | Existing GCN-PPO is continuous tanh-Gaussian, not this categorical proposal; changing algorithm config alone would not implement the proposed method |
+| Evidence | `specs/2026-09-30-routing-candidate-contract/readout.md`; `src/rl/routing_candidate_contract.py`; `tests/test_routing_candidate_contract.py` |
+| Validation |24 new/111 related tests pass in4.643s; full compileall pass;8 prior source/evidence fingerprints unchanged. Invented queue/tensor fixtures only, zero new scientific trajectories or fits |
+| Process check | Approved read-only host scan found only its own matching shell/filter, no related research workload; all test/compile sessions completed exit0 |
+| Next concrete action | Synthetic-only matched graph/flat candidate scoring and sealed on-policy receipt interface, including old log-probability, policy version, candidate support, terminal/truncation semantics and recovery requirements; reuse existing components |
+| Approval needed | No new approval for this next engineering preparation. Before scientific fitting/collection, present one bounded protocol with named arms, objective, fresh streams and query/update/time caps for specific execution approval |
+| Unchanged limits | No reward search, new patient scenarios, hidden-state policy inputs, historical holdout, remote Git, messages, cloud actions or reopening prior studies. E1 domain calibration remains missing |
+| Preservation | Existing sources/configs/results untouched except appended status/change-control records. Local source/test/readout commit only; no new cloud-sync or collaborator-access claim |
+
+## Previous checkpoint: Algorithm agnostic GCN and RL direction reviewed
 
 Updated 2026-09-30. Zhaowei explicitly prioritized a rigorous publishable
 GCN-plus-RL study over preserving DDPG. This authorizes method investigation

@@ -1693,3 +1693,24 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   scientific execution still requires a committed bounded protocol and specific
   authorization. The prior24-critic normalization question was not approved;
   do not launch it implicitly. No Howard sign-off or remote action is inferred.
+
+### 2026-09-30: Routing request-class engineering interface accepted
+
+- Following Zhaowei's continuation request, added the opt-in
+  `routing_candidate_contract.py` and24 synthetic unit tests. No existing agent,
+  dynamics, reward, config, historical output or experimental scope changed.
+- The contract canonicalizes exact integer decoder requests, preserves original
+  submitted actions and reference/specimen-anchor provenance, uses one
+  categorical probability per unique class and guards replay precision. It is
+  not a physical-feasibility oracle, hidden-state mask or complete policy learner.
+- A synthetic typed-replay integration check preserves the original request
+  and terminal target. Existing continuous Gaussian GCN-PPO is not the proposed
+  categorical learner; do not treat a config switch as an implementation.
+- Readout: `specs/2026-09-30-routing-candidate-contract/readout.md`.
+  All111 related tests and full compileall pass; eight prior source/evidence
+  fingerprints match; no related research workload remains. Initial float64
+  fixture expectation failures are documented, not erased or scientific retries.
+- Next allowed engineering work is synthetic-only candidate scoring and sealed
+  on-policy receipts. New scientific trajectories or fitting still require a
+  committed bounded protocol and specific execution approval. No broad algorithm
+  search, remote Git, Howard sign-off, holdout use or Stage E reopening.

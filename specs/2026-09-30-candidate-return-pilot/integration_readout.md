@@ -1,6 +1,64 @@
 # P1 integration checkpoint
 
-## Current: serial transactions, raw verification and outer watchdog
+## Current: complete campaign binding accepted on invented fixtures
+
+2026-09-30T17:12Z, based on505e2487ab4faa3a8878f9f30b8e1ee6e579224c.
+The full66-job application and single-attempt launch wrapper are implemented.
+**271 related tests pass in49.211s; full repository compileall exits0.**
+At this source-freeze checkpoint no real P1 environment or scientific fit has
+run. The result root remains absent; approved host process scan77898/77901
+returned only the scan's shell/filter. Tests/audit/compile commands have ended.
+
+The production factory binds only the strict R4 deployment facade, unchanged
+effective environment, public observation producer and declared CPUfloat32
+candidate models. Nine preflight cases (block then representation) use the
+first9 allocated preflight seeds. Each records52 original steps and4 exact
+restored clone steps at the midpoint:504 calls, within the624 cap. The other3
+allocated preflight seeds remain unused. Disposable copies of the declared
+continuation samplers test recovery; stored templates and later fork sampling
+states are not advanced. Isolated copied producer/policy inference has no
+environment handle, and its public request support must match recorded support.
+
+Demonstrations,256-step initialization, independent95% qualification, same-start
+forks,32-episode continuations, every-four-episode state bundles, all27-model seal,
+396 evaluations and raw paired readback now share the tested serial application.
+The application restores phase/model/global RNG/collector/update ownership only
+against a verified live ledger prefix; it cannot refund spend, truncate raw
+records, jump phases or provide an automatic restart after scientific failure.
+No claim of resumability after an operating-system process death is made.
+
+The locked entrypoint rejects dirty/wrong worktrees, uncommitted effective
+configs, proposal/authorization/source/runtime/input drift, changed historical
+seed inventories and pre-existing output roots. The parent exclusively claims
+the attempt, bundles the committed source and supervises one child process group
+against global and active-scope deadlines. CPU thread settings are1/1 with
+deterministic algorithms, float32, and frozen Python/NumPy/Torch/build records.
+No resume, tuning, parameter override or retry flags exist.
+
+Completed payload archiving re-reads every member and source hash. The approved
+Dropbox-local archive/manifest copy is separately byte-verified; cloud sync and
+Howard access remain explicitly unverified. Live launcher/ledger records stay
+outside the immutable payload; the payload retains the budget prefix through
+verification. Terminal records preserve the final ledger state separately.
+
+Ten new tests include the full66-stage pipeline with real miniature PPO/BC
+kernels, raw recording/verifier and local archive copy, but only invented
+bookkeeping and patched patient constructors/reset/steps. The tiny fixture uses
+354 fake calls/45 artificial Adam steps and33 fake tests; these are NOT P1
+scientific counts or results. It also checks qualification/preflight terminal
+failure, active-collector and post-update campaign restore, atomic bad-RNG
+rejection, implementation-commit binding and source/runtime/input lock failures.
+Earlier fixture runs exposed a wrong fake action width and an invalid checkpoint
+suffix; both were fixed before science. No scientific attempt was consumed.
+
+Fresh readiness-after-campaign.json again checks7 R4 locks,888 prior local
+JSON/JSONL files and zero collisions. Original protocol/config and8 historical
+fingerprints are unchanged. Next: commit this implementation, generate and
+commit the separate effective execution packet, recheck locks and run the one
+authorized budgeted preflight/pilot. Real scientific failure still closes it
+without fix/retry. No performance improvement is claimed by engineering tests.
+
+## Previous: serial transactions, raw verification and outer watchdog
 
 Updated 2026-09-30T16:49Z; based on14f533c9f0a962be43aacf4f0942b004a97450ee.
 This is engineering progress, NOT an executed P1 preflight or performance result.

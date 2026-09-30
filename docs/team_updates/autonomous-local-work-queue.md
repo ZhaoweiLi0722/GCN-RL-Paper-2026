@@ -1,6 +1,26 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 serial transactions and raw verifier pass; full application binding next
+## Live checkpoint: P1 full application accepted; execution freeze next
+
+Updated 2026-09-30T17:12Z. The original P1 scope remains unchanged. No real P1
+preflight, patient simulation or scientific fit has run at this checkpoint.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent integration worktree; codex/september-research-integration; base505e248; local only |
+| Completed | Full66-job application, strict patient/reference factories, concrete504-step preflight incl clones, initialization/qualification/forks,18 serial continuations,27-model test seal, raw396-evaluation readback, verified archive/local-copy path and one-attempt locked watchdog entrypoint |
+| Validation |271 related invented-fixture tests pass in49.211s; compileall and diff check exit0. Includes whole pipeline, failure closure, mid-collector/post-update campaign restore, no refund/truncation and source/runtime/authorization locks |
+| Evidence | specs/2026-09-30-candidate-return-pilot/integration_readout.md; candidate_pilot_campaign.py and candidate_pilot_execution.py; two new test modules; readiness-after-campaign.json |
+| Preservation |Original protocol/config,7 R4 locks and8 prior fingerprints match;888 historical JSON/JSONL files, zero stream collisions |
+| Engineering failures |Tiny fake fixture action width and checkpoint suffix errors corrected before science; no P1 scientific attempt consumed |
+| Current phase |Engineering acceptance passed; source/effective-config freeze pending; ready_to_execute=false until committed locks pass |
+| Process |Approved host scan returned only77898/77901 shell/filter. Test/audit/compile commands ended. No research runner observed; output root absent |
+| Next action |Local implementation commit; commit separate effective config with actual implementation/source/runtime/input/seed locks; then one authorized real preflight and pilot only if it passes |
+| Exact approval need |None for original approved P1. Terminal scientific failure, parameter/cap/design changes or follow-on work require a new decision |
+| Limits |52,728 calls,4,608 updates,6h plus nontransferable subcaps, single attempt. No DDPG fits, reward/scenario search, holdout, Stage E reopen, remote Git, messaging or Howard approval claim |
+| External status |No actual Dropbox copy/cloud sync/access yet. Existing gcn-rl-p1 only, unchanged. Engineering acceptance is not RL performance evidence |
+
+## Previous checkpoint: P1 serial transactions and raw verifier pass; full application binding next
 
 Updated 2026-09-30T16:49Z. Continuing the exact approved bounded P1 scope.
 No real P1 preflight, patient simulation or scientific fit has run. New tests

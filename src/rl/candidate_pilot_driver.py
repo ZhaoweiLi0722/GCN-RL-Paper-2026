@@ -262,7 +262,7 @@ class CandidateContinuation:
     def update_due(self):
         return self.episode == (self.updates + 1) * self.settings["episodes_per_rollout"] and self.active is None
 
-    def step(self):
+    def start_episode(self):
         if self.done or self.update_due or self.episode >= len(self.seeds) or self.budget.active != self.scope:
             raise ValueError("collection forbidden at closed/update/wrong-scope boundary")
         self.budget.check()
@@ -271,6 +271,10 @@ class CandidateContinuation:
             if (self.active.split != "training" or self.active.selection != "sample" or self.active.learner is not self.kernel
                     or self.active.boundary.episode_horizon != self.horizon):
                 raise ValueError("training must sample this exact kernel")
+        return self.active
+
+    def step(self):
+        self.start_episode()
         event = self.active.step(before_step=lambda: self.budget.debit("environment"))
         if self.active.closed:
             if self.role == "ppo":

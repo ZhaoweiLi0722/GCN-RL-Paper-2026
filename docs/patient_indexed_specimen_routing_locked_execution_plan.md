@@ -1888,3 +1888,16 @@ process was observed. This checkpoint is not new scientific scope, launch
 readiness or an experiment result. Existing gcn-rl-p1 remains active/unchanged
 for the finite approved remainder; do not expand the design or retry a failed
 scientific attempt. No remote, cloud, holdout or Stage E action occurred.
+
+#### P1 full application acceptance and execution-freeze gate
+
+2026-09-30T17:12Z: full serial campaign/factories, concrete preflight and
+single-attempt source/runtime-locked supervisor are implemented.271 related
+invented-fixture tests and full compileall pass. Nine preflight cases use504
+original-plus-clone calls within the unchanged624 cap; all scientific settings,
+95% initialization gate, counts, serial order and single-attempt rule remain
+unchanged. Fresh7-input/888-file stream audit and8 historical fingerprints pass.
+Engineering fixes and limitations are recorded in the integration readout.
+No real P1 preflight or fit has run yet. Commit actual implementation and a
+separate effective execution packet before launching the approved attempt.
+Neither these checks nor source-freeze authority is a positive RL result.

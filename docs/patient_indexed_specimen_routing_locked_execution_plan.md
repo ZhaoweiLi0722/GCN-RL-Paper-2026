@@ -1781,3 +1781,30 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   source-audit/prepare the public collector with mocks, then draft one bounded
   pilot for explicit execution approval. No automatic experiment, algorithm
   search, remote action, Howard sign-off, formal holdout or Stage E reopening.
+
+### 2026-09-30: Public candidate collector audit and pure boundary accepted
+
+- Following Zhaowei's continuation, source-audited actual observation, anchor,
+  routing, cost, horizon and recovery paths. The existing proposal/gate collector
+  cannot silently stand in for a categorical collector. Time-limit done does
+  not resolve all patients or add a terminal liability; this is an objective
+  boundary, not proof of why earlier RL failed.
+- Added pure public context/submission/receipt checks without environment
+  construction or steps. Preserve the full MDL-2 anchor and exact original
+  request; reconcile raw cost, decoded/conserved flow and unfinished identities.
+  No new reward, penalty, patient-state mask, dynamics or historical-agent change.
+- Readout: `specs/2026-09-30-candidate-collector-audit/readout.md`.17 new tests
+  and182 prior related tests pass,199 total in5.595s; full compileall and eight
+  preservation fingerprints pass. New tests actively forbid patient constructor,
+  reset and step; only metadata shells and invented arrays/receipts are used.
+- This is not end-to-end collector acceptance. A combined categorical collector
+  recovery driver, real preflight, candidate support/initialization and precise
+  finite-window/clinical endpoint objective remain pre-execution requirements.
+  Clone checks must count against the future simulator-query budget.
+- Raw input parity does not equal full neural feature parity: candidate scoring
+  also consumes reference/candidate features. A DDPG comparison would compare
+  controller packages unless those differences and initialization are controlled.
+- Next draft one bounded pilot packet and ask explicit scientific execution
+  approval, then remove the finite heartbeat when only that approval remains.
+  No automatic training, scenario/reward search, remote action, Howard sign-off,
+  holdout use or Stage E reopening; inspected R6 labels remain development data.

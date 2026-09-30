@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: Capped PPO update and recovery verified
+## Live checkpoint: Public collector source audit and pure boundary verified
+
+Updated 2026-09-30T15:15:25Z. Zhaowei requested continuation. The existing
+observation/action/reward/closure/recovery paths were source-audited, and a pure
+candidate boundary was verified on invented inputs. No real patient environment
+construction/reset/step or scientific collection/fitting ran in this packet.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only; baseb960e44 |
+| Completed work | Public raw producer/full MDL-2 anchor context; unchanged float64 candidate submission; raw reward/component/flow audit; explicit horizon mapping and unresolved-identity reporting |
+| Evidence | `specs/2026-09-30-candidate-collector-audit/readout.md`; `src/rl/candidate_collection_boundary.py`;17 new tests with patient constructor/reset/step patched to reject execution |
+| Important findings | Old float32 proposal/gate collector is not the categorical interface. Environment done is a clock limit, not patient resolution. Distinct request classes need not yield distinct or useful executed routes |
+| Validation |199 related tests pass in5.595s; full compileall passes; eight old fingerprints unchanged. Existing related kernels use invented-tensor updates; new boundary tests do not train or simulate |
+| Scope boundary | No hidden patient metadata in policy inputs, no new reward/terminal penalty, no feasibility certificate. Candidate/reference features differ from DDPG despite common raw state, so not an isolated optimizer comparison. No PPO superiority or online benefit established |
+| Integration gap | Pure adapter only. A combined categorical environment/cursor/pending-segment/kernel recovery driver and real preflight are not implemented/verified; include as hard pre-execution requirements in the proposed protocol |
+| Process check | Approved read-only host scan found only its own shell/filter; tests/compile exited0; no detached research workload. Existing gcn-rl heartbeat rechecked ACTIVE every30min, not modified |
+| Next concrete action | Draft one bounded pilot decision packet: same-start frozen/no-RL comparison, named initialization and candidate support, clean DDPG/graph attribution limits, finite-window versus clinical lifecycle objective, fresh streams, all-query/update/time caps, preflight and stop gates |
+| Approval needed | No new approval to draft the packet. Before any scientific execution, ask one concrete scope question; once only that decision remains, delete the finite gcn-rl heartbeat rather than invent more experiments |
+| Unchanged limits | No automatic real collection/fitting, reward/scenario/model search, formal holdout, external compute, remote Git or messaging. Stage E closed; R6 test data not untouched confirmation; no Howard approval inferred |
+| Preservation | New source/tests/readout plus appended local status/ledger only; prior source/config/evidence untouched; no new cloud-sync/access claim |
+
+## Previous checkpoint: Capped PPO update and recovery verified
 
 Updated 2026-09-30T15:05:09Z. Zhaowei requested continuation. The capped
 categorical update adapter and closed-rollout/update-boundary checkpoint tests

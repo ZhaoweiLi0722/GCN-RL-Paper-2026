@@ -1602,3 +1602,22 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   sampling, clinical rules, compute caps and authorization. Do not fit on these
   states then call new draws on the same states generalization. No reward
   tuning, actor updates, formal holdout, remote Git or reopening Stage E.
+
+### 2026-09-30: R6 bounded clean-critic diagnostic explicitly approved
+
+- Zhaowei answered the concrete scope question: "Approve this bounded critic
+  diagnostic". This authorizes18 fresh frozen-policy parent trajectories,
+  four training/two test per replacement model, and three fresh critics with
+  at most1000 updates each. It does not represent Howard approval.
+- Follow `specs/2026-09-30-clean-critic-generalization/protocol.md` and
+  `experiments/configs/clean_critic_generalization_20260930.json`. Commit first;
+  single attempt, at most113256 simulator steps/7200 seconds, no expansion.
+- Preserve actor/gate/reward/dynamics and all old evidence. New trajectories
+  are disjoint from R3 and from each other's partition. Seal predictions before
+  opening test labels; select constant baseline on training labels only.
+- This is supervised frozen-continuation critic ranking, not online DDPG or a
+  full-episode improved policy. Retain all clinical harms and null results.
+  No automatic actor training regardless of triage; new scope needs approval.
+- Independently audit and archive raw data, full critic/RNG state and source;
+  checksum the authorized Dropbox local copy. Cloud sync/access separately
+  unverified. No remote Git, messages, formal holdout or Stage E reopening.

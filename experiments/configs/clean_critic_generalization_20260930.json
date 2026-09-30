@@ -1,0 +1,33 @@
+{
+  "kind": "R6_clean_frozen_continuation_critic_generalization",
+  "input_lock_config": "experiments/configs/replacement_policy_compatibility_20260929.json",
+  "seeds": [60, 61, 62],
+  "scenario": "routing_nominal_history",
+  "horizon": 52,
+  "decision_steps": [0, 13, 26, 39],
+  "trajectories": {"train": 4, "test": 2},
+  "draws_per_state": 8,
+  "rng_namespace_text": "R6-clean-critic-generalization-20260930",
+  "critic_init_seeds": [930601, 930611, 930621],
+  "options": [
+    {"group": "specimen_transfer", "epsilon": 0.05, "sign": -1},
+    {"group": "specimen_transfer", "epsilon": 0.05, "sign": 1},
+    {"group": "specimen_transfer", "epsilon": 0.10, "sign": -1},
+    {"group": "specimen_transfer", "epsilon": 0.10, "sign": 1}
+  ],
+  "fit": {"updates": 1000, "learning_rate": 0.0003, "gradient_clip": 5.0,
+          "scale_floor": 1e-9, "log_every": 100},
+  "maximum_environment_steps": 113256,
+  "maximum_seconds": 7200,
+  "maximum_records": 3456,
+  "device": "mps",
+  "reward_scale": 1e-9,
+  "gamma": 1.0,
+  "prior_locks": {
+    "results/replacement_fixed_window_pilot_20260929/artifact_inventory.json": "16bac5ba84db986228fb14ebd85708629c20bd51562dee0420c04cdda6f0f6be",
+    "results/replacement_fixed_window_pilot_20260929/status.json": "7ad8830bf598a67ad83b23a78455622eb236e5fd919335e7be178031e17d433d",
+    "reports/2026-09-29-replacement-fixed-window-pilot/verification.json": "aee6ccdee737a16214d69bfaf22e10e5d7657987b07f6faf8b21e95377ec705a"
+  },
+  "output_root": "results/clean_critic_generalization_20260930",
+  "protocol": "specs/2026-09-30-clean-critic-generalization/protocol.md"
+}

@@ -1,6 +1,26 @@
 # Autonomous local research queue
 
-## Live checkpoint: R3 replacement pilot verified and archived; no training authorized
+## Live checkpoint: R6 critic-only diagnostic approved; pre-execution preparation
+
+Updated 2026-09-30. Zhaowei explicitly approved the bounded18-trajectory,
+three-critic/1000-update diagnostic in response to the concrete scope question.
+This supersedes only R3's lack of authorization for this specific new packet.
+Actor/gate/reward/scenario/Stage E and remote-operation boundaries remain fixed.
+
+| Item | Current state |
+| --- | --- |
+| Worktree | Persistent `worktrees/september-research-integration`; branch `codex/september-research-integration`; local only |
+| Phase | R6 implementation/testing before frozen source commit and one production attempt |
+| Completed work | Public-input and lineage guards; separate fresh GCN critic; equal-state training-only scaling; training-only constant baseline; sealed held-out predictions; raw verifier and checkpoint replay |
+| Tests | 62 related synthetic tests, full compileall and diff checks pass; read-only preflight verifies24 input files/83 source locks/594 fresh streams and all R3 inventory members; no patient simulation or production critic fit yet |
+| Recorded output | None for R6; R3 remains complete and immutable |
+| Next concrete action | Finish integration checks, freeze source/config/protocol, then execute the one approved bounded attempt |
+| Limits | 18 parent trajectories,72 states,3456 logical continuations,113256 actual simulator steps,7200s,3 critics at1000 updates each |
+| Approval | R6 scope approved explicitly; no pending approval inside that scope; no automatic actor training or retry |
+| Preservation | Save raw data/full critic and RNG states/code; independently verify then archive and copy to versioned Dropbox folder; cloud sync not implied |
+| Scientific meaning | Frozen-continuation critic generalization only; cannot prove online DDPG benefit or clinical safety |
+
+## Previous checkpoint: R3 replacement pilot verified and archived
 
 Updated 2026-09-29 local time after the approved single bounded R3 attempt.
 Source `195d0eb` passed81 tests/compileall and24-step mechanical acceptance.

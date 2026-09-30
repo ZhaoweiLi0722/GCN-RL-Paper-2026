@@ -1,6 +1,6 @@
 # Autonomous local research queue
 
-## Live checkpoint: R6 critic-only diagnostic approved; pre-execution preparation
+## Live checkpoint: R6 negative generalization screen verified and archived
 
 Updated 2026-09-30. Zhaowei explicitly approved the bounded18-trajectory,
 three-critic/1000-update diagnostic in response to the concrete scope question.
@@ -10,14 +10,16 @@ Actor/gate/reward/scenario/Stage E and remote-operation boundaries remain fixed.
 | Item | Current state |
 | --- | --- |
 | Worktree | Persistent `worktrees/september-research-integration`; branch `codex/september-research-integration`; local only |
-| Phase | R6 implementation/testing before frozen source commit and one production attempt |
+| Phase | R6 finite packet complete, including independent verification and archive/Dropbox local byte checks; execution97c79a6b316740b835d82bc3f2be2683624908f9 |
 | Completed work | Public-input and lineage guards; separate fresh GCN critic; equal-state training-only scaling; training-only constant baseline; sealed held-out predictions; raw verifier and checkpoint replay |
-| Tests | 62 related synthetic tests, full compileall and diff checks pass; read-only preflight verifies24 input files/83 source locks/594 fresh streams and all R3 inventory members; no patient simulation or production critic fit yet |
-| Recorded output | None for R6; R3 remains complete and immutable |
-| Next concrete action | Finish integration checks, freeze source/config/protocol, then execute the one approved bounded attempt |
+| Tests | 62 prelaunch/63 final related tests, full compileall pass;24 inputs/83 source locks/594 fresh streams and R3 inventory verify unchanged |
+| Recorded output | PID54880/PPID30450 completed exit0 after1895.705s;18 trajectories/72 states/3456 records/73232 steps/3000 supervised critic updates; actor/DDPG updates0; stderr empty; no experiment/verifier process at final scan |
+| Verification/result | All raw costs/848 aliases/labels/seals/splits and triage independently reconcile; saved-weight MPS predictions reproduce exactly. Test ranking32.0%,46.7%,46.3%; cost improves vs frozen on2/6 test trajectories, clinical mean adverse on2/6. All triage gates fail; no actor follow-on |
+| Next concrete action | Review the readout's coverage/label/representation versus clinical-objective questions before any separate prospective fit/data/actor proposal; no retry/new training authorized |
 | Limits | 18 parent trajectories,72 states,3456 logical continuations,113256 actual simulator steps,7200s,3 critics at1000 updates each |
-| Approval | R6 scope approved explicitly; no pending approval inside that scope; no automatic actor training or retry |
-| Preservation | Save raw data/full critic and RNG states/code; independently verify then archive and copy to versioned Dropbox folder; cloud sync not implied |
+| Approval | R6 explicitly approved scope is complete; any new scientific fit/data/objective/actor stage needs a separate bounded proposal and approval; no automatic follow-on |
+| Preservation | 3659-file archive611157514 bytes and Dropbox local archive/manifest hashes verified; archiveSHA256 bce84b741c3dc714a9439cc49f8226e8be7dee646450a4ca53ca23eaca0977f0; cloud sync/access unverified |
+| Evidence | `specs/2026-09-30-clean-critic-generalization/readout.md`; `reports/2026-09-30-clean-critic-generalization/`; raw root and versioned archive retained |
 | Scientific meaning | Frozen-continuation critic generalization only; cannot prove online DDPG benefit or clinical safety |
 
 ## Previous checkpoint: R3 replacement pilot verified and archived

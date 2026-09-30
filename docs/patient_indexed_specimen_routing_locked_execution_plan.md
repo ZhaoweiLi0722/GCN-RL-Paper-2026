@@ -1621,3 +1621,29 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - Independently audit and archive raw data, full critic/RNG state and source;
   checksum the authorized Dropbox local copy. Cloud sync/access separately
   unverified. No remote Git, messages, formal holdout or Stage E reopening.
+
+### 2026-09-30: R6 critic-only diagnostic complete; generalization gates fail
+
+- Single source97c79a6 attempt completed exit0:18 parent trajectories,72 states,
+  3456 outcomes,73232 actual simulator steps,1895.705s,three critics at1000
+  supervised updates each. No actor/DDPG update, retry, or sample expansion.
+- Independent raw arithmetic/lineage/848 alias/seal/selection verification
+  passes. Fresh initial weights reproduce, all Adam steps equal1000, final
+  saved-weight MPS predictions exactly match. R4/R3 inputs/evidence unchanged,
+  stderr empty and no experiment/verifier remains.63 final related tests and
+  compileall pass, including the read-only post-run error-accounting helper.
+- Test pairwise accuracy32.0%,46.7%,46.3%, versus training78.7%,78.8%,67.8%.
+  Test errors exceed the zero-advantage prediction reference for all models.
+  Cost improves over frozen in only2/6 test trajectories;2/6 have an adverse
+  clinical mean. These are dependent remaining-window diagnostic contrasts,
+  not improved full-policy episodes or formal statistical/safety conclusions.
+- All prespecified triage components fail. Preserve the limited R3 headroom
+  finding but do not convert it to an online-DDPG claim. Generalization and
+  clinical-objective alignment need separate diagnosis; reward changes are
+  not an established remedy and are not automatically authorized.
+- Readout: `specs/2026-09-30-clean-critic-generalization/readout.md`. The3659-file
+  archive and Dropbox local archive/manifest copies hash-verify; cloud/access
+  unverified. ArchiveSHA256:
+  `bce84b741c3dc714a9439cc49f8226e8be7dee646450a4ca53ca23eaca0977f0`.
+- Finite packet closed; no actor follow-on, new experiment, remote Git, formal
+  holdout or Stage E reopening. No Howard sign-off is inferred.

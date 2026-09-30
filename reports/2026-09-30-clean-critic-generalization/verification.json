@@ -1,0 +1,307 @@
+{
+  "actual_steps": 73232,
+  "aliased_continuations": 848,
+  "limitations": [
+    "six test trajectories",
+    "dependent states and draws",
+    "replacement frozen baselines",
+    "one-step changes then frozen continuation",
+    "no clinical noninferiority"
+  ],
+  "online_benefit_claim": false,
+  "policies": {
+    "60": {
+      "ranking": {
+        "comparable_pairs": 75,
+        "correct": 24,
+        "incorrect": 51,
+        "label_ties": 3,
+        "pairwise_accuracy": 0.32,
+        "prediction_ties": 0,
+        "regret_reference": "optimistic held-out sampled argmin; diagnostic only",
+        "sampled_support_regret": [
+          0.0,
+          2640157.3559508324,
+          4108416.081821203,
+          3097967.087096095,
+          0.0,
+          0.0,
+          0.0,
+          830610.9648513794
+        ],
+        "selected_actions": [
+          0,
+          4,
+          4,
+          0,
+          0,
+          0,
+          5,
+          4
+        ]
+      },
+      "scale": 0.0022024099930675785,
+      "training_constant": 5,
+      "trajectories": [
+        {
+          "adverse_clinical_mean_vs_frozen": true,
+          "mean_contrasts": {
+            "constant": {
+              "completion_service_level": -0.0013551473974766498,
+              "manufacturing_loss_rate": 0.0019350063073367701,
+              "patients_completed": -7.5625,
+              "patients_lost": 9.625,
+              "total_cost": 2006024.5239888951
+            },
+            "frozen": {
+              "completion_service_level": -0.0007828538620366868,
+              "manufacturing_loss_rate": 0.00040881009731357767,
+              "patients_completed": -4.375,
+              "patients_lost": 5.90625,
+              "total_cost": 72704.47524613142
+            },
+            "mdl2": {
+              "completion_service_level": -0.0008208476599081988,
+              "manufacturing_loss_rate": 0.0006419964034697476,
+              "patients_completed": -4.59375,
+              "patients_lost": 6.5625,
+              "total_cost": 193446.6302562952
+            }
+          },
+          "trajectory": 0
+        },
+        {
+          "adverse_clinical_mean_vs_frozen": false,
+          "mean_contrasts": {
+            "constant": {
+              "completion_service_level": 9.912151851953696e-06,
+              "manufacturing_loss_rate": -0.00014390537905842674,
+              "patients_completed": 0.0625,
+              "patients_lost": 0.03125,
+              "total_cost": -585608.496496018
+            },
+            "frozen": {
+              "completion_service_level": 0.00017944346968005315,
+              "manufacturing_loss_rate": -0.0002740279195822448,
+              "patients_completed": 1.03125,
+              "patients_lost": -0.1875,
+              "total_cost": -880115.6572606266
+            },
+            "mdl2": {
+              "completion_service_level": 4.7712910601339226e-05,
+              "manufacturing_loss_rate": -0.00033738664219156735,
+              "patients_completed": 0.28125,
+              "patients_lost": 0.0625,
+              "total_cost": -369499.018304307
+            }
+          },
+          "trajectory": 1
+        }
+      ]
+    },
+    "61": {
+      "ranking": {
+        "comparable_pairs": 60,
+        "correct": 28,
+        "incorrect": 32,
+        "label_ties": 4,
+        "pairwise_accuracy": 0.4666666666666667,
+        "prediction_ties": 0,
+        "regret_reference": "optimistic held-out sampled argmin; diagnostic only",
+        "sampled_support_regret": [
+          0.0,
+          3864057.609547615,
+          0.0,
+          80701.2829811573,
+          0.0,
+          0.0,
+          9624512.06594801,
+          0.0
+        ],
+        "selected_actions": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          4
+        ]
+      },
+      "scale": 0.0036641539077590076,
+      "training_constant": 5,
+      "trajectories": [
+        {
+          "adverse_clinical_mean_vs_frozen": false,
+          "mean_contrasts": {
+            "constant": {
+              "completion_service_level": -0.0005273550964483599,
+              "manufacturing_loss_rate": 0.0004353676363298565,
+              "patients_completed": -3.1875,
+              "patients_lost": 2.8125,
+              "total_cost": 668027.28710014
+            },
+            "frozen": {
+              "completion_service_level": 0.0,
+              "manufacturing_loss_rate": 0.0,
+              "patients_completed": 0.0,
+              "patients_lost": 0.0,
+              "total_cost": 0.0
+            },
+            "mdl2": {
+              "completion_service_level": -0.0002221591575364574,
+              "manufacturing_loss_rate": 0.000260948680102408,
+              "patients_completed": -1.34375,
+              "patients_lost": 2.0,
+              "total_cost": -29998.34637643397
+            }
+          },
+          "trajectory": 0
+        },
+        {
+          "adverse_clinical_mean_vs_frozen": true,
+          "mean_contrasts": {
+            "constant": {
+              "completion_service_level": -0.00042118588777083875,
+              "manufacturing_loss_rate": 0.00033597680106127285,
+              "patients_completed": -2.5625,
+              "patients_lost": 3.65625,
+              "total_cost": 1255335.142318055
+            },
+            "frozen": {
+              "completion_service_level": -0.00024164718832029967,
+              "manufacturing_loss_rate": -2.121609467593431e-05,
+              "patients_completed": -1.46875,
+              "patients_lost": 2.8125,
+              "total_cost": 46343.6488603577
+            },
+            "mdl2": {
+              "completion_service_level": -0.00038645279242163245,
+              "manufacturing_loss_rate": 0.00020522915872448052,
+              "patients_completed": -2.34375,
+              "patients_lost": 3.0,
+              "total_cost": 919411.1886873171
+            }
+          },
+          "trajectory": 1
+        }
+      ]
+    },
+    "62": {
+      "ranking": {
+        "comparable_pairs": 80,
+        "correct": 37,
+        "incorrect": 43,
+        "label_ties": 12,
+        "pairwise_accuracy": 0.4625,
+        "prediction_ties": 0,
+        "regret_reference": "optimistic held-out sampled argmin; diagnostic only",
+        "sampled_support_regret": [
+          0.0,
+          0.0,
+          3328597.1913523674,
+          501986.412840724,
+          0.0,
+          1505422.075905323,
+          0.0,
+          0.0
+        ],
+        "selected_actions": [
+          0,
+          5,
+          4,
+          5,
+          0,
+          5,
+          4,
+          5
+        ]
+      },
+      "scale": 0.0012894615887533189,
+      "training_constant": 1,
+      "trajectories": [
+        {
+          "adverse_clinical_mean_vs_frozen": false,
+          "mean_contrasts": {
+            "constant": {
+              "completion_service_level": 0.0002904003382295829,
+              "manufacturing_loss_rate": -0.0005568529470604353,
+              "patients_completed": 1.65625,
+              "patients_lost": -1.4375,
+              "total_cost": -473948.2541157231
+            },
+            "frozen": {
+              "completion_service_level": 0.0001534658750692048,
+              "manufacturing_loss_rate": -0.00021917214913783783,
+              "patients_completed": 0.84375,
+              "patients_lost": -1.0625,
+              "total_cost": 43955.94484299421
+            },
+            "mdl2": {
+              "completion_service_level": 0.0002904003382295829,
+              "manufacturing_loss_rate": -0.0005568529470604353,
+              "patients_completed": 1.65625,
+              "patients_lost": -1.4375,
+              "total_cost": -473948.2541157231
+            }
+          },
+          "trajectory": 0
+        },
+        {
+          "adverse_clinical_mean_vs_frozen": false,
+          "mean_contrasts": {
+            "constant": {
+              "completion_service_level": -3.335864368599409e-05,
+              "manufacturing_loss_rate": 7.787259118416834e-05,
+              "patients_completed": -0.1875,
+              "patients_lost": 0.3125,
+              "total_cost": -719839.5512017012
+            },
+            "frozen": {
+              "completion_service_level": 0.00016260199561403746,
+              "manufacturing_loss_rate": -0.00037798723194254567,
+              "patients_completed": 1.0,
+              "patients_lost": -1.0625,
+              "total_cost": -1309294.5961036086
+            },
+            "mdl2": {
+              "completion_service_level": -3.335864368599409e-05,
+              "manufacturing_loss_rate": 7.787259118416834e-05,
+              "patients_completed": -0.1875,
+              "patients_lost": 0.3125,
+              "total_cost": -719839.5512017012
+            }
+          },
+          "trajectory": 1
+        }
+      ]
+    }
+  },
+  "records": 3456,
+  "saved_weight_prediction_replay": {
+    "60": {
+      "adam_steps": 1000,
+      "fresh_initialization_reproduced": true,
+      "max_prediction_difference": 0.0
+    },
+    "61": {
+      "adam_steps": 1000,
+      "fresh_initialization_reproduced": true,
+      "max_prediction_difference": 0.0
+    },
+    "62": {
+      "adam_steps": 1000,
+      "fresh_initialization_reproduced": true,
+      "max_prediction_difference": 0.0
+    }
+  },
+  "states": 72,
+  "triage": {
+    "all_policy_ranking": false,
+    "all_trajectory_cost": false,
+    "clinical_directions": false,
+    "followup_discussion_only": false
+  },
+  "verified_raw_arithmetic": true
+}

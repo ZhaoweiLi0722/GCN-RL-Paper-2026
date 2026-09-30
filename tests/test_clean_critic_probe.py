@@ -10,6 +10,7 @@ import numpy as np
 import torch
 
 from evaluation.run_clean_critic_generalization import allocate_streams, summarize_test
+from evaluation.summarize_clean_critic_generalization import error_accounting
 from src.models.gcn_ddpg import GCNDDPGAgent
 from src.rl.clean_critic_probe import (
     advantage, checkpoint, fit, fresh_critic, seal_predictions, target_scale, tensor_inputs,
@@ -105,6 +106,13 @@ class CriticSmoke(unittest.TestCase):
 
 
 class ProductionContract(unittest.TestCase):
+    def test_saved_error_accounting_has_no_refit_or_reweighting(self):
+        actual = error_accounting([[0., 2.], [0., 99.]], [[0., 1.], [0., 999.]],
+                                  [[True, True], [True, False]], 2., [[0., .5], [0., 999.]])
+        self.assertEqual(actual["normalized_mse"], .0625)
+        self.assertEqual(actual["zero_advantage_predictor_mse"], .0625)
+        self.assertEqual(actual["estimated_mc_label_mean_variance"], .015625)
+
     def test_exact_limits_and_disjoint_streams(self):
         spec = json.loads(Path("experiments/configs/clean_critic_generalization_20260930.json").read_text())
         base, streams = allocate_streams(spec)

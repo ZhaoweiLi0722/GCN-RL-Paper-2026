@@ -1909,3 +1909,22 @@ P1 execution freeze binds implementation
 It retains original scientific parameters/draft bytes and binds264 source files,
 runtime,7 R4 inputs and the888-file historical stream audit. Commit this packet
 before the single real preflight; no scientific run is claimed at this entry.
+
+#### P1 terminal failure, preservation and new-decision boundary
+
+2026-09-30T17:16Z: the claimed P1 at execution3de710b failed on first producer
+construction: locked R4 include_central_capacity_hub=true conflicts with the
+producer's explicit guard. One environment initialization, zero env.step calls,
+zero updates, zero completed episodes. No RL performance result. The prior
+271 tests passed only invented no-hub layouts; the static readiness omission is
+recorded, not treated as a scientific negative. Parent78259/child78540 exited;
+no repair/retry followed. A separate artificial clock probe also exposed an
+invalid cross-process monotonic-origin assumption in the supervisor.
+
+The full15-file failed tree/source bundle is retained and archived member by
+member, SHA2563d29ccdff06ff52cb7b2fe1280f0ec5015d7fef252101fca3522da06ee3c877c.
+Approved Dropbox-local archive/manifest copies are byte-verified, not cloud-sync
+or Howard-access confirmations. Details: P1 terminal_readout.md. The app deleted
+gcn-rl-p1 with deleteStatus=deleted. New compatibility/timing repair and another
+bounded scientific attempt need a new explicit decision; no silent hub removal,
+reward/design change, historical overwrite or auto-relaunch is permitted.

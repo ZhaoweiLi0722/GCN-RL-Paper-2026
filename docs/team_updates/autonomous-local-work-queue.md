@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 implementation frozen; single real preflight next
+## Live checkpoint: P1 terminal preflight failure; evidence archived; new decision needed
+
+Updated 2026-09-30T17:16Z. The authorized single P1 attempt has ended. No
+repair/retry/resume is authorized by this failed attempt; no runner remains.
+
+| Item | Current state |
+| --- | --- |
+| Execution |Implementation e1de58ab1b358ff41cb4a37c26babfac88ecff4b; execution HEAD3de710bbb84cf200101d8ba8d22e864145bce680; local only |
+| Engineering acceptance |271 invented-fixture tests and full compileall passed before source freeze. This did not cover the real R4 hub-enabled layout |
+| Actual failure |First real preflight environment/producer setup: all R4 configs enable central capacity hub; current producer explicitly rejects it. Static compatibility check should have caught this |
+| Actual work counts |One initial preflight environment constructed/reset,0 env.step calls,0 optimizer steps,0 completed episodes,0 training and0 evaluation. No RL performance result |
+| Evidence |specs/2026-09-30-candidate-return-pilot/terminal_readout.md; results/candidate_return_pilot_20260930/launcher/{failure.json,failure-state.pt,budget.jsonl,terminal.json,supervisor.json} |
+| Process |Parent78259/child78540 ended; child exit1 in4.9169s, no kill. Post-exit host scan only78868/78871 shell/filter. All scientific/test commands ended |
+| Error scan |Caught hub-guard traceback in stdout/failure.json; stderr empty does not mean success |
+| Additional diagnostic |Artificial no-simulation probe found different parent/child monotonic origins in current runtime; supervisor clock comparison also needs repair before any new attempt. Not causal for this failure |
+| Archive |Complete15-file failed tree,80,491,902-byte archive; SHA2563d29ccdff06ff52cb7b2fe1280f0ec5015d7fef252101fca3522da06ee3c877c. Per-file verification and approved Dropbox-local archive/manifest byte copies complete |
+| External truth |Dropbox cloud sync and Howard access unverified; no push/PR/merge/messages, sharing change, holdout or Stage E reopen |
+| Automation |gcn-rl-p1 deleted; app confirmed deleteStatus=deleted. Other tasks untouched; do not auto-recreate while awaiting decision |
+| Next action |Only after approval: compatibility/timing repair with full-layout static/mock acceptance; freeze a new recovery packet; at most one new attempt if original scientific design/caps remain unchanged |
+| Exact approval need |Approve P1-R1 under the same environment/reward/information/model boundaries,95% gate/counts and52,728 calls/4,608 updates/6h caps; otherwise preserve closure. If any design cannot remain unchanged, ask again before execution |
+| Interpretation |Failure is engineering compatibility, not evidence against PPO/DDPG or for changing rewards. Historical graph/distillation claims remain separate from unproven online RL contribution |
+
+## Previous checkpoint: P1 implementation frozen; single real preflight next
 
 Updated 2026-09-30T17:12Z. The original P1 scope remains unchanged. No real P1
 preflight, patient simulation or scientific fit has run at this checkpoint.

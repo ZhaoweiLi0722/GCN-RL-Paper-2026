@@ -1,5 +1,14 @@
 # P1 integration checkpoint
 
+**Terminal update 2026-09-30T17:16Z:** the one real preflight failed during
+producer construction because all R4 configs enable the central capacity hub,
+which this producer rejects. No simulator step or optimizer update ran. No
+automatic repair/retry occurred. Complete evidence and verified Dropbox-local
+failure archive are preserved; the finite automation is deleted. See
+`terminal_readout.md` for the exact failure, a separate cross-process clock
+defect, preservation receipts and the new recovery approval boundary. The
+engineering acceptance below is retained historically, not a successful trial.
+
 Execution freeze: implementation `e1de58ab1b358ff41cb4a37c26babfac88ecff4b`.
 Separate effective config SHA256
 `e1090015d1f963f071f2bfbb2a8e76b7399e0545d13db894262438cad9a0b8ba`

@@ -1,6 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: R6 saved-data diagnosis verified and archived
+## Live checkpoint: Algorithm agnostic GCN and RL direction reviewed
+
+Updated 2026-09-30. Zhaowei explicitly prioritized a rigorous publishable
+GCN-plus-RL study over preserving DDPG. This authorizes method investigation
+and local preparation, not an unbounded algorithm search or a scientific run.
+Cost/service trade-offs are not automatically errors. No Howard approval or
+positive result is assumed. Previous negative stages and Stage E remain closed.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only; reviewed source8511e42 |
+| Completed work | Source-linked review distinguishes historical DDPG data-contract defects, request/execution geometry, sparse critic coverage and graph attribution gaps; primary literature checked |
+| Research direction | Separate simulation-trained RL from deployment-time updates. Develop one clean DDPG reference and one discrete candidate-action graph-policy contract; PPO is a proposed alternative, not a verified winner |
+| Evidence | `docs/team_updates/2026-09-30-gcn-rl-research-direction.md`; prior M2/G1/R6 evidence unchanged |
+| Validation |87 existing replay/input/graph/kernel unit tests pass in4.791s; full compileall,7 local evidence links and8 unchanged source fingerprints pass. Numerical fixture updates only; no scientific fits, new environment episodes or performance result |
+| Process check | Default sandbox ps denied; approved read-only host scan succeeded and found no related Python experiment. Unit-test session completed exit0 |
+| Next concrete action | Specify and test a public-information feasible-candidate contract and clean-DDPG integration boundary without new patient simulation; then propose one bounded prospective pilot |
+| Approval needed | Before new scientific fitting/collection, freeze named arms, scenario, streams, metrics and per-arm query/update/time caps and obtain specific approval. The unanswered24-critic normalization proposal was not launched and is no longer the recommended main direction |
+| Unchanged limits | No reward tuning, hidden-state inputs, historical holdout, remote Git, messages, external compute or reopening prior studies. Missing operational calibration remains missing |
+| Preservation | Research priority recorded in AGENTS.md; review is local text only. Prior verified archives unchanged; no new cloud-sync or collaborator-access claim |
+
+## Previous checkpoint: R6 saved-data diagnosis verified and archived
 
 Updated 2026-09-30. User requested continuation after the closed R6 diagnostic.
 The next packet is post-run descriptive analysis of saved evidence only, not

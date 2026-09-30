@@ -2,6 +2,18 @@
 
 This is a research codebase for graph-aware deep reinforcement learning in distributed personalized regenerative medicine manufacturing networks. The intended implementation includes GCN-DDPG, flat-state DDPG / MLP-DDPG baselines, graph ablations, multiple random seeds, and Monte Carlo evaluation.
 
+## Research Objective
+
+Zhaowei clarified on 2026-09-30 that the objective is a rigorous, publishable
+GCN-plus-reinforcement-learning study, targeting EAAI-level work, not preserving
+DDPG or guaranteeing a positive result. DDPG remains a candidate to assess fairly;
+other algorithms may be considered when they fit the actual decisions better.
+Separate RL policy training in simulation from parameter adaptation during
+deployment, and separate both from imitation/distillation. Do not rename an
+imitation gain as an RL gain. Favor decisive, bounded comparisons over an
+open-ended algorithm search. The locked-plan change control and local-only
+execution boundaries still apply; this objective is not a new experiment permit.
+
 ## Coding Guidelines
 
 - Keep environment dynamics, graph construction, model architectures, training loops, and evaluation scripts modular.

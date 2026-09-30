@@ -1668,3 +1668,28 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
 - A24-critic, zero-simulation input-normalization control is a bounded proposal
   only. New fitting, clinical-objective changes or prospective data collection
   require explicit approval. No automatic launch, Howard sign-off or remote Git.
+
+### 2026-09-30: Algorithm agnostic GCN and RL research direction
+
+- Zhaowei explicitly stated that DDPG is not mandatory: the objective is a
+  rigorous, publishable GCN-plus-RL solution, while assessing whether DDPG's
+  previous limitations reflect its implementation or its decision interface.
+  This updates future method-selection priorities, not the frozen historical
+  primary method, results, formal holdout or Stage E status.
+- Review historical replay/graph audits and R6 evidence before choosing an
+  algorithm. Distinguish imitation, RL training in simulation, and additional
+  deployment-time parameter adaptation. A failure of the third is not a proof
+  that the second is impossible; imitation gains are not renamed RL gains.
+- Local evidence/literature review and software-contract preparation are open.
+  The preferred comparison is a clean DDPG reference versus a feasible discrete
+  graph-policy route, not an unlimited algorithm or reward search. PPO is a
+  proposal, not an executed or selected winning method. A changed representation
+  and optimizer jointly define a controller comparison, not an isolated
+  algorithm effect. Cost/service trade-offs remain legitimate when declared.
+- Review memo: `docs/team_updates/2026-09-30-gcn-rl-research-direction.md`.
+  87 existing synthetic/replay/input/kernel tests and full compileall pass;
+  no scientific fitting, new patient trajectory or performance measurement.
+- Next prepare public-information action and clean-learner contracts. New
+  scientific execution still requires a committed bounded protocol and specific
+  authorization. The prior24-critic normalization question was not approved;
+  do not launch it implicitly. No Howard sign-off or remote action is inferred.

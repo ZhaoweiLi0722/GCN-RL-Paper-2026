@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: PPO objective verified; finite automatic continuation active
+## Live checkpoint: Capped PPO update and recovery verified
+
+Updated 2026-09-30T15:05:09Z. Zhaowei requested continuation. The capped
+categorical update adapter and closed-rollout/update-boundary checkpoint tests
+are complete on invented data. This is not a scientific fit, real environment
+collection, deployment-time adaptation result or a claim of positive RL gains.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; local only; base34ffdc1 |
+| Completed work | Opt-in cloned candidate PPO/Adam; sealed on-policy admission; consumed-lineage guard; bounded rollout/optimizer updates; private sampling/shuffle RNGs; atomic complete-update publication and validated no-overwrite checkpoints |
+| Evidence | `specs/2026-09-30-candidate-ppo-kernel/readout.md`; `src/rl/candidate_ppo_kernel.py`;26 new tests |
+| Validation |182 related tests pass in5.516s; full compileall passes; eight prior fingerprints unchanged. Independent first-Adam-step check, injected second-minibatch rollback and exact next update/sampling after recovery pass |
+| Scope | Bounded invented-tensor optimizer steps only. No scientific training, patient simulator episode, reward change or performance comparison; historical agents and evidence untouched |
+| Recovery limits | Closed-rollout/update boundary on CPU only. No environment/unfinished collector/mid-minibatch resume; no MPS recovery claim. Wall-clock/query limits remain the future runner's responsibility |
+| Automation | `gcn-rl` remains ACTIVE every30min, configuration rechecked; no duplicate task or automation change this turn. First finite-chain item complete; collector preparation and decision packet remain |
+| Process check | Default sandbox ps denied; approved read-only host scan found only its own shell/filter. All test/compile sessions ended exit0; no detached scientific workload |
+| Next concrete action | Source-audit and prepare the public-input collector with mocks/invented fixtures only: observation availability, original requests/precision, terminal liabilities, support, information parity and recovery; no patient-environment steps |
+| Approval needed | None for remaining finite engineering preparation. After collector audit, freeze one bounded pilot and ask specific execution approval for named arms, initialization, fresh streams, outcomes and query/update/time caps; then end this finite heartbeat |
+| Unchanged limits | No automatic scientific collection/fitting, reward/scenario/model search, formal holdout, external compute, remote Git or messaging. No Howard approval inferred; Stage E closed; R6 test data not untouched confirmation |
+| Preservation | New source/tests/readout plus appended status/ledger only. No new archive/cloud-sync/collaborator-access claim; test-fixture development failures recorded in readout |
+
+## Previous checkpoint: PPO objective verified; finite automatic continuation active
 
 Updated 2026-09-30T14:51:37Z. Zhaowei explicitly requested continued work and an
 automatic continuation. The new heartbeat is active; this is engineering work,

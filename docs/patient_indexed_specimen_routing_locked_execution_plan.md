@@ -1759,3 +1759,25 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   No automatic reward/scenario/model search, real episodes, research training,
   formal holdout, external compute, remote Git, messages, Howard sign-off or Stage
   E reopening. Inspected R6 test labels are not untouched confirmation.
+
+### 2026-09-30: Capped categorical PPO update/recovery engineering accepted
+
+- Following Zhaowei's continuation, added an opt-in CPU categorical PPO kernel
+  with explicit rollout/update/optimizer caps, sealed on-policy receipt checks,
+  once-per-rollout normalization, clipped loss, gradient clipping and private
+  sampling/shuffle RNGs. Historical DDPG/PPO agents and prior evidence unchanged.
+- A complete rollout update publishes atomically from a private copy. Validated
+  no-overwrite checkpoints include model, Adam, pending closed segments, consumed
+  lineage, update history and both RNGs. This does not restore an environment,
+  unfinished collection, mid-minibatch cursor or GPU execution.
+- Readout: `specs/2026-09-30-candidate-ppo-kernel/readout.md`.26 new tests bring
+  the related suite to182, passing in5.516s; full compileall and eight preserved
+  fingerprints pass. Independent first-step arithmetic, failure rollback and
+  exact next CPU update/sampling after recovery pass. Fixture failures recorded.
+- All optimizer work used invented inputs; no scientific fitting, real patient
+  episode, reward change or performance comparison ran. The frozen arm has no
+  optimizer; enabling an update kernel is not evidence of online-RL benefit.
+- The existing finite `gcn-rl` heartbeat stays active without modification. Next
+  source-audit/prepare the public collector with mocks, then draft one bounded
+  pilot for explicit execution approval. No automatic experiment, algorithm
+  search, remote action, Howard sign-off, formal holdout or Stage E reopening.

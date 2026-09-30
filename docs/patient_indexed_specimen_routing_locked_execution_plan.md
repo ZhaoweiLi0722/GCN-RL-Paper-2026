@@ -1901,3 +1901,11 @@ Engineering fixes and limitations are recorded in the integration readout.
 No real P1 preflight or fit has run yet. Commit actual implementation and a
 separate effective execution packet before launching the approved attempt.
 Neither these checks nor source-freeze authority is a positive RL result.
+
+P1 execution freeze binds implementation
+`e1de58ab1b358ff41cb4a37c26babfac88ecff4b` to the separate effective config
+`experiments/configs/candidate_return_pilot_20260930_execution.json`, SHA256
+`e1090015d1f963f071f2bfbb2a8e76b7399e0545d13db894262438cad9a0b8ba`.
+It retains original scientific parameters/draft bytes and binds264 source files,
+runtime,7 R4 inputs and the888-file historical stream audit. Commit this packet
+before the single real preflight; no scientific run is claimed at this entry.

@@ -1,6 +1,6 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 full application accepted; execution freeze next
+## Live checkpoint: P1 implementation frozen; single real preflight next
 
 Updated 2026-09-30T17:12Z. The original P1 scope remains unchanged. No real P1
 preflight, patient simulation or scientific fit has run at this checkpoint.
@@ -13,9 +13,11 @@ preflight, patient simulation or scientific fit has run at this checkpoint.
 | Evidence | specs/2026-09-30-candidate-return-pilot/integration_readout.md; candidate_pilot_campaign.py and candidate_pilot_execution.py; two new test modules; readiness-after-campaign.json |
 | Preservation |Original protocol/config,7 R4 locks and8 prior fingerprints match;888 historical JSON/JSONL files, zero stream collisions |
 | Engineering failures |Tiny fake fixture action width and checkpoint suffix errors corrected before science; no P1 scientific attempt consumed |
-| Current phase |Engineering acceptance passed; source/effective-config freeze pending; ready_to_execute=false until committed locks pass |
+| Current phase |Engineering accepted; implementation e1de58ab1b358ff41cb4a37c26babfac88ecff4b frozen; separate effective packet generated and being committed; no scientific execution yet |
 | Process |Approved host scan returned only77898/77901 shell/filter. Test/audit/compile commands ended. No research runner observed; output root absent |
-| Next action |Local implementation commit; commit separate effective config with actual implementation/source/runtime/input/seed locks; then one authorized real preflight and pilot only if it passes |
+| Execution packet |experiments/configs/candidate_return_pilot_20260930_execution.json SHA256 e1090015d1f963f071f2bfbb2a8e76b7399e0545d13db894262438cad9a0b8ba; binds264 source files,888 historical files,7 R4 inputs, original proposal/protocol and approval |
+| Runtime |Python3.9.6, NumPy2.0.2, Torch2.8.0; CPUfloat32, deterministic,1 compute/1 interop thread; exact executable/build/package-entry hashes frozen |
+| Next action |Verify committed effective packet and no duplicate process, then the one authorized real preflight; enter pilot only if all gates pass |
 | Exact approval need |None for original approved P1. Terminal scientific failure, parameter/cap/design changes or follow-on work require a new decision |
 | Limits |52,728 calls,4,608 updates,6h plus nontransferable subcaps, single attempt. No DDPG fits, reward/scenario search, holdout, Stage E reopen, remote Git, messaging or Howard approval claim |
 | External status |No actual Dropbox copy/cloud sync/access yet. Existing gcn-rl-p1 only, unchanged. Engineering acceptance is not RL performance evidence |

@@ -1,5 +1,13 @@
 # P1 integration checkpoint
 
+Execution freeze: implementation `e1de58ab1b358ff41cb4a37c26babfac88ecff4b`.
+Separate effective config SHA256
+`e1090015d1f963f071f2bfbb2a8e76b7399e0545d13db894262438cad9a0b8ba`
+binds264 committed source files,888 historical files,7 R4 inputs, original
+protocol/proposal, approval and exact CPU runtime. NumPy2.0.2/Torch2.8.0,
+deterministic CPUfloat32,1 compute/1 interop thread. Original draft remains
+scientific_execution_authorized=false. At packet commit, real P1 remains unrun.
+
 ## Current: complete campaign binding accepted on invented fixtures
 
 2026-09-30T17:12Z, based on505e2487ab4faa3a8878f9f30b8e1ee6e579224c.

@@ -1564,3 +1564,19 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   or an online benefit. R3 collection needs its distinct explicit approval and
   collector/action/stream acceptance. A question is pending; silence is not
   approval. Preserve all scientific boundaries and closed Stage E.
+
+### 2026-09-29: R3 replacement-baseline data-only pilot approved
+
+- Zhaowei replied "continue" to the explicit 12-state, 8+8-draw, at-most
+  37,596-step/one-hour data-only pilot question. This is direct scope approval,
+  not silence or a claimed Howard sign-off. Original R3 remains historical.
+- Follow `specs/2026-09-29-replacement-fixed-window-pilot/protocol.md` and its
+  separate config. R4 replacements are not recovered F1 and their competence
+  remains unmeasured. Use unchanged nominal-history dynamics and absolute cost.
+- Freeze source, pass collector tests and the distinct 24-step clone/truncation
+  engineering smoke, then one scientific attempt. Save seed namespace audit,
+  raw costs, actual-action aliases, snapshots and discovery-before-validation
+  selections. No fitting, reward change, extra scenario, retry, or formal CRN.
+- Independently verify calculations and preserve an archive plus local Dropbox
+  checksum receipts. Finish with a decision memo, not automatic online training.
+  Historical results, Stage E and remote Git state remain unchanged.

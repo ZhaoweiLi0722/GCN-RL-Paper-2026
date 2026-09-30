@@ -1,8 +1,10 @@
 # Autonomous local research queue
 
-## Live checkpoint: R5 complete and archived; R3 pilot approval pending
+## Live checkpoint: R3 replacement pilot approved; collector acceptance in progress
 
-Updated 2026-09-29 following Zhaowei's request to keep progressing. R5 strict
+Updated 2026-09-29: Zhaowei replied "continue" to the explicit bounded R3
+data-only pilot question. The replacement amendment, collector, stream mapping
+and tests are being prepared; no R3 scientific run has started. R5 strict
 loading and 48 saved-observation CPU/MPS checks pass across three replacements.
 Source `f089fd0` saved seed60 then failed on scalar summary formatting; source
 `91a1e5b` reused those bytes without re-inference and completed seeds61/62.
@@ -15,18 +17,18 @@ sync/access remain unverified. No background task or automation is active.
 | --- | --- |
 | Workspace | Persistent `worktrees/september-research-integration`, branch `codex/september-research-integration`; local only |
 | Last verified stage | R5 raw inference checks complete; independent raw arithmetic also agrees; older campaigns unchanged |
-| Current task | R5 finite engineering packet complete; pending R3 data-only scope decision |
-| Protocol commit | R5 protocol/source `f089fd0`; summary-only repair and unvisited-seed completion `91a1e5b` |
+| Current task | R3 replacement pilot collector/seed acceptance, then one approved capped attempt |
+| Protocol commit | R3 replacement amendment/source being frozen in the next local commit; R5 `f089fd0`/`91a1e5b` unchanged |
 | Automatic continuation | `gcn-rl` deleted through the app on 2026-09-29 at 15:38 UTC; deletion confirmed. Finite chain complete, no new experiment created to keep it active |
-| Implementation evidence | 23 new/69 related tests, full compileall and diff checks pass; real-agent synthetic roundtrip forbids env reset/step and optimizer updates |
+| Implementation evidence | R3:12 new/81 related tests, full compileall and diff checks pass. Preflight scans1,259 prior files, zero namespace hits;195 fresh starts. All24 input/83 source locks match |
 | Recorded execution | R5: 48 saved observations, CPU policy/full-state and MPS routes; no new simulator/optimizer step. R4 remains 3,120 demonstration steps and 0 online episodes |
 | Independent verification | Exact CPU/full-state outputs, no hard-gate/lot mismatch, max request difference 2.981e-8. All 24 R4 files and 83 existing source files unchanged; stdlib verifier `c7567e8` agrees. All 16 archive members and two Dropbox copies hash-verify |
-| Process/output check | Both R5 processes ended: original exit1 summary-only; unvisited completion exit0. No continuing job claimed |
+| Process/output check | Fresh PID/command scan finds no related process; R3 smoke and scientific pilot not launched yet |
 | Scientific result | Saved-observation compatibility only; no actual routing/cost or online/frozen performance contrast |
 | Target diagnosis | G1 uses MDL-2 followup, DDPG bootstraps target actor; continuation identities must not be conflated. R3 proposes preserved frozen-actor followup and primary frozen-action reference; no causal explanation claimed |
 | Evidence paths | `specs/2026-09-29-replacement-policy-compatibility/`; `reports/2026-09-29-replacement-policy-compatibility/`; both named R5 result roots |
-| Next concrete action | Once R3 pilot scope is approved, commit explicit replacement-baseline amendment; implement/test collector and action identity, allocate/check fresh streams, freeze source before one capped run. No further pretraining |
-| Data/approval needed now | Asked once: approve the fixed R3 data-only pilot using R4 replacements, after collector acceptance (12 states, 8+8 draws, max37,596 steps/1h, no training/reward change)? No answer recorded yet. Cloud sync/access still unverified |
+| Next concrete action | Complete tests and full compileall, freeze amendment/collector/config, pass distinct24-step smoke, then run one 12-state/8+8-draw matrix; independently verify and archive |
+| Data/approval needed now | Named R3 pilot approved by direct user continuation; no further routine approval needed. Training, scope expansion/retry and formal use remain outside scope. Cloud sync/access unverified |
 | Latest verification | Known scalar/list report bug repaired; failed summary/raw hashes preserved, seed60 inference not repeated; unvisited seed outputs and all model tensors finite |
 | Approval boundary | New patient/scientific scenario, reward/model/continuation changes, neural campaign, extra matrix/retry, external compute, push/merge/send or formal evidence use |
 | Result guarantee | None; record negative/null/unstable outcomes without tuning toward a desired conclusion |
@@ -40,11 +42,11 @@ active job. Continue adjacent unblocked steps within a run where feasible.
 
 R3 source of truth:
 `specs/2026-09-29-fixed-window-value-contract/protocol.md` and the matching
-config above. The finite design/test packet is complete; no automation remains
-to disable. Proposed 1,152 continuation records / 37,596 transitions / 3,600 s
-are NOT consumed budget or execution permission. G1's correction/failure remain
-in force. Do not fill the queue with invented experiments, repeat arithmetic as
-new progress, or recreate missing pretrained weights without a new decision.
+config above preserve the original design. The approved replacement execution
+amendment is `specs/2026-09-29-replacement-fixed-window-pilot/protocol.md` with
+`experiments/configs/replacement_fixed_window_pilot_20260929.json`. Its fixed
+1,152 records / 37,596 transitions / 3,600 s are caps, not consumed budget.
+G1's correction/failure remain in force. Do not create extra experiments.
 Unchanged waits need no repeated message; report actual milestones or decisions.
 
 R5 handoff: `specs/2026-09-29-replacement-policy-compatibility/readout.md` and
@@ -52,8 +54,8 @@ R5 handoff: `specs/2026-09-29-replacement-policy-compatibility/readout.md` and
 completed sampled compatibility, not a value-label pilot. The versioned local
 Dropbox destination is in `dropbox_receipts.json`; archive SHA256
 `aa2bda7640ea5e26a760737232aa81a7569c9d8b9b4901a6bb3561e6b9d6c69b`.
-No approval response is recorded at this checkpoint. Do not rerun the 48 checks
-or create an automation while waiting. The old scalar-summary failure and
+The named R3 pilot is now approved; do not rerun the 48 R5 checks or create an
+automation. The old scalar-summary failure and
 unvisited-only continuation stay visible; no completed inference was repeated.
 
 September 29 R4 amendment: follow

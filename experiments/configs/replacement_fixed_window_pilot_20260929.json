@@ -1,0 +1,29 @@
+{
+  "kind": "R3_replacement_data_only_fixed_window_pilot",
+  "input_lock_config": "experiments/configs/replacement_policy_compatibility_20260929.json",
+  "seeds": [60, 61, 62],
+  "scenario": "routing_nominal_history",
+  "horizon": 52,
+  "decision_steps": [0, 13, 26, 39],
+  "draws_per_block": 8,
+  "rng_namespace": "785341523836069323249247463669760",
+  "rng_namespace_derivation": "first 96 SHA256 bits of R3-replacement-window-20260929, shifted left 16 bits",
+  "engineering_seed_offset": 65535,
+  "options": [
+    {"group": "specimen_transfer", "epsilon": 0.05, "sign": -1},
+    {"group": "specimen_transfer", "epsilon": 0.05, "sign": 1},
+    {"group": "specimen_transfer", "epsilon": 0.10, "sign": -1},
+    {"group": "specimen_transfer", "epsilon": 0.10, "sign": 1}
+  ],
+  "maximum_environment_steps": 37596,
+  "maximum_seconds": 3600,
+  "maximum_records": 1152,
+  "engineering_maximum_steps": 24,
+  "device": "mps",
+  "reward_scale": 1e-9,
+  "gamma": 1.0,
+  "optimizer_updates": 0,
+  "output_root": "results/replacement_fixed_window_pilot_20260929",
+  "engineering_root": "results/replacement_fixed_window_engineering_20260929",
+  "protocol": "specs/2026-09-29-replacement-fixed-window-pilot/protocol.md"
+}

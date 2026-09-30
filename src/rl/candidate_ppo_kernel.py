@@ -178,7 +178,7 @@ class CandidatePPOKernel:
             raise ValueError("optimizer step cap cannot admit this complete rollout")
         self.pending = proposed
 
-    def _update_in_place(self):
+    def _update_in_place(self, before_optimizer_step=lambda: None):
         self.pending = self._validate_pending(self.pending)
         decisions = [d for s in self.pending for d in s.decisions]
         if not decisions:
@@ -211,6 +211,7 @@ class CandidatePPOKernel:
                     raise ValueError("missing/nonfinite PPO gradient")
                 norm = torch.nn.utils.clip_grad_norm_(
                     self.policy.parameters(), self.settings.max_grad_norm, error_if_nonfinite=True)
+                before_optimizer_step()
                 self.optimizer.step()
                 state_digest(self.policy.state_dict())
                 state_digest(self.optimizer.state_dict())
@@ -225,13 +226,13 @@ class CandidatePPOKernel:
         return {"update": self.total_updates, "optimizer_steps": self.total_optimizer_steps,
                 "rollout_steps": len(decisions), "minibatches": logs}
 
-    def update(self):
+    def update(self, *, before_optimizer_step=lambda: None):
         if self.mode != "online" or self.total_updates >= self.settings.max_updates:
             raise ValueError("frozen arm or declared update cap prevents update")
         # Publish only after the entire rollout update and resulting state validate.
         candidate = copy.deepcopy(self)
         candidate._restore(self.state_dict())
-        result = candidate._update_in_place()
+        result = candidate._update_in_place(before_optimizer_step)
         candidate._restore(candidate.state_dict())
         self.__dict__.update(candidate.__dict__)
         return result

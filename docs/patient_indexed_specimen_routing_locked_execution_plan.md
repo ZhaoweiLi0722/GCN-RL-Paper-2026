@@ -1840,3 +1840,31 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   confirmed deleteStatus=deleted. Its legacy dynamic route was unavailable;
   no other automation changed. Do not recreate an idle approval-waiting task.
   Stage E and formal holdout stay closed; Howard approval is not inferred.
+
+### 2026-09-30: P1 bounded scope approved; integration gates remain mandatory
+
+- Following the explicit P1 scope question, Zhaowei requested continued,
+  accelerated execution. This authorizes the previously specified bounded
+  proposal, conditional on engineering/readiness gates, not expanded science.
+  Approval record: `specs/2026-09-30-candidate-return-pilot/authorization.md`.
+- Preserve the draft/config at3ed478e. Hard52,728 environment steps,4,608
+  optimizer steps,6h, single attempt, fixed reward/scenario and no auto-retry.
+  Implement the categorical collector/BC/full recovery and verify invented
+  fixtures, inputs, streams and committed source before budgeted real preflight.
+- No performance result is claimed by this authorization. No remote Git,
+  messaging, Howard sign-off, new DDPG training, formal holdout or Stage E reopen.
+
+#### P1 engineering checkpoint and finite continuation
+
+The 2026-09-30 integration packet adds bounded imitation, public candidate
+collection/recovery and durable resource accounting;230 invented-fixture related
+tests and full compileall pass. Seven R4 locks and eight preservation fingerprints
+match;888 local historical JSON/JSONL files have no numeric stream collisions.
+Two known truncated non-seed score reports are explicitly hash-locked exclusions;
+their complete v2 counterparts are scanned. No P1 real simulator step or fit ran.
+See `specs/2026-09-30-candidate-return-pilot/integration_readout.md`.
+Campaign scheduling, full boundary bundles, outer watchdog and independent raw
+outcome verification remain gates, not waived by speed requests. New in-thread
+`gcn-rl-p1` is ACTIVE every15min for this finite approved chain only; delete it
+on completion/terminal failure/new-scope approval boundary. The old `gcn-rl`
+remains deleted. No other automation changed.

@@ -1,6 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 draft committed; finite heartbeat ended; execution decision pending
+## Live checkpoint: P1 scope approved; collector/BC/budget components verified; orchestration next
+
+Updated 2026-09-30T16:02Z. Zhaowei requested continued, faster progress after
+the concrete bounded P1 scope question. Approval is recorded in
+`specs/2026-09-30-candidate-return-pilot/authorization.md`, conditional on the
+original engineering/source-freeze/preflight gates. No real P1 episode,
+scientific fit or performance result exists yet; no scientific runner is active.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent integration worktree; branch `codex/september-research-integration`; this packet based on c6cde24; local only |
+| Completed | Bounded BC initialization/continuation; audited candidate session with whole episode/kernel recovery; full MDL-2 original-action preservation; external non-refundable resource ledger and seed/input audit |
+| Evidence | `specs/2026-09-30-candidate-return-pilot/integration_readout.md`; `reports/2026-09-30-candidate-pilot-integration/readiness.json`; new candidate_imitation, candidate_patient_session and candidate_pilot_resources modules |
+| Validation |230 related tests pass in6.425s on final rerun (31 new), full compileall passes; only invented tensors/mock step accounting. Scientific episodes/updates remain0 |
+| Preservation |7 R4 hashes, identical environments and8 old fingerprints verified. Draft config/protocol unchanged.888 historical JSON/JSONL files scanned, zero numeric stream collisions;2 known malformed non-seed score prefixes explicitly hash-locked/excluded, complete v2 scanned |
+| Engineering failures |Torch staging filename error fixed before science; first read-only audit stopped at preserved truncated report, then explicit hash-locked exclusion added. Neither was a P1 scientific attempt/retry |
+| Remaining |Campaign orchestration, phase/ledger/update-boundary restoration, outer wall-clock watchdog, independent raw outcome verifier, final model seals and committed effective execution config; then budgeted real preflight |
+| Approved limits |Original P1:3 blocks x graph/self-only/flat, frozen/PPO/BC-CONTINUE plus R4/MDL-2;32 episodes per continued model;396 final evaluations; max52,728 simulator calls,4,608 optimizer steps,6h and all phase/model caps; one attempt, no retry/transfer |
+| Interpretation |Simulation return training vs imitation, NOT deployment adaptation. No PPO-over-DDPG or pure graph superiority claim; graph/self-only59,602 vs flat238,658 parameters. Existing GCN/distillation gains and unproven extra online-DDPG benefit remain unchanged |
+| Process |Read-only host filter returned only itself; test/compile/audit sessions ended; P1 output root absent; no background research process launched |
+| Automation |New `gcn-rl-p1` ACTIVE every15min; creation and saved config verified. Finite engineering + single approved P1 chain; delete on completion/terminal failure/new-scope block. Prior `gcn-rl` remains deleted; other tasks untouched |
+| Next action |Implement/test serial driver and independent raw-cost/clinical verifier, all-models-sealed-before-test ordering, scope/time accounting and four-episode recovery; freeze source/config before real preflight |
+| Approval needed |None for this exact approved P1 after gates. Expanded scope/caps, retry after scientific failure, reward/scenario/structure search or other changed design needs a new explicit decision |
+| Unchanged limits |No remote Git, messages, new DDPG/TD3 training, external compute, formal holdout, R6-as-untouched-validation, Howard approval inference or Stage E reopening. No new Dropbox/cloud/access claim |
+
+## Previous checkpoint: P1 draft committed; finite heartbeat ended; execution decision pending
 
 Updated 2026-09-30T15:33:26Z. The gcn-rl heartbeat completed its third and final
 authorized engineering item. A concrete execution-scope question was presented;

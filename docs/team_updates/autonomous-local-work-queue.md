@@ -1,6 +1,33 @@
 # Autonomous local research queue
 
-## Live checkpoint: Public collector source audit and pure boundary verified
+## Live checkpoint: P1 draft committed; finite heartbeat ended; execution decision pending
+
+Updated 2026-09-30T15:33:26Z. The gcn-rl heartbeat completed its third and final
+authorized engineering item. A concrete execution-scope question was presented;
+tool acceptance means the question was displayed, NOT that Zhaowei approved it.
+No P1 simulator episode, scientific fit or performance measurement has run.
+
+| Item | Current state |
+| --- | --- |
+| Workspace | Persistent `worktrees/september-research-integration`; `codex/september-research-integration`; engineering1f31765; proposal3ed478e; local only |
+| Completed finite chain | Capped categorical PPO update/recovery; public-input collector source audit/pure boundary; one bounded scientific pilot decision packet |
+| Evidence | `specs/2026-09-30-candidate-return-pilot/protocol.md`, `readout.md`; `experiments/configs/candidate_return_pilot_20260930.json` |
+| Proposed question | Return training vs same-start imitation-only policy, matched-effort continued imitation, unchanged R4 and full MDL-2; not deployment-time online adaptation |
+| Proposed scope, NOT executed | Three blocks x graph/self-only/flat;9 PPO and9 BC continuations of32 episodes,9 frozen forks,3 R4 and3 MDL-2 comparators;396 final evaluation episodes. Hard52,728 simulator steps,4,608 optimizer steps,6h; one attempt, no budget transfer/retry |
+| Initialization and attribution | Fresh imitation initialization must pass95% reference-class agreement; within-representation forks tensor-identical. Graph/self-only59,602 parameters, flat238,658; common reference is itself graph-based. No pure graph or PPO-over-DDPG superiority claim |
+| Objective boundary | Existing52-step absolute-cost reward unchanged; separately report losses, completions and unresolved patients. No invented terminal penalty, global near-optimality or lifecycle-benefit claim |
+| Validation |199 existing related tests pass in5.594s; full compileall passes; budget/arm arithmetic and draft consistency checks pass. Seven R4 policy/config/manifest hashes and eight prior preservation fingerprints match; all3 effective environment configs equal |
+| Missing execution readiness | Combined categorical environment/collector/BC/recovery driver, committed effective execution config, complete local seed collision audit and budgeted real preflight. Shape-only parameter checks are not real-environment acceptance |
+| Proposed config SHA256 | `fe7d1cc4227e86c0d16360e6b285748e5b4be268c19270b9df29afc442eb5052` |
+| Protocol SHA256 | `75c9c47f484dafd345d9e1c670a81330469ed3cf986f8a80864e5cd6ee3f027b` |
+| Process evidence | Approved read-only host scan found only its own shell/filter; test and compile sessions exited0; P1 output root absent. No detached research process was launched |
+| Automation | gcn-rl deleted: Codex app confirmed deleteStatus=deleted at this handoff. Legacy dynamic-tool route was unavailable; MCP deletion succeeded. Other automations untouched; do not recreate while merely awaiting approval |
+| Approval needed | One question sent: approve this precise P1 scope, conditional on implementation/readiness gates, or keep it unexecuted. No answer recorded yet; scientific_execution_authorized remains false |
+| Next concrete action | After explicit scope approval only, append the execution amendment, implement/test complete collector/BC/recovery on invented fixtures, freeze source/config, audit streams/inputs, then run the single budgeted preflight and pilot if all gates pass. Failure closes the attempt without auto-repair/relaunch |
+| Unchanged limits | No new DDPG training; DDPG suitability remains unresolved. No scenario/reward search, old formal holdout, R6-as-untouched-validation, external compute, remote Git, messages, Howard sign-off or Stage E reopening |
+| Preservation | Historical files unchanged; only new proposal and appended records. No cloud copy, sync or collaborator-access claim. Future approved artifacts have a versioned archive/Dropbox plan |
+
+## Previous checkpoint: Public collector source audit and pure boundary verified
 
 Updated 2026-09-30T15:15:25Z. Zhaowei requested continuation. The existing
 observation/action/reward/closure/recovery paths were source-audited, and a pure

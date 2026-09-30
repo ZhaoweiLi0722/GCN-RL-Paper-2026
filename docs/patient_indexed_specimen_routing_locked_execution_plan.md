@@ -1808,3 +1808,35 @@ next gate. Detailed reports may live elsewhere, but must be linked here.
   approval, then remove the finite heartbeat when only that approval remains.
   No automatic training, scenario/reward search, remote action, Howard sign-off,
   holdout use or Stage E reopening; inspected R6 labels remain development data.
+
+### 2026-09-30: P1 draft handoff; finite engineering automation closed
+
+- Completed the final authorized finite-chain item under heartbeat gcn-rl:
+  `specs/2026-09-30-candidate-return-pilot/protocol.md` and associated readout/
+  non-executable JSON proposal, local commit3ed478e. This is a proposal approval
+  gate, NOT a scientific execution amendment or an executed experiment.
+- P1 proposes three blocks of graph/self-only/flat candidate initializers, each
+  forked into frozen/PPO/continued-imitation roles, plus unchanged R4 replacement
+  and full MDL-2 controls.32 episodes per trainable role;396 final evaluation
+  episodes; hard total52,728 simulator steps,4,608 optimizer steps and6h,
+  including bounded preflight/clone work. Single attempt; no scope/budget transfer.
+- Initial imitation quality, identical within-representation forks, complete
+  public collection/recovery, fresh streams and source/config freeze are gates,
+  not already verified experimental capabilities. The existing52-step objective
+  is finite-window cost; clinical completion/loss/unfinished outcomes stay visible.
+- Graph/self-only counts match at59,602; flat238,658 is not parameter-matched.
+  All candidates share a graph-based reference, so this cannot remove all graph
+  information. Zero new DDPG fits are proposed: no claim against clean DDPG or
+  of algorithm superiority. The target is simulation return training, not
+  deployment-time adaptation or guaranteed positive/publishable results.
+-199 existing related invented-fixture tests pass in5.594s; full compileall and
+  independent budget/config arithmetic pass. Seven R4 input/manifest hashes and
+  eight earlier preservation fingerprints match. No patient simulation,
+  scientific optimization, result directory, remote action or cloud copy.
+- One explicit P1 scope question was sent to Zhaowei; no approval recorded.
+  Draft authorization stays false. Any later execution must retain this draft,
+  record approval and bind a separately committed implementation/effective config.
+- The finite gcn-rl heartbeat was deleted through the Codex app MCP tool,
+  confirmed deleteStatus=deleted. Its legacy dynamic route was unavailable;
+  no other automation changed. Do not recreate an idle approval-waiting task.
+  Stage E and formal holdout stay closed; Howard approval is not inferred.

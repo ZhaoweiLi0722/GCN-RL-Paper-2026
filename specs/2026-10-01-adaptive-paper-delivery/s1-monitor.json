@@ -1,0 +1,16 @@
+{
+  "automation_id": "gcn-rl-s1",
+  "kind": "heartbeat",
+  "created_status": "ACTIVE",
+  "cadence_minutes": 30,
+  "creation_confirmed_by_app": true,
+  "view_confirmed_by_app": true,
+  "recorded_at_utc": "2026-10-01T20:19:34Z",
+  "scope": "Read-only monitor of the existing single S1 attempt; local handoff on terminal state,no launch or retry",
+  "execution_commit": "af1fe201779477b71200d069ce7b446f39ee4b84",
+  "supervisor_pid_at_creation": 42349,
+  "child_pid_at_creation": 42704,
+  "result_root": "results/dynamic_candidate_pilot_20261001",
+  "delete_on_terminal_handoff": true,
+  "other_automations_modified": false
+}

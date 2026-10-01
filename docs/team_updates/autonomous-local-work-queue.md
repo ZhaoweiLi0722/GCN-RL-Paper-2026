@@ -1,6 +1,39 @@
 # Autonomous local research queue
 
-## Live checkpoint: S1 approved; bind authorization and start the single attempt
+## Live checkpoint: S1 running; demonstrations completed and initialization started
+
+2026-10-01T20:19:34Z. Executing the single authorized packet from
+af1fe201779477b71200d069ce7b446f39ee4b84,with frozen implementationdb8f17e.
+Exact process evidence:supervisor42349 PPID30450 and child42704 PPID42349,
+both commands experiments.scripts.run_dynamic_candidate_pilot (child --child).
+The owned exec session is25711. Do not launch again or change frozen sources.
+
+Latest observed boundary:launcher/status/000006.json,initialization_fit/block60,
+three completed scopes. Real prototype preflight passed three52-step episodes
+and12 restored-clone calls;24 demonstration episodes completed. Durable ledger
+sequence1545 records1,416 environment debits and122 actor optimizer debits.
+Debits precede execution and are not independent proof every charged call
+returned. Actual initialization outcome/qualification is not yet available.
+No test-set evaluation or performance conclusion has been produced. stderr was
+empty at inspection. Next routine action is the existing runner's initialization,
+then fixed qualification,then same-start continuation only if qualification passes.
+
+Independent finite agent Mendel (01a0f91d-2b31-75b2-ba66-b9c4ed62cbdb) read the
+available raw boundary and supplied an evidence-field map;now closed. It
+confirmed no current RL performance evidence and emphasized separately reading
+PPO-vs-BC as well as PPO-vs-frozen;the primary decision label alone is insufficient.
+No source edits or duplicate verification runs were delegated. Existing finite
+efficiency advice remains applied;no extra reviewer gate.
+
+A read-only same-thread monitor gcn-rl-s1 was created ACTIVE,every30minutes,
+and viewed through the app. It may only observe this existing attempt,read raw
+results and write a non-overwriting local handoff;no new fits/retry/source edits.
+It must delete itself on terminal failure or completed handoff. No other
+automation was changed. Receipt:specs/2026-10-01-adaptive-paper-delivery/s1-monitor.json.
+The actual process/ledger,new boundary and completed raw episodes establish
+progress;the schedule does not. No new approval is needed inside this packet.
+
+## Previous checkpoint: S1 approved; bind authorization and start the single attempt
 
 2026-10-01T20:15:41Z. Entry HEADb86b875,clean declared integration worktree.
 After the full frozen S1 approval question,Zhaowei instructed "next step";

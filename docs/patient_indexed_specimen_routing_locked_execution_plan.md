@@ -2170,3 +2170,22 @@ remote action,Howard approval claim,formal holdout or Stage E reopening.
 Details:specs/2026-10-01-candidate-calibration-engineering/protocol.md. Even full
 artificial acceptance would establish only necessary numerical capability,
 not PPO effectiveness or a new scientific performance result.
+
+#### Artificial calibration completed but did not meet ranking acceptance
+
+2026-10-01: frozen4c90d201da2b8e8cfa67137d071ed3ceb9037106 completed the single
+nine-fixture packet:exactly1,152 Adam calls,6.250 numerical seconds,exit0. No
+scientific/patient fitting or trajectory occurred.0/9 full gates pass;all nine
+actors still choose reference on every artificial test state(50% accuracy).
+Toy value explained variance0.805-0.959 is partial engineering progress,not a
+patient result. Initial shared-reference directional gradient is positive even
+with exact oracle action values;isolating its cause needs a separate control.
+Existing P2 source/document locks and full payload/launcher remain unchanged.
+
+Independent no-forward scalar readback reconciles2,343 files,1,152 charges and
+Adam counters,seals before tests,known-answer returns and gates.87 prelaunch
+zero-optimizer tests/full compileall passed. Report:
+specs/2026-10-01-candidate-calibration-engineering/readout.md. Preserve and close
+this packet;do not tune/retry or launch a patient pilot. A separately bounded
+actor-only positive control is proposed,not executed/approved. All existing
+remote/holdout/Howard/Stage E boundaries remain unchanged.

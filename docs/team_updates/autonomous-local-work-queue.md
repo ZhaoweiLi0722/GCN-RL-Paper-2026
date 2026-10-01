@@ -1,6 +1,25 @@
 # Autonomous local research queue
 
-## Live checkpoint: engineering calibration approved and being implemented
+## Live checkpoint: artificial calibration completed with no-go ranking result
+
+2026-10-01. Frozen4c90d201da2b8e8cfa67137d071ed3ceb9037106 completed9 invented
+fits/1,152 optimizer calls in6.250 numerical seconds; runner exit0. No related
+research Python remains. This was artificial acceptance,not a patient experiment.
+
+| Item | Verified state |
+| --- | --- |
+| Overall gate |0/9 cases pass;all actor accuracies50%,same as frozen;no patient pilot authorized |
+| Partial numerical result |Toy value explained variance0.805-0.959;only flat-102 passes both value gates;not a new P2 or clinical gain |
+| Ranking |All72 artificial test choices remain reference;probability rises to92.46%-97.22%;score-span upper bound no longer mathematically excludes flips but does not guarantee them |
+| Mechanism evidence |Shared-reference logit direction has positive initial net derivative+0.005574;actual shared-gradient conflict664/1,143;not a causal component ablation |
+| Validation |87 zero-optimizer tests,full compileall/diff check before frozen acceptance;independent scalar verifier reconciles2,343 files,charges,Adam counts,oracles and all gates without another forward/update |
+| Original evidence |P2 source/document locks,payload/launcher unchanged;new policy remains unregistered in patient runners |
+| Evidence |specs/2026-10-01-candidate-calibration-engineering/readout.md;reports/2026-10-01-candidate-calibration-engineering/verification.json |
+| Remaining closure |Archive this packet and verify a new authorized Dropbox-local copy;local commit only |
+| Next proposed decision |Separate actor-only positive control with minimal state-conditioned head and initialization-only reference tie-break,one9-fixture packet capped1,152 calls/30 numerical minutes;new approval required |
+| Boundaries |No retry,tuning,new patient trajectory,reward change,remote operation,holdout,Howard approval claim,automation or Stage E reopening |
+
+## Previous checkpoint: engineering calibration approved and being implemented
 
 2026-10-01: Zhaowei accepted the nine-fixture engineering-only proposal with
 "按照你的思路 继续". Actual base07f9766, clean at entry; related Python process

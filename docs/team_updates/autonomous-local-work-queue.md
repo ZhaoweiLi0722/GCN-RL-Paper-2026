@@ -1,6 +1,6 @@
 # Autonomous local research queue
 
-## Live checkpoint: P2 single attempt approved; integration acceptance in progress
+## Live checkpoint: P2 accepted and frozen; single launch next
 
 Updated2026-10-01. Zhaowei explicitly replied "批准" to the bounded P2 proposal.
 New authority:specs/2026-10-01-reference-prior-residual/execution_authorization.md.
@@ -28,6 +28,14 @@ The original design/protocol/config and both failed P1 trees remain unchanged.
   No new approval needed within this exact scope; no automatic retry.
 - Local commits/verified Dropbox-local archive copy only; no push/PR/merge,
   messages, holdout, new scenario/reward search, Howard sign-off or Stage E reopen.
+
+Implementation:da5cfbae27b0f1154b10a2c1cc3ac7b7ba4e3735.
+Effective packet:experiments/configs/candidate_reference_prior_pilot_20261001_execution.json,
+SHA256914a751214ce5e9386c349d200cd17faa22b3c3ac9767c998fcf293507df56b9.
+282 source locks,1,116 historical files/no collisions,7 R4 locks, prior15/279
+unchanged failure files, protocol/authority and CPU-float32 single-thread
+runtime are bound. Commit packet, recheck processes/clean lock state and launch
+once. No actual scientific execution is claimed by this freeze checkpoint.
 
 ## Previous checkpoint: reference-prior design accepted on artificial inputs; P2 not authorized
 

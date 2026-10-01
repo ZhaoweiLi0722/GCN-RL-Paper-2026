@@ -2189,3 +2189,14 @@ specs/2026-10-01-candidate-calibration-engineering/readout.md. Preserve and clos
 this packet;do not tune/retry or launch a patient pilot. A separately bounded
 actor-only positive control is proposed,not executed/approved. All existing
 remote/holdout/Howard/Stage E boundaries remain unchanged.
+
+Preservation closure2026-10-01: the2,639-member artificial acceptance/source/
+report archive is verified by reading every member;SHA256
+ba943f0d426cb1b413d1e0276f9aa3e8ba95d32d8c30d0da9ec47ca91ce34278.
+The archive,manifest,readout and receipt have byte-verified copies in the new
+Dropbox-local candidate_calibration_engineering_20261001 folder. Original
+acceptance inventory remains unchanged;preserver exit0 and final related-Python
+process scan empty. Cloud synchronization and Howard access remain unverified.
+Receipt:reports/2026-10-01-candidate-calibration-engineering/preservation.json.
+This finite packet is closed;the proposed actor-only control requires a new
+bounded approval and has not started. No patient experiment is authorized here.

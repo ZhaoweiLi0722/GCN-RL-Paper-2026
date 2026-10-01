@@ -15,7 +15,8 @@ research Python remains. This was artificial acceptance,not a patient experiment
 | Validation |87 zero-optimizer tests,full compileall/diff check before frozen acceptance;independent scalar verifier reconciles2,343 files,charges,Adam counts,oracles and all gates without another forward/update |
 | Original evidence |P2 source/document locks,payload/launcher unchanged;new policy remains unregistered in patient runners |
 | Evidence |specs/2026-10-01-candidate-calibration-engineering/readout.md;reports/2026-10-01-candidate-calibration-engineering/verification.json |
-| Remaining closure |Archive this packet and verify a new authorized Dropbox-local copy;local commit only |
+| Preservation complete |2,639-member archive verified;SHA256 ba943f0d426cb1b413d1e0276f9aa3e8ba95d32d8c30d0da9ec47ca91ce34278;new Dropbox-local archive/manifest/readout/receipt verified;original acceptance unchanged;cloud sync and Howard access unverified |
+| Closure evidence |reports/2026-10-01-candidate-calibration-engineering/preservation.json;preserver exit0;final related-Python process check empty;finite packet closed,local commit only |
 | Next proposed decision |Separate actor-only positive control with minimal state-conditioned head and initialization-only reference tie-break,one9-fixture packet capped1,152 calls/30 numerical minutes;new approval required |
 | Boundaries |No retry,tuning,new patient trajectory,reward change,remote operation,holdout,Howard approval claim,automation or Stage E reopening |
 

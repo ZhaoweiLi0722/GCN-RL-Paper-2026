@@ -133,17 +133,24 @@ def verify_packet(root, effective, *, require_clean=True, recovery=False):
     return cfg
 
 
-def launch(root, effective_path, *, recovery=False):
+def launch(root, effective_path, *, recovery=False, reference_prior=False):
     root, effective_path = Path(root).resolve(), Path(effective_path).resolve()
+    if reference_prior and recovery:
+        raise ValueError("one explicit scientific profile required")
+    from src.rl import candidate_reference_execution as prior_execution
+    from src.rl import candidate_reference_spec as prior_spec
     expected_effective = recovery_spec.EFFECTIVE if recovery else EFFECTIVE
     authorization = recovery_spec.AUTHORIZATION if recovery else AUTHORIZATION
+    if reference_prior:
+        expected_effective, authorization = prior_spec.EFFECTIVE, prior_spec.AUTHORIZATION
     if effective_path != root / expected_effective:
         raise ValueError("only the committed effective execution config can launch")
     effective = json.loads(effective_path.read_text())
-    cfg = verify_packet(root, effective, recovery=True) if recovery else verify_packet(root, effective)
+    cfg = (prior_execution.verify_packet(root, effective) if reference_prior else
+           verify_packet(root, effective, recovery=True) if recovery else verify_packet(root, effective))
     if git(root, "show", "HEAD:" + expected_effective) != effective_path.read_text().strip():
         raise ValueError("effective execution config is not committed at HEAD")
-    refreshed = audit(root, recovery=True) if recovery else audit(root)
+    refreshed = prior_spec.audit(root) if reference_prior else audit(root, recovery=True) if recovery else audit(root)
     require_supported_layouts(refreshed["static_compatibility"])
     if (refreshed["collision_audit"] != effective["readiness_audit"]["collision_audit"]
             or refreshed["explicit_non_seed_parse_exclusions"] != effective["readiness_audit"]["explicit_non_seed_parse_exclusions"]):
@@ -167,7 +174,7 @@ def launch(root, effective_path, *, recovery=False):
     try:
         locks = output / "payload" / "locks"
         copy_verified(effective_path, locks / "effective-execution.json")
-        copy_verified(root / PROPOSAL, locks / "original-proposal.json")
+        copy_verified(root / (prior_spec.DESIGN if reference_prior else PROPOSAL), locks / "original-proposal.json")
         copy_verified(root / cfg["protocol"], locks / "protocol.md")
         copy_verified(root / authorization, locks / "authorization.md")
         if recovery:
@@ -176,7 +183,8 @@ def launch(root, effective_path, *, recovery=False):
         subprocess.run(["git", "bundle", "create", str(locks / "source.bundle"), "HEAD"], cwd=root, check=True,
                        timeout=max(1., cfg["caps"]["maximum_seconds"] - (shared_monotonic() - started)))
         remaining = cfg["caps"]["maximum_seconds"] - (shared_monotonic() - started)
-        command = [sys.executable, "-m", "experiments.scripts.run_candidate_return_pilot", "--child"]
+        module = "experiments.scripts.run_candidate_reference_pilot" if reference_prior else "experiments.scripts.run_candidate_return_pilot"
+        command = [sys.executable, "-m", module, "--child"]
         if recovery:
             command.append("--recovery1")
         result = supervise(command,
@@ -192,11 +200,18 @@ def launch(root, effective_path, *, recovery=False):
         return 1
 
 
-def child(root, *, recovery=False):
+def child(root, *, recovery=False, reference_prior=False):
     root = Path(root).resolve()
-    effective_path = root / (recovery_spec.EFFECTIVE if recovery else EFFECTIVE)
+    if reference_prior and recovery:
+        raise ValueError("one explicit scientific profile required")
+    from src.rl import candidate_reference_execution as prior_execution
+    from src.rl import candidate_reference_spec as prior_spec
+    from src.rl.candidate_reference_campaign import ReferencePriorCampaign
+    from src.rl.candidate_reference_verification import verify_reference_bundle
+    effective_path = root / (prior_spec.EFFECTIVE if reference_prior else recovery_spec.EFFECTIVE if recovery else EFFECTIVE)
     effective = json.loads(effective_path.read_text())
-    cfg = verify_packet(root, effective, recovery=True) if recovery else verify_packet(root, effective)
+    cfg = (prior_execution.verify_packet(root, effective) if reference_prior else
+           verify_packet(root, effective, recovery=True) if recovery else verify_packet(root, effective))
     output = root / cfg["output_root"]
     claim = json.loads((output / "launcher/claim.json").read_text())
     if (claim["pid"] != os.getppid() or claim.get("clock_id") != CLOCK_ID
@@ -209,6 +224,12 @@ def child(root, *, recovery=False):
     def recheck():
         if sha(effective_path) != claim["effective_sha256"] or git(root, "rev-parse", "HEAD") != claim["head"]:
             raise ValueError("execution HEAD/effective config drift")
-        verify_packet(root, effective, require_clean=False, recovery=recovery)
+        if reference_prior:
+            prior_execution.verify_packet(root, effective, require_clean=False)
+        else:
+            verify_packet(root, effective, require_clean=False, recovery=recovery)
+    if reference_prior:
+        return ReferencePriorCampaign(output, cfg, streams, budget, PatientBackend(root, cfg, streams),
+            verifier=verify_reference_bundle, final_lock_check=recheck).run()
     return PilotCampaign(output, cfg, streams, budget, PatientBackend(root, cfg, streams),
                          final_lock_check=recheck).run()

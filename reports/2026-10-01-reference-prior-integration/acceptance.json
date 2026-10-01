@@ -1,0 +1,22 @@
+{
+  "kind": "p2_pre_science_engineering_acceptance",
+  "date": "2026-10-01",
+  "base_commit": "684c84e",
+  "related_tests": {"count": 281, "seconds": 87.628, "passed": true},
+  "additional_metadata_collector_tests": {"count": 34, "seconds": 2.802, "passed": true},
+  "total_tests_passed": 315,
+  "full_repository_compileall_exit_code": 0,
+  "git_diff_check_exit_code": 0,
+  "historical_json_jsonl_files": 1116,
+  "historical_stream_collisions": [],
+  "verified_r4_inputs": 7,
+  "prior_unchanged_tree_file_counts": [15, 279],
+  "static_compatibility_passed": true,
+  "artificial_optimizer_updates_performed": true,
+  "new_scientific_environment_calls": 0,
+  "new_scientific_optimizer_steps": 0,
+  "p2_claim_created": false,
+  "performance_conclusion": null,
+  "remaining_before_launch": ["implementation commit", "effective packet freeze and commit", "live process and clean-lock checks"],
+  "automatic_retry": false
+}

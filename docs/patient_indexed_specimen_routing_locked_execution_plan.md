@@ -2044,3 +2044,27 @@ fresh-stream conflict audit and execution freeze precede any budgeted real
 preflight. No inherited P1 authorization, unused budget, test streams or fitted
 weights may be silently reused. No remote action, Howard sign-off, holdout use
 or Stage E reopening. New scope approval is pending, not inferred from timing.
+
+#### P2 bounded execution explicitly approved
+
+2026-10-01: Zhaowei replied "批准" to finishing the P2 integration and running
+one new P2 only after engineering acceptance, local implementation/effective
+commits and hash/runtime/input/stream gates pass. Authority is separately
+recorded in specs/2026-10-01-reference-prior-residual/execution_authorization.md.
+Original design-only files and P1/P1-R1 protocols, data and failures stay intact.
+
+The approved scientific delta is the exact90% reference-log-prior plus learned
+residual initialization without BC fitting/demonstrations. Same environment,
+reward, information, candidate support, widths, three blocks,32 continued-arm
+episodes, PPO/BC settings and396 final evaluations; no further search. New
+namespace P2-reference-prior-candidate-20261001-v1 has explicit prospective
+model/sampler/shuffle/bootstrap derivation and all local historical manifests
+must be audited before use. No P1 fitted weights or inspected data are reused.
+
+One fresh results/candidate_reference_prior_pilot_20261001 claim and separate
+Dropbox-local artifact subdirectory. Nontransferable caps51,480 env calls,
+2,304 optimizer steps and6h include preflight/clones/I/O/archive. Scientific
+failure is terminal with preservation, not permission to repair and retry.
+Artificial pre-science tests may be fixed. No deployment adaptation or guaranteed
+positive/publication claim. Existing remote/holdout/Howard/Stage E restrictions
+remain in effect. Approval does not itself establish execution or success.

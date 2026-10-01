@@ -22,7 +22,7 @@ def stream_manifest(config):
     base = int.from_bytes(hashlib.sha256(namespace.encode()).digest()[:12], "big") << 16
     ranges = rng["ordinal_ranges"]
     blocks = config["blocks"]
-    counts = {"demonstration": config["initialization"]["demonstration_episodes_per_block"],
+    counts = {"demonstration": config["initialization"].get("demonstration_episodes_per_block", 0),
               "qualification": config["initialization"]["qualification_episodes_per_block"],
               "training": config["ppo"]["episodes_per_model"],
               "test": config["evaluation"]["episodes_per_policy"]}
@@ -103,16 +103,20 @@ def budget_sections(config):
     caps = config["caps"]
     time_limits = caps["seconds"]
     sections = {}
-    for phase, time_name in (("preflight_including_clones", "preflight_total"),
-                             ("demonstrations", "demonstrations_total"), ("qualification", "qualification_total")):
+    prior = config.get("pilot_profile") == "p2_reference_prior"
+    phases = [("preflight_including_clones", "preflight_total"), ("qualification", "qualification_total")]
+    if not prior:
+        phases.insert(1, ("demonstrations", "demonstrations_total"))
+    for phase, time_name in phases:
         sections[phase] = {"phase": phase, "environment": caps["environment_steps"][phase],
                            "optimizer": 0, "seconds": time_limits[time_name]}
     for block in config["blocks"]:
         for representation in config["representations"]:
             key = f"block{block}/{representation['name']}"
-            sections[key + "/initialization"] = {"phase": "initialization", "environment": 0,
-                "optimizer": config["initialization"]["optimizer_steps_per_model"],
-                "seconds": time_limits["initialization_per_model"]}
+            if not prior:
+                sections[key + "/initialization"] = {"phase": "initialization", "environment": 0,
+                    "optimizer": config["initialization"]["optimizer_steps_per_model"],
+                    "seconds": time_limits["initialization_per_model"]}
             for role in ("ppo", "bc_continue"):
                 sections[key + "/" + role] = {"phase": role,
                     "environment": caps["per_continuation_model_environment_steps"],

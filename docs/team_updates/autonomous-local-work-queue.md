@@ -1,6 +1,35 @@
 # Autonomous local research queue
 
-## Live checkpoint: reference-prior design accepted on artificial inputs; P2 not authorized
+## Live checkpoint: P2 single attempt approved; integration acceptance in progress
+
+Updated2026-10-01. Zhaowei explicitly replied "批准" to the bounded P2 proposal.
+New authority:specs/2026-10-01-reference-prior-residual/execution_authorization.md.
+The original design/protocol/config and both failed P1 trees remain unchanged.
+
+- Base684c84e; explicit P2 prior factory, no-demo/no-initialization schedule and
+  separate resource scopes implemented; analytical prior qualification and
+  identical fresh-optimizer forks reuse the tested serial collector/driver.
+- New raw verification checks exact frozen-vs-R4 closed-loop aliases and all18
+  continued-arm raw costs/outcomes/coverage. New stream namespace and explicit
+  pairing paths cover prior P1/P1-R1 historical evidence in the conflict audit.
+- Acceptance completed:315 tests pass (281 in87.628s plus34 in2.802s), full
+  compileall/diff check exit0. Invented tensors/fake bookkeeping only; no P2
+  scientific claim, real preflight, patient trajectory or result yet.
+- Read-only audit:1,116 prior JSON/JSONL files, zero stream collisions,7 R4
+  input locks and static compatibility pass. Both15/279-file prior failure
+  trees and archives/manifests unchanged. Evidence:integration_readout.md and
+  reports/2026-10-01-reference-prior-integration/acceptance.json.
+- Live host process scan found no research Python workload; ample local disk.
+  Recheck before the exclusive one-attempt launch. No automation recreated.
+- Next: freeze source/input/runtime/history locks in local commits, then one
+  budgeted preflight and conditional pilot. No additional approval needed.
+- Caps51,480 environment calls/2,304 updates/6h, unchanged environment/reward,
+  three blocks and396 final evaluations. Terminal failure closes the attempt.
+  No new approval needed within this exact scope; no automatic retry.
+- Local commits/verified Dropbox-local archive copy only; no push/PR/merge,
+  messages, holdout, new scenario/reward search, Howard sign-off or Stage E reopen.
+
+## Previous checkpoint: reference-prior design accepted on artificial inputs; P2 not authorized
 
 Updated2026-10-01. Zhaowei approved design/artificial testing and asked when a
 new experiment can start. This did not authorize a new scientific attempt.

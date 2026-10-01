@@ -16,6 +16,7 @@ from pathlib import Path
 import numpy as np
 
 from src.models.candidate_policy import CandidatePolicy
+from src.models.reference_prior_candidate import ReferencePriorCandidatePolicy
 from src.rl.candidate_imitation import CandidateImitationKernel, ImitationSettings, decode_example
 from src.rl.candidate_patient_session import load_envelope, save_envelope
 from src.rl.candidate_pilot_resources import digest, read_ledger
@@ -32,7 +33,11 @@ def candidate_prototype(producer, config, *, block, representation):
         raise ValueError("unknown/duplicate representation")
     spec = matches[0]
     seed = config["policy_init_seeds"][config["blocks"].index(block)]
-    model = CandidatePolicy(producer.contract.inputs, enabled=True,
+    policy_type, extra = CandidatePolicy, {}
+    if config.get("pilot_profile") == "p2_reference_prior":
+        policy_type = ReferencePriorCandidatePolicy
+        extra = {"nonreference_mass": config["initialization"]["nonreference_mass"]}
+    model = policy_type(producer.contract.inputs, enabled=True, **extra,
         architecture=spec["architecture"], message_mode=spec["message_mode"],
         encoder_width=config["model"]["encoder_width"], head_width=config["model"]["head_width"], seed=seed)
     if sum(p.numel() for p in model.parameters()) != spec["expected_parameters"]:
@@ -53,6 +58,11 @@ def fork_initializer(initializer, qualification, config, streams, *, block, repr
     if (qualification.get("passed") is not True or qualification["kernel_sha256"] != state_digest(initializer.state_dict())
             or initializer.steps != config["initialization"]["optimizer_steps_per_model"]):
         raise ValueError("complete unchanged qualified initializer required")
+    return fork_policy(initializer, config, streams, block=block, representation=representation)
+
+
+def fork_policy(initializer, config, streams, *, block, representation):
+    """Common fresh-optimizer fork after the profile-specific qualification."""
     base = f"block{block}/{representation}"
     sample = streams["neural"][base + "/continuation/sample"]
     settings = CandidatePPOSettings(**{f.name: config["ppo"][f.name] for f in fields(CandidatePPOSettings)})
@@ -75,9 +85,11 @@ def fork_initializer(initializer, qualification, config, streams, *, block, repr
 
 def pilot_jobs(config):
     """One fixed serial order. Testing follows the all-model seal barrier."""
-    jobs = ["preflight_including_clones", "demonstrations"]
+    prior = config.get("pilot_profile") == "p2_reference_prior"
+    jobs = ["preflight_including_clones"]
     models = [f"block{b}/{r['name']}" for b in config["blocks"] for r in config["representations"]]
-    jobs += [m + "/initialization" for m in models]
+    if not prior:
+        jobs += ["demonstrations"] + [m + "/initialization" for m in models]
     jobs += ["qualification"]
     jobs += [m + "/" + role for m in models for role in ("ppo", "bc_continue")]
     jobs += ["seal_all_models"]

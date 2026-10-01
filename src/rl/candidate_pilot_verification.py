@@ -256,6 +256,14 @@ def verify_episode(header, rows, final_state, config):
 
 def verify_raw_bundle(root, index, config, streams):
     """Reopen and hash every raw file, then independently recompute all outcomes."""
+    files, outcomes = read_raw_episodes(root, index, config)
+    analysis = paired_analysis(outcomes, config, streams)
+    return {"files": files, "outcomes": outcomes, "analysis": analysis,
+            "verification": "raw files reopened, hashes checked, all prescribed outcomes recomputed"}
+
+
+def read_raw_episodes(root, index, config):
+    """Shared raw-only reader for prescribed test and development episode sets."""
     root = Path(root).resolve()
     seen, files, outcomes = set(), [], []
 
@@ -276,9 +284,7 @@ def verify_raw_bundle(root, index, config, streams):
         rows = read(entry["events"], jsonl=True)
         final = read(entry["final_state"])
         outcomes.append(verify_episode(header, rows, final, config))
-    analysis = paired_analysis(outcomes, config, streams)
-    return {"files": files, "outcomes": outcomes, "analysis": analysis,
-            "verification": "raw files reopened, hashes checked, all prescribed outcomes recomputed"}
+    return files, outcomes
 
 
 def paired_analysis(outcomes, config, streams):

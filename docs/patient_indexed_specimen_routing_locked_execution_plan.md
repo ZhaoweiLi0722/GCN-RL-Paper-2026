@@ -2233,3 +2233,14 @@ specs/2026-10-01-actor-positive-control/readout.md. Archive this finite packet.
 Proposed sampled-return/independent-critic artificial control is not yet approved
 or executed;fixed-bank patient integration also remains unresolved. No automatic
 pilot,search,reward modification,remote action,holdout use or Stage E reopening.
+
+Local preservation closure2026-10-01:2,648 archive members and unchanged source
+run verified,1,690,516 bytes,SHA256
+6dfc54a6b830155b061c2d4208f0111df8f1b8b3698d90a422084ab4532b18b6.
+Receipt:reports/2026-10-01-actor-positive-control/preservation.json. Preserver
+exit0;final matching Python process scan empty. Dropbox export was rejected by
+permission review BEFORE process launch because exact source/results payload
+and synchronized destination need explicit confirmation. The safer alternative
+archives only inside this project;no Dropbox copy occurred and no workaround
+was attempted. New artificial numerical scope and optional Dropbox copying both
+remain pending separate user decisions. This finite packet is closed.

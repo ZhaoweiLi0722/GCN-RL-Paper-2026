@@ -1,10 +1,11 @@
 # Autonomous local research queue
 
-## Live checkpoint: actor-only artificial positive control passed; preservation pending
+## Live checkpoint: actor-only artificial positive control passed and locally archived
 
 2026-10-01. Frozen87621a18e84314f996ffcc2e8081bb99e6e3654c completed the single
 packet,exit0,1,152 Adam calls,3.140 numerical seconds. Independent scalar verifier
-also exit0. No patient/scientific fit occurred. No new numerical run authorized.
+also exit0. No patient/scientific fit occurred. Final matching Python process
+scan empty. This finite packet is closed;no new numerical run authorized.
 
 | Item | Verified state |
 | --- | --- |
@@ -13,7 +14,8 @@ also exit0. No patient/scientific fit occurred. No new numerical run authorized.
 | Validation |100 zero-update tests/full compileall/diff check pass;independent arithmetic/hash reader validates2,345 files,all1,152 charges,Adam counters,seals and gates without new neural forward |
 | Old evidence |P2 source/document locks,payload/launcher and closed calibration inventory unchanged |
 | Evidence |specs/2026-10-01-actor-positive-control/readout.md;reports/2026-10-01-actor-positive-control/verification.json |
-| Next closure |Local-only archive and local commit;Dropbox export blocked before launch by permission review,requires exact payload/destination approval;no workaround or implicit export |
+| Local preservation |2,648-member archive verified,1,690,516 bytes,SHA2566dfc54a6b830155b061c2d4208f0111df8f1b8b3698d90a422084ab4532b18b6;original run unchanged;receipt reports/2026-10-01-actor-positive-control/preservation.json |
+| Backup decision |Dropbox export blocked before launch by permission review;exact source/result payload and destination in dropbox-permission-review.json need user approval;no Dropbox copy/cloud sync/Howard access claim |
 | Next proposed approval |Same actor/task with sampled returns and independent critic:9 fits,128 actor+128 critic calls each/2,304 total,13,824 artificial observations/30 numerical minutes,one configuration;NOT authorized/executed |
 | Integration gap |Real candidate requests/classes change with state;fixed toy indices cannot be submitted directly;future dynamic-support interface needs explicit design and contract tests |
 | Boundaries |No patient calls,search,reward change,retry,remote actions,automation,holdout,Howard approval claim or Stage E reopening |

@@ -21,6 +21,14 @@ has run at this checkpoint; the original P1 failure remains immutable.
 | Bounds |52,728 calls,4,608 updates,6h and original nontransferable subcaps;0 new DDPG fits. Local only; no remote actions,holdout or Stage E reopening |
 | Automation |No research automation recreated; the execution process, not a heartbeat, will determine actual running status |
 
+Freeze update: implementation86c57ab6d32b43f4682637d0096fcab42d03683f accepted;
+effective recovery1 execution config SHA256
+cb1b35f0f22ffbc8e699830f89ffc29566c5cc61509f04bef02757473cca643b generated.
+270 source locks,891 historical files without collisions,7 R4 locks, prior
+zero-step failure inventory and runtime verified; static compatibility passes.
+Next is commit effective packet, verify clean locks/processes, then launch once.
+No recovery preflight is claimed until actual process/output evidence exists.
+
 ## Previous checkpoint: P1 recovery engineering verified; graph contract decision needed
 
 Updated 2026-10-01T00:55Z (September30 local time). Zhaowei's latest continue

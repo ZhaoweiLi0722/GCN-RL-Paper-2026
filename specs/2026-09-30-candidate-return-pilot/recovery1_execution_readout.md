@@ -37,3 +37,14 @@ shared POSIX deadline clock. Single attempt, no retry, no budget transfer.
 Next: commit implementation; freeze and commit the separate effective packet;
 check processes and locks; then enter the approved bounded real preflight.
 This engineering acceptance is not an RL performance result.
+
+## Frozen execution packet
+
+Implementation86c57ab6d32b43f4682637d0096fcab42d03683f. Effective file:
+`experiments/configs/candidate_return_pilot_20260930_recovery1_execution.json`,
+SHA256cb1b35f0f22ffbc8e699830f89ffc29566c5cc61509f04bef02757473cca643b.
+It binds270 source files,891 historical JSON/JSONL files with zero collisions,
+7 R4 inputs, the original protocol/config, explicit recovery approval/amendment,
+CPUfloat32 runtime and the prior15-file zero-step failure. Static compatibility
+passes under the explicit specimen-only contract. Commit packet before launch;
+no real preflight is claimed by this freeze entry. Local volume had569GiB free.

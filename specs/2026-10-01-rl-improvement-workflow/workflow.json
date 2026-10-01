@@ -6,7 +6,7 @@
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "e9d5db00a5f49d8e5dfcc2fd2003212574247d25",
-  "status": "approval_required",
+  "status": "ready",
   "automation_id": "gcn-rl-reward",
   "automation_creation_verified": true,
   "automation_status_at_creation": "ACTIVE",
@@ -21,7 +21,7 @@
     "zero_optimizer_mock_tests": true,
     "saved_data_reward_audit": true,
     "local_commits_and_project_local_archives": true,
-    "sampled_return_artificial_fits": false,
+    "sampled_return_artificial_fits": true,
     "patient_environment_calls": false,
     "patient_data_fitting": false,
     "reward_modification": false,
@@ -30,8 +30,8 @@
     "holdout_use": false
   },
   "artificial_packet_proposal": {
-    "approval_status": "pending_explicit_user_reply",
-    "approval_evidence": null,
+    "approval_status": "accepted_by_new_continue_reply_to_bounded_handoff",
+    "approval_evidence": "specs/2026-10-01-sampled-return-control/execution_authorization.json",
     "fits": 9,
     "actor_optimizer_calls_per_fit": 128,
     "critic_optimizer_calls_per_fit": 128,
@@ -48,7 +48,7 @@
     {"id": "A1_PREP", "state": "ready", "deliverable": "specs/2026-10-01-sampled-return-control/protocol.md; serial runner, independent verifier, 121 non-fitting tests and full compileall passed; execution approval packet absent"},
     {"id": "A2_CONTRACT", "state": "passed", "deliverable": "specs/2026-10-01-rl-improvement-workflow/candidate-contract-readout.md; source/mock audit only, no integrated patient actor"},
     {"id": "A2_REWARD", "state": "passed", "deliverable": "specs/2026-10-01-rl-improvement-workflow/reward-decision.md; unchanged finite-horizon reward, unresolved domain/lifecycle interpretation disclosed"},
-    {"id": "A1_RUN", "state": "approval_required", "deliverable": "single approved artificial packet with independent verification and local archive"},
+    {"id": "A1_RUN", "state": "ready", "deliverable": "single approved artificial packet with independent verification and local archive"},
     {"id": "A3_DECISION", "state": "passed", "deliverable": "specs/2026-10-01-rl-improvement-workflow/readiness.md; decision is not patient-ready, no launch or additional approval question"}
   ],
   "observations": {

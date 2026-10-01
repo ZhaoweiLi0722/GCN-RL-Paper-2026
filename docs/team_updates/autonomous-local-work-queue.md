@@ -1,6 +1,34 @@
 # Autonomous local research queue
 
-## Live checkpoint: sampled learning preparation complete and reward audit recorded
+## Live checkpoint: bounded sampled learning packet accepted and awaiting launch
+
+2026-10-01. User replied "continue, why does it feel like there has been no
+substantive progress in these two days?" immediately after the explicit
+nine-fit/2,304-call/30-minute/one-attempt proposal. This new reply accepts that
+specific artificial packet; it is not silence and is not the earlier generic
+engineering continuation. Exact original wording and context are retained in
+specs/2026-10-01-sampled-return-control/execution_authorization.json.
+
+Implementation stays frozen at2bf2403d346c708338a7ee20a3a6ee8bf190589e. The new
+authorization binds304 source/test locks, unchanged protocol/config hashes,
+CPU float32 Python3.9.6/Torch2.8.0/NumPy2.0.2 runtime, and the same fixed caps.
+No source, reward, seed, gate or update count changed. Prior121 tests and full
+compileall passed; current worktree was clean at entry and host process scan
+found no related Python. No numerical result exists at this checkpoint.
+
+Next: commit the authorization/change control, invoke the frozen single-run
+entry point, retain output and errors, then independently verify and archive.
+Do not stop at another preparatory status if execution is unblocked. No new
+approval needed inside this packet. No patient calls/fitting, scenario/reward
+search, retry, Dropbox export, remote action, holdout or Stage E reopening.
+The previous finite automation remains deleted; this turn carries the packet
+through to a terminal decision without creating a new waiting schedule.
+
+Research-management correction: report decisions and actual performance
+evidence separately from test counts. Do not present accumulated engineering
+checks as patient-performance improvement. A failed gate ends this attempt.
+
+## Previous checkpoint: sampled learning preparation complete and reward audit recorded
 
 2026-10-01T17:50Z. Entry HEAD1e5e57e; branch
 codex/september-research-integration. No actual optimizer call, patient episode

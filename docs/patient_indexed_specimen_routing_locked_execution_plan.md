@@ -2291,3 +2291,25 @@ The original draft remains false;do not fabricate approval or loop the core
 manually. Finish local freeze and remove only the finite gcn-rl-reward schedule
 because independent preparation is complete. All remote,sharing,holdout,
 Howard-signoff and Stage E boundaries remain unchanged.
+
+#### Sampled return artificial packet accepted after bounded handoff
+
+2026-10-01: following the immediately preceding response listing9 artificial
+fits, at most2,304 optimizer calls,30 numerical minutes and one attempt,
+Zhaowei replied "continue, why does it feel like there has been no substantive
+progress in these two days?" The exact Chinese message is preserved in the new
+execution_authorization.json under specs/2026-10-01-sampled-return-control/.
+This is acceptance of that pending finite packet, not an inferred approval
+from silence, the earlier continuation, or the automation.
+
+Authorize only the frozen protocol/config and implementation
+2bf2403d346c708338a7ee20a3a6ee8bf190589e:9 artificial fits,128 actor and128
+independent critic calls each,2,304 total,13,824 training action observations,
+1800 numerical seconds,one configuration/attempt,CPU float32. The separate
+authorization binds304 source/test locks and actual runtime. The original
+draft false fields and frozen protocol remain unchanged. No extra fitting,
+tuning, retry, new patient experiment, reward revision, Dropbox export, remote
+action, holdout, Howard approval claim or Stage E reopening. Complete numerical
+execution, independent saved-receipt verification and project-local archiving
+without asking again at routine intermediate steps. Report null/failed gates
+as clearly as improvements. No artificial result is a patient RL contribution.

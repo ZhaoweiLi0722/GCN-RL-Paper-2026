@@ -98,10 +98,12 @@ class DynamicCandidateContinuation(CandidateContinuation):
             self.budget.check()
             if self.role == "ppo":
                 result = self.kernel.update(before_optimizer_step=self.budget.debit_optimizer,
-                                            before_minibatch=self.budget.check_minibatch)
+                                            before_minibatch=self.budget.check_minibatch,
+                                            before_compute=self.budget.check)
             else:
                 result = self.kernel.fit(self.examples, epochs=self.settings["epochs"],
-                                         before_step=lambda: self.budget.debit_optimizer("actor"))
+                                         before_step=lambda: self.budget.debit_optimizer("actor"),
+                                         before_compute=self.budget.check)
                 self.examples = []
             self.budget.check()
             return result

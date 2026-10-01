@@ -1,8 +1,8 @@
 """Serial dynamic-policy engineering runner with explicit external ownership.
 
-This is not a scientific launcher. An injected backend must explicitly identify
-itself as an invented fixture. A future separately authorized launcher must bind
-the scientific backend; this version deliberately refuses that execution mode.
+This is not an authorization source. Fixture execution needs an invented backend;
+scientific execution additionally requires the source-bound admission object
+from the exclusive execution wrapper. No approval is bundled with this module.
 Every advance performs one recoverable operation, never retries a failed one.
 """
 
@@ -53,17 +53,24 @@ class DynamicCandidateCampaign:
     def __init__(self, root, config, streams, budget, backend, *, enabled=False,
                  engineering_only=True, recorder=EpisodeRecorder,
                  reader=read_dynamic_raw_episodes, verifier=verify_dynamic_raw_bundle,
-                 final_lock_check=lambda: None):
-        if enabled is not True or engineering_only is not True:
-            raise ValueError("only explicitly enabled engineering fixture execution is implemented")
-        if getattr(backend, "engineering_fixture", False) is not True:
-            raise ValueError("patient or unclassified backends are forbidden in engineering mode")
+                 final_lock_check=lambda: None, execution_admission=None):
+        if enabled is not True or type(engineering_only) is not bool:
+            raise ValueError("explicit execution mode required")
+        if engineering_only:
+            if getattr(backend, "engineering_fixture", False) is not True or execution_admission is not None:
+                raise ValueError("patient or unclassified backends are forbidden in engineering mode")
+        else:
+            from src.rl.dynamic_candidate_execution import ScientificAdmission
+            if type(execution_admission) is not ScientificAdmission:
+                raise PermissionError("scientific execution requires the exclusive approved admission")
+            execution_admission.bind_campaign(root, config, streams, budget, backend)
         if type(budget) is not DynamicCandidateBudget or budget.plan != dynamic_budget_plan(config):
             raise ValueError("exact external dynamic budget required")
         self.root, self.config, self.streams = Path(root).resolve(), copy.deepcopy(config), copy.deepcopy(streams)
         self.budget, self.backend = budget, backend
         self.recorder_type, self.reader, self.verifier = recorder, reader, verifier
         self.final_lock_check = final_lock_check
+        self.engineering_only = engineering_only
         self.sequence = DynamicPilotSequence(config, self.root, enabled=True)
         self.templates, self.initializers, self.models, self.model_paths = {}, {}, {}, {}
         self.demonstrations, self.qualification, self.qualified = {}, {}, {}
@@ -99,8 +106,8 @@ class DynamicCandidateCampaign:
 
     def emit_status(self, state, **extra):
         path = self._json(f"launcher/status/{self.status_serial:06d}.json", {
-            "status": state, "engineering_fixture": True,
-            "scientific_execution": False, "job": self.sequence.active or self.sequence.next_job,
+            "status": state, "engineering_fixture": self.engineering_only,
+            "scientific_execution": not self.engineering_only, "job": self.sequence.active or self.sequence.next_job,
             "completed_jobs": len(self.sequence.completed), "budget": self.budget.snapshot(), **extra})
         self.status_serial += 1
         return path
@@ -468,7 +475,7 @@ class DynamicCandidateCampaign:
         self._json("payload/all-episode-verification.json", {"files": files, "outcomes": outcomes})
         self._json("payload/compute-accounting.json", {"owner_counts": ledger["owner_counts"],
                     "counts": ledger["counts"], "phase_seconds": ledger["phase_seconds"],
-                    "engineering_fixture": True, "scientific_performance_claim": False})
+                    "engineering_fixture": self.engineering_only, "scientific_performance_claim": False})
         self.budget.check()
         copy_verified(self.budget.path, self.root / "payload/budget-through-verification.jsonl")
 
@@ -513,7 +520,7 @@ class DynamicCandidateCampaign:
             self.budget.check()
             self.work["updates"].append(owner.fit(self.demonstrations[b],
                 replacement_steps=self.config["initialization"]["actor_adam_calls_per_block"],
-                before_step=lambda: self.budget.debit_optimizer("actor")))
+                before_step=lambda: self.budget.debit_optimizer("actor"), before_compute=self.budget.check))
             self._state_file(f"payload/initialization/{key}/final.pt", owner.state_dict())
             done = True
         elif job.startswith(("ppo_continuation/", "bc_continuation/")):
@@ -531,9 +538,9 @@ class DynamicCandidateCampaign:
         elif job == "supervisor_dispatch_terminal_closure":
             self.sequence.check_seals()
             self.final_lock_check()
-            self._json("launcher/closure.json", {"engineering_fixture": True,
+            self._json("launcher/closure.json", {"engineering_fixture": self.engineering_only,
                 "payload_unchanged": inventory(self.root / "payload") == self.payload_seal,
-                "automatic_followon": False, "scientific_execution": False})
+                "automatic_followon": False, "scientific_execution": not self.engineering_only})
             done = True
         else:
             descriptors = self._descriptors(job)
@@ -557,6 +564,11 @@ class DynamicCandidateCampaign:
         self.save_boundary("phase-work-complete")
         self.emit_status("phase_completed", completed_job=job)
         self.sequence.finish(evidence)
+        if job == "supervisor_dispatch_terminal_closure":
+            self._json("launcher/completed.json", {"status": "completed", "exit_code": 0,
+                "engineering_fixture": self.engineering_only, "scientific_execution": not self.engineering_only,
+                "sequence": self.sequence.state_dict(), "budget": self.budget.snapshot(),
+                "automatic_followon": False, "requires_successful_supervisor_receipt": True})
         self.budget.check()
         self.budget.finish()
         self.work = None
@@ -589,9 +601,6 @@ class DynamicCandidateCampaign:
                 if self.work is None:
                     self.begin_next()
                 self.dispatch(self.sequence.active)
-            self._json("launcher/completed.json", {"status": "completed", "exit_code": 0,
-                "engineering_fixture": True, "scientific_execution": False,
-                "sequence": self.sequence.state_dict(), "budget": self.budget.snapshot(), "automatic_followon": False})
             return 0
         except BaseException as error:
             self.fail(error)

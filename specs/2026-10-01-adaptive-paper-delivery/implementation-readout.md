@@ -1,6 +1,51 @@
 # Dynamic candidate implementation readout
 
-## Latest integration milestone: October 1, 19:52 UTC
+## Latest execution-binding milestone: October 1, 20:05 UTC
+
+Entry HEAD: 871d18b57cbeb36a7912459fc3f77321cb669672. The exclusive real
+execution wrapper is implemented and fixture-tested. It requires a separately
+committed explicit authorization bound to the exact frozen proposal. No such
+authorization exists and no scientific launcher has been invoked.
+
+Delivered this turn:
+
+- `dynamic_candidate_execution.py` and `run_dynamic_candidate_pilot.py`: fixed
+  worktree paths, committed source/config/protocol/runtime admission, exclusive
+  one-attempt claim, owned patient-backend capability, local input preservation,
+  and independently reconciled terminal budget/archive receipts.
+- `dynamic_candidate_watchdog.py`: separately owned child process, inherited
+  monotonic origin, initial setup charged to its phase, incremental ledger
+  deadlines, bounded termination/reaping and terminal failure receipts. The
+  final closure deadline includes archive-byte readback and terminal writing.
+- Update/continuation kernels now check the active deadline around forward,
+  backward and state restoration. Durable charges cannot be refunded by an
+  exception; failure payloads remain evidence, not another attempt.
+- `pilot-protocol.md`: one complete prospective S1 packet, including explicit
+  graph/bias/prerequisite amendments, 22,224 environment calls, 1,920 optimizer
+  calls, all phase caps and a six-hour global cap. It remains unapproved.
+
+Parent validation: **155 tests passed in 36.086 seconds** across the 14 dynamic
+model, update, resource, sequence, session, continuation, factory, verification,
+backend, preparation, campaign, compute-deadline, execution and watchdog modules.
+The focused wrapper/deadline suite also passed 47 tests in 1.205 seconds. Full
+repository `python -m compileall -q .` passed. Numerical Adam/SGD steps and real
+patient calls were forbidden by test sentinels. The watchdog tests owned only
+harmless exit/sleep subprocesses, which were reaped. New patient builds/steps,
+research trajectories and numerical optimizer steps are all zero.
+
+McClintock (01a0f907-dd6a-70d1-a5f2-acd594f1ac16) delivered compute-boundary
+callbacks and 14 tests, then was closed. The coordinator implemented the
+wrapper/watchdog, integrated all changes and ran the combined suite. Harvey's
+existing finite efficiency review remains applied; no repeated reviewer gate
+or historical full audit was added. No research process was observed in the
+entry host PID/PPID/command scan.
+
+Next: commit this implementation, freeze its exact proposal from the clean
+commit, and present the single S1 approval. Fixture success is not scientific
+qualification or patient improvement. Restoration remains in-owner only;
+scientific failure is terminal, without repair-and-retry or a cold restart.
+
+## Previous integration milestone: October 1, 19:52 UTC
 
 Entry HEAD: dd5044f97495a3131415f6e929753bf48fcb6110. D2's complete fixture
 chain is now connected; D3's real execution binding is not complete. No new

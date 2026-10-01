@@ -12,7 +12,7 @@ import math
 from src.models.dynamic_candidate_policy import DynamicCandidatePolicy
 from src.rl.candidate_imitation import ImitationSettings, decode_example
 from src.rl.candidate_rollout import sample_candidate
-from src.rl.dynamic_candidate_ppo import validate_adam_state
+from src.rl.dynamic_candidate_ppo import _compute_checks, _no_compute_check, validate_adam_state
 from src.rl.dynamic_candidate_rollout import evaluate_dynamic_policy
 from src.rl.networks import require_torch, torch
 from src.rl.prospective_adapter import ReplayInputContract
@@ -71,7 +71,8 @@ class DynamicCandidateImitationKernel:
         return sample_candidate(evaluate_dynamic_policy(self.policy, observation, candidates, self.contract),
                                 generator=self.sampling_rng)
 
-    def _fit(self, examples, *, epochs, replacement_steps, before_step):
+    def _fit(self, examples, *, epochs, replacement_steps, before_step, before_compute):
+        before_compute()
         if self.settings.allowed_split == "demonstration":
             if epochs is not None or type(replacement_steps) is not int or replacement_steps < 1:
                 raise ValueError("demonstration requires explicit replacement-update count")
@@ -88,60 +89,88 @@ class DynamicCandidateImitationKernel:
             raise ValueError("mixed/forbidden split or duplicate examples")
         if set(ids).intersection(i for row in self.history for i in row["identities"]):
             raise ValueError("already consumed imitation rollout")
-        decoded = [decode_example(e, self.contract) for e in examples]
+        decoded = []
+        for example in examples:
+            before_compute()
+            decoded.append(decode_example(example, self.contract))
         if replacement_steps is not None:
-            batches = [torch.randint(len(examples), (self.settings.batch_size,), generator=self.rng).tolist()
-                       for _ in range(replacement_steps)]
+            batches = []
+            for _ in range(replacement_steps):
+                before_compute()
+                batches.append(torch.randint(len(examples), (self.settings.batch_size,), generator=self.rng).tolist())
         else:
             batches = []
             for _ in range(epochs):
+                before_compute()
                 order = torch.randperm(len(examples), generator=self.rng).tolist()
                 batches.extend(order[i:i + self.settings.batch_size] for i in range(0, len(order), self.settings.batch_size))
         logs = []
         for indices in batches:
+            before_compute()
             losses = []
             for i in indices:
                 observation, candidates = decoded[i]
+                before_compute()
                 logits = self.policy(observation, candidates).logits
                 losses.append(-torch.log_softmax(logits, dim=0)[candidates.reference_class])
+            before_compute()
             loss = torch.stack(losses).mean()
             if not torch.isfinite(loss).item():
                 raise ValueError("nonfinite imitation loss")
             self.policy.zero_grad(set_to_none=True)
+            before_compute()
             loss.backward()
+            before_compute()
             parameters = self.trainable()
             if (any(p.grad is None or not torch.isfinite(p.grad).all().item() for p in parameters)
                     or any(p.grad is not None for p in self.policy.critic_parameters())):
                 raise ValueError("nonfinite/missing/cross-owner imitation gradient")
+            before_compute()
             norm = torch.nn.utils.clip_grad_norm_(parameters, self.settings.max_grad_norm, error_if_nonfinite=True)
+            before_compute()
             before_step()
+            before_compute()
             self.optimizer.step()
             self.steps += 1
+            before_compute()
             state_digest(self.policy.state_dict())
             state_digest(self.optimizer.state_dict())
             logs.append({"indices": indices, "cross_entropy": loss.item(), "grad_norm": norm.item()})
+        before_compute()
         if state_digest(self.policy.critic.state_dict()) != state_digest(self._critic_state):
             raise ValueError("imitation changed independent critic")
         self.history.append({"identities": ids, "examples_sha256": state_digest(examples), "steps": count})
         self._set_modes()
         return {"optimizer_steps": self.steps, "minibatches": logs}
 
-    def fit(self, examples, *, before_step, epochs=None, replacement_steps=None):
+    def fit(self, examples, *, before_step, epochs=None, replacement_steps=None,
+            before_compute=_no_compute_check):
+        """Check compute deadlines without replacing the durable actor debit."""
         if self._failure is not None:
             raise ValueError("failed transaction is terminal")
         if not callable(before_step):
             raise ValueError("explicit durable charge callback required")
-        candidate, charged = copy.deepcopy(self), []
+        if not callable(before_compute):
+            raise ValueError("before_compute must be callable")
+        candidate, charged = self, []
 
         def debit():
             before_step()
             charged.append("actor")
 
         try:
-            candidate._restore(self.state_dict())
-            result = candidate._fit(examples, epochs=epochs, replacement_steps=replacement_steps, before_step=debit)
-            candidate._restore(candidate.state_dict())
+            before_compute()
+            candidate = copy.deepcopy(self)
+            with _compute_checks(candidate, before_compute):
+                before_compute()
+                candidate._restore(self.state_dict(), before_compute=before_compute)
+                result = candidate._fit(examples, epochs=epochs, replacement_steps=replacement_steps,
+                                        before_step=debit, before_compute=before_compute)
+                before_compute()
+                candidate._restore(candidate.state_dict(), before_compute=before_compute)
+                before_compute()
         except BaseException as error:
+            # Do not deadline-gate terminal evidence or refund an external debit.
             self._failure = {"error_type": type(error).__name__, "message": str(error),
                              "acknowledged_charge_owners": charged,
                              "resource_authority": "external_non_refundable_ledger",
@@ -156,7 +185,8 @@ class DynamicCandidateImitationKernel:
                               "sampling_rng": None if self.sampling_rng is None else self.sampling_rng.get_state(),
                               "steps": self.steps, "history": self.history, "failure": self._failure})
 
-    def _restore(self, state):
+    def _restore(self, state, *, before_compute=_no_compute_check):
+        before_compute()
         keys = {"manifest", "policy", "optimizer", "rng", "sampling_rng", "steps", "history", "failure"}
         if not isinstance(state, dict) or set(state) != keys or state["manifest"] != self.manifest:
             raise ValueError("imitation checkpoint manifest differs")
@@ -184,12 +214,14 @@ class DynamicCandidateImitationKernel:
             if (not isinstance(value, torch.Tensor) or value.dtype != expected[name].dtype
                     or value.shape != expected[name].shape or value.device.type != "cpu"):
                 raise ValueError("policy tensor contract mismatch")
+        before_compute()
         self.policy.load_state_dict(state["policy"])
         if state_digest(self.policy.critic.state_dict()) != state_digest(self._critic_state):
             raise ValueError("frozen critic differs")
         if not steps and self.policy.snapshot_sha256() != self.manifest["initial_weights"]:
             raise ValueError("zero-step weights differ")
-        validate_adam_state(self.optimizer, state["optimizer"], self.trainable(), self._groups, steps)
+        validate_adam_state(self.optimizer, state["optimizer"], self.trainable(), self._groups, steps,
+                            before_compute=before_compute)
         for key, generator in (("rng", self.rng), ("sampling_rng", self.sampling_rng)):
             value = state[key]
             if generator is None:
@@ -202,6 +234,7 @@ class DynamicCandidateImitationKernel:
             generator.set_state(value)
         self.steps, self.history, self._failure = steps, copy.deepcopy(history), None
         self._set_modes()
+        before_compute()
 
     def load_state_dict(self, state):
         if self._failure is not None:

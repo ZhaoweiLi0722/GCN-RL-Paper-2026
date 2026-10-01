@@ -222,7 +222,7 @@ class DynamicCandidateCampaignTests(unittest.TestCase):
         args = (run.root, run.config, run.streams, run.budget, run.backend)
         with self.assertRaises(ValueError):
             DynamicCandidateCampaign(*args)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(PermissionError):
             DynamicCandidateCampaign(*args, enabled=True, engineering_only=False)
         run.backend.engineering_fixture = False
         with self.assertRaises(ValueError):

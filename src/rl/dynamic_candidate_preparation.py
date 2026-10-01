@@ -19,6 +19,8 @@ from src.rl.dynamic_candidate_resources import dynamic_budget_plan, dynamic_stre
 
 BRANCH = "codex/september-research-integration"
 PACKET_DIRECTORY = "specs/2026-10-01-adaptive-paper-delivery/frozen-proposal"
+RUN_DIRECTORY = "results/dynamic_candidate_pilot_20261001"
+PROTOCOL = "specs/2026-10-01-adaptive-paper-delivery/pilot-protocol.md"
 
 
 def git(root, *args):
@@ -54,7 +56,8 @@ def seed_evidence_inventory(root):
             continue
         for path in base.rglob("*"):
             relative = path.relative_to(root).as_posix()
-            if relative.startswith(PACKET_DIRECTORY + "/") or relative == DRAFT:
+            if (relative.startswith(PACKET_DIRECTORY + "/")
+                    or relative.startswith(RUN_DIRECTORY + "/") or relative == DRAFT):
                 continue
             if any(word in path.name.lower() for word in ("seed", "stream", "manifest", "config")) and path.is_file():
                 if path.suffix in (".json", ".jsonl"):
@@ -89,6 +92,7 @@ def prepare_proposal(root, *, freeze=False):
     result = {"format": "unapproved-dynamic-pilot-preparation-v1", "scientific_execution_authorized": False,
         "ready_to_launch": False, "workspace": str(root), "branch": BRANCH,
         "implementation_commit": git(root, "rev-parse", "HEAD"), "source_frozen": bool(freeze),
+        "protocol": file_record(root, PROTOCOL),
         "scientific_config": config, "static_inputs": inputs, "parameter_counts": counts,
         "streams": streams, "budget_plan": dynamic_budget_plan(config),
         "new_patient_builds": 0, "new_patient_steps": 0, "new_optimizer_steps": 0,

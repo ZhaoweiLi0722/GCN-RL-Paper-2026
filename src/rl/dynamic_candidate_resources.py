@@ -161,7 +161,7 @@ def _combined(row):
 class DynamicCandidateBudget(PilotBudget):
     """Reuse the durable ledger with separate operation owners and phase clocks."""
 
-    def __init__(self, path, plan, *, enabled=False, clock=None):
+    def __init__(self, path, plan, *, enabled=False, clock=None, started=None):
         if enabled is not True:
             raise ValueError("dynamic candidate budget requires explicit opt-in")
         validate_budget_plan(plan)
@@ -173,8 +173,10 @@ class DynamicCandidateBudget(PilotBudget):
                          for name, row in plan["sections"].items()}
         self.phase_limits = {kind: {phase: _combined(row)[kind] for phase, row in plan["phases"].items()}
                              for kind in ("environment", "optimizer")}
-        self.started = self.last_clock = self.clock()
-        if not math.isfinite(self.started):
+        self.last_clock = self.clock()
+        self.started = self.last_clock if started is None else started
+        if (not math.isfinite(self.started) or not math.isfinite(self.last_clock)
+                or self.started > self.last_clock):
             raise ValueError("invalid monotonic clock")
         self.active, self.section_started, self.closed = None, None, []
         self.counts = {"environment": 0, "optimizer": 0}
@@ -195,6 +197,17 @@ class DynamicCandidateBudget(PilotBudget):
                 self.failed = True
                 raise TimeoutError("aggregate phase wall-clock cap exceeded")
         return now
+
+    def begin(self, section):
+        if section == "runtime_input_binding" and not self.closed and self.active is None:
+            now = self.check()
+            if now - self.started > self.sections[section]["seconds"]:
+                self.failed = True
+                raise TimeoutError("supervisor setup consumed the initial phase cap")
+            self._append({"event": "begin", "section": section, "clock": self.started})
+            self.active, self.section_started = section, self.started
+            return
+        super().begin(section)
 
     def _capacity(self, owners):
         now = self.check()
@@ -303,6 +316,7 @@ def read_dynamic_ledger(path):
                 raise ValueError("aggregate phase elapsed mismatch")
             active = None
     return result | {"owner_counts": owners, "phase_seconds": seconds,
+                     "closed": [r["section"] for r in rows if r["event"] == "finish"], "active": active,
                      "plan_sha256": digest(plan)}
 
 

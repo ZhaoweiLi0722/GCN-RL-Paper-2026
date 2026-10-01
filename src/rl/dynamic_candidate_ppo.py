@@ -6,6 +6,7 @@ mandatory; rollback of the model never refunds charges or permits a retry.
 """
 
 import copy
+from contextlib import contextmanager
 from dataclasses import asdict
 import math
 
@@ -22,8 +23,41 @@ from src.rl.prospective_ddpg_kernel import state_digest
 from src.rl.training_state import training_contract_sha256
 
 
-def validate_adam_state(optimizer, saved, parameters, expected_groups, count):
+def _no_compute_check():
+    pass
+
+
+@contextmanager
+def _compute_checks(kernel, before_compute):
+    """Bridge inherited restore hooks without retaining the external budget.
+
+    Forward guards also cover receipt adapters and the independent critic after
+    the actor returns. They are removed before publication or failure capture.
+    """
+    handles = []
+    previous = getattr(kernel, "_before_compute", None)
+    kernel._before_compute = before_compute
+
+    def check_forward(module, inputs):
+        before_compute()
+
+    try:
+        for module in (kernel.policy, kernel.policy.actor, kernel.policy.critic):
+            handles.append(module.register_forward_pre_hook(check_forward))
+        yield
+    finally:
+        for handle in handles:
+            handle.remove()
+        if previous is None:
+            del kernel._before_compute
+        else:
+            kernel._before_compute = previous
+
+
+def validate_adam_state(optimizer, saved, parameters, expected_groups, count, *,
+                        before_compute=_no_compute_check):
     """Validate each owner's independent counter and moments before loading."""
+    before_compute()
     _keys(saved, ("state", "param_groups"), "optimizer")
     if saved["param_groups"] != expected_groups:
         raise ValueError("Adam hyperparameters or parameter mapping differ")
@@ -34,6 +68,7 @@ def validate_adam_state(optimizer, saved, parameters, expected_groups, count):
     for index, parameter in zip(ids, parameters):
         if not count:
             break
+        before_compute()
         moments = saved["state"][index]
         _keys(moments, ("step", "exp_avg", "exp_avg_sq"), "Adam moments")
         step = moments["step"]
@@ -47,7 +82,9 @@ def validate_adam_state(optimizer, saved, parameters, expected_groups, count):
                 raise ValueError("Adam moment shape/dtype/device differs")
         if (moments["exp_avg_sq"] < 0).any().item():
             raise ValueError("negative Adam second moment")
+    before_compute()
     state_digest(saved)
+    before_compute()
     optimizer.load_state_dict(saved)
 
 
@@ -132,6 +169,8 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
         return sample_candidate(evaluation, generator=self.sampling_rng)
 
     def _validate_segment(self, segment):
+        before_compute = getattr(self, "_before_compute", _no_compute_check)
+        before_compute()
         if not isinstance(segment, PreparedCandidateSegment):
             raise TypeError("prepared closed candidate segment required")
         if segment.gae_lambda != self.settings.gae_lambda:
@@ -143,8 +182,10 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
         if state_digest(asdict(segment)) != state_digest(asdict(canonical)):
             raise ValueError("segment return/advantage receipt differs")
         for decision in segment.decisions:
+            before_compute()
             verify_dynamic_evaluation(self.policy, self._observation(decision.evaluation), decision.evaluation)
         if segment.bootstrap is not None:
+            before_compute()
             verify_dynamic_evaluation(self.policy, self._observation(segment.bootstrap), segment.bootstrap)
         return canonical
 
@@ -156,46 +197,66 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
             raise ValueError("two-owner optimizer step cap cannot admit rollout")
         self.pending = proposed
 
-    def _update_in_place(self, before_optimizer_step, before_minibatch):
+    def _update_in_place(self, before_optimizer_step, before_minibatch, before_compute):
+        before_compute()
         self.pending = self._validate_pending(self.pending)
         decisions = [d for s in self.pending for d in s.decisions]
         if not decisions:
             raise ValueError("nonempty closed rollout required")
         if self.total_optimizer_steps + self._required(self.pending) > self.settings.max_optimizer_steps:
             raise ValueError("two-owner optimizer cap exceeded")
+        before_compute()
         advantages = normalize_rollout_advantages(torch.tensor(
             [a for s in self.pending for a in s.advantages], dtype=self.dtype),
             enabled=self.settings.normalize_advantages)
         returns = torch.tensor([r for s in self.pending for r in s.returns], dtype=self.dtype)
         old_logp = torch.tensor([d.old_log_prob for d in decisions], dtype=self.dtype)
-        observations = [self._observation(d.evaluation) for d in decisions]
+        observations = []
+        for decision in decisions:
+            before_compute()
+            observations.append(self._observation(decision.evaluation))
         logs = []
         for epoch in range(self.settings.epochs):
+            before_compute()
             order = torch.randperm(len(decisions), generator=self.shuffle_rng).tolist()
             for start in range(0, len(order), self.settings.batch_size):
                 indices = order[start:start + self.settings.batch_size]
                 before_minibatch()  # Check both available slots/deadline without refunding either owner.
-                evaluated = [reevaluate_dynamic_decision(self.policy, observations[i], decisions[i])
-                             for i in indices]
+                evaluated = []
+                for i in indices:
+                    before_compute()
+                    evaluated.append(reevaluate_dynamic_decision(self.policy, observations[i], decisions[i]))
+                before_compute()
                 logp, values, entropies = [torch.stack(v) for v in zip(*evaluated)]
+                before_compute()
                 losses = candidate_ppo_loss(
                     logp, values, entropies, old_logp[indices], advantages[indices], returns[indices],
                     clip_ratio=self.settings.clip_ratio, value_loss_coef=self.settings.value_loss_coef,
                     entropy_coef=self.settings.entropy_coef)
                 self.policy.zero_grad(set_to_none=True)
+                before_compute()
                 (losses.policy - self.settings.entropy_coef * losses.entropy).backward()
+                before_compute()
                 actor_norm = checked_gradient(self.policy.actor_parameters(), self.policy.critic_parameters(),
                                               self.settings.max_grad_norm)
+                before_compute()
                 before_optimizer_step("actor")
+                before_compute()
                 self.actor_optimizer.step()
+                before_compute()
                 state_digest(self.policy.state_dict())
                 state_digest(self.actor_optimizer.state_dict())
                 self.policy.zero_grad(set_to_none=True)
+                before_compute()
                 (self.settings.value_loss_coef * losses.value).backward()
+                before_compute()
                 critic_norm = checked_gradient(self.policy.critic_parameters(), self.policy.actor_parameters(),
                                                self.settings.max_grad_norm)
+                before_compute()
                 before_optimizer_step("critic")
+                before_compute()
                 self.critic_optimizer.step()
+                before_compute()
                 state_digest(self.policy.state_dict())
                 state_digest(self.critic_optimizer.state_dict())
                 logs.append({"epoch": epoch, "indices": indices,
@@ -203,6 +264,7 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
                              "entropy": losses.entropy.item(), "clip_fraction": losses.clip_fraction.item(),
                              "actor_grad_norm_before_clip": actor_norm,
                              "critic_grad_norm_before_clip": critic_norm})
+        before_compute()
         self.history.append(len(decisions))
         self.consumed.extend(_record_id(r) for s in self.pending for r in s.records)
         self.pending = []
@@ -211,12 +273,15 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
                 "actor_optimizer_steps": self.total_owner_steps, "critic_optimizer_steps": self.total_owner_steps,
                 "rollout_steps": len(decisions), "minibatches": logs}
 
-    def update(self, *, before_optimizer_step, before_minibatch):
+    def update(self, *, before_optimizer_step, before_minibatch, before_compute=_no_compute_check):
+        """Check compute deadlines independently of durable per-owner charging."""
         if not callable(before_optimizer_step) or not callable(before_minibatch):
             raise ValueError("explicit durable charge and pair-cap callbacks required")
+        if not callable(before_compute):
+            raise ValueError("before_compute must be callable")
         if self._failure is not None or self.mode != "online" or self.total_updates >= self.settings.max_updates:
             raise ValueError("failed/frozen arm or declared update cap prevents update")
-        candidate = copy.deepcopy(self)
+        candidate = self
         attempted = []
 
         def charge(owner):
@@ -224,10 +289,17 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
             attempted.append(owner)
 
         try:
-            candidate._restore(self.state_dict())
-            result = candidate._update_in_place(charge, before_minibatch)
-            candidate._restore(candidate.state_dict())
+            before_compute()
+            candidate = copy.deepcopy(self)
+            with _compute_checks(candidate, before_compute):
+                before_compute()
+                candidate._restore(self.state_dict())
+                result = candidate._update_in_place(charge, before_minibatch, before_compute)
+                before_compute()
+                candidate._restore(candidate.state_dict())
+                before_compute()
         except BaseException as error:
+            # Failure evidence must remain available even after the deadline.
             self._failure = {"error_type": type(error).__name__, "message": str(error),
                              "acknowledged_charge_owners": attempted,
                              "resource_authority": "external_non_refundable_ledger",
@@ -248,6 +320,8 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
         })
 
     def _load_optimizer(self, saved):
+        before_compute = getattr(self, "_before_compute", _no_compute_check)
+        before_compute()
         if self.mode == "frozen":
             if saved is not None or self.total_optimizer_steps:
                 raise ValueError("frozen checkpoint contains optimizers")
@@ -256,9 +330,12 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
         for owner, optimizer in self.optimizers.items():
             parameters = getattr(self.policy, owner + "_parameters")()
             validate_adam_state(optimizer, saved[owner], parameters,
-                                self._owner_groups[owner], self.total_owner_steps)
+                                self._owner_groups[owner], self.total_owner_steps,
+                                before_compute=before_compute)
 
     def _restore(self, state):
+        before_compute = getattr(self, "_before_compute", _no_compute_check)
+        before_compute()
         if not isinstance(state, dict) or "failure" not in state:
             raise ValueError("missing transaction failure state")
         failure = state["failure"]
@@ -267,6 +344,7 @@ class DynamicCandidatePPOKernel(CandidatePPOKernel):
             raise ValueError("failed transaction evidence cannot resume")
         base = {k: v for k, v in state.items() if k != "failure"}
         super()._restore(base)
+        before_compute()
         if self.pending and self.total_optimizer_steps + self._required(self.pending) > self.settings.max_optimizer_steps:
             raise ValueError("pending two-owner rollout exceeds cap")
         self._failure = None

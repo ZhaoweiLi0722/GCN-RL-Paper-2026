@@ -1,6 +1,90 @@
 # Autonomous local research queue
 
-## Live checkpoint: sampled-return packet closed and locally archived; gate failed
+## Live checkpoint: two-role delivery completed; next target is end-to-end paper comparison
+
+2026-10-01T18:10Z. User explicitly requests an efficiency-evaluation subagent
+and an independent advancement agent, to replace repetitive audit-only cycles
+with substantive progress. Entry HEAD af77a86,clean worktree. This is an
+organizational/local-analysis change,not a new scientific execution approval.
+
+User's latest clarification: the objective is a complete,defensible paper
+experimental package that can support submission. Both agents were explicitly
+redirected to that objective. Methodology/tooling is useful only when it closes
+a named experimental gap. No guarantee of acceptance or positive RL effect.
+
+Paper-level delivery priorities (reuse the existing September29 evidence map;
+do not redo its crossed audit):
+
+| Evidence gap | Required substantive delivery | Current boundary |
+| --- | --- | --- |
+| Increment beyond a competent initial policy |End-to-end RL-trained versus same-start frozen and BC-CONTINUE comparison,on fresh paired full episodes,with raw cost and patient outcomes |P2 remains null;current toy readback only selects a focused candidate repair;new integrated trial needs one consolidated bounded amendment |
+| Isolated graph contribution |Match public information,action support,gates and model capacity in graph/self-only/flat comparisons |Historical package-level advantage is not clean isolated GCN attribution;do not relabel it |
+| Stability and practical value |Independent training seeds,strong comparable baselines,uncertainty respecting seed/world dependence,patient/service trade-offs and justified robustness |Do not count extra correlated rows or favorable toy seeds as evidence;new scenarios require a rationale and prospective scope |
+
+Exit from this diagnostic: return one prioritized implementation/comparison
+decision,not another automatically spawned toy-stage family. The next approval
+should cover the complete smallest informative experiment package,including
+its necessary engineering/preflight and evaluation budget,not separate
+routine confirmations for each preparation substep. No launch approval is
+implied by this organizational change.
+
+| Role | Actual assignment and state |
+| --- | --- |
+| Efficiency evaluator |Descartes,01a0f8a8-a9a8-71e1-8279-27599ce3d8b9;first bounded review completed and agent closed;read-only,no numerical re-audit or new release gate |
+| Independent advancement |Hegel,01a0f8a8-aa21-7011-a3dc-b9bb362d30db;reader implemented,15 synthetic tests passed,training-only readback completed exit0;agent closed |
+| Coordinator |This task;reviewed code/summary and persisted paper-facing two-role rules;final integration compileall/local commit |
+
+First advancement question: in the already-recorded artificial training data,
+does the state/time component dominate the within-state action signal, and do
+sampled winner-logit score contributions oppose the known toy within-state
+direction? This post-hoc proxy is not a shared-network gradient or causal proof.
+No held-out outcomes,model forwards,baseline fitting,optimizer updates or new
+environment calls are permitted. Hash only consumed inputs;do not repeat the
+completed whole-packet integrity audit. Existing numerical packet stays closed.
+
+Success this turn means an implemented/checked reader plus a quantitative
+answer that narrows the next intervention,not another schedule or a patient
+performance claim. Process review must say what to remove/reuse,not create
+more paperwork. New roles are recorded in AGENTS.md. No recurring automation
+or permanent background agent is implied;no new experiment is running.
+
+Efficiency review accepted: stop letting artificial diagnostics replace the
+main comparison. The prioritized next deliverable is ONE end-to-end simulator
+amendment package,covering the minimum dynamic-candidate integration,competent
+initialization,qualification and same-start RL/frozen/BC-CONTINUE comparison
+against R4 and full MDL-2. Include all query/update/time budgets and a single
+failure stop rule. Reuse contracts,recording/restoration and existing baseline
+implementations. Do not repeat a full audit. Further graph attribution and
+independent confirmation follow only a justified development decision.
+
+The current failed artificial gate remains failed. Replacing that prerequisite
+requires a prospective approved amendment,not retroactive relabeling or a
+silent launch. This organizational instruction does not authorize new fitting.
+The training-receipt reader is the final assigned diagnostic in this delivery
+trial;its output must select or reject a concrete implementation change,not
+automatically create another toy acceptance campaign. Publication readiness
+is measured by closed paper-evidence gaps,not elapsed tool activity.
+
+Delivered saved-data result:298 consumed files,288 existing training rollouts,
+13,824 observations;between-context share of within-rollout residual variance
+98.91%-99.56%;1,382/3,456 context-rollouts have nonpositive normalized
+winner-logit score proxies. These are sparse,descriptive independent-logit
+proxies,not actual model gradients or causal proof. No held-out outcome reads,
+model forwards,fitting or new environment calls. The evidence prioritizes a
+training-only baseline/credit-assignment intervention over an exposure-only
+extension,not a claim that the intervention will succeed. Code,raw readback
+and interpretation:reports/2026-10-01-agent-delivery/.
+
+Both subagents have completed and been closed. Their durable roles remain in
+AGENTS.md for appropriate future milestones;they are not permanent background
+processes. Next deliverable is the consolidated end-to-end amendment package;
+new numerical execution still needs its bounded approval. No new question is
+posed for this already-completed saved-data assignment.
+Integration complete:parent code review,full repository compileall and diff
+check passed;worker's15 focused synthetic tests reused. No historical suite
+or full evidence inventory was rerun. Only local files/commit are changed.
+
+## Previous checkpoint: sampled-return packet closed and locally archived; gate failed
 
 2026-10-01T18:05Z. Executed once at4763e1e1fd4dfd658b4026f1d84ba69f68a839b6;
 runner and independent verifier both finished exit0. Nine artificial fits,

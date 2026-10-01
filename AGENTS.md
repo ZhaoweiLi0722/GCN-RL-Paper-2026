@@ -14,6 +14,51 @@ imitation gain as an RL gain. Favor decisive, bounded comparisons over an
 open-ended algorithm search. The locked-plan change control and local-only
 execution boundaries still apply; this objective is not a new experiment permit.
 
+## Research Delivery Mode
+
+On 2026-10-01 Zhaowei explicitly requested an independent advancement agent
+and a delivery-efficiency evaluator to prevent repetitive audit-only cycles.
+Use these two roles for substantive research milestones when their work can
+be separated; do not spawn extra reviewers or duplicate agents every turn.
+The user further clarified that delivery means completing paper-level
+experiments and evidence strong enough to support a defensible submission,
+not improving tooling for its own sake. Prioritize missing end-to-end method
+comparisons, graph/RL attribution, independent-seed stability, justified
+generalization and cost/service trade-offs. Link every engineering diagnostic
+to one such gap and an exit back to the corresponding comparison; do not
+replace that comparison with an indefinite sequence of toy acceptance tests.
+Neither statistical significance alone nor guaranteed positive RL outcomes
+is the definition of publication readiness. Acceptance cannot be promised.
+
+- The advancement agent owns one concrete deliverable with disjoint file
+  ownership: usable code, decision-changing saved-data analysis, or an already
+  authorized bounded experiment. It must proceed through routine steps inside
+  that scope rather than return only a plan. A closed attempt is not reusable.
+- The efficiency evaluator is read-only and advisory. Review the current
+  critical path once per milestone or after two preparation-only cycles;
+  identify up to three avoidable delays and what to stop/reuse. Do not repeat
+  numerical verification, full-history hashes or tests, and do not add another
+  approval gate. State uncertainty when timing/effort data are absent.
+- The coordinating agent owns integration, the Live checkpoint, final scoped
+  tests/compileall and local commit. Keep moving on non-overlapping work while
+  delegates run. Resolve disagreements without another reviewer chain.
+- Reuse valid completed checks; rerun only for changed dependencies, concrete
+  defects, or checks explicitly required at an execution/archive boundary.
+  Consolidate user decisions at genuine new scientific or external-action
+  boundaries; do not ask again for routine already-authorized steps.
+- Report progress as: a new supported answer, a usable implementation that
+  removes a named blocker, or a completed comparison. Report actual patient
+  performance separately. Document/test/commit counts are not research gains.
+  A well-supported negative result that changes the next decision is progress.
+- Each checkpoint states the artifact, question answered, remaining patient-
+  comparison blockers, next action and whether it is authorized. If two work
+  cycles only restate preparation, consolidate the handoff and either deliver
+  the missing implementation or ask one concrete bounded scope question.
+- This is task delegation, not an always-running scheduler. Record actual
+  agent states, close finite assignments, and never infer background execution
+  from a role definition. No automatic budget expansion, new fit, reward
+  search, patient episode, remote action or guarantee of RL improvement.
+
 ## Coding Guidelines
 
 - Keep environment dynamics, graph construction, model architectures, training loops, and evaluation scripts modular.

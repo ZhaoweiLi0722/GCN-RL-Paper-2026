@@ -1,0 +1,23 @@
+{
+  "format": "p2-training-diagnostic-acceptance-v1",
+  "date": "2026-10-01",
+  "frozen_reader_commit": "3b90bef2e3d984f2cc0b38f161774729f63cd9d7",
+  "tests": {
+    "command": "python -m unittest tests.test_p2_training_diagnostic tests.test_reference_terminal_audit tests.test_research_archive",
+    "passed": 28,
+    "fixtures": "invented arithmetic and tensor readback only; no neural forwards or optimizer steps"
+  },
+  "compileall_exit_code": 0,
+  "git_diff_check_exit_code": 0,
+  "complete_diagnostic_exit_code": 0,
+  "independent_scalar_crosscheck_exit_code": 0,
+  "readback_failures": 0,
+  "original_payload_launcher_unchanged": true,
+  "consumed_input_files_rehashed": 675,
+  "new_simulator_calls": 0,
+  "new_neural_forwards": 0,
+  "new_neural_backwards": 0,
+  "new_optimizer_steps": 0,
+  "new_test_evaluations": 0,
+  "scientific_rerun": false
+}

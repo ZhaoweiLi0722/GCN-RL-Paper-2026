@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: authorized P2 saved-training diagnosis in preparation
+## Live checkpoint: saved training diagnosis complete; ranking and value barriers found
+
+Updated2026-10-01T16:07Z. P2 remains closed with zero observed incremental greedy
+gain. The authorized readback finished; no research process is running.
+
+| Item | Verified state |
+| --- | --- |
+| Frozen diagnostic |3b90bef2e3d984f2cc0b38f161774729f63cd9d7; new reader outside the original result tree |
+| Coverage |9 PPO models,288 training episodes,14,976 steps,72 saved rollouts,1,152 minibatches;675 consumed inputs rehashed |
+| Ranking certificate |Every final scorer's maximum pairwise residual span0.0951-0.8093 is below minimum prior gap2.1972; actual5/6-class gaps3.5835/3.8067. These final policies cannot override R4 on any finite input |
+| Value limitation |9,001/14,976 targets outside respective final possible value ranges;behavior value explained variance-0.000654 to0.002063;not a model-class impossibility |
+| Advantage variation |90.73%-99.52% between time positions within each four-episode rollout;descriptive,not causal action headroom |
+| Clipping |Probability ratio0/1,152;global gradient1,145/1,152;component-gradient domination not established |
+| Reward checks |Raw cost/reward and within-episode return accounting pass;max return error1.2662e-6;no basis here to change cost weights for a positive result |
+| Acceptance |28 artificial arithmetic/closure/archive tests,full compileall/diff check pass;full reader and independent scalar crosscheck exit0;no readback failure |
+| Preservation |Original payload/launcher inventories and frozen source/document locks unchanged;new diagnostic archive/local Dropbox verification is the remaining closure step |
+| Evidence |specs/2026-10-01-p2-training-diagnostic/readout.md;reports/2026-10-01-p2-training-diagnostic/result.json and crosscheck.json |
+| New science |0 environment calls,neural forwards/backwards,optimizer steps,test evaluations;no reward/parameter change |
+| Next concrete action |Finish separate diagnostic preservation/local commit;then await engineering-only repair acceptance before any new pilot |
+| Exact next decision |Approve one engineering-only candidate with9 invented fixtures,up to128 optimizer.step calls each/1,152 total/30 numerical minutes,no real patient/checkpoint optimization,no reward change;later pilot requires separate approval |
+| Boundaries |No new fit,remote action,automation,Howard approval claim,holdout use or Stage E reopening;cloud sync/Howard access unverified |
+
+## Previous checkpoint: authorized P2 saved-training diagnosis in preparation
 
 Updated2026-10-01T15:57Z. Zhaowei's "continue" accepts the proposed saved-data
 diagnostic only. P2 is closed; no new scientific trajectory, fit or evaluation.

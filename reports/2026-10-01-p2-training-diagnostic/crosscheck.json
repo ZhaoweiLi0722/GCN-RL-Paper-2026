@@ -1,0 +1,184 @@
+{
+  "aggregate": {
+    "behavior_value_explained_variance_range": [
+      -0.0006535185364546781,
+      0.0020626671400841845
+    ],
+    "first_minibatch_max_error": 3.4177871333085363e-07,
+    "gradient_clipped_minibatches": 1145,
+    "positive_mean_nonreference_advantage_rollouts": 29,
+    "positive_reference_logit_signal_rollouts": 39,
+    "positive_time_centered_nonreference_advantage_rollouts": 33,
+    "ratio_clipped_minibatches": 0,
+    "raw_cost_component_shares": {
+      "bioreactor_holding_cost": 1.4478461377007547e-06,
+      "bioreactor_shortage_cost": 0.4302164788896614,
+      "capacity_transfer_cost": 2.409736256989801e-05,
+      "expiry_cost": 0.08824192162573359,
+      "patient_loss_cost": 0.44190018022445204,
+      "reagent_holding_cost": 0.0019646933993596686,
+      "reagent_purchase_cost": 0.029322992783536193,
+      "reagent_shortage_cost": 0.004878453780114211,
+      "reagent_transfer_cost": 6.3050659958564e-05,
+      "specimen_transfer_cost": 0.00013059561252155188,
+      "urgency_cost": 0.003256087815955141
+    },
+    "return_reconstruction_max_error": 1.2661523207668779e-06,
+    "rollouts": 72,
+    "targets_outside_final_value_ranges": 9001,
+    "time_position_variation_share_range": [
+      0.9073388021788426,
+      0.9951938670267061
+    ],
+    "total_minibatches": 1152,
+    "training_targets": 14976
+  },
+  "crosscheck_source_sha256": "e2c07d4553c3f53767fb3acd01ffd9ec454a6f1757e544c5bee28c31e17f7e85",
+  "finished_utc": "2026-10-01T16:02:41.468355+00:00",
+  "format": "p2-training-diagnostic-independent-scalar-readback-v1",
+  "input_files_rehashed": 675,
+  "method": "scalar math.fsum; no import from the first diagnostic; same saved inputs, not independent scientific data",
+  "models": {
+    "block60/flat/ppo": {
+      "cost_sum": 82549772951.16676,
+      "minimum_prior_remaining_gap": 1.9193239633317538,
+      "mse_floor": 0.5479325250113679,
+      "recorded_behavior_value_range": [
+        -1.1092627048492432,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.27790061400446575,
+      "scalar_fsum_value_range": [
+        -1.2558958530426025,
+        1.1909951120615005
+      ],
+      "targets_outside": 998
+    },
+    "block60/graph/ppo": {
+      "cost_sum": 82421133229.93091,
+      "minimum_prior_remaining_gap": 1.8229524165511797,
+      "mse_floor": 0.5339498674036596,
+      "recorded_behavior_value_range": [
+        -1.1122198104858398,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.3742721607850399,
+      "scalar_fsum_value_range": [
+        -1.2671454548835754,
+        1.2037296369671822
+      ],
+      "targets_outside": 993
+    },
+    "block60/self_only/ppo": {
+      "cost_sum": 82275082116.26222,
+      "minimum_prior_remaining_gap": 1.9844672118637212,
+      "mse_floor": 0.5261190304997624,
+      "recorded_behavior_value_range": [
+        -1.1138180494308472,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.21275736547249835,
+      "scalar_fsum_value_range": [
+        -1.2711507081985474,
+        1.2081157565116882
+      ],
+      "targets_outside": 989
+    },
+    "block61/flat/ppo": {
+      "cost_sum": 84326929165.10643,
+      "minimum_prior_remaining_gap": 1.7095870013876087,
+      "mse_floor": 0.5938090862037282,
+      "recorded_behavior_value_range": [
+        -1.111180067062378,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.4876375759486109,
+      "scalar_fsum_value_range": [
+        -1.269925594329834,
+        1.203124463558197
+      ],
+      "targets_outside": 1013
+    },
+    "block61/graph/ppo": {
+      "cost_sum": 84251484668.39883,
+      "minimum_prior_remaining_gap": 1.8038435567290256,
+      "mse_floor": 0.5968677315365728,
+      "recorded_behavior_value_range": [
+        -1.1131190061569214,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.39338102060719393,
+      "scalar_fsum_value_range": [
+        -1.265722457319498,
+        1.200250070542097
+      ],
+      "targets_outside": 1014
+    },
+    "block61/self_only/ppo": {
+      "cost_sum": 84228999585.68047,
+      "minimum_prior_remaining_gap": 1.8382475556867397,
+      "mse_floor": 0.5971215084503194,
+      "recorded_behavior_value_range": [
+        -1.11284601688385,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.35897702164947987,
+      "scalar_fsum_value_range": [
+        -1.263154935091734,
+        1.1982366852462292
+      ],
+      "targets_outside": 1018
+    },
+    "block62/flat/ppo": {
+      "cost_sum": 80903771263.66956,
+      "minimum_prior_remaining_gap": 1.3878796281354702,
+      "mse_floor": 0.4970311937417733,
+      "recorded_behavior_value_range": [
+        -1.1120237112045288,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.8093449492007494,
+      "scalar_fsum_value_range": [
+        -1.270810853689909,
+        1.2056345604360104
+      ],
+      "targets_outside": 993
+    },
+    "block62/graph/ppo": {
+      "cost_sum": 81028737171.34816,
+      "minimum_prior_remaining_gap": 1.938667028938999,
+      "mse_floor": 0.4977709362594647,
+      "recorded_behavior_value_range": [
+        -1.114761471748352,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.25855754839722067,
+      "scalar_fsum_value_range": [
+        -1.2737297713756561,
+        1.2078707069158554
+      ],
+      "targets_outside": 989
+    },
+    "block62/self_only/ppo": {
+      "cost_sum": 80876425485.55502,
+      "minimum_prior_remaining_gap": 2.102118221359324,
+      "mse_floor": 0.49716541566912004,
+      "recorded_behavior_value_range": [
+        -1.1153945922851562,
+        0.0
+      ],
+      "scalar_fsum_score_bound": 0.09510635597689543,
+      "scalar_fsum_value_range": [
+        -1.2706273198127747,
+        1.2055233418941498
+      ],
+      "targets_outside": 994
+    }
+  },
+  "new_neural_backwards": 0,
+  "new_neural_forwards": 0,
+  "new_optimizer_steps": 0,
+  "new_patient_calls": 0,
+  "new_test_evaluations": 0,
+  "result_sha256": "d27425e5bd954b17eca0d90c359301cd09d4ec5545efca0a86db04a46bcaec73"
+}

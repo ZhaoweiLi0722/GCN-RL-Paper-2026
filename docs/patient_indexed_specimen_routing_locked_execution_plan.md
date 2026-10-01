@@ -2123,3 +2123,28 @@ Preserve new reports in a separate byte-verified Dropbox-local subfolder; no
 cloud-sync/access claim. Readback errors may be preserved and reader-corrected,
 never used to reopen P2. New scientific fitting/reward/prior/scope changes need
 a separately bounded decision. Stage E and all remote restrictions stay closed.
+
+#### P2 saved training diagnosis completed without new science
+
+2026-10-01: frozen reader3b90bef2e3d984f2cc0b38f161774729f63cd9d7 completed all
+9 PPO fits/288 training episodes/72 saved rollouts/1,152 minibatches. Independent
+scalar readback rehashed675 consumed inputs and confirmed raw costs,final bounds
+and clipping. Both readers exit0;18 artificial tests/full compileall pass.
+Original payload/launcher and frozen source/document locks remain unchanged.
+
+All9 final scorers have2*L1 output bounds0.0951-0.8093,below the fixed prior gap
+even atK=2(2.1972). Thus these exact final weights cannot change the R4 greedy
+choice at any finite input. This is not a future-weight/model-class impossibility
+or an optimality claim.9,001/14,976 training targets are outside the respective
+final value head ranges;recorded behavior value explained variance is essentially
+zero. Advantages predominantly vary by time position. Ratio clipping never fires,
+global gradient clipping fires1,145/1,152times;component-gradient causality remains
+unresolved. Raw reward/return arithmetic passes;cost weights are not changed.
+
+No new patient call,neural forward/backward,optimizer step or test evaluation.
+Readout:specs/2026-10-01-p2-training-diagnostic/readout.md. A separately bounded
+engineering-only repair is proposed,not authorized/executed:9 invented fixtures,
+up to128 joint updates each/1,152 total/30 numerical minutes,one implementation,
+no patient-data fitting or search. New scientific pilot remains separately gated.
+Preserve this packet independently;prior null results and clinical trade-offs
+remain reportable. No remote action,Howard sign-off,holdout or Stage E reopening.

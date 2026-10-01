@@ -2489,3 +2489,24 @@ reward,scenario and all old evidence. No retry or automatic continuation even
 if all qualification criteria pass. Old S1 remains closed;A1 stays failed1/9;
 no Stage E reopening,holdout,remote action,Dropbox or Howard approval claim.
 Commit this record and the separate authorization before launching.
+
+#### Saved-model qualification completed without new trajectories or fitting
+
+2026-10-01: executione6eec08dcd362f3084d15f1eb10a8ca66a9cfaca completed the
+separate attempt exit0 in8.584168seconds. Exactly4 saved loads and624 frozen
+state scorings;all six paths104/104 reference agreement and multiclass agreement.
+All three initialized models pass the original qualification. Reused saved
+outcomes have zero paired cost/loss/completion/terminal-active differences.
+42 input files unchanged;stdout/stderr empty;owned process exited normally and
+no matching Python remains. Result root is
+results/dynamic_candidate_saved_qualification_20261001;15-member local archive
+verified atarchives/2026-10-01-s1-saved-qualification/completed-qualification.tar.gz,
+SHA256c72297c0a22b48820478f05ed62173658591d267dd6076c046df024f4159c94a.
+
+No new environment call,optimizer update,rollout or final-test episode occurred.
+Qualification is initialization fidelity,not an RL gain or clinical
+noninferiority claim. Preserve the old failed S1 and this completed single
+attempt. Neither supplies automatic training authority. Retain the saved models
+for a separately proposed same-start PPO/frozen/BC continuation comparison;
+no refitting,reward change,retry,holdout,Stage E reopening,remote or Dropbox action.
+The visible automation remains paused because the finite approved scope ended.

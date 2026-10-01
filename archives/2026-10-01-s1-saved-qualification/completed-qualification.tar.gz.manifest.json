@@ -1,0 +1,25 @@
+{
+  "archive": "completed-qualification.tar.gz",
+  "archive_sha256": "c72297c0a22b48820478f05ed62173658591d267dd6076c046df024f4159c94a",
+  "file_count": 15,
+  "files": {
+    "binding.json": "49e47acfe92aa05e55b6d837b1b7152e817ca05624d4265b71ca490b630bc433",
+    "child-claim.json": "180e6b2696041af8d720c1cb23b8e1b32ab0e9f528722c2532d6c8411a4e97b6",
+    "claim.json": "7ab6f0fb580cbf613c06f6c04537ba7fec92bd25772ef3ef6fdd3faa552a3ef6",
+    "debits.jsonl": "518264f296dcd7e79d14417a4662ec497e6eabd1566f740df280b6a24b05700d",
+    "paths/block60-initializer_greedy.json": "1ac176af9e2238e97f6412f1636d1ad675ff910778389e795040e91381ec4363",
+    "paths/block60-r4.json": "1ac176af9e2238e97f6412f1636d1ad675ff910778389e795040e91381ec4363",
+    "paths/block61-initializer_greedy.json": "0058e6eef6fb26fd2a1928b78b41650e9de2e5f54ebccc9729cb87fa93aa307d",
+    "paths/block61-r4.json": "0058e6eef6fb26fd2a1928b78b41650e9de2e5f54ebccc9729cb87fa93aa307d",
+    "paths/block62-initializer_greedy.json": "341828ec4fce96fd6c6599e672f04a00cad2f7efe98fb5371c86fd729506b1ce",
+    "paths/block62-r4.json": "341828ec4fce96fd6c6599e672f04a00cad2f7efe98fb5371c86fd729506b1ce",
+    "qualification.json": "f1b271a72b4bfa1d0b9d16deb3651af60f1d56aedbf4dc541ded0f133257b9b6",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "supervisor.json": "06030f0cff3b859f4ebd8e92cba3b8d1069b08b602de2377b13af8980e1ce2e1",
+    "terminal.json": "5617d5fc053efcea92073f18f2a0d46e7b4efd1f4925bf455c770dcb3ce28906"
+  },
+  "schema_version": 1,
+  "size_bytes": 65236,
+  "verified_by_reading_every_archive_member": true
+}

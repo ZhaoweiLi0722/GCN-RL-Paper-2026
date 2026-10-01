@@ -1,6 +1,43 @@
 # Autonomous local research queue
 
-## Live checkpoint: saved qualification approved; single launch next
+## Live checkpoint: saved qualification passed; no continuation started
+
+2026-10-01T23:56Z. The separately authorized saved-only attempt completed exit0
+in8.584168seconds at execution commite6eec08dcd362f3084d15f1eb10a8ca66a9cfaca.
+Exactly4 checkpoint loads and624 frozen state scorings;all six block/path checks
+are104/104 agreement and104/104 multiclass agreement. All three blocks pass the
+unchanged qualification gate. The reused six paired qualification worlds retain
+zero differences in cost,losses,completions and terminal-active patients.
+No new simulation,optimizer call,rollout or final-test episode occurred.
+
+Evidence:results/dynamic_candidate_saved_qualification_20261001/qualification.json,
+its six paths,debits.jsonl andterminal.json. The42 input hashes match before/after;
+stdout/stderr are empty. Owned exec95530 ended exit0;supervisor receipt records
+parent48610/child48618,normal exit,no timeout/forced kill. Host command scan after
+completion found no matching process. No experiment is running.
+
+Local15-file result archive verified member-by-member and source unchanged:
+archives/2026-10-01-s1-saved-qualification/completed-qualification.tar.gz,
+65,236bytes,SHA256c72297c0a22b48820478f05ed62173658591d267dd6076c046df024f4159c94a.
+No Dropbox export or remote action. Historical39-episode arithmetic and source
+tests were reused;frozen implementation unchanged,no new code tests necessary.
+Independent finite advancement agent Bernoulli completed the readout at
+reports/2026-10-01-s1-saved-qualification/readout.md and was closed. It verified
+all628 debit records,hash-chain links,six path receipts and outcome reconciliation;
+no inconsistency was found and no additional model call occurred. Prior efficiency advice
+remains applied;no new audit gate or experimental expansion is introduced.
+
+Supported new answer:the three saved initializers satisfy the original two-path
+qualification and can be retained as prospective same-start models. This is
+initialization fidelity,not RL gain or clinical noninferiority. Old S1 remains
+closed,and this separate single attempt is now consumed. The remaining research
+question is PPO-vs-own-frozen and PPO-vs-BC continuation from these exact models.
+Any such training/evaluation recovery needs one complete separately approved
+packet;do not refit initialization,change rewards or reuse consumed S1 authority.
+The qualification-only permission did not authorize continuation. Automation
+gcn-rl stays PAUSED and visible;no duplicate schedule or task is needed.
+
+## Previous checkpoint: saved qualification approved; single launch next
 
 2026-10-01T23:54:03Z. Zhaowei explicitly replied "approved" to the complete
 saved-model-only qualification question;exact wording is recorded in

@@ -1,0 +1,19 @@
+{
+  "schema": "same-thread-automation-direction-update-v1",
+  "verified_at_utc": "2026-10-01T19:47:08Z",
+  "id": "gcn-rl",
+  "name": "GCN-RL 论文自适应推进",
+  "kind": "heartbeat",
+  "status": "ACTIVE",
+  "rrule": "FREQ=MINUTELY;INTERVAL=30",
+  "target_thread_id": "019f2ea2-0217-7b71-90cf-791dc05cc921",
+  "tool_update_succeeded": true,
+  "local_prompt_readback_exact": true,
+  "scientific_intent_added": true,
+  "other_automations_modified": false,
+  "scientific_execution_authorized": false,
+  "patient_environment_calls": 0,
+  "optimizer_steps": 0,
+  "scientific_process_launch": false,
+  "prompt_tail": "科学定位已由 Zhaowei 在2026-10-01确认：最终问题是有约束的跨设施协同决策，考虑网络与未来患者后果；当前标本候选 pilot 只是机制检验，不是最终方法的永久上限。必须区分仿真中保留的标本/试剂/产能/补货操作、GCN 的标本运输消息图、RL 在 R4/MDL-2/预设标本修正之间的选择自由度。网络级不要求神经策略控制所有资源，但不能把受限收益写成全面联合优化；历史整套控制器优势也不等于单独证明 GCN。先完成当前 D2-D3 与一次明确批准的机制比较；不为此再开 toy 拟合链。若现有动作空间确无可学改进空间，再基于证据提出标本路由与物理上合理的弹性产能协同方案；扩展动作、多关系图、新场景或奖励仍需新的明确有上限批准，不自动执行。两个有限 agent 的分工仍是独立实现推进与只读效率建议；协调者须继续并行的关键路径工作，不能停在角色分配。"
+}

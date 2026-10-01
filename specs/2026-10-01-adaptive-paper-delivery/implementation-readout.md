@@ -1,5 +1,81 @@
 # Dynamic candidate implementation readout
 
+## Latest integration milestone: October 1, 19:52 UTC
+
+Entry HEAD: dd5044f97495a3131415f6e929753bf48fcb6110. D2's complete fixture
+chain is now connected; D3's real execution binding is not complete. No new
+science, numerical optimizer updates or patient-environment calls occurred.
+
+New components:
+
+- `dynamic_candidate_factory.py`: separate-owner model construction, declared
+  parameter-count check, initialization, both reference-path and own-path
+  action agreement, raw paired cost/patient qualification and same-start forks.
+- `dynamic_candidate_verification.py`: independent saved-scalar/request/identity
+  verification and block/world paired comparisons. It does not call the learner
+  or environment to rederive outcomes.
+- `dynamic_candidate_campaign.py`: all 33 serial scopes, disposable preflights,
+  demonstration/initialization/qualification, same-start forks, continuation,
+  nine-model test barrier, raw readback and local-only archive. It accepts only
+  an explicitly marked invented backend, not the patient backend.
+- `dynamic_candidate_backend.py`: prospective real-factory adapter with
+  admission disabled by default, static input checks, declared split starts,
+  non-refundable construction counts and RNG preservation. Not invoked on real
+  environments during this work.
+- `dynamic_candidate_specification.py` and `dynamic_candidate_preparation.py`:
+  immutable-draft bindings, explicit graph/bias choices, six consumed R4 input
+  hashes, algebraic parameter counts, scoped local seed inventory and a
+  clean-commit freeze interface. The thin `prepare_dynamic_candidate_pilot`
+  entrypoint always rejects `--run`.
+
+The real-file static inspection verified six consumed input hashes and layout
+JSON without loading checkpoint tensors or constructing a model/environment.
+Proposed counts are actor 31,346 and critic 28,721, with no shared parameters.
+The prospective streams had zero numeric collisions in 499 local declaration
+files. This is not a final source freeze or coverage of missing external files.
+An initial preparation error classified the repository's newline-only
+`.gitkeep` as an unsupported config. The fix excludes only a non-symlinked
+whitespace placeholder, and a regression test still rejects content-bearing
+placeholders. This was engineering preparation, not a consumed science attempt.
+
+Parent combined run: **129 tests passed in 35.773 seconds**. After the small
+placeholder fix, all seven preparation tests passed again in 0.013 seconds.
+Full repository compileall passed. Command:
+
+```text
+PYTHONPYCACHEPREFIX=/private/tmp/gcn_rl_pycache <project .venv>/bin/python -m unittest tests.test_dynamic_candidate_policy tests.test_dynamic_candidate_updates tests.test_dynamic_candidate_resources tests.test_dynamic_candidate_sequence tests.test_dynamic_candidate_session tests.test_dynamic_candidate_continuation tests.test_dynamic_candidate_factory tests.test_dynamic_candidate_verification tests.test_dynamic_candidate_backend tests.test_dynamic_candidate_preparation tests.test_dynamic_candidate_campaign
+```
+
+The complete dispatcher test uses a two-transition invented environment and
+metadata-only Adam doubles; numerical Adam/SGD steps are forbidden. Its injected
+raw reader is explicitly a fixture, not a patient identity verifier. The real
+independent verifier has separate invented raw-identity/scalar tests. Thus this
+milestone verifies engineering composition, not scientific qualification,
+patient performance or a complete real-run acceptance.
+
+Russell's advancement assignment and Harvey's read-only efficiency assignment
+completed and were closed. The coordinator reviewed/integrated their work.
+Harvey's three recommendations are applied: reuse the existing components,
+resolve graph wording within the same packet, and keep possible wider
+coordination outside this immediate critical path. No new reviewer gate.
+
+Remaining concrete D3 work: bind exclusive claim and approved-packet admission
+to the real backend and an outer deadline watchdog; cover before-backward
+checks and terminal completion inside its phase deadline; freeze the final
+source/runtime/input/seed packet. Current checkpoint restoration is in-owner,
+not cold process restart, and failures remain terminal with no retry. Do not
+represent the current fixture-only runner or preparation CLI as launch-ready.
+
+The goal clarification is now in plan/workflow and in the active `gcn-rl`
+automation, with exact local prompt readback recorded in
+`automation-direction-update.json`. `manuscript-claims-draft.md` reuses the
+existing evidence map without another outcome audit. The broader goal is
+constrained cross-facility coordination; the restricted pilot remains a
+mechanism test. Original reward, scenario, numerical budget and failed 1/9
+artificial gate are unchanged. One prospective S1 approval remains required.
+
+## Earlier module milestone
+
 Status: D1 implemented; D2 additive integration in progress. No scientific
 execution, artificial fitting or patient-environment call is authorized or
 performed by this engineering work. Entry commit:

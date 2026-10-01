@@ -9,6 +9,42 @@ silently enlarge an approved scientific experiment.
 
 ## Current decision
 
+### Scientific intent clarified with Zhaowei
+
+On 2026-10-01 Zhaowei accepted the following direction and requested both the
+advancement and efficiency agents to proceed. The paper question is constrained
+cross-facility coordination with consequences over time, not preservation of
+DDPG or maximization of the number of directly learned action channels. A routing
+decision alone can be network-level if it accounts for downstream queues,
+resource competition and patient outcomes. Network-level does not mean every
+operational quantity must be output by a neural policy.
+
+The current specimen-candidate S1 is a bounded mechanism test, NOT a permanent
+ceiling on the final method. Keep three things distinct: the environment retains
+specimen/reagent/capacity/replenishment operations; the proposed candidate GCN
+uses specimen-route message passing; the new selector chooses R4, MDL-2 or
+declared specimen-correction requests, not arbitrary independent joint controls.
+Other resources are not disabled. The original budget draft's
+`physical_shared_relations` label is inconsistent with the existing producer:
+that mode requires identical relation graphs, whereas current R4 environments
+have different relations and a capacity hub. Preserve the original draft; an
+effective prospective packet must explicitly propose `specimen_routes`, retain
+all environment/reference relations, and disclose the representation difference.
+This explanation is not approval to execute either graph configuration.
+
+Finish the current mechanism comparison preparation without another sequence of
+toy fitting gates. An approved S1 must distinguish interaction learning from
+inherited R4 behavior and extra imitation. A positive restricted-space result is
+not proof of unconstrained joint optimization, isolated GCN benefit, deployment
+adaptation, or publication readiness. A null result is not proof all RL is
+useless. Use recorded action changes, support and existing headroom evidence to
+separate lack of useful choices from failure to learn useful choices. If a new
+action design is justified, the first proposal is specimen routing coupled with
+physically meaningful flexible-capacity decisions, with credible costs and
+constraints; multi-relation message passing is considered only if that decision
+needs it. This is a later explicit bounded proposal, not an automatic action,
+architecture, reward or scenario search. No pilot thresholds or budgets change.
+
 Return to an end-to-end simulator comparison. Do not launch another automatic
 series of artificial learning gates. The next implementation is a dynamic
 request-conditioned policy with a learnable initial preference and independent

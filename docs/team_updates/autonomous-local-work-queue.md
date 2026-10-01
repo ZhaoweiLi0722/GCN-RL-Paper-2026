@@ -1,6 +1,65 @@
 # Autonomous local research queue
 
-## Live checkpoint: dynamic policy and continuation implemented; finish the orchestrator
+## Live checkpoint: complete fixture chain delivered; bind the prospective real execution wrapper
+
+2026-10-01T19:52Z. Entry HEAD dd5044f97495a3131415f6e929753bf48fcb6110 on
+codex/september-research-integration. Zhaowei accepted the constrained
+cross-facility direction and requested two finite agents, then asked whether
+the plan changed. The goal and execution sequence were clarified, not replaced.
+Current specimen-candidate work is a mechanism test, not the final method's
+permanent action-space ceiling. Environment operations, GCN message graph and
+learner freedom are explicitly different concepts. No new scientific permit.
+
+Actual deliveries: same-start/qualification factory; independent raw request,
+cost and patient-outcome verifier; complete 33-scope fixture orchestrator;
+disabled patient-backend adapter; static six-input/prospective-config preparation
+and freeze interface. Exact algebraic model counts are actor31,346 and
+critic28,721, shared0. A preliminary local declaration scan found no proposed
+stream collisions in499files; not a final source freeze or external coverage.
+
+Parent validation:129tests passed in35.773s; all7 preparation tests reran and
+passed after correcting the whitespace-only .gitkeep inventory handling.
+Full repository compileall passed. All numerical Adam/SGD updates were forbidden;
+fake doubles only changed optimizer metadata. Complete fake phase dispatch,
+failure preservation, irreversible charging, nine-model test seal and archive
+were exercised. The real scalar verifier is separately fixture-tested; no
+real scientific end-to-end acceptance is claimed. Patient calls=0, new
+research trajectories=0, numerical optimizer steps=0.
+
+Two requested delegates completed and are closed: Russell implemented the
+campaign plus ten tests; Harvey made one read-only efficiency review, with
+three recommendations applied and no added gate. The parent integrated code,
+tests and documentation. No background delegate remains. The same gcn-rl
+heartbeat is ACTIVE; its scientific-intent amendment was updated through the
+app and local prompt readback matched exactly. No other schedule was changed.
+The entry host PID/PPID/command inspection found no relevant research Python;
+only engineering checks ran. Scheduling is not proof of an active experiment.
+
+Evidence: specs/2026-10-01-adaptive-paper-delivery/implementation-readout.md,
+workflow.json, automation-direction-update.json and manuscript-claims-draft.md.
+The manuscript draft uses the existing evidence map: historical package gains
+are not isolated GCN attribution, and online RL endpoint benefit remains
+unestablished. No new patient-performance conclusion was produced this turn.
+
+Next concrete authorized step: connect the fixture-verified runner to a
+fail-closed exclusive claim/approved-packet admission/outer watchdog, finish
+before-backward and terminal closure deadline ownership, and freeze the final
+source/runtime/input/seed packet. Test this binding with invented inputs only.
+Current campaign accepts fake backends only. Restoration is in-owner, not
+cold process restart; no automatic restart of a failed scientific attempt.
+D2 fixture integration is complete; D3 is NOT launch-ready yet. Do not repeat
+historical audits or add a toy-fit campaign while completing this named blocker.
+
+Exact approval remains the consolidated S1 packet after D3: proposed22,224
+env.step calls,1,920 optimizer calls,6h global cap,three blocks,five controllers,
+fixed scenario/reward. Explicit prospective choices: specimen_routes message
+graph instead of the original draft label,neutral0.0 trainable reference bias,
+and prospective replacement of the failed artificial prerequisite. Preserve
+original draft and1/9failure. Broader routing/capacity coordination is a possible
+future bounded proposal,not automatically authorized now. No fitting,patient
+simulation,remote action,Dropbox export,holdout or Stage E reopening occurred.
+
+## Previous checkpoint: dynamic policy and continuation implemented; finish the orchestrator
 
 2026-10-01T19:16Z. Entry HEAD49d7ae8443b18c56b676dfb4092535af6c5484b4 on
 codex/september-research-integration. Zhaowei requested immediate active work,

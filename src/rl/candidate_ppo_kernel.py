@@ -15,6 +15,7 @@ from pathlib import Path
 import tempfile
 
 from src.models.candidate_policy import CandidatePolicy
+from src.models.reference_prior_candidate import ReferencePriorCandidatePolicy
 from src.rl.candidate_ppo_objective import candidate_ppo_loss, normalize_rollout_advantages
 from src.rl.candidate_rollout import (
     CandidateDecision, PolicyEvaluation, PreparedCandidateSegment, evaluate_candidate_policy,
@@ -77,7 +78,7 @@ class CandidatePPOKernel:
         require_torch()
         if enabled is not True:
             raise ValueError("candidate PPO kernel must be explicitly enabled")
-        if (type(prototype) is not CandidatePolicy or not isinstance(contract, ReplayInputContract)
+        if (type(prototype) not in (CandidatePolicy, ReferencePriorCandidatePolicy) or not isinstance(contract, ReplayInputContract)
                 or not isinstance(settings, CandidatePPOSettings) or prototype.schema != contract.inputs):
             raise ValueError("explicit matching candidate policy, contract and settings required")
         if mode not in ("online", "frozen"):

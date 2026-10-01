@@ -17,6 +17,7 @@ import numpy as np
 
 from src.baselines.ppo import _compute_gae
 from src.models.candidate_policy import CandidatePolicy
+from src.models.reference_prior_candidate import ReferencePriorCandidatePolicy
 from src.rl.networks import require_torch, torch
 from src.rl.prospective_adapter import ReplayInputContract, completed_segment_windows
 from src.rl.routing_candidate_contract import (
@@ -103,7 +104,7 @@ class CandidateDecision:
 
 def evaluate_candidate_policy(policy, observation, candidates, contract):
     require_torch()
-    if type(policy) is not CandidatePolicy:
+    if type(policy) not in (CandidatePolicy, ReferencePriorCandidatePolicy):
         raise TypeError("explicit prospective CandidatePolicy required")
     if not isinstance(contract, ReplayInputContract) or contract.inputs != policy.schema:
         raise ValueError("explicit matching input/reward contract required")
@@ -132,7 +133,7 @@ def reevaluate_candidate_decision(policy, observation, decision):
     Weights may change for a PPO update; observation/schema/support may not.
     The collector still owns verification of the original behavior snapshot.
     """
-    if not isinstance(decision, CandidateDecision) or type(policy) is not CandidatePolicy:
+    if not isinstance(decision, CandidateDecision) or type(policy) not in (CandidatePolicy, ReferencePriorCandidatePolicy):
         raise TypeError("explicit policy and sealed decision required")
     if policy.schema != decision.evaluation.input_schema:
         raise ValueError("new-policy input schema differs from collected input")

@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 import math
 
 from src.models.candidate_policy import CandidatePolicy
+from src.models.reference_prior_candidate import ReferencePriorCandidatePolicy
 from src.rl.networks import torch
 from src.rl.candidate_rollout import evaluate_candidate_policy, sample_candidate
 from src.rl.prospective_adapter import _decode_actor_state, pack_actor_state
@@ -66,7 +67,7 @@ class ImitationSettings:
 
 class CandidateImitationKernel:
     def __init__(self, prototype, contract, settings, *, enabled=False, shuffle_seed, sampling_seed=None):
-        if (enabled is not True or type(prototype) is not CandidatePolicy
+        if (enabled is not True or type(prototype) not in (CandidatePolicy, ReferencePriorCandidatePolicy)
                 or not isinstance(settings, ImitationSettings) or not isinstance(contract, ReplayInputContract)
                 or prototype.schema != contract.inputs
                 or type(shuffle_seed) is not int or not 0 <= shuffle_seed < 2**63):

@@ -1,0 +1,40 @@
+{
+  "kind": "reference_prior_residual_design_only",
+  "scientific_execution_authorized": false,
+  "engineering_only": true,
+  "policy": {
+    "type": "ReferencePriorCandidatePolicy",
+    "nonreference_mass": 0.1,
+    "allocation": "uniform_over_unique_nonreference_request_classes",
+    "initialization": "zero_scorer_and_value_output_layers",
+    "encoder_width": 16,
+    "head_width": 32,
+    "dtype": "float32",
+    "device": "cpu"
+  },
+  "candidate_message_graph": "specimen_routes",
+  "original_environment_and_reward_unchanged": true,
+  "expected_parameters": {"graph": 59602, "self_only": 59602, "flat": 238658},
+  "new_patient_trajectories_authorized": 0,
+  "optimizer_steps_authorized": 0,
+  "new_scientific_attempts_authorized": 0,
+  "proposal_not_execution_caps": {
+    "blocks": [60, 61, 62],
+    "preflight_environment_calls": 624,
+    "prior_qualification_environment_calls": 312,
+    "ppo_environment_calls": 14976,
+    "bc_continue_environment_calls": 14976,
+    "evaluation_environment_calls": 20592,
+    "global_environment_calls": 51480,
+    "ppo_optimizer_steps": 1152,
+    "bc_continue_optimizer_steps": 1152,
+    "global_optimizer_steps": 2304,
+    "global_seconds": 21600,
+    "attempts": 1
+  },
+  "new_rng_namespace_proposal": "P2-reference-prior-candidate-20261001-v1",
+  "rng_allocation_and_collision_audit_complete": false,
+  "runner_integrated": false,
+  "automatic_retry": false,
+  "stage_e_reopened": false
+}

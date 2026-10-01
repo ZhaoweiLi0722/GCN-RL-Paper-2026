@@ -2016,3 +2016,31 @@ A proposed reference-prior/categorical-residual initialization redesign needs
 a new explicit decision before implementation/science. First proposed permission
 is design and artificial-fixture acceptance only, not another patient run.
 Original protocol/approval/failures remain immutable; Stage E stays closed.
+
+#### Reference-prior residual design approved; no new execution approval
+
+2026-10-01: Zhaowei agreed to the reference-preserving initialization design
+and artificial tests, and asked when a new experiment can start. Implemented
+an explicit prospective reference-log-prior plus zero-initialized residual
+scorer/value type. Legacy behavior is unchanged. Initial greedy=R4, proposed
+sampling mass90% R4/10% other unique classes, singleton1.0; no deterministic
+sampling equivalence or safety claim. Prior settings bind to model/receipt
+semantics. PPO/BC kernels accept the explicit new type, but no experiment
+factory/runner profile is activated by this engineering work.
+
+134 artificial/related tests pass and full compileall/diff check exit0. Tests
+cover input/parameter parity, class aliases, actual behavior probabilities,
+derivatives, same-start sampling and zero-update private-RNG/pending-state
+recovery. No optimizer steps or real patient trajectories occurred. Nonempty
+Adam/update-boundary and full new-profile application acceptance remain gates.
+The old15/279-file failure trees and archives/config locks remain unchanged.
+
+Design and proposed new pilot: specs/2026-10-01-reference-prior-residual/.
+The proposed single P2 uses no BC initialization, otherwise retains the
+environment/reward/support/32-episode continued arms/396-evaluation contrasts,
+with51,480 environment calls,2,304 updates and6h caps. Draft/config remain NOT
+scientifically authorized. A new approval, committed phase/budget integration,
+fresh-stream conflict audit and execution freeze precede any budgeted real
+preflight. No inherited P1 authorization, unused budget, test streams or fitted
+weights may be silently reused. No remote action, Howard sign-off, holdout use
+or Stage E reopening. New scope approval is pending, not inferred from timing.

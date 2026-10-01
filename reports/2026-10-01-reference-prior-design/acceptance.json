@@ -1,0 +1,39 @@
+{
+  "base_commit": "111ec7bc87225487bd6499e82a323fbe5c796f91",
+  "compileall_exit": 0,
+  "config_sha256": "0c7f99e045a77862a78a6a5c39e763683dcf7a1ed35296f95157e690952a5298",
+  "fresh_stream_audit_complete": false,
+  "kind": "reference-prior-design-engineering-only",
+  "new_patient_trajectories": 0,
+  "new_policy_update_boundary_acceptance_complete": false,
+  "old_evidence": [
+    {
+      "archive_sha256": "3d29ccdff06ff52cb7b2fe1280f0ec5015d7fef252101fca3522da06ee3c877c",
+      "file_count": 15,
+      "manifest_sha256": "96f0c53f60e20e9d35b104fb2942615968da90a78318b8bb0d61d2281d449392",
+      "root": "results/candidate_return_pilot_20260930",
+      "unchanged": true
+    },
+    {
+      "archive_sha256": "801567b3ff7e5609a964a03761cdf594a8aa196c1ca6fa7f3c8f2259c875a21b",
+      "file_count": 279,
+      "manifest_sha256": "2563b39fec1c04d46a13420ed9fd00572b2146615d632f9b060841138339e645",
+      "root": "results/candidate_return_pilot_20260930_recovery1",
+      "unchanged": true
+    }
+  ],
+  "optimizer_steps": 0,
+  "original_locks": {
+    "experiments/configs/candidate_return_pilot_20260930.json": "fe7d1cc4227e86c0d16360e6b285748e5b4be268c19270b9df29afc442eb5052",
+    "experiments/configs/candidate_return_pilot_20260930_recovery1_execution.json": "cb1b35f0f22ffbc8e699830f89ffc29566c5cc61509f04bef02757473cca643b",
+    "specs/2026-09-30-candidate-return-pilot/protocol.md": "75c9c47f484dafd345d9e1c670a81330469ed3cf986f8a80864e5cd6ee3f027b"
+  },
+  "runner_integrated": false,
+  "scientific_execution_authorized": false,
+  "tests": {
+    "count": 134,
+    "passed": true,
+    "scope": "invented tensors, receipts, derivatives, private sampling, zero-update state recovery; no fitting",
+    "seconds": 0.715
+  }
+}

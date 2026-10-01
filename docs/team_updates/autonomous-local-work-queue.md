@@ -1,6 +1,29 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1-R1 closed at initialization gate; evidence verified and archived
+## Live checkpoint: reference-prior design accepted on artificial inputs; P2 not authorized
+
+Updated2026-10-01. Zhaowei approved design/artificial testing and asked when a
+new experiment can start. This did not authorize a new scientific attempt.
+
+| Item | Verified state |
+| --- | --- |
+| Base |111ec7bc87225487bd6499e82a323fbe5c796f91 on persistent September integration branch |
+| Implemented |Explicit ReferencePriorCandidatePolicy, fixed log prior plus learned residual; zero scorer/value output layers; known-type receipt/PPO/BC interfaces; legacy defaults unchanged |
+| Initial behavior |Greedy request=R4; sampling90% reference/10% uniform other unique classes when K>1; singleton1.0. Sampling is not deterministic R4 or a safety guarantee |
+| New design |Remove finite-budget BC imitation initialization; no changes to environment/reward/information/candidate support; graph/self-only share tensors, flat remains unmatched; common graph-based R4 retained |
+| Verification |18 new and116 existing tests,134 total, pass in0.715s; full compileall and diff check exit0. Invented tensors/gradients/draws only; no optimizer step |
+| Restores verified |Behavior definitions/old probabilities, same-start sampling, pending receipts/private RNG and empty-optimizer states. Nonempty optimizer/update-boundary acceptance still required |
+| Actual science this turn |0 patient trajectories,0 optimizer steps,0 new attempts; old P1/P1-R1 closed, no new results or RL benefit |
+| Preservation |Old15/279-file trees, archives/manifests, P1 proposal/protocol and P1-R1 effective packet checked unchanged; no existing results or Dropbox copies modified |
+| Process |Pre-edit P1 host command scan empty; no scientific launcher invoked; no research automation created |
+| Evidence |specs/2026-10-01-reference-prior-residual/{authorization,protocol,readout}.md; experiments/configs/candidate_reference_prior_design_20261001.json; reports/2026-10-01-reference-prior-design/acceptance.json |
+| Readiness |P2=false. No new-profile runner, effective execution packet, fresh-stream collision audit or scientific claim. Design config scientific_execution_authorized=false |
+| Next concrete work |Distinct P2 phase/budget/qualification path, full fake application and bounded artificial PPO/BC update/recovery/rollback tests, independent verifier, fresh streams and source/input/runtime freeze |
+| Exact approval needed |Approve remaining P2 engineering including invented optimizer updates and one conditional new attempt only after all gates pass:51,480 env calls,2,304 optimizer steps,6h,32 episodes/continued model,396 final evaluations,3 blocks, one attempt/no retry |
+| Timing |Can launch the single budgeted preflight in the same work session after approval, integration/acceptance and freeze; no extra BC/data waiting stage. No precise start-time or positive-outcome promise |
+| Boundaries |Local commits only; no push/PR/merge/messages, Howard approval claim, holdout, new scenario/reward search or Stage E reopen. Do not recreate closed automation merely to wait |
+
+## Previous checkpoint: P1-R1 closed at initialization gate; evidence verified and archived
 
 Updated2026-10-01T01:30Z (September30 local time). The confirmed single
 recovery ran and terminated; no repair/retry or new science was performed.

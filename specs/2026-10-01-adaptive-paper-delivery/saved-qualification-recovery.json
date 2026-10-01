@@ -1,0 +1,48 @@
+{
+  "schema": "s1-saved-qualification-recovery-proposal-v1",
+  "scientific_execution_authorized": false,
+  "ready_to_launch": false,
+  "purpose": "Complete only the missing prespecified frozen qualification scoring using existing evidence; no S1 restart",
+  "source_root": "results/dynamic_candidate_pilot_20261001",
+  "new_output_root": "results/dynamic_candidate_saved_qualification_20261001",
+  "raw_readout": "reports/2026-10-01-s1-saved-readback/readout.json",
+  "raw_readout_sha256": "ccd6186ee9bdea9a1b1baa75bedb7d5927a9debe8d99d8d53d0ed0d31bc152b0",
+  "unchanged_original_config_sha256": "935b8a655f2350d8758fd73a033feca609f254d3749367fda4ce0a99747a6639",
+  "inputs": {
+    "payload/initialization/block60/graph/final.pt": "0822665a503fdc825ca65183bc2293c4af21d6ef3d9b35b9c8fb2eb07cffecc3",
+    "payload/initialization/block61/graph/final.pt": "5e302b42edac8bf9217a39164fab405ac5208ef485115bf8eda952caa017b852",
+    "payload/initialization/block62/graph/final.pt": "100c456c2bdc84133389f59c1b4d24492229a85320c6eaed15f198967662b242",
+    "launcher/recovery/000027-collection-block-complete.pt": "4fbd06f5a2ffb66c094c03387053e1a20ead10e2ae8b18882a4a57b6742c7ea6"
+  },
+  "limits": {
+    "attempts": 1,
+    "wall_seconds_including_loading_scoring_and_readback": 900,
+    "checkpoint_loads": 4,
+    "saved_initialized_policies": 3,
+    "saved_state_scorings": 624,
+    "blocks": [60, 61, 62],
+    "paths_each_block": ["r4", "initializer_greedy"],
+    "rows_each_path": 104,
+    "new_environment_calls": 0,
+    "new_optimizer_updates": 0,
+    "new_rollouts": 0,
+    "final_test_episodes": 0
+  },
+  "implementation_requirements": [
+    "New additive entrypoint only; never invoke the old campaign.advance or failure-state restore",
+    "Load trusted hash-bound CPU tensors with weights_only; check envelope and same saved policy state",
+    "Reuse original qualification thresholds and public-example decoding without any fitting or optimizer.step",
+    "Match saved example identities, split, state tokens, candidate support and model lineage to raw qualification records",
+    "Exclusive new claim; charge each scoring before forward; enforce 900-second outer timeout and preserve first error without retry",
+    "Freeze source/runtime/input bindings and separately record explicit user authorization before checkpoint loading",
+    "Write separate per-block/path evidence and before/after input hashes; no source or original evidence mutation",
+    "Stop after qualification result; training continuation is a different approval, not unused S1 budget"
+  ],
+  "current_missing_work": "Engineering entrypoint, mock/synthetic no-update tests, source/runtime freeze, and user approval",
+  "approval_question_issued": true,
+  "approval_received": false,
+  "automatic_training_after_pass": false,
+  "reward_or_scenario_change": false,
+  "historical_a1_gate": "failed_1_of_9_unchanged",
+  "remote_action_or_dropbox_export": false
+}

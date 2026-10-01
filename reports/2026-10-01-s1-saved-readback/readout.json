@@ -1,0 +1,4431 @@
+{
+  "checkpoint_loads": 0,
+  "config_sha256": "935b8a655f2350d8758fd73a033feca609f254d3749367fda4ce0a99747a6639",
+  "episode_outcomes": [
+    {
+      "block": 60,
+      "blocked_requests": 380,
+      "completion_service_level": 0.5164538752023018,
+      "completions": 2872,
+      "components": {
+        "bioreactor_holding_cost": 4055.039702939987,
+        "bioreactor_shortage_cost": 1017326519.5297316,
+        "capacity_transfer_cost": 57839.47129539492,
+        "expiry_cost": 207500000.0,
+        "patient_loss_cost": 1038000000.0,
+        "reagent_holding_cost": 5146725.597252576,
+        "reagent_purchase_cost": 71021015.82419348,
+        "reagent_shortage_cost": 9878814.10327806,
+        "reagent_transfer_cost": 141307.74439929033,
+        "specimen_transfer_cost": 244429.57516181754,
+        "urgency_cost": 8625000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.36569837200000777,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2357945706.8850145,
+      "distinct_executed_net_flows": 47,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5561,
+      "expiry_losses": 1848,
+      "final_state_sha256": "02277d65cbb7e885766dd7d5d490becac2ccb26968e1d2aac9b32d3f79123998",
+      "inference_seconds": 0.36569837200000777,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "ad3180fb5d84eda87d7433975773afe059f6f5c8a477acbe865d65df46ac887e",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 227,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 71,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1777,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 2076,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "c94e554b0b28f1cf9b36fa2ffb18dcd402b17fa2f5e00858af8cc47c885cf13a",
+      "raw_files": {
+        "events": {
+          "bytes": 2427623,
+          "path": "payload/episodes/demonstration/block60/world00/events.jsonl",
+          "sha256": "2ca7dde52ead0cb52bc9bda95a5ea1014a0fed5f8277b1abd463f55f5b2d34dc"
+        },
+        "final_state": {
+          "bytes": 3744125,
+          "path": "payload/episodes/demonstration/block60/world00/final_state.json",
+          "sha256": "25657992543e6cd3d75e26c20e9b38881cee7340f0b9cb974af9c9e53a6d2031"
+        },
+        "header": {
+          "bytes": 18558,
+          "path": "payload/episodes/demonstration/block60/world00/header.json",
+          "sha256": "281b85040a2479f6f1a13264e9ed7b7d488e6680b81d893cd01bdfb4c902a7d7"
+        }
+      },
+      "raw_header_sha256": "14f36d8bfc0199cae3b1593d4c06345063711972444558a178f13f89d809aa61",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 357,
+      "seed": 4292615209384789272390987701551110,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 613,
+      "terminal_compartments": {
+        "active": 613,
+        "delivered": 2872,
+        "enrolled": 5561,
+        "finished_return": 0,
+        "lost": 2076,
+        "production": 116,
+        "specimen_transit": 8,
+        "waiting": 489
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 116,
+      "terminal_specimen_transit": 8,
+      "terminal_waiting": 489,
+      "trajectory_id": "demonstration/block60/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23686,
+      "world_index": 0
+    },
+    {
+      "block": 60,
+      "blocked_requests": 409,
+      "completion_service_level": 0.49441945693819755,
+      "completions": 2968,
+      "components": {
+        "bioreactor_holding_cost": 2833.9198478221897,
+        "bioreactor_shortage_cost": 1163934391.073028,
+        "capacity_transfer_cost": 56779.31112479545,
+        "expiry_cost": 243900000.0,
+        "patient_loss_cost": 1220500000.0,
+        "reagent_holding_cost": 5020218.528624309,
+        "reagent_purchase_cost": 73298412.77486846,
+        "reagent_shortage_cost": 8131423.528094358,
+        "reagent_transfer_cost": 158043.00526644013,
+        "specimen_transfer_cost": 357139.58256518986,
+        "urgency_cost": 8325000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3683699130000164,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2723684241.723419,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6003,
+      "expiry_losses": 2225,
+      "final_state_sha256": "d350d899fe0b1fe12d6db12ccc1f5ba2e68c98ec24b98a623eda0f85f6a030ff",
+      "inference_seconds": 0.3683699130000164,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "4e88477aadb410c680c381d092131f1c7d67ce46b2851fe40d8ff3cc5d78704a",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 214,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 107,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2118,
+        "patients_lost_waiting_ineligible": 2
+      },
+      "losses": 2441,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "d4f563011755e9036aa8096f23a222ed1507c50e04446f96bcbd430a12f8c679",
+      "raw_files": {
+        "events": {
+          "bytes": 2543849,
+          "path": "payload/episodes/demonstration/block60/world01/events.jsonl",
+          "sha256": "e0fc36bee46433df7ba67e5663baafd1f584052df3ed636d30e1ca0783c39f77"
+        },
+        "final_state": {
+          "bytes": 4101763,
+          "path": "payload/episodes/demonstration/block60/world01/final_state.json",
+          "sha256": "ff819bb7b8c10409dc30f5a967517fa6d119c674381abee0e6650972962defd2"
+        },
+        "header": {
+          "bytes": 18537,
+          "path": "payload/episodes/demonstration/block60/world01/header.json",
+          "sha256": "b988e67785a9872f101c8004c425e205869e3a5976e8f383904e9ba9f748aaa8"
+        }
+      },
+      "raw_header_sha256": "071e1930a9030de7bd7fb3e1e72232fc6d0744cef204bdbc1597d97063efbd46",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 524,
+      "seed": 4292615209384789272390987701551111,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 594,
+      "terminal_compartments": {
+        "active": 594,
+        "delivered": 2968,
+        "enrolled": 6003,
+        "finished_return": 0,
+        "lost": 2441,
+        "production": 121,
+        "specimen_transit": 9,
+        "waiting": 464
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 121,
+      "terminal_specimen_transit": 9,
+      "terminal_waiting": 464,
+      "trajectory_id": "demonstration/block60/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26677,
+      "world_index": 1
+    },
+    {
+      "block": 60,
+      "blocked_requests": 313,
+      "completion_service_level": 0.5311055812300035,
+      "completions": 2988,
+      "components": {
+        "bioreactor_holding_cost": 3179.519778299331,
+        "bioreactor_shortage_cost": 1011173024.9559078,
+        "capacity_transfer_cost": 61080.64101165226,
+        "expiry_cost": 188000000.0,
+        "patient_loss_cost": 941000000.0,
+        "reagent_holding_cost": 4965851.994864211,
+        "reagent_purchase_cost": 78468944.46699187,
+        "reagent_shortage_cost": 12543152.674339617,
+        "reagent_transfer_cost": 106096.57418267618,
+        "specimen_transfer_cost": 264924.80682705314,
+        "urgency_cost": 7100000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.36474395899995926,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2243686255.633903,
+      "distinct_executed_net_flows": 47,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5626,
+      "expiry_losses": 1678,
+      "final_state_sha256": "3dc4acf3a325261a40d4fc89c64baec0a4730c430a65fab5e91ec1bfed482632",
+      "inference_seconds": 0.36474395899995926,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "fb95327167f9d7632ed8a4271e68bc5bf0ba0e87a4952fb7f34dd5f4d0eb4a72",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 202,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 66,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1612,
+        "patients_lost_waiting_ineligible": 2
+      },
+      "losses": 1882,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "3afddfedda2b8da03206fdc479d946767389be461a6859f12b4fd76e1a1b60c5",
+      "raw_files": {
+        "events": {
+          "bytes": 2453072,
+          "path": "payload/episodes/demonstration/block60/world02/events.jsonl",
+          "sha256": "fe9428a4f446eccc428eee0e9bebfe33fd979b8b87cf581f0ef03ba5124e9189"
+        },
+        "final_state": {
+          "bytes": 3810680,
+          "path": "payload/episodes/demonstration/block60/world02/final_state.json",
+          "sha256": "a05dbcc37fd826c4b1147bebc4a2d6ed0ed3b3783490fffd0f04354a2a08453c"
+        },
+        "header": {
+          "bytes": 18495,
+          "path": "payload/episodes/demonstration/block60/world02/header.json",
+          "sha256": "85fc1be5327df4400c09ca9e758e8dd72fda013b95732540fab56de739cc3d4f"
+        }
+      },
+      "raw_header_sha256": "c98b1a323ff822fde8923eaa4a8941b05186c6a49e6df85f7dff23b66e9c41b5",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 389,
+      "seed": 4292615209384789272390987701551112,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 756,
+      "terminal_compartments": {
+        "active": 756,
+        "delivered": 2988,
+        "enrolled": 5626,
+        "finished_return": 0,
+        "lost": 1882,
+        "production": 120,
+        "specimen_transit": 9,
+        "waiting": 627
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 120,
+      "terminal_specimen_transit": 9,
+      "terminal_waiting": 627,
+      "trajectory_id": "demonstration/block60/world02",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23767,
+      "world_index": 2
+    },
+    {
+      "block": 60,
+      "blocked_requests": 416,
+      "completion_service_level": 0.5264638649551608,
+      "completions": 2994,
+      "components": {
+        "bioreactor_holding_cost": 3743.9996126890182,
+        "bioreactor_shortage_cost": 997267347.3662608,
+        "capacity_transfer_cost": 55598.54418185765,
+        "expiry_cost": 196400000.0,
+        "patient_loss_cost": 982500000.0,
+        "reagent_holding_cost": 4877094.992738904,
+        "reagent_purchase_cost": 76292766.04022026,
+        "reagent_shortage_cost": 8477441.281328063,
+        "reagent_transfer_cost": 164577.24350230437,
+        "specimen_transfer_cost": 249801.5032288064,
+        "urgency_cost": 8350000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3652861240000149,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2274638370.971074,
+      "distinct_executed_net_flows": 45,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5687,
+      "expiry_losses": 1747,
+      "final_state_sha256": "3b187adc32f707be37f1cd8b4013675b4964c1c61bebf570c92597b45f9bf0b8",
+      "inference_seconds": 0.3652861240000149,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "606af92da26e18239796734483c76045bfeb6134dadc2edb4896432a70a89fd6",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 217,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 36,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1711,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 1965,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "34bf212b40e302e797d677d432688624e55021512050a0a48b751e9a64b0c0c6",
+      "raw_files": {
+        "events": {
+          "bytes": 2450130,
+          "path": "payload/episodes/demonstration/block60/world03/events.jsonl",
+          "sha256": "42ed64fe6d2e17aac1c9813633304157c0b05f14f0b5a3bd774d21be677eb25f"
+        },
+        "final_state": {
+          "bytes": 3834078,
+          "path": "payload/episodes/demonstration/block60/world03/final_state.json",
+          "sha256": "fcf6c275a2534a269e5d06cfcd20963f168507c488d0fb94a685751efcb6b7ca"
+        },
+        "header": {
+          "bytes": 18542,
+          "path": "payload/episodes/demonstration/block60/world03/header.json",
+          "sha256": "ccbe27a1380b73616aa9e17840293c9bac805dd3c8cb0de32ec96157ed28688e"
+        }
+      },
+      "raw_header_sha256": "9357fde5d22f6bc0ca57642d320920504f30a2d380d5926a56931d3001e2a50c",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 362,
+      "seed": 4292615209384789272390987701551113,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 728,
+      "terminal_compartments": {
+        "active": 728,
+        "delivered": 2994,
+        "enrolled": 5687,
+        "finished_return": 0,
+        "lost": 1965,
+        "production": 121,
+        "specimen_transit": 13,
+        "waiting": 594
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 121,
+      "terminal_specimen_transit": 13,
+      "terminal_waiting": 594,
+      "trajectory_id": "demonstration/block60/world03",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23446,
+      "world_index": 3
+    },
+    {
+      "block": 60,
+      "blocked_requests": 436,
+      "completion_service_level": 0.4790204081632653,
+      "completions": 2934,
+      "components": {
+        "bioreactor_holding_cost": 3006.7199016809454,
+        "bioreactor_shortage_cost": 1175306275.4714558,
+        "capacity_transfer_cost": 59552.71918005414,
+        "expiry_cost": 234300000.0,
+        "patient_loss_cost": 1173500000.0,
+        "reagent_holding_cost": 4947238.002641782,
+        "reagent_purchase_cost": 80425817.83629097,
+        "reagent_shortage_cost": 6799253.22238679,
+        "reagent_transfer_cost": 134508.56991621756,
+        "specimen_transfer_cost": 301672.1108082184,
+        "urgency_cost": 8650000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37141841599995473,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2684427324.6525817,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6125,
+      "expiry_losses": 2129,
+      "final_state_sha256": "67a2c0617c6e5befd151aa7e2b353477d15d70f552ded53f44ffb2078641c612",
+      "inference_seconds": 0.37141841599995473,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "a2b9f1525668d69a87ad591a56e029a485daabff295548546b56bffa66ad70a3",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 214,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 95,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2034,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2347,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "7885e7d3041d9bb3782b8c3fc23d3fd5cb32e998a78749b6f9d804663e469ce0",
+      "raw_files": {
+        "events": {
+          "bytes": 2508257,
+          "path": "payload/episodes/demonstration/block60/world04/events.jsonl",
+          "sha256": "c4b6f6c57c70122a6358b47be41ed4ee31c25fa74d79b133269ff04003476b84"
+        },
+        "final_state": {
+          "bytes": 4156675,
+          "path": "payload/episodes/demonstration/block60/world04/final_state.json",
+          "sha256": "49eb6adc37a4204167d6b75ef93a6d7d711835c1a682e36c6de6038deb232f97"
+        },
+        "header": {
+          "bytes": 18552,
+          "path": "payload/episodes/demonstration/block60/world04/header.json",
+          "sha256": "d799fe77e75135658b65cf714abcb4b518962b0e490ccd3b75d8908341177b14"
+        }
+      },
+      "raw_header_sha256": "3a1c674e1cafd3f9f6638016e23703b37e082b168738094722e7c8a119100c9f",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 443,
+      "seed": 4292615209384789272390987701551114,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 844,
+      "terminal_compartments": {
+        "active": 844,
+        "delivered": 2934,
+        "enrolled": 6125,
+        "finished_return": 0,
+        "lost": 2347,
+        "production": 117,
+        "specimen_transit": 9,
+        "waiting": 718
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 117,
+      "terminal_specimen_transit": 9,
+      "terminal_waiting": 718,
+      "trajectory_id": "demonstration/block60/world04",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26910,
+      "world_index": 4
+    },
+    {
+      "block": 60,
+      "blocked_requests": 232,
+      "completion_service_level": 0.5361423901198692,
+      "completions": 2952,
+      "components": {
+        "bioreactor_holding_cost": 2350.0798137903216,
+        "bioreactor_shortage_cost": 1000836780.404048,
+        "capacity_transfer_cost": 67478.932399045,
+        "expiry_cost": 189000000.0,
+        "patient_loss_cost": 945500000.0,
+        "reagent_holding_cost": 5060079.699679206,
+        "reagent_purchase_cost": 72927281.00028433,
+        "reagent_shortage_cost": 4982659.585545134,
+        "reagent_transfer_cost": 160914.13483809636,
+        "specimen_transfer_cost": 230532.7469740004,
+        "urgency_cost": 7350000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3646160830000085,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2226118076.5835824,
+      "distinct_executed_net_flows": 33,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5506,
+      "expiry_losses": 1704,
+      "final_state_sha256": "e3edc038a055cabaad61606e55f028ac4ab9e52fd0e268354246030a8385caa8",
+      "inference_seconds": 0.3646160830000085,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "aea0c31b4648da4becda1dce7655ae2a95d2c65013d6504b1e7e0edadb1c668e",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 186,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 58,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1646,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 1891,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "0a81d3fc58eeac7eb5a76cc9ec32d278f6e11c6fd056ff43b5ca14122f8cc847",
+      "raw_files": {
+        "events": {
+          "bytes": 2412978,
+          "path": "payload/episodes/demonstration/block60/world05/events.jsonl",
+          "sha256": "fff4a9163bd79a4048614b6d2fe8db901621b7871df2ae2635848ad68cd51b84"
+        },
+        "final_state": {
+          "bytes": 3703196,
+          "path": "payload/episodes/demonstration/block60/world05/final_state.json",
+          "sha256": "1675a3dc0beb2e6397cf99533163ba350b18456b72831dee72a2ee2da412ad92"
+        },
+        "header": {
+          "bytes": 18542,
+          "path": "payload/episodes/demonstration/block60/world05/header.json",
+          "sha256": "be0794581efac024176748f6edc6f14cf401c70da3ca70f5c4b11367c3d0da7d"
+        }
+      },
+      "raw_header_sha256": "a88ae6ae483a8c4b3fb84951ac8f0695fc14fad253e7acdf9912858f657f5217",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 336,
+      "seed": 4292615209384789272390987701551115,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 663,
+      "terminal_compartments": {
+        "active": 663,
+        "delivered": 2952,
+        "enrolled": 5506,
+        "finished_return": 0,
+        "lost": 1891,
+        "production": 128,
+        "specimen_transit": 9,
+        "waiting": 526
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 128,
+      "terminal_specimen_transit": 9,
+      "terminal_waiting": 526,
+      "trajectory_id": "demonstration/block60/world05",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23517,
+      "world_index": 5
+    },
+    {
+      "block": 60,
+      "blocked_requests": 428,
+      "completion_service_level": 0.49141389825068205,
+      "completions": 3062,
+      "components": {
+        "bioreactor_holding_cost": 4296.959780251979,
+        "bioreactor_shortage_cost": 1168991909.4902341,
+        "capacity_transfer_cost": 50604.02422919802,
+        "expiry_cost": 239900000.0,
+        "patient_loss_cost": 1201500000.0,
+        "reagent_holding_cost": 4862158.398940985,
+        "reagent_purchase_cost": 85992786.48484267,
+        "reagent_shortage_cost": 32612195.93009314,
+        "reagent_transfer_cost": 147416.1839587954,
+        "specimen_transfer_cost": 401339.3796565461,
+        "urgency_cost": 9225000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3688663320000103,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2743687706.8517356,
+      "distinct_executed_net_flows": 51,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6231,
+      "expiry_losses": 2160,
+      "final_state_sha256": "6b570beba40e7ffbcd60eeda1fe380d544b7227e3db4bc703c505b793869e7b0",
+      "inference_seconds": 0.3688663320000103,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "5e768757f60d7b1e15ef06feec5f5710825321a4a43d82dea4d4355ded18f554",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 239,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 101,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2059,
+        "patients_lost_waiting_ineligible": 4
+      },
+      "losses": 2403,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "6199543542103b08e14a01d6d820357542d4938aef1d89487175296909d3dfbb",
+      "raw_files": {
+        "events": {
+          "bytes": 2569325,
+          "path": "payload/episodes/demonstration/block60/world06/events.jsonl",
+          "sha256": "90a894a5a73ec67fe77282658e3f43c36a38e23a355d6a6162e69484a35064b8"
+        },
+        "final_state": {
+          "bytes": 4285765,
+          "path": "payload/episodes/demonstration/block60/world06/final_state.json",
+          "sha256": "d84d6d31719757bc3a2456ed1a6513304655ca918364c831d78099a3d996ef7d"
+        },
+        "header": {
+          "bytes": 18518,
+          "path": "payload/episodes/demonstration/block60/world06/header.json",
+          "sha256": "f64c22327096b1e6314878111ba75a54d5f8556f196e9fc277aeed1ad7c03fbf"
+        }
+      },
+      "raw_header_sha256": "56b06f9b592ca8327141d781203a9fd07c3aa7abacc9740fb08ed02efc191a87",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 580,
+      "seed": 4292615209384789272390987701551116,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 766,
+      "terminal_compartments": {
+        "active": 766,
+        "delivered": 3062,
+        "enrolled": 6231,
+        "finished_return": 0,
+        "lost": 2403,
+        "production": 126,
+        "specimen_transit": 14,
+        "waiting": 626
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 126,
+      "terminal_specimen_transit": 14,
+      "terminal_waiting": 626,
+      "trajectory_id": "demonstration/block60/world06",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26919,
+      "world_index": 6
+    },
+    {
+      "block": 60,
+      "blocked_requests": 345,
+      "completion_service_level": 0.48526422764227645,
+      "completions": 2865,
+      "components": {
+        "bioreactor_holding_cost": 3286.079834282398,
+        "bioreactor_shortage_cost": 1147434591.335997,
+        "capacity_transfer_cost": 61718.19082296878,
+        "expiry_cost": 241600000.0,
+        "patient_loss_cost": 1210000000.0,
+        "reagent_holding_cost": 4964172.195709979,
+        "reagent_purchase_cost": 72286235.82655013,
+        "reagent_shortage_cost": 5951509.933597729,
+        "reagent_transfer_cost": 134812.49687540054,
+        "specimen_transfer_cost": 338818.9168907695,
+        "urgency_cost": 10200000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3674540380000053,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2692975144.9762783,
+      "distinct_executed_net_flows": 47,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5904,
+      "expiry_losses": 2174,
+      "final_state_sha256": "2d8de663bea0433acb9a67dd1f5a6bc35594c2e441018b96fc4011789b803fd1",
+      "inference_seconds": 0.3674540380000053,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "b3522d7a8ff4d2b1098bf39b813670e83534e070f78aa4e3186fdc52cabe3620",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 242,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 112,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2062,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2420,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "b69b6863ecf2784d247c91cf0d4e7f34ae410f9fec7b3a5a31f34b3a90b4b383",
+      "raw_files": {
+        "events": {
+          "bytes": 2527550,
+          "path": "payload/episodes/demonstration/block60/world07/events.jsonl",
+          "sha256": "c3ea276ea3a24e1e810be067ccd1c15f1967e3fd0217caab354717dcee9f9c51"
+        },
+        "final_state": {
+          "bytes": 4025981,
+          "path": "payload/episodes/demonstration/block60/world07/final_state.json",
+          "sha256": "72caeb96537b768bebd1091873816e0bf5e117584b1a60437a61dab159c4f772"
+        },
+        "header": {
+          "bytes": 18510,
+          "path": "payload/episodes/demonstration/block60/world07/header.json",
+          "sha256": "1a4dccfb9673fbfdfc2d116626df347cec4ca80f9e88b06b7a70d33258a0ed78"
+        }
+      },
+      "raw_header_sha256": "eadd7b773d0e60a3aa9215b8c9787dfc5eda42dbb1d70f5476871f963a813f5d",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 492,
+      "seed": 4292615209384789272390987701551117,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 619,
+      "terminal_compartments": {
+        "active": 619,
+        "delivered": 2865,
+        "enrolled": 5904,
+        "finished_return": 0,
+        "lost": 2420,
+        "production": 109,
+        "specimen_transit": 10,
+        "waiting": 500
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 109,
+      "terminal_specimen_transit": 10,
+      "terminal_waiting": 500,
+      "trajectory_id": "demonstration/block60/world07",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26405,
+      "world_index": 7
+    },
+    {
+      "block": 61,
+      "blocked_requests": 344,
+      "completion_service_level": 0.47774480712166173,
+      "completions": 2898,
+      "components": {
+        "bioreactor_holding_cost": 2249.279924726486,
+        "bioreactor_shortage_cost": 1170148208.2290015,
+        "capacity_transfer_cost": 68851.52001342094,
+        "expiry_cost": 240900000.0,
+        "patient_loss_cost": 1206000000.0,
+        "reagent_holding_cost": 5430203.18682483,
+        "reagent_purchase_cost": 81969385.92684634,
+        "reagent_shortage_cost": 7750804.032834209,
+        "reagent_transfer_cost": 195246.98787075485,
+        "specimen_transfer_cost": 350978.676267233,
+        "urgency_cost": 8825000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3711135419999749,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2721640927.8395834,
+      "distinct_executed_net_flows": 48,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6066,
+      "expiry_losses": 2208,
+      "final_state_sha256": "d9329edf28e584268850de7c9750a8cf914db365273e9f581f86c6fa6f2ce581",
+      "inference_seconds": 0.3711135419999749,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "ced7c1f7a8d984e7137e0b5f714d15419ba296adac1664d8c3293060a9489b34",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 201,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 97,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2111,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2412,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "1a9f9774aaa7d51f655ac484a8ab2a8cf0f05d450973b388629a2d13c55bf21c",
+      "raw_files": {
+        "events": {
+          "bytes": 2520394,
+          "path": "payload/episodes/demonstration/block61/world00/events.jsonl",
+          "sha256": "c017bdc589128914fb8d20eee7fe2b60befb84f0e549b7acf6fb4ad839aeb80b"
+        },
+        "final_state": {
+          "bytes": 4145884,
+          "path": "payload/episodes/demonstration/block61/world00/final_state.json",
+          "sha256": "fd6d93092433ef2fdb41e5d38ef81be782a3789f04c3a9461da9abf8ca6022a9"
+        },
+        "header": {
+          "bytes": 18541,
+          "path": "payload/episodes/demonstration/block61/world00/header.json",
+          "sha256": "4e39cdbdb0033bd80994485edcabbef2aa2d015569c19ed3ffba450e6a556c4e"
+        }
+      },
+      "raw_header_sha256": "9bc00614fd2758120ce95a0ea26b69ff09655c56558538d673296a0824f28ece",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 505,
+      "seed": 4292615209384789272390987701551118,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 756,
+      "terminal_compartments": {
+        "active": 756,
+        "delivered": 2898,
+        "enrolled": 6066,
+        "finished_return": 0,
+        "lost": 2412,
+        "production": 116,
+        "specimen_transit": 17,
+        "waiting": 623
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 116,
+      "terminal_specimen_transit": 17,
+      "terminal_waiting": 623,
+      "trajectory_id": "demonstration/block61/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26799,
+      "world_index": 0
+    },
+    {
+      "block": 61,
+      "blocked_requests": 314,
+      "completion_service_level": 0.4976135761004066,
+      "completions": 2815,
+      "components": {
+        "bioreactor_holding_cost": 2903.0398417711253,
+        "bioreactor_shortage_cost": 1111519136.7576215,
+        "capacity_transfer_cost": 74421.33994990705,
+        "expiry_cost": 225500000.0,
+        "patient_loss_cost": 1128500000.0,
+        "reagent_holding_cost": 5211942.699436719,
+        "reagent_purchase_cost": 65496221.63581811,
+        "reagent_shortage_cost": 6020713.503209141,
+        "reagent_transfer_cost": 146493.85590777744,
+        "specimen_transfer_cost": 198336.26351324932,
+        "urgency_cost": 7525000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3709215890000195,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2550195169.0952992,
+      "distinct_executed_net_flows": 44,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5657,
+      "expiry_losses": 2036,
+      "final_state_sha256": "59d66c6eab6fd4f5d6b05bdb975692228ef750b79c0d8b3f407fccd22b2f5392",
+      "inference_seconds": 0.3709215890000195,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "20472af94036f837728df359a101cb7c86db2aacdac30df6b81a45e3abb5541c",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 219,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 39,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1997,
+        "patients_lost_waiting_ineligible": 2
+      },
+      "losses": 2257,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "08ef89b71a3b82bd4124ad420c8b60b6fae5ea6a645865ab366dc595ed230b94",
+      "raw_files": {
+        "events": {
+          "bytes": 2399083,
+          "path": "payload/episodes/demonstration/block61/world01/events.jsonl",
+          "sha256": "dc68107fdbc3db292e781fda51be4e6a1ad604bfd71614a1125b6565f9f39d1a"
+        },
+        "final_state": {
+          "bytes": 3769557,
+          "path": "payload/episodes/demonstration/block61/world01/final_state.json",
+          "sha256": "1105d36bd911a22b9a83b91e16ae5b93379bb17a1b98ab7c42fb8fbf554d5e78"
+        },
+        "header": {
+          "bytes": 18533,
+          "path": "payload/episodes/demonstration/block61/world01/header.json",
+          "sha256": "1595667232817624274bb4c8eecc502b057a6c80cece7c790a8cf29a4a7326ff"
+        }
+      },
+      "raw_header_sha256": "a10bfc3f225931bb49eff9cf6432ad782e3806061a7149f4747fdf9227847e16",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 290,
+      "seed": 4292615209384789272390987701551119,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 585,
+      "terminal_compartments": {
+        "active": 585,
+        "delivered": 2815,
+        "enrolled": 5657,
+        "finished_return": 0,
+        "lost": 2257,
+        "production": 117,
+        "specimen_transit": 6,
+        "waiting": 462
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 117,
+      "terminal_specimen_transit": 6,
+      "terminal_waiting": 462,
+      "trajectory_id": "demonstration/block61/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 25598,
+      "world_index": 1
+    },
+    {
+      "block": 61,
+      "blocked_requests": 375,
+      "completion_service_level": 0.4801547258661285,
+      "completions": 2855,
+      "components": {
+        "bioreactor_holding_cost": 2862.7197890281664,
+        "bioreactor_shortage_cost": 1170067770.73899,
+        "capacity_transfer_cost": 77112.03285050765,
+        "expiry_cost": 245300000.0,
+        "patient_loss_cost": 1228500000.0,
+        "reagent_holding_cost": 5477782.372000449,
+        "reagent_purchase_cost": 75896330.1983331,
+        "reagent_shortage_cost": 24826794.41712717,
+        "reagent_transfer_cost": 142355.85264755317,
+        "specimen_transfer_cost": 198855.05631764827,
+        "urgency_cost": 9175000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3681382980000052,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2759664863.3880553,
+      "distinct_executed_net_flows": 42,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5946,
+      "expiry_losses": 2232,
+      "final_state_sha256": "9649e0d58600a98c20e5e386add87077e801509e9398674a1a3aae772524c3b8",
+      "inference_seconds": 0.3681382980000052,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "8f779fa5d2a6f6086f7ff03431d4d35b8b22547c6c4e1c93387b94f527ce38f3",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 221,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 59,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2173,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2457,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "b3eaccf5ccaf155a9b5726d35fc227d93a463e83859a34d27d690c5777ccaa16",
+      "raw_files": {
+        "events": {
+          "bytes": 2398872,
+          "path": "payload/episodes/demonstration/block61/world02/events.jsonl",
+          "sha256": "a0a331ef65f3d1321a1dcae8517ba9226f6fd56bb9a2fecb625fdfb88c8341b0"
+        },
+        "final_state": {
+          "bytes": 3955898,
+          "path": "payload/episodes/demonstration/block61/world02/final_state.json",
+          "sha256": "0d84c305091aefe5e8304acac6ac80d6421d48dc7e3faa78cc6ed220198aa637"
+        },
+        "header": {
+          "bytes": 18559,
+          "path": "payload/episodes/demonstration/block61/world02/header.json",
+          "sha256": "b7787ff93f5c66338ea389a7be9517d18139a51ea8f0cb7ac72353a50f724734"
+        }
+      },
+      "raw_header_sha256": "8929f1ef3a9fb472325f383c1f88d912042fa57a97728529b1784965111d7b7b",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 290,
+      "seed": 4292615209384789272390987701551120,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 634,
+      "terminal_compartments": {
+        "active": 634,
+        "delivered": 2855,
+        "enrolled": 5946,
+        "finished_return": 0,
+        "lost": 2457,
+        "production": 125,
+        "specimen_transit": 6,
+        "waiting": 503
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 125,
+      "terminal_specimen_transit": 6,
+      "terminal_waiting": 503,
+      "trajectory_id": "demonstration/block61/world02",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26813,
+      "world_index": 2
+    },
+    {
+      "block": 61,
+      "blocked_requests": 436,
+      "completion_service_level": 0.45280074894679356,
+      "completions": 2902,
+      "components": {
+        "bioreactor_holding_cost": 3787.199772763251,
+        "bioreactor_shortage_cost": 1267930355.5866117,
+        "capacity_transfer_cost": 52138.66067872988,
+        "expiry_cost": 289300000.0,
+        "patient_loss_cost": 1450500000.0,
+        "reagent_holding_cost": 4981242.6041932795,
+        "reagent_purchase_cost": 77431464.03833494,
+        "reagent_shortage_cost": 16280146.29280831,
+        "reagent_transfer_cost": 214936.32093387147,
+        "specimen_transfer_cost": 383908.7415754993,
+        "urgency_cost": 12825000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3740985359999911,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 3119902979.4449096,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6409,
+      "expiry_losses": 2571,
+      "final_state_sha256": "734d5af78eaf0ac7ab21658ee37736975d88e83eaeb028e4dcb60963f60d6ad8",
+      "inference_seconds": 0.3740985359999911,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "5846cc36239e891a5eaf5206c34ab54dbb661ce41abc8dfd489bf2fdab430edc",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 322,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 120,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2451,
+        "patients_lost_waiting_ineligible": 8
+      },
+      "losses": 2901,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "09e3a8230274b654214ae28c0779d63b32ed1eb73fd23bddf9496165ef61df78",
+      "raw_files": {
+        "events": {
+          "bytes": 2568718,
+          "path": "payload/episodes/demonstration/block61/world03/events.jsonl",
+          "sha256": "c6d144f0873f207ad2e823c08368a0fc9226277a0f69188fcecd98158a83f601"
+        },
+        "final_state": {
+          "bytes": 4374976,
+          "path": "payload/episodes/demonstration/block61/world03/final_state.json",
+          "sha256": "f7b13b147cd18c11a84688f03f48ac21c280c5775c4752c2e5c55d02c5efa689"
+        },
+        "header": {
+          "bytes": 18492,
+          "path": "payload/episodes/demonstration/block61/world03/header.json",
+          "sha256": "ba61852d20db86c0110e5ea62b5263d6858939c7f6dd05e64a5aba72f1b7054c"
+        }
+      },
+      "raw_header_sha256": "6ee95d7045a2cb39d509bea64d20360e2f151110e1a0223bb4e7265c9e96a280",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 560,
+      "seed": 4292615209384789272390987701551121,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 606,
+      "terminal_compartments": {
+        "active": 606,
+        "delivered": 2902,
+        "enrolled": 6409,
+        "finished_return": 0,
+        "lost": 2901,
+        "production": 121,
+        "specimen_transit": 8,
+        "waiting": 477
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 121,
+      "terminal_specimen_transit": 8,
+      "terminal_waiting": 477,
+      "trajectory_id": "demonstration/block61/world03",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 28862,
+      "world_index": 3
+    },
+    {
+      "block": 61,
+      "blocked_requests": 287,
+      "completion_service_level": 0.5629891912038762,
+      "completions": 3021,
+      "components": {
+        "bioreactor_holding_cost": 5140.799752485754,
+        "bioreactor_shortage_cost": 876781642.7216544,
+        "capacity_transfer_cost": 55013.176530760225,
+        "expiry_cost": 175600000.0,
+        "patient_loss_cost": 878500000.0,
+        "reagent_holding_cost": 5167518.805183863,
+        "reagent_purchase_cost": 71931973.90139446,
+        "reagent_shortage_cost": 6020714.055875394,
+        "reagent_transfer_cost": 126331.46888222158,
+        "specimen_transfer_cost": 397308.4988219257,
+        "urgency_cost": 5375000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37063799499992456,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2019960643.4280956,
+      "distinct_executed_net_flows": 49,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5366,
+      "expiry_losses": 1578,
+      "final_state_sha256": "e08164c293ce33047dcf7123953119cfb822064a8c23a62eba3ccf51f934e411",
+      "inference_seconds": 0.37063799499992456,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "8b4cf5f5700041ca9eea92bec7a4f8f4727fef26c1e9693893ad3eb5a6f84866",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 178,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 112,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1466,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 1757,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "5717d07e9733bfa631f19de15264f6aad776617aad04b039470440460cf3c958",
+      "raw_files": {
+        "events": {
+          "bytes": 2556514,
+          "path": "payload/episodes/demonstration/block61/world04/events.jsonl",
+          "sha256": "ae2262786e82d5b0a3a7297526ffc96cf2512d741dd7ffab8ed9e95db32b1442"
+        },
+        "final_state": {
+          "bytes": 3726604,
+          "path": "payload/episodes/demonstration/block61/world04/final_state.json",
+          "sha256": "8629326f0dedb8f11ad8f223c5f2380e287a145fc40fdcfb9921d862b5e550fe"
+        },
+        "header": {
+          "bytes": 18495,
+          "path": "payload/episodes/demonstration/block61/world04/header.json",
+          "sha256": "6fd718fa3ed768dea13ba32e90c907c14b5694be6759eea54272b7b98911bdc9"
+        }
+      },
+      "raw_header_sha256": "6f3382b5f9c246cd8a8a1dde6a42f45177f4145764383cc66ef74483624f6a6e",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 578,
+      "seed": 4292615209384789272390987701551122,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 588,
+      "terminal_compartments": {
+        "active": 588,
+        "delivered": 3021,
+        "enrolled": 5366,
+        "finished_return": 0,
+        "lost": 1757,
+        "production": 129,
+        "specimen_transit": 10,
+        "waiting": 449
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 129,
+      "terminal_specimen_transit": 10,
+      "terminal_waiting": 449,
+      "trajectory_id": "demonstration/block61/world04",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 20926,
+      "world_index": 4
+    },
+    {
+      "block": 61,
+      "blocked_requests": 384,
+      "completion_service_level": 0.4938733832539142,
+      "completions": 2902,
+      "components": {
+        "bioreactor_holding_cost": 4109.759888613225,
+        "bioreactor_shortage_cost": 1134755594.1526282,
+        "capacity_transfer_cost": 67042.51954778872,
+        "expiry_cost": 236200000.0,
+        "patient_loss_cost": 1184000000.0,
+        "reagent_holding_cost": 5075833.500570808,
+        "reagent_purchase_cost": 72859802.42268674,
+        "reagent_shortage_cost": 8183326.909871829,
+        "reagent_transfer_cost": 177942.67429045343,
+        "specimen_transfer_cost": 392178.7117645799,
+        "urgency_cost": 7275000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37482733300004156,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2648990830.6512485,
+      "distinct_executed_net_flows": 50,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5876,
+      "expiry_losses": 2129,
+      "final_state_sha256": "63fab8cf3383e38e21bf1d1d18aa56b19135ff58abdb990fdc987e7e6fdc1cc3",
+      "inference_seconds": 0.37482733300004156,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "7d4479cf28c0c5ef7752ca8449f44590b7f0518dc276b5990fdcf86629fafcc3",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 233,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 114,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2015,
+        "patients_lost_waiting_ineligible": 6
+      },
+      "losses": 2368,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "37f9addce344f7be16a5bfe905106f810ab60b15a1349b5c205e15994ad3a15e",
+      "raw_files": {
+        "events": {
+          "bytes": 2562719,
+          "path": "payload/episodes/demonstration/block61/world05/events.jsonl",
+          "sha256": "fb4da25a613d02acb520ce9680974daade1abba4a7a469bbda79a87be7cdc75a"
+        },
+        "final_state": {
+          "bytes": 4045625,
+          "path": "payload/episodes/demonstration/block61/world05/final_state.json",
+          "sha256": "9d1104c5d9381c72686ee87e10de075af26501dc68d253a90405f182ddfaafc4"
+        },
+        "header": {
+          "bytes": 18514,
+          "path": "payload/episodes/demonstration/block61/world05/header.json",
+          "sha256": "2d7a1ccf5d9e2b4f5b97df378fef1ec23a09fad439a5494e06236411bd6aece6"
+        }
+      },
+      "raw_header_sha256": "1efef05c484521aff01974494d1e2069cd4bd128b1ed38de3bd67e3a7d1ce2c1",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 570,
+      "seed": 4292615209384789272390987701551123,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 606,
+      "terminal_compartments": {
+        "active": 606,
+        "delivered": 2902,
+        "enrolled": 5876,
+        "finished_return": 0,
+        "lost": 2368,
+        "production": 121,
+        "specimen_transit": 11,
+        "waiting": 474
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 121,
+      "terminal_specimen_transit": 11,
+      "terminal_waiting": 474,
+      "trajectory_id": "demonstration/block61/world05",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26046,
+      "world_index": 5
+    },
+    {
+      "block": 61,
+      "blocked_requests": 344,
+      "completion_service_level": 0.5322552599547905,
+      "completions": 3061,
+      "components": {
+        "bioreactor_holding_cost": 5543.99996609688,
+        "bioreactor_shortage_cost": 928171312.4440262,
+        "capacity_transfer_cost": 45573.083234927,
+        "expiry_cost": 193300000.0,
+        "patient_loss_cost": 969000000.0,
+        "reagent_holding_cost": 4939815.097493055,
+        "reagent_purchase_cost": 80071556.39660642,
+        "reagent_shortage_cost": 7612396.780983492,
+        "reagent_transfer_cost": 137417.69778682446,
+        "specimen_transfer_cost": 376834.8634561156,
+        "urgency_cost": 8625000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37685566600002574,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2192285450.363553,
+      "distinct_executed_net_flows": 51,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5751,
+      "expiry_losses": 1726,
+      "final_state_sha256": "d88744ba7122699bef5ce5b2c8f3dc92cb4c5ac050d811b2cf9dbd503c8f7efd",
+      "inference_seconds": 0.37685566600002574,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "fbdde2530136c5f206eeb2e803169b08f2f3f501fa7abbee5d331cb4cd895d65",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 207,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 92,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1634,
+        "patients_lost_waiting_ineligible": 4
+      },
+      "losses": 1938,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "2bfa57b1aaf28fdbf1559db055488a2322b6d3b68ab189508f068adfb148a86b",
+      "raw_files": {
+        "events": {
+          "bytes": 2544115,
+          "path": "payload/episodes/demonstration/block61/world06/events.jsonl",
+          "sha256": "dc5981d6ed3beec268ceef390ce14313de4a7d4b87c264f948e52ff88880858d"
+        },
+        "final_state": {
+          "bytes": 3969582,
+          "path": "payload/episodes/demonstration/block61/world06/final_state.json",
+          "sha256": "4578a0370d8df195a8efdaf3e07fd54bbdfb8e9eb57c366497eb989d44777ebe"
+        },
+        "header": {
+          "bytes": 18543,
+          "path": "payload/episodes/demonstration/block61/world06/header.json",
+          "sha256": "fcb1a2707b8ba95a9f0de07c012f5b278f0b9c66b0d3586f584201f273330f2b"
+        }
+      },
+      "raw_header_sha256": "b59871d2233e3d81cd3307bbecd42b15c34503824bc4b764e5da9a9a7f31436a",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 551,
+      "seed": 4292615209384789272390987701551124,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 752,
+      "terminal_compartments": {
+        "active": 752,
+        "delivered": 3061,
+        "enrolled": 5751,
+        "finished_return": 0,
+        "lost": 1938,
+        "production": 125,
+        "specimen_transit": 15,
+        "waiting": 612
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 125,
+      "terminal_specimen_transit": 15,
+      "terminal_waiting": 612,
+      "trajectory_id": "demonstration/block61/world06",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 21953,
+      "world_index": 6
+    },
+    {
+      "block": 61,
+      "blocked_requests": 414,
+      "completion_service_level": 0.5599044468945241,
+      "completions": 3047,
+      "components": {
+        "bioreactor_holding_cost": 4135.679840505123,
+        "bioreactor_shortage_cost": 922812151.189624,
+        "capacity_transfer_cost": 60807.07751673302,
+        "expiry_cost": 175500000.0,
+        "patient_loss_cost": 880500000.0,
+        "reagent_holding_cost": 5005213.805627402,
+        "reagent_purchase_cost": 73551456.15648195,
+        "reagent_shortage_cost": 8615848.587962043,
+        "reagent_transfer_cost": 182314.28262322387,
+        "specimen_transfer_cost": 312916.9550477366,
+        "urgency_cost": 6825000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37217687499996543,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2073369843.7347233,
+      "distinct_executed_net_flows": 49,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5442,
+      "expiry_losses": 1579,
+      "final_state_sha256": "54065203513a7780847d7ca19f85f370730f2dba2a24b2e50ced728bdc72959e",
+      "inference_seconds": 0.37217687499996543,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "f4892d2922e572dc9998b024bcd6fb417f646b78b08a9526fc27e1937e307298",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 176,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 76,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1503,
+        "patients_lost_waiting_ineligible": 5
+      },
+      "losses": 1761,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "9bc81f7f8818be306d88adfde30dec999f195bc0fab939d33e6c5ebef5330293",
+      "raw_files": {
+        "events": {
+          "bytes": 2501085,
+          "path": "payload/episodes/demonstration/block61/world07/events.jsonl",
+          "sha256": "2fb9a179fec7f7c265b967df0170ac766f6c68447e6b61323b213ca0bd10e365"
+        },
+        "final_state": {
+          "bytes": 3721430,
+          "path": "payload/episodes/demonstration/block61/world07/final_state.json",
+          "sha256": "bb465d26152426f43168e8163177e7085e3f24f86d33926df36ede1ff6401657"
+        },
+        "header": {
+          "bytes": 18547,
+          "path": "payload/episodes/demonstration/block61/world07/header.json",
+          "sha256": "eecbe9baa76794639a5a9475473a2a2a57ddb8bca0d7812d6f7dfb463150458d"
+        }
+      },
+      "raw_header_sha256": "60a35ad4008f24318304b198355ae9e3416474dde44a52575fafb2fda2d35b43",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 460,
+      "seed": 4292615209384789272390987701551125,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 634,
+      "terminal_compartments": {
+        "active": 634,
+        "delivered": 3047,
+        "enrolled": 5442,
+        "finished_return": 0,
+        "lost": 1761,
+        "production": 127,
+        "specimen_transit": 12,
+        "waiting": 495
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 127,
+      "terminal_specimen_transit": 12,
+      "terminal_waiting": 495,
+      "trajectory_id": "demonstration/block61/world07",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 21919,
+      "world_index": 7
+    },
+    {
+      "block": 62,
+      "blocked_requests": 216,
+      "completion_service_level": 0.48988536749831424,
+      "completions": 2906,
+      "components": {
+        "bioreactor_holding_cost": 1995.8398867249489,
+        "bioreactor_shortage_cost": 1129054565.6900194,
+        "capacity_transfer_cost": 76293.33282588399,
+        "expiry_cost": 223000000.0,
+        "patient_loss_cost": 1117500000.0,
+        "reagent_holding_cost": 5217277.205126613,
+        "reagent_purchase_cost": 75263719.76250887,
+        "reagent_shortage_cost": 2214515.0332011357,
+        "reagent_transfer_cost": 157489.10318485965,
+        "specimen_transfer_cost": 299533.9764630183,
+        "urgency_cost": 7450000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3730252910000047,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2560235389.943217,
+      "distinct_executed_net_flows": 39,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5932,
+      "expiry_losses": 2023,
+      "final_state_sha256": "cbaf5f9891487f326eb9859a7685492d0615430a3d6355ab3c9a66b648c524d9",
+      "inference_seconds": 0.3730252910000047,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "eac0c2aeb74e8483993154c643347ffc799fc9d0bcd09e7621a17bfa060285d1",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 207,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 95,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1928,
+        "patients_lost_waiting_ineligible": 5
+      },
+      "losses": 2235,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "b33f64d762e695aa183b1fd3b8d7ea314d3ec6458c55012878ffb1e2f9f0a911",
+      "raw_files": {
+        "events": {
+          "bytes": 2459561,
+          "path": "payload/episodes/demonstration/block62/world00/events.jsonl",
+          "sha256": "5d106a0c6337fb98a3ae18660ee5c1189c6a862b3a0ee9328c33a6861e3511a1"
+        },
+        "final_state": {
+          "bytes": 4029072,
+          "path": "payload/episodes/demonstration/block62/world00/final_state.json",
+          "sha256": "2c036b631e8c056ab04cfc45d96f0e037b4e830ad57a5222d207ecee8ebba404"
+        },
+        "header": {
+          "bytes": 18530,
+          "path": "payload/episodes/demonstration/block62/world00/header.json",
+          "sha256": "ce486ca23e0fef309d4917289eb8680672fb2d77b0cb1952a45f083d40fe91a0"
+        }
+      },
+      "raw_header_sha256": "c1fc9f2345ddc7f6d4174354ae46855a9b001e9a66ee19edc0a04de87cd797ae",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 437,
+      "seed": 4292615209384789272390987701551126,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 791,
+      "terminal_compartments": {
+        "active": 791,
+        "delivered": 2906,
+        "enrolled": 5932,
+        "finished_return": 0,
+        "lost": 2235,
+        "production": 128,
+        "specimen_transit": 13,
+        "waiting": 650
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 128,
+      "terminal_specimen_transit": 13,
+      "terminal_waiting": 650,
+      "trajectory_id": "demonstration/block62/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26037,
+      "world_index": 0
+    },
+    {
+      "block": 62,
+      "blocked_requests": 522,
+      "completion_service_level": 0.4473562509634654,
+      "completions": 2902,
+      "components": {
+        "bioreactor_holding_cost": 5299.1997959375385,
+        "bioreactor_shortage_cost": 1275129535.153583,
+        "capacity_transfer_cost": 65826.67562467382,
+        "expiry_cost": 280300000.0,
+        "patient_loss_cost": 1404500000.0,
+        "reagent_holding_cost": 5271121.603876904,
+        "reagent_purchase_cost": 78781031.92961454,
+        "reagent_shortage_cost": 11193681.723358024,
+        "reagent_transfer_cost": 191614.29179643682,
+        "specimen_transfer_cost": 353561.78442526155,
+        "urgency_cost": 10350000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3738385010000229,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 3066141672.362075,
+      "distinct_executed_net_flows": 50,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6487,
+      "expiry_losses": 2573,
+      "final_state_sha256": "e1fb1ef993b131e060f757066a451f6b24b223618b185626352f27f00910203e",
+      "inference_seconds": 0.3738385010000229,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "9bf81c7586228fff3f4bd714ad570e453411213ad8fed59d653853359093f305",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 230,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 94,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2479,
+        "patients_lost_waiting_ineligible": 6
+      },
+      "losses": 2809,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "6408c4c40e590d54caa8634529a77b43ffee9dd7e178d2d6901d4d6bbbb9170e",
+      "raw_files": {
+        "events": {
+          "bytes": 2539386,
+          "path": "payload/episodes/demonstration/block62/world01/events.jsonl",
+          "sha256": "413e11ddf12c181f508c5c6aadde521e101a80b3104b25cd5e1a7391061e34a1"
+        },
+        "final_state": {
+          "bytes": 4415393,
+          "path": "payload/episodes/demonstration/block62/world01/final_state.json",
+          "sha256": "1d999ca21c00c6e4f4e32d693e4f71790090100002f9763ccf125af3cd8479b7"
+        },
+        "header": {
+          "bytes": 18527,
+          "path": "payload/episodes/demonstration/block62/world01/header.json",
+          "sha256": "2ab207d02a4fae98cbd742c9ecc71cf4bfb9a196d948acd8d019a5aac370158e"
+        }
+      },
+      "raw_header_sha256": "660af6f751615b60fa31a2037176da9b9563db6e9dafd5c780f401f67641f18a",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 516,
+      "seed": 4292615209384789272390987701551127,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 776,
+      "terminal_compartments": {
+        "active": 776,
+        "delivered": 2902,
+        "enrolled": 6487,
+        "finished_return": 0,
+        "lost": 2809,
+        "production": 129,
+        "specimen_transit": 9,
+        "waiting": 638
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 129,
+      "terminal_specimen_transit": 9,
+      "terminal_waiting": 638,
+      "trajectory_id": "demonstration/block62/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 28870,
+      "world_index": 1
+    },
+    {
+      "block": 62,
+      "blocked_requests": 272,
+      "completion_service_level": 0.5053191489361702,
+      "completions": 2945,
+      "components": {
+        "bioreactor_holding_cost": 2522.879843187332,
+        "bioreactor_shortage_cost": 1130331519.8210282,
+        "capacity_transfer_cost": 68846.29915698928,
+        "expiry_cost": 218700000.0,
+        "patient_loss_cost": 1096500000.0,
+        "reagent_holding_cost": 5268193.300490979,
+        "reagent_purchase_cost": 79843816.75613478,
+        "reagent_shortage_cost": 16833772.33756563,
+        "reagent_transfer_cost": 99926.1726170633,
+        "specimen_transfer_cost": 331435.66276235355,
+        "urgency_cost": 6850000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3695134169999932,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2554830033.229599,
+      "distinct_executed_net_flows": 40,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5828,
+      "expiry_losses": 2006,
+      "final_state_sha256": "98c8a478a44c541bdd4849b188311d125ce4622190eaf194707a22b4ba4fa38b",
+      "inference_seconds": 0.3695134169999932,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "6b2135a4f3b760467ac8e84f7c05ac6af4b203eb8b02a9a7a1392d8dbf1e31fb",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 181,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 102,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1904,
+        "patients_lost_waiting_ineligible": 6
+      },
+      "losses": 2193,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "707b82b903d8d502ab97181d64b09e29792240a04dddabc7b2071ceed6b2af98",
+      "raw_files": {
+        "events": {
+          "bytes": 2491573,
+          "path": "payload/episodes/demonstration/block62/world02/events.jsonl",
+          "sha256": "e5b59a28647418067ac22ea4d53a4c9c3b1764d6c7edbb8ebc568c7ebb743b0c"
+        },
+        "final_state": {
+          "bytes": 3976629,
+          "path": "payload/episodes/demonstration/block62/world02/final_state.json",
+          "sha256": "31a78e350203ed46e271580cc6ea75c4221b136d11d69d2c7c5840ea00f769a9"
+        },
+        "header": {
+          "bytes": 18541,
+          "path": "payload/episodes/demonstration/block62/world02/header.json",
+          "sha256": "d07ca9048b72f38ce5e160fcaf034d89d345a645b06db4ab6e9a5821383b394a"
+        }
+      },
+      "raw_header_sha256": "4235c48f864f50e88b50a7c3c6f889afa6d334edc010096e76be799dd529de09",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 480,
+      "seed": 4292615209384789272390987701551128,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 690,
+      "terminal_compartments": {
+        "active": 690,
+        "delivered": 2945,
+        "enrolled": 5828,
+        "finished_return": 0,
+        "lost": 2193,
+        "production": 112,
+        "specimen_transit": 7,
+        "waiting": 571
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 112,
+      "terminal_specimen_transit": 7,
+      "terminal_waiting": 571,
+      "trajectory_id": "demonstration/block62/world02",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 26061,
+      "world_index": 2
+    },
+    {
+      "block": 62,
+      "blocked_requests": 364,
+      "completion_service_level": 0.5159281010856024,
+      "completions": 2899,
+      "components": {
+        "bioreactor_holding_cost": 4633.920034825802,
+        "bioreactor_shortage_cost": 1018553194.6838233,
+        "capacity_transfer_cost": 66375.89105439103,
+        "expiry_cost": 204100000.0,
+        "patient_loss_cost": 1021000000.0,
+        "reagent_holding_cost": 5149676.607718069,
+        "reagent_purchase_cost": 69342490.41740477,
+        "reagent_shortage_cost": 10138327.892662488,
+        "reagent_transfer_cost": 153948.19986396903,
+        "specimen_transfer_cost": 347853.9782238404,
+        "urgency_cost": 6775000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3725534970000268,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2335631501.5907855,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5619,
+      "expiry_losses": 1857,
+      "final_state_sha256": "c2bc37f769b65234651992a8eddb30fe5e31b96805089d6574f3f0b0cdd0b285",
+      "inference_seconds": 0.3725534970000268,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "481f9eecbfcca1699da782235bd2248773b8636568d2f5f856e2ea0b33accf05",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 184,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 99,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1758,
+        "patients_lost_waiting_ineligible": 0
+      },
+      "losses": 2042,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "0c77eb0119f318273e7110b8b96c396693fd62482ec686621dab63945df74ff3",
+      "raw_files": {
+        "events": {
+          "bytes": 2524591,
+          "path": "payload/episodes/demonstration/block62/world03/events.jsonl",
+          "sha256": "b8f6a01398e89d92bf0f168ff4ffe3dd349930933fabde8189d442c5e4e6e741"
+        },
+        "final_state": {
+          "bytes": 3856492,
+          "path": "payload/episodes/demonstration/block62/world03/final_state.json",
+          "sha256": "6982ec5e3374dcbc32cfa919bf500758ffeb311efe7ce62cd3d96465a35d2025"
+        },
+        "header": {
+          "bytes": 18529,
+          "path": "payload/episodes/demonstration/block62/world03/header.json",
+          "sha256": "9c5606548c9cf334e50b28e64a43809a75c1c9d399d2e2aff5b0d9e358805fe1"
+        }
+      },
+      "raw_header_sha256": "522226c4beb5a06edab8a0b3a64d735639d1b5fbbed83d7e096f335835c674a6",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 505,
+      "seed": 4292615209384789272390987701551129,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 678,
+      "terminal_compartments": {
+        "active": 678,
+        "delivered": 2899,
+        "enrolled": 5619,
+        "finished_return": 0,
+        "lost": 2042,
+        "production": 118,
+        "specimen_transit": 11,
+        "waiting": 549
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 118,
+      "terminal_specimen_transit": 11,
+      "terminal_waiting": 549,
+      "trajectory_id": "demonstration/block62/world03",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23655,
+      "world_index": 3
+    },
+    {
+      "block": 62,
+      "blocked_requests": 351,
+      "completion_service_level": 0.516713581984518,
+      "completions": 2937,
+      "components": {
+        "bioreactor_holding_cost": 2767.6799443602567,
+        "bioreactor_shortage_cost": 1064885344.0985467,
+        "capacity_transfer_cost": 64740.34229969343,
+        "expiry_cost": 214100000.0,
+        "patient_loss_cost": 1071500000.0,
+        "reagent_holding_cost": 5234029.789100196,
+        "reagent_purchase_cost": 73365890.27547431,
+        "reagent_shortage_cost": 7058767.022405614,
+        "reagent_transfer_cost": 152835.28159572338,
+        "specimen_transfer_cost": 283460.6283446802,
+        "urgency_cost": 7575000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37155770899998686,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2444222835.117711,
+      "distinct_executed_net_flows": 40,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5684,
+      "expiry_losses": 1932,
+      "final_state_sha256": "6a398040d93efc0f1e5e8c76d2d36c32b92efdc3a59eb1185791aff1529d39e4",
+      "inference_seconds": 0.37155770899998686,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "ace9d56a398cd83319b7bcd9e8f2f4a9d0818de28aefac388480280d07b52e0d",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 209,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 86,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1846,
+        "patients_lost_waiting_ineligible": 2
+      },
+      "losses": 2143,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "d28c1d078aaa3be970c7ad62896a2c4c59a0941c96a0ec1751b63e83c6d58f10",
+      "raw_files": {
+        "events": {
+          "bytes": 2450391,
+          "path": "payload/episodes/demonstration/block62/world04/events.jsonl",
+          "sha256": "e9dd4bb68c8c10fc6b5192a588be197f8e9fc25caa169cb91853444b92a47e9e"
+        },
+        "final_state": {
+          "bytes": 3846518,
+          "path": "payload/episodes/demonstration/block62/world04/final_state.json",
+          "sha256": "f432d38a5dc983cde3083956b25f1de04f42a29511b201ced243bb573a34631d"
+        },
+        "header": {
+          "bytes": 18566,
+          "path": "payload/episodes/demonstration/block62/world04/header.json",
+          "sha256": "eac50a69d53589ee719baadc7e07306c85b6f9530985b6244a9c7319465ecfba"
+        }
+      },
+      "raw_header_sha256": "029a191d2a9c67d1fdd140e6d303f64ec0077b5ee65343c40064e320ebf3ae56",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 413,
+      "seed": 4292615209384789272390987701551130,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 604,
+      "terminal_compartments": {
+        "active": 604,
+        "delivered": 2937,
+        "enrolled": 5684,
+        "finished_return": 0,
+        "lost": 2143,
+        "production": 130,
+        "specimen_transit": 4,
+        "waiting": 470
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 130,
+      "terminal_specimen_transit": 4,
+      "terminal_waiting": 470,
+      "trajectory_id": "demonstration/block62/world04",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 24745,
+      "world_index": 4
+    },
+    {
+      "block": 62,
+      "blocked_requests": 252,
+      "completion_service_level": 0.4944500504540868,
+      "completions": 2940,
+      "components": {
+        "bioreactor_holding_cost": 3078.7198930978775,
+        "bioreactor_shortage_cost": 1101967151.478474,
+        "capacity_transfer_cost": 59491.90360038609,
+        "expiry_cost": 226600000.0,
+        "patient_loss_cost": 1134500000.0,
+        "reagent_holding_cost": 4966079.001116563,
+        "reagent_purchase_cost": 82998432.41351455,
+        "reagent_shortage_cost": 13183285.91104886,
+        "reagent_transfer_cost": 173771.34317087,
+        "specimen_transfer_cost": 255766.76375279887,
+        "urgency_cost": 8875000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37777745799996865,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2573582057.5345707,
+      "distinct_executed_net_flows": 49,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5946,
+      "expiry_losses": 2064,
+      "final_state_sha256": "3b5c47880c1bd3b783822f619b1467f1b9597bd440bb2d0a1683880d14687bb4",
+      "inference_seconds": 0.37777745799996865,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "f3b1401c439dcff9fae95c106cb95f22512b2c8681ba6964921a59cc5147cb51",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 202,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 80,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1984,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2269,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "c7bd51a26874bb58f1f95a16b963399bb29698fd2ebc404f1c3ca7ecae8ffdb4",
+      "raw_files": {
+        "events": {
+          "bytes": 2441535,
+          "path": "payload/episodes/demonstration/block62/world05/events.jsonl",
+          "sha256": "a4d6fecd69701946d57774057c9101aabb677274a78411cb63fa1158bd3d8d73"
+        },
+        "final_state": {
+          "bytes": 4003160,
+          "path": "payload/episodes/demonstration/block62/world05/final_state.json",
+          "sha256": "cab3afd0312e32b85d70591cf2e6d560d2933d8e4145ff7365af28a35d2258e2"
+        },
+        "header": {
+          "bytes": 18544,
+          "path": "payload/episodes/demonstration/block62/world05/header.json",
+          "sha256": "cb704134be06b3d89730421310f217fa37d916e88cde2499df3e0fa306447f1c"
+        }
+      },
+      "raw_header_sha256": "407a2dbfca6b6c1e1f58ffe24edf6a9a5cdc3f8e7f251992cc4512f97a14cc91",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 372,
+      "seed": 4292615209384789272390987701551131,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 737,
+      "terminal_compartments": {
+        "active": 737,
+        "delivered": 2940,
+        "enrolled": 5946,
+        "finished_return": 0,
+        "lost": 2269,
+        "production": 116,
+        "specimen_transit": 14,
+        "waiting": 607
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 116,
+      "terminal_specimen_transit": 14,
+      "terminal_waiting": 607,
+      "trajectory_id": "demonstration/block62/world05",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 25493,
+      "world_index": 5
+    },
+    {
+      "block": 62,
+      "blocked_requests": 265,
+      "completion_service_level": 0.5212035896533521,
+      "completions": 2962,
+      "components": {
+        "bioreactor_holding_cost": 5365.439834153654,
+        "bioreactor_shortage_cost": 1024485475.4770746,
+        "capacity_transfer_cost": 59486.659482415336,
+        "expiry_cost": 208900000.0,
+        "patient_loss_cost": 1044500000.0,
+        "reagent_holding_cost": 5039354.588483809,
+        "reagent_purchase_cost": 74841980.43808356,
+        "reagent_shortage_cost": 10951470.58987323,
+        "reagent_transfer_cost": 138728.17193834842,
+        "specimen_transfer_cost": 248368.64125566254,
+        "urgency_cost": 6900000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3797514609998416,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2376070230.006026,
+      "distinct_executed_net_flows": 45,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5683,
+      "expiry_losses": 1895,
+      "final_state_sha256": "48833b2369df86401800a1110e1263699ecb9ebb646f9c6e9bba798a5ba9a43f",
+      "inference_seconds": 0.3797514609998416,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "3ef1d2666a966f1803072c42e3b1c2bd57ff405ae50afb6406b01a0380732679",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 194,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 52,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1843,
+        "patients_lost_waiting_ineligible": 0
+      },
+      "losses": 2089,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "586595bf64520f34474038afed845abad1e9cf8611784c86fca356476c1053aa",
+      "raw_files": {
+        "events": {
+          "bytes": 2429189,
+          "path": "payload/episodes/demonstration/block62/world06/events.jsonl",
+          "sha256": "bf55941cc6408cb18c43994b240fff1d4a36e68bce923e733f2c407b61cfeabb"
+        },
+        "final_state": {
+          "bytes": 3826248,
+          "path": "payload/episodes/demonstration/block62/world06/final_state.json",
+          "sha256": "99626e1f21a4933883a1d4b57b88ed21a4412cebd027c7e9c0694bb8dc4b5159"
+        },
+        "header": {
+          "bytes": 18542,
+          "path": "payload/episodes/demonstration/block62/world06/header.json",
+          "sha256": "0635fe613d295c2fd7dc504e946dcdb05fc09170ba4b314ed7e447877fb64726"
+        }
+      },
+      "raw_header_sha256": "d0af1bfa8bd14c9e3ecf8b761010163b578bb83145b406735da8cc8644379810",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 364,
+      "seed": 4292615209384789272390987701551132,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 632,
+      "terminal_compartments": {
+        "active": 632,
+        "delivered": 2962,
+        "enrolled": 5683,
+        "finished_return": 0,
+        "lost": 2089,
+        "production": 121,
+        "specimen_transit": 10,
+        "waiting": 501
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 121,
+      "terminal_specimen_transit": 10,
+      "terminal_waiting": 501,
+      "trajectory_id": "demonstration/block62/world06",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23859,
+      "world_index": 6
+    },
+    {
+      "block": 62,
+      "blocked_requests": 307,
+      "completion_service_level": 0.527437400106553,
+      "completions": 2970,
+      "components": {
+        "bioreactor_holding_cost": 3862.079862177372,
+        "bioreactor_shortage_cost": 1023801754.4780445,
+        "capacity_transfer_cost": 51019.51526877321,
+        "expiry_cost": 207200000.0,
+        "patient_loss_cost": 1038000000.0,
+        "reagent_holding_cost": 5000855.4031551285,
+        "reagent_purchase_cost": 73703282.61593252,
+        "reagent_shortage_cost": 5328677.289876745,
+        "reagent_transfer_cost": 130475.69213807804,
+        "specimen_transfer_cost": 352383.5205468767,
+        "urgency_cost": 9625000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37686020900011385,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2363197310.5948243,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5631,
+      "expiry_losses": 1870,
+      "final_state_sha256": "9462376e893d858521b20281a5f07334dbec8740e174ba018bc4b4ac85b52e6b",
+      "inference_seconds": 0.37686020900011385,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "9faadf9f4a996bc642217cafab0e83c481410b5b7e8fc5f0b3ec7ea156d3e990",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 202,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 86,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1784,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2076,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "b722da08f1b6d68d37be5a03d8ac7a2b554da0b20a2c10a4995456edab5c090e",
+      "raw_files": {
+        "events": {
+          "bytes": 2532566,
+          "path": "payload/episodes/demonstration/block62/world07/events.jsonl",
+          "sha256": "bf51d8ac39dd97685ac5641f75a07903e4731e8055d30aedfea203843b161d43"
+        },
+        "final_state": {
+          "bytes": 3861125,
+          "path": "payload/episodes/demonstration/block62/world07/final_state.json",
+          "sha256": "c5bc8dec55fd5958da9f2688c9a7b3b9cba8fa7ee09eee5713793517bbca3549"
+        },
+        "header": {
+          "bytes": 18514,
+          "path": "payload/episodes/demonstration/block62/world07/header.json",
+          "sha256": "22847d5a5d98cc612922bf4483825f613fc4f6289f52cb67644af73f150e7ea5"
+        }
+      },
+      "raw_header_sha256": "04e0ccac4aac39b58342a029c3e50e50803059be7595d1c964f1a08d0bc2a7dc",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 514,
+      "seed": 4292615209384789272390987701551133,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "demonstration",
+      "steps": 52,
+      "terminal_active": 585,
+      "terminal_compartments": {
+        "active": 585,
+        "delivered": 2970,
+        "enrolled": 5631,
+        "finished_return": 0,
+        "lost": 2076,
+        "production": 127,
+        "specimen_transit": 5,
+        "waiting": 453
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 127,
+      "terminal_specimen_transit": 5,
+      "terminal_waiting": 453,
+      "trajectory_id": "demonstration/block62/world07",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23870,
+      "world_index": 7
+    },
+    {
+      "block": 60,
+      "blocked_requests": 1084,
+      "completion_service_level": 0.45351437699680514,
+      "completions": 2839,
+      "components": {
+        "bioreactor_holding_cost": 5512.319663500786,
+        "bioreactor_shortage_cost": 1196974196.3170774,
+        "capacity_transfer_cost": 54964.90801044264,
+        "expiry_cost": 261500000.0,
+        "patient_loss_cost": 1309500000.0,
+        "reagent_holding_cost": 5077263.593803313,
+        "reagent_purchase_cost": 80113730.52606538,
+        "reagent_shortage_cost": 5553588.422999075,
+        "reagent_transfer_cost": 199833.32282371778,
+        "specimen_transfer_cost": 396517.8723212633,
+        "urgency_cost": 11525000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.4589771640000002,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2870900607.2827625,
+      "distinct_executed_net_flows": 51,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6260,
+      "expiry_losses": 2364,
+      "final_state_sha256": "ad46b5ee2f7b403ce6e4b2a55393370cef8cf27d9a8951c0d9d7f918a4ca692e",
+      "inference_seconds": 0.4589771640000002,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "ac47941390b6e2223f933d88981e57807701a8dddea25e4f71cea757d632e23d",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 251,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 110,
+        "patients_lost_transit_ineligible": 2,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2254,
+        "patients_lost_waiting_ineligible": 2
+      },
+      "losses": 2619,
+      "policy_sha256": "bb18b474583123fca01d6f8bb426a59dc35dc68316f85e72521b2469b370ce0b",
+      "raw_episode_sha256": "3aeca9a5f2e1545ff57d91f47c88634ee7ad518e77c30959e5190dd55dbd7d6a",
+      "raw_files": {
+        "events": {
+          "bytes": 2584183,
+          "path": "payload/episodes/preflight/prototype/block60/events.jsonl",
+          "sha256": "2711d7a0dcd6255cb279b7351c67f4777b27fc76010524fcb2d74c0ac15012b6"
+        },
+        "final_state": {
+          "bytes": 4309370,
+          "path": "payload/episodes/preflight/prototype/block60/final_state.json",
+          "sha256": "35bd4c4457d3f8339063f45356757e5e82a74952cd6f02d74eebacbec04d4e38"
+        },
+        "header": {
+          "bytes": 18528,
+          "path": "payload/episodes/preflight/prototype/block60/header.json",
+          "sha256": "1b15b553dc428912180aff4043235b6ae25e7a08a91da2323d91a8dd695ba7ea"
+        }
+      },
+      "raw_header_sha256": "dcb203e48d0f3f3732ccb915e4e5ed07da2f78e424af5db2dd2ba5cfa592681c",
+      "reference_class_choices": 8,
+      "representation": "graph",
+      "role": "preflight",
+      "route_count": 587,
+      "seed": 4292615209384789272390987701551104,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "preflight",
+      "steps": 52,
+      "terminal_active": 802,
+      "terminal_compartments": {
+        "active": 802,
+        "delivered": 2839,
+        "enrolled": 6260,
+        "finished_return": 0,
+        "lost": 2619,
+        "production": 112,
+        "specimen_transit": 14,
+        "waiting": 676
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 112,
+      "terminal_specimen_transit": 14,
+      "terminal_waiting": 676,
+      "trajectory_id": "preflight/prototype/block60",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 27280,
+      "world_index": 0
+    },
+    {
+      "block": 61,
+      "blocked_requests": 1033,
+      "completion_service_level": 0.4866220735785953,
+      "completions": 2910,
+      "components": {
+        "bioreactor_holding_cost": 5630.399840462209,
+        "bioreactor_shortage_cost": 1099433356.7807448,
+        "capacity_transfer_cost": 54474.40818133015,
+        "expiry_cost": 241900000.0,
+        "patient_loss_cost": 1210000000.0,
+        "reagent_holding_cost": 5068478.683372501,
+        "reagent_purchase_cost": 79202771.60785246,
+        "reagent_shortage_cost": 4844252.2489415025,
+        "reagent_transfer_cost": 162655.03023005492,
+        "specimen_transfer_cost": 394733.44288080157,
+        "urgency_cost": 9525000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.4627728280000021,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2650591352.602043,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5980,
+      "expiry_losses": 2170,
+      "final_state_sha256": "4840fc757fcfed9f04f5ff2c6832ee2b64bfe86ea23313cbefdfe305305bfdd8",
+      "inference_seconds": 0.4627728280000021,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "f2cb7cd2d11821bb0aa920282995597d7a8f69850b7effe968bbb415eae0920b",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 249,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 91,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2079,
+        "patients_lost_waiting_ineligible": 0
+      },
+      "losses": 2420,
+      "policy_sha256": "28eb24092a3692b2062950ac769c243be61ed908985cc86d0d322c4df1b8b70d",
+      "raw_episode_sha256": "b4277c9e881299ddb6e13d61b85e32e9de351b7c81baf49f1d86a3326d76548d",
+      "raw_files": {
+        "events": {
+          "bytes": 2573216,
+          "path": "payload/episodes/preflight/prototype/block61/events.jsonl",
+          "sha256": "10c16d48bc68437dee019735dcf3daaee260c636689ccb0e84bdff347e6e06b2"
+        },
+        "final_state": {
+          "bytes": 4121542,
+          "path": "payload/episodes/preflight/prototype/block61/final_state.json",
+          "sha256": "0c14737dd251510058812beb135fb0c2f414c8b1932d5b599385cd65d64fece7"
+        },
+        "header": {
+          "bytes": 18508,
+          "path": "payload/episodes/preflight/prototype/block61/header.json",
+          "sha256": "d17e41f31d55bb2d95e10b12863872df3127e3f5f9e0fa6c0660ba473087c30a"
+        }
+      },
+      "raw_header_sha256": "6606cfd360f1b1462b9b9cc461b01a5a64d408173bbe4fb586a47c5ffb44e445",
+      "reference_class_choices": 10,
+      "representation": "graph",
+      "role": "preflight",
+      "route_count": 586,
+      "seed": 4292615209384789272390987701551105,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "preflight",
+      "steps": 52,
+      "terminal_active": 650,
+      "terminal_compartments": {
+        "active": 650,
+        "delivered": 2910,
+        "enrolled": 5980,
+        "finished_return": 0,
+        "lost": 2420,
+        "production": 132,
+        "specimen_transit": 12,
+        "waiting": 506
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 132,
+      "terminal_specimen_transit": 12,
+      "terminal_waiting": 506,
+      "trajectory_id": "preflight/prototype/block61",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 25403,
+      "world_index": 0
+    },
+    {
+      "block": 62,
+      "blocked_requests": 1175,
+      "completion_service_level": 0.46985694822888285,
+      "completions": 2759,
+      "components": {
+        "bioreactor_holding_cost": 5572.7996917605415,
+        "bioreactor_shortage_cost": 1095471798.3073766,
+        "capacity_transfer_cost": 66779.24586065896,
+        "expiry_cost": 242400000.0,
+        "patient_loss_cost": 1213500000.0,
+        "reagent_holding_cost": 5532217.00321111,
+        "reagent_purchase_cost": 68920750.79289861,
+        "reagent_shortage_cost": 26920199.486505523,
+        "reagent_transfer_cost": 191282.4680665284,
+        "specimen_transfer_cost": 402957.4410288413,
+        "urgency_cost": 8925000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.4760316660000079,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2662336557.5446396,
+      "distinct_executed_net_flows": 51,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5872,
+      "expiry_losses": 2187,
+      "final_state_sha256": "9fd03ba713febd9f7b4c5f17a7c564616df607653fe4d995d2da7b57192f2f6b",
+      "inference_seconds": 0.4760316660000079,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "4bad9f9edbe1dad76ba133cd3684ddcb4b332f272f8ab351eb46096b76a55fdc",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 237,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 109,
+        "patients_lost_transit_ineligible": 2,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2078,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 2427,
+      "policy_sha256": "a6ec54988d5007bcb723cf4ab31ea02cb7020226e40126a3507a8150b9c581ea",
+      "raw_episode_sha256": "f8a95a87b1c03f17f579456b927cae46a07832b8b8d5107fad55dd77b948a30f",
+      "raw_files": {
+        "events": {
+          "bytes": 2565685,
+          "path": "payload/episodes/preflight/prototype/block62/events.jsonl",
+          "sha256": "ebbc8cb94d234d624d629fa8fc5bdd64b3a624b4d7bcb4d4c1c0dc1086765860"
+        },
+        "final_state": {
+          "bytes": 4054797,
+          "path": "payload/episodes/preflight/prototype/block62/final_state.json",
+          "sha256": "c945026bc5bde1dea0f125cd23136ed657171e70fb82bd97b4ddb37c739b4382"
+        },
+        "header": {
+          "bytes": 18519,
+          "path": "payload/episodes/preflight/prototype/block62/header.json",
+          "sha256": "a110a4f393725867585535baff470b4c14217bbaa97e5fd706951fd5016b5a56"
+        }
+      },
+      "raw_header_sha256": "6e1c85e412aeac21f7336b14964a869dfef8db4f63aacad871121d8eecfed96e",
+      "reference_class_choices": 8,
+      "representation": "graph",
+      "role": "preflight",
+      "route_count": 593,
+      "seed": 4292615209384789272390987701551106,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "preflight",
+      "steps": 52,
+      "terminal_active": 686,
+      "terminal_compartments": {
+        "active": 686,
+        "delivered": 2759,
+        "enrolled": 5872,
+        "finished_return": 0,
+        "lost": 2427,
+        "production": 108,
+        "specimen_transit": 0,
+        "waiting": 578
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 108,
+      "terminal_specimen_transit": 0,
+      "terminal_waiting": 578,
+      "trajectory_id": "preflight/prototype/block62",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 25186,
+      "world_index": 0
+    },
+    {
+      "block": 60,
+      "blocked_requests": 356,
+      "completion_service_level": 0.4743288590604027,
+      "completions": 2827,
+      "components": {
+        "bioreactor_holding_cost": 2165.759852027894,
+        "bioreactor_shortage_cost": 1204766607.34583,
+        "capacity_transfer_cost": 74575.67322614927,
+        "expiry_cost": 248900000.0,
+        "patient_loss_cost": 1245500000.0,
+        "reagent_holding_cost": 5182409.999883513,
+        "reagent_purchase_cost": 70708928.07170212,
+        "reagent_shortage_cost": 8563944.981492711,
+        "reagent_transfer_cost": 141810.70857777385,
+        "specimen_transfer_cost": 235626.15859484364,
+        "urgency_cost": 7750000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3779830440000751,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2791826068.69916,
+      "distinct_executed_net_flows": 44,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5960,
+      "expiry_losses": 2275,
+      "final_state_sha256": "54a9e428d28619f7569c997abbba02ff6412e2b29e5d39f778de702f5ac15a41",
+      "inference_seconds": 0.3779830440000751,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "c86816a98d4ce6318670b84e2b34c698d5b796a23caa3bec0db01e79aea56cff",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 214,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 89,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2186,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 2491,
+      "policy_sha256": "f61d079ce0a56ef6b184b9f1dd6468cba87fcc98ac279081487521b7b4fb10b9",
+      "raw_episode_sha256": "bffc94139fa47a34550070f544de34c87d677886ba3db7ef1aa03bf1039e862d",
+      "raw_files": {
+        "events": {
+          "bytes": 2434490,
+          "path": "payload/episodes/qualification/block60/initializer_greedy/world00/events.jsonl",
+          "sha256": "1b8e5dc387177e632373bb7aed7ff3070062b47be5bf9069cfe1967ed1095ada"
+        },
+        "final_state": {
+          "bytes": 3991282,
+          "path": "payload/episodes/qualification/block60/initializer_greedy/world00/final_state.json",
+          "sha256": "98071ef6208ad5441a9aa9f96affacffc27500399ac72c1efd1757dd3971f69f"
+        },
+        "header": {
+          "bytes": 18553,
+          "path": "payload/episodes/qualification/block60/initializer_greedy/world00/header.json",
+          "sha256": "91bd568cae4bdd9c0c847595ad57248be567ea206a6d2b76b58b77d080e93c6a"
+        }
+      },
+      "raw_header_sha256": "2e41811bb12dc11077959121288d41bfd4b385f9ab34828c3d9b81d5717fecae",
+      "reference_class_choices": 52,
+      "representation": "graph",
+      "role": "initializer_greedy",
+      "route_count": 345,
+      "seed": 4292615209384789272390987701551134,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 642,
+      "terminal_compartments": {
+        "active": 642,
+        "delivered": 2827,
+        "enrolled": 5960,
+        "finished_return": 0,
+        "lost": 2491,
+        "production": 117,
+        "specimen_transit": 7,
+        "waiting": 518
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 117,
+      "terminal_specimen_transit": 7,
+      "terminal_waiting": 518,
+      "trajectory_id": "qualification/block60/initializer_greedy/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 27422,
+      "world_index": 0
+    },
+    {
+      "block": 60,
+      "blocked_requests": 278,
+      "completion_service_level": 0.5434547421565092,
+      "completions": 3014,
+      "components": {
+        "bioreactor_holding_cost": 3801.5997535586357,
+        "bioreactor_shortage_cost": 961894847.275189,
+        "capacity_transfer_cost": 63160.995462848674,
+        "expiry_cost": 182800000.0,
+        "patient_loss_cost": 915500000.0,
+        "reagent_holding_cost": 5085980.388242674,
+        "reagent_purchase_cost": 76005982.85605699,
+        "reagent_shortage_cost": 19428910.510965586,
+        "reagent_transfer_cost": 116802.10692884082,
+        "specimen_transfer_cost": 264168.09303681005,
+        "urgency_cost": 6800000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3745596629998431,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2167963653.8256364,
+      "distinct_executed_net_flows": 45,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5546,
+      "expiry_losses": 1651,
+      "final_state_sha256": "3ca8358584b23818159ba0bda527c5e7ee620c23440c7099d86b1b2c8b76410f",
+      "inference_seconds": 0.3745596629998431,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "84ecfbf45fe8a3fd7bd38c14dbb22f1a620e29f6e4916a9b41e72eb878928d5e",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 177,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 57,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1594,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 1831,
+      "policy_sha256": "f61d079ce0a56ef6b184b9f1dd6468cba87fcc98ac279081487521b7b4fb10b9",
+      "raw_episode_sha256": "1313090c85ff3a16470d60a7a24e45a3faf40fc147ca14eb5c2b31e3a9f2244b",
+      "raw_files": {
+        "events": {
+          "bytes": 2443397,
+          "path": "payload/episodes/qualification/block60/initializer_greedy/world01/events.jsonl",
+          "sha256": "9f572dc3b1062525435a5b4cd19f0e45b79c1b826d2c4f5e67b082d77257a014"
+        },
+        "final_state": {
+          "bytes": 3752464,
+          "path": "payload/episodes/qualification/block60/initializer_greedy/world01/final_state.json",
+          "sha256": "89d46a9730c74ecc97b57e7989ff4df381fdd403130238952cc0bd453ab4ffe3"
+        },
+        "header": {
+          "bytes": 18598,
+          "path": "payload/episodes/qualification/block60/initializer_greedy/world01/header.json",
+          "sha256": "c5c9de3b0100fddf83d12f2339ce6c4a61be7367bf5fc6d13353839443191dd0"
+        }
+      },
+      "raw_header_sha256": "6c7caa42a1d52bc6cdf1de9327351d0d63043a8001dc5fe9de42c580091b6fbf",
+      "reference_class_choices": 52,
+      "representation": "graph",
+      "role": "initializer_greedy",
+      "route_count": 384,
+      "seed": 4292615209384789272390987701551135,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 701,
+      "terminal_compartments": {
+        "active": 701,
+        "delivered": 3014,
+        "enrolled": 5546,
+        "finished_return": 0,
+        "lost": 1831,
+        "production": 128,
+        "specimen_transit": 5,
+        "waiting": 568
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 128,
+      "terminal_specimen_transit": 5,
+      "terminal_waiting": 568,
+      "trajectory_id": "qualification/block60/initializer_greedy/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 22679,
+      "world_index": 1
+    },
+    {
+      "block": 60,
+      "blocked_requests": 356,
+      "completion_service_level": 0.4743288590604027,
+      "completions": 2827,
+      "components": {
+        "bioreactor_holding_cost": 2165.759852027894,
+        "bioreactor_shortage_cost": 1204766607.34583,
+        "capacity_transfer_cost": 74575.67322614927,
+        "expiry_cost": 248900000.0,
+        "patient_loss_cost": 1245500000.0,
+        "reagent_holding_cost": 5182409.999883513,
+        "reagent_purchase_cost": 70708928.07170212,
+        "reagent_shortage_cost": 8563944.981492711,
+        "reagent_transfer_cost": 141810.70857777385,
+        "specimen_transfer_cost": 235626.15859484364,
+        "urgency_cost": 7750000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.37974928900013083,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2791826068.69916,
+      "distinct_executed_net_flows": 44,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5960,
+      "expiry_losses": 2275,
+      "final_state_sha256": "54a9e428d28619f7569c997abbba02ff6412e2b29e5d39f778de702f5ac15a41",
+      "inference_seconds": 0.37974928900013083,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "c86816a98d4ce6318670b84e2b34c698d5b796a23caa3bec0db01e79aea56cff",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 214,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 89,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2186,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 2491,
+      "policy_sha256": "f61d079ce0a56ef6b184b9f1dd6468cba87fcc98ac279081487521b7b4fb10b9",
+      "raw_episode_sha256": "3d11e8633c4407bd5364fb4d9ad48a98e332e4db37d9e8bd41ab8d0c91dd0735",
+      "raw_files": {
+        "events": {
+          "bytes": 2433655,
+          "path": "payload/episodes/qualification/block60/r4/world00/events.jsonl",
+          "sha256": "dfbc346efa1186e31c7dbb3f238be1c51bcae26d6de6926cec528e4f2283d89b"
+        },
+        "final_state": {
+          "bytes": 3991282,
+          "path": "payload/episodes/qualification/block60/r4/world00/final_state.json",
+          "sha256": "98071ef6208ad5441a9aa9f96affacffc27500399ac72c1efd1757dd3971f69f"
+        },
+        "header": {
+          "bytes": 18515,
+          "path": "payload/episodes/qualification/block60/r4/world00/header.json",
+          "sha256": "57497504ab2883781b4643e8bc0eb82b55c01e43972225c070d00c31c36f5b01"
+        }
+      },
+      "raw_header_sha256": "cda5a6ecd9d1c3233da538d65ce54a9745810089b9a21426e4bb407d7bb8456c",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 345,
+      "seed": 4292615209384789272390987701551134,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 642,
+      "terminal_compartments": {
+        "active": 642,
+        "delivered": 2827,
+        "enrolled": 5960,
+        "finished_return": 0,
+        "lost": 2491,
+        "production": 117,
+        "specimen_transit": 7,
+        "waiting": 518
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 117,
+      "terminal_specimen_transit": 7,
+      "terminal_waiting": 518,
+      "trajectory_id": "qualification/block60/r4/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 27422,
+      "world_index": 0
+    },
+    {
+      "block": 60,
+      "blocked_requests": 278,
+      "completion_service_level": 0.5434547421565092,
+      "completions": 3014,
+      "components": {
+        "bioreactor_holding_cost": 3801.5997535586357,
+        "bioreactor_shortage_cost": 961894847.275189,
+        "capacity_transfer_cost": 63160.995462848674,
+        "expiry_cost": 182800000.0,
+        "patient_loss_cost": 915500000.0,
+        "reagent_holding_cost": 5085980.388242674,
+        "reagent_purchase_cost": 76005982.85605699,
+        "reagent_shortage_cost": 19428910.510965586,
+        "reagent_transfer_cost": 116802.10692884082,
+        "specimen_transfer_cost": 264168.09303681005,
+        "urgency_cost": 6800000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3761691649999932,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2167963653.8256364,
+      "distinct_executed_net_flows": 45,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5546,
+      "expiry_losses": 1651,
+      "final_state_sha256": "3ca8358584b23818159ba0bda527c5e7ee620c23440c7099d86b1b2c8b76410f",
+      "inference_seconds": 0.3761691649999932,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "84ecfbf45fe8a3fd7bd38c14dbb22f1a620e29f6e4916a9b41e72eb878928d5e",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 177,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 57,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1594,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 1831,
+      "policy_sha256": "f61d079ce0a56ef6b184b9f1dd6468cba87fcc98ac279081487521b7b4fb10b9",
+      "raw_episode_sha256": "e1219b418080042730a63d89d3c648a83d3156c60ab808f76310f791a90aa065",
+      "raw_files": {
+        "events": {
+          "bytes": 2442559,
+          "path": "payload/episodes/qualification/block60/r4/world01/events.jsonl",
+          "sha256": "0f0e28e447dd8c177ff218551ae111aa8c06f39f7a4f172f91e8cd85010482b1"
+        },
+        "final_state": {
+          "bytes": 3752464,
+          "path": "payload/episodes/qualification/block60/r4/world01/final_state.json",
+          "sha256": "89d46a9730c74ecc97b57e7989ff4df381fdd403130238952cc0bd453ab4ffe3"
+        },
+        "header": {
+          "bytes": 18560,
+          "path": "payload/episodes/qualification/block60/r4/world01/header.json",
+          "sha256": "e132e4af047df07e3705ad14d7c6f050d48d8693f70f52481a33741f60ea9812"
+        }
+      },
+      "raw_header_sha256": "b6c7d73f578256fff328cb3644fdd0dca0db2ce2ed781eea372a5630e662f678",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 384,
+      "seed": 4292615209384789272390987701551135,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 701,
+      "terminal_compartments": {
+        "active": 701,
+        "delivered": 3014,
+        "enrolled": 5546,
+        "finished_return": 0,
+        "lost": 1831,
+        "production": 128,
+        "specimen_transit": 5,
+        "waiting": 568
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 128,
+      "terminal_specimen_transit": 5,
+      "terminal_waiting": 568,
+      "trajectory_id": "qualification/block60/r4/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 22679,
+      "world_index": 1
+    },
+    {
+      "block": 61,
+      "blocked_requests": 521,
+      "completion_service_level": 0.4724548969072165,
+      "completions": 2933,
+      "components": {
+        "bioreactor_holding_cost": 4481.279850375651,
+        "bioreactor_shortage_cost": 1203429327.249203,
+        "capacity_transfer_cost": 49798.803262495705,
+        "expiry_cost": 260100000.0,
+        "patient_loss_cost": 1302500000.0,
+        "reagent_holding_cost": 4832671.11385071,
+        "reagent_purchase_cost": 76486766.7501048,
+        "reagent_shortage_cost": 9255980.98407075,
+        "reagent_transfer_cost": 169747.2934560109,
+        "specimen_transfer_cost": 394854.362005855,
+        "urgency_cost": 10375000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3800304149999363,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2867598627.835804,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6208,
+      "expiry_losses": 2380,
+      "final_state_sha256": "ec2c024b41631dd92ec486b1fff252759a81b0d1a37b0a2221ada0c04b1fe497",
+      "inference_seconds": 0.3800304149999363,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "fea930bd2ce5e70d10091906586ecb72d7b016fe330b20f2141e7cc6cb945bd6",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 221,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 114,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2266,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2605,
+      "policy_sha256": "180825d1e218de6e7e8037c7dc5202f81eba5ff160506905b06fc75068420f72",
+      "raw_episode_sha256": "8c59c9857fc51c24c7a4c9de8a45db28a9083a0fd2c003a2c3ab7653f132fc55",
+      "raw_files": {
+        "events": {
+          "bytes": 2578344,
+          "path": "payload/episodes/qualification/block61/initializer_greedy/world00/events.jsonl",
+          "sha256": "22cbec141d244537c23068063a5d5c8b1c55fddca5b9a945d355f209b8429c9b"
+        },
+        "final_state": {
+          "bytes": 4260040,
+          "path": "payload/episodes/qualification/block61/initializer_greedy/world00/final_state.json",
+          "sha256": "b8ab52350379f3c1b80a643f9cab5076ec059d8008eab5c1eccdef83b5d08aea"
+        },
+        "header": {
+          "bytes": 18601,
+          "path": "payload/episodes/qualification/block61/initializer_greedy/world00/header.json",
+          "sha256": "f0a1fda1d23ab195f24a53f4ba7bdcaa35fe37e5285bd846aacafce4ca260bb9"
+        }
+      },
+      "raw_header_sha256": "810d192e8174f08fa0bee82638e7af4a1196fcbbaade8beca785c20f358201e6",
+      "reference_class_choices": 52,
+      "representation": "graph",
+      "role": "initializer_greedy",
+      "route_count": 574,
+      "seed": 4292615209384789272390987701551136,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 670,
+      "terminal_compartments": {
+        "active": 670,
+        "delivered": 2933,
+        "enrolled": 6208,
+        "finished_return": 0,
+        "lost": 2605,
+        "production": 121,
+        "specimen_transit": 10,
+        "waiting": 539
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 121,
+      "terminal_specimen_transit": 10,
+      "terminal_waiting": 539,
+      "trajectory_id": "qualification/block61/initializer_greedy/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 27444,
+      "world_index": 0
+    },
+    {
+      "block": 61,
+      "blocked_requests": 359,
+      "completion_service_level": 0.5075122292103424,
+      "completions": 2905,
+      "components": {
+        "bioreactor_holding_cost": 2790.719897067547,
+        "bioreactor_shortage_cost": 1073411739.1436741,
+        "capacity_transfer_cost": 68955.91971856522,
+        "expiry_cost": 212600000.0,
+        "patient_loss_cost": 1065500000.0,
+        "reagent_holding_cost": 5358925.203533003,
+        "reagent_purchase_cost": 71931974.53454934,
+        "reagent_shortage_cost": 12646958.152582977,
+        "reagent_transfer_cost": 181945.7534210311,
+        "specimen_transfer_cost": 309833.9803618436,
+        "urgency_cost": 7250000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3827549579999072,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2449263123.4077373,
+      "distinct_executed_net_flows": 49,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5724,
+      "expiry_losses": 1932,
+      "final_state_sha256": "c304efedd00ca294588dec1feebdf26c9a881dafe78718b1aab8e7dad179a8fa",
+      "inference_seconds": 0.3827549579999072,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "9fac67e78af7438c8a665b8b95aba92c7308f9c00ed26e90503d6fba35a818c7",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 194,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 84,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1848,
+        "patients_lost_waiting_ineligible": 5
+      },
+      "losses": 2131,
+      "policy_sha256": "180825d1e218de6e7e8037c7dc5202f81eba5ff160506905b06fc75068420f72",
+      "raw_episode_sha256": "85eab63273b83339ec62baf86c99950619eab1ce7f06c8f645d8d8c0cc4ded1f",
+      "raw_files": {
+        "events": {
+          "bytes": 2493575,
+          "path": "payload/episodes/qualification/block61/initializer_greedy/world01/events.jsonl",
+          "sha256": "05358fd7052779b03ad37ae7ae3f5ad0c9e59821b558c4430332977804c07dbc"
+        },
+        "final_state": {
+          "bytes": 3897952,
+          "path": "payload/episodes/qualification/block61/initializer_greedy/world01/final_state.json",
+          "sha256": "ad2d0c370707e8d065aff8f9941e7fdf0ea00bc9c7506545936bd14e587e8594"
+        },
+        "header": {
+          "bytes": 18587,
+          "path": "payload/episodes/qualification/block61/initializer_greedy/world01/header.json",
+          "sha256": "7f3ee8ecfcd4e39d521f7c5445674c416ee79787c684127502130dc4c22683e7"
+        }
+      },
+      "raw_header_sha256": "ef1377b05dde2ac2342302bc280f320aacd3af4671e20d3d1b77fea6fd5c6c1e",
+      "reference_class_choices": 52,
+      "representation": "graph",
+      "role": "initializer_greedy",
+      "route_count": 448,
+      "seed": 4292615209384789272390987701551137,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 688,
+      "terminal_compartments": {
+        "active": 688,
+        "delivered": 2905,
+        "enrolled": 5724,
+        "finished_return": 0,
+        "lost": 2131,
+        "production": 126,
+        "specimen_transit": 18,
+        "waiting": 544
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 126,
+      "terminal_specimen_transit": 18,
+      "terminal_waiting": 544,
+      "trajectory_id": "qualification/block61/initializer_greedy/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 24861,
+      "world_index": 1
+    },
+    {
+      "block": 61,
+      "blocked_requests": 521,
+      "completion_service_level": 0.4724548969072165,
+      "completions": 2933,
+      "components": {
+        "bioreactor_holding_cost": 4481.279850375651,
+        "bioreactor_shortage_cost": 1203429327.249203,
+        "capacity_transfer_cost": 49798.803262495705,
+        "expiry_cost": 260100000.0,
+        "patient_loss_cost": 1302500000.0,
+        "reagent_holding_cost": 4832671.11385071,
+        "reagent_purchase_cost": 76486766.7501048,
+        "reagent_shortage_cost": 9255980.98407075,
+        "reagent_transfer_cost": 169747.2934560109,
+        "specimen_transfer_cost": 394854.362005855,
+        "urgency_cost": 10375000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3791400379999459,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2867598627.835804,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 6208,
+      "expiry_losses": 2380,
+      "final_state_sha256": "ec2c024b41631dd92ec486b1fff252759a81b0d1a37b0a2221ada0c04b1fe497",
+      "inference_seconds": 0.3791400379999459,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "fea930bd2ce5e70d10091906586ecb72d7b016fe330b20f2141e7cc6cb945bd6",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 221,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 114,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 2266,
+        "patients_lost_waiting_ineligible": 3
+      },
+      "losses": 2605,
+      "policy_sha256": "180825d1e218de6e7e8037c7dc5202f81eba5ff160506905b06fc75068420f72",
+      "raw_episode_sha256": "3c43e80e8d28b35e7630455ae4cdddd3c6aad2b0ee63ea7dcc68f973328c78b5",
+      "raw_files": {
+        "events": {
+          "bytes": 2577509,
+          "path": "payload/episodes/qualification/block61/r4/world00/events.jsonl",
+          "sha256": "cd51fa665e3ca696830dd53221ec6b9161915fcd78c2c81439620425263e36b2"
+        },
+        "final_state": {
+          "bytes": 4260040,
+          "path": "payload/episodes/qualification/block61/r4/world00/final_state.json",
+          "sha256": "b8ab52350379f3c1b80a643f9cab5076ec059d8008eab5c1eccdef83b5d08aea"
+        },
+        "header": {
+          "bytes": 18563,
+          "path": "payload/episodes/qualification/block61/r4/world00/header.json",
+          "sha256": "efe1526085a81ecf286fe4405c7053554c59bd59ce84438a6f7aca8005cc9c28"
+        }
+      },
+      "raw_header_sha256": "494f54430b2496fc381bcc64389f865933279c6174ba796cf890c760f48176e6",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 574,
+      "seed": 4292615209384789272390987701551136,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 670,
+      "terminal_compartments": {
+        "active": 670,
+        "delivered": 2933,
+        "enrolled": 6208,
+        "finished_return": 0,
+        "lost": 2605,
+        "production": 121,
+        "specimen_transit": 10,
+        "waiting": 539
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 121,
+      "terminal_specimen_transit": 10,
+      "terminal_waiting": 539,
+      "trajectory_id": "qualification/block61/r4/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 27444,
+      "world_index": 0
+    },
+    {
+      "block": 61,
+      "blocked_requests": 359,
+      "completion_service_level": 0.5075122292103424,
+      "completions": 2905,
+      "components": {
+        "bioreactor_holding_cost": 2790.719897067547,
+        "bioreactor_shortage_cost": 1073411739.1436741,
+        "capacity_transfer_cost": 68955.91971856522,
+        "expiry_cost": 212600000.0,
+        "patient_loss_cost": 1065500000.0,
+        "reagent_holding_cost": 5358925.203533003,
+        "reagent_purchase_cost": 71931974.53454934,
+        "reagent_shortage_cost": 12646958.152582977,
+        "reagent_transfer_cost": 181945.7534210311,
+        "specimen_transfer_cost": 309833.9803618436,
+        "urgency_cost": 7250000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3788377949999244,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2449263123.4077373,
+      "distinct_executed_net_flows": 49,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5724,
+      "expiry_losses": 1932,
+      "final_state_sha256": "c304efedd00ca294588dec1feebdf26c9a881dafe78718b1aab8e7dad179a8fa",
+      "inference_seconds": 0.3788377949999244,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "9fac67e78af7438c8a665b8b95aba92c7308f9c00ed26e90503d6fba35a818c7",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 194,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 84,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1848,
+        "patients_lost_waiting_ineligible": 5
+      },
+      "losses": 2131,
+      "policy_sha256": "180825d1e218de6e7e8037c7dc5202f81eba5ff160506905b06fc75068420f72",
+      "raw_episode_sha256": "775737d8612466e6cb9421df90cad84108b2a8a339b75a301876908bb6467d82",
+      "raw_files": {
+        "events": {
+          "bytes": 2492748,
+          "path": "payload/episodes/qualification/block61/r4/world01/events.jsonl",
+          "sha256": "2dd97de1758f13c176ff66acada4a2a5a97ff086be3ee1009367d50ace9d4e18"
+        },
+        "final_state": {
+          "bytes": 3897952,
+          "path": "payload/episodes/qualification/block61/r4/world01/final_state.json",
+          "sha256": "ad2d0c370707e8d065aff8f9941e7fdf0ea00bc9c7506545936bd14e587e8594"
+        },
+        "header": {
+          "bytes": 18549,
+          "path": "payload/episodes/qualification/block61/r4/world01/header.json",
+          "sha256": "2ed4a44e4426c1861f80b63bb3c8c3422e66f924356eda7a23e37aee08ca6e66"
+        }
+      },
+      "raw_header_sha256": "0c744994c7080a904500ce6763d65d4e76dae4e2b1c6fd01e4395b4eb6f0cb38",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 448,
+      "seed": 4292615209384789272390987701551137,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 688,
+      "terminal_compartments": {
+        "active": 688,
+        "delivered": 2905,
+        "enrolled": 5724,
+        "finished_return": 0,
+        "lost": 2131,
+        "production": 126,
+        "specimen_transit": 18,
+        "waiting": 544
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 126,
+      "terminal_specimen_transit": 18,
+      "terminal_waiting": 544,
+      "trajectory_id": "qualification/block61/r4/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 24861,
+      "world_index": 1
+    },
+    {
+      "block": 62,
+      "blocked_requests": 458,
+      "completion_service_level": 0.497129935640981,
+      "completions": 2858,
+      "components": {
+        "bioreactor_holding_cost": 5014.079790937898,
+        "bioreactor_shortage_cost": 1017215912.3394164,
+        "capacity_transfer_cost": 50418.491775416245,
+        "expiry_cost": 207400000.0,
+        "patient_loss_cost": 1038000000.0,
+        "reagent_holding_cost": 5016177.906129882,
+        "reagent_purchase_cost": 78215900.4930722,
+        "reagent_shortage_cost": 15328593.258322315,
+        "reagent_transfer_cost": 170939.13823790452,
+        "specimen_transfer_cost": 383973.10309950897,
+        "urgency_cost": 9650000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.38228470300020945,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2371436928.8098445,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5749,
+      "expiry_losses": 1870,
+      "final_state_sha256": "78a1ef9775f9c008c089e4d23d07505eac227ff92ac9cb04426980b230f9b525",
+      "inference_seconds": 0.38228470300020945,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "1fa62a809423912f2677cb29d7981d6c083230c5dc75472e4075290dfe21ec5c",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 204,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 83,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1787,
+        "patients_lost_waiting_ineligible": 2
+      },
+      "losses": 2076,
+      "policy_sha256": "f566e2d3c0492ab7050035c684cd798659d8502220acac14ae4005107449d792",
+      "raw_episode_sha256": "a519858b54dea89788091bd40b712afead39ba3257b7bef4d1b9b5b29c3db25e",
+      "raw_files": {
+        "events": {
+          "bytes": 2571572,
+          "path": "payload/episodes/qualification/block62/initializer_greedy/world00/events.jsonl",
+          "sha256": "e7e1f573353eabfd7ab0f4c8df35d1b45fdbe12e1702a49728c4af1179dc383a"
+        },
+        "final_state": {
+          "bytes": 3979219,
+          "path": "payload/episodes/qualification/block62/initializer_greedy/world00/final_state.json",
+          "sha256": "aed273d131c5be0c43bdac136a3c6af6d1103c72ddb5ac3f14cc4e8eee92c34b"
+        },
+        "header": {
+          "bytes": 18555,
+          "path": "payload/episodes/qualification/block62/initializer_greedy/world00/header.json",
+          "sha256": "d45ca22a25576a5e7cf0bd7f53e83a215aab348c4a53e562bf25e42304ec3005"
+        }
+      },
+      "raw_header_sha256": "d5e02bccdee1c43dc6615227f0208fa1dabbf3c104a7ca9169e712fde0dcdfc6",
+      "reference_class_choices": 52,
+      "representation": "graph",
+      "role": "initializer_greedy",
+      "route_count": 568,
+      "seed": 4292615209384789272390987701551138,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 815,
+      "terminal_compartments": {
+        "active": 815,
+        "delivered": 2858,
+        "enrolled": 5749,
+        "finished_return": 0,
+        "lost": 2076,
+        "production": 112,
+        "specimen_transit": 12,
+        "waiting": 691
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 112,
+      "terminal_specimen_transit": 12,
+      "terminal_waiting": 691,
+      "trajectory_id": "qualification/block62/initializer_greedy/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23678,
+      "world_index": 0
+    },
+    {
+      "block": 62,
+      "blocked_requests": 491,
+      "completion_service_level": 0.5005016722408027,
+      "completions": 2993,
+      "components": {
+        "bioreactor_holding_cost": 3983.0398813605307,
+        "bioreactor_shortage_cost": 1102992733.423316,
+        "capacity_transfer_cost": 56328.575607275714,
+        "expiry_cost": 227700000.0,
+        "patient_loss_cost": 1139500000.0,
+        "reagent_holding_cost": 4853169.187403883,
+        "reagent_purchase_cost": 76149374.36172791,
+        "reagent_shortage_cost": 32266178.72428905,
+        "reagent_transfer_cost": 186911.64885939076,
+        "specimen_transfer_cost": 428759.90034615336,
+        "urgency_cost": 8875000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3808320409998487,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2593012438.861431,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5980,
+      "expiry_losses": 2047,
+      "final_state_sha256": "7f8e04e9eac18784cd7e5feedc0d3c4fd687c2a0fe3551faf23acbacc2864860",
+      "inference_seconds": 0.3808320409998487,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "bd9bb6a977b24728a6574cfa69da23894eb5e3c68c0958ab78421566f774382e",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 230,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 104,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1943,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 2279,
+      "policy_sha256": "f566e2d3c0492ab7050035c684cd798659d8502220acac14ae4005107449d792",
+      "raw_episode_sha256": "1ffadbe3393162d3a51d6f9cf77982fb6ac2ff685e7fdb87d5b978e874c40e23",
+      "raw_files": {
+        "events": {
+          "bytes": 2594386,
+          "path": "payload/episodes/qualification/block62/initializer_greedy/world01/events.jsonl",
+          "sha256": "585b1cc26ab5b9f1faa1a411af84ee93d62958c1714db6ab82316bf0b683937f"
+        },
+        "final_state": {
+          "bytes": 4142083,
+          "path": "payload/episodes/qualification/block62/initializer_greedy/world01/final_state.json",
+          "sha256": "185852914b587d40f0f811e9d58873c57295f3a667d1a590c60575ed87ea5dc6"
+        },
+        "header": {
+          "bytes": 18586,
+          "path": "payload/episodes/qualification/block62/initializer_greedy/world01/header.json",
+          "sha256": "9d8834efc086eebfb00c1590637ccc3dfb8fe9d97adfccaeb343588c6e5562c4"
+        }
+      },
+      "raw_header_sha256": "0fb4292d85feb7e5ecad1966d103dc11a15ec2090cb5ad55edd59f98b3890d71",
+      "reference_class_choices": 52,
+      "representation": "graph",
+      "role": "initializer_greedy",
+      "route_count": 620,
+      "seed": 4292615209384789272390987701551139,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 708,
+      "terminal_compartments": {
+        "active": 708,
+        "delivered": 2993,
+        "enrolled": 5980,
+        "finished_return": 0,
+        "lost": 2279,
+        "production": 106,
+        "specimen_transit": 17,
+        "waiting": 585
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 106,
+      "terminal_specimen_transit": 17,
+      "terminal_waiting": 585,
+      "trajectory_id": "qualification/block62/initializer_greedy/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 25457,
+      "world_index": 1
+    },
+    {
+      "block": 62,
+      "blocked_requests": 458,
+      "completion_service_level": 0.497129935640981,
+      "completions": 2858,
+      "components": {
+        "bioreactor_holding_cost": 5014.079790937898,
+        "bioreactor_shortage_cost": 1017215912.3394164,
+        "capacity_transfer_cost": 50418.491775416245,
+        "expiry_cost": 207400000.0,
+        "patient_loss_cost": 1038000000.0,
+        "reagent_holding_cost": 5016177.906129882,
+        "reagent_purchase_cost": 78215900.4930722,
+        "reagent_shortage_cost": 15328593.258322315,
+        "reagent_transfer_cost": 170939.13823790452,
+        "specimen_transfer_cost": 383973.10309950897,
+        "urgency_cost": 9650000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.38129428799976495,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2371436928.8098445,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5749,
+      "expiry_losses": 1870,
+      "final_state_sha256": "78a1ef9775f9c008c089e4d23d07505eac227ff92ac9cb04426980b230f9b525",
+      "inference_seconds": 0.38129428799976495,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "1fa62a809423912f2677cb29d7981d6c083230c5dc75472e4075290dfe21ec5c",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 204,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 83,
+        "patients_lost_transit_ineligible": 0,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1787,
+        "patients_lost_waiting_ineligible": 2
+      },
+      "losses": 2076,
+      "policy_sha256": "f566e2d3c0492ab7050035c684cd798659d8502220acac14ae4005107449d792",
+      "raw_episode_sha256": "1c236287f03a5eeaf2f989a03d2e8cb7e3f1436eedbba63937849f86063b8606",
+      "raw_files": {
+        "events": {
+          "bytes": 2570743,
+          "path": "payload/episodes/qualification/block62/r4/world00/events.jsonl",
+          "sha256": "37647a8e9a1f7f50271b67ca93eee3f39817a27d6cd2120432ed18ed9a7c2385"
+        },
+        "final_state": {
+          "bytes": 3979219,
+          "path": "payload/episodes/qualification/block62/r4/world00/final_state.json",
+          "sha256": "aed273d131c5be0c43bdac136a3c6af6d1103c72ddb5ac3f14cc4e8eee92c34b"
+        },
+        "header": {
+          "bytes": 18517,
+          "path": "payload/episodes/qualification/block62/r4/world00/header.json",
+          "sha256": "29b68024a5580ea33592651b7ec265336948cb1a82c4986562543f5eb5f550fe"
+        }
+      },
+      "raw_header_sha256": "2b44c436599ab796e8baa9559cbb42be13692e805ea2e425b3042c76ef833faf",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 568,
+      "seed": 4292615209384789272390987701551138,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 815,
+      "terminal_compartments": {
+        "active": 815,
+        "delivered": 2858,
+        "enrolled": 5749,
+        "finished_return": 0,
+        "lost": 2076,
+        "production": 112,
+        "specimen_transit": 12,
+        "waiting": 691
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 112,
+      "terminal_specimen_transit": 12,
+      "terminal_waiting": 691,
+      "trajectory_id": "qualification/block62/r4/world00",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 23678,
+      "world_index": 0
+    },
+    {
+      "block": 62,
+      "blocked_requests": 491,
+      "completion_service_level": 0.5005016722408027,
+      "completions": 2993,
+      "components": {
+        "bioreactor_holding_cost": 3983.0398813605307,
+        "bioreactor_shortage_cost": 1102992733.423316,
+        "capacity_transfer_cost": 56328.575607275714,
+        "expiry_cost": 227700000.0,
+        "patient_loss_cost": 1139500000.0,
+        "reagent_holding_cost": 4853169.187403883,
+        "reagent_purchase_cost": 76149374.36172791,
+        "reagent_shortage_cost": 32266178.72428905,
+        "reagent_transfer_cost": 186911.64885939076,
+        "specimen_transfer_cost": 428759.90034615336,
+        "urgency_cost": 8875000.0
+      },
+      "compute_cost": {
+        "decision_path_seconds": 0.3804526260001353,
+        "environment_steps": 52,
+        "evaluation_env_steps": 0,
+        "training_compute": "not_in_episode_receipts_use_campaign_budget_ledger"
+      },
+      "correction_reference": "contemporaneous_r4",
+      "cost": 2593012438.861431,
+      "distinct_executed_net_flows": 52,
+      "distinct_selected_request_classes": 52,
+      "enrolled": 5980,
+      "expiry_losses": 2047,
+      "final_state_sha256": "7f8e04e9eac18784cd7e5feedc0d3c4fd687c2a0fe3551faf23acbacc2864860",
+      "inference_seconds": 0.3804526260001353,
+      "initial_enrolled": 0,
+      "initial_state_sha256": "bd9bb6a977b24728a6574cfa69da23894eb5e3c68c0958ab78421566f774382e",
+      "loss_causes": {
+        "finished_expired": 0,
+        "patients_lost_manufacturing": 230,
+        "patients_lost_return_ineligible": 0,
+        "patients_lost_transit_expired": 104,
+        "patients_lost_transit_ineligible": 1,
+        "patients_lost_transit_transport": 0,
+        "patients_lost_waiting_expired": 1943,
+        "patients_lost_waiting_ineligible": 1
+      },
+      "losses": 2279,
+      "policy_sha256": "f566e2d3c0492ab7050035c684cd798659d8502220acac14ae4005107449d792",
+      "raw_episode_sha256": "ddb5dabc4009397db020f40f99cf31949199c36aeb9a32b7efd91e353e39dc56",
+      "raw_files": {
+        "events": {
+          "bytes": 2593547,
+          "path": "payload/episodes/qualification/block62/r4/world01/events.jsonl",
+          "sha256": "27805cc393e528687cff807d3e24baae4424565df295f9e681e81035f180f05a"
+        },
+        "final_state": {
+          "bytes": 4142083,
+          "path": "payload/episodes/qualification/block62/r4/world01/final_state.json",
+          "sha256": "185852914b587d40f0f811e9d58873c57295f3a667d1a590c60575ed87ea5dc6"
+        },
+        "header": {
+          "bytes": 18548,
+          "path": "payload/episodes/qualification/block62/r4/world01/header.json",
+          "sha256": "8e2cf0b758ef9df49584513ae6eae463f59b41a8c1969cff618ae4bc3bb878d3"
+        }
+      },
+      "raw_header_sha256": "8da39c5a7ef683e315d2fa4355eb35cb71bf6b1a31595d411985a05d13179440",
+      "reference_class_choices": 52,
+      "representation": "reference",
+      "role": "r4",
+      "route_count": 620,
+      "seed": 4292615209384789272390987701551139,
+      "source_id": "APD-single-gcn-pilot-20261001-v1",
+      "split": "qualification",
+      "steps": 52,
+      "terminal_active": 708,
+      "terminal_compartments": {
+        "active": 708,
+        "delivered": 2993,
+        "enrolled": 5980,
+        "finished_return": 0,
+        "lost": 2279,
+        "production": 106,
+        "specimen_transit": 17,
+        "waiting": 585
+      },
+      "terminal_finished_return": 0,
+      "terminal_production": 106,
+      "terminal_specimen_transit": 17,
+      "terminal_waiting": 585,
+      "trajectory_id": "qualification/block62/r4/world01",
+      "waiting_definition": "sum_of_end_of_epoch_waiting_patients",
+      "waiting_patient_steps": 25457,
+      "world_index": 1
+    }
+  ],
+  "episodes": 39,
+  "episodes_by_split": {
+    "demonstration": 24,
+    "preflight": 3,
+    "qualification": 12
+  },
+  "format": "s1-saved-only-readout-v1",
+  "new_environment_steps": 0,
+  "new_model_forwards": 0,
+  "new_optimizer_steps": 0,
+  "preservation_manifest_sha256": "800a76433590908aa2666cea09e350076eed31553741302a63b9f4840627182e",
+  "preserved_source_files": 606,
+  "proposal_file_sha256": "8f4cb4f581855851f53d42d9127a7023f14290b608c6e67774b364650c1169af",
+  "qualification": {
+    "all_required_necessary_conditions_passed": true,
+    "automatic_training_authorized": false,
+    "blocks": [
+      {
+        "block": 60,
+        "initializer_scoring_on_r4_path": "not_performed",
+        "mean_differences": {
+          "completions": 0.0,
+          "cost": 0.0,
+          "expiry_losses": 0.0,
+          "losses": 0.0,
+          "terminal_active": 0.0,
+          "waiting_patient_steps": 0.0
+        },
+        "outcome_necessary_condition_passed": true,
+        "pairs": [
+          {
+            "differences_initializer_minus_r4": {
+              "completions": 0,
+              "cost": 0.0,
+              "expiry_losses": 0,
+              "losses": 0,
+              "terminal_active": 0,
+              "waiting_patient_steps": 0
+            },
+            "initial_state_sha256": "c86816a98d4ce6318670b84e2b34c698d5b796a23caa3bec0db01e79aea56cff",
+            "raw_sha256": {
+              "initializer": "bffc94139fa47a34550070f544de34c87d677886ba3db7ef1aa03bf1039e862d",
+              "r4": "3d11e8633c4407bd5364fb4d9ad48a98e332e4db37d9e8bd41ab8d0c91dd0735"
+            },
+            "reference_cost": 2791826068.69916,
+            "seed": 4292615209384789272390987701551134,
+            "world_index": 0
+          },
+          {
+            "differences_initializer_minus_r4": {
+              "completions": 0,
+              "cost": 0.0,
+              "expiry_losses": 0,
+              "losses": 0,
+              "terminal_active": 0,
+              "waiting_patient_steps": 0
+            },
+            "initial_state_sha256": "84ecfbf45fe8a3fd7bd38c14dbb22f1a620e29f6e4916a9b41e72eb878928d5e",
+            "raw_sha256": {
+              "initializer": "1313090c85ff3a16470d60a7a24e45a3faf40fc147ca14eb5c2b31e3a9f2244b",
+              "r4": "e1219b418080042730a63d89d3c648a83d3156c60ab808f76310f791a90aa065"
+            },
+            "reference_cost": 2167963653.8256364,
+            "seed": 4292615209384789272390987701551135,
+            "world_index": 1
+          }
+        ],
+        "recorded_own_path": {
+          "agreement": 1.0,
+          "multiclass_agreement": 1.0,
+          "multiclass_hits": 104,
+          "multiclass_rows": 104,
+          "necessary_condition_passed": true,
+          "reference_choices": 104,
+          "rows": 104
+        },
+        "relative_cost_change_percent": 0.0
+      },
+      {
+        "block": 61,
+        "initializer_scoring_on_r4_path": "not_performed",
+        "mean_differences": {
+          "completions": 0.0,
+          "cost": 0.0,
+          "expiry_losses": 0.0,
+          "losses": 0.0,
+          "terminal_active": 0.0,
+          "waiting_patient_steps": 0.0
+        },
+        "outcome_necessary_condition_passed": true,
+        "pairs": [
+          {
+            "differences_initializer_minus_r4": {
+              "completions": 0,
+              "cost": 0.0,
+              "expiry_losses": 0,
+              "losses": 0,
+              "terminal_active": 0,
+              "waiting_patient_steps": 0
+            },
+            "initial_state_sha256": "fea930bd2ce5e70d10091906586ecb72d7b016fe330b20f2141e7cc6cb945bd6",
+            "raw_sha256": {
+              "initializer": "8c59c9857fc51c24c7a4c9de8a45db28a9083a0fd2c003a2c3ab7653f132fc55",
+              "r4": "3c43e80e8d28b35e7630455ae4cdddd3c6aad2b0ee63ea7dcc68f973328c78b5"
+            },
+            "reference_cost": 2867598627.835804,
+            "seed": 4292615209384789272390987701551136,
+            "world_index": 0
+          },
+          {
+            "differences_initializer_minus_r4": {
+              "completions": 0,
+              "cost": 0.0,
+              "expiry_losses": 0,
+              "losses": 0,
+              "terminal_active": 0,
+              "waiting_patient_steps": 0
+            },
+            "initial_state_sha256": "9fac67e78af7438c8a665b8b95aba92c7308f9c00ed26e90503d6fba35a818c7",
+            "raw_sha256": {
+              "initializer": "85eab63273b83339ec62baf86c99950619eab1ce7f06c8f645d8d8c0cc4ded1f",
+              "r4": "775737d8612466e6cb9421df90cad84108b2a8a339b75a301876908bb6467d82"
+            },
+            "reference_cost": 2449263123.4077373,
+            "seed": 4292615209384789272390987701551137,
+            "world_index": 1
+          }
+        ],
+        "recorded_own_path": {
+          "agreement": 1.0,
+          "multiclass_agreement": 1.0,
+          "multiclass_hits": 104,
+          "multiclass_rows": 104,
+          "necessary_condition_passed": true,
+          "reference_choices": 104,
+          "rows": 104
+        },
+        "relative_cost_change_percent": 0.0
+      },
+      {
+        "block": 62,
+        "initializer_scoring_on_r4_path": "not_performed",
+        "mean_differences": {
+          "completions": 0.0,
+          "cost": 0.0,
+          "expiry_losses": 0.0,
+          "losses": 0.0,
+          "terminal_active": 0.0,
+          "waiting_patient_steps": 0.0
+        },
+        "outcome_necessary_condition_passed": true,
+        "pairs": [
+          {
+            "differences_initializer_minus_r4": {
+              "completions": 0,
+              "cost": 0.0,
+              "expiry_losses": 0,
+              "losses": 0,
+              "terminal_active": 0,
+              "waiting_patient_steps": 0
+            },
+            "initial_state_sha256": "1fa62a809423912f2677cb29d7981d6c083230c5dc75472e4075290dfe21ec5c",
+            "raw_sha256": {
+              "initializer": "a519858b54dea89788091bd40b712afead39ba3257b7bef4d1b9b5b29c3db25e",
+              "r4": "1c236287f03a5eeaf2f989a03d2e8cb7e3f1436eedbba63937849f86063b8606"
+            },
+            "reference_cost": 2371436928.8098445,
+            "seed": 4292615209384789272390987701551138,
+            "world_index": 0
+          },
+          {
+            "differences_initializer_minus_r4": {
+              "completions": 0,
+              "cost": 0.0,
+              "expiry_losses": 0,
+              "losses": 0,
+              "terminal_active": 0,
+              "waiting_patient_steps": 0
+            },
+            "initial_state_sha256": "bd9bb6a977b24728a6574cfa69da23894eb5e3c68c0958ab78421566f774382e",
+            "raw_sha256": {
+              "initializer": "1ffadbe3393162d3a51d6f9cf77982fb6ac2ff685e7fdb87d5b978e874c40e23",
+              "r4": "ddb5dabc4009397db020f40f99cf31949199c36aeb9a32b7efd91e353e39dc56"
+            },
+            "reference_cost": 2593012438.861431,
+            "seed": 4292615209384789272390987701551139,
+            "world_index": 1
+          }
+        ],
+        "recorded_own_path": {
+          "agreement": 1.0,
+          "multiclass_agreement": 1.0,
+          "multiclass_hits": 104,
+          "multiclass_rows": 104,
+          "necessary_condition_passed": true,
+          "reference_choices": 104,
+          "rows": 104
+        },
+        "relative_cost_change_percent": 0.0
+      }
+    ],
+    "clinical_noninferiority_claim": false,
+    "decision": "full_qualification_unresolved",
+    "full_qualification_replayed": false,
+    "rl_performance_claim": false
+  },
+  "raw_files": [
+    {
+      "bytes": 18558,
+      "path": "payload/episodes/demonstration/block60/world00/header.json",
+      "sha256": "281b85040a2479f6f1a13264e9ed7b7d488e6680b81d893cd01bdfb4c902a7d7"
+    },
+    {
+      "bytes": 2427623,
+      "path": "payload/episodes/demonstration/block60/world00/events.jsonl",
+      "sha256": "2ca7dde52ead0cb52bc9bda95a5ea1014a0fed5f8277b1abd463f55f5b2d34dc"
+    },
+    {
+      "bytes": 3744125,
+      "path": "payload/episodes/demonstration/block60/world00/final_state.json",
+      "sha256": "25657992543e6cd3d75e26c20e9b38881cee7340f0b9cb974af9c9e53a6d2031"
+    },
+    {
+      "bytes": 18537,
+      "path": "payload/episodes/demonstration/block60/world01/header.json",
+      "sha256": "b988e67785a9872f101c8004c425e205869e3a5976e8f383904e9ba9f748aaa8"
+    },
+    {
+      "bytes": 2543849,
+      "path": "payload/episodes/demonstration/block60/world01/events.jsonl",
+      "sha256": "e0fc36bee46433df7ba67e5663baafd1f584052df3ed636d30e1ca0783c39f77"
+    },
+    {
+      "bytes": 4101763,
+      "path": "payload/episodes/demonstration/block60/world01/final_state.json",
+      "sha256": "ff819bb7b8c10409dc30f5a967517fa6d119c674381abee0e6650972962defd2"
+    },
+    {
+      "bytes": 18495,
+      "path": "payload/episodes/demonstration/block60/world02/header.json",
+      "sha256": "85fc1be5327df4400c09ca9e758e8dd72fda013b95732540fab56de739cc3d4f"
+    },
+    {
+      "bytes": 2453072,
+      "path": "payload/episodes/demonstration/block60/world02/events.jsonl",
+      "sha256": "fe9428a4f446eccc428eee0e9bebfe33fd979b8b87cf581f0ef03ba5124e9189"
+    },
+    {
+      "bytes": 3810680,
+      "path": "payload/episodes/demonstration/block60/world02/final_state.json",
+      "sha256": "a05dbcc37fd826c4b1147bebc4a2d6ed0ed3b3783490fffd0f04354a2a08453c"
+    },
+    {
+      "bytes": 18542,
+      "path": "payload/episodes/demonstration/block60/world03/header.json",
+      "sha256": "ccbe27a1380b73616aa9e17840293c9bac805dd3c8cb0de32ec96157ed28688e"
+    },
+    {
+      "bytes": 2450130,
+      "path": "payload/episodes/demonstration/block60/world03/events.jsonl",
+      "sha256": "42ed64fe6d2e17aac1c9813633304157c0b05f14f0b5a3bd774d21be677eb25f"
+    },
+    {
+      "bytes": 3834078,
+      "path": "payload/episodes/demonstration/block60/world03/final_state.json",
+      "sha256": "fcf6c275a2534a269e5d06cfcd20963f168507c488d0fb94a685751efcb6b7ca"
+    },
+    {
+      "bytes": 18552,
+      "path": "payload/episodes/demonstration/block60/world04/header.json",
+      "sha256": "d799fe77e75135658b65cf714abcb4b518962b0e490ccd3b75d8908341177b14"
+    },
+    {
+      "bytes": 2508257,
+      "path": "payload/episodes/demonstration/block60/world04/events.jsonl",
+      "sha256": "c4b6f6c57c70122a6358b47be41ed4ee31c25fa74d79b133269ff04003476b84"
+    },
+    {
+      "bytes": 4156675,
+      "path": "payload/episodes/demonstration/block60/world04/final_state.json",
+      "sha256": "49eb6adc37a4204167d6b75ef93a6d7d711835c1a682e36c6de6038deb232f97"
+    },
+    {
+      "bytes": 18542,
+      "path": "payload/episodes/demonstration/block60/world05/header.json",
+      "sha256": "be0794581efac024176748f6edc6f14cf401c70da3ca70f5c4b11367c3d0da7d"
+    },
+    {
+      "bytes": 2412978,
+      "path": "payload/episodes/demonstration/block60/world05/events.jsonl",
+      "sha256": "fff4a9163bd79a4048614b6d2fe8db901621b7871df2ae2635848ad68cd51b84"
+    },
+    {
+      "bytes": 3703196,
+      "path": "payload/episodes/demonstration/block60/world05/final_state.json",
+      "sha256": "1675a3dc0beb2e6397cf99533163ba350b18456b72831dee72a2ee2da412ad92"
+    },
+    {
+      "bytes": 18518,
+      "path": "payload/episodes/demonstration/block60/world06/header.json",
+      "sha256": "f64c22327096b1e6314878111ba75a54d5f8556f196e9fc277aeed1ad7c03fbf"
+    },
+    {
+      "bytes": 2569325,
+      "path": "payload/episodes/demonstration/block60/world06/events.jsonl",
+      "sha256": "90a894a5a73ec67fe77282658e3f43c36a38e23a355d6a6162e69484a35064b8"
+    },
+    {
+      "bytes": 4285765,
+      "path": "payload/episodes/demonstration/block60/world06/final_state.json",
+      "sha256": "d84d6d31719757bc3a2456ed1a6513304655ca918364c831d78099a3d996ef7d"
+    },
+    {
+      "bytes": 18510,
+      "path": "payload/episodes/demonstration/block60/world07/header.json",
+      "sha256": "1a4dccfb9673fbfdfc2d116626df347cec4ca80f9e88b06b7a70d33258a0ed78"
+    },
+    {
+      "bytes": 2527550,
+      "path": "payload/episodes/demonstration/block60/world07/events.jsonl",
+      "sha256": "c3ea276ea3a24e1e810be067ccd1c15f1967e3fd0217caab354717dcee9f9c51"
+    },
+    {
+      "bytes": 4025981,
+      "path": "payload/episodes/demonstration/block60/world07/final_state.json",
+      "sha256": "72caeb96537b768bebd1091873816e0bf5e117584b1a60437a61dab159c4f772"
+    },
+    {
+      "bytes": 18541,
+      "path": "payload/episodes/demonstration/block61/world00/header.json",
+      "sha256": "4e39cdbdb0033bd80994485edcabbef2aa2d015569c19ed3ffba450e6a556c4e"
+    },
+    {
+      "bytes": 2520394,
+      "path": "payload/episodes/demonstration/block61/world00/events.jsonl",
+      "sha256": "c017bdc589128914fb8d20eee7fe2b60befb84f0e549b7acf6fb4ad839aeb80b"
+    },
+    {
+      "bytes": 4145884,
+      "path": "payload/episodes/demonstration/block61/world00/final_state.json",
+      "sha256": "fd6d93092433ef2fdb41e5d38ef81be782a3789f04c3a9461da9abf8ca6022a9"
+    },
+    {
+      "bytes": 18533,
+      "path": "payload/episodes/demonstration/block61/world01/header.json",
+      "sha256": "1595667232817624274bb4c8eecc502b057a6c80cece7c790a8cf29a4a7326ff"
+    },
+    {
+      "bytes": 2399083,
+      "path": "payload/episodes/demonstration/block61/world01/events.jsonl",
+      "sha256": "dc68107fdbc3db292e781fda51be4e6a1ad604bfd71614a1125b6565f9f39d1a"
+    },
+    {
+      "bytes": 3769557,
+      "path": "payload/episodes/demonstration/block61/world01/final_state.json",
+      "sha256": "1105d36bd911a22b9a83b91e16ae5b93379bb17a1b98ab7c42fb8fbf554d5e78"
+    },
+    {
+      "bytes": 18559,
+      "path": "payload/episodes/demonstration/block61/world02/header.json",
+      "sha256": "b7787ff93f5c66338ea389a7be9517d18139a51ea8f0cb7ac72353a50f724734"
+    },
+    {
+      "bytes": 2398872,
+      "path": "payload/episodes/demonstration/block61/world02/events.jsonl",
+      "sha256": "a0a331ef65f3d1321a1dcae8517ba9226f6fd56bb9a2fecb625fdfb88c8341b0"
+    },
+    {
+      "bytes": 3955898,
+      "path": "payload/episodes/demonstration/block61/world02/final_state.json",
+      "sha256": "0d84c305091aefe5e8304acac6ac80d6421d48dc7e3faa78cc6ed220198aa637"
+    },
+    {
+      "bytes": 18492,
+      "path": "payload/episodes/demonstration/block61/world03/header.json",
+      "sha256": "ba61852d20db86c0110e5ea62b5263d6858939c7f6dd05e64a5aba72f1b7054c"
+    },
+    {
+      "bytes": 2568718,
+      "path": "payload/episodes/demonstration/block61/world03/events.jsonl",
+      "sha256": "c6d144f0873f207ad2e823c08368a0fc9226277a0f69188fcecd98158a83f601"
+    },
+    {
+      "bytes": 4374976,
+      "path": "payload/episodes/demonstration/block61/world03/final_state.json",
+      "sha256": "f7b13b147cd18c11a84688f03f48ac21c280c5775c4752c2e5c55d02c5efa689"
+    },
+    {
+      "bytes": 18495,
+      "path": "payload/episodes/demonstration/block61/world04/header.json",
+      "sha256": "6fd718fa3ed768dea13ba32e90c907c14b5694be6759eea54272b7b98911bdc9"
+    },
+    {
+      "bytes": 2556514,
+      "path": "payload/episodes/demonstration/block61/world04/events.jsonl",
+      "sha256": "ae2262786e82d5b0a3a7297526ffc96cf2512d741dd7ffab8ed9e95db32b1442"
+    },
+    {
+      "bytes": 3726604,
+      "path": "payload/episodes/demonstration/block61/world04/final_state.json",
+      "sha256": "8629326f0dedb8f11ad8f223c5f2380e287a145fc40fdcfb9921d862b5e550fe"
+    },
+    {
+      "bytes": 18514,
+      "path": "payload/episodes/demonstration/block61/world05/header.json",
+      "sha256": "2d7a1ccf5d9e2b4f5b97df378fef1ec23a09fad439a5494e06236411bd6aece6"
+    },
+    {
+      "bytes": 2562719,
+      "path": "payload/episodes/demonstration/block61/world05/events.jsonl",
+      "sha256": "fb4da25a613d02acb520ce9680974daade1abba4a7a469bbda79a87be7cdc75a"
+    },
+    {
+      "bytes": 4045625,
+      "path": "payload/episodes/demonstration/block61/world05/final_state.json",
+      "sha256": "9d1104c5d9381c72686ee87e10de075af26501dc68d253a90405f182ddfaafc4"
+    },
+    {
+      "bytes": 18543,
+      "path": "payload/episodes/demonstration/block61/world06/header.json",
+      "sha256": "fcb1a2707b8ba95a9f0de07c012f5b278f0b9c66b0d3586f584201f273330f2b"
+    },
+    {
+      "bytes": 2544115,
+      "path": "payload/episodes/demonstration/block61/world06/events.jsonl",
+      "sha256": "dc5981d6ed3beec268ceef390ce14313de4a7d4b87c264f948e52ff88880858d"
+    },
+    {
+      "bytes": 3969582,
+      "path": "payload/episodes/demonstration/block61/world06/final_state.json",
+      "sha256": "4578a0370d8df195a8efdaf3e07fd54bbdfb8e9eb57c366497eb989d44777ebe"
+    },
+    {
+      "bytes": 18547,
+      "path": "payload/episodes/demonstration/block61/world07/header.json",
+      "sha256": "eecbe9baa76794639a5a9475473a2a2a57ddb8bca0d7812d6f7dfb463150458d"
+    },
+    {
+      "bytes": 2501085,
+      "path": "payload/episodes/demonstration/block61/world07/events.jsonl",
+      "sha256": "2fb9a179fec7f7c265b967df0170ac766f6c68447e6b61323b213ca0bd10e365"
+    },
+    {
+      "bytes": 3721430,
+      "path": "payload/episodes/demonstration/block61/world07/final_state.json",
+      "sha256": "bb465d26152426f43168e8163177e7085e3f24f86d33926df36ede1ff6401657"
+    },
+    {
+      "bytes": 18530,
+      "path": "payload/episodes/demonstration/block62/world00/header.json",
+      "sha256": "ce486ca23e0fef309d4917289eb8680672fb2d77b0cb1952a45f083d40fe91a0"
+    },
+    {
+      "bytes": 2459561,
+      "path": "payload/episodes/demonstration/block62/world00/events.jsonl",
+      "sha256": "5d106a0c6337fb98a3ae18660ee5c1189c6a862b3a0ee9328c33a6861e3511a1"
+    },
+    {
+      "bytes": 4029072,
+      "path": "payload/episodes/demonstration/block62/world00/final_state.json",
+      "sha256": "2c036b631e8c056ab04cfc45d96f0e037b4e830ad57a5222d207ecee8ebba404"
+    },
+    {
+      "bytes": 18527,
+      "path": "payload/episodes/demonstration/block62/world01/header.json",
+      "sha256": "2ab207d02a4fae98cbd742c9ecc71cf4bfb9a196d948acd8d019a5aac370158e"
+    },
+    {
+      "bytes": 2539386,
+      "path": "payload/episodes/demonstration/block62/world01/events.jsonl",
+      "sha256": "413e11ddf12c181f508c5c6aadde521e101a80b3104b25cd5e1a7391061e34a1"
+    },
+    {
+      "bytes": 4415393,
+      "path": "payload/episodes/demonstration/block62/world01/final_state.json",
+      "sha256": "1d999ca21c00c6e4f4e32d693e4f71790090100002f9763ccf125af3cd8479b7"
+    },
+    {
+      "bytes": 18541,
+      "path": "payload/episodes/demonstration/block62/world02/header.json",
+      "sha256": "d07ca9048b72f38ce5e160fcaf034d89d345a645b06db4ab6e9a5821383b394a"
+    },
+    {
+      "bytes": 2491573,
+      "path": "payload/episodes/demonstration/block62/world02/events.jsonl",
+      "sha256": "e5b59a28647418067ac22ea4d53a4c9c3b1764d6c7edbb8ebc568c7ebb743b0c"
+    },
+    {
+      "bytes": 3976629,
+      "path": "payload/episodes/demonstration/block62/world02/final_state.json",
+      "sha256": "31a78e350203ed46e271580cc6ea75c4221b136d11d69d2c7c5840ea00f769a9"
+    },
+    {
+      "bytes": 18529,
+      "path": "payload/episodes/demonstration/block62/world03/header.json",
+      "sha256": "9c5606548c9cf334e50b28e64a43809a75c1c9d399d2e2aff5b0d9e358805fe1"
+    },
+    {
+      "bytes": 2524591,
+      "path": "payload/episodes/demonstration/block62/world03/events.jsonl",
+      "sha256": "b8f6a01398e89d92bf0f168ff4ffe3dd349930933fabde8189d442c5e4e6e741"
+    },
+    {
+      "bytes": 3856492,
+      "path": "payload/episodes/demonstration/block62/world03/final_state.json",
+      "sha256": "6982ec5e3374dcbc32cfa919bf500758ffeb311efe7ce62cd3d96465a35d2025"
+    },
+    {
+      "bytes": 18566,
+      "path": "payload/episodes/demonstration/block62/world04/header.json",
+      "sha256": "eac50a69d53589ee719baadc7e07306c85b6f9530985b6244a9c7319465ecfba"
+    },
+    {
+      "bytes": 2450391,
+      "path": "payload/episodes/demonstration/block62/world04/events.jsonl",
+      "sha256": "e9dd4bb68c8c10fc6b5192a588be197f8e9fc25caa169cb91853444b92a47e9e"
+    },
+    {
+      "bytes": 3846518,
+      "path": "payload/episodes/demonstration/block62/world04/final_state.json",
+      "sha256": "f432d38a5dc983cde3083956b25f1de04f42a29511b201ced243bb573a34631d"
+    },
+    {
+      "bytes": 18544,
+      "path": "payload/episodes/demonstration/block62/world05/header.json",
+      "sha256": "cb704134be06b3d89730421310f217fa37d916e88cde2499df3e0fa306447f1c"
+    },
+    {
+      "bytes": 2441535,
+      "path": "payload/episodes/demonstration/block62/world05/events.jsonl",
+      "sha256": "a4d6fecd69701946d57774057c9101aabb677274a78411cb63fa1158bd3d8d73"
+    },
+    {
+      "bytes": 4003160,
+      "path": "payload/episodes/demonstration/block62/world05/final_state.json",
+      "sha256": "cab3afd0312e32b85d70591cf2e6d560d2933d8e4145ff7365af28a35d2258e2"
+    },
+    {
+      "bytes": 18542,
+      "path": "payload/episodes/demonstration/block62/world06/header.json",
+      "sha256": "0635fe613d295c2fd7dc504e946dcdb05fc09170ba4b314ed7e447877fb64726"
+    },
+    {
+      "bytes": 2429189,
+      "path": "payload/episodes/demonstration/block62/world06/events.jsonl",
+      "sha256": "bf55941cc6408cb18c43994b240fff1d4a36e68bce923e733f2c407b61cfeabb"
+    },
+    {
+      "bytes": 3826248,
+      "path": "payload/episodes/demonstration/block62/world06/final_state.json",
+      "sha256": "99626e1f21a4933883a1d4b57b88ed21a4412cebd027c7e9c0694bb8dc4b5159"
+    },
+    {
+      "bytes": 18514,
+      "path": "payload/episodes/demonstration/block62/world07/header.json",
+      "sha256": "22847d5a5d98cc612922bf4483825f613fc4f6289f52cb67644af73f150e7ea5"
+    },
+    {
+      "bytes": 2532566,
+      "path": "payload/episodes/demonstration/block62/world07/events.jsonl",
+      "sha256": "bf51d8ac39dd97685ac5641f75a07903e4731e8055d30aedfea203843b161d43"
+    },
+    {
+      "bytes": 3861125,
+      "path": "payload/episodes/demonstration/block62/world07/final_state.json",
+      "sha256": "c5bc8dec55fd5958da9f2688c9a7b3b9cba8fa7ee09eee5713793517bbca3549"
+    },
+    {
+      "bytes": 18528,
+      "path": "payload/episodes/preflight/prototype/block60/header.json",
+      "sha256": "1b15b553dc428912180aff4043235b6ae25e7a08a91da2323d91a8dd695ba7ea"
+    },
+    {
+      "bytes": 2584183,
+      "path": "payload/episodes/preflight/prototype/block60/events.jsonl",
+      "sha256": "2711d7a0dcd6255cb279b7351c67f4777b27fc76010524fcb2d74c0ac15012b6"
+    },
+    {
+      "bytes": 4309370,
+      "path": "payload/episodes/preflight/prototype/block60/final_state.json",
+      "sha256": "35bd4c4457d3f8339063f45356757e5e82a74952cd6f02d74eebacbec04d4e38"
+    },
+    {
+      "bytes": 18508,
+      "path": "payload/episodes/preflight/prototype/block61/header.json",
+      "sha256": "d17e41f31d55bb2d95e10b12863872df3127e3f5f9e0fa6c0660ba473087c30a"
+    },
+    {
+      "bytes": 2573216,
+      "path": "payload/episodes/preflight/prototype/block61/events.jsonl",
+      "sha256": "10c16d48bc68437dee019735dcf3daaee260c636689ccb0e84bdff347e6e06b2"
+    },
+    {
+      "bytes": 4121542,
+      "path": "payload/episodes/preflight/prototype/block61/final_state.json",
+      "sha256": "0c14737dd251510058812beb135fb0c2f414c8b1932d5b599385cd65d64fece7"
+    },
+    {
+      "bytes": 18519,
+      "path": "payload/episodes/preflight/prototype/block62/header.json",
+      "sha256": "a110a4f393725867585535baff470b4c14217bbaa97e5fd706951fd5016b5a56"
+    },
+    {
+      "bytes": 2565685,
+      "path": "payload/episodes/preflight/prototype/block62/events.jsonl",
+      "sha256": "ebbc8cb94d234d624d629fa8fc5bdd64b3a624b4d7bcb4d4c1c0dc1086765860"
+    },
+    {
+      "bytes": 4054797,
+      "path": "payload/episodes/preflight/prototype/block62/final_state.json",
+      "sha256": "c945026bc5bde1dea0f125cd23136ed657171e70fb82bd97b4ddb37c739b4382"
+    },
+    {
+      "bytes": 18553,
+      "path": "payload/episodes/qualification/block60/initializer_greedy/world00/header.json",
+      "sha256": "91bd568cae4bdd9c0c847595ad57248be567ea206a6d2b76b58b77d080e93c6a"
+    },
+    {
+      "bytes": 2434490,
+      "path": "payload/episodes/qualification/block60/initializer_greedy/world00/events.jsonl",
+      "sha256": "1b8e5dc387177e632373bb7aed7ff3070062b47be5bf9069cfe1967ed1095ada"
+    },
+    {
+      "bytes": 3991282,
+      "path": "payload/episodes/qualification/block60/initializer_greedy/world00/final_state.json",
+      "sha256": "98071ef6208ad5441a9aa9f96affacffc27500399ac72c1efd1757dd3971f69f"
+    },
+    {
+      "bytes": 18598,
+      "path": "payload/episodes/qualification/block60/initializer_greedy/world01/header.json",
+      "sha256": "c5c9de3b0100fddf83d12f2339ce6c4a61be7367bf5fc6d13353839443191dd0"
+    },
+    {
+      "bytes": 2443397,
+      "path": "payload/episodes/qualification/block60/initializer_greedy/world01/events.jsonl",
+      "sha256": "9f572dc3b1062525435a5b4cd19f0e45b79c1b826d2c4f5e67b082d77257a014"
+    },
+    {
+      "bytes": 3752464,
+      "path": "payload/episodes/qualification/block60/initializer_greedy/world01/final_state.json",
+      "sha256": "89d46a9730c74ecc97b57e7989ff4df381fdd403130238952cc0bd453ab4ffe3"
+    },
+    {
+      "bytes": 18515,
+      "path": "payload/episodes/qualification/block60/r4/world00/header.json",
+      "sha256": "57497504ab2883781b4643e8bc0eb82b55c01e43972225c070d00c31c36f5b01"
+    },
+    {
+      "bytes": 2433655,
+      "path": "payload/episodes/qualification/block60/r4/world00/events.jsonl",
+      "sha256": "dfbc346efa1186e31c7dbb3f238be1c51bcae26d6de6926cec528e4f2283d89b"
+    },
+    {
+      "bytes": 3991282,
+      "path": "payload/episodes/qualification/block60/r4/world00/final_state.json",
+      "sha256": "98071ef6208ad5441a9aa9f96affacffc27500399ac72c1efd1757dd3971f69f"
+    },
+    {
+      "bytes": 18560,
+      "path": "payload/episodes/qualification/block60/r4/world01/header.json",
+      "sha256": "e132e4af047df07e3705ad14d7c6f050d48d8693f70f52481a33741f60ea9812"
+    },
+    {
+      "bytes": 2442559,
+      "path": "payload/episodes/qualification/block60/r4/world01/events.jsonl",
+      "sha256": "0f0e28e447dd8c177ff218551ae111aa8c06f39f7a4f172f91e8cd85010482b1"
+    },
+    {
+      "bytes": 3752464,
+      "path": "payload/episodes/qualification/block60/r4/world01/final_state.json",
+      "sha256": "89d46a9730c74ecc97b57e7989ff4df381fdd403130238952cc0bd453ab4ffe3"
+    },
+    {
+      "bytes": 18601,
+      "path": "payload/episodes/qualification/block61/initializer_greedy/world00/header.json",
+      "sha256": "f0a1fda1d23ab195f24a53f4ba7bdcaa35fe37e5285bd846aacafce4ca260bb9"
+    },
+    {
+      "bytes": 2578344,
+      "path": "payload/episodes/qualification/block61/initializer_greedy/world00/events.jsonl",
+      "sha256": "22cbec141d244537c23068063a5d5c8b1c55fddca5b9a945d355f209b8429c9b"
+    },
+    {
+      "bytes": 4260040,
+      "path": "payload/episodes/qualification/block61/initializer_greedy/world00/final_state.json",
+      "sha256": "b8ab52350379f3c1b80a643f9cab5076ec059d8008eab5c1eccdef83b5d08aea"
+    },
+    {
+      "bytes": 18587,
+      "path": "payload/episodes/qualification/block61/initializer_greedy/world01/header.json",
+      "sha256": "7f3ee8ecfcd4e39d521f7c5445674c416ee79787c684127502130dc4c22683e7"
+    },
+    {
+      "bytes": 2493575,
+      "path": "payload/episodes/qualification/block61/initializer_greedy/world01/events.jsonl",
+      "sha256": "05358fd7052779b03ad37ae7ae3f5ad0c9e59821b558c4430332977804c07dbc"
+    },
+    {
+      "bytes": 3897952,
+      "path": "payload/episodes/qualification/block61/initializer_greedy/world01/final_state.json",
+      "sha256": "ad2d0c370707e8d065aff8f9941e7fdf0ea00bc9c7506545936bd14e587e8594"
+    },
+    {
+      "bytes": 18563,
+      "path": "payload/episodes/qualification/block61/r4/world00/header.json",
+      "sha256": "efe1526085a81ecf286fe4405c7053554c59bd59ce84438a6f7aca8005cc9c28"
+    },
+    {
+      "bytes": 2577509,
+      "path": "payload/episodes/qualification/block61/r4/world00/events.jsonl",
+      "sha256": "cd51fa665e3ca696830dd53221ec6b9161915fcd78c2c81439620425263e36b2"
+    },
+    {
+      "bytes": 4260040,
+      "path": "payload/episodes/qualification/block61/r4/world00/final_state.json",
+      "sha256": "b8ab52350379f3c1b80a643f9cab5076ec059d8008eab5c1eccdef83b5d08aea"
+    },
+    {
+      "bytes": 18549,
+      "path": "payload/episodes/qualification/block61/r4/world01/header.json",
+      "sha256": "2ed4a44e4426c1861f80b63bb3c8c3422e66f924356eda7a23e37aee08ca6e66"
+    },
+    {
+      "bytes": 2492748,
+      "path": "payload/episodes/qualification/block61/r4/world01/events.jsonl",
+      "sha256": "2dd97de1758f13c176ff66acada4a2a5a97ff086be3ee1009367d50ace9d4e18"
+    },
+    {
+      "bytes": 3897952,
+      "path": "payload/episodes/qualification/block61/r4/world01/final_state.json",
+      "sha256": "ad2d0c370707e8d065aff8f9941e7fdf0ea00bc9c7506545936bd14e587e8594"
+    },
+    {
+      "bytes": 18555,
+      "path": "payload/episodes/qualification/block62/initializer_greedy/world00/header.json",
+      "sha256": "d45ca22a25576a5e7cf0bd7f53e83a215aab348c4a53e562bf25e42304ec3005"
+    },
+    {
+      "bytes": 2571572,
+      "path": "payload/episodes/qualification/block62/initializer_greedy/world00/events.jsonl",
+      "sha256": "e7e1f573353eabfd7ab0f4c8df35d1b45fdbe12e1702a49728c4af1179dc383a"
+    },
+    {
+      "bytes": 3979219,
+      "path": "payload/episodes/qualification/block62/initializer_greedy/world00/final_state.json",
+      "sha256": "aed273d131c5be0c43bdac136a3c6af6d1103c72ddb5ac3f14cc4e8eee92c34b"
+    },
+    {
+      "bytes": 18586,
+      "path": "payload/episodes/qualification/block62/initializer_greedy/world01/header.json",
+      "sha256": "9d8834efc086eebfb00c1590637ccc3dfb8fe9d97adfccaeb343588c6e5562c4"
+    },
+    {
+      "bytes": 2594386,
+      "path": "payload/episodes/qualification/block62/initializer_greedy/world01/events.jsonl",
+      "sha256": "585b1cc26ab5b9f1faa1a411af84ee93d62958c1714db6ab82316bf0b683937f"
+    },
+    {
+      "bytes": 4142083,
+      "path": "payload/episodes/qualification/block62/initializer_greedy/world01/final_state.json",
+      "sha256": "185852914b587d40f0f811e9d58873c57295f3a667d1a590c60575ed87ea5dc6"
+    },
+    {
+      "bytes": 18517,
+      "path": "payload/episodes/qualification/block62/r4/world00/header.json",
+      "sha256": "29b68024a5580ea33592651b7ec265336948cb1a82c4986562543f5eb5f550fe"
+    },
+    {
+      "bytes": 2570743,
+      "path": "payload/episodes/qualification/block62/r4/world00/events.jsonl",
+      "sha256": "37647a8e9a1f7f50271b67ca93eee3f39817a27d6cd2120432ed18ed9a7c2385"
+    },
+    {
+      "bytes": 3979219,
+      "path": "payload/episodes/qualification/block62/r4/world00/final_state.json",
+      "sha256": "aed273d131c5be0c43bdac136a3c6af6d1103c72ddb5ac3f14cc4e8eee92c34b"
+    },
+    {
+      "bytes": 18548,
+      "path": "payload/episodes/qualification/block62/r4/world01/header.json",
+      "sha256": "8e2cf0b758ef9df49584513ae6eae463f59b41a8c1969cff618ae4bc3bb878d3"
+    },
+    {
+      "bytes": 2593547,
+      "path": "payload/episodes/qualification/block62/r4/world01/events.jsonl",
+      "sha256": "27805cc393e528687cff807d3e24baae4424565df295f9e681e81035f180f05a"
+    },
+    {
+      "bytes": 4142083,
+      "path": "payload/episodes/qualification/block62/r4/world01/final_state.json",
+      "sha256": "185852914b587d40f0f811e9d58873c57295f3a667d1a590c60575ed87ea5dc6"
+    }
+  ],
+  "raw_rows": 2028,
+  "reader_commit": "c895fc6c476bf8dc729746a3dfa5799aeb4245d4",
+  "source_inventory_sha256": "a48a5b2a6f49c27c9123f321586e6994f4f3131927c118cf540973069a48182d",
+  "source_root": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/dynamic_candidate_pilot_20261001",
+  "source_unchanged": true
+}

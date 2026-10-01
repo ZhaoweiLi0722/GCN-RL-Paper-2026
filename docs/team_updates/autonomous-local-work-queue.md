@@ -1,6 +1,37 @@
 # Autonomous local research queue
 
-## Live checkpoint: additive reader repair and saved-only readback
+## Live checkpoint: reader fixed; saved initializer matches R4, full qualification pending
+
+2026-10-01T23:07:29Z. Additive reader frozen atc895fc6; current original S1
+attempt remains closed. Completed saved-only readout exit0,39episodes/2,028rows;
+all606original files unchanged against preservation inventory before/after.
+Three blocks each record104/104 own-path reference choices,all multi-class.
+All six paired worlds have exactly zero initializer-minus-R4 differences in
+cost,losses,completions,terminal active,waiting occupancy and expiry losses.
+Evidence:reports/2026-10-01-s1-saved-readback/readout.json andreadout.md.
+This supports retained initialization behavior,not RL benefit. The R4-path
+frozen-model check remains unperformed;full qualification is not passed.
+
+59 relevant tests passed in2.078s;whole-repo compileall passed. The initial
+offline readback property-call error is preserved inengineering-failure-01.json,
+fixed with a complete invented saved-bundle regression before successful readout.
+No new environment calls,optimizer updates,model forwards or checkpoint loads.
+All owned test/readback processes ended. Advancement Chandrasekhar completed
+29initial tests and closed;coordinator added the full-bundle integration case.
+Efficiency Pascal completed and closed. Do not duplicate these finite roles.
+
+Automation gcn-rl remains ACTIVE/30minutes in this thread. It is an engineering
+continuation,not a training process. Next authorized work:implement and test the
+additive saved-qualification-only entrypoint described in
+specs/2026-10-01-adaptive-paper-delivery/saved-qualification-recovery.json,
+then freeze source/runtime/input locks. No need to redo current39-episode
+arithmetic or completed history checks. One complete question was issued for
+624saved frozen state scorings/4checkpoint loads/900seconds,zero new simulations,
+optimizer calls or tests. Approval has not been received. Once engineering is
+ready,run only if separately approved;otherwise PAUSE visibly,do not delete.
+Do not resume PPO/BC or open final evaluation even if qualification passes.
+
+## Previous checkpoint: additive reader repair and saved-only readback
 
 2026-10-01T23:02:43Z. Entry HEAD414218d,clean integration worktree. The user
 asked to continue and why automation was not enabled. The S1 monitor deletion

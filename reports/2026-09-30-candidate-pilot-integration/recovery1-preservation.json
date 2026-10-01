@@ -1,0 +1,49 @@
+{
+  "archive_members_verified": 15,
+  "archive_sha256": "3d29ccdff06ff52cb7b2fe1280f0ec5015d7fef252101fca3522da06ee3c877c",
+  "clock": {
+    "api": "time.clock_gettime(time.CLOCK_MONOTONIC)",
+    "id": "posix-clock-monotonic-v1",
+    "resolution_seconds": 1.0000000000000002e-06,
+    "scope": "same_host_same_boot_live_processes"
+  },
+  "cloud_sync_verified": false,
+  "dropbox_local_copies": [
+    {
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_return_pilot_20260930/failed-attempt-3de710b.tar.gz",
+      "sha256": "3d29ccdff06ff52cb7b2fe1280f0ec5015d7fef252101fca3522da06ee3c877c"
+    },
+    {
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_return_pilot_20260930/failed-attempt-3de710b.tar.gz.manifest.json",
+      "sha256": "96f0c53f60e20e9d35b104fb2942615968da90a78318b8bb0d61d2281d449392"
+    }
+  ],
+  "historical_locks_verified": 890,
+  "howard_access_verified": false,
+  "kind": "p1_recovery_engineering_preservation_only",
+  "new_environment_constructions": 0,
+  "new_environment_steps": 0,
+  "new_scientific_updates": 0,
+  "original_locks_verified": {
+    "experiments/configs/candidate_return_pilot_20260930.json": "fe7d1cc4227e86c0d16360e6b285748e5b4be268c19270b9df29afc442eb5052",
+    "experiments/configs/candidate_return_pilot_20260930_execution.json": "e1090015d1f963f071f2bfbb2a8e76b7399e0545d13db894262438cad9a0b8ba",
+    "results/frozen_baseline_rebuild_20260929/archives/through_seed62.tar.gz.manifest.json": "011a13fe83d2085a2b14d2733cf307a43c5a0e30d1a0bd76b2984631b3f87c0d",
+    "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed60/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed60_pretrain.pt": "2cc16c4208c0ace7370748695ee8191d54e8161bcb20cb16a8de494bfd12f675",
+    "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed60/config.json": "24eedf3322ac27c099a19680f2513518e5414a05104e209efa19007e96352b37",
+    "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed61/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed61_pretrain.pt": "a875c3455b29c422216c02a85d7ae52277be32598e4b9442c241738554c1371a",
+    "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed61/config.json": "507c1ed67c20820be60aaa72cdffb0e24512370318fec0637e991cf301949b97",
+    "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed62/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed62_pretrain.pt": "4a2fec7fd0ff1c3a58fbea1375418bc1fd3208a77fac55ef172df3a7d1cd784d",
+    "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed62/config.json": "d4013e4ec8eda9c763aefb1a1c3363fc8c8dafcc05ea9d0b04fb5066801fd76c",
+    "specs/2026-09-30-candidate-return-pilot/authorization.md": "52c4a9a8393ea5af3949b63028253e00ccca15ba9cf1687384522d739a744e1e",
+    "specs/2026-09-30-candidate-return-pilot/protocol.md": "75c9c47f484dafd345d9e1c670a81330469ed3cf986f8a80864e5cd6ee3f027b"
+  },
+  "original_tree_unchanged": true,
+  "prior_ledger": {
+    "counts": {},
+    "events": 2,
+    "last_sha256": "a05519006bd3073d0a99ff8fbc865e4c34e0a055bb29050cedfaefd19201afbe"
+  },
+  "recovery_attempt_launched": false
+}

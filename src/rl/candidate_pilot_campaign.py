@@ -22,6 +22,7 @@ from src.rl.candidate_pilot_driver import (CandidateContinuation, PilotSequence,
     candidate_prototype, initialization_kernel, fork_initializer, qualify_initializer, file_record)
 from src.rl.candidate_pilot_recording import EpisodeRecorder, write_json_once
 from src.rl.candidate_pilot_resources import digest, read_ledger
+from src.rl.candidate_pilot_compatibility import inspect_patient_layout, require_supported_layouts
 from src.rl.candidate_pilot_verification import verify_raw_bundle
 from src.rl.candidate_ppo_kernel import CandidatePPOKernel, CandidatePPOSettings
 from src.rl.prospective_ddpg_kernel import state_digest
@@ -60,6 +61,7 @@ class PatientBackend:
         path = self.workspace / spec["directory"]
         config_path = path / spec["config_template"].format(seed=block)
         runtime = json.loads(config_path.read_text())
+        require_supported_layouts(inspect_patient_layout(runtime, self.config["objective"]))
         before = global_rng_state()
         try:
             reference = StrictFrozenPolicy(path / spec["policy_template"].format(seed=block), config_path,

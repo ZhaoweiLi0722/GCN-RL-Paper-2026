@@ -1,6 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 terminal preflight failure; evidence archived; new decision needed
+## Live checkpoint: P1 recovery engineering verified; graph contract decision needed
+
+Updated 2026-10-01T00:55Z (September30 local time). Zhaowei's latest continue
+authorizes the conditional P1-R1 repair path, not a changed scientific design.
+No recovery scientific attempt has started. The old P1 failure stays closed.
+
+| Item | Current state |
+| --- | --- |
+| Completed |Shared POSIX cross-process clock and explicit clock receipts; static R4 layout audit and veto before freeze/claim/model load/environment construction |
+| Newly verified blocker |All3 locked R4 inputs have36 specimen/resource/information edges,190 physical capacity edges and a hub-aware reference graph. Producer requires one identical adjacency and no hub; removing just the first guard is insufficient |
+| Scientific scope |Original protocol expressly stops unsupported relation differences. No producer bypass, environment change, edge union, reward change or model redesign performed |
+| Verification |39 targeted tests pass; full288 related invented-fixture tests pass in53.259s; full compileall and diff check exit0 |
+| Static audit |7 R4 locks verified;890 historical files scanned, no unrelated collision; compatibility=false and audit exit1 are expected vetoes. Original preflight ordinal0 was initialized before failure, not fresh unused data |
+| Preservation |15 old failure/archive members;11 original/R4 locks;890 prior hashes;2 Dropbox-local copies verified unchanged. Cloud sync and Howard access unverified |
+| Evidence |specs/2026-09-30-candidate-return-pilot/recovery1_readiness.md; reports/2026-09-30-candidate-pilot-integration/recovery1-{readiness,preservation}.json |
+| This turn science |0 real environment constructions,0 simulation steps,0 scientific updates,0 recovery attempts; no new RL performance conclusion |
+| Process |Host scan87683/87686 only inspection shell/filter; test/audit/compile commands ended; no P1 process observed |
+| Next action |After explicit amendment approval: implement a declared specimen-only candidate graph while retaining original environment/R4, validate full input/request/recovery parity, then freeze a new packet and run once within unchanged caps |
+| Exact approval need |Approve20-node/36-edge specimen-only candidate message graph; keep real capacity network/hub,R4,reward,95% qualification,counts and52,728 calls/4,608 updates/6h caps. Narrow graph claims accordingly; no automatic retry |
+| Automation and external actions |gcn-rl-p1 remains deleted; no new automation while blocked. Local work only; no push/PR/merge/messages or Howard approval claim; Stage E closed |
+
+## Previous checkpoint: P1 terminal preflight failure; evidence archived; new decision needed
 
 Updated 2026-09-30T17:16Z. The authorized single P1 attempt has ended. No
 repair/retry/resume is authorized by this failed attempt; no runner remains.

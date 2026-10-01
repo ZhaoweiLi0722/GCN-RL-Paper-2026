@@ -4,12 +4,15 @@ import json
 import os
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import time
 import unittest
 
 from src.rl.candidate_pilot_resources import PilotBudget
 from src.rl.candidate_pilot_watchdog import LedgerDeadline, supervise
+from src.rl.candidate_pilot_resources import read_ledger
+from src.utils.research_clock import CLOCK_ID, shared_monotonic
 from tests.test_candidate_pilot_resources import config
 
 
@@ -61,7 +64,7 @@ class CandidatePilotWatchdogTests(unittest.TestCase):
         budget.debit("environment")
         watcher.poll()
         self.assertEqual(watcher.active, "preflight_including_clones")
-        self.assertLess(watcher.deadline(time.monotonic() + 100), time.monotonic() + 1.01)
+        self.assertLess(watcher.deadline(shared_monotonic() + 100), shared_monotonic() + 1.01)
         budget.finish()
         watcher.poll()
         self.assertIsNone(watcher.active)
@@ -94,6 +97,59 @@ class CandidatePilotWatchdogTests(unittest.TestCase):
             handle.write(b'{"sequence":2,"previous":"wrong","sha256":"wrong"}\n')
         with self.assertRaises(ValueError):
             watcher.poll()
+
+    def test_fresh_child_clock_is_bracketed_by_parent_clock(self):
+        before = shared_monotonic()
+        child = float(subprocess.check_output([sys.executable, "-c",
+            "from src.utils.research_clock import shared_monotonic; print(shared_monotonic())"],
+            cwd=Path(__file__).resolve().parents[1], text=True))
+        self.assertLessEqual(before, child)
+        self.assertLessEqual(child, shared_monotonic())
+
+    def child_ledger_source(self):
+        cfg = config()
+        cfg["caps"]["seconds"]["preflight_total"] = 1
+        return (f"import sys, time; sys.path.insert(0, {str(Path(__file__).resolve().parents[1])!r}); "
+            "from src.rl.candidate_pilot_resources import PilotBudget; "
+            f"budget=PilotBudget('ledger.jsonl', {cfg!r}); budget.begin('preflight_including_clones'); ")
+
+    def test_older_parent_does_not_expire_fresh_child_scope_immediately(self):
+        time.sleep(1.1)
+        result = self.run_child(self.child_ledger_source() + "time.sleep(30)", seconds=5)
+        self.assertEqual(result["reason"], "wall_clock_deadline")
+        self.assertEqual(result["clock_id"], CLOCK_ID)
+        self.assertEqual(result["active_scope"], "preflight_including_clones")
+        self.assertGreaterEqual(result["elapsed_seconds"], .95)
+        self.assertLess(result["elapsed_seconds"], 3)
+        with self.assertRaises(ProcessLookupError):
+            os.kill(result["pid"], 0)
+
+    def test_fresh_child_finishes_scope_under_older_parent(self):
+        time.sleep(1.1)
+        result = self.run_child(self.child_ledger_source() + "time.sleep(.05); budget.finish(); budget.close()")
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["last_ledger_sequence"], 3)
+
+    def test_injected_clock_is_readable_historically_but_not_live(self):
+        budget = PilotBudget(self.root / "ledger.jsonl", config(), clock=lambda: 100.)
+        budget.begin("preflight_including_clones")
+        budget.close()
+        self.assertEqual(read_ledger(budget.path)["events"], 2)
+        with self.assertRaisesRegex(ValueError, "cross-process"):
+            LedgerDeadline(budget.path).poll()
+
+    def test_legacy_clock_ledger_is_preserved_but_not_live_compatible(self):
+        from src.rl.candidate_pilot_resources import digest
+        budget = PilotBudget(self.root / "ledger.jsonl", config())
+        budget.close()
+        claim = json.loads(budget.path.read_text())
+        del claim["clock_id"], claim["sha256"]
+        claim["sha256"] = digest(claim)
+        budget.path.write_text(json.dumps(claim) + "\n")
+        self.assertEqual(read_ledger(budget.path)["events"], 1)
+        result = self.run_child("import time; time.sleep(30)")
+        self.assertEqual(result["reason"], "watchdog_or_launch_error")
+        self.assertIn("cross-process", result["error"])
 
 
 if __name__ == "__main__":

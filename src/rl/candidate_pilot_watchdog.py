@@ -15,6 +15,7 @@ import subprocess
 import time
 
 from src.rl.candidate_pilot_resources import digest
+from src.utils.research_clock import CLOCK_ID, shared_monotonic
 
 
 class LedgerDeadline:
@@ -51,6 +52,8 @@ class LedgerDeadline:
             if self.sequence == 0:
                 if event != "claim":
                     raise ValueError("missing initial budget claim")
+                if row.get("clock_id") != CLOCK_ID:
+                    raise ValueError("live ledger requires the shared cross-process clock")
                 self.claim, self.last_clock = row, row["started"]
                 if not math.isfinite(self.last_clock) or self.claim["limits"]["seconds"] <= 0:
                     raise ValueError("invalid initial budget deadline")
@@ -102,14 +105,14 @@ def supervise(command, *, cwd, stdout_path, stderr_path, ledger_path, report_pat
         raise FileExistsError("watchdog evidence paths must be fresh and distinct")
     for path in paths:
         path.parent.mkdir(parents=True, exist_ok=True)
-    started = time.monotonic()
+    started = shared_monotonic()
     watcher, child, reason, failure, forced = LedgerDeadline(ledger_path), None, None, None, False
     with paths[0].open("xb") as stdout, paths[1].open("xb") as stderr:
         try:
             child = subprocess.Popen(command, cwd=cwd, stdout=stdout, stderr=stderr, start_new_session=True)
             while child.poll() is None:
                 watcher.poll()
-                if time.monotonic() >= watcher.deadline(started + maximum_seconds):
+                if shared_monotonic() >= watcher.deadline(started + maximum_seconds):
                     reason = "wall_clock_deadline"
                     break
                 time.sleep(poll_seconds)
@@ -118,7 +121,7 @@ def supervise(command, *, cwd, stdout_path, stderr_path, ledger_path, report_pat
                 reason = "child_exited" if child.returncode == 0 else "child_failed"
                 if watcher.partial:
                     reason = "incomplete_final_budget_line"
-                if time.monotonic() > watcher.deadline(started + maximum_seconds):
+                if shared_monotonic() > watcher.deadline(started + maximum_seconds):
                     reason = "wall_clock_deadline"
         except BaseException as exc:
             reason, failure = "watchdog_or_launch_error", repr(exc)
@@ -145,7 +148,8 @@ def supervise(command, *, cwd, stdout_path, stderr_path, ledger_path, report_pat
     result = {"format": "candidate-pilot-supervisor-v1", "command": command, "cwd": str(cwd),
               "pid": None if child is None else child.pid, "ppid": os.getpid(),
               "exit_code": None if child is None else child.returncode, "reason": reason,
-              "error": failure, "forced_kill": forced, "elapsed_seconds": time.monotonic() - started,
+              "error": failure, "forced_kill": forced, "elapsed_seconds": shared_monotonic() - started,
+              "clock_id": CLOCK_ID,
               "maximum_seconds": maximum_seconds, "poll_seconds": poll_seconds,
               "termination_grace_seconds": termination_grace_seconds,
               "last_ledger_sequence": watcher.sequence, "last_ledger_sha256": watcher.previous,

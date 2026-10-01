@@ -1928,3 +1928,30 @@ or Howard-access confirmations. Details: P1 terminal_readout.md. The app deleted
 gcn-rl-p1 with deleteStatus=deleted. New compatibility/timing repair and another
 bounded scientific attempt need a new explicit decision; no silent hub removal,
 reward/design change, historical overwrite or auto-relaunch is permitted.
+
+#### P1 conditional recovery repair and static relation veto
+
+2026-10-01T00:55Z (September30 local time): Zhaowei replied continue to the
+specific P1-R1 conditional recovery request. Implemented shared POSIX deadline
+clock/receipts and a static full-config/topology veto, with288 related invented
+tests and full compileall passing. No real environment construction, step,
+scientific optimizer update or recovery attempt occurred in this repair turn.
+
+All3 R4 configs statically resolve to36 specimen/resource/information edges
+but190 physical capacity edges, alongside the central hub graph representation.
+The existing single-adjacency producer rejects both hub and relation mismatch.
+Under the original protocol this cannot be bypassed or silently unioned, even
+after conditional repair approval. Original environment/producer/model science,
+proposal/protocol/authorization/effective packet and failed artifacts are intact.
+15 archive members,11 original/R4 locks,890 historical hashes and the2 existing
+Dropbox-local copies were reverified. Static audit correctly returns not ready.
+
+The proposed next decision is an explicit20-node/36-edge specimen-only candidate
+message graph, keeping the real capacity-sharing network, hub-aware R4, all raw
+public observations, reward, support, model widths/counts,95% gate, episode counts
+and budgets. This narrows graph attribution; it is not a full multi-relation
+model and is NOT yet approved or implemented. Details and alternative are in
+specs/2026-09-30-candidate-return-pilot/recovery1_readiness.md. A future packet
+must also account for the original initialized preflight seed versus unconsumed
+train/test streams. No new scientific launch pending that decision; automation
+remains deleted, no remote or Stage E/holdout action.

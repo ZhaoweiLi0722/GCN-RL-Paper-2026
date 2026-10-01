@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 
 from src.rl.candidate_pilot_resources import audit_stream_collisions, stream_manifest
+from src.rl.candidate_pilot_compatibility import audit_reference_layouts
 
 
 PROPOSAL = "experiments/configs/candidate_return_pilot_20260930.json"
@@ -77,6 +78,7 @@ def audit(root):
             raise ValueError(f"R4 inherited input hash changed: {name}")
     if any(env != environments[0] for env in environments[1:]):
         raise ValueError("R4 effective environments differ")
+    compatibility = audit_reference_layouts(root, config)
     manifest = stream_manifest(config)
     files, exclusions = [], []
     for path in historical_files(root):
@@ -97,11 +99,13 @@ def audit(root):
             "head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
             "proposal_sha256": PROPOSAL_SHA, "protocol_sha256": PROTOCOL_SHA, "verified_r4_inputs": inputs,
             "effective_environments_equal": True, "streams": manifest, "collision_audit": collision,
+            "static_compatibility": compatibility,
             "explicit_non_seed_parse_exclusions": exclusions,
             "new_environment_constructions": 0, "new_environment_steps": 0, "new_scientific_updates": 0,
             "scope": "tracked JSON configs and all locally present prior results/reports JSON/JSONL; not unavailable external evidence",
             "ready_to_execute": False,
-            "remaining": ["complete committed orchestration and effective execution config",
+            "remaining": (["resolve unsupported producer layout/relation contract before any scientific claim"]
+                          if not compatibility["passed"] else []) + ["complete committed orchestration and effective execution config",
                           "independent outcome verification and source/runtime manifest", "budgeted real preflight"]}
 
 
@@ -119,8 +123,9 @@ def main():
     print(json.dumps({"verified_r4_inputs": len(result["verified_r4_inputs"]),
                       "historical_files": len(result["collision_audit"]["files"]),
                       "collisions": result["collision_audit"]["collisions"],
+                      "static_compatibility_passed": result["static_compatibility"]["passed"],
                       "ready_to_execute": False}, sort_keys=True))
-    return 0 if result["collision_audit"]["passed"] else 1
+    return 0 if result["collision_audit"]["passed"] and result["static_compatibility"]["passed"] else 1
 
 
 if __name__ == "__main__":

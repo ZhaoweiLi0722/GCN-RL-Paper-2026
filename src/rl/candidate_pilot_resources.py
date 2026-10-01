@@ -8,7 +8,7 @@ import json
 import math
 import os
 from pathlib import Path
-import time
+from src.utils.research_clock import CLOCK_ID, INJECTED_CLOCK_ID, shared_monotonic
 
 
 def digest(data):
@@ -137,8 +137,9 @@ class PilotBudget:
     Session checkpoint restoration never restores this external budget.
     """
 
-    def __init__(self, path, config, *, clock=time.monotonic):
-        self.path, self.clock = Path(path), clock
+    def __init__(self, path, config, *, clock=None):
+        self.path, self.clock = Path(path), shared_monotonic if clock is None else clock
+        self.clock_id = CLOCK_ID if clock is None else INJECTED_CLOCK_ID
         caps = config["caps"]
         self.limits = {"environment": caps["maximum_environment_steps"],
                        "optimizer": caps["maximum_optimizer_steps"], "seconds": caps["maximum_seconds"]}
@@ -147,7 +148,7 @@ class PilotBudget:
         for row in [self.limits, *self.sections.values()]:
             if any(type(row[k]) is not int or row[k] < 0 for k in ("environment", "optimizer", "seconds")):
                 raise ValueError("explicit nonnegative integer resource limits required")
-        self.started = self.last_clock = clock()
+        self.started = self.last_clock = self.clock()
         if not math.isfinite(self.started):
             raise ValueError("invalid monotonic clock")
         self.active, self.section_started, self.closed = None, None, []
@@ -157,7 +158,7 @@ class PilotBudget:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.handle = self.path.open("x", encoding="utf-8")
         self._append({"event": "claim", "limits": self.limits, "sections": self.sections,
-                      "phase_limits": self.phase_limits, "started": self.started})
+                      "phase_limits": self.phase_limits, "started": self.started, "clock_id": self.clock_id})
 
     def _append(self, event):
         if self.failed:

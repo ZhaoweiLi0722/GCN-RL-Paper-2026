@@ -8,17 +8,18 @@ from pathlib import Path
 import platform
 import subprocess
 import sys
-import time
 
 import numpy as np
 import torch
 
 from experiments.scripts.audit_candidate_pilot_readiness import audit, sha, PROPOSAL, PROPOSAL_SHA, PROTOCOL_SHA
 from src.rl.candidate_pilot_campaign import PatientBackend, PilotCampaign
+from src.rl.candidate_pilot_compatibility import audit_reference_layouts, require_supported_layouts
 from src.rl.candidate_pilot_recording import write_json_once
 from src.rl.candidate_pilot_resources import PilotBudget, digest, stream_manifest
 from src.rl.candidate_pilot_watchdog import supervise
 from src.utils.research_archive import copy_verified
+from src.utils.research_clock import CLOCK_ID, clock_record, shared_monotonic
 
 
 EFFECTIVE = "experiments/configs/candidate_return_pilot_20260930_execution.json"
@@ -42,7 +43,8 @@ def runtime_record():
         "numpy": np.__version__, "torch": str(torch.__version__), "torch_build": torch.__config__.show(),
         "torch_threads": torch.get_num_threads(), "torch_interop_threads": torch.get_num_interop_threads(),
         "default_dtype": str(torch.get_default_dtype()), "deterministic": torch.are_deterministic_algorithms_enabled(),
-        "device": "cpu", "package_entry_locks": {str(Path(module.__file__).resolve()): sha(module.__file__)
+        "device": "cpu", "budget_clock": clock_record(),
+        "package_entry_locks": {str(Path(module.__file__).resolve()): sha(module.__file__)
                                                for module in (np, torch)}}
 
 
@@ -57,6 +59,7 @@ def freeze_packet(root):
     if git(root, "branch", "--show-current") != BRANCH or git(root, "status", "--porcelain"):
         raise ValueError("freeze requires the declared clean, committed worktree")
     subset = audit(root)
+    require_supported_layouts(subset["static_compatibility"])
     if not subset["collision_audit"]["passed"]:
         raise ValueError("historical seed collision")
     cfg = json.loads((root / PROPOSAL).read_text())
@@ -96,6 +99,10 @@ def verify_packet(root, effective, *, require_clean=True):
         if hashlib.sha256(content).hexdigest() != expected:
             raise ValueError("source locks not bound to actual implementation commit")
     inherited = effective["readiness_audit"]
+    compatibility = audit_reference_layouts(root, cfg)
+    require_supported_layouts(compatibility)
+    if inherited.get("static_compatibility") != compatibility:
+        raise ValueError("static compatibility receipt differs")
     if inherited["streams"] != stream_manifest(cfg) or inherited["collision_audit"]["passed"] is not True:
         raise ValueError("stream audit mismatch")
     for name, expected in inherited["verified_r4_inputs"].items():
@@ -116,6 +123,7 @@ def launch(root, effective_path):
     if git(root, "show", "HEAD:" + EFFECTIVE) != effective_path.read_text().strip():
         raise ValueError("effective execution config is not committed at HEAD")
     refreshed = audit(root)
+    require_supported_layouts(refreshed["static_compatibility"])
     if (refreshed["collision_audit"] != effective["readiness_audit"]["collision_audit"]
             or refreshed["explicit_non_seed_parse_exclusions"] != effective["readiness_audit"]["explicit_non_seed_parse_exclusions"]):
         raise ValueError("historical seed inventory changed after freeze")
@@ -126,13 +134,13 @@ def launch(root, effective_path):
     if not ancestor.is_dir() or not os.access(ancestor, os.W_OK):
         raise PermissionError("authorized local archive destination unavailable before attempt")
     output = root / cfg["output_root"]
-    started = time.monotonic()
+    started = shared_monotonic()
     output.mkdir(parents=True, exist_ok=False)  # Exclusive single-attempt claim, even after failure.
     launcher = output / "launcher"
     launcher.mkdir()
     claim = {"format": "p1-exclusive-claim-v1", "pid": os.getpid(), "ppid": os.getppid(),
         "head": git(root, "rev-parse", "HEAD"), "implementation_commit": effective["implementation_commit"],
-        "effective_sha256": sha(effective_path), "started_monotonic": started,
+        "effective_sha256": sha(effective_path), "started_monotonic": started, "clock_id": CLOCK_ID,
         "maximum_seconds": cfg["caps"]["maximum_seconds"], "automatic_retry": False}
     write_json_once(launcher / "claim.json", claim)
     try:
@@ -142,8 +150,8 @@ def launch(root, effective_path):
         copy_verified(root / cfg["protocol"], locks / "protocol.md")
         copy_verified(root / AUTHORIZATION, locks / "authorization.md")
         subprocess.run(["git", "bundle", "create", str(locks / "source.bundle"), "HEAD"], cwd=root, check=True,
-                       timeout=max(1., cfg["caps"]["maximum_seconds"] - (time.monotonic() - started)))
-        remaining = cfg["caps"]["maximum_seconds"] - (time.monotonic() - started)
+                       timeout=max(1., cfg["caps"]["maximum_seconds"] - (shared_monotonic() - started)))
+        remaining = cfg["caps"]["maximum_seconds"] - (shared_monotonic() - started)
         result = supervise([sys.executable, "-m", "experiments.scripts.run_candidate_return_pilot", "--child"],
             cwd=root, stdout_path=launcher / "stdout.log", stderr_path=launcher / "stderr.log",
             ledger_path=launcher / "budget.jsonl", report_path=launcher / "supervisor.json", maximum_seconds=remaining)
@@ -164,7 +172,8 @@ def child(root):
     cfg = verify_packet(root, effective)
     output = root / cfg["output_root"]
     claim = json.loads((output / "launcher/claim.json").read_text())
-    if (claim["pid"] != os.getppid() or claim["effective_sha256"] != sha(effective_path)
+    if (claim["pid"] != os.getppid() or claim.get("clock_id") != CLOCK_ID
+            or claim["effective_sha256"] != sha(effective_path)
             or claim["head"] != git(root, "rev-parse", "HEAD") or (output / "launcher/terminal.json").exists()):
         raise ValueError("child lacks matching live exclusive parent claim")
     write_json_once(output / "launcher/child.json", {"pid": os.getpid(), "ppid": os.getppid()})

@@ -35,6 +35,7 @@ class CandidatePilotExecutionTests(unittest.TestCase):
             "authorization": execution.AUTHORIZATION, "authorization_sha256": self.hashes[execution.AUTHORIZATION],
             "scientific_config": self.cfg, "source_files": {"src/fixture.py": self.hashes["src/fixture.py"]},
             "runtime": self.runtime, "readiness_audit": {"streams": stream_manifest(self.cfg),
+                "static_compatibility": {"passed": True, "invented": True},
                 "collision_audit": {"passed": True, "files": [{"path": "results/prior.json", "sha256": self.hashes["results/prior.json"]}]},
                 "explicit_non_seed_parse_exclusions": [], "verified_r4_inputs": {"inputs/model.pt": self.hashes["inputs/model.pt"]}}}
         def git(root, *args):
@@ -47,6 +48,7 @@ class CandidatePilotExecutionTests(unittest.TestCase):
             patch.object(execution, "PROTOCOL_SHA", self.hashes[self.cfg["protocol"]]),
             patch.object(execution, "git", side_effect=git),
             patch.object(execution, "runtime_record", return_value=self.runtime),
+            patch.object(execution, "audit_reference_layouts", return_value={"passed": True, "invented": True}),
             patch.object(execution, "source_files", side_effect=lambda root: {"src/fixture.py": execution.sha(root / "src/fixture.py")}),
             patch.object(execution.subprocess, "run"),
             patch.object(execution.subprocess, "check_output", return_value=contents["src/fixture.py"].encode())]
@@ -84,6 +86,20 @@ class CandidatePilotExecutionTests(unittest.TestCase):
         with patch.object(execution.subprocess, "check_output", return_value=b"uncommitted code"):
             with self.assertRaisesRegex(ValueError, "actual implementation"):
                 execution.verify_packet(self.root, self.effective)
+
+    def test_static_incompatibility_prevents_packet_or_claim_creation(self):
+        with patch.object(execution, "audit", return_value={"static_compatibility": {"passed": False}}):
+            with self.assertRaisesRegex(ValueError, "compatibility"):
+                execution.freeze_packet(self.root)
+        with patch.object(execution, "audit_reference_layouts", return_value={"passed": False}):
+            with self.assertRaisesRegex(ValueError, "compatibility"):
+                execution.verify_packet(self.root, self.effective)
+
+    def test_static_compatibility_receipt_is_bound_to_frozen_packet(self):
+        packet = copy.deepcopy(self.effective)
+        del packet["readiness_audit"]["static_compatibility"]
+        with self.assertRaisesRegex(ValueError, "compatibility receipt"):
+            execution.verify_packet(self.root, packet)
 
     def test_unclaimed_child_and_arbitrary_launch_path_cannot_start_science(self):
         with patch.object(execution, "verify_packet", return_value=self.cfg), patch.object(execution, "EFFECTIVE", execution.PROPOSAL):

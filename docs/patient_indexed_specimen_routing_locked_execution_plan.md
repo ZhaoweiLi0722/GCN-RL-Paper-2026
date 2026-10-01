@@ -2109,3 +2109,17 @@ Readout:specs/2026-10-01-reference-prior-residual/terminal_readout.md.
 Close the finite chain. Proposed next decision is saved-training-data diagnosis
 only before designing another intervention,not an automatic retrain/reward/prior
 search. No remote operation,holdout use,Howard sign-off or Stage E reopening.
+
+#### P2 saved-training-only diagnostic accepted
+
+2026-10-01: Zhaowei replied "continue" to the proposed saved-training diagnosis.
+This authorizes arithmetic on existing weights, raw training costs and receipts,
+not another trial or neural forward/backward/update. Scope and preliminary
+data exposure are recorded in specs/2026-10-01-p2-training-diagnostic/protocol.md.
+Cover all9 PPO models,288 training episodes,72 pre-update saved rollouts and
+1,152 minibatches. Artificial tests and full compilation precede an analysis
+freeze/readback. Verify original payload and launcher inventories unchanged.
+Preserve new reports in a separate byte-verified Dropbox-local subfolder; no
+cloud-sync/access claim. Readback errors may be preserved and reader-corrected,
+never used to reopen P2. New scientific fitting/reward/prior/scope changes need
+a separately bounded decision. Stage E and all remote restrictions stay closed.

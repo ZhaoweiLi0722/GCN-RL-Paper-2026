@@ -1,6 +1,26 @@
 # Autonomous local research queue
 
-## Live checkpoint: P2 completed and preserved; no incremental greedy-policy gain
+## Live checkpoint: authorized P2 saved-training diagnosis in preparation
+
+Updated2026-10-01T15:57Z. Zhaowei's "continue" accepts the proposed saved-data
+diagnostic only. P2 is closed; no new scientific trajectory, fit or evaluation.
+Base a7c891886b3bf67e956442b9a83c9f3430faebd5; matching research process scan empty.
+Protocol:specs/2026-10-01-p2-training-diagnostic/protocol.md. New standalone
+arithmetic reader and artificial tests are being prepared; complete readback
+has not run yet. Preliminary saved weights establish a possible stronger
+constraint: every final scorer's2*L1 output bound is below the fixed prior gap.
+This is an observed-weights certificate, not an environment optimality claim.
+
+Acceptance:18 artificial arithmetic/closure tests passed, full repository
+compileall and diff check exit0. No science work or neural forward was run.
+Next: local analysis freeze, then one complete
+readback of9 models/288 training episodes/72 rollouts/1,152 minibatches. Reconcile
+returns, fixed-weight ranges, recorded clipping and descriptive advantage
+patterns; preserve original hashes and archive new evidence separately.
+No further approval needed for this packet. A new experiment or changed
+prior/reward/update budget remains unapproved. No remote action or automation.
+
+## Previous checkpoint: P2 completed and preserved; no incremental greedy-policy gain
 
 Updated2026-10-01T09:43Z. The approved single P2 has finished; no experiment is
 running. Do not resume it, reuse spare budget or recreate an automation to wait.

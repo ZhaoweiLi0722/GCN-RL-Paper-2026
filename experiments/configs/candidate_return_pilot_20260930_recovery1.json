@@ -1,0 +1,12 @@
+{
+  "kind": "p1_recovery1_specimen_graph_amendment",
+  "candidate_message_graph": "specimen_routes",
+  "output_suffix": "_recovery1",
+  "authorization": "specs/2026-09-30-candidate-return-pilot/recovery1_authorization.md",
+  "prior_manifest": "results/candidate_return_pilot_20260930_failure_archive/failed-attempt-3de710b.tar.gz.manifest.json",
+  "prior_manifest_sha256": "96f0c53f60e20e9d35b104fb2942615968da90a78318b8bb0d61d2281d449392",
+  "prior_archive_sha256": "3d29ccdff06ff52cb7b2fe1280f0ec5015d7fef252101fca3522da06ee3c877c",
+  "prior_ledger_sha256": "a05519006bd3073d0a99ff8fbc865e4c34e0a055bb29050cedfaefd19201afbe",
+  "stream_handling": "retain_original_allocation_disclose_preflight_ordinal0_initialization_only",
+  "automatic_retry": false
+}

@@ -18,6 +18,7 @@ from src.rl.candidate_pilot_compatibility import audit_reference_layouts, requir
 from src.rl.candidate_pilot_recording import write_json_once
 from src.rl.candidate_pilot_resources import PilotBudget, digest, stream_manifest
 from src.rl.candidate_pilot_watchdog import supervise
+from src.rl import candidate_pilot_recovery as recovery_spec
 from src.utils.research_archive import copy_verified
 from src.utils.research_clock import CLOCK_ID, clock_record, shared_monotonic
 
@@ -53,28 +54,39 @@ def source_files(root):
     return {name: sha(root / name) for name in names if (root / name).is_file()}
 
 
-def freeze_packet(root):
+def freeze_packet(root, *, recovery=False):
     """Read-only packet builder; caller must commit its output before launch."""
     root = Path(root).resolve()
     if git(root, "branch", "--show-current") != BRANCH or git(root, "status", "--porcelain"):
         raise ValueError("freeze requires the declared clean, committed worktree")
-    subset = audit(root)
+    subset = audit(root, recovery=True) if recovery else audit(root)
     require_supported_layouts(subset["static_compatibility"])
     if not subset["collision_audit"]["passed"]:
         raise ValueError("historical seed collision")
     cfg = json.loads((root / PROPOSAL).read_text())
-    return {"kind": "p1_single_attempt_effective_execution", "scientific_execution_authorized": True,
+    authorization = recovery_spec.AUTHORIZATION if recovery else AUTHORIZATION
+    if recovery:
+        cfg = recovery_spec.recovery_configuration(root, cfg)
+    result = {"kind": "p1_recovery1_single_attempt_effective_execution" if recovery else "p1_single_attempt_effective_execution",
+        "scientific_execution_authorized": True,
         "workspace": str(root), "branch": BRANCH, "implementation_commit": git(root, "rev-parse", "HEAD"),
         "proposal": PROPOSAL, "proposal_sha256": PROPOSAL_SHA,
         "protocol": cfg["protocol"], "protocol_sha256": PROTOCOL_SHA,
-        "authorization": AUTHORIZATION, "authorization_sha256": sha(root / AUTHORIZATION),
+        "authorization": authorization, "authorization_sha256": sha(root / authorization),
         "scientific_config": cfg, "source_files": source_files(root), "runtime": runtime_record(),
-        "readiness_audit": subset, "automatic_retry": False, "new_scope_authorized": False}
+        "readiness_audit": subset, "automatic_retry": False, "new_scope_authorized": recovery}
+    if recovery:
+        result["amendment"] = recovery_spec.AMENDMENT
+        result["amendment_sha256"] = sha(root / recovery_spec.AMENDMENT)
+        result["original_authorization_sha256"] = sha(root / AUTHORIZATION)
+    return result
 
 
-def verify_packet(root, effective, *, require_clean=True):
+def verify_packet(root, effective, *, require_clean=True, recovery=False):
     root = Path(root).resolve()
-    if (effective["kind"] != "p1_single_attempt_effective_execution" or effective["scientific_execution_authorized"] is not True
+    kind = "p1_recovery1_single_attempt_effective_execution" if recovery else "p1_single_attempt_effective_execution"
+    authorization = recovery_spec.AUTHORIZATION if recovery else AUTHORIZATION
+    if (effective["kind"] != kind or effective["scientific_execution_authorized"] is not True
             or str(root) != effective["workspace"] or effective["branch"] != BRANCH
             or git(root, "branch", "--show-current") != BRANCH):
         raise ValueError("wrong workspace/branch/authorization")
@@ -82,13 +94,20 @@ def verify_packet(root, effective, *, require_clean=True):
         raise ValueError("scientific launch requires clean committed worktree")
     subprocess.run(["git", "merge-base", "--is-ancestor", effective["implementation_commit"], "HEAD"], cwd=root, check=True)
     if (effective["proposal"] != PROPOSAL or effective["proposal_sha256"] != PROPOSAL_SHA
-            or effective["protocol_sha256"] != PROTOCOL_SHA or effective["authorization"] != AUTHORIZATION):
+            or effective["protocol_sha256"] != PROTOCOL_SHA or effective["authorization"] != authorization):
         raise ValueError("locked proposal/protocol/authorization identity differs")
     for name, expected in ((PROPOSAL, PROPOSAL_SHA), (effective["protocol"], PROTOCOL_SHA),
-                           (AUTHORIZATION, effective["authorization_sha256"])):
+                           (authorization, effective["authorization_sha256"])):
         if sha(root / name) != expected:
             raise ValueError("locked protocol/config/authorization changed")
     cfg = json.loads((root / PROPOSAL).read_text())
+    if recovery:
+        if (effective.get("amendment") != recovery_spec.AMENDMENT
+                or sha(root / recovery_spec.AMENDMENT) != effective["amendment_sha256"]
+                or sha(root / AUTHORIZATION) != effective["original_authorization_sha256"]
+                or effective["readiness_audit"].get("recovery_prior_attempt") != recovery_spec.prior_attempt_receipt(root, cfg)):
+            raise ValueError("recovery approval/amendment/prior failure changed")
+        cfg = recovery_spec.recovery_configuration(root, cfg)
     if effective["scientific_config"] != cfg or cfg["scientific_execution_authorized"] is not False:
         raise ValueError("original draft parameters/authorization were modified")
     if source_files(root) != effective["source_files"] or runtime_record() != effective["runtime"]:
@@ -114,15 +133,17 @@ def verify_packet(root, effective, *, require_clean=True):
     return cfg
 
 
-def launch(root, effective_path):
+def launch(root, effective_path, *, recovery=False):
     root, effective_path = Path(root).resolve(), Path(effective_path).resolve()
-    if effective_path != root / EFFECTIVE:
+    expected_effective = recovery_spec.EFFECTIVE if recovery else EFFECTIVE
+    authorization = recovery_spec.AUTHORIZATION if recovery else AUTHORIZATION
+    if effective_path != root / expected_effective:
         raise ValueError("only the committed effective execution config can launch")
     effective = json.loads(effective_path.read_text())
-    cfg = verify_packet(root, effective)
-    if git(root, "show", "HEAD:" + EFFECTIVE) != effective_path.read_text().strip():
+    cfg = verify_packet(root, effective, recovery=True) if recovery else verify_packet(root, effective)
+    if git(root, "show", "HEAD:" + expected_effective) != effective_path.read_text().strip():
         raise ValueError("effective execution config is not committed at HEAD")
-    refreshed = audit(root)
+    refreshed = audit(root, recovery=True) if recovery else audit(root)
     require_supported_layouts(refreshed["static_compatibility"])
     if (refreshed["collision_audit"] != effective["readiness_audit"]["collision_audit"]
             or refreshed["explicit_non_seed_parse_exclusions"] != effective["readiness_audit"]["explicit_non_seed_parse_exclusions"]):
@@ -148,11 +169,17 @@ def launch(root, effective_path):
         copy_verified(effective_path, locks / "effective-execution.json")
         copy_verified(root / PROPOSAL, locks / "original-proposal.json")
         copy_verified(root / cfg["protocol"], locks / "protocol.md")
-        copy_verified(root / AUTHORIZATION, locks / "authorization.md")
+        copy_verified(root / authorization, locks / "authorization.md")
+        if recovery:
+            copy_verified(root / recovery_spec.AMENDMENT, locks / "recovery-amendment.json")
+            copy_verified(root / AUTHORIZATION, locks / "original-authorization.md")
         subprocess.run(["git", "bundle", "create", str(locks / "source.bundle"), "HEAD"], cwd=root, check=True,
                        timeout=max(1., cfg["caps"]["maximum_seconds"] - (shared_monotonic() - started)))
         remaining = cfg["caps"]["maximum_seconds"] - (shared_monotonic() - started)
-        result = supervise([sys.executable, "-m", "experiments.scripts.run_candidate_return_pilot", "--child"],
+        command = [sys.executable, "-m", "experiments.scripts.run_candidate_return_pilot", "--child"]
+        if recovery:
+            command.append("--recovery1")
+        result = supervise(command,
             cwd=root, stdout_path=launcher / "stdout.log", stderr_path=launcher / "stderr.log",
             ledger_path=launcher / "budget.jsonl", report_path=launcher / "supervisor.json", maximum_seconds=remaining)
         completed = launcher / "completed.json"
@@ -165,11 +192,11 @@ def launch(root, effective_path):
         return 1
 
 
-def child(root):
+def child(root, *, recovery=False):
     root = Path(root).resolve()
-    effective_path = root / EFFECTIVE
+    effective_path = root / (recovery_spec.EFFECTIVE if recovery else EFFECTIVE)
     effective = json.loads(effective_path.read_text())
-    cfg = verify_packet(root, effective)
+    cfg = verify_packet(root, effective, recovery=True) if recovery else verify_packet(root, effective)
     output = root / cfg["output_root"]
     claim = json.loads((output / "launcher/claim.json").read_text())
     if (claim["pid"] != os.getppid() or claim.get("clock_id") != CLOCK_ID
@@ -182,6 +209,6 @@ def child(root):
     def recheck():
         if sha(effective_path) != claim["effective_sha256"] or git(root, "rev-parse", "HEAD") != claim["head"]:
             raise ValueError("execution HEAD/effective config drift")
-        verify_packet(root, effective, require_clean=False)
+        verify_packet(root, effective, require_clean=False, recovery=recovery)
     return PilotCampaign(output, cfg, streams, budget, PatientBackend(root, cfg, streams),
                          final_lock_check=recheck).run()

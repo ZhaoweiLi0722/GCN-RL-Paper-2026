@@ -1,6 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 recovery engineering verified; graph contract decision needed
+## Live checkpoint: P1 recovery approved and engineering accepted; freeze next
+
+Updated 2026-10-01T01:14Z. Zhaowei explicitly confirmed the specimen-routing
+graph amendment and one original-budget recovery. No recovery real preflight
+has run at this checkpoint; the original P1 failure remains immutable.
+
+| Item | Current state |
+| --- | --- |
+| Implemented |Opt-in specimen_routes producer; full four-relation drift checks retained; original shared-relation default still rejects hub/heterogeneity. Static audit and one explicit recovery1 entrypoint/profile |
+| Scientific delta |Candidate adjacency is36 specimen links/20 facilities; simulator,190 capacity links,hub-aware R4,561 raw inputs,80 actions,reward,model widths/counts,95% gate and all budgets/counts unchanged |
+| Verification |297 relevant tests pass in54.207s; full compileall and diff check pass. Includes real locked R4 metadata on dormant shells and frozen R4 inference on invented numerical inputs, no real patient construction/reset/steps |
+| Representation checks |All3 blocks preserve59,602/59,602/238,658 parameters, identical graph/self-only initial tensors,21-node R4 graph,raw input roundtrip and exact non-specimen R4/MDL2 request equality on artificial inputs |
+| Recovery authority |specs/2026-09-30-candidate-return-pilot/recovery1_authorization.md; experiments/configs/candidate_return_pilot_20260930_recovery1.json. Original protocol/config/authorization stay unchanged |
+| Stream accounting |Same allocation; old preflight ordinal0 initialized once,zero steps/updates. Explicit hash-verified prior receipt; demo/qualification/train/test streams not consumed by P1; not a new namespace |
+| Current science |No new real environment or scientific optimizer work yet. No new performance conclusion |
+| Process |Initial approved host scan88614/88617 only shell/filter. All tests/compile ended; recheck immediately before launch |
+| Next action |Commit implementation and approval; generate fresh recovery readiness/source/runtime/input/prior-failure locks; commit effective packet; verify clean locks and run the one budgeted preflight/pilot |
+| Exact approval need |None inside the confirmed scope. A terminal failure closes this attempt; no retry or new scientific change without a new decision |
+| Bounds |52,728 calls,4,608 updates,6h and original nontransferable subcaps;0 new DDPG fits. Local only; no remote actions,holdout or Stage E reopening |
+| Automation |No research automation recreated; the execution process, not a heartbeat, will determine actual running status |
+
+## Previous checkpoint: P1 recovery engineering verified; graph contract decision needed
 
 Updated 2026-10-01T00:55Z (September30 local time). Zhaowei's latest continue
 authorizes the conditional P1-R1 repair path, not a changed scientific design.

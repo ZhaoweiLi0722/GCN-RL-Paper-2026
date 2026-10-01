@@ -44,23 +44,25 @@ class PatientObservationProducer:
     to the policy by the collector's metadata path.
     """
 
-    def __init__(self, env, *, enabled=False, gamma, reward_scale):
+    def __init__(self, env, *, enabled=False, gamma, reward_scale, message_graph="shared_relations"):
         require_torch()
         if enabled is not True:
             raise ValueError("prospective collection must be explicitly enabled")
         if type(env) is not PatientConditionCapacityEnv:
             raise TypeError("only the declared patient environment is supported")
         base = env.config
+        if message_graph not in ("shared_relations", "specimen_routes"):
+            raise ValueError("explicit supported message graph required")
         if base.action_mode != "facility_net":
             raise ValueError("facility_net required")
-        if (base.enable_overtime_control or base.include_central_capacity_hub
+        if (base.enable_overtime_control or (base.include_central_capacity_hub and message_graph == "shared_relations")
                 or base.include_on_order_state or base.enable_stochastic_procurement
                 or base.reagent_purchase_lead_time):
             raise ValueError("overtime, hub and procurement layouts are not supported")
         edges = _edge_sets(env)
-        if any(relation != edges[0] for relation in edges[1:]):
+        if message_graph == "shared_relations" and any(relation != edges[0] for relation in edges[1:]):
             raise ValueError("heterogeneous relations cannot be collapsed into one physical graph")
-        self.edges = edges
+        self.edges, self.message_graph = edges, message_graph
         self.config_digest = evidence_digest(asdict(env.env_config))
         self.anchor_config = asdict(base)
         patient = asdict(env.env_config)
@@ -93,8 +95,12 @@ class PatientObservationProducer:
         self.summary_width = len(names) - self.base_width
         if self.summary_width != env.summary_width or env.action_size != 4 * n:
             raise ValueError("unsupported patient/action layout")
-        definition = "patient-raw-request-v1/" + evidence_digest({
-            "env": self.config_digest, "edges": edges, "anchor": asdict(self.settings)})
+        definition_data = {"env": self.config_digest, "edges": edges, "anchor": asdict(self.settings)}
+        if message_graph == "specimen_routes":
+            # A declared projection, not a union or a change to physical transfers.
+            # Raw observations have facility nodes only, even for hub-aware R4.
+            definition_data["message_graph"] = message_graph
+        definition = "patient-raw-request-v1/" + evidence_digest(definition_data)
         schema = InputSchema(definition, tuple(f"facility_{i}" for i in range(n)), tuple(names),
                              ("normalized_time",) if base.include_time_state else (),
                              tuple(f"{group}_{i}" for group in

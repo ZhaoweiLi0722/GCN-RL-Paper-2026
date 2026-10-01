@@ -1955,3 +1955,24 @@ specs/2026-09-30-candidate-return-pilot/recovery1_readiness.md. A future packet
 must also account for the original initialized preflight seed versus unconsumed
 train/test streams. No new scientific launch pending that decision; automation
 remains deleted, no remote or Stage E/holdout action.
+
+#### P1 specimen graph amendment explicitly approved
+
+Zhaowei answered "confirmed" to the clarified request for the specimen-routing
+graph revision and one original-budget recovery after implementation/validation.
+This supersedes the pending decision, not the preserved failure or protocol.
+Only the new candidate message graph becomes explicitly specimen-only; preserve
+all public raw observations, real capacity network/hub, R4, reward, supports,
+architectures/parameter counts,95% gate, episode counts and sub/global caps.
+Authority and exact boundaries are in
+specs/2026-09-30-candidate-return-pilot/recovery1_authorization.md and
+experiments/configs/candidate_return_pilot_20260930_recovery1.json.
+
+Use a separate recovery1 output/Dropbox-local directory and committed effective
+packet; retain original RNG allocation with the previously initialized
+preflight ordinal0 explicitly disclosed. Only original demo/train/test streams
+are unused. Verify old zero-step failure inventory before proceeding. No silent
+relation union, environmental modification, repeated scientific attempt or
+budget transfer is authorized. Record full engineering acceptance, source freeze
+and actual execution evidence separately. No Howard approval or positive result
+is implied; all local-only/holdout/Stage E restrictions remain in effect.

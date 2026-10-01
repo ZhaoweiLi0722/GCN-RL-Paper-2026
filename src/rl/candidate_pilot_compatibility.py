@@ -21,7 +21,9 @@ from src.rl.candidate_pilot_resources import digest
 RELATIONS = ("specimen_edges", "resource_edges", "capacity_edges", "information_edges")
 
 
-def inspect_patient_layout(runtime, objective=None):
+def inspect_patient_layout(runtime, objective=None, *, message_graph="shared_relations"):
+    if message_graph not in ("shared_relations", "specimen_routes"):
+        raise ValueError("unknown declared message graph")
     raw = dict(runtime.get("env", {}))
     ablation = raw.pop("graph_ablation", runtime.get("graph_ablation", "full_graph"))
     scenario = raw.pop("scenario_name", runtime.get("scenario", "default"))
@@ -46,8 +48,10 @@ def inspect_patient_layout(runtime, objective=None):
     unsupported = {name: getattr(base, name) for name in (
         "enable_overtime_control", "include_central_capacity_hub", "include_on_order_state",
         "enable_stochastic_procurement", "reagent_purchase_lead_time") if getattr(base, name)}
+    if message_graph == "specimen_routes":
+        unsupported.pop("include_central_capacity_hub", None)
     reasons += ["unsupported_producer_layout:" + name for name in unsupported]
-    if not equal:
+    if not equal and message_graph == "shared_relations":
         reasons.append("heterogeneous_relations_cannot_use_single_adjacency")
     # Widths are reported only for the existing basic raw facility-net layout.
     widths = None
@@ -74,7 +78,8 @@ def inspect_patient_layout(runtime, objective=None):
             "all_relations_identical": equal, "raw_facility_nodes": n,
             "reference_graph_nodes": n + int(base.include_central_capacity_hub),
             "reference_capacity_graph_edges": [list(edge) for edge in capacity_graph_edges],
-            "candidate_contract": "single_adjacency_no_hub_no_relation_collapse",
+            "candidate_contract": ("single_adjacency_no_hub_no_relation_collapse" if message_graph == "shared_relations"
+                                   else "specimen_routes_only_facility_nodes_environment_and_reference_unchanged"),
             "new_environment_constructions": 0, "new_environment_steps": 0,
             "new_policy_loads": 0, "realized_topology_verified": False}
 
@@ -90,7 +95,8 @@ def audit_reference_layouts(root, config):
         runtime = json.loads(raw)
         environments.append(runtime["env"])
         reports.append({"block": block, "path": name, "sha256": sha,
-                        "layout": inspect_patient_layout(runtime, config["objective"])})
+                        "layout": inspect_patient_layout(runtime, config["objective"],
+                            message_graph=config.get("candidate_message_graph", "shared_relations"))})
     equal = bool(reports) and all(env == environments[0] for env in environments[1:])
     return {"kind": "p1_static_reference_compatibility_v1", "effective_environments_equal": equal,
             "blocks": reports, "passed": equal and all(row["layout"]["passed"] for row in reports),

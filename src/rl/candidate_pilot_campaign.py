@@ -61,7 +61,8 @@ class PatientBackend:
         path = self.workspace / spec["directory"]
         config_path = path / spec["config_template"].format(seed=block)
         runtime = json.loads(config_path.read_text())
-        require_supported_layouts(inspect_patient_layout(runtime, self.config["objective"]))
+        message_graph = self.config.get("candidate_message_graph", "shared_relations")
+        require_supported_layouts(inspect_patient_layout(runtime, self.config["objective"], message_graph=message_graph))
         before = global_rng_state()
         try:
             reference = StrictFrozenPolicy(path / spec["policy_template"].format(seed=block), config_path,
@@ -70,7 +71,8 @@ class PatientBackend:
             env = build_env(runtime, seed)
             effective = assert_scenario(env, runtime, self.config["objective"]["scenario"])
             producer = PatientObservationProducer(env, enabled=True,
-                gamma=self.config["objective"]["gamma"], reward_scale=self.config["objective"]["reward_scale"])
+                gamma=self.config["objective"]["gamma"], reward_scale=self.config["objective"]["reward_scale"],
+                message_graph=message_graph)
         finally:
             restore_global_rng(before)
         self.contexts[block] = (runtime, producer, reference)

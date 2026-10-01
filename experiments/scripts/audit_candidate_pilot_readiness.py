@@ -10,6 +10,7 @@ import subprocess
 
 from src.rl.candidate_pilot_resources import audit_stream_collisions, stream_manifest
 from src.rl.candidate_pilot_compatibility import audit_reference_layouts
+from src.rl.candidate_pilot_recovery import EFFECTIVE as RECOVERY_EFFECTIVE, recovery_configuration, prior_attempt_receipt
 
 
 PROPOSAL = "experiments/configs/candidate_return_pilot_20260930.json"
@@ -35,7 +36,7 @@ def historical_files(root):
     tracked = subprocess.check_output(["git", "ls-files", "-z", "experiments/configs"], cwd=root).decode().split("\0")
     files = []
     for name in tracked:
-        if not name or name == PROPOSAL or name == "experiments/configs/candidate_return_pilot_20260930_execution.json":
+        if not name or name in (PROPOSAL, "experiments/configs/candidate_return_pilot_20260930_execution.json", RECOVERY_EFFECTIVE):
             continue
         path = root / name
         if path.suffix == ".json":
@@ -47,7 +48,8 @@ def historical_files(root):
             continue
         for path in directory.rglob("*"):
             rel = path.relative_to(root)
-            if rel.parts[1] in ("candidate_return_pilot_20260930", "2026-09-30-candidate-pilot-integration"):
+            if rel.parts[1] in ("candidate_return_pilot_20260930", "candidate_return_pilot_20260930_recovery1",
+                                "2026-09-30-candidate-pilot-integration"):
                 continue
             if path.is_file() and path.suffix in (".json", ".jsonl"):
                 files.append(path)
@@ -57,13 +59,16 @@ def historical_files(root):
     return sorted(set(files))
 
 
-def audit(root):
+def audit(root, *, recovery=False):
     root = Path(root).resolve()
     if sha(root / PROPOSAL) != PROPOSAL_SHA:
         raise ValueError("proposal changed")
     config = json.loads((root / PROPOSAL).read_text())
     if sha(root / config["protocol"]) != PROTOCOL_SHA:
         raise ValueError("protocol changed")
+    prior = prior_attempt_receipt(root, config) if recovery else None
+    if recovery:
+        config = recovery_configuration(root, config)
     reference = config["reference"]
     inputs = {reference["archive_manifest"]: reference["archive_manifest_sha256"]}
     environments = []
@@ -100,6 +105,7 @@ def audit(root):
             "proposal_sha256": PROPOSAL_SHA, "protocol_sha256": PROTOCOL_SHA, "verified_r4_inputs": inputs,
             "effective_environments_equal": True, "streams": manifest, "collision_audit": collision,
             "static_compatibility": compatibility,
+            "recovery_prior_attempt": prior,
             "explicit_non_seed_parse_exclusions": exclusions,
             "new_environment_constructions": 0, "new_environment_steps": 0, "new_scientific_updates": 0,
             "scope": "tracked JSON configs and all locally present prior results/reports JSON/JSONL; not unavailable external evidence",
@@ -113,8 +119,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--recovery1", action="store_true")
     args = parser.parse_args()
-    result = audit(args.root)
+    result = audit(args.root, recovery=args.recovery1)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with args.output.open("x") as handle:

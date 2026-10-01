@@ -101,6 +101,53 @@ class CandidatePilotExecutionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "compatibility receipt"):
             execution.verify_packet(self.root, packet)
 
+    def recovery_packet(self):
+        amendment = (Path(__file__).resolve().parents[1] / execution.recovery_spec.AMENDMENT).read_text()
+        amendment_path = self.root / execution.recovery_spec.AMENDMENT
+        amendment_path.write_text(amendment)
+        authorization = self.root / execution.recovery_spec.AUTHORIZATION
+        authorization.parent.mkdir(parents=True, exist_ok=True)
+        authorization.write_text("invented recovery approval")
+        packet = copy.deepcopy(self.effective)
+        packet.update(kind="p1_recovery1_single_attempt_effective_execution",
+            authorization=execution.recovery_spec.AUTHORIZATION, authorization_sha256=execution.sha(authorization),
+            original_authorization_sha256=self.hashes[execution.AUTHORIZATION],
+            amendment=execution.recovery_spec.AMENDMENT, amendment_sha256=execution.sha(amendment_path),
+            scientific_config=execution.recovery_spec.recovery_configuration(self.root, self.cfg),
+            new_scope_authorized=True)
+        packet["readiness_audit"]["recovery_prior_attempt"] = {"invented_prior_receipt": True}
+        return packet
+
+    def test_recovery_packet_requires_explicit_profile_and_exact_scientific_delta(self):
+        packet = self.recovery_packet()
+        with patch.object(execution.recovery_spec, "prior_attempt_receipt", return_value={"invented_prior_receipt": True}):
+            self.assertEqual(execution.verify_packet(self.root, packet, recovery=True), packet["scientific_config"])
+            with self.assertRaises(ValueError):
+                execution.verify_packet(self.root, packet)
+            for field in ("objective", "ppo", "caps", "evaluation"):
+                altered = copy.deepcopy(packet)
+                altered["scientific_config"][field]["unapproved_setting"] = 1
+                with self.assertRaisesRegex(ValueError, "original draft"):
+                    execution.verify_packet(self.root, altered, recovery=True)
+            altered = copy.deepcopy(packet)
+            altered["scientific_config"]["candidate_message_graph"] = "union"
+            with self.assertRaises(ValueError):
+                execution.verify_packet(self.root, altered, recovery=True)
+
+    def test_recovery_approval_and_prior_evidence_cannot_drift(self):
+        packet = self.recovery_packet()
+        with patch.object(execution.recovery_spec, "prior_attempt_receipt", return_value={"different": True}):
+            with self.assertRaisesRegex(ValueError, "prior failure changed"):
+                execution.verify_packet(self.root, packet, recovery=True)
+        with patch.object(execution.recovery_spec, "prior_attempt_receipt", return_value={"invented_prior_receipt": True}):
+            (self.root / execution.recovery_spec.AUTHORIZATION).write_text("changed approval")
+            with self.assertRaisesRegex(ValueError, "authorization changed"):
+                execution.verify_packet(self.root, packet, recovery=True)
+
+    def test_recovery_cannot_launch_the_old_packet_or_output(self):
+        with self.assertRaisesRegex(ValueError, "committed effective"):
+            execution.launch(self.root, self.root / execution.EFFECTIVE, recovery=True)
+
     def test_unclaimed_child_and_arbitrary_launch_path_cannot_start_science(self):
         with patch.object(execution, "verify_packet", return_value=self.cfg), patch.object(execution, "EFFECTIVE", execution.PROPOSAL):
             with self.assertRaises(FileNotFoundError):

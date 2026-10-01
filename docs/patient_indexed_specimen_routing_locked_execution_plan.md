@@ -2474,3 +2474,18 @@ restart S1. Actual user authorization and a committed change-control entry must
 precede any saved-model scientific execution. Passing qualification would still
 not approve PPO/BC continuation,which requires a different complete recovery
 decision. Historical A1 stays failed1/9;Stage E stays closed.
+
+#### Saved-model qualification-only attempt authorized
+
+2026-10-01T23:54:03Z: Zhaowei directly replied "approved" (original Chinese
+text preserved in saved-qualification-authorization.json) to the complete
+624-state/15-minute saved-model question. Bind implementation1fd62b2 and frozen
+packet0f46307d6ecca4f3b317fe8a18b88c6291af5b6b866c86c0764be209475e2afb.
+This approves exactly one separate read-only qualification attempt:4 saved
+checkpoint loads,3 initialized models,624 saved state scorings,900 seconds
+including binding/loading/scoring/readback. Zero new environment calls,
+optimizer steps,rollouts or final-test episodes. Preserve original thresholds,
+reward,scenario and all old evidence. No retry or automatic continuation even
+if all qualification criteria pass. Old S1 remains closed;A1 stays failed1/9;
+no Stage E reopening,holdout,remote action,Dropbox or Howard approval claim.
+Commit this record and the separate authorization before launching.

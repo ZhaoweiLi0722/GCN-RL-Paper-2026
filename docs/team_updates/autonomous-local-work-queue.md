@@ -1,6 +1,24 @@
 # Autonomous local research queue
 
-## Live checkpoint: saved qualification entrypoint frozen; awaiting execution approval
+## Live checkpoint: saved qualification approved; single launch next
+
+2026-10-01T23:54:03Z. Zhaowei explicitly replied "approved" to the complete
+saved-model-only qualification question;exact wording is recorded in
+saved-qualification-authorization.json. Entry HEAD757ba4f,clean integration
+branch. Host PID/PPID/command scan found no matching research process;new
+result root and authorization did not previously exist. No run started yet.
+
+The one authorized attempt loads4 exact saved files and scores624 saved states
+within900 seconds. No environment,optimizer,new test or automatic continuation.
+Source/config/runtime packet remains unchanged;reuse92 passing tests and full
+compileall from frozen preparation. Next:commit authorization/change control,
+launch the separate owned entrypoint once,and finish result readback/preservation.
+Do not rerun preparation or old39-episode arithmetic. Original S1 remains closed.
+The schedule remains PAUSED;this foreground bounded job does not require a
+second scheduler or duplicate execution. Routine steps inside this exact packet
+need no additional approval. Stop at qualification,regardless of its verdict.
+
+## Previous checkpoint: saved qualification entrypoint frozen; awaiting execution approval
 
 2026-10-01T23:50Z. Engineering milestone complete. Implementation commit
 1fd62b2afe29e618cf8747933d59cceabce26cce adds a separate read-only qualification

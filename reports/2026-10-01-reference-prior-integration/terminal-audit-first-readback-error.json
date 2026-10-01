@@ -1,0 +1,10 @@
+{
+  "additional_optimizer_steps": 0,
+  "additional_simulator_calls": 0,
+  "detail": "All raw episode and paired trace checks completed before checkpoint-readback field error. Audit report not written; preserve originals and repair audit schema handling only.",
+  "error": "KeyError: pending in BC saved state",
+  "location": "terminal_audit.py weight_readback",
+  "scientific_attempt_retried": false,
+  "scientific_experiment_status": "completed, exit 0",
+  "stage": "post-closure saved-data audit"
+}

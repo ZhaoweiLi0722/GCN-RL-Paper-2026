@@ -1,0 +1,25 @@
+{
+  "additional_patient_simulator_calls": 0,
+  "additional_scientific_optimizer_steps": 0,
+  "compileall": {
+    "command": "python -m compileall -q .",
+    "exit_code": 0
+  },
+  "diff_check_exit_code": 0,
+  "kind": "post-run-artificial-audit-and-regression-acceptance",
+  "scope": "arithmetic fixtures and artificial fake-backend execution; no scientific retry",
+  "sources": {
+    "reports/2026-10-01-reference-prior-integration/terminal_audit.py": "dc42a88f449bef84c28f98fd7982fe1697c9a905b2e0ccd2930bc9980cc85b0e",
+    "tests/test_reference_terminal_audit.py": "fcb9afbd87b52b13c25b013961c5e8c89cec461a8df81e9a357ab96392a59050"
+  },
+  "tests": {
+    "modules": [
+      "tests.test_reference_terminal_audit",
+      "tests.test_candidate_reference_campaign",
+      "tests.test_candidate_reference_execution",
+      "tests.test_candidate_reference_spec"
+    ],
+    "passed": 18,
+    "seconds": 41.012
+  }
+}

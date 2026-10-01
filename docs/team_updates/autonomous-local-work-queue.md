@@ -1,6 +1,79 @@
 # Autonomous local research queue
 
-## Live checkpoint: P2 accepted and frozen; single launch next
+## Live checkpoint: P2 completed and preserved; no incremental greedy-policy gain
+
+Updated2026-10-01T09:43Z. The approved single P2 has finished; no experiment is
+running. Do not resume it, reuse spare budget or recreate an automation to wait.
+
+| Item | Verified state |
+| --- | --- |
+| Execution |9dc736777393269b13b46680cec9e7ea2e84c052; implementation da5cfbae27b0f1154b10a2c1cc3ac7b7ba4e3735 |
+| Terminal |56/56 jobs, completed, child exit0, no forced kill,9,473.37 seconds; parent97343/child97654 ended and matching process scan empty |
+| Scientific work |9 preflight cases including36 clones;6 qualification episodes/all9 models pass;18 continued models/576 training episodes;27 sealed models;396 final evaluations |
+| Budget |51,360/51,480 env calls,2,304/2,304 Adam steps,under6h; no second attempt |
+| Primary result |Graph-PPO vs its own same-start frozen:0% cost gain,all36 world differences0,patient outcomes identical; same null vs BC/R4 and in self-only/flat |
+| Attribution |0.735498% lower mean cost vs MDL-2 is inherited R4 behavior,not incremental PPO or a new isolated GCN gain |
+| Clinical trade-off |Vs MDL-2:mean losses-23.4722,completions+9.3333,terminal active+14.1389; terminal obligations are not deaths or free benefit; no clinical noninferiority claim |
+| Mechanism readback |All9 PPO model weights changed,128 Adam steps each; all5,616 greedy test choices remain R4. Saved R4 probabilities89.9512%-90.1272%,minimum ranking margin3.5765 |
+| Independent closure audit |987 raw episodes/51,324 records plus36 clones; raw costs/identities/12 contrast calculations and324 full R4 trace aliases verified; no new forward/simulation/optimizer call |
+| Locks/preservation |282 source/runtime,7 R4 and prior evidence locks pass; original payload/launcher unchanged;5,254-file payload and265-file terminal archives/member hashes verified and Dropbox-local copies verified |
+| Limits |Only3 training blocks; development evidence; no optimality/universal RL-null/clean-DDPG superiority/deployment adaptation claim; flat unmatched and common graph-based R4 disclosed |
+| Engineering |315 pre-launch tests;19 post-closure tests/full compileall/diff check pass. Supplementary audit first encountered BC schema difference; error retained and only reader corrected; no science retry |
+| Evidence |specs/2026-10-01-reference-prior-residual/terminal_readout.md;reports/2026-10-01-reference-prior-integration/terminal-audit.json and terminal-preservation.json |
+| Next concrete action |Propose saved-training-data-only diagnosis of action advantages,clipping/value scales and ranking changes before choosing any new scientific intervention |
+| Exact next decision |Approve that read-only posthoc diagnostic packet only,with0 new trajectories/model fitting/test evaluation; any later experiment needs separate bounded approval |
+| Boundaries |Finite chain closed; no background research automation,remote push/PR/merge,messages,holdout,Howard approval claim or Stage E reopening. Dropbox cloud sync/Howard access remain unverified |
+
+## Previous checkpoint: P2 training and396 evaluations complete; raw verification running
+
+Observed2026-10-01T06:56Z. Actual execution HEAD9dc736777393269b13b46680cec9e7ea2e84c052,
+parent97343/PPID30450, child97654/PPID97343 with exact P2 module commands.
+Exclusive claim and child receipts exist. Nine real preflight cases completed
+504 calls including36 clone calls,0 optimizer steps; new qualification phase
+observed at104/312 calls (608 total). Matching live processes and a new completed
+phase boundary substantiate running status. Stdout shows preflight completion;
+stderr empty at this sample. No result, training gain or overall success yet.
+
+Update06:58Z: qualification completed312 calls, all9 models pass104 rows each,
+zero singleton states and maximum probability error2.345e-7 (within8 float32
+eps). First graph/PPO block60 completed4 episodes/one rollout/16 Adam steps;
+total1,024 environment calls at that persisted boundary. Full qualification
+artifact:payload/qualification.json under the unique P2 root. Final test phase
+has not opened. A separate read-only status watcher is not a second experiment.
+
+Update07:30Z: block60 all6 continued models complete,192 recorded training
+episodes; block61 graph/PPO at16/32 episodes, cumulative11,632 environment calls
+and832 optimizer steps at the latest sampled update boundary. Six training
+summaries/final model artifacts exist, zero evaluation indexes. Same parent/
+child97343/97654 verified,stderr0bytes. No performance claim from training logs.
+
+Update08:02Z: blocks60/61 all12 continued models complete (384 episodes),
+block62 graph/PPO at20/32 episodes. Latest sampled boundary21,824 env calls/
+1,616 optimizer steps;stderr still0bytes. Final tests remain unopened, same
+single attempt and unchanged scientific scope. Next:finish last block, seal all
+models, run prescribed final evaluations and independent raw audit/archive.
+
+Update08:32Z: all18 continued models completed576 training episodes and2,304
+Adam steps. All27 model artifacts sealed before first test entry. Final
+evaluation now running,3/33 policy indexes complete (36/396 episodes), at
+32,640 total env calls in latest sampled phase boundary. No evaluation updates;
+stderr0bytes. Next:finish fixed396 evaluations, independently recompute paired
+cost/clinical results, verify duplicate frozen/R4 lineage, then archive. Do not
+interpret incomplete curves or alter the locked model set based on results.
+
+Update09:05Z:33/33 evaluation policy jobs complete,396/396 final episodes,
+51,360 total environment calls and2,304 optimizer steps. All scientific
+collection/fitting is finished; process97654 remains live in independent
+verification (parent97343),54/56 serial jobs complete. No overall completion or
+performance conclusion claimed until raw verification/archive and clean exit.
+
+Next: observe this sole process through analytical qualification, conditional
+18 continued models and396 final evaluations, raw audit and archive. Do not
+change frozen code/config/HEAD or launch another instance. Terminal failure
+closes this attempt without repair/retry. This live document is the only
+uncommitted status edit; scientific sources and packet remain frozen.
+
+### Accepted launch record
 
 Updated2026-10-01. Zhaowei explicitly replied "批准" to the bounded P2 proposal.
 New authority:specs/2026-10-01-reference-prior-residual/execution_authorization.md.

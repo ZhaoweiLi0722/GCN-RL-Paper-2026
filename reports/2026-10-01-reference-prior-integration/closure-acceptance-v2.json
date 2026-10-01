@@ -1,0 +1,27 @@
+{
+  "additional_patient_simulator_calls": 0,
+  "additional_scientific_optimizer_steps": 0,
+  "compileall": {
+    "command": "python -m compileall -q .",
+    "exit_code": 0
+  },
+  "kind": "post-run-readback-schema-correction-and-regression-acceptance",
+  "original_scientific_results_modified": false,
+  "original_scientific_source_modified": false,
+  "reason": "BC checkpoints have synchronous history/steps and no PPO pending field; saved-data reader now explicitly branches by checkpoint format.",
+  "sources": {
+    "reports/2026-10-01-reference-prior-integration/terminal_audit.py": "05b6763d2e466c3e45e747e76e0cf493f81cfff40fbd86e990dceeabfe4c874b",
+    "tests/test_reference_terminal_audit.py": "edee6d93aac353efd3243b9f85a7668e696b975d9c354f62f10b22ade1d996fb"
+  },
+  "supersedes": "closure-acceptance.json (preserved)",
+  "tests": {
+    "modules": [
+      "tests.test_reference_terminal_audit",
+      "tests.test_candidate_reference_campaign",
+      "tests.test_candidate_reference_execution",
+      "tests.test_candidate_reference_spec"
+    ],
+    "passed": 19,
+    "seconds": 41.243
+  }
+}

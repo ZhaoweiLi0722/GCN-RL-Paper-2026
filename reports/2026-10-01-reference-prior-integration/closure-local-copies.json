@@ -1,0 +1,71 @@
+{
+  "cloud_sync_verified": false,
+  "copies": [
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/acceptance.json",
+      "sha256": "0953ef1cc8216636ab75cb630c40e734460e4bada036f024f51d72f480f73b3a",
+      "source": "reports/2026-10-01-reference-prior-integration/acceptance.json"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/closure-acceptance-v2.json",
+      "sha256": "30405bf4c72f286252401eca200274ae4614df8d94782d532006b2c98ce6310b",
+      "source": "reports/2026-10-01-reference-prior-integration/closure-acceptance-v2.json"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/closure-acceptance.json",
+      "sha256": "15267c67a0a8ccb072c5b6102351768951cdc91bbd3b7ebbd966b9186d84a34e",
+      "source": "reports/2026-10-01-reference-prior-integration/closure-acceptance.json"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/terminal-audit-first-readback-error.json",
+      "sha256": "61f7a51b48251f683f00d271695647825b1fcece384ac79cf06c2d8daeecfd42",
+      "source": "reports/2026-10-01-reference-prior-integration/terminal-audit-first-readback-error.json"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/terminal-audit.json",
+      "sha256": "f889605a92cf41aca104832e72bb503fbf67a1b615d05d70c99175b59fbb1abc",
+      "source": "reports/2026-10-01-reference-prior-integration/terminal-audit.json"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/terminal-preservation.json",
+      "sha256": "2e751c57162a09d527de068e99c779cb9d85a20726eb13914da0b9c9fdc0aecf",
+      "source": "reports/2026-10-01-reference-prior-integration/terminal-preservation.json"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/terminal_audit.py",
+      "sha256": "05b6763d2e466c3e45e747e76e0cf493f81cfff40fbd86e990dceeabfe4c874b",
+      "source": "reports/2026-10-01-reference-prior-integration/terminal_audit.py"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/terminal_readout.md",
+      "sha256": "367e28dd0c7ae9834a82ef8331d1257a8251c644ac31c21099578e2d064c2360",
+      "source": "specs/2026-10-01-reference-prior-residual/terminal_readout.md"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/readout/test_reference_terminal_audit.py",
+      "sha256": "edee6d93aac353efd3243b9f85a7668e696b975d9c354f62f10b22ade1d996fb",
+      "source": "tests/test_reference_terminal_audit.py"
+    }
+  ],
+  "howard_access_verified": false,
+  "kind": "non-overwriting-posthoc-audit-evidence-copies",
+  "sharing_permissions_changed": false
+}

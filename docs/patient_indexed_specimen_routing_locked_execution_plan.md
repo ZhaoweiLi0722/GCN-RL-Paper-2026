@@ -2068,3 +2068,44 @@ failure is terminal with preservation, not permission to repair and retry.
 Artificial pre-science tests may be fixed. No deployment adaptation or guaranteed
 positive/publication claim. Existing remote/holdout/Howard/Stage E restrictions
 remain in effect. Approval does not itself establish execution or success.
+
+#### P2 completed with null incremental greedy-policy outcome
+
+2026-10-01: the single approved execution at9dc736777393269b13b46680cec9e7ea2e84c052
+completed56/56 jobs and exited0 without forced termination. Nine preflight cases,
+six prior-qualification episodes/all9 policies passing,18 continued models/576
+training episodes and396 sealed-model final evaluations consumed51,360 env calls
+(including36 clones) and2,304 Adam steps in9,473.37seconds,within all caps.
+Actual parent97343/child97654 ended; post-exit matching-process scan is empty.
+
+Locked decision:limited_negative_or_inconclusive. Graph-PPO minus its own frozen
+controller is0 cost/clinical difference on all36 paired worlds; continued BC,
+R4,self-only and flat comparisons also show no incremental greedy-policy gain.
+The0.735498% cost benefit vs MDL-2 is inherited R4 behavior,not new PPO or a new
+isolated GCN contribution. Vs MDL-2,fewer losses/more completions coexist with
+more terminal active patients; the no-adverse-direction screen does not pass.
+No near-optimality,universal RL failure or clinical noninferiority conclusion.
+
+Saved checkpoints confirm128 Adam steps and changed weights in all9 PPO models,
+but all5,616 PPO greedy test choices remain R4. Saved reference probabilities
+stay89.9512%-90.1272%; reference margin remains at least3.5765. This identifies
+unchanged action ranking under the fixed prior/budget,not the causal effect of
+removing the prior or proof that reward is wrong. All324 frozen/PPO/BC traces
+equal their matched R4 physical traces. Only3 training blocks; duplicate frozen
+comparators do not add independent replications; flat remains unmatched.
+
+Independent closure readback verifies987 raw episodes,51,324 records+36 clones,
+cost/identity accounting,12 contrasts,27 model seals,source/runtime/input/prior
+locks and unchanged original evidence. No new model forwards,patient simulation
+or fitting. A supplementary audit-reader BC/PPO schema error was preserved and
+corrected; this was not a scientific failure/retry.315 pre-launch tests and19
+post-closure tests/full compileall pass. Full payload5,254-member archive SHA256
+581f2ebda6736aa10cbf0d64bdebfebe20d46ece16a402da8c5069d09225e799 and terminal
+265-member archive4334b109f8c6f91a029ecc8420bb1677390ec841b10e4ff4f1c7350f89945d6a
+are member-verified and copied byte-verified to the authorized new Dropbox-local
+subdirectory. Cloud sync/Howard access remain unverified; originals are retained.
+
+Readout:specs/2026-10-01-reference-prior-residual/terminal_readout.md.
+Close the finite chain. Proposed next decision is saved-training-data diagnosis
+only before designing another intervention,not an automatic retrain/reward/prior
+search. No remote operation,holdout use,Howard sign-off or Stage E reopening.

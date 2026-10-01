@@ -1,6 +1,59 @@
 # Autonomous local research queue
 
-## Live checkpoint: adaptive paper workflow active; next action is dynamic implementation
+## Live checkpoint: dynamic policy and continuation implemented; finish the orchestrator
+
+2026-10-01T19:16Z. Entry HEAD49d7ae8443b18c56b676dfb4092535af6c5484b4 on
+codex/september-research-integration. Zhaowei requested immediate active work,
+not a wait for the next schedule. Actual implementation proceeded this turn;
+no scientific scope changed. D1 is complete and D2 is partly integrated.
+
+Concrete code now exists in new,unregistered modules: dynamic candidate actor
+and independent value network; receipt adapters; separate-owner PPO; actor-only
+imitation; precise public-input collection; fixed-rollout continuation; durable
+trajectory/clone and actor/critic ledgers; and all-model sealed serial cursor.
+The actor has a trainable reference preference,not a fixed log prior. The
+critic receives public state without chosen actions or support-count pooling.
+PPO and BC retain same-start/restore contracts. Old source/config/result files
+and all historical failure evidence are unchanged.
+
+Integration result:78 focused tests passed in3.558s,including complete fake
+PPO/BC rollouts,interrupted collection/update restore,finite gradients,independent
+owners,terminal failure/interrupt evidence,non-refundable charging and the
+33-job cursor/nine-model barrier. Real Adam/SGD updates were forbidden;mock
+optimizer metadata changed but policy bytes did not. Patient simulations=0,
+new research trajectories=0,numerical fits=0. Full repository compileall passed.
+The fake cursor is NOT an end-to-end scientific runner acceptance result.
+
+Readout and commands:
+specs/2026-10-01-adaptive-paper-delivery/implementation-readout.md.
+The same advancement delegate Copernicus implemented model and session files,
+completed the failure-latch correction,and is now closed. Parent implemented
+and tested the update/resource/sequence/continuation adapters. Previous finite
+efficiency recommendations remain applied;no extra reviewer/gate was added.
+
+Next concrete authorized action: implement the complete prospective orchestrator
+using these working components,with graph-only disposable preflights,paired
+reference/own-policy qualification,the raw-cost/patient scalar verifier and
+project-local-only archive. Exercise that whole chain with fake inputs and
+forbidden numerical updates,then complete D3's exact input/runtime/source/seed
+freeze. Do not repeat the passed module tests unless their dependencies change;
+do not repeat a full historical audit. D2 is not marked complete yet.
+
+The existing same-thread heartbeat gcn-rl remains active;no duplicate schedule
+was created or other automation changed. Entry process scan found no research
+Python;all current test/compile commands exited. No scientific process was
+launched. Scheduling is not evidence of background training or guaranteed host
+uptime. Continue ordinary engineering without asking for another "continue".
+
+Exact approval boundary remains one consolidated S1 packet when D1-D3 are ready:
+22,224 proposed env.step calls,1,920 real optimizer calls,6h global cap,unchanged
+scenario/reward,three blocks and five controllers. It must explicitly replace
+the failed artificial prerequisite prospectively;1/9 remains failed. No new
+fit/patient call,reward/scenario search,remote action,Dropbox export,holdout or
+Stage E reopening is authorized now. Current supported patient conclusions have
+not changed. This turn removes implementation blockers,not paper evidence gaps.
+
+## Previous checkpoint: adaptive paper workflow active; next action is dynamic implementation
 
 2026-10-01T18:28:59Z. Entry HEAD7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f,
 clean worktree. User requests a detailed automatic plan that adapts to stage

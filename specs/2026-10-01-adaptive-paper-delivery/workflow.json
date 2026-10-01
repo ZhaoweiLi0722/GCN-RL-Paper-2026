@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 1,
-  "updated_at_utc": "2026-10-01T18:29:00Z",
+  "revision": 2,
+  "updated_at_utc": "2026-10-01T19:16:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
@@ -9,8 +9,8 @@
   "execution_config": false,
   "scientific_execution_authorized": false,
   "status": "engineering_active",
-  "current_task": "D1",
-  "next_concrete_action": "Implement a new unregistered dynamic request-conditioned actor and independent value model, using existing public candidate contracts; zero optimizer and patient calls.",
+  "current_task": "D2",
+  "next_concrete_action": "Wire the implemented dynamic model/session/continuation/owner budgets/phase cursor into one disabled scientific orchestrator, with paired own-path qualification and existing independent raw-cost verifier; fake fixtures only.",
   "authority": {
     "local_code_preparation": true,
     "synthetic_zero_update_tests": true,
@@ -53,8 +53,8 @@
     "note": "Planning ceilings only; do not execute or request an incomplete approval before D1-D3 are ready."
   },
   "tasks": [
-    {"id": "D1", "state": "pending", "authorized": true, "deliverable": "New variable-bank actor and separate value model with zero-update contract tests", "exit": "Usable implementation, not a numerical fit gate"},
-    {"id": "D2", "state": "pending", "authorized": true, "depends_on": ["D1"], "deliverable": "Serial integration, complete accounting/restore and independent scalar verifier tested with fake environments and forbidden optimizer sentinels", "exit": "Complete mock phase chain passes; actual science entry point stays disabled"},
+    {"id": "D1", "state": "completed_zero_update", "authorized": true, "deliverable": "New variable-bank actor and separate value model with zero-update contract tests", "exit": "Usable implementation, not a numerical fit gate"},
+    {"id": "D2", "state": "in_progress_continuation_integrated", "authorized": true, "depends_on": ["D1"], "deliverable": "Dynamic kernels, collection, continuation, owner ledger and phase cursor implemented and fake-tested; complete orchestrator/qualification/scalar-verifier wiring remains", "exit": "Complete mock phase chain passes; actual science entry point stays disabled"},
     {"id": "D3", "state": "draft_budget_complete_integration_pending", "authorized": true, "deliverable": "Proposed complete call/time arithmetic delivered in pilot-budget-draft.md/json; actual source/runtime/seed freeze still pending", "exit": "Ask one consolidated scientific approval question only when all fields and implementation are ready"},
     {"id": "S1", "state": "approval_required", "authorized": false, "depends_on": ["D1", "D2", "D3"], "deliverable": "Single end-to-end GCN PPO/frozen/BC-CONTINUE/R4/full-MDL2 comparison"},
     {"id": "S2", "state": "scope_required", "authorized": false, "deliverable": "Fair graph/self-only/flat attribution"},
@@ -64,13 +64,19 @@
   ],
   "progress": {
     "paper_evidence_gaps_closed_this_cycle": [],
-    "implementation_blockers_removed_this_cycle": [],
+    "implementation_blockers_removed_this_cycle": ["variable_support_actor_and_independent_public_state_critic", "two_owner_ppo_and_actor_only_bc_transactions", "greedy_qualification_capable_session", "fixed_rollout_continuation_and_nonrefundable_restore", "owner_clone_phase_ledgers_and_all_model_test_barrier"],
     "new_patient_performance_result": false,
     "preparation_only_cycles_without_new_deliverable": 0,
     "efficiency_review_trigger": "substantive_milestone_or_two_restatement_cycles",
     "relevant_research_process_observed": false,
     "process_inspection_verified": true,
-    "process_inspection_note": "2026-10-01 read-only host ps scan: no relevant Python; unrelated dashboard and Dropbox processes are not this workload. Sandbox denial was resolved by a read-only approved scan."
+    "process_inspection_note": "Read-only host scan at implementation entry found no research Python. Current work executed only the six new fake/synthetic test modules and compileall, all exited; no scientific launcher was invoked.",
+    "implementation_readout": "specs/2026-10-01-adaptive-paper-delivery/implementation-readout.md",
+    "tests_passed": 78,
+    "full_compileall_passed": true,
+    "real_optimizer_steps": 0,
+    "patient_environment_calls": 0,
+    "remaining_patient_comparison_blocker": "Complete orchestrator and paired qualification/raw-result verification wiring, then exact source/input/runtime/seed freeze and one prospective S1 amendment."
   },
   "decisions": [
     {
@@ -92,7 +98,8 @@
   ],
   "finite_agents": [
     {"id": "01a0f8b3-4760-7130-b7d9-5e5394abbfbc", "role": "advancement", "name": "Lovelace", "state": "completed_closed", "artifact": "pilot-budget-draft.md and pilot-budget-draft.json; stdlib arithmetic checked, no numerical research"},
-    {"id": "01a0f8b5-747b-7b10-abe2-6ec2051be37f", "role": "efficiency", "name": "Dalton", "state": "completed_closed", "artifact": "Two workflow corrections accepted; no additional release gate"}
+    {"id": "01a0f8b5-747b-7b10-abe2-6ec2051be37f", "role": "efficiency", "name": "Dalton", "state": "completed_closed", "artifact": "Two workflow corrections accepted; no additional release gate"},
+    {"id": "01a0f8d3-52ee-7801-8d2e-61ba1f5567c5", "role": "advancement", "name": "Copernicus", "state": "completed_closed", "artifact": "Dynamic model and failure-latched collection session; parent accepted and integrated into 78-test suite"}
   ],
   "on_terminal_failure": "Preserve evidence, close consumed attempt, no automatic repair-and-rerun; complete saved-evidence handoff.",
   "on_only_unapproved_work_remaining": "Present one concrete decision and delete only this schedule; do not repeatedly poll or invent work.",

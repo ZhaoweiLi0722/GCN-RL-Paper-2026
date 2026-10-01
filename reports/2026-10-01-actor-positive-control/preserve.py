@@ -1,4 +1,4 @@
-"""Archive the closed actor-control packet without overwriting prior evidence."""
+"""Local-only archive; Dropbox export is blocked pending explicit confirmation."""
 
 import json
 from pathlib import Path
@@ -12,11 +12,10 @@ ROOT = Path.cwd()
 RUN = ROOT / "results/candidate_actor_positive_control_20261001"
 REPORT = ROOT / "reports/2026-10-01-actor-positive-control"
 STORAGE = ROOT / "results/candidate_actor_positive_control_20261001_archive"
-DROPBOX = Path("/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_actor_positive_control_20261001")
 
 
 def main():
-    if STORAGE.exists() or DROPBOX.exists() or (REPORT / "preservation.json").exists():
+    if STORAGE.exists() or (REPORT / "preservation.json").exists():
         raise FileExistsError("preserve any existing snapshot; no overwrite/relaunch")
     assert not subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
     terminal = json.loads((RUN / "terminal.json").read_text())
@@ -44,17 +43,14 @@ def main():
         "engineering_passed": terminal["engineering_passed"]})
     archive = STORAGE / "completed-actor-positive-control.tar.gz"
     manifest = create_archive(payload, archive)
-    copies = [copy_verified(path, DROPBOX / path.name) for path in (
-        archive, archive.with_name(archive.name + ".manifest.json"),
-        ROOT / "specs/2026-10-01-actor-positive-control/readout.md")]
     assert inventory(RUN) == raw
     receipt = {"format": "actor-control-preservation-v1", "closure_commit": commit,
-        "archive": str(archive), "archive_manifest": manifest, "dropbox_local_copies": copies,
+        "archive": str(archive), "archive_manifest": manifest, "dropbox_local_copies": [],
+        "dropbox_copy_status": "blocked_by_permission_review_pending_exact_user_approval",
         "original_acceptance_unchanged": True, "cloud_sync_verified": False, "howard_access_verified": False}
     write_json_once(REPORT / "preservation.json", receipt)
-    copy_verified(REPORT / "preservation.json", DROPBOX / "preservation.json")
     print(json.dumps({"files": manifest["file_count"], "bytes": manifest["size_bytes"],
-        "archive_sha256": manifest["archive_sha256"], "dropbox_local_verified": True, "cloud_sync_verified": False}))
+        "archive_sha256": manifest["archive_sha256"], "dropbox_local_verified": False, "cloud_sync_verified": False}))
 
 
 if __name__ == "__main__":

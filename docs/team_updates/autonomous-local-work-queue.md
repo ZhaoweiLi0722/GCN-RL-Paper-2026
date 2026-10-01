@@ -13,7 +13,7 @@ also exit0. No patient/scientific fit occurred. No new numerical run authorized.
 | Validation |100 zero-update tests/full compileall/diff check pass;independent arithmetic/hash reader validates2,345 files,all1,152 charges,Adam counters,seals and gates without new neural forward |
 | Old evidence |P2 source/document locks,payload/launcher and closed calibration inventory unchanged |
 | Evidence |specs/2026-10-01-actor-positive-control/readout.md;reports/2026-10-01-actor-positive-control/verification.json |
-| Next closure |Archive packet and verify authorized new Dropbox-local copy,then close with local commit;cloud sync/Howard access not inferred |
+| Next closure |Local-only archive and local commit;Dropbox export blocked before launch by permission review,requires exact payload/destination approval;no workaround or implicit export |
 | Next proposed approval |Same actor/task with sampled returns and independent critic:9 fits,128 actor+128 critic calls each/2,304 total,13,824 artificial observations/30 numerical minutes,one configuration;NOT authorized/executed |
 | Integration gap |Real candidate requests/classes change with state;fixed toy indices cannot be submitted directly;future dynamic-support interface needs explicit design and contract tests |
 | Boundaries |No patient calls,search,reward change,retry,remote actions,automation,holdout,Howard approval claim or Stage E reopening |

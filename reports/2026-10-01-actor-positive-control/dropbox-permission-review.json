@@ -1,0 +1,10 @@
+{
+  "status": "copy_blocked_before_process_launch",
+  "payload": "Completed artificial actor-control archive with raw receipts, checkpoints, frozen source/config/protocol, verification and readout; plus archive manifest and preservation receipt",
+  "requested_destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_actor_positive_control_20261001",
+  "reason": "Permission review requires explicit authorization for this exact source/result payload and Dropbox-synchronized destination, which could export sensitive research material",
+  "alternative": "Only create and verify the archive inside the authorized local project worktree. Do not attempt Dropbox copying again without exact confirmation.",
+  "dropbox_copy_attempt_executed": false,
+  "cloud_sync_verified": false,
+  "howard_access_verified": false
+}

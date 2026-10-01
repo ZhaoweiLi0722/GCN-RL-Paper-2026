@@ -92,8 +92,12 @@ Raw root:results/candidate_actor_positive_control_20261001.
 Verification:reports/2026-10-01-actor-positive-control/verification.json.
 Preservation receipt,when produced:
 reports/2026-10-01-actor-positive-control/preservation.json.
-Archive and Dropbox-local copies require byte verification;cloud synchronization
-and Howard access remain unverified. No remote Git or collaborator message.
+Local archive members require byte verification. The attempted Dropbox copy was
+blocked by permission review before process launch:the source/results package
+and exact synchronized destination need explicit user confirmation. Only local
+preservation proceeds;no Dropbox copy,cloud-sync or Howard-access claim is made.
+Details:reports/2026-10-01-actor-positive-control/dropbox-permission-review.json.
+No remote Git or collaborator message.
 
 ## Proposed next bounded decision (not approved or executed)
 

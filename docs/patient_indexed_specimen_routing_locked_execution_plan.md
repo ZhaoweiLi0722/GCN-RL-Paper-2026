@@ -2244,3 +2244,23 @@ and synchronized destination need explicit confirmation. The safer alternative
 archives only inside this project;no Dropbox copy occurred and no workaround
 was attempted. New artificial numerical scope and optional Dropbox copying both
 remain pending separate user decisions. This finite packet is closed.
+
+#### Improvement plan and finite automatic engineering workflow requested
+
+2026-10-01: Zhaowei requested a complete plan, when to modify reward, and an
+automatic execution workflow. Authorize local planning, source/saved-receipt
+reward audit, standalone sampled-return diagnostic engineering and zero-update
+mock contract tests, local commits, and a same-thread continuation schedule.
+Plan:specs/2026-10-01-rl-improvement-workflow/plan.md; explicit authority and
+finite task states:workflow.json in the same directory. No reward is changed.
+
+The proposed artificial sampled-return/independent-critic packet still needs
+the specific pending approval:9 fits,128 actor plus128 critic calls each,
+2,304 total,13,824 invented training observations,30 numerical minutes,one
+configuration/attempt. No optimization may be hidden in preparatory tests.
+No new patient trajectory or fitting,scientific pilot,scenario/reward search,
+Dropbox export,remote action,holdout,Howard approval claim or Stage E reopening
+is authorized by scheduling. Preserve prior evidence and locked sources.
+Complete unblocked preparation,then stop/delete this schedule when the finite
+chain closes or only new-scope approval remains. A later explicit approval must
+be recorded before the corresponding run;silence is not consent.

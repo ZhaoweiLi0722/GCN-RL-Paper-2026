@@ -1,0 +1,55 @@
+{
+  "schema": "local-research-preparation-queue-v1",
+  "updated_at_utc": "2026-10-01T17:11:28Z",
+  "execution_config": false,
+  "plan": "specs/2026-10-01-rl-improvement-workflow/plan.md",
+  "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
+  "branch": "codex/september-research-integration",
+  "entry_head": "e9d5db00a5f49d8e5dfcc2fd2003212574247d25",
+  "status": "preparing",
+  "automation_id": null,
+  "automation_creation_verified": false,
+  "authority": {
+    "local_engineering_preparation": true,
+    "zero_optimizer_mock_tests": true,
+    "saved_data_reward_audit": true,
+    "local_commits_and_project_local_archives": true,
+    "sampled_return_artificial_fits": false,
+    "patient_environment_calls": false,
+    "patient_data_fitting": false,
+    "reward_modification": false,
+    "dropbox_export": false,
+    "remote_actions": false,
+    "holdout_use": false
+  },
+  "artificial_packet_proposal": {
+    "approval_status": "pending_explicit_user_reply",
+    "approval_evidence": null,
+    "fits": 9,
+    "actor_optimizer_calls_per_fit": 128,
+    "critic_optimizer_calls_per_fit": 128,
+    "maximum_optimizer_calls": 2304,
+    "maximum_training_action_observations": 13824,
+    "maximum_numerical_seconds": 1800,
+    "maximum_attempts": 1,
+    "configuration_search": false,
+    "automatic_retry": false,
+    "protocol_and_implementation_frozen": false,
+    "attempt_started": false
+  },
+  "tasks": [
+    {"id": "A1_PREP", "state": "pending", "deliverable": "specs/2026-10-01-sampled-return-control/protocol.md and zero-update tested implementation"},
+    {"id": "A2_CONTRACT", "state": "pending", "deliverable": "specs/2026-10-01-rl-improvement-workflow/candidate-contract-readout.md"},
+    {"id": "A2_REWARD", "state": "pending", "deliverable": "specs/2026-10-01-rl-improvement-workflow/reward-decision.md"},
+    {"id": "A1_RUN", "state": "approval_required", "deliverable": "single approved artificial packet with independent verification and local archive"},
+    {"id": "A3_DECISION", "state": "pending", "deliverable": "specs/2026-10-01-rl-improvement-workflow/readiness.md; no patient launch"}
+  ],
+  "observations": {
+    "matching_research_python_found": false,
+    "process_scan_verified": true,
+    "process_scan_note": "Restricted pgrep failed; approved read-only host pgrep then returned exit 1 with no matches.",
+    "new_numeric_work_in_this_planning_turn": 0
+  },
+  "stop_when": ["finite_chain_complete", "recorded_numerical_attempt_terminal_failure", "only_new_scope_approval_remains"],
+  "on_stop": "write_handoff_then_delete_only_this_automation"
+}

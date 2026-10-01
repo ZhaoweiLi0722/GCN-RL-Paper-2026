@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: actor-only artificial positive control passed and locally archived
+## Live checkpoint: improvement plan and finite automatic preparation requested
+
+2026-10-01T17:11Z. User requested a complete improvement plan, explicit reward
+change criteria, and an automatic workflow. Entry HEAD e9d5db00a5f49d8e5dfcc2fd2003212574247d25,
+clean worktree. Restricted process inspection failed; approved read-only host
+inspection then found no matching research Python. No new fit or simulation.
+
+Plan: `specs/2026-10-01-rl-improvement-workflow/plan.md`.
+Queue/authority: `specs/2026-10-01-rl-improvement-workflow/workflow.json`.
+Finite chain: sampled-return artificial diagnostic preparation, zero-update
+dynamic-candidate contracts, saved-data/source reward audit, then a bounded
+patient-pilot decision packet. A1 numerical execution remains pending explicit
+approval (9 fits,2,304 total calls,13,824 invented observations,30 numerical
+minutes,one attempt). The question was presented once; silence is not approval.
+
+Reward audit starts now as preparation; no reward coefficients/objective are
+modified. Patient work, reward revision, Dropbox export and remote actions
+remain unapproved. The closed 9/9 actor control is engineering evidence only.
+Next: validate and locally commit this plan, create the requested 30-minute
+same-thread automation, record its actual receipt, then let it continue the
+finite authorized preparation. Automation creation is not yet verified here.
+
+## Previous checkpoint: actor-only artificial positive control passed and locally archived
 
 2026-10-01. Frozen87621a18e84314f996ffcc2e8081bb99e6e3654c completed the single
 packet,exit0,1,152 Adam calls,3.140 numerical seconds. Independent scalar verifier

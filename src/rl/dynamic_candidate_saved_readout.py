@@ -86,7 +86,7 @@ def build_saved_readout(root, proposal_path, archive_manifest_path):
         entry = {}
         for key, leaf in (("header", "header.json"), ("events", "events.jsonl"), ("final_state", "final_state.json")):
             relative = (directory / leaf).as_posix()
-            entry[key] = {"path": relative, "bytes": (root / relative).stat().st_size(), "sha256": files[relative]}
+            entry[key] = {"path": relative, "bytes": (root / relative).stat().st_size, "sha256": files[relative]}
         index.append(entry)
     verified_files, outcomes = read_dynamic_raw_episodes(root, index, config)
     expected = {(b, "preflight", "preflight", 0) for b in config["blocks"]}

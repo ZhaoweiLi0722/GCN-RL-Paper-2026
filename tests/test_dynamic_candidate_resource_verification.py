@@ -495,5 +495,57 @@ class SavedQualificationReadoutTests(unittest.TestCase):
         json.dumps(report, allow_nan=False)
 
 
+class SavedReadoutIntegrationTests(unittest.TestCase):
+    def test_complete_saved_only_boundary_and_preservation(self):
+        from src.rl.dynamic_candidate_saved_readout import build_saved_readout
+        from src.utils.research_archive import inventory
+
+        cfg, streams = fixture_config()
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory).resolve()
+            root = base / "failed"
+            root.mkdir()
+            proposal = root / "proposal.json"
+            proposal.write_text(json.dumps({"scientific_config": cfg, "streams": streams}))
+            descriptors = []
+            for block in cfg["blocks"]:
+                descriptors.append((block, "preflight", "preflight", "prototype_preflight", 0))
+                descriptors.extend((block, "demonstration", "r4", "demonstration", w)
+                                   for w in range(cfg["initialization"]["demonstration_episodes_per_block"]))
+                descriptors.extend((block, "qualification", role, "qualification", w)
+                                   for role in ("r4", "initializer_greedy")
+                                   for w in range(cfg["qualification"]["fresh_worlds_per_block"]))
+            for block, split, role, stream, world in descriptors:
+                fixture_role = "r4" if role == "r4" else "own_frozen"
+                seed = streams["environment"][str(block)][stream][world]
+                header, rows, final = raw_episode(block, fixture_role, world, seed)
+                header.update(role=role, split=split, selection="reference" if role == "r4"
+                              else "sample" if role == "preflight" else "greedy")
+                fractional_resources(header, rows, final)
+                folder = root / "payload/episodes" / f"{split}-{block}-{role}-{world}"
+                folder.mkdir(parents=True)
+                (folder / "header.json").write_text(json.dumps(header))
+                (folder / "events.jsonl").write_text("".join(json.dumps(row) + "\n" for row in rows))
+                (folder / "final_state.json").write_text(json.dumps(final))
+            files = inventory(root)
+            manifest = base / "preservation.json"
+            manifest.write_text(json.dumps({"files": files, "file_count": len(files)}))
+            report = build_saved_readout(root, proposal, manifest)
+            self.assertEqual((report["episodes"], report["raw_rows"]), (39, 78))
+            self.assertEqual(report["episodes_by_split"], {"demonstration": 24, "preflight": 3, "qualification": 12})
+            self.assertTrue(report["source_unchanged"])
+            self.assertEqual(report["qualification"]["decision"], "full_qualification_unresolved")
+            for key in ("new_environment_steps", "new_optimizer_steps", "new_model_forwards", "checkpoint_loads"):
+                self.assertEqual(report[key], 0)
+            self.assertEqual(inventory(root), files)
+            external = base / "unbound-proposal.json"
+            external.write_bytes(proposal.read_bytes())
+            with self.assertRaisesRegex(ValueError, "archived proposal"):
+                build_saved_readout(root, external, manifest)
+            proposal.write_text("{}")
+            with self.assertRaisesRegex(ValueError, "preserved source inventory"):
+                build_saved_readout(root, proposal, manifest)
+
+
 if __name__ == "__main__":
     unittest.main()

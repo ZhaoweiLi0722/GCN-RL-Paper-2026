@@ -1,0 +1,14 @@
+{
+  "source_commit": "0218215",
+  "command": "python -m experiments.scripts.read_dynamic_candidate_saved",
+  "exit_code": 1,
+  "error": "TypeError: 'int' object is not callable",
+  "location": "src/rl/dynamic_candidate_saved_readout.py:89 stat().st_size()",
+  "phase": "saved-file index construction before raw episode arithmetic",
+  "new_environment_steps": 0,
+  "new_optimizer_steps": 0,
+  "new_model_forwards": 0,
+  "output_report_created": false,
+  "scientific_attempt_restarted": false,
+  "remedy": "Use st_size property; add full invented saved-bundle integration regression before recomputing saved-only arithmetic."
+}

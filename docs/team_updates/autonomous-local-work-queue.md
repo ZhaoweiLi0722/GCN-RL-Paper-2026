@@ -25,8 +25,15 @@ matching research Python. Necessary test/compile sessions finished, exit0.
 
 The original draft remains non-authorizing, and no execution_authorization.json
 has been created. A3 readiness decision is **not ready for a patient pilot**,
-not permission to skip artificial or dynamic-interface gates. Local code freeze
-and automation closure receipts are appended below after confirmation.
+not permission to skip artificial or dynamic-interface gates.
+
+Closure17:52Z: implementation/protocol/config frozen locally as
+2bf2403d346c708338a7ee20a3a6ee8bf190589e. The app confirmed deletion of only
+gcn-rl-reward (`deleteStatus=deleted`). Receipt:
+specs/2026-10-01-rl-improvement-workflow/closure-receipt.json. No other automation
+was changed. Pending approval is the sole next action; no research process or
+recorded artificial run was started. A future approval must bind this frozen
+implementation, not silently change its settings.
 
 ## Previous checkpoint: improvement plan and finite automatic preparation requested
 

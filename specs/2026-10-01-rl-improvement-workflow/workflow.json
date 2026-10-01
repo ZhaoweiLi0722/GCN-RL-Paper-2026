@@ -1,6 +1,6 @@
 {
   "schema": "local-research-preparation-queue-v1",
-  "updated_at_utc": "2026-10-01T17:50:00Z",
+  "updated_at_utc": "2026-10-01T17:52:12Z",
   "execution_config": false,
   "plan": "specs/2026-10-01-rl-improvement-workflow/plan.md",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
@@ -10,7 +10,10 @@
   "automation_id": "gcn-rl-reward",
   "automation_creation_verified": true,
   "automation_status_at_creation": "ACTIVE",
-  "automation_closure": "preparation_complete_delete_after_local_freeze",
+  "automation_closure": "deleted_after_preparation_complete_only_approval_gated_work_remains",
+  "automation_deletion_verified": true,
+  "automation_deletion_receipt": "specs/2026-10-01-rl-improvement-workflow/closure-receipt.json",
+  "implementation_commit": "2bf2403d346c708338a7ee20a3a6ee8bf190589e",
   "cadence_minutes": 30,
   "automation_receipt": "specs/2026-10-01-rl-improvement-workflow/automation-receipt.json",
   "authority": {
@@ -38,7 +41,7 @@
     "maximum_attempts": 1,
     "configuration_search": false,
     "automatic_retry": false,
-    "protocol_and_implementation_frozen": false,
+    "protocol_and_implementation_frozen": true,
     "attempt_started": false
   },
   "tasks": [

@@ -51,7 +51,10 @@ Neither mock acceptance nor an eventual artificial pass supplies the missing
 patient RL contribution. Keep patient losses, completions and unfinished work
 visible alongside raw total cost in the next prospective comparison.
 
-The finite preparation workflow can now stop once tests and the local freeze
-are recorded. Only approval-gated work remains; the schedule must not generate
-new experiments or repeated waiting notifications. No remote action, Dropbox
-export, formal holdout use, Howard sign-off or Stage E reopening is implied.
+Implementation/protocol/config freeze:
+`2bf2403d346c708338a7ee20a3a6ee8bf190589e`. The 121-test no-fitting suite and
+full repository compileall pass. The app confirmed deletion of this finite
+preparation schedule on 2026-10-01 at 17:52 UTC; see `closure-receipt.json`.
+Only approval-gated work remains. No new experiments or repeated waiting
+notifications should be created. No remote action, Dropbox export, formal
+holdout use, Howard sign-off or Stage E reopening is implied.

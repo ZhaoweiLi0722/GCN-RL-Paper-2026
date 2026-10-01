@@ -1,0 +1,16 @@
+{
+  "format": "calibration-engineering-prelaunch-v1",
+  "date": "2026-10-01",
+  "base_commit": "07f9766cdc188ffb8aba5e8a1fdb2550ffbfda4e",
+  "tests_passed": 87,
+  "test_command": "python -m unittest tests.test_candidate_calibration_engineering tests.test_reference_prior_candidate tests.test_candidate_policy_rollout tests.test_candidate_ppo_objective tests.test_research_archive",
+  "new_module_zero_update_tests": 14,
+  "compileall_exit_code": 0,
+  "diff_check_exit_code": 0,
+  "optimizer_calls_before_recorded_acceptance": 0,
+  "patient_calls": 0,
+  "registered_with_patient_runner": false,
+  "artificial_fits_started": false,
+  "gains_not_searched": true,
+  "limits": "Nine predetermined artificial fits only; no performance inference or automatic patient pilot"
+}

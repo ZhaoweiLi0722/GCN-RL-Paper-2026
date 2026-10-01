@@ -2156,3 +2156,17 @@ is member-verified;archive,manifest,readout and receipt are byte-verified in the
 new Dropbox-local training-diagnostic-20261001 subfolder. Cloud sync and Howard
 access are not verified. Preservation receipt is separate from the archived
 payload. Local results commit0988746;no scientific workload remains active.
+
+#### Artificial calibration engineering explicitly accepted
+
+2026-10-01: Zhaowei replied "按照你的思路 继续" to the bounded engineering
+proposal. Authorize one new unregistered candidate,zero-update contract tests,
+then nine invented numerical fixtures at most128 optimizer.step calls each,
+1,152 total and30 minutes for recorded numerical execution. Fixed protocol/config
+and implementation commit precede optimization; no tuning/expansion/retry after
+results. Existing patient source,configs,checkpoints and results stay unchanged.
+No patient trajectory,patient-data fitting,new scientific pilot,reward change,
+remote action,Howard approval claim,formal holdout or Stage E reopening.
+Details:specs/2026-10-01-candidate-calibration-engineering/protocol.md. Even full
+artificial acceptance would establish only necessary numerical capability,
+not PPO effectiveness or a new scientific performance result.

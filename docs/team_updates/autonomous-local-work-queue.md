@@ -1,6 +1,24 @@
 # Autonomous local research queue
 
-## Live checkpoint: saved training diagnosis complete; ranking and value barriers found
+## Live checkpoint: engineering calibration approved and being implemented
+
+2026-10-01: Zhaowei accepted the nine-fixture engineering-only proposal with
+"按照你的思路 继续". Actual base07f9766, clean at entry; related Python process
+scan empty. No patient experiment is running or authorized. New unregistered
+model only; all original P2 source/config/results remain unchanged.
+
+One fixed candidate normalizes explicit neural units and scales scorer/value
+outputs, preserving initial90% reference behavior and raw request/receipt units.
+Protocol:specs/2026-10-01-candidate-calibration-engineering/protocol.md. Next:
+Implementation ready:87 no-optimizer contract/regression/archive tests pass
+(14 new),full compileall/diff check pass. Evidence:reports/2026-10-01-candidate-
+calibration-engineering/prelaunch.json. No artificial fitting has started.
+Freeze locally,then execute the single9-fixture packet (128 optimizer calls each/1,152 total,
+30 numerical minutes). No gate adjustment, retry or scope expansion.
+No additional approval needed within this engineering packet. Any later patient
+pilot remains separately gated; no remote actions, reward change or automation.
+
+## Previous checkpoint: saved training diagnosis complete; ranking and value barriers found
 
 Updated2026-10-01. P2 remains closed with zero observed incremental greedy
 gain. The authorized readback finished; no research process is running.

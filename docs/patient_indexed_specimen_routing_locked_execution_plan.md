@@ -2213,3 +2213,23 @@ search,retry or expansion. Prior and head/optimizer change jointly;no causal
 ablation or original90%-sampling-policy continuity is claimed. Preserve old
 source/config/results,archive new evidence separately and keep Stage E closed.
 All local-only,holdout,Howard-approval and sharing restrictions remain in force.
+
+#### Actor-only positive control completed with engineering pass
+
+2026-10-01: frozen87621a18e84314f996ffcc2e8081bb99e6e3654c completed9 artificial
+fits,exactly1,152 Adam calls,3.140 numerical seconds,exit0. All9 pass their fixed
+100% accuracy/minimum0.1 margin gates;observed minimum margins2.6270-2.6657.
+Each model uses the same8 invented interpolation contexts;these are not72
+independent science replications. No patient call or scientific fitting occurred.
+The new actor changes head/prior/optimization jointly and uses exact oracle Q;
+no causal component attribution,graph advantage or patient RL gain is claimed.
+
+100 zero-optimizer tests/full compileall pass,with the pre-execution RNG-format
+test error and repair retained. Independent scalar reader verified2,345 files,
+1,152 charges,Adam counts,all final seals before tests and raw ranking/return
+arithmetic without new model evaluation. P2 locks/payload/launcher and previous
+calibration evidence remain unchanged. Readout:
+specs/2026-10-01-actor-positive-control/readout.md. Archive this finite packet.
+Proposed sampled-return/independent-critic artificial control is not yet approved
+or executed;fixed-bank patient integration also remains unresolved. No automatic
+pilot,search,reward modification,remote action,holdout use or Stage E reopening.

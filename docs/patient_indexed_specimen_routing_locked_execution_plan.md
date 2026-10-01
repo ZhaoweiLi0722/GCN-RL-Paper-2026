@@ -2200,3 +2200,16 @@ process scan empty. Cloud synchronization and Howard access remain unverified.
 Receipt:reports/2026-10-01-candidate-calibration-engineering/preservation.json.
 This finite packet is closed;the proposed actor-only control requires a new
 bounded approval and has not started. No patient experiment is authorized here.
+
+#### Actor-only artificial positive control explicitly accepted
+
+2026-10-01: Zhaowei replied "continue" to the specific nine-case artificial
+positive-control question. Authorize one fixed minimal state-conditioned actor,
+initialization-only small reference bias,no critic;128 calls per fixture,
+1,152 total and30 numerical minutes. Full details and immutable gate definitions:
+specs/2026-10-01-actor-positive-control/protocol.md. Freeze before its only run.
+No patient environment calls,data fitting,new scientific pilot,reward change,
+search,retry or expansion. Prior and head/optimizer change jointly;no causal
+ablation or original90%-sampling-policy continuity is claimed. Preserve old
+source/config/results,archive new evidence separately and keep Stage E closed.
+All local-only,holdout,Howard-approval and sharing restrictions remain in force.

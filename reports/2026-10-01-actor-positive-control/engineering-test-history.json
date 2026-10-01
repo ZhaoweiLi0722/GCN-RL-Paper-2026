@@ -1,0 +1,14 @@
+{
+  "format": "pre-execution-engineering-test-history-v1",
+  "first_run": {
+    "tests": 99,
+    "errors": 1,
+    "test": "test_serialization_and_rng_without_optimization",
+    "error": "TypeError: unsupported kernel-state type: ndarray",
+    "location": "save_envelope -> state_digest -> _json_tensor",
+    "optimizer_calls": 0,
+    "patient_calls": 0,
+    "numerical_acceptance_started": false
+  },
+  "repair": "Encode NumPy RNG as named scalar fields and an explicit uint32 key list; verify reconstruction with an isolated RandomState. No scientific retry."
+}

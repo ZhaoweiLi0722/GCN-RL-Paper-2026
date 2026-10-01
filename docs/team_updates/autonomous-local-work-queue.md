@@ -1,6 +1,23 @@
 # Autonomous local research queue
 
-## Live checkpoint: artificial calibration completed with no-go ranking result
+## Live checkpoint: actor-only positive control approved; engineering in progress
+
+2026-10-01: Zhaowei's "continue" accepts the proposed single nine-fixture
+actor-only artificial packet:128 calls each/1,152 total/30 numerical minutes.
+Entry HEAD e935d68,clean worktree,matching Python process scan empty. No patient
+simulation or scientific training authorized. Protocol:
+specs/2026-10-01-actor-positive-control/protocol.md. New unregistered fixed-bank
+linear actor with initialization-only tiny reference preference,no critic.
+This combines changes and is not a causal ablation or historical same-policy fit.
+Engineering ready:100 zero-optimizer tests(13 new),full compileall/diff check
+pass. A pre-execution NumPy RNG serialization error was repaired and preserved
+in reports/2026-10-01-actor-positive-control/engineering-test-history.json.
+No numerical acceptance has run. Next:freeze locally,run the single artificial
+packet,independent scalar verification and new archive.
+No new approval needed within this packet;any subsequent fit/patient work needs
+a separate bounded decision. No retries,search,reward change or remote actions.
+
+## Previous checkpoint: artificial calibration completed with no-go ranking result
 
 2026-10-01. Frozen4c90d201da2b8e8cfa67137d071ed3ceb9037106 completed9 invented
 fits/1,152 optimizer calls in6.250 numerical seconds; runner exit0. No related

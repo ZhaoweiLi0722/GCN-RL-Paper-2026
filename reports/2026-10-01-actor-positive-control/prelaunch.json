@@ -1,0 +1,17 @@
+{
+  "format": "actor-control-prelaunch-v1",
+  "observed_utc": "2026-10-01T16:42:34Z",
+  "tests": {
+    "passed": 100,
+    "new_actor_control_tests": 13,
+    "seconds": 0.912,
+    "modules": ["tests.test_actor_positive_control", "tests.test_candidate_calibration_engineering", "tests.test_reference_prior_candidate", "tests.test_candidate_policy_rollout", "tests.test_candidate_ppo_objective", "tests.test_research_archive"],
+    "optimizer_calls": 0,
+    "patient_calls": 0
+  },
+  "compileall_exit_code": 0,
+  "git_diff_check_exit_code": 0,
+  "numerical_acceptance_started": false,
+  "old_error_preserved": "reports/2026-10-01-actor-positive-control/engineering-test-history.json",
+  "next_action": "Freeze all implementation and protocol files locally, then the single authorized 9-fixture artificial packet"
+}

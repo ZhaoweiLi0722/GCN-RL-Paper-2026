@@ -1,0 +1,42 @@
+{
+  "format": "candidate-actor-positive-control-v1",
+  "engineering_only": true,
+  "scientific_execution_authorized": false,
+  "patient_calls_authorized": 0,
+  "historical_checkpoint_optimization_authorized": false,
+  "representations": ["graph", "self_only", "flat"],
+  "initialization_seeds": [101, 102, 103],
+  "encoder_width": 16,
+  "units": {
+    "node_divisors": [1000.0],
+    "global_divisors": [1.0, 1.0],
+    "action_divisors": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+    "link_divisor": 100000.0,
+    "logit_gain": 32.0
+  },
+  "initial_reference_logit": 0.0001,
+  "optimizer": {
+    "learning_rate": 0.0003,
+    "steps_per_fixture": 128,
+    "old_distribution_refresh_every": 4,
+    "clip_ratio": 0.2,
+    "entropy_coef": 0.01,
+    "max_grad_norm": 0.5
+  },
+  "training_times": [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+  "heldout_times": [0.1, 0.3, 0.7, 0.9],
+  "cues": [-1.0, 1.0],
+  "request_values": [0.0, 0.25, -0.25, 0.5, -0.5, 0.75],
+  "positive_cue_winner_request": 0.75,
+  "negative_cue_winner_request": 0.0,
+  "invented_return": {"intercept": -0.25, "remaining_time_slope": -2.75, "wrong_action_penalty": -0.25},
+  "caps": {"fixtures": 9, "total_optimizer_step_calls": 1152, "numerical_wall_seconds": 1800},
+  "gates": {
+    "initial_reference_logit_absolute_error": 0.0000001,
+    "heldout_greedy_accuracy": 1.0,
+    "heldout_minimum_winner_logit_margin": 0.1
+  },
+  "output": "results/candidate_actor_positive_control_20261001",
+  "must_not_register_with_patient_runner": true,
+  "no_retry_or_expansion": true
+}

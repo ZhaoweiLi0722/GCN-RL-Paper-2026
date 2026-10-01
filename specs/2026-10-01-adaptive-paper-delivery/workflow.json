@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 9,
-  "updated_at_utc": "2026-10-01T23:07:29Z",
+  "revision": 10,
+  "updated_at_utc": "2026-10-01T23:50:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
@@ -10,9 +10,9 @@
   "execution_authorization": "specs/2026-10-01-adaptive-paper-delivery/execution-authorization.json",
   "scientific_execution_authorized": false,
   "authorization_state": "Approved single attempt consumed; original authorization preserved unchanged,no further execution authority",
-  "status": "saved_readback_complete_qualification_entry_preparation",
+  "status": "saved_qualification_frozen_waiting_explicit_approval",
   "execution_commit": "af1fe201779477b71200d069ce7b446f39ee4b84",
-  "current_task": "S1_SAVED_QUALIFICATION_PREP",
+  "current_task": "S1_SAVED_QUALIFICATION_APPROVAL",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -26,7 +26,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Implement/test saved-qualification-only entrypoint and freeze source/runtime/input locks for saved-qualification-recovery.json. One624-scoring/900-second approval question is pending; no model/checkpoint execution before approval,no training after qualification. Do not repeat completed raw arithmetic.",
+  "next_concrete_action": "Await the already-issued explicit approval for saved-qualification-frozen.json:624 saved state scorings,4 checkpoint loads,900 seconds,one attempt,zero environment/optimizer/test calls. Then record/commit authorization before the separate launcher. No training after qualification;no repeated preparation or raw audit while waiting.",
   "authority": {
     "local_code_preparation": true,
     "synthetic_zero_update_tests": true,
@@ -54,9 +54,9 @@
     "kind": "heartbeat",
     "cadence_minutes": 30,
     "creation_verified": true,
-    "status": "ACTIVE",
+    "status": "PAUSED",
     "terminal_closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/s1-monitor-closure.json",
-    "current_receipt": "specs/2026-10-01-adaptive-paper-delivery/reader-recovery-automation.json",
+    "current_receipt": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-pause.json",
     "closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-closure.json",
     "receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-receipt.json",
     "direction_update_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-direction-update.json",
@@ -90,12 +90,34 @@
     {"id": "D2", "state": "completed_fixture_integration", "authorized": true, "depends_on": ["D1"], "deliverable": "Complete 33-scope fixture runner, qualification/forks/collection/updates/test seals/verifier/archive wiring; independent scalar verifier separately tested. In-owner restoration only; no scientific execution acceptance", "exit": "Complete mock chain passed; real entrypoint fails closed without explicit bound approval"},
     {"id": "D3", "state": "completed_source_frozen_engineering", "authorized": true, "deliverable": "Exclusive claim, committed approval/live admission, external watchdog, inner compute and terminal deadlines; 334 source/6 input/runtime locks plus 499-file local seed audit frozen and reread from clean commits", "exit": "One complete S1 decision in approval-request.md; no real scientific preflight performed"},
     {"id": "S1", "state": "terminal_runtime_failure_in_raw_qualification_reader", "authorized": false, "attempt_consumed": true, "depends_on": ["D1", "D2", "D3"], "deliverable": "39 complete episode records and three initializers preserved; no PPO/BC continuation or final evaluation"},
+    {"id": "S1_SAVED_QUALIFICATION_PREP", "state": "completed_frozen_unapproved", "authorized": true, "deliverable": "Separate saved-only loader/scorer,92 passing zero-update tests,343 source/42 input/runtime locks;no real scoring or original S1 restart"},
+    {"id": "S1_SAVED_QUALIFICATION_APPROVAL", "state": "waiting_user", "authorized": false, "deliverable": "One624-scoring,4-load,900-second qualification-only decision;training not included"},
     {"id": "S2", "state": "scope_required", "authorized": false, "deliverable": "Fair graph/self-only/flat attribution"},
     {"id": "S3", "state": "scope_required", "authorized": false, "deliverable": "Strong information-matched baselines and justified robustness"},
     {"id": "S4", "state": "scope_required", "authorized": false, "deliverable": "Independent confirmation with prespecified effect and uncertainty"},
     {"id": "M1_PREP", "state": "completed_local_draft", "authorized": true, "deliverable": "manuscript-claims-draft.md reuses the existing evidence map, separates historical package gain, unestablished RL increment and prospective mechanism scope; no new outcome analysis"}
   ],
   "progress": {
+    "saved_qualification_preparation": {
+      "implementation_commit": "1fd62b2afe29e618cf8747933d59cceabce26cce",
+      "frozen_packet": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-frozen.json",
+      "packet_sha256": "0f46307d6ecca4f3b317fe8a18b88c6291af5b6b866c86c0764be209475e2afb",
+      "readout": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-preparation.md",
+      "source_locks": 343,
+      "input_locks": 42,
+      "runtime_locked": true,
+      "tests_passed": 92,
+      "tests_seconds": 5.942,
+      "full_compileall_passed": true,
+      "new_research_checkpoint_loads": 0,
+      "new_research_model_forwards": 0,
+      "new_environment_calls": 0,
+      "new_optimizer_updates": 0,
+      "result_root_exists": false,
+      "approval_received": false,
+      "qualification_executed": false,
+      "automatic_continuation_authorized": false
+    },
     "saved_readback": {
       "source_commit": "c895fc6c476bf8dc729746a3dfa5799aeb4245d4",
       "report": "reports/2026-10-01-s1-saved-readback/readout.json",
@@ -142,6 +164,14 @@
     "remaining_patient_comparison_blocker": "Reader repaired and raw necessary conditions pass;full frozen qualification scoring and any subsequent training recovery remain separately bounded decisions. No PPO outcome exists."
   },
   "decisions": [
+    {
+      "date": "2026-10-01",
+      "trigger_evidence": "Saved-only entrypoint plus92 zero-update tests and source/runtime/input freeze completed;no matching research process or approval record",
+      "old_action": "Prepare the missing saved-model qualification entrypoint",
+      "new_action": "Pause the existing visible heartbeat and hand off the exact unapproved624-scoring packet;reuse saved models and raw outcomes without refitting",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "One existing qualification-only question remains pending;no automatic training even on pass"
+    },
     {
       "date": "2026-10-01",
       "trigger_evidence": "All39 saved episodes verified;three own paths104/104 reference agreement;all six paired qualification outcomes exactly equal R4",
@@ -216,6 +246,8 @@
     }
   ],
   "finite_agents": [
+    {"id": "01a0f9d2-97e0-7490-9866-e4d59244135b", "role": "advancement", "name": "Gauss", "state": "completed_closed", "artifact": "23 invented zero-update saved-policy tests;identified R4 lineage omission fixed by coordinator;integrated92-test suite passed"},
+    {"id": "01a0f9d2-984a-7cb2-9d9a-f7457e9e160f", "role": "efficiency", "name": "Faraday", "state": "completed_closed", "artifact": "Thin saved-policy restoration,reuse raw readout,and pause at one complete approval;no new gate"},
     {"id": "01a0f9b2-22e0-7bd3-b90a-9e03ab4ceb87", "role": "advancement", "name": "Chandrasekhar", "state": "completed_closed", "artifact": "29 additive regression tests;parent integrated with full saved-bundle test into59-test passing suite"},
     {"id": "01a0f9b2-2350-7b31-b1c9-38b82f7fb13a", "role": "efficiency", "name": "Pascal", "state": "completed_closed", "artifact": "Separate stop-science from stop-engineering,reuse preservation,one bounded recovery question;no extra gate"},
     {"id": "01a0f8b3-4760-7130-b7d9-5e5394abbfbc", "role": "advancement", "name": "Lovelace", "state": "completed_closed", "artifact": "pilot-budget-draft.md and pilot-budget-draft.json; stdlib arithmetic checked, no numerical research"},

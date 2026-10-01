@@ -1,0 +1,15 @@
+{
+  "automation_id": "gcn-rl",
+  "status": "PAUSED",
+  "app_update_confirmed": true,
+  "toml_readback_confirmed": true,
+  "target_thread_id": "019f2ea2-0217-7b71-90cf-791dc05cc921",
+  "rrule": "FREQ=MINUTELY;INTERVAL=30",
+  "updated_at_epoch_ms": 1790898552021,
+  "reason": "Finite engineering chain completed;exact saved-model-only execution approval remains pending",
+  "deleted": false,
+  "other_automations_modified": false,
+  "new_scientific_execution_started": false,
+  "research_process_found_in_host_scan": false,
+  "process_scan": "ps -axo pid,ppid,stat,etime,command filtered for dynamic_candidate or saved_qualification;no matches after prepare exit0"
+}

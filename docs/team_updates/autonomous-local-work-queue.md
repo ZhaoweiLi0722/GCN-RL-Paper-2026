@@ -1,6 +1,45 @@
 # Autonomous local research queue
 
-## Live checkpoint: reader fixed; saved initializer matches R4, full qualification pending
+## Live checkpoint: saved qualification entrypoint frozen; awaiting execution approval
+
+2026-10-01T23:50Z. Engineering milestone complete. Implementation commit
+1fd62b2afe29e618cf8747933d59cceabce26cce adds a separate read-only qualification
+entrypoint, exact saved-example/raw-record joins, CPU weights-only envelope
+loading, irreversible load/forward debits, an owned outer timeout, per-path
+receipts and terminal readback. It never restores the failed campaign, an
+environment or an optimizer. No source-frozen historical module was changed.
+
+92 relevant zero-update/artificial/mock tests passed in5.942s;full-repository
+compileall passed. The advancement agent Gauss delivered23 tests and found a
+missing R4-path model-lineage check,which the coordinator fixed. The efficiency
+agent Faraday advised thin restoration,reuse of the completed raw readout,and
+one handoff;both finite agents completed and closed. Two fixture-only failures
+caused by macOS temporary-path aliases were fixed by resolving the test root.
+These were engineering tests,not scientific attempts.
+
+The unapproved saved-qualification-frozen.json binds343 source files,42 input
+files and CPU float32 runtime to1fd62b2. Packet SHA256:
+0f46307d6ecca4f3b317fe8a18b88c6291af5b6b866c86c0764be209475e2afb.
+Preparation exited0 with0 checkpoint loads/model forwards/environment calls/
+optimizer updates. The new result root and separate approval file do not exist.
+Host PID/PPID/command scan after preparation found no matching dynamic-candidate
+or saved-qualification process. No experiment is running or claimed complete.
+
+The prior39-episode result is reused,not rerun:initialization retains R4 behavior;
+full qualification still unresolved;no RL benefit demonstrated. Original S1
+remains terminal. See saved-qualification-preparation.md for the executable
+handoff and the remaining patient-performance comparison blocker.
+
+Automation gcn-rl is now PAUSED,not deleted;app update and TOML readback verified.
+Only one decision remains:approve the existing3 saved models and1 completed
+collection checkpoint for624 frozen state scorings,4 loads,900 seconds,one
+attempt,0 new simulation/optimizer/test calls. The complete question was already
+issued and no answer has arrived. Do not ask for small preparation approvals or
+do another audit while waiting. Once explicitly approved,record exact approval,
+append change control and commit it before launch. Passing qualification does
+not authorize PPO/BC continuation;that remains a different bounded package.
+
+## Previous checkpoint: reader fixed; saved initializer matches R4, full qualification pending
 
 2026-10-01T23:07:29Z. Additive reader frozen atc895fc6; current original S1
 attempt remains closed. Completed saved-only readout exit0,39episodes/2,028rows;

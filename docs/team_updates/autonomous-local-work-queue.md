@@ -18,9 +18,15 @@ minutes,one attempt). The question was presented once; silence is not approval.
 Reward audit starts now as preparation; no reward coefficients/objective are
 modified. Patient work, reward revision, Dropbox export and remote actions
 remain unapproved. The closed 9/9 actor control is engineering evidence only.
-Next: validate and locally commit this plan, create the requested 30-minute
-same-thread automation, record its actual receipt, then let it continue the
-finite authorized preparation. Automation creation is not yet verified here.
+Plan committed as dc75396. JSON/budget arithmetic, full repository compileall
+and diff check pass; no executable code or research output changed. Same-thread
+30-minute automation `gcn-rl-reward` creation returned ACTIVE and its card was
+rendered by a view call. Receipt:specs/2026-10-01-rl-improvement-workflow/automation-receipt.json.
+An initial tool argument rejection created nothing; the corrected call created
+one task. No scheduled run or numerical experiment has yet been observed.
+Next concrete action: A1 protocol/standalone sampled-return implementation and
+zero-update tests; A2 reward/source and candidate-contract audits can proceed
+without the pending numerical approval. No new approval needed for those steps.
 
 ## Previous checkpoint: actor-only artificial positive control passed and locally archived
 

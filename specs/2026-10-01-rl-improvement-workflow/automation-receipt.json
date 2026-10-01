@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-01",
+  "plan_commit": "dc75396",
+  "automation_id": "gcn-rl-reward",
+  "kind": "heartbeat",
+  "destination": "current_thread",
+  "cadence_minutes": 30,
+  "creation_confirmed": true,
+  "status_in_creation_receipt": "ACTIVE",
+  "creation_message": "Created automation in the app.",
+  "view_card_rendered": true,
+  "initial_validation_error": "First create rejected before creation: missing targetThreadId or destination=thread. Corrected by setting destination=thread.",
+  "verification": {
+    "workflow_json_and_budget_arithmetic": "passed",
+    "git_diff_check": "passed",
+    "full_repository_compileall": "passed",
+    "new_executable_code_in_plan_commit": false,
+    "new_experiment_started": false,
+    "reward_modified": false
+  },
+  "limits": "Creation and card rendering do not verify a scheduled run, experiment process, future host availability, or numerical execution authorization."
+}

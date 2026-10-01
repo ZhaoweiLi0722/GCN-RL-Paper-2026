@@ -7,8 +7,11 @@
   "branch": "codex/september-research-integration",
   "entry_head": "e9d5db00a5f49d8e5dfcc2fd2003212574247d25",
   "status": "preparing",
-  "automation_id": null,
-  "automation_creation_verified": false,
+  "automation_id": "gcn-rl-reward",
+  "automation_creation_verified": true,
+  "automation_status_at_creation": "ACTIVE",
+  "cadence_minutes": 30,
+  "automation_receipt": "specs/2026-10-01-rl-improvement-workflow/automation-receipt.json",
   "authority": {
     "local_engineering_preparation": true,
     "zero_optimizer_mock_tests": true,

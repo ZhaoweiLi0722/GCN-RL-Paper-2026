@@ -2437,3 +2437,20 @@ All owned science/archive commands exited;host scan found no matching Python.
 Only its gcn-rl-s1 monitor was deleted. Saved-data diagnosis may inform a new
 bounded recovery decision;unused budget is not permission to resume. No source
 fix,new fitting,patient episode,remote action or Dropbox copy occurred at closure.
+
+#### S1 saved-data reader repair and scheduler lifecycle clarification
+
+2026-10-01: Zhaowei requested continuation and explanation of the inactive
+automation. Re-enable one same-thread finite engineering workflow. The consumed
+S1 stays closed;new versioned modules may repair raw resource typing and recompute
+existing saved data with no model scoring,checkpoint loading,environment calls
+or optimizer updates. Keep original sources/evidence immutable. Use the existing
+preservation manifest,not another whole-history audit. Saved initializer choices
+and outcomes may already reject necessary qualification conditions;do not spend
+another scoring experiment merely to reconfirm a sufficient stop condition.
+
+Stopping failed science does not cancel authorized engineering. At a genuine
+new-science permission boundary,prepare one complete decision and PAUSE the
+visible engineering schedule rather than deleting it. This scheduling change
+does not grant any scientific retry,unused budget,reward change,remote action,
+Howard sign-off or Stage E reopening.

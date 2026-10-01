@@ -1,6 +1,30 @@
 # Autonomous local research queue
 
-## Live checkpoint: S1 terminal raw-verifier failure; no PPO or test result
+## Live checkpoint: additive reader repair and saved-only readback
+
+2026-10-01T23:02:43Z. Entry HEAD414218d,clean integration worktree. The user
+asked to continue and why automation was not enabled. The S1 monitor deletion
+receipt and current automation TOMLs confirm deliberate deletion;host PID/PPID/
+command scan found no run_dynamic_candidate_pilot process. No restart occurred.
+Created one same-thread gcn-rl heartbeat ACTIVE,every30minutes,and reread its
+exact active status/cadence/thread. No unrelated schedule was changed.
+
+Added a new versioned resource reader and saved-only arithmetic entrypoint;
+old frozen reader/sources/results remain unchanged. Capacity/reagent flows and
+replenishment retain their legitimate fractional quantities,patient/specimen
+checks remain integer. No model forward,checkpoint load,environment or optimizer
+call is authorized by this repair. Qualification necessary conditions can be
+read from already saved raw outcomes and initializer-greedy choices;this may
+avoid an unnecessary model-recovery request if those conditions already fail.
+
+Advancement agent Chandrasekhar owns only regression tests. Read-only efficiency
+agent Pascal completed and closed:continue engineering after stopping failed
+science,reuse preservation,and ask once only at the real recovery boundary.
+Next:run relevant zero-execution tests and compileall,commit source,then compute
+the existing39-episode readout with before/after preservation hashes. No new
+patient-performance result or qualification verdict is claimed at this checkpoint.
+
+## Previous checkpoint: S1 terminal raw-verifier failure; no PPO or test result
 
 2026-10-01T20:24Z. The single S1 attempt at execution commitaf1fe20 terminated
 exit1 after288.884seconds. Parent42349 and child42704 exited;the host process

@@ -1,0 +1,14 @@
+{
+  "automation_id": "gcn-rl",
+  "name": "GCN-RL reader repair and saved-data progression",
+  "kind": "heartbeat",
+  "status_at_creation": "ACTIVE",
+  "cadence_minutes": 30,
+  "target_thread_id": "019f2ea2-0217-7b71-90cf-791dc05cc921",
+  "tool_receipt": "Created automation in the app.",
+  "active_status_cadence_thread_readback_verified": true,
+  "scope": "Additive reader correction, saved-data arithmetic, tests and one bounded recovery decision. No science restart.",
+  "permission_boundary_behavior": "Pause visibly instead of delete; no idle polling.",
+  "other_automations_modified": false,
+  "current_training_process": false
+}

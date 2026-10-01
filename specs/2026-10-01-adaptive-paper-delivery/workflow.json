@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 7,
-  "updated_at_utc": "2026-10-01T20:27:00Z",
+  "revision": 8,
+  "updated_at_utc": "2026-10-01T23:02:43Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
@@ -10,9 +10,9 @@
   "execution_authorization": "specs/2026-10-01-adaptive-paper-delivery/execution-authorization.json",
   "scientific_execution_authorized": false,
   "authorization_state": "Approved single attempt consumed; original authorization preserved unchanged,no further execution authority",
-  "status": "single_s1_terminal_verifier_failure",
+  "status": "saved_only_reader_repair_in_progress",
   "execution_commit": "af1fe201779477b71200d069ce7b446f39ee4b84",
-  "current_task": "S1",
+  "current_task": "S1_READER_REPAIR",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -26,7 +26,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Propose a separate reader-repair and saved-artifact qualification-only packet: preserve valid fractional capacity/reagent/replenishment,retain integer patient/specimen checks,zero new environment/optimizer calls and no PPO/test continuation. Checkpoint restorable ownership remains unverified.",
+  "next_concrete_action": "Validate and commit additive resource-contract reader,then re-read existing39 episodes and necessary qualification conditions. Zero model forwards,checkpoint loads,environment or optimizer calls. Prepare one recovery decision only if the saved conditions do not already preclude continuation.",
   "authority": {
     "local_code_preparation": true,
     "synthetic_zero_update_tests": true,
@@ -50,17 +50,19 @@
     "decision_record_fields": ["date", "trigger_evidence", "old_action", "new_action", "scientific_locks_unchanged", "approval_requirement"]
   },
   "automation": {
-    "id": "gcn-rl-s1",
+    "id": "gcn-rl",
     "kind": "heartbeat",
     "cadence_minutes": 30,
     "creation_verified": true,
-    "status": "DELETED",
+    "status": "ACTIVE",
     "terminal_closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/s1-monitor-closure.json",
-    "current_receipt": "specs/2026-10-01-adaptive-paper-delivery/s1-monitor.json",
+    "current_receipt": "specs/2026-10-01-adaptive-paper-delivery/reader-recovery-automation.json",
     "closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-closure.json",
     "receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-receipt.json",
     "direction_update_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-direction-update.json",
-    "scientific_intent_prompt_readback_exact": true
+    "scientific_intent_prompt_readback_exact": false,
+    "active_configuration_readback_verified": true,
+    "terminal_science_does_not_cancel_authorized_engineering": true
   },
   "pilot_proposal": {
     "draft": "specs/2026-10-01-adaptive-paper-delivery/pilot-budget-draft.json",
@@ -124,6 +126,14 @@
     "remaining_patient_comparison_blocker": "Confirmed reader contract defect: legal continuous capacity,reagent,replenishment fields are routed to an integer-only helper. Qualification unknown; needs separately authorized saved-artifact qualification recovery,no PPO outcome exists."
   },
   "decisions": [
+    {
+      "date": "2026-10-01",
+      "trigger_evidence": "User requests continuation and asks why automation appears inactive; live app configuration confirms both prior schedules were deleted,not a running workload",
+      "old_action": "Terminal science closure also removed the only continuation schedule",
+      "new_action": "Create one30-minute engineering/saved-evidence heartbeat,finish versioned reader and raw readout now; pause visibly at a genuine new-scope decision instead of deleting the workflow",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "No restart or new science. Frozen-model scoring/continuation still needs a complete separate authorization; already saved raw arithmetic is permitted."
+    },
     {
       "date": "2026-10-01",
       "trigger_evidence": "qualification raw-reader ValueError non-integer raw vector; terminal exit1 after2040 environment debits and768 actor updates",
@@ -192,7 +202,7 @@
     {"id": "01a0f91d-2b31-75b2-ba66-b9c4ed62cbdb", "role": "advancement", "name": "Mendel", "state": "completed_closed", "artifact": "Read-only current raw boundary and exact final evidence-field map; primary decision cannot replace PPO-vs-BC contrast; no performance claim"},
     {"id": "01a0f921-b0a8-7f43-a232-5695cb3b92c0", "role": "advancement", "name": "Fermat", "state": "completed_closed", "artifact": "Independent exact fractional-field/source-contract diagnosis and post-collection recovery boundary; no checkpoint/model/environment execution or edits"}
   ],
-  "on_terminal_failure": "Preserve evidence, close consumed attempt, no automatic repair-and-rerun; complete saved-evidence handoff.",
-  "on_only_unapproved_work_remaining": "Present one concrete decision and delete only this schedule; do not repeatedly poll or invent work.",
+  "on_terminal_failure": "Preserve evidence and close consumed science attempt. Continue authorized additive repair,saved-evidence analysis and handoff; never retry science automatically.",
+  "on_only_unapproved_work_remaining": "Present one complete decision and pause only this schedule with a visible reason; retain it rather than delete. No repeated polling or invented work.",
   "on_roadmap_complete": "Deliver manuscript and reproducibility handoff; no automatic submission or extra experiments."
 }

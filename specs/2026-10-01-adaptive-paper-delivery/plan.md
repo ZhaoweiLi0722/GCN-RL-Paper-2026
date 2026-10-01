@@ -229,6 +229,19 @@ whole-history hash sweeps except mandated run/archive boundaries.
 
 ## Scheduling and persistence
 
+### 2026-10-01 lifecycle correction
+
+After S1 failed, its monitor was correctly deleted under its own instructions,
+but that also removed the only scheduled path for still-authorized engineering.
+Zhaowei asked why automation was inactive and requested continuation. The new
+`gcn-rl` heartbeat covers additive reader repair, saved-only arithmetic and one
+recovery decision packet, not another S1 attempt. Stop a failed scientific run;
+continue unblocked local engineering and saved-evidence synthesis in the same
+turn. When only new science approval remains, PAUSE the visible task with the
+exact reason instead of deleting it. This paragraph supersedes the earlier
+delete-on-permission-boundary scheduling text below, not the no-retry rule.
+Do not keep polling an unanswered question or invent more experiments.
+
 Create one same-thread heartbeat every 30 minutes; continue multiple unblocked
 steps in one turn, not one file per wake-up. Inspect existing schedules first
 and leave unrelated tasks unchanged. Read actual branch/HEAD/diff, current

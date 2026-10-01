@@ -1,0 +1,14 @@
+{
+  "scope": "post-run archival helper and saved evidence closure; no new fits",
+  "tests": "python -m unittest tests.test_research_archive tests.test_sampled_return_control",
+  "tests_passed": 32,
+  "test_seconds": 21.273,
+  "test_exit_code": 0,
+  "compileall": "python -m compileall -q .",
+  "compileall_exit_code": 0,
+  "git_diff_check_exit_code": 0,
+  "runtime_execution_exit_code": 0,
+  "independent_verification_exit_code": 0,
+  "engineering_gate_passed": false,
+  "note": "All numerical results are from the already completed single packet; these tests do not add scientific observations. Preservation receipt is produced separately only after all archive members verify."
+}

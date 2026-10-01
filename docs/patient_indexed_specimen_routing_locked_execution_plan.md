@@ -2313,3 +2313,26 @@ action, holdout, Howard approval claim or Stage E reopening. Complete numerical
 execution, independent saved-receipt verification and project-local archiving
 without asking again at routine intermediate steps. Report null/failed gates
 as clearly as improvements. No artificial result is a patient RL contribution.
+
+#### Sampled-return packet completed with partial learning and failed acceptance
+
+2026-10-01: the single packet at4763e1e1fd4dfd658b4026f1d84ba69f68a839b6
+completed exit0:9 artificial fits,2,304 optimizer calls,13,824 observations,
+13.753 numerical seconds. Independent verification also exit0;9,863 raw files,
+private RNG replay,scalar returns/advantages,Adam counters,charges and seals
+reconciled. Prior P2/calibration/actor-control evidence unchanged. No patient
+calls/fits,reward changes or extra evaluation forwards.
+
+Acceptance fails:only1/9 fits passes all prospective gates.9/9 improve exact
+stochastic expected toy return,3/9 improve greedy accuracy,6/9 remain50% and
+choose one request across all test contexts. Every winning action was observed
+in training;the three coverage failures miss only a nonwinning request.
+All critic relative-MSE gates pass,which is insufficient to establish reliable
+state-dependent learning. No graph advantage or patient-performance claim.
+Readout:specs/2026-10-01-sampled-return-control/readout.md.
+
+This numerical attempt is closed,not a retryable runtime failure. Finish
+project-local archival,then stop the finite chain. A focused training-only
+baseline/credit-assignment comparison is a proposal requiring separate bounded
+approval,not an authorization to fit,retune or change reward. Do not reopen
+patient work,holdout,Stage E,remote actions or the deleted automation.

@@ -1,6 +1,33 @@
 # Autonomous local research queue
 
-## Live checkpoint: bounded sampled learning packet accepted and awaiting launch
+## Live checkpoint: sampled-return packet executed and verified; gate failed
+
+2026-10-01T18:05Z. Executed once at4763e1e1fd4dfd658b4026f1d84ba69f68a839b6;
+runner and independent verifier both finished exit0. Nine artificial fits,
+2,304 optimizer calls,13,824 observations,13.753 numerical seconds. No patient
+simulation/fitting or reward change. Both stderr logs empty. The numerical
+attempt is consumed;no retry or extra fitting. Local archival is the remaining
+in-scope action, not another experiment.
+
+| Item | Verified result |
+| --- | --- |
+| Acceptance |1/9 fits pass all gates;overall no-go for patient execution |
+| Partial improvement |9/9 stochastic expected returns improve;only3/9 greedy accuracies improve;6/9 remain50% |
+| State dependence |Six final actors pick one request for all eight test contexts;graph/self_only-103 reach75%,flat-101 reaches100% |
+| Coverage |6/9 pass all-action coverage;every winning action was observed in every training context, so missing winning-action discovery is not established as the cause |
+| Value |9/9 pass relative-MSE gate;absolute RMSE0.574-0.591 versus action effect0.25;possible credit-assignment variance issue,not a causal proof |
+| Verification |9,863 run files;raw arithmetic/private RNG replay/Adam counters/charges/seals/prior evidence verified without new neural forwards |
+| Evidence |specs/2026-10-01-sampled-return-control/readout.md;reports/2026-10-01-sampled-return-control/verification.json;results/candidate_sampled_return_control_20261001/ |
+| Next in-scope action |Commit closure/readout and archive every run/log/source member locally;preserve all failed gates |
+| Subsequent decision |A single training-only state/time baseline intervention is proposed,not approved or launched;do not change reward and learning design together |
+| Boundaries |No patient launch,search,rerun,Dropbox export,remote operation,holdout,Howard sign-off or Stage E reopening;automation remains deleted |
+
+Progress is now an actual numerical result plus a narrower failure mode,not a
+claim of patient-performance improvement. No new approval question is needed
+to finish this already authorized packet. Any subsequent fit needs its own
+bounded scope;this queue is not evidence of a background training process.
+
+## Previous checkpoint: bounded sampled learning packet accepted and awaiting launch
 
 2026-10-01. User replied "continue, why does it feel like there has been no
 substantive progress in these two days?" immediately after the explicit

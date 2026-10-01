@@ -2148,3 +2148,11 @@ up to128 joint updates each/1,152 total/30 numerical minutes,one implementation,
 no patient-data fitting or search. New scientific pilot remains separately gated.
 Preserve this packet independently;prior null results and clinical trade-offs
 remain reportable. No remote action,Howard sign-off,holdout or Stage E reopening.
+
+Closure:28 arithmetic/closure/archive tests and full compileall pass. The new
+15-member diagnostic archive SHA256
+87d3b5e185b8e685e223b4bafc6731c11a931b4bca32f0d91b8793ca38d78e2e
+is member-verified;archive,manifest,readout and receipt are byte-verified in the
+new Dropbox-local training-diagnostic-20261001 subfolder. Cloud sync and Howard
+access are not verified. Preservation receipt is separate from the archived
+payload. Local results commit0988746;no scientific workload remains active.

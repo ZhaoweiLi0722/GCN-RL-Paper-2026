@@ -1,0 +1,53 @@
+{
+  "archive": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/p2_saved_training_diagnostic_20261001_archive/p2-training-diagnostic.tar.gz",
+  "archive_manifest": {
+    "archive": "p2-training-diagnostic.tar.gz",
+    "archive_sha256": "87d3b5e185b8e685e223b4bafc6731c11a931b4bca32f0d91b8793ca38d78e2e",
+    "file_count": 15,
+    "files": {
+      "provenance.json": "44784ae062ec6e678f54b9a6f0f0449fd3c01d9a8dd83c4d9f1dff7bd3c38c44",
+      "reports/2026-10-01-p2-training-diagnostic/acceptance.json": "299bae7c3ca85efb3b3b9c24febd92b8b4b5554e6e17d0b4a6feb150123e1176",
+      "reports/2026-10-01-p2-training-diagnostic/crosscheck.json": "1c496c1cc303206e2075a2460b1d5f341ed5209a9b4c3e351575a9daaf5fcafe",
+      "reports/2026-10-01-p2-training-diagnostic/crosscheck.py": "e2c07d4553c3f53767fb3acd01ffd9ec454a6f1757e544c5bee28c31e17f7e85",
+      "reports/2026-10-01-p2-training-diagnostic/diagnose.py": "2d5fa70a39dda19b446079f92c1b61096e6ad7be14e45f9bb25dad4c6dc9c3cf",
+      "reports/2026-10-01-p2-training-diagnostic/preserve.py": "7a14500c4a3858ecc6f6f3693b4c476eeda8641e206683d826d7c39aefe81608",
+      "reports/2026-10-01-p2-training-diagnostic/result.json": "d27425e5bd954b17eca0d90c359301cd09d4ec5545efca0a86db04a46bcaec73",
+      "specs/2026-10-01-p2-training-diagnostic/protocol.md": "de3d159bfe96b9785eb7c71f24eef75ccd57fd06f56425c46c232750efcb9865",
+      "specs/2026-10-01-p2-training-diagnostic/readout.md": "0c9f018d725f6c17b3bbd92654404c8afa07c7c822bc875bca2db5935b7814c9",
+      "src/models/candidate_policy.py": "a38b977c11cd4b1d90ce60ffa1bcf87be88167a9ec7521c916ff46b5a0cd8fdc",
+      "src/models/reference_prior_candidate.py": "bf2717dac4afa66543075fd7b1dd07679f6aa4e35784b218fa66306c14a4a2dd",
+      "src/rl/candidate_ppo_kernel.py": "59e5997ec98259feb20547ed774ebac5c7d269a108e2f1656f7c62950be47726",
+      "src/rl/candidate_ppo_objective.py": "8439a415174087ea61c34753dae7027080791d0ddc4a0d3a7a217002ca809b24",
+      "src/rl/candidate_rollout.py": "549146ef016c7bf8b76ce971eb244e424ceb43f45f121a74ae1950a1219e1cd2",
+      "tests/test_p2_training_diagnostic.py": "a7b76fb3f8828dd894430ae05d8da891d1b417e0e73a6cad48b80d0c490c2331"
+    },
+    "schema_version": 1,
+    "size_bytes": 93827,
+    "verified_by_reading_every_archive_member": true
+  },
+  "cloud_sync_verified": false,
+  "commit": "0988746bd07a11d870a0bad0df2161176abd8314",
+  "dropbox_local_copies": [
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/training-diagnostic-20261001/p2-training-diagnostic.tar.gz",
+      "sha256": "87d3b5e185b8e685e223b4bafc6731c11a931b4bca32f0d91b8793ca38d78e2e"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/training-diagnostic-20261001/p2-training-diagnostic.tar.gz.manifest.json",
+      "sha256": "c2ada68bd2726fec0b576483f89b093c1c522cfdd2dd25e11797142a24ce500e"
+    },
+    {
+      "cloud_sync_verified": false,
+      "local_copy_verified": true,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/candidate_reference_prior_pilot_20261001/training-diagnostic-20261001/readout.md",
+      "sha256": "0c9f018d725f6c17b3bbd92654404c8afa07c7c822bc875bca2db5935b7814c9"
+    }
+  ],
+  "format": "p2-training-diagnostic-preservation-v1",
+  "howard_access_verified": false,
+  "original_source_files_unchanged": true
+}

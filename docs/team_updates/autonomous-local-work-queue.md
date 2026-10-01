@@ -2,7 +2,7 @@
 
 ## Live checkpoint: saved training diagnosis complete; ranking and value barriers found
 
-Updated2026-10-01T16:07Z. P2 remains closed with zero observed incremental greedy
+Updated2026-10-01. P2 remains closed with zero observed incremental greedy
 gain. The authorized readback finished; no research process is running.
 
 | Item | Verified state |
@@ -15,10 +15,10 @@ gain. The authorized readback finished; no research process is running.
 | Clipping |Probability ratio0/1,152;global gradient1,145/1,152;component-gradient domination not established |
 | Reward checks |Raw cost/reward and within-episode return accounting pass;max return error1.2662e-6;no basis here to change cost weights for a positive result |
 | Acceptance |28 artificial arithmetic/closure/archive tests,full compileall/diff check pass;full reader and independent scalar crosscheck exit0;no readback failure |
-| Preservation |Original payload/launcher inventories and frozen source/document locks unchanged;new diagnostic archive/local Dropbox verification is the remaining closure step |
+| Preservation |Original payload/launcher and locks unchanged;15-member diagnostic archive87d3b5e185b8e685e223b4bafc6731c11a931b4bca32f0d91b8793ca38d78e2e member-verified;archive,manifest,readout,receipt copied byte-verified to new Dropbox-local training-diagnostic-20261001 folder |
 | Evidence |specs/2026-10-01-p2-training-diagnostic/readout.md;reports/2026-10-01-p2-training-diagnostic/result.json and crosscheck.json |
 | New science |0 environment calls,neural forwards/backwards,optimizer steps,test evaluations;no reward/parameter change |
-| Next concrete action |Finish separate diagnostic preservation/local commit;then await engineering-only repair acceptance before any new pilot |
+| Next concrete action |Finite diagnostic packet closed and preserved;await engineering-only repair approval before its artificial numerical tests,then separately gate any new pilot |
 | Exact next decision |Approve one engineering-only candidate with9 invented fixtures,up to128 optimizer.step calls each/1,152 total/30 numerical minutes,no real patient/checkpoint optimization,no reward change;later pilot requires separate approval |
 | Boundaries |No new fit,remote action,automation,Howard approval claim,holdout use or Stage E reopening;cloud sync/Howard access unverified |
 

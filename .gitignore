@@ -68,6 +68,9 @@ figures/residual_policy_benchmark/
 # Generated manuscript/submission archives
 [Pp]aper/**/*.zip
 
+# Verified local S1 failure archive; tracked receipt records its byte hash.
+/archives/2026-10-01-s1-terminal/
+
 # Private / personal research materials (not for sharing)
 docs/local_progress_reports/
 docs/research_howard/

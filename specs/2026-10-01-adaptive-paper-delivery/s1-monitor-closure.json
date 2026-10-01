@@ -1,0 +1,12 @@
+{
+  "automation_id": "gcn-rl-s1",
+  "mode": "delete",
+  "delete_status": "deleted",
+  "tool_reported_error": false,
+  "tool_receipt": "Deleted automation in the app.",
+  "reason": "Owned single S1 attempt exited1 in qualification raw-data verification; no retry permitted.",
+  "other_automations_modified": false,
+  "matching_scientific_processes_after_exit": 0,
+  "process_inspection_verified": true,
+  "new_execution_started": false
+}

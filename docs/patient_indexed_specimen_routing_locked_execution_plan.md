@@ -2417,3 +2417,23 @@ seeds and all historical evidence remain fixed. Any terminal failure consumes
 the attempt; preserve evidence,no automatic patch/retry/restart or expansion.
 Routine within-packet work needs no repeated approval. No Dropbox export,
 external messages,remote action,holdout,Howard approval claim or Stage E reopening.
+
+#### S1 attempt closed on qualification raw-reader error
+
+2026-10-01: executionaf1fe201779477b71200d069ce7b446f39ee4b84 terminated exit1
+after288.884seconds with ValueError("non-integer raw vector") in the independent
+qualification reader. It completed39 full episode receipts (three prototypes,
+24 demonstrations,12 qualification) and three256-step initializers. Durable
+budget:2,040 environment calls including12 clones;768 actor updates,zero critic
+updates. No qualification verdict,same-start continuation or final test exists.
+This is a verifier/runtime failure,not negative RL performance or a gate result.
+
+The attempt is consumed with no retry. Original evidence and35,213,901-byte
+failure state remain unchanged. Local archive606members/141,125,221bytes passed
+member and source hash checks,SHA256
+b1e1ffd33ca659d9258b88a892ff61db3dfdd01ae96ac7897901f69e41a6a904.
+Receipt:specs/2026-10-01-adaptive-paper-delivery/terminal-preservation.json.
+All owned science/archive commands exited;host scan found no matching Python.
+Only its gcn-rl-s1 monitor was deleted. Saved-data diagnosis may inform a new
+bounded recovery decision;unused budget is not permission to resume. No source
+fix,new fitting,patient episode,remote action or Dropbox copy occurred at closure.

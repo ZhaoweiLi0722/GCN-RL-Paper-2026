@@ -1,0 +1,21 @@
+{
+  "status": "failed_attempt_preserved",
+  "recorded_at_utc": "2026-10-01T20:24:05Z",
+  "source": "results/dynamic_candidate_pilot_20261001",
+  "archive": "archives/2026-10-01-s1-terminal/dynamic-candidate-failed-attempt.tar.gz",
+  "manifest": "archives/2026-10-01-s1-terminal/dynamic-candidate-failed-attempt.tar.gz.manifest.json",
+  "archive_sha256": "b1e1ffd33ca659d9258b88a892ff61db3dfdd01ae96ac7897901f69e41a6a904",
+  "size_bytes": 141125221,
+  "file_count": 606,
+  "verified_by_reading_every_archive_member": true,
+  "source_inventory_unchanged_after_archiving": true,
+  "original_result_preserved": true,
+  "local_archive_verified": true,
+  "dropbox_exported": false,
+  "cloud_sync_verified": false,
+  "howard_access_verified": false,
+  "scientific_attempt_complete": false,
+  "automatic_retry": false,
+  "post_failure_preservation_only": true,
+  "additional_environment_or_optimizer_calls": 0
+}

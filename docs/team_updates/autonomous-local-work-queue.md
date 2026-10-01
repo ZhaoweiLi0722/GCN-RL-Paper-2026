@@ -1,6 +1,51 @@
 # Autonomous local research queue
 
-## Live checkpoint: S1 running; demonstrations completed and initialization started
+## Live checkpoint: S1 terminal raw-verifier failure; no PPO or test result
+
+2026-10-01T20:24Z. The single S1 attempt at execution commitaf1fe20 terminated
+exit1 after288.884seconds. Parent42349 and child42704 exited;the host process
+scan found no matching remaining process. Exec session25711 is complete.
+No retry,restart,source fix or second experiment was launched.
+
+Actual delivery:three real prototype episodes plus12 restored-clone calls,
+24 demonstration episodes,three completed256-step actor initializers,and12
+qualification episodes. Independent ledger/row reading confirms39 complete
+episodes/2,028 raw steps,2,040 total environment debits and768 actor updates;
+no critic/PPO/continued-BC updates,no final evaluation. Six scopes completed.
+All persisted initialization loss/gradient norms were finite. This is not
+evidence of PPO improvement or failure because continuation never started.
+
+The raw qualification reader raised ValueError("non-integer raw vector") in
+dynamic_candidate_verification._enrich at164 calling the legacy integer vector
+reader atcandidate_pilot_verification.py:51. No qualification verdict exists.
+This is a runtime verification error,not a rejected clinical/competence gate.
+stderr is empty but launcher/failure.json contains the exception/trace and a
+complete35,213,901-byte failure state was saved. Independent agent Fermat
+(01a0f921-b0a8-7f43-a232-5695cb3b92c0) completed and is closed. Exact cause:
+qualification/block60/r4/world00/events.jsonl line1 records legal continuous
+capacity_transfers[0]=3.0000019669532776;the reader demands integers for every
+resource vector. Prototype line1 already includes-8.600000560283661,and reagent/
+replenishment are also continuous. Only patient/specimen counts require integers.
+The coordinator confirmed the saved capacity vector and simulator scaling.
+No source fix or new numerical work occurred. Do not round original records.
+
+Original evidence remains immutable atresults/dynamic_candidate_pilot_20261001.
+Local archive completed and606 members verified;141,125,221bytes,SHA256
+b1e1ffd33ca659d9258b88a892ff61db3dfdd01ae96ac7897901f69e41a6a904.
+See specs/2026-10-01-adaptive-paper-delivery/terminal-preservation.json and
+terminal-readout.md. No Dropbox export/cloud-sync/access claim. Only the
+gcn-rl-s1 monitor was deleted on terminal failure,confirmed by the app.
+No necessary experiment or archive command remains running.
+
+Next decision:a separate reader-repair and saved-artifact qualification-only
+packet,without new environment steps,optimization,PPO continuation or final test.
+Three initialized models and a completed-collection checkpoint exist;their
+contents/restorability remain unverified. Qualification requires bounded frozen
+model scoring of saved inputs as well as corrected arithmetic. Do not rerun
+initialization for convenience,assert qualification passed,consume the remaining
+budget or revive this closed attempt. No new scientific scope is approved.
+
+## Previous checkpoint: S1 running; demonstrations completed and initialization started
 
 2026-10-01T20:19:34Z. Executing the single authorized packet from
 af1fe201779477b71200d069ce7b446f39ee4b84,with frozen implementationdb8f17e.

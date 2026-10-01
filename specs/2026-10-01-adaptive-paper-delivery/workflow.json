@@ -1,14 +1,15 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 4,
-  "updated_at_utc": "2026-10-01T20:06:40Z",
+  "revision": 5,
+  "updated_at_utc": "2026-10-01T20:15:41Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
   "plan": "specs/2026-10-01-adaptive-paper-delivery/plan.md",
-  "execution_config": false,
-  "scientific_execution_authorized": false,
-  "status": "engineering_complete_awaiting_one_scientific_decision",
+  "execution_config": "specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json",
+  "execution_authorization": "specs/2026-10-01-adaptive-paper-delivery/execution-authorization.json",
+  "scientific_execution_authorized": true,
+  "status": "single_s1_authorized_not_yet_launched",
   "current_task": "S1",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
@@ -23,18 +24,19 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Obtain one explicit decision on approval-request.md. Only after approval record the actual words, append change control, commit the bound authorization and execute one S1 attempt without routine microapprovals. No further preparation or scientific work is invented while waiting.",
+  "next_concrete_action": "Commit the exact user authorization and change control, then invoke the frozen single-attempt launcher once. Observe the owned process and raw evidence; complete the packet or preserve terminal failure without retry.",
   "authority": {
     "local_code_preparation": true,
     "synthetic_zero_update_tests": true,
     "saved_evidence_synthesis": true,
     "local_manuscript_claim_updates": true,
     "local_commits": true,
-    "scientific_or_artificial_fitting": false,
-    "patient_environment_calls": false,
+    "scientific_or_artificial_fitting": "Only the exact S1 packet; no extra artificial fitting",
+    "patient_environment_calls": "Only the exact S1 packet including all preflight and cloned calls",
     "reward_changes": false,
     "scenario_changes": false,
     "historical_gate_changes": false,
+    "prospective_failed_a1_prerequisite_replacement": true,
     "dropbox_export": false,
     "remote_actions": false,
     "formal_holdout": false,
@@ -70,18 +72,18 @@
     "runtime_lock_verified": true,
     "clean_committed_packet_readback_passed": true,
     "preliminary_local_seed_inventory": {"files": 499, "collisions": 0, "source_frozen": false, "external_evidence_covered": false},
-    "approved": false,
+    "approved": true,
     "recommended_main_environment_step_cap": 22224,
     "recommended_optimizer_call_cap": 1920,
     "proposed_global_seconds_cap": 21600,
     "optional_counterfactual_enabled": false,
-    "note": "Complete frozen prospective packet; D1-D3 ready but no explicit scientific authorization exists. Main caps include every phase; optional appendix remains off."
+    "note": "User directed the next step after the complete S1 question; exact text/context recorded in separate authorization. One attempt,all phase caps preserved,optional appendix off."
   },
   "tasks": [
     {"id": "D1", "state": "completed_zero_update", "authorized": true, "deliverable": "New variable-bank actor and separate value model with zero-update contract tests", "exit": "Usable implementation, not a numerical fit gate"},
     {"id": "D2", "state": "completed_fixture_integration", "authorized": true, "depends_on": ["D1"], "deliverable": "Complete 33-scope fixture runner, qualification/forks/collection/updates/test seals/verifier/archive wiring; independent scalar verifier separately tested. In-owner restoration only; no scientific execution acceptance", "exit": "Complete mock chain passed; real entrypoint fails closed without explicit bound approval"},
     {"id": "D3", "state": "completed_source_frozen_engineering", "authorized": true, "deliverable": "Exclusive claim, committed approval/live admission, external watchdog, inner compute and terminal deadlines; 334 source/6 input/runtime locks plus 499-file local seed audit frozen and reread from clean commits", "exit": "One complete S1 decision in approval-request.md; no real scientific preflight performed"},
-    {"id": "S1", "state": "approval_required", "authorized": false, "depends_on": ["D1", "D2", "D3"], "deliverable": "Single end-to-end GCN PPO/frozen/BC-CONTINUE/R4/full-MDL2 comparison"},
+    {"id": "S1", "state": "authorized_not_yet_launched", "authorized": true, "depends_on": ["D1", "D2", "D3"], "deliverable": "Single end-to-end GCN PPO/frozen/BC-CONTINUE/R4/full-MDL2 comparison"},
     {"id": "S2", "state": "scope_required", "authorized": false, "deliverable": "Fair graph/self-only/flat attribution"},
     {"id": "S3", "state": "scope_required", "authorized": false, "deliverable": "Strong information-matched baselines and justified robustness"},
     {"id": "S4", "state": "scope_required", "authorized": false, "deliverable": "Independent confirmation with prespecified effect and uncertainty"},
@@ -103,9 +105,17 @@
     "full_compileall_passed": true,
     "real_optimizer_steps": 0,
     "patient_environment_calls": 0,
-    "remaining_patient_comparison_blocker": "Explicit prospective S1 approval only, including graph label, neutral bias and failed A1 prerequisite replacement. No approved authorization file or scientific claim exists."
+    "remaining_patient_comparison_blocker": "None in engineering preparation; commit authorization and run the single source-bound packet. No actual patient performance result yet."
   },
   "decisions": [
+    {
+      "date": "2026-10-01",
+      "trigger_evidence": "Direct user next-step instruction immediately after the complete frozen S1 approval question",
+      "old_action": "Await one complete S1 decision",
+      "new_action": "Record exact authorization,commit change control and start the one enumerated S1 packet",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "This packet approved; new scope,retry,expansion or external action still requires a new decision"
+    },
     {
       "date": "2026-10-01",
       "trigger_evidence": "155 zero-update tests, full compileall, frozen implementation db8f17e and clean committed proposal readback passed",

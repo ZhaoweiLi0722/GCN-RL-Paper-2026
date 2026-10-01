@@ -2392,3 +2392,28 @@ the failed A1 prerequisite with this end-to-end comparison. A1 remains failed
 holdout, Howard sign-off claim or Stage E reopening are granted. Only the
 completed gcn-rl preparation schedule was deleted; future approved execution
 may receive its own bounded monitor. This entry records readiness, not approval.
+
+#### S1 prospective single attempt authorized
+
+2026-10-01T20:15:41Z: after the complete frozen S1 question and handoff, Zhaowei
+directly instructed "next step" (exact original-language text preserved in
+specs/2026-10-01-adaptive-paper-delivery/execution-authorization.json). This is
+approval to proceed with that enumerated packet, not unbounded exploration.
+The interpretation was stated to the user before making changes or launching.
+
+Bind implementation db8f17e38586083aa6531bae0964880dbf773b4a, proposal content
+a997a5afbfb83e876b0b48b1de73068f3310b3cb47b1d251b3b421bbef080070 and protocol
+4f17ff2efcf5e3facac9d4d0af392ee5573f4077e3d965ebcb3059903d1fb0c3. Authorize one
+CPU float32,three-block graph-only S1 with same-start frozen/PPO/BC-CONTINUE,
+R4/full-MDL2,32 continuation episodes/model,180 final evaluation episodes.
+All initialization,qualification,preflight,clones,training,evaluation,readback
+and preservation are included in22,224 environment calls,1,920 optimizer calls
+and21,600 seconds,with unchanged phase caps and no budget transfers.
+
+Prospective amendments are specimen_routes message passing,neutral trainable
+bias0.0,and replacement of the failed A1 artificial prerequisite by the bounded
+end-to-end protocol. A1 stays failed1/9. Existing reward,scenario,thresholds,
+seeds and all historical evidence remain fixed. Any terminal failure consumes
+the attempt; preserve evidence,no automatic patch/retry/restart or expansion.
+Routine within-packet work needs no repeated approval. No Dropbox export,
+external messages,remote action,holdout,Howard approval claim or Stage E reopening.

@@ -1,6 +1,29 @@
 # Autonomous local research queue
 
-## Live checkpoint: D1-D3 complete; one frozen S1 execution decision remains
+## Live checkpoint: S1 approved; bind authorization and start the single attempt
+
+2026-10-01T20:15:41Z. Entry HEADb86b875,clean declared integration worktree.
+After the full frozen S1 approval question,Zhaowei instructed "next step";
+exact words and context are in execution-authorization.json. The coordinator
+stated the bounded interpretation before action. New approval applies only to
+the frozen22,224-step/1,920-update/six-hour single attempt,including its graph,
+bias and prerequisite amendments. Original draft/packet false flags remain
+preserved;separate committed authorization provides the execution capability.
+
+Actual host PID/PPID/command scan found no matching research process. The
+result root and authorization file did not previously exist. No duplicate
+claim or recorded attempt was found. Source and scientific files are unchanged;
+reuse the155 tests and full compileall already passed at the frozen commit.
+
+Next:commit authorization/change control,invoke the one existing source-bound
+launcher,observe actual status/budget/progress,then independently read the raw
+results or terminal failure. No scientific process was running at this
+checkpoint;launch is the next action,not yet claimed complete. Do not start a
+second attempt. Do not create results via a separate smoke run. All remaining
+routine phases are inside this packet;failed qualification or runtime is
+terminal. No automatic repair,retuning,expansion,Dropbox or remote action.
+
+## Previous checkpoint: D1-D3 complete; one frozen S1 execution decision remains
 
 2026-10-01T20:06Z. Branch codex/september-research-integration. Implementation
 commit db8f17e38586083aa6531bae0964880dbf773b4a; frozen-proposal commit0893f05.

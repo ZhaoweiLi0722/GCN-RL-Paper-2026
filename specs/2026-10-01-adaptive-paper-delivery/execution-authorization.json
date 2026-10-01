@@ -1,0 +1,29 @@
+{
+  "format": "dynamic-pilot-explicit-authorization-v1",
+  "approved": true,
+  "proposal_content_sha256": "a997a5afbfb83e876b0b48b1de73068f3310b3cb47b1d251b3b421bbef080070",
+  "implementation_commit": "db8f17e38586083aa6531bae0964880dbf773b4a",
+  "scientific_config_sha256": "935b8a655f2350d8758fd73a033feca609f254d3749367fda4ce0a99747a6639",
+  "protocol": "specs/2026-10-01-adaptive-paper-delivery/pilot-protocol.md",
+  "protocol_sha256": "4f17ff2efcf5e3facac9d4d0af392ee5573f4077e3d965ebcb3059903d1fb0c3",
+  "amendments": {
+    "preserve_failed_a1_replace_prerequisite": true,
+    "specimen_routes_instead_of_draft_graph_label": true,
+    "neutral_trainable_reference_bias": true,
+    "unchanged_reward_and_scenario": true
+  },
+  "limits": {
+    "environment_steps": 22224,
+    "optimizer_steps": 1920,
+    "seconds": 21600,
+    "attempts": 1
+  },
+  "automatic_retry": false,
+  "remote_or_dropbox_actions": false,
+  "user_approval": {
+    "user": "Zhaowei",
+    "verbatim": "\u4e0b\u4e00\u6b65\u3002",
+    "recorded_at_utc": "2026-10-01T20:15:41Z",
+    "context": "Direct user instruction to take the next step, immediately following the complete frozen S1 approval question and handoff. Interpreted as proceeding with that specified single packet, not broader research authority. The interpretation and unchanged limits were stated before action."
+  }
+}

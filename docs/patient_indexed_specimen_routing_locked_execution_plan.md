@@ -1984,3 +1984,35 @@ cb1b35f0f22ffbc8e699830f89ffc29566c5cc61509f04bef02757473cca643b.
 270 source locks,891 historical JSON/JSONL files without collisions,7 R4 inputs
 and prior15-file zero-step failure are bound. Commit packet and verify clean
 execution state before the one authorized real preflight. This is not a result.
+
+#### P1-R1 terminal initialization failure and preserved evidence
+
+2026-10-01T01:30Z (September30 local): the single approved attempt ran at
+execution010ca27fec294db27f935828aac711063cbc0f01. All9 real preflight cases
+passed.24 demonstration episodes,9 fixed256-update BC initializers and6
+independent qualification episodes completed:2064 total env.step calls and2304
+BC-init optimizer steps. Block60 graph93/104 and self-only85/104 fail the
+unchanged95% gate; the other7 initializers pass. The campaign stopped before
+PPO, continued BC, model forks or final tests. Exit1, no forced termination;
+parent89151/child89438 and duplicate P1 processes are absent after closure.
+
+Independent saved-data inference reproduces all9 qualifications. Raw39-episode
+cost/identity/action readback and all1560 cached example/raw-event comparisons
+pass;279-file root remains unchanged. Teacher sampling probability is only
+21.64%-26.34% on qualification states, even in greedily accurate models. This
+is an initialization/sampling-contract limitation, not observed RL harm or
+evidence that the reward is wrong. No simulator, optimizer or test use in audit.
+
+The full279-member failure archive is byte/member verified, SHA256
+801567b3ff7e5609a964a03761cdf594a8aa196c1ca6fa7f3c8f2259c875a21b.
+Authorized new Dropbox-local archive/manifest/audit copies verified; cloud sync
+and Howard access unverified.25 post-closure focused tests pass, alongside297
+pre-launch tests. See recovery1_terminal_readout.md and terminal-audit/preservation
+JSON under reports/2026-09-30-candidate-pilot-integration.
+
+Close this finite chain; automation remains deleted. No unused budget transfer,
+gate relaxation, surviving-seed-only continuation or repair-and-relaunch.
+A proposed reference-prior/categorical-residual initialization redesign needs
+a new explicit decision before implementation/science. First proposed permission
+is design and artificial-fixture acceptance only, not another patient run.
+Original protocol/approval/failures remain immutable; Stage E stays closed.

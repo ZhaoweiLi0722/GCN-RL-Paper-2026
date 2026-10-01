@@ -48,3 +48,12 @@ It binds270 source files,891 historical JSON/JSONL files with zero collisions,
 CPUfloat32 runtime and the prior15-file zero-step failure. Static compatibility
 passes under the explicit specimen-only contract. Commit packet before launch;
 no real preflight is claimed by this freeze entry. Local volume had569GiB free.
+
+## Terminal execution update
+
+The frozen packet was committed at010ca27fec294db27f935828aac711063cbc0f01
+and run once. Real preflight passed; the run then failed its unchanged95%
+initialization gate after2064 calls and2304 BC-only optimizer steps. PPO,
+BC-CONTINUE and final evaluation were not entered. Both runner processes ended.
+Full independent readback, result interpretation, preservation and next approval
+boundary are in `recovery1_terminal_readout.md`; no automatic retry is authorized.

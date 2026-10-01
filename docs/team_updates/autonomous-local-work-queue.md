@@ -1,6 +1,54 @@
 # Autonomous local research queue
 
-## Live checkpoint: P1 recovery approved and engineering accepted; freeze next
+## Live checkpoint: P1-R1 closed at initialization gate; evidence verified and archived
+
+Updated2026-10-01T01:30Z (September30 local time). The confirmed single
+recovery ran and terminated; no repair/retry or new science was performed.
+
+| Item | Verified state |
+| --- | --- |
+| Execution |HEAD010ca27fec294db27f935828aac711063cbc0f01; implementation86c57ab; specimen-only amendment, unchanged original budgets/reward/environment |
+| Completed |9 real preflight cases including clones (504calls),24 R4 demonstrations (1248calls),9 BC initializers (256updates each),6 qualification episodes (312calls) |
+| Terminal |Initialization gate failure: block60 graph93/104=89.42%; self-only85/104=81.73%, below95%. Other7 pass; no pooled-gate substitution |
+| Total work |2064 environment calls,2304 BC-init steps;0 PPO updates,0 BC-CONTINUE updates,0 final evaluations,0 forked continuation models; test streams unopened |
+| Process |Parent89151/child89438 ended; child exit1 after299.528s, no forced kill. Post-exit exact-PID and host P1-command scans empty; no background experiment remains |
+| Independent verification |Raw39 episodes/2028 recorded steps plus36 cloned steps reconcile. Costs, identities, losses/completions/terminal counts and request/routing arithmetic match; minimum300 routes/episode. All1560 saved demo/qualification examples match raw events |
+| Numerical readback |Nine saved weights reproduce every qualification score. Block60 also has imperfect demo agreement94.71%/87.74%; qualification mean teacher probability only21.64%-26.34% across models. Greedy fidelity alone does not certify stochastic behavior; no counterfactual harm measured |
+| Locks/tests |270 source/runtime,7 R4 and prior evidence locks pass;279-file run unchanged by readback.297 related tests passed before launch;25 targeted tests pass after closure; full repository compileall and diff check exit0 |
+| Failure evidence |launcher/failure.json,failure-state.pt,budget.jsonl,terminal.json; caught traceback in stdout,stderr0bytes does not mean success |
+| Archive |279-member archive275,251,375bytes; SHA256801567b3ff7e5609a964a03761cdf594a8aa196c1ca6fa7f3c8f2259c875a21b; original root retained |
+| Dropbox |New recovery1 subdirectory has verified archive,manifest,auditJSON and audit-script bytes. Cloud sync and Howard access unverified; no sharing changes |
+| Evidence paths |specs/2026-09-30-candidate-return-pilot/recovery1_terminal_readout.md; reports/2026-09-30-candidate-pilot-integration/recovery1-terminal-{audit,preservation}.json |
+| Scientific conclusion |Initialization qualification failed, not a PPO/DDPG or reward performance result. CE-only fit never used reward labels; no justified reward change from this failure |
+| Next action |After new approval only: prepare a reference-preserving categorical residual initialization design, prospective sampling/coverage contract and mock acceptance; no automatic fitting, simulation or new attempt |
+| Exact approval needed |Approve design/artificial-fixture work for reference-prior plus learned residual, with0 new patient trajectories/optimizer fitting; present a separate frozen bounded protocol before any further science |
+| Automation/boundaries |gcn-rl-p1 remains deleted; no re-creation or other task modification. Local-only commits; no remote/messages,Howard approval claims,holdout or Stage E reopening |
+
+The finite P1-R1 chain is closed. Do not treat a later heartbeat with the old
+P1 instructions as authority to resume the failed run or consume unused budget.
+
+## Previous checkpoint: P1 recovery preflight passed; demonstrations in progress
+
+Execution HEAD010ca27fec294db27f935828aac711063cbc0f01, implementation86c57ab.
+One new claimed attempt in results/candidate_return_pilot_20260930_recovery1.
+Parent89151/PPID30450 and child89438/PPID89151 verified with exact
+run_candidate_return_pilot --recovery1 / --child --recovery1 commands.
+Real preflight passed all9 block/representation cases:52 original and4 cloned
+steps each,504 calls total,0 optimizer updates. Raw-only support equality and
+exact restored decision/reward/identity/RNG checks pass. Summary persisted at
+payload/preflight/summary.json. Live ledger subsequently reached253 demonstration
+steps (757 total),still0 updates. Stdout reports demonstration collection;
+stderr is empty at this observation. No campaign completion or
+RL benefit is claimed. Original failed attempt remains preserved separately.
+
+Next: observe this sole process through its locked BC
+initialization/95% qualification gate and conditional training/evaluation.
+Do not start a second process or alter source/config/HEAD while it runs.
+An unsuccessful preflight/qualification/run ends this attempt without repair or
+retry. No extra approval is needed within the confirmed scope. No automation
+was recreated and no remote action/holdout/Stage E change is permitted.
+
+## Previous checkpoint: P1 recovery approved and engineering accepted; freeze next
 
 Updated 2026-10-01T01:14Z. Zhaowei explicitly confirmed the specimen-routing
 graph amendment and one original-budget recovery. No recovery real preflight

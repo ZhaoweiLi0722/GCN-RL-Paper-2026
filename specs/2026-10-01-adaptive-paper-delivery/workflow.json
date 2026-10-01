@@ -1,15 +1,15 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 3,
-  "updated_at_utc": "2026-10-01T19:52:00Z",
+  "revision": 4,
+  "updated_at_utc": "2026-10-01T20:06:40Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
   "plan": "specs/2026-10-01-adaptive-paper-delivery/plan.md",
   "execution_config": false,
   "scientific_execution_authorized": false,
-  "status": "engineering_active",
-  "current_task": "D3",
+  "status": "engineering_complete_awaiting_one_scientific_decision",
+  "current_task": "S1",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -23,7 +23,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Bind the fixture-verified serial runner to a fail-closed prospective claim/admission/watchdog wrapper, covering internal compute and terminal closure deadlines; fake fixtures only. Freeze that final source/runtime/input/seed packet before one consolidated S1 decision.",
+  "next_concrete_action": "Obtain one explicit decision on approval-request.md. Only after approval record the actual words, append change control, commit the bound authorization and execute one S1 attempt without routine microapprovals. No further preparation or scientific work is invented while waiting.",
   "authority": {
     "local_code_preparation": true,
     "synthetic_zero_update_tests": true,
@@ -50,7 +50,8 @@
     "kind": "heartbeat",
     "cadence_minutes": 30,
     "creation_verified": true,
-    "status": "ACTIVE",
+    "status": "DELETED",
+    "closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-closure.json",
     "receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-receipt.json",
     "direction_update_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-direction-update.json",
     "scientific_intent_prompt_readback_exact": true
@@ -58,20 +59,28 @@
   "pilot_proposal": {
     "draft": "specs/2026-10-01-adaptive-paper-delivery/pilot-budget-draft.json",
     "complete_proposed_call_arithmetic": true,
-    "source_integration_ready": false,
-    "seed_freshness_verified": false,
+    "source_integration_ready": true,
+    "seed_freshness_verified": true,
+    "seed_freshness_scope": "499 tracked/local seed declaration files; unavailable external files not covered",
+    "implementation_commit": "db8f17e38586083aa6531bae0964880dbf773b4a",
+    "frozen_packet": "specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json",
+    "packet_content_sha256": "a997a5afbfb83e876b0b48b1de73068f3310b3cb47b1d251b3b421bbef080070",
+    "source_locks_verified": 334,
+    "input_locks_verified": 6,
+    "runtime_lock_verified": true,
+    "clean_committed_packet_readback_passed": true,
     "preliminary_local_seed_inventory": {"files": 499, "collisions": 0, "source_frozen": false, "external_evidence_covered": false},
     "approved": false,
     "recommended_main_environment_step_cap": 22224,
     "recommended_optimizer_call_cap": 1920,
     "proposed_global_seconds_cap": 21600,
     "optional_counterfactual_enabled": false,
-    "note": "Planning ceilings only; do not execute or request an incomplete approval before D1-D3 are ready."
+    "note": "Complete frozen prospective packet; D1-D3 ready but no explicit scientific authorization exists. Main caps include every phase; optional appendix remains off."
   },
   "tasks": [
     {"id": "D1", "state": "completed_zero_update", "authorized": true, "deliverable": "New variable-bank actor and separate value model with zero-update contract tests", "exit": "Usable implementation, not a numerical fit gate"},
-    {"id": "D2", "state": "completed_fixture_integration", "authorized": true, "depends_on": ["D1"], "deliverable": "Complete 33-scope fixture runner, qualification/forks/collection/updates/test seals/verifier/archive wiring; independent scalar verifier separately tested. In-owner restoration only; no scientific execution acceptance", "exit": "Complete mock phase chain passes; actual science entry point stays disabled"},
-    {"id": "D3", "state": "source_bound_preparation_implemented_execution_wrapper_pending", "authorized": true, "deliverable": "Static six-input validation, exact model counts, explicit graph/bias proposal and freeze CLI implemented; scientific claim/admission/watchdog integration and final source/runtime/seed freeze remain", "exit": "Ask one consolidated scientific approval question only when all fields and implementation are ready"},
+    {"id": "D2", "state": "completed_fixture_integration", "authorized": true, "depends_on": ["D1"], "deliverable": "Complete 33-scope fixture runner, qualification/forks/collection/updates/test seals/verifier/archive wiring; independent scalar verifier separately tested. In-owner restoration only; no scientific execution acceptance", "exit": "Complete mock chain passed; real entrypoint fails closed without explicit bound approval"},
+    {"id": "D3", "state": "completed_source_frozen_engineering", "authorized": true, "deliverable": "Exclusive claim, committed approval/live admission, external watchdog, inner compute and terminal deadlines; 334 source/6 input/runtime locks plus 499-file local seed audit frozen and reread from clean commits", "exit": "One complete S1 decision in approval-request.md; no real scientific preflight performed"},
     {"id": "S1", "state": "approval_required", "authorized": false, "depends_on": ["D1", "D2", "D3"], "deliverable": "Single end-to-end GCN PPO/frozen/BC-CONTINUE/R4/full-MDL2 comparison"},
     {"id": "S2", "state": "scope_required", "authorized": false, "deliverable": "Fair graph/self-only/flat attribution"},
     {"id": "S3", "state": "scope_required", "authorized": false, "deliverable": "Strong information-matched baselines and justified robustness"},
@@ -80,7 +89,7 @@
   ],
   "progress": {
     "paper_evidence_gaps_closed_this_cycle": [],
-    "implementation_blockers_removed_this_cycle": ["complete_33_scope_fake_dispatch", "paired_path_and_cost_patient_qualification", "same_start_factory_and_manifest_parameter_check", "independent_original_request_cost_patient_verifier", "static_input_and_prospective_binding_preparation", "explicit_graph_and_action_scope_in_automation"],
+    "implementation_blockers_removed_this_cycle": ["explicit_committed_packet_admission", "exclusive_single_attempt_supervisor", "real_backend_owned_capability", "external_scope_phase_global_watchdog", "inherited_startup_and_internal_compute_deadlines", "terminal_archive_and_completion_deadline_ownership", "clean_source_runtime_input_seed_freeze"],
     "new_patient_performance_result": false,
     "preparation_only_cycles_without_new_deliverable": 0,
     "efficiency_review_trigger": "substantive_milestone_or_two_restatement_cycles",
@@ -88,14 +97,23 @@
     "process_inspection_verified": true,
     "process_inspection_note": "Read-only host PID/PPID/command scan at this turn entry found no relevant research Python. Only fixture tests, static file reads and compilation were executed; no scientific launcher was invoked.",
     "implementation_readout": "specs/2026-10-01-adaptive-paper-delivery/implementation-readout.md",
-    "tests_passed": 129,
-    "focused_followup_tests_passed": 7,
+    "tests_passed": 155,
+    "tests_seconds": 36.086,
+    "focused_followup_tests_passed": 47,
     "full_compileall_passed": true,
     "real_optimizer_steps": 0,
     "patient_environment_calls": 0,
-    "remaining_patient_comparison_blocker": "Scientific claim/admission/outer watchdog binding, inner backward deadline and terminal closure ownership; final exact freeze and one prospective S1 amendment. Current runner only accepts fixture backends and restoration is in-owner, not process restart."
+    "remaining_patient_comparison_blocker": "Explicit prospective S1 approval only, including graph label, neutral bias and failed A1 prerequisite replacement. No approved authorization file or scientific claim exists."
   },
   "decisions": [
+    {
+      "date": "2026-10-01",
+      "trigger_evidence": "155 zero-update tests, full compileall, frozen implementation db8f17e and clean committed proposal readback passed",
+      "old_action": "Complete D3 execution binding and source freeze under periodic preparation heartbeat",
+      "new_action": "End the completed finite preparation chain, delete only gcn-rl and ask one complete S1 execution decision; no additional audit or toy fit",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "Explicit approval of the frozen packet plus specimen_routes, neutral trainable bias0.0 and prospective A1-prerequisite replacement; A1 stays failed1/9"
+    },
     {
       "date": "2026-10-01",
       "trigger_evidence": "Harvey finite efficiency review and Russell complete fixture dispatcher with explicit scientific-wrapper limitations",
@@ -135,7 +153,8 @@
     {"id": "01a0f8d3-52ee-7801-8d2e-61ba1f5567c5", "role": "advancement", "name": "Copernicus", "state": "completed_closed", "artifact": "Dynamic model and failure-latched collection session; parent accepted and integrated into 78-test suite"},
     {"id": "01a0f8e9-8d9e-7a13-9859-15ee0345753d", "role": "advancement", "name": "Ptolemy", "state": "completed_closed", "artifact": "Independent dynamic raw verifier and 20 synthetic tests; parent factory adds 9 zero-update tests, all 29 passed"},
     {"id": "01a0f8f8-dde7-75b1-bf24-93548c527ffe", "role": "advancement", "name": "Russell", "state": "completed_closed", "artifact": "dynamic_candidate_campaign.py and ten fake-only serial integration tests; parent combined 129-test run passed"},
-    {"id": "01a0f8f8-de52-7de0-8d0a-c9409c48608d", "role": "efficiency", "name": "Harvey", "state": "completed_closed", "artifact": "Reuse current end-to-end components, resolve graph wording in the same packet, and keep broader coordination off the immediate critical path; no additional gate"}
+    {"id": "01a0f8f8-de52-7de0-8d0a-c9409c48608d", "role": "efficiency", "name": "Harvey", "state": "completed_closed", "artifact": "Reuse current end-to-end components, resolve graph wording in the same packet, and keep broader coordination off the immediate critical path; no additional gate"},
+    {"id": "01a0f907-dd6a-70d1-a5f2-acd594f1ac16", "role": "advancement", "name": "McClintock", "state": "completed_closed", "artifact": "Before-forward/backward/restore compute callbacks and 14 forbidden-update tests; parent integrated into 155-test suite"}
   ],
   "on_terminal_failure": "Preserve evidence, close consumed attempt, no automatic repair-and-rerun; complete saved-evidence handoff.",
   "on_only_unapproved_work_remaining": "Present one concrete decision and delete only this schedule; do not repeatedly poll or invent work.",

@@ -40,8 +40,19 @@ existing finite efficiency review remains applied; no repeated reviewer gate
 or historical full audit was added. No research process was observed in the
 entry host PID/PPID/command scan.
 
-Next: commit this implementation, freeze its exact proposal from the clean
-commit, and present the single S1 approval. Fixture success is not scientific
+Implementation committed as db8f17e38586083aa6531bae0964880dbf773b4a. The
+proposal was frozen from that clean commit and committed as0893f05. A fresh
+clean-worktree readback verified334 source locks,6 input locks,the runtime,
+protocol and499 local seed files with zero numeric collisions. Content SHA256:
+`a997a5afbfb83e876b0b48b1de73068f3310b3cb47b1d251b3b421bbef080070`.
+The scope excludes unavailable external seed declarations. Protocol SHA256:
+`4f17ff2efcf5e3facac9d4d0af392ee5573f4077e3d965ebcb3059903d1fb0c3`.
+
+D1-D3 are complete as engineering preparation. `approval-request.md` gives the
+single remaining scientific decision; no approved authorization file exists.
+The finite gcn-rl preparation automation was deleted through the app after
+completion, with receipt in `automation-closure.json`. The existing manuscript
+draft is complete independently of this decision. Fixture success is not scientific
 qualification or patient improvement. Restoration remains in-owner only;
 scientific failure is terminal, without repair-and-retry or a cold restart.
 

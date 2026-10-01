@@ -1,0 +1,16 @@
+{
+  "automation_id": "gcn-rl",
+  "checked_at_utc": "2026-10-01T20:06:40Z",
+  "mode": "delete",
+  "delete_status": "deleted",
+  "tool_reported_error": false,
+  "tool_receipt": "Deleted automation in the app.",
+  "snapshot": {
+    "kind": "heartbeat",
+    "rrule": "FREQ=MINUTELY;INTERVAL=30"
+  },
+  "reason": "D1-D3 and independent manuscript preparation complete; only explicit S1 scientific approval remains.",
+  "other_automations_modified": false,
+  "scientific_execution_started": false,
+  "replacement_schedule_created": false
+}

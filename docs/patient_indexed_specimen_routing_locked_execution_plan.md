@@ -2371,3 +2371,24 @@ search, scenario change, holdout, Stage E reopening, Howard sign-off claim,
 Dropbox export or remote action. Complete all unblocked engineering, then ask
 one consolidated decision and delete only the new schedule if only unapproved
 work remains. The roadmap persists; automation is not proof of a live workload.
+
+#### Dynamic mechanism pilot preparation completed, execution still unapproved
+
+2026-10-01: D1-D3 local engineering is complete at implementation
+db8f17e38586083aa6531bae0964880dbf773b4a. The prospective protocol is
+specs/2026-10-01-adaptive-paper-delivery/pilot-protocol.md; its exact unapproved
+packet is frozen-proposal/proposal.json in the same directory, content SHA256
+a997a5afbfb83e876b0b48b1de73068f3310b3cb47b1d251b3b421bbef080070.
+155 zero-update/fictional-environment tests and full compileall passed. The
+clean source/input/runtime/seed binding was independently reread. No real
+patient build/step, numerical optimizer call or scientific launch occurred.
+
+The executable path fails closed without a separately committed explicit user
+approval. Approval must include the complete22,224-environment-call,
+1,920-optimizer-call,six-hour,single-attempt packet and the three prospective
+choices: specimen_routes message graph, neutral trainable bias0.0, and replacing
+the failed A1 prerequisite with this end-to-end comparison. A1 remains failed
+1/9. No reward/scenario changes, test reuse, remote actions, Dropbox export,
+holdout, Howard sign-off claim or Stage E reopening are granted. Only the
+completed gcn-rl preparation schedule was deleted; future approved execution
+may receive its own bounded monitor. This entry records readiness, not approval.

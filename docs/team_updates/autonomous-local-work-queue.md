@@ -1,6 +1,63 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete fixture chain delivered; bind the prospective real execution wrapper
+## Live checkpoint: D1-D3 complete; one frozen S1 execution decision remains
+
+2026-10-01T20:06Z. Branch codex/september-research-integration. Implementation
+commit db8f17e38586083aa6531bae0964880dbf773b4a; frozen-proposal commit0893f05.
+The entry HEAD was871d18b57cbeb36a7912459fc3f77321cb669672. Zhaowei asked to
+continue authorized preparation; no new scientific approval was inferred.
+
+The real execution entrypoint, explicit committed-approval check, exclusive
+one-attempt claim, live backend admission, owned external watchdog and bounded
+terminal readback are implemented. Before-forward/backward/restore checks and
+inherited setup time close the remaining deadline gaps. Checkpoint restoration
+is in-owner only, not a restart permission. Failure evidence and budget remain
+irreversible; no repair-and-rerun is allowed after a scientific claim.
+
+Parent validation:155 tests passed in36.086s; full repository compileall passed.
+Tests used invented inputs, fake environments and metadata-only optimizer
+doubles; numerical Adam/SGD and patient calls were forbidden. Dummy watchdog
+subprocesses were reaped. No patient steps, research trajectories or numerical
+optimizer calls were made. No scientific launcher was invoked. Entry host
+PID/PPID/command scan found no relevant research Python. All test/compile/freeze
+tool sessions finished successfully; no active research process is claimed.
+
+Frozen packet:specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json.
+Content SHA256 a997a5afbfb83e876b0b48b1de73068f3310b3cb47b1d251b3b421bbef080070.
+Clean-commit readback verified334 source locks,6 consumed input locks,exact
+runtime,scientific configuration,protocol and499 local seed declaration files
+with zero numeric collisions. Missing external seed evidence is not covered.
+The frozen packet remains scientific_execution_authorized=false and
+ready_to_launch=false because the actual approval record does not yet exist.
+
+McClintock completed the finite compute-deadline assignment and was closed;
+the coordinator delivered the wrapper/watchdog and integrated the suite.
+Harvey's earlier efficiency advice was reused without another gate. All finite
+delegates are closed. M1 manuscript preparation was already delivered. The
+finite preparation chain is complete; only a new scientific decision remains.
+Accordingly only gcn-rl was deleted through the app at20:06UTC; the confirmed
+receipt is in specs/2026-10-01-adaptive-paper-delivery/automation-closure.json.
+No other automation was changed. No duplicate waiting heartbeat is needed.
+
+Next concrete action after explicit approval: record exact user words and
+timestamp against this packet/protocol/implementation, append change control,
+commit the authorization and execute one serial S1 attempt. A bounded monitor
+may then be established for that approved packet. Within-packet steps need no
+further microapproval. Before approval, do not launch, fit, change the proposal
+or create further experiments merely to keep automation alive.
+
+Exact decision:22,224 maximum environment calls,1,920 optimizer calls,6h global
+cap;three blocks,32 continuation episodes/arm/block,180 final evaluation
+episodes comparing same-start PPO/frozen/BC-CONTINUE plus R4/full-MDL2. Include
+all initialization,qualification,preflight and cloned calls. Explicitly accept
+specimen_routes instead of the early draft label,neutral trainable bias0.0,
+and prospective replacement of the failed A1 artificial prerequisite. Preserve
+A1's1/9 failure. Reward/scenario unchanged;single attempt,no retry,local-only.
+Question/details:specs/2026-10-01-adaptive-paper-delivery/approval-request.md.
+This is restricted simulator RL attribution,not deployment adaptation,isolated
+GCN proof,full resource co-optimization or new patient-performance evidence.
+
+## Previous checkpoint: complete fixture chain delivered; bind the prospective real execution wrapper
 
 2026-10-01T19:52Z. Entry HEAD dd5044f97495a3131415f6e929753bf48fcb6110 on
 codex/september-research-integration. Zhaowei accepted the constrained

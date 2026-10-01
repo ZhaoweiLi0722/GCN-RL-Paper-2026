@@ -1,6 +1,65 @@
 # Autonomous local research queue
 
-## Live checkpoint: two-role delivery completed; next target is end-to-end paper comparison
+## Live checkpoint: adaptive paper workflow active; next action is dynamic implementation
+
+2026-10-01T18:28:59Z. Entry HEAD7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f,
+clean worktree. User requests a detailed automatic plan that adapts to stage
+results, serving a defensible EAAI-level submission. The new roadmap is
+specs/2026-10-01-adaptive-paper-delivery/plan.md with explicit authority,
+task states and decision history in workflow.json. It does not authorize new
+fitting/patient episodes or retroactive changes to failed experimental gates.
+
+Actual evidence: read-only host PID/PPID/command inspection found no relevant
+research Python. Sandbox ps was denied; a separately approved read-only scan
+resolved that visibility issue. Existing schedules were inspected: the old PC
+TD3 monitor is paused and an unrelated daily planner is active. Neither is this
+new workflow, and neither was changed. No relevant continuation schedule was
+present before this turn. New same-thread heartbeat gcn-rl was created ACTIVE,
+every30 minutes; creation, app view and local id/kind/cadence/thread/status fields
+verified. Receipt:specs/2026-10-01-adaptive-paper-delivery/automation-receipt.json.
+This verifies scheduling,not a future wake-up or scientific execution. Local
+machine/app availability is required;no experiment is running.
+
+Current finite chain: D1 dynamic request scorer and independent baseline;
+D2 fake-environment serial integration/accounting/restore; D3 one fully bounded
+end-to-end pilot decision package. Only zero-update synthetic preparation and
+existing-evidence manuscript work are authorized. Preserve historical code and
+results. No further automatic sequence of toy learning gates. S1-S4 are proposed
+paper experiments, not granted execution permissions.
+
+Two actual finite delegates:
+- Lovelace,01a0f8b3-4760-7130-b7d9-5e5394abbfbc: completed pilot-budget-draft.md/
+  json and stdlib-only arithmetic checks;now closed,no numerical work.
+- Dalton,01a0f8b5-747b-7b10-abe2-6ec2051be37f: read-only workflow efficiency
+  review completed and closed. Two edits accepted:packet approval covers its
+  internal fits/episodes;manuscript preparation does not block S1 approval.
+  No additional gate or audit cycle was added.
+
+Concrete delivered scope:proposed main packet22,224 env.step calls,1,920 Adam
+calls,6-hour overall cap including initialization,qualification,preflight,
+clones,training,evaluation,readback and preservation. Optional72-call appendix
+defaults OFF and is not recommended main scope. This repairs the previous
+19,344-step incomplete subtotal;none of the budget has been authorized or
+consumed. Three blocks;PPO/frozen/BC-CONTINUE/R4/full-MDL2;unchanged reward and
+scenario. Source-frozen dynamic runner,exact initialization and seed-freshness
+checks are still missing. Draft arithmetic is not executable readiness.
+
+Validation:worker's stdlib phase/owner/time/seed-allocation arithmetic checks
+passed;parent reviewed the proposed schedule,confirmed JSON authority and
+automation receipt fields,and integrated the two efficiency corrections.
+This turn changes documentation/queue JSON only,no Python implementation;
+no scientific test,model forward,optimizer or patient environment call was
+performed. Historical suites and whole-evidence audits were not repeated.
+
+Next concrete action after workflow setup: implement the new unregistered
+variable-bank model and zero-update tests, reusing established public candidate
+contracts. Do not start fitting or patient simulation. Complete the full mock
+integration and source-bound proposal before asking once for the new scientific
+scope. This turn delivers a usable work queue and consolidated scope arithmetic,
+not new patient-performance evidence. Historical P2 remains null and artificial
+sampled-return acceptance remains1/9. Local-only boundaries remain in force.
+
+## Previous checkpoint: two-role delivery completed; next target is end-to-end paper comparison
 
 2026-10-01T18:10Z. User explicitly requests an efficiency-evaluation subagent
 and an independent advancement agent, to replace repetitive audit-only cycles

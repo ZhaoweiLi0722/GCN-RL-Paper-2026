@@ -2344,3 +2344,30 @@ Original run/launcher unchanged;no Dropbox copy. Receipt:
 reports/2026-10-01-sampled-return-control/preservation.json.32 post-run
 non-fitting tests and full compileall passed;all tool sessions ended and final
 host process scan found no related Python. Finite packet closed without retry.
+
+#### Adaptive paper delivery workflow requested
+
+2026-10-01: Zhaowei requested a detailed automated progression plan that can
+revise its next actions based on each stage's results, with the ultimate goal
+of a defensible EAAI-level paper. Current roadmap:
+specs/2026-10-01-adaptive-paper-delivery/plan.md and workflow.json. This permits
+the finite local engineering chain: a new unregistered dynamic candidate model,
+zero-update synthetic contracts, mock serial integration and accounting,
+existing-evidence manuscript preparation, and one complete proposed simulator
+pilot packet. Local commits and one same-thread continuation schedule are
+allowed. No new fit or patient episode is authorized by this planning request.
+
+Routine engineering order and supported manuscript wording may adapt without
+microapprovals; document triggering evidence and authority implications. Reuse
+passing checks rather than repeating historical full audits. The independent
+advancement role owns a concrete artifact; the read-only efficiency evaluator
+reviews only a substantive milestone or two preparation-only restatements.
+
+The sampled-return gate remains failed at1/9. The next experiment must be a
+prospective, explicitly approved end-to-end amendment, including any replacement
+of that prerequisite and all initialization, qualification, preflight, clone,
+training, evaluation and time caps. No automatic toy retry, reward/architecture
+search, scenario change, holdout, Stage E reopening, Howard sign-off claim,
+Dropbox export or remote action. Complete all unblocked engineering, then ask
+one consolidated decision and delete only the new schedule if only unapproved
+work remains. The roadmap persists; automation is not proof of a live workload.

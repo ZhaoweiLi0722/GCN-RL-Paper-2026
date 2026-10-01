@@ -1,0 +1,18 @@
+{
+  "schema": "thread-automation-creation-receipt-v1",
+  "automation_id": "gcn-rl",
+  "name": "GCN-RL 论文自适应推进",
+  "kind": "heartbeat",
+  "status_at_creation": "ACTIVE",
+  "cadence_minutes": 30,
+  "target_thread_id": "019f2ea2-0217-7b71-90cf-791dc05cc921",
+  "created_at_unix_ms": 1790879127929,
+  "tool_creation_response": {"automationId": "gcn-rl", "mode": "create", "status": "ACTIVE"},
+  "tool_is_error": false,
+  "view_response": "Rendered automation card in the app.",
+  "local_config_fields_verified": ["id", "kind", "name", "status", "rrule", "target_thread_id", "created_at", "updated_at"],
+  "config_path": "/Users/lizhaowei/.codex/automations/gcn-rl/automation.toml",
+  "other_automations_changed": false,
+  "scientific_execution_started": false,
+  "note": "Creation and local configuration were verified; this is not evidence of future wake-ups, a live research process, or new numerical authorization. Local scheduling requires the machine and app to remain available."
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "adaptive-paper-delivery-v1",
+  "revision": 1,
+  "updated_at_utc": "2026-10-01T18:29:00Z",
+  "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
+  "branch": "codex/september-research-integration",
+  "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
+  "plan": "specs/2026-10-01-adaptive-paper-delivery/plan.md",
+  "execution_config": false,
+  "scientific_execution_authorized": false,
+  "status": "engineering_active",
+  "current_task": "D1",
+  "next_concrete_action": "Implement a new unregistered dynamic request-conditioned actor and independent value model, using existing public candidate contracts; zero optimizer and patient calls.",
+  "authority": {
+    "local_code_preparation": true,
+    "synthetic_zero_update_tests": true,
+    "saved_evidence_synthesis": true,
+    "local_manuscript_claim_updates": true,
+    "local_commits": true,
+    "scientific_or_artificial_fitting": false,
+    "patient_environment_calls": false,
+    "reward_changes": false,
+    "scenario_changes": false,
+    "historical_gate_changes": false,
+    "dropbox_export": false,
+    "remote_actions": false,
+    "formal_holdout": false,
+    "stage_e_reopening": false
+  },
+  "automatic_replanning": {
+    "allowed": ["reorder_authorized_engineering", "remove_redundant_checks", "reuse_existing_helpers", "update_supported_manuscript_claims", "draft_next_bounded_packet"],
+    "requires_explicit_amendment": ["fit_or_episode_outside_explicitly_approved_packet", "new_reward_or_scenario", "change_frozen_scientific_config", "replace_failed_gate", "expand_or_retry_consumed_attempt", "external_action"],
+    "decision_record_fields": ["date", "trigger_evidence", "old_action", "new_action", "scientific_locks_unchanged", "approval_requirement"]
+  },
+  "automation": {
+    "id": "gcn-rl",
+    "kind": "heartbeat",
+    "cadence_minutes": 30,
+    "creation_verified": true,
+    "status": "ACTIVE",
+    "receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-receipt.json"
+  },
+  "pilot_proposal": {
+    "draft": "specs/2026-10-01-adaptive-paper-delivery/pilot-budget-draft.json",
+    "complete_proposed_call_arithmetic": true,
+    "source_integration_ready": false,
+    "seed_freshness_verified": false,
+    "approved": false,
+    "recommended_main_environment_step_cap": 22224,
+    "recommended_optimizer_call_cap": 1920,
+    "proposed_global_seconds_cap": 21600,
+    "optional_counterfactual_enabled": false,
+    "note": "Planning ceilings only; do not execute or request an incomplete approval before D1-D3 are ready."
+  },
+  "tasks": [
+    {"id": "D1", "state": "pending", "authorized": true, "deliverable": "New variable-bank actor and separate value model with zero-update contract tests", "exit": "Usable implementation, not a numerical fit gate"},
+    {"id": "D2", "state": "pending", "authorized": true, "depends_on": ["D1"], "deliverable": "Serial integration, complete accounting/restore and independent scalar verifier tested with fake environments and forbidden optimizer sentinels", "exit": "Complete mock phase chain passes; actual science entry point stays disabled"},
+    {"id": "D3", "state": "draft_budget_complete_integration_pending", "authorized": true, "deliverable": "Proposed complete call/time arithmetic delivered in pilot-budget-draft.md/json; actual source/runtime/seed freeze still pending", "exit": "Ask one consolidated scientific approval question only when all fields and implementation are ready"},
+    {"id": "S1", "state": "approval_required", "authorized": false, "depends_on": ["D1", "D2", "D3"], "deliverable": "Single end-to-end GCN PPO/frozen/BC-CONTINUE/R4/full-MDL2 comparison"},
+    {"id": "S2", "state": "scope_required", "authorized": false, "deliverable": "Fair graph/self-only/flat attribution"},
+    {"id": "S3", "state": "scope_required", "authorized": false, "deliverable": "Strong information-matched baselines and justified robustness"},
+    {"id": "S4", "state": "scope_required", "authorized": false, "deliverable": "Independent confirmation with prespecified effect and uncertainty"},
+    {"id": "M1_PREP", "state": "pending", "authorized": true, "deliverable": "Use the existing evidence map to prepare supported manuscript methods/results/limitations prose; no new map audit and no blocking S1 approval"}
+  ],
+  "progress": {
+    "paper_evidence_gaps_closed_this_cycle": [],
+    "implementation_blockers_removed_this_cycle": [],
+    "new_patient_performance_result": false,
+    "preparation_only_cycles_without_new_deliverable": 0,
+    "efficiency_review_trigger": "substantive_milestone_or_two_restatement_cycles",
+    "relevant_research_process_observed": false,
+    "process_inspection_verified": true,
+    "process_inspection_note": "2026-10-01 read-only host ps scan: no relevant Python; unrelated dashboard and Dropbox processes are not this workload. Sandbox denial was resolved by a read-only approved scan."
+  },
+  "decisions": [
+    {
+      "date": "2026-10-01",
+      "trigger_evidence": "reports/2026-10-01-agent-delivery/readout.md plus current user request for adaptive autonomous paper delivery",
+      "old_action": "Repeated separately approved artificial learning diagnostics",
+      "new_action": "Complete dynamic implementation and one bounded end-to-end simulator comparison packet; no further automatic toy campaign",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "New numerical science and replacement of failed prerequisite remain one prospective explicit amendment"
+    },
+    {
+      "date": "2026-10-01",
+      "trigger_evidence": "Finite efficiency review by Dalton,01a0f8b5-747b-7b10-abe2-6ec2051be37f",
+      "old_action": "Ambiguous new-fit permission label and possible manuscript-preparation prerequisite",
+      "new_action": "Only out-of-packet fits need a new amendment; present S1 immediately when D1-D3 are ready, with manuscript work independent",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "No new gate; unchanged one complete prospective S1 approval"
+    }
+  ],
+  "finite_agents": [
+    {"id": "01a0f8b3-4760-7130-b7d9-5e5394abbfbc", "role": "advancement", "name": "Lovelace", "state": "completed_closed", "artifact": "pilot-budget-draft.md and pilot-budget-draft.json; stdlib arithmetic checked, no numerical research"},
+    {"id": "01a0f8b5-747b-7b10-abe2-6ec2051be37f", "role": "efficiency", "name": "Dalton", "state": "completed_closed", "artifact": "Two workflow corrections accepted; no additional release gate"}
+  ],
+  "on_terminal_failure": "Preserve evidence, close consumed attempt, no automatic repair-and-rerun; complete saved-evidence handoff.",
+  "on_only_unapproved_work_remaining": "Present one concrete decision and delete only this schedule; do not repeatedly poll or invent work.",
+  "on_roadmap_complete": "Deliver manuscript and reproducibility handoff; no automatic submission or extra experiments."
+}

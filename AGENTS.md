@@ -59,6 +59,22 @@ is the definition of publication readiness. Acceptance cannot be promised.
   from a role definition. No automatic budget expansion, new fit, reward
   search, patient episode, remote action or guarantee of RL improvement.
 
+## Adaptive Paper Workflow
+
+The current delivery roadmap is
+`specs/2026-10-01-adaptive-paper-delivery/plan.md`, with task state and decision
+history in its `workflow.json`. Zhaowei requested automatic routine progression
+and evidence-driven replanning on 2026-10-01. Continue the current finite local
+engineering chain without requiring another "continue" for each step. Use one
+same-thread schedule, not parallel copies of the campaign. Scientific scope,
+frozen parameters, consumed attempts and external-action boundaries are not
+automatically editable. A new integrated pilot needs one complete prospective
+approval, including the explicit replacement of the failed artificial gate;
+that gate must never be reported as passed. Do not append more toy campaigns
+to delay the end-to-end comparison. Inspect actual processes and record actual
+deliveries, not inferred background progress. See the roadmap for closure and
+consolidated-decision rules; it is not itself an experiment execution permit.
+
 ## Coding Guidelines
 
 - Keep environment dynamics, graph construction, model architectures, training loops, and evaluation scripts modular.

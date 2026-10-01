@@ -1,0 +1,24 @@
+{
+  "schema": "source-and-saved-report-review-v1",
+  "date": "2026-10-01",
+  "new_patient_calls": 0,
+  "new_optimizer_calls": 0,
+  "raw_patient_episodes_reaudited_this_turn": false,
+  "inputs": {
+    "results/candidate_reference_prior_pilot_20261001/payload/locks/effective-execution.json": "914a751214ce5e9386c349d200cd17faa22b3c3ac9767c998fcf293507df56b9",
+    "reports/2026-10-01-p2-training-diagnostic/result.json": "d27425e5bd954b17eca0d90c359301cd09d4ec5545efca0a86db04a46bcaec73",
+    "reports/2026-10-01-reference-prior-integration/terminal-audit.json": "f889605a92cf41aca104832e72bb503fbf67a1b615d05d70c99175b59fbb1abc",
+    "src/env/patient_capacity_planning.py": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4",
+    "src/env/capacity_planning.py": "529215bc180463fb1965534f994539616198e95371776acd814fd8bf05a1e2f1",
+    "src/rl/candidate_rollout.py": "549146ef016c7bf8b76ce971eb244e424ceb43f45f121a74ae1950a1219e1cd2",
+    "src/rl/candidate_collection_boundary.py": "fe77b982cc93230b847d0d40cd8120bfc44a07a973bb653fba31b942e6d3d3b5"
+  },
+  "p2_source_and_document_locks_checked": true,
+  "preserved_trees_file_counts": {
+    "p2_payload": 5254,
+    "p2_launcher": 265,
+    "artificial_calibration": 2343,
+    "actor_positive_control": 2345
+  },
+  "preservation_check": "Existing prior_evidence reader plus actor-control inventory equality; no new model forward, fit or patient simulation."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "pre-execution-engineering-test-history-v1",
+  "scientific_or_artificial_fit_started": false,
+  "real_optimizer_calls": 0,
+  "patient_environment_calls": 0,
+  "failures": [
+    {
+      "command": "python -m unittest tests.test_sampled_return_control -v",
+      "tests_run": 22,
+      "errors": 2,
+      "affected_tests": [
+        "test_entire_serial_schedule_with_mocked_observer_optimizer_and_evaluation",
+        "test_terminal_failure_preserves_claim_partial_and_forbids_second_attempt"
+      ],
+      "error": "AttributeError: 'str' object has no attribute 'decode'",
+      "trace": "campaign.execute -> runtime -> platform.platform -> architecture -> _syscmd_file -> output.decode('latin-1')",
+      "cause": "The git check_output mock also intercepted platform's subprocess call and returned a string rather than bytes.",
+      "repair": "Use an explicit invented runtime fixture inside the two mock campaign tests; no scientific code or reward repair."
+    }
+  ]
+}

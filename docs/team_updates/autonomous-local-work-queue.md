@@ -1,6 +1,34 @@
 # Autonomous local research queue
 
-## Live checkpoint: improvement plan and finite automatic preparation requested
+## Live checkpoint: sampled learning preparation complete and reward audit recorded
+
+2026-10-01T17:50Z. Entry HEAD1e5e57e; branch
+codex/september-research-integration. No actual optimizer call, patient episode
+or new performance estimate. The final read-only host process check found no
+matching research Python. Necessary test/compile sessions finished, exit0.
+
+| Item | Verified state |
+| --- | --- |
+| A1 implementation |Independent artificial critic; sampled observed returns only; separate actor/value losses and optimizers; nonrefundable budgets; complete sampling/shuffle/global RNG and update-boundary snapshots |
+| Serial execution |Single fixed result root, missing approval rejected before models, committed exact source/config/protocol/runtime approval required; all9 finals sealed before evaluation; failure records and no retry |
+| Independent reader |Scalar rewards, chosen log probabilities, normalized advantages, all charge events, rollout/update checkpoints, Adam counters, private RNG replay, final seals and gates; no model inference |
+| Engineering validation |121 non-fitting tests passed twice (20.699s and final21.697s);full repository compileall/diff check passed. Full serial fixture mocks observations, optimizer moments and evaluation; it is not a trial fit |
+| Test history |Two initial mock-runtime errors retained in reports/2026-10-01-sampled-return-control/engineering-test-history.json and repaired before any recorded run |
+| A2 interface |Source/mock audit complete; fixed-bank toy actor still cannot be used for variable patient candidate banks. Actual integrated scorer and qualification remain future work |
+| A2 reward |No sign/return-accounting error found in inspected source/saved audit; same finite-horizon objective retained. Shortage-versus-loss economic rationale and unfinished patient obligations require explicit interpretation before a patient pilot |
+| Preservation |P2 source/document locks and5,254 payload/265 launcher files checked against the closed actor-control input snapshot;2,343 calibration and2,345 actor-control files unchanged;seven review input hashes verified |
+| Evidence |specs/2026-10-01-sampled-return-control/protocol.md;specs/2026-10-01-rl-improvement-workflow/reward-decision.md,candidate-contract-readout.md,readiness.md;reports/2026-10-01-sampled-return-control/engineering-readout.json |
+| Exact next decision |Previously asked artificial-only packet:9 fits,128 actor+128 critic calls each/2,304 total,13,824 invented observations,30 numerical minutes,one attempt;approval remains pending, do not repeat the question or infer from silence |
+| Next action after approval |Record actual user wording and exact scope;bind this completed implementation freeze plus source/config/protocol/runtime hashes in a committed authorization;recheck processes and prior evidence;run once, verify and locally archive |
+| Automation |Independent preparation complete;only approval-gated work remains. Delete only gcn-rl-reward after recording local freeze, per its finite-chain stop rule |
+| Boundaries |No patient run,reward change,scope search,Dropbox export,remote action,holdout,Howard sign-off or Stage E reopening. No experiment is running |
+
+The original draft remains non-authorizing, and no execution_authorization.json
+has been created. A3 readiness decision is **not ready for a patient pilot**,
+not permission to skip artificial or dynamic-interface gates. Local code freeze
+and automation closure receipts are appended below after confirmation.
+
+## Previous checkpoint: improvement plan and finite automatic preparation requested
 
 2026-10-01T17:11Z. User requested a complete improvement plan, explicit reward
 change criteria, and an automatic workflow. Entry HEAD e9d5db00a5f49d8e5dfcc2fd2003212574247d25,

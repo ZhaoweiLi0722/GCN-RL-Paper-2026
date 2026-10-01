@@ -2264,3 +2264,30 @@ is authorized by scheduling. Preserve prior evidence and locked sources.
 Complete unblocked preparation,then stop/delete this schedule when the finite
 chain closes or only new-scope approval remains. A later explicit approval must
 be recorded before the corresponding run;silence is not consent.
+
+#### Sampled learning engineering and reward review completed without fitting
+
+2026-10-01: the next "continue" advanced the authorized finite preparation.
+New standalone sampled-return/independent-critic core, serial single-attempt
+runner and independent packet verifier are implemented.121 non-fitting tests
+and full repository compileall passed. The entire serial test uses invented
+receipts, mocked optimizer moments and mocked evaluation, with real Adam/SGD
+and patient calls forbidden. Two pre-execution mock-runtime errors were fixed;
+their record remains in reports/2026-10-01-sampled-return-control/engineering-
+test-history.json. This is not a scientific or artificial-fit retry.
+
+Reward/source review retains the existing finite-horizon objective, documents
+unresolved shortage-versus-patient-loss meaning and terminal obligations, and
+does not change weights. Dynamic candidate contracts were audited; no new
+patient-integrated actor exists. Current readiness decision is no patient
+launch. Readouts:specs/2026-10-01-rl-improvement-workflow/reward-decision.md,
+candidate-contract-readout.md and readiness.md. P2 source/document locks and
+prior calibration/actor-control evidence remain unchanged.
+
+No optimizer call or patient episode occurred. The9-fit/2,304-call/13,824-
+observation/30-minute one-attempt artificial packet still requires its pending
+explicit approval and a separate committed source/runtime-bound authorization.
+The original draft remains false;do not fabricate approval or loop the core
+manually. Finish local freeze and remove only the finite gcn-rl-reward schedule
+because independent preparation is complete. All remote,sharing,holdout,
+Howard-signoff and Stage E boundaries remain unchanged.

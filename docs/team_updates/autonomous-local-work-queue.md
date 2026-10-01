@@ -1,13 +1,13 @@
 # Autonomous local research queue
 
-## Live checkpoint: sampled-return packet executed and verified; gate failed
+## Live checkpoint: sampled-return packet closed and locally archived; gate failed
 
 2026-10-01T18:05Z. Executed once at4763e1e1fd4dfd658b4026f1d84ba69f68a839b6;
 runner and independent verifier both finished exit0. Nine artificial fits,
 2,304 optimizer calls,13,824 observations,13.753 numerical seconds. No patient
 simulation/fitting or reward change. Both stderr logs empty. The numerical
-attempt is consumed;no retry or extra fitting. Local archival is the remaining
-in-scope action, not another experiment.
+attempt is consumed;no retry or extra fitting. Local archival has also finished
+exit0;the finite packet is closed,with no related research Python remaining.
 
 | Item | Verified result |
 | --- | --- |
@@ -18,7 +18,9 @@ in-scope action, not another experiment.
 | Value |9/9 pass relative-MSE gate;absolute RMSE0.574-0.591 versus action effect0.25;possible credit-assignment variance issue,not a causal proof |
 | Verification |9,863 run files;raw arithmetic/private RNG replay/Adam counters/charges/seals/prior evidence verified without new neural forwards |
 | Evidence |specs/2026-10-01-sampled-return-control/readout.md;reports/2026-10-01-sampled-return-control/verification.json;results/candidate_sampled_return_control_20261001/ |
-| Next in-scope action |Commit closure/readout and archive every run/log/source member locally;preserve all failed gates |
+| Local preservation |10,179 archive members verified;49,516,261 bytes;original run and launcher unchanged;reports/2026-10-01-sampled-return-control/preservation.json |
+| Closure |Readout/verification committed as0555bfd;archive SHA256676d44764c173798000cf55a24934e136c5b76d703e2ed188c53885adcb83385;no Dropbox export |
+| Next in-scope action |None in the consumed numerical packet;retain handoff and await a separately bounded next-study decision |
 | Subsequent decision |A single training-only state/time baseline intervention is proposed,not approved or launched;do not change reward and learning design together |
 | Boundaries |No patient launch,search,rerun,Dropbox export,remote operation,holdout,Howard sign-off or Stage E reopening;automation remains deleted |
 
@@ -26,6 +28,9 @@ Progress is now an actual numerical result plus a narrower failure mode,not a
 claim of patient-performance improvement. No new approval question is needed
 to finish this already authorized packet. Any subsequent fit needs its own
 bounded scope;this queue is not evidence of a background training process.
+Final read-only host process scan returned no matching Python after runner,
+verifier,32 non-fitting tests,full compileall and preserver finished. No
+automation was recreated and no additional optimization was performed.
 
 ## Previous checkpoint: bounded sampled learning packet accepted and awaiting launch
 

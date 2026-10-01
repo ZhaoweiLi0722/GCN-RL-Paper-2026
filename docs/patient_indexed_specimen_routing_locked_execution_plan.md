@@ -2336,3 +2336,11 @@ project-local archival,then stop the finite chain. A focused training-only
 baseline/credit-assignment comparison is a proposal requiring separate bounded
 approval,not an authorization to fit,retune or change reward. Do not reopen
 patient work,holdout,Stage E,remote actions or the deleted automation.
+
+Preservation completed at closure commit0555bfd24a5b1a3802b54973941e8a388164d6ce:
+10,179 archive members verified,49,516,261 bytes,SHA256
+676d44764c173798000cf55a24934e136c5b76d703e2ed188c53885adcb83385.
+Original run/launcher unchanged;no Dropbox copy. Receipt:
+reports/2026-10-01-sampled-return-control/preservation.json.32 post-run
+non-fitting tests and full compileall passed;all tool sessions ended and final
+host process scan found no related Python. Finite packet closed without retry.

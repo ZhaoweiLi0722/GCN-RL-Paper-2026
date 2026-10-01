@@ -1,12 +1,12 @@
 {
   "schema": "local-research-preparation-queue-v1",
-  "updated_at_utc": "2026-10-01T18:05:00Z",
+  "updated_at_utc": "2026-10-01T18:08:00Z",
   "execution_config": false,
   "plan": "specs/2026-10-01-rl-improvement-workflow/plan.md",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "e9d5db00a5f49d8e5dfcc2fd2003212574247d25",
-  "status": "numerically_closed_gate_failed_archival_pending",
+  "status": "closed_verified_archived_gate_failed",
   "automation_id": "gcn-rl-reward",
   "automation_creation_verified": true,
   "automation_status_at_creation": "ACTIVE",
@@ -56,13 +56,13 @@
     {"id": "A1_PREP", "state": "passed", "deliverable": "frozen at2bf2403; bounded authorization committed at4763e1e; 121 non-fitting tests and full compileall passed"},
     {"id": "A2_CONTRACT", "state": "passed", "deliverable": "specs/2026-10-01-rl-improvement-workflow/candidate-contract-readout.md; source/mock audit only, no integrated patient actor"},
     {"id": "A2_REWARD", "state": "passed", "deliverable": "specs/2026-10-01-rl-improvement-workflow/reward-decision.md; unchanged finite-horizon reward, unresolved domain/lifecycle interpretation disclosed"},
-    {"id": "A1_RUN", "state": "completed_gate_failed", "deliverable": "single attempt completed exit0 and independently verified;1/9 acceptance;local archive pending;specs/2026-10-01-sampled-return-control/readout.md"},
+    {"id": "A1_RUN", "state": "completed_gate_failed", "deliverable": "single attempt and independent verification exit0;1/9 acceptance;10,179-member project-local archive verified;reports/2026-10-01-sampled-return-control/preservation.json"},
     {"id": "A3_DECISION", "state": "passed", "deliverable": "specs/2026-10-01-rl-improvement-workflow/readiness.md; decision is not patient-ready, no launch or additional approval question"}
   ],
   "observations": {
     "matching_research_python_found": false,
     "process_scan_verified": true,
-    "process_scan_note": "Before launch no match; runner PID24636/PPID30450 command verified live; numerical and verification tool sessions both finished exit0. Final closure scan pending.",
+    "process_scan_note": "Runner PID24636/PPID30450 verified live; runner,verifier,tests,compileall and preserver finished exit0. Final approved read-only host pgrep exit1/no matches; no related research Python remains.",
     "new_numeric_work_in_this_planning_turn": 0,
     "engineering_tests_passed": 121,
     "full_compileall_passed": true,
@@ -72,7 +72,11 @@
     "recorded_numerical_attempt_completed": true,
     "numerical_seconds": 13.75295225,
     "raw_files_verified": 9863,
-    "patient_calls_this_execution": 0
+    "patient_calls_this_execution": 0,
+    "postrun_nonfitting_tests_passed": 32,
+    "local_archive_members_verified": 10179,
+    "local_archive_sha256": "676d44764c173798000cf55a24934e136c5b76d703e2ed188c53885adcb83385",
+    "dropbox_export_performed": false
   },
   "stop_when": ["finite_chain_complete", "recorded_numerical_attempt_terminal_failure", "only_new_scope_approval_remains"],
   "on_stop": "write_handoff_then_delete_only_this_automation"

@@ -1,6 +1,30 @@
 # Autonomous local research queue
 
-## Live checkpoint: approved single package, freezing before launch
+## Live checkpoint: single experiment launched, all preflights passed
+
+2026-10-02T14:17Z (10:17EDT). Execution HEAD3da1a09; supervisor92429 and
+child92443 verified with matching native --launch/--child commands. Packet
+dcdd94320defd4f44d18d0a50a0f29a520eb28dd3a51175c2c30f6fd1798b4ab;
+source437files,input14files,local historical seed979JSON/JSONL records checked,
+zero new stream collisions. CPUfloat32 deterministic runtime locked. No remote
+or external storage action. Authorization,freeze and source are locally committed.
+
+Binding and all3same-start preflight original/clone pairs completed; their378
+environment calls are charged. The latest durable receipt entered
+reference_contexts/block60,total381environment calls,0optimizer calls. No
+performance result yet. The supervisor's single attempt is now consumed on
+failure or completion; never relaunch or use unused budget as a retry permit.
+
+Observe results/paired_cohort_improvement_20261002/launcher and payload.
+The samegcn-rl automation is ACTIVE,tool-confirmed,with unchanged30minute cadence
+and a new read-only finite monitor prompt tied to this exact attempt. No duplicate
+task was created. Final interpretation uses the independent comparison and
+failure-precedence read_terminal semantics; no new model/reward/scenario search.
+Next: let the existing process complete reference contexts,conditional branches,
+fixed actor/BC fits,sealing and216evaluations; record boundaries,then read saved
+results and preserve the completed or failed evidence. No per-phase approval.
+
+## Previous approved-freeze checkpoint
 
 2026-10-02T14:14Z. Entry HEAD5c6c642; branch correct, worktree clean, no matching
 scientific process. Zhaowei replied `下一步` immediately after the exact package

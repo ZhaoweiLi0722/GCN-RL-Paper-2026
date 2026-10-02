@@ -1,0 +1,43 @@
+{
+  "approved": true,
+  "attempts": 1,
+  "automatic_followon": false,
+  "automatic_retry": false,
+  "budget_plan_sha256": "b1e208fbc197700b306ddc2c40e9c01e839c0aa0ae82f424b5ef0cfaf1789280",
+  "format": "conservative-cohort-authorization-v1",
+  "implementation_commit": "c9d5290690ee6b49fa67984e982fda6bfa32fd4b",
+  "packet_sha256": "c571729b094dd02e6034434273d04fc72c23c9db31a0d2f0e69fdc6c01bd0d66",
+  "proposal_sha256": "0fff2023466f94932a585648c853a467eb6e16aa6d706829e146f8d3c712f3f2",
+  "protocol_sha256": "c5510dd8a92bfa8c3e6585f5f772601c7e336f9aeb5668ffc420d21de31e7961",
+  "remote_or_dropbox_actions": false,
+  "runtime_sha256": "9f323279c2f2a99149bce81114ca11daffb42e9adcbef107ade1709c94a048bd",
+  "user_approval": {
+    "approved": true,
+    "attempts": 1,
+    "automatic_followon": false,
+    "automatic_retry": false,
+    "blocks": [
+      60,
+      61,
+      62
+    ],
+    "context": "This reply follows the complete one-attempt numerical package question and the immediately preceding final answer listing 768 actor updates, 180 evaluation cohorts, 49626 environment calls and an 8-hour maximum. It confirms proceeding with that exact package, not unbounded performance optimization or automatic retries.",
+    "contextual_approval": true,
+    "evaluation_cohorts": 180,
+    "global_seconds": 28800,
+    "howard_approval_claimed": false,
+    "implementation_source_commit": "a98b1faff4eaaf24288a4ad65b345ed3d4429896",
+    "maximum_actor_updates": 768,
+    "maximum_critic_updates": 0,
+    "maximum_environment_calls": 49626,
+    "proposal_sha256": "0fff2023466f94932a585648c853a467eb6e16aa6d706829e146f8d3c712f3f2",
+    "protocol_sha256": "c5510dd8a92bfa8c3e6585f5f772601c7e336f9aeb5668ffc420d21de31e7961",
+    "recorded_at_utc": "2026-10-02T20:08:16Z",
+    "remote_or_dropbox_actions": false,
+    "reward_scenario_architecture_support_changes": false,
+    "rounds": 2,
+    "routine_phases_need_reapproval": false,
+    "schema": "conservative-cohort-scope-approval-intent-v1",
+    "user_literal": "\u6211\u4eec\u7684\u4e0b\u4e00\u6b65\u662f\u4ec0\u4e48 \u7ee7\u7eed"
+  }
+}

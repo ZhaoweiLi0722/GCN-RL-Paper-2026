@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 18,
-  "updated_at_utc": "2026-10-02T04:26:00Z",
+  "revision": 19,
+  "updated_at_utc": "2026-10-02T04:49:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
@@ -10,9 +10,9 @@
   "execution_authorization": "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-authorization.json",
   "scientific_execution_authorized": false,
   "authorization_state": "Complete continuation attempt successfully executed and consumed;no automatic follow-on or retry",
-  "status": "saved_return_diagnosis_complete_bounded_baseline_proposal_next",
+  "status": "one_shot_time_baseline_proposed_numeric_approval_pending_engineering_active",
   "execution_commit": "63c2383d33f5795f22ec1173bd75222a30a63a4a",
-  "current_task": "N3_VALUE_BASELINE_COMPARISON_PROPOSAL",
+  "current_task": "N4_TIME_BASELINE_INTEGRATION",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -26,7 +26,26 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Integrate source-contract note and draft one complete bounded value-baseline intervention comparison against current PPO,own frozen and BC-CONTINUE. Keep reward/scenario/support fixed;explicit initialization,new streams,all loads/episodes/updates/time counts. No fit-only gate. Ask one complete execution approval then pause;no scientific calls authorized.",
+  "next_concrete_action": "Integrate additive target selection and full restore, six-controller serial budget/readout adapter, fresh stream manifest and scoped collision check; zero-update mock tests and local source/runtime/input freeze. One numeric execution question already pending; do not repeat it. No scientific calls until explicit reply to that packet and frozen implementation. Stop baseline route after one completed null/diagnostic-only comparison and use reward-pivot memo; no automatic reward training.",
+  "time_baseline_proposal": {
+    "path": "specs/2026-10-02-time-baseline-comparison/proposal.json",
+    "protocol": "specs/2026-10-02-time-baseline-comparison/protocol.md",
+    "reward_pivot": "specs/2026-10-02-time-baseline-comparison/reward-pivot.md",
+    "direction_approved": true,
+    "numeric_execution_approved": false,
+    "execution_question_asked": true,
+    "source_integration_ready": false,
+    "source_frozen": false,
+    "scalar_tests_passed": 7,
+    "full_compileall_passed": true,
+    "budget_arithmetic_verified": true,
+    "seed_freshness_verified": false,
+    "new_scientific_calls": 0,
+    "proposed_episodes": 522,
+    "proposed_environment_calls": 27216,
+    "proposed_optimizer_calls": 1920,
+    "proposed_seconds": 10800
+  },
   "saved_qualification_authorization": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-authorization.json",
   "authority": {
     "local_code_preparation": true,
@@ -57,9 +76,9 @@
     "creation_verified": true,
     "status": "ACTIVE",
     "pause_reason": null,
-    "current_scope": "Finite N1-N3 saved JSON diagnosis and prospective comparison packet only;no scientific execution",
-    "active_update_verified_at_utc": "2026-10-02T04:26:00Z",
-    "active_toml_sha256": "31a14dd71f8a5c0907e1c515f2fca9f01f35c4c181fc0a70d1c225df1090e001",
+    "current_scope": "Finite additive time-baseline integration and zero-update preparation;numeric approval pending;one-attempt stop and reward-design pivot only",
+    "active_update_verified_at_utc": "2026-10-02T04:49:00Z",
+    "active_toml_sha256": "3645ea4611cbe488182b1f8b0499fb2e620b16a0d242edb69718df5f3ae5f334",
     "terminal_closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/s1-monitor-closure.json",
     "current_receipt": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-pause.json",
     "closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-closure.json",
@@ -93,7 +112,8 @@
   "tasks": [
     {"id": "N1_SOURCE_CONTRACT", "state": "completed", "authorized": true, "deliverable": "Exact frozen objective/value/input/logging contract;time input present;no model access"},
     {"id": "N2_SAVED_RETURN_DIAGNOSIS", "state": "completed", "authorized": true, "deliverable": "99 hash-matched files,4992 saved PPO rows;near-constant value baseline identified;zero scientific calls"},
-    {"id": "N3_VALUE_BASELINE_COMPARISON_PROPOSAL", "state": "next_authorized_preparation", "authorized": true, "deliverable": "One full bounded comparison packet and paper update;ask execution approval then pause"},
+    {"id": "N3_VALUE_BASELINE_COMPARISON_PROPOSAL", "state": "draft_complete_numeric_question_asked", "authorized": true, "deliverable": "Single LOEO time-baseline comparison, whole-attempt budget and independent reward-pivot memo;not yet source frozen or approved for science"},
+    {"id": "N4_TIME_BASELINE_INTEGRATION", "state": "scalar_transform_complete_integration_next", "authorized": true, "deliverable": "Versioned target/full-restore integration,six-controller execution/readout,new streams,mock-only tests and local freeze;no additional fit gate"},
     {"id": "D1", "state": "completed_zero_update", "authorized": true, "deliverable": "New variable-bank actor and separate value model with zero-update contract tests", "exit": "Usable implementation, not a numerical fit gate"},
     {"id": "D2", "state": "completed_fixture_integration", "authorized": true, "depends_on": ["D1"], "deliverable": "Complete 33-scope fixture runner, qualification/forks/collection/updates/test seals/verifier/archive wiring; independent scalar verifier separately tested. In-owner restoration only; no scientific execution acceptance", "exit": "Complete mock chain passed; real entrypoint fails closed without explicit bound approval"},
     {"id": "D3", "state": "completed_source_frozen_engineering", "authorized": true, "deliverable": "Exclusive claim, committed approval/live admission, external watchdog, inner compute and terminal deadlines; 334 source/6 input/runtime locks plus 499-file local seed audit frozen and reread from clean commits", "exit": "One complete S1 decision in approval-request.md; no real scientific preflight performed"},
@@ -306,6 +326,14 @@
   },
   "decisions": [
     {
+      "date": "2026-10-02T04:49:00Z",
+      "trigger_evidence": "Near-constant collected values,time-structured returns and user request to stop wasting time then pivot reward if ineffective",
+      "old_action": "Unspecified learned-value intervention preparation",
+      "new_action": "One fixed training-only leave-one-episode-out time baseline,keeping critic targets and all objective settings;prepare reward interpretation now and stop baseline route after one unhelpful attempt",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "Direction/preparation accepted. New522episode/27216env/1920optimizer/10800second numeric question asked once,pending;no real calls before approval and freeze. Reward training requires a later explicit complete amendment."
+    },
+    {
       "date": "2026-10-02T03:05:00Z",
       "trigger_evidence": "Completed387episodes/1152updates/180tests and verified local archives;primarycostdifference0 and unchanged greedyrequests on1872sharedstates despite changed probabilities and nonreference training coverage",
       "old_action": "Execute the approved same-start PPO/frozen/BC continuation comparison",
@@ -427,6 +455,7 @@
     }
   ],
   "finite_agents": [
+    {"id": "01a0fad9-c141-7e43-94bb-797a6c2f6f8d", "role": "advancement", "name": "Rawls", "state": "completed_closed", "artifact": "Disjoint97-line reward-pivot memo:full-MC shaping equivalence,terminal-liability objective boundary,patient/material consequence semantics;no scientific calls. Prior Carson efficiency advice reused without another review."},
     {"id": "01a0f9e4-f33b-7272-8571-d38a99d31408", "role": "advancement", "name": "Bernoulli", "state": "completed_closed", "artifact": "Independent saved-qualification readout reconciles628 debits/hash chain,six paths,and paired outcomes;no extra model or environment calls;prior efficiency advice reused"},
     {"id": "01a0f9d2-97e0-7490-9866-e4d59244135b", "role": "advancement", "name": "Gauss", "state": "completed_closed", "artifact": "23 invented zero-update saved-policy tests;identified R4 lineage omission fixed by coordinator;integrated92-test suite passed"},
     {"id": "01a0f9d2-984a-7cb2-9d9a-f7457e9e160f", "role": "efficiency", "name": "Faraday", "state": "completed_closed", "artifact": "Thin saved-policy restoration,reuse raw readout,and pause at one complete approval;no new gate"},

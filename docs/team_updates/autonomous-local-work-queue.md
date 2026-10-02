@@ -1,6 +1,55 @@
 # Autonomous local research queue
 
-## Live checkpoint: saved-data value-baseline bottleneck identified
+## Live checkpoint: one-shot time-baseline comparison prepared; integration next
+
+2026-10-02T04:49Z. Entry HEAD32b4f7159865235912a908a425339b9fc6774362.
+Zhaowei approved the direction and requested a fast reward pivot if it fails.
+The exact reply is in specs/2026-10-02-time-baseline-comparison/proposal.json.
+It preceded this new numeric package; one consolidated execution question has
+now been asked. No answer to that specific question has been received here.
+Do not infer numeric execution approval from the earlier direction approval.
+
+New usable scalar transform:src/rl/leave_one_episode_out_baseline.py. It uses
+other independent training episodes at the same time index, excludes the
+entire owned trajectory, preserves return targets, and rejects incomplete or
+mixed-behavior input. Seven artificial scalar tests and full compileall passed.
+One initial exact-equality assertion was corrected to12decimal-place tolerance
+for ordinary floating-point subtraction; no scientific attempt was run.
+This removes target-math ambiguity, not the remaining execution integration.
+
+Protocol/proposal specify3blocks, original PPO/time-baseline PPO/BC training,
+same-start frozen and R4/MDL-2 evaluation,522episodes,27,216env calls,
+1,920optimizer calls and10,800seconds including verification/archives.
+Budget sums and138disjoint ordinal slots checked without generating data.
+No new result root, model loads/forwards, patient steps or optimizer calls.
+Host PID/PPID/command scan found no matching scientific process; only the
+inspection commands matched. Prior completed scientific attempts stay closed.
+
+Decision: test one direct advantage-baseline replacement, not a new critic
+architecture or fit-only gate. Low value fit motivates it but does not establish
+causality. If the full comparison is null or only improves internal diagnostics,
+close this route and move to reward-design preparation without extra training.
+Independent memo:specs/2026-10-02-time-baseline-comparison/reward-pivot.md.
+Under the current full-MC contract, potential shaping can merely shift the
+baseline; it is not automatically a distinct remedy. Unpriced terminal workload
+is an objective-definition question, not a proved bug; overlapping patient harm
+and material loss does not alone establish duplicate valuation.
+
+Next concrete authorized engineering:versioned target selection/full-restore
+binding, six-controller serial budget adapter and raw verifier, fresh-stream
+manifest/collision check, zero-update mock integration, local source/runtime/
+input freeze. No repeat historical audit or toy fitting. The numeric approval
+question is pending; ask no duplicate question. Real execution also requires
+the integrated implementation and committed locks/authorization. If it becomes
+the only remaining blocker, pause visibly rather than keep polling.
+
+Rawls completed the disjoint97-line reward memo and was closed. Reuse Carson's
+already completed efficiency advice:one decisive comparison, no extra toy gates.
+gcn-rl updated/read back ACTIVE, same thread and30-minute cadence; it advances
+only finite preparation unless the exact new package is explicitly approved.
+This is not a running experiment. No remote/Dropbox/holdout/Stage E change.
+
+## Previous checkpoint: saved-data value-baseline bottleneck identified
 
 2026-10-02T04:26Z. User requested the next step and automatic progression.
 Entry HEAD44cfc2783019dcea71f75920d52f3818ccf6ce4f was clean; host PID/PPID/command

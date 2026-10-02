@@ -2598,3 +2598,34 @@ Only local artifacts/commits,no Dropbox,remote action,holdout or Stage E change.
 Automation remains PAUSED and visible. New experimental scope needs a separate
 evidence-based decision;do not launch extra seeds,reward tuning or a stochastic
 evaluation appendix merely because the primary result is null.
+
+#### One-shot baseline direction and reward-pivot preparation
+
+2026-10-02: Zhaowei approved proceeding with the proposed direction and asked
+for a fast reward pivot if the baseline intervention is unhelpful. The reply
+predated the new numeric package; preserve it verbatim in
+specs/2026-10-02-time-baseline-comparison/proposal.json, not as retroactive
+execution approval. One complete numeric question is now pending:3blocks,
+522episodes,27,216env calls,1,920optimizer calls,10,800seconds and one attempt.
+No real model loads/forwards,patient calls or optimizer calls have been made.
+
+The prospective intervention changes only policy advantages:at each time,
+subtract the mean return from the other3independent complete episodes under
+the same fixed behavior. Critic targets,raw reward,scenario,support,models,
+initialization and evaluation remain fixed. This is not a repaired learned
+critic. Original PPO,own frozen andBC are required comparators;R4/MDL-2 are
+context. Reuse qualified saved initializers,not old trained comparison results.
+No extra fit-only gate or alternate baseline after a null. Protocol and phase
+caps are in that directory; engineering integration and source/input/runtime
+freeze remain incomplete. A numeric approval and committed locks are required
+before new scientific execution; the old attempt stays consumed.
+
+The independent reward-pivot memo is preparation only. Full-episode MC potential
+shaping can be equivalent to a baseline shift, so it is not automatically a
+distinct remedy. Terminal workload valuation changes the finite-window objective
+if added; overlapping patient-harm and material-loss costs do not establish
+duplicate valuation without domain definitions. Keep old-objective/raw patient
+reporting visible in any later proposal. Do not tune weights to obtain a win.
+No reward training/search is authorized by this direction. Continue only local
+engineering,zero-update fixtures and proposal preparation under the existing
+heartbeat;no remote/Dropbox/holdout/Howard approval assertion or Stage E change.

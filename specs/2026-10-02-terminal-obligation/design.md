@@ -5,6 +5,14 @@ the objective investigation; it is not approval of unspecified new calls, a
 terminal weight, changed scenario or another training attempt. The completed
 baseline route remains closed. No full-lifecycle clinical benefit is modeled.
 
+2026-10-02 implementation refinement: [protocol.md](protocol.md) and
+[bound-and-settlement.md](bound-and-settlement.md) specify an8step patient bound
+and a fixed11step economic tail. The resolution-stopped formula below is retained
+as an earlier design option and a secondary decomposition; the proposed primary
+cost now uses the same63step exposure for every arm, including post-resolution
+holding. This avoids arm-dependent early accounting termination. No new science
+or lifetime terminal valuation is thereby authorized.
+
 ## Question and Estimand
 
 Can a graph-aware policy learn a better first-52-step coordination policy when

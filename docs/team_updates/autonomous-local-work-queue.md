@@ -1,6 +1,54 @@
 # Autonomous local research queue
 
-## Live checkpoint: saved terminal diagnosis delivered; cohort-objective design next
+## Live checkpoint: cohort bounds, target adapter and raw-tail components delivered
+
+2026-10-02T08:04Z. Entry HEAD62056c12cb84b27ca1acb401045472ea3e83c428.
+Zhaowei requested continuing under the roadmap. Current authority is local
+engineering and prospective design, not a new reward experiment. No scientific
+checkpoint/forward, patient construction/step or optimizer update occurred.
+Historical time-baseline and saved-terminal analyses are closed; do not repeat.
+
+New supported engineering answer: existing routing_nominal_history prefix is
+unchanged52steps. The source-derived patient resolution bound is8tail steps;
+3more drain resource transfers, giving common fixed63step cost accounting.
+Zero future demand/rate priors with plainMDL2 while active, then no new orders
+or transfers; retain all primitive costs and final stocks. No salvage/penalty
+weight is chosen. The bound still needs the proposed budgeted live preflight;
+this is a changed finite-cohort estimand, not proof the historical reward is wrong.
+
+Delivered additive cohort_followup,cohort_collection,cohort_objective,
+cohort_ppo,cohort_objective_plan andcohort_verification modules plus tests.
+The PPO adapter keeps rawprefix rewards immutable, includes tailcost once only
+for the cohort objective, and binds full-tail provenance/RNG/optimizer/pending
+data/targethistory to its versioned restore contract. The generic collector
+stores both stages but its full reconstruction and campaign wiring are pending.
+39focused/regression tests passed in1.832s and full compileall exited0;fake Adam
+metadata only,no actual fitting. These tests remove implementation blockers,
+not evidence of improved patient performance. Arendt's disjoint bound/settlement
+memo was integrated and the agent closed;existing efficiency advice reused.
+
+Complete numerical draft:3blocks,3training arms x32episodes/block;6evaluation
+controllers,522main63step episodes plus3full52step prefix parity traces and
+36short restore clones. Caps33186environment calls,1920optimizer calls,10800s,
+single attempt with nontransferable subcaps. Exact scope/interpretation and
+promotion screen:specs/2026-10-02-terminal-obligation/proposal.json,protocol.md.
+No execution approval, frozen implementation packet or seed-freshness claim yet.
+
+Next concrete authorized action: finish structural public-producer bridge and
+versioned prefix session, complete collector/continuation reconstruction and
+two-part recording, wire serial six-controller campaign and independent bundle
+verification, then freeze source/runtime/input/fresh-stream locks and ask one
+complete execution question. Do not call old52step recorder.finish after tail63.
+No more baseline fits or toy science. See integration-readout.md for exact gaps.
+
+Host process check08:03Z found only inspection commands,no matching research
+launcher. The SAME gcn-rl task is now ACTIVE for engineering only,read back08:04Z
+at unchanged30-minute cadence. TOML SHA256:
+ce55016fb460d614c146c184879a0b371f42f8150100cd78af57e6293166f62a.
+Scheduler activation is not training. Pause visibly once only new scope approval
+remains. No remote,Dropbox,holdout,Howard-approval assertion or StageE change.
+
+## Previous checkpoint: saved terminal diagnosis delivered; cohort-objective design next
 
 2026-10-02T07:33Z. Entry HEAD e916c414c89bc334ad96e4cde48536535228791d.
 Zhaowei's "continue" advanced saved-data diagnosis and prospective design, not

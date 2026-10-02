@@ -2717,3 +2717,37 @@ locked. No new follow-up,fit,coefficient search or scientific execution is appro
 Canonical design:specs/2026-10-02-terminal-obligation/design.md. gcn-rl remains
 PAUSED and visible; no active scientific workload is claimed. Only local work;
 no export,remote,holdout,Howard approval assertion or Stage E reopening.
+
+#### Cohort-objective engineering and prospective numerical packet
+
+2026-10-02T08:04Z: Zhaowei requested continuing under the roadmap. This permits
+the local additive engineering chain; it is not approval of an unspecified
+reward trial. Entry62056c12cb84b27ca1acb401045472ea3e83c428. Source review by a
+disjoint finite agent and coordinator resolves the current scenario as
+routing_nominal_history, with52step original enrollment,8tail transitions to
+patient resolution and3additional transitions for resource pipelines. The new
+proposal uses a common63step economic endpoint, not an arm-dependent cost cutoff.
+No monetary penalty/salvage coefficient is introduced; remaining resource stocks
+and clipping are reported, not relabeled as lifetime economic settlement.
+
+The unregistered cohort clock, two-stage collector skeleton, pure cost target,
+objective-bound PPO/restoration adapter, budget/stream plan and independent raw
+tail verifier passed39zero-update/mock tests and full compileall. No patient
+environment/checkpoint/scientific forward/real optimizer ran. Full producer,
+session, collection reconstruction, serial campaign and bundle verification
+remain incomplete; these component tests are not scientific execution readiness.
+
+Prospective packet:specs/2026-10-02-terminal-obligation/proposal.json,protocol.md.
+Three blocks, window/cohort PPO and BC continuation at32episodes/model,
+six controllers and522main63step episodes, plus3full52step parity traces and
+36short clone comparisons:33186environment,1920optimizer calls,10800seconds,
+oneattempt and nontransferable phase/owner caps. This full numerical scope and
+changed estimand are not yet approved. Freeze integrated source/runtime/input
+and prospective streams, then request one precise execution authorization.
+Do not run the proposal before that approval or reuse a consumed budget.
+
+The same gcn-rl heartbeat was reactivated/read back for the remaining finite
+engineering chain at30minute cadence. Scientific attempts remain closed and no
+new research process is claimed. Pause visibly when only new scope approval
+remains. No historical source/results overwritten, no new fit gate, no remote,
+export,holdout,StageE reopening or Howard approval assertion.

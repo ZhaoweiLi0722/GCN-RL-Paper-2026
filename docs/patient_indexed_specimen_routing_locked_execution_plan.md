@@ -2976,3 +2976,24 @@ The samegcn-rl automation was PAUSED and retained after its finite engineering
 chain; no duplicate schedule or scientific task was started. Banach's disjoint
 assignments are closed, prior efficiency advice reused. All prior failed and
 completed evidence remains untouched. Current handoff is the Live checkpoint.
+
+#### Paired-cohort one-attempt execution approved in context
+
+2026-10-02T14:14Z: after the assistant explicitly identified the complete
+33318environment/768actor/0critic/14400second single package as the sole pending
+next step, Zhaowei replied `下一步`. Record that exact instruction and its
+context in specs/2026-10-02-paired-cohort-improvement/approval-intent.json; do not
+replace the literal with an invented yes or claim Howard approval. This permits
+the unchanged complete package:3blocks,12reference cohorts,36states,at most432
+conditional branches,6new actor fits of128updates and216evaluations, including
+the budgeted same-start preflight and independent raw comparison/preservation.
+The original proposal and protocol remain immutable snapshots, not rewritten
+as if previously approved. Separate committed effective authorization binds them.
+
+Implementation5c6c642 passed the145test zero-update integration andcompileall.
+Freeze source/runtime/input/fresh-seed locks and commit the bound authorization
+before launching once in the new persistent result directory. No per-phase
+reapproval or additional diagnostic gate. No change to reward,scenario,support,
+architecture,primary outcome,threshold,seednamespace,budget or single-attempt
+termination. Old attempts remain consumed. No automatic retry/follow-on,
+holdout/StageE/remote/export/Howard-signoff action is authorized.

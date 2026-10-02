@@ -1,6 +1,23 @@
 # Autonomous local research queue
 
-## Live checkpoint: native campaign delivered, one scope approval remains
+## Live checkpoint: approved single package, freezing before launch
+
+2026-10-02T14:14Z. Entry HEAD5c6c642; branch correct, worktree clean, no matching
+scientific process. Zhaowei replied `下一步` immediately after the exact package
+was identified as the sole pending step. This is recorded transparently as
+contextual execution approval in the new approval-intent.json, with literal
+instruction and unchanged protocol/config hashes; not a Howard approval claim.
+
+Authorized once:33318environment calls/768actor/0critic/14400seconds,including
+3blocks,12reference cohorts/36states,at most432conditional branches,6fits and
+216evaluations. Implementation/testing already complete; no repeat toy fits,
+history audit or old result rerun. Next: commit intent/change control, freeze
+source/runtime/input/seed locks, commit bound authorization and launch the one
+complete serial package. No science has started at this checkpoint. Preserve
+all stage/owner caps and stop on any terminal failure without retry. Existing
+same-thread monitor can track this attempt; a schedule is not process evidence.
+
+## Previous engineering-complete checkpoint
 
 2026-10-02T13:50Z. Entry HEAD9f4c4d3749b9a84d0e6952d5a56743760c8dc9df.
 No related scientific process was present at entry or final read-only process

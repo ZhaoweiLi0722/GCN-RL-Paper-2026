@@ -1,18 +1,18 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 14,
-  "updated_at_utc": "2026-10-02T01:51:00Z",
+  "revision": 15,
+  "updated_at_utc": "2026-10-02T02:03:18Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
   "plan": "specs/2026-10-01-adaptive-paper-delivery/plan.md",
-  "execution_config": "specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json",
-  "execution_authorization": "specs/2026-10-01-adaptive-paper-delivery/execution-authorization.json",
-  "scientific_execution_authorized": false,
-  "authorization_state": "Separate saved-qualification attempt completed and consumed;original S1 remains closed;no continuation authority",
-  "status": "continuation_recovery_frozen_awaiting_complete_execution_decision",
+  "execution_config": "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-frozen.json",
+  "execution_authorization": "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-authorization.json",
+  "scientific_execution_authorized": true,
+  "authorization_state": "Exact complete continuation-only packet approved once;old S1 and saved qualification remain closed",
+  "status": "continuation_recovery_approved_single_launch_next",
   "execution_commit": "af1fe201779477b71200d069ce7b446f39ee4b84",
-  "current_task": "S1_CONTINUATION_RECOVERY_PREP",
+  "current_task": "S1_CONTINUATION_RECOVERY_EXECUTION",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -26,7 +26,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Ask one complete source-frozen continuation/evaluation execution decision:387episodes,20184envcalls,1152optimizer calls,17400seconds,one attempt. On approval record and commit exact authority before the single launch;no per-phase reapproval. Until then no science,qualification repeat or initialization refit.",
+  "next_concrete_action": "Commit exact approval/change control then launch the continuation entrypoint once. Observe the owned process through preflight,continuation,evaluation,verification and archival;no duplicate launch or repeated per-phase approval;terminal failure cannot retry.",
   "saved_qualification_authorization": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-authorization.json",
   "authority": {
     "local_code_preparation": true,
@@ -34,8 +34,8 @@
     "saved_evidence_synthesis": true,
     "local_manuscript_claim_updates": true,
     "local_commits": true,
-    "scientific_or_artificial_fitting": false,
-    "patient_environment_calls": false,
+    "scientific_or_artificial_fitting": "only exact authorized continuation packet",
+    "patient_environment_calls": "only exact authorized continuation packet",
     "reward_changes": false,
     "scenario_changes": false,
     "historical_gate_changes": false,
@@ -56,7 +56,7 @@
     "cadence_minutes": 30,
     "creation_verified": true,
     "status": "PAUSED",
-    "pause_reason": "Qualification-only packet completed;no continuation execution approved",
+    "pause_reason": "Foreground coordinator owns the approved single continuation launch and observation;no duplicate scheduled launcher",
     "terminal_closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/s1-monitor-closure.json",
     "current_receipt": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-pause.json",
     "closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-closure.json",
@@ -96,7 +96,7 @@
     {"id": "S1_SAVED_QUALIFICATION_APPROVAL", "state": "approved", "authorized": true, "deliverable": "Direct user approval recorded for one624-scoring,4-load,900-second qualification-only decision;training not included"},
     {"id": "S1_SAVED_QUALIFICATION_EXECUTION", "state": "completed_passed", "authorized": false, "attempt_consumed": true, "deliverable": "624 frozen scorings,all six paths104/104 agreement,three blocks passed,no new environment/optimizer/test calls;no S1 restart"},
     {"id": "S1_CONTINUATION_RECOVERY_PREP", "state": "completed_source_input_runtime_frozen", "authorized": true, "deliverable": "Additive continuation-only runner,complete protocol and exact remaining budget;120tests and compileall passed;349source/73input/runtime locks;no research calls"},
-    {"id": "S1_CONTINUATION_RECOVERY_EXECUTION", "state": "unapproved", "authorized": false, "deliverable": "Same-start PPO/frozen/BC comparison plus R4/MDL2;387episodes,20184envcalls,1152optimizer calls,17400seconds,one attempt"},
+    {"id": "S1_CONTINUATION_RECOVERY_EXECUTION", "state": "approved_single_launch_next", "authorized": true, "deliverable": "Same-start PPO/frozen/BC comparison plus R4/MDL2;387episodes,20184envcalls,1152optimizer calls,17400seconds,one attempt"},
     {"id": "S2", "state": "scope_required", "authorized": false, "deliverable": "Fair graph/self-only/flat attribution"},
     {"id": "S3", "state": "scope_required", "authorized": false, "deliverable": "Strong information-matched baselines and justified robustness"},
     {"id": "S4", "state": "scope_required", "authorized": false, "deliverable": "Independent confirmation with prespecified effect and uncertainty"},
@@ -131,7 +131,7 @@
       "proposed_attempts": 1,
       "advancement_agent": "completed_and_closed",
       "efficiency_agent": "completed_and_closed",
-      "approval_received": false,
+      "approval_received": true,
       "scientific_execution_started": false
     },
     "saved_qualification_result": {
@@ -238,6 +238,14 @@
     "remaining_patient_comparison_blocker": "Original two-path qualification now passes for saved models. A separately approved complete continuation/evaluation recovery is still required;no PPO outcome exists."
   },
   "decisions": [
+    {
+      "date": "2026-10-02T02:03:18Z",
+      "trigger_evidence": "Direct user approval of the complete frozen continuation package",
+      "old_action": "Await one full execution decision",
+      "new_action": "Record exact authority and local commit,then launch the one approved continuation attempt and finish all routine stages without repeated approval",
+      "scientific_locks_unchanged": true,
+      "approval_requirement": "Full bound packet approved once;no automatic retry,new scope or external action"
+    },
     {
       "date": "2026-10-01",
       "trigger_evidence": "Qualified saved models plus120 passing mock/admission regressions and complete additive continuation runner;349source/73input/runtime locks frozen without science",

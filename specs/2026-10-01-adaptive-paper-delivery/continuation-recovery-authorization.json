@@ -1,0 +1,27 @@
+{
+  "format": "dynamic-continuation-recovery-authorization-v1",
+  "approved": true,
+  "packet_sha256": "8f0698cc8bdf41725e07ed78b0a856695473588cdcbbb817d90fa9d8c0223107",
+  "implementation_commit": "82a947404db18ba034fed241155336d4786b9898",
+  "limits": {
+    "attempts": 1,
+    "environment_steps": 20184,
+    "optimizer_calls": 1152,
+    "seconds": 17400,
+    "historical_initializer_loads": 3,
+    "reference_loads": 3,
+    "layout_builds": 3,
+    "episode_builds": 387,
+    "final_test_episodes": 180
+  },
+  "automatic_retry": false,
+  "remote_or_dropbox_actions": false,
+  "reuse_completed_qualification_without_rescoring": true,
+  "old_s1_remains_terminal": true,
+  "user_approval": {
+    "user": "Zhaowei",
+    "verbatim": "批准",
+    "recorded_at_utc": "2026-10-02T02:03:18Z",
+    "context": "Direct reply to the complete frozen continuation package question:387episodes,20184environment calls,1152optimizer updates,17400seconds,one attempt;preflight,training,evaluation and local archives included;no reward/scenario changes or automatic retry."
+  }
+}

@@ -2541,3 +2541,25 @@ exact committed authorization/change-control before launch. Routine approved
 stages would not need repeated permission. Until then keep gcn-rl PAUSED and
 visible;no new result root,no training,holdout,remote/Dropbox action,Howard
 approval assertion or Stage E reopening. Source readiness is not RL benefit.
+
+#### Complete continuation-only attempt authorized
+
+2026-10-02T02:03:18Z: Zhaowei directly replied "approved" to the complete frozen
+package question. The exact original Chinese reply is retained in
+specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-authorization.json.
+Bind implementation82a947404db18ba034fed241155336d4786b9898 and packet
+8f0698cc8bdf41725e07ed78b0a856695473588cdcbbb817d90fa9d8c0223107.
+This authorizes one new continuation-only attempt,not reopening old S1 or
+repeating qualification:3initializer+3R4 loads,3layouts+387episode builds,
+15preflight+192continuation+180final evaluation episodes,20,184environment
+calls including60clones,768actor+384critic=1,152optimizer calls,and17,400seconds
+including source/input admission,verification and local archives. Retain all
+phase/owner subcaps and all scientific settings. No refund of consumed budgets.
+
+Commit this authority before launch. Inside this complete packet,the coordinator
+may proceed automatically through all routine phases. Failure consumes the
+attempt;no automatic repair/retry,model search,reward/scenario change,extra
+data or fitting. Report raw costs and patient trade-offs regardless of direction.
+No remote action,Dropbox export,holdout,Howard sign-off or Stage E reopening.
+The scheduler may remain paused while one foreground owned run completes;
+process evidence,not a scheduler state,establishes actual execution.

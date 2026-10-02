@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete continuation packet frozen; execution decision pending
+## Live checkpoint: complete continuation approved; single launch next
+
+2026-10-02T02:03:18Z. Zhaowei directly replied "approved" to the complete
+continuation/evaluation package. Exact Chinese text is preserved in
+specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-authorization.json.
+Entry HEAD6d353961994ddee9d422429f6e5af93f934b4450,clean integration branch;
+host PID/PPID/command inspection found no matching experiment process.
+
+Authorize one attempt bound to implementation82a9474 and frozen packet
+8f0698cc8bdf41725e07ed78b0a856695473588cdcbbb817d90fa9d8c0223107:
+3initializer+3R4 loads,390builds,387episodes,20,184environment calls,
+1,152optimizer calls,17,400seconds including preflight,continuation,180final
+evaluations,independent raw verification and local archives. No refit/rescore,
+new reward/scenario,automatic retry,remote/Dropbox action or Stage E reopening.
+Old S1 and saved qualification remain closed. Reuse120 tests and compileall.
+
+Next:commit this authorization/change control,launch the new entrypoint exactly
+once,and stay with its actual process and evidence through terminal closure.
+Routine within-packet stages need no additional user reply. The existing
+scheduler remains PAUSED while the foreground coordinator owns execution;
+no second launcher is needed. No new performance result or running claim yet.
+
+## Previous checkpoint: complete continuation packet frozen; execution decision pending
 
 2026-10-02T01:51Z. Additive implementation committed locally at
 82a947404db18ba034fed241155336d4786b9898. JSON/hash-only freeze completed exit0:

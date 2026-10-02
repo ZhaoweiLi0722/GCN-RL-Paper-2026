@@ -2842,3 +2842,24 @@ execute routine serial evaluation,independent original-cost/patient comparison
 and preservation without further stage approvals. No remote,Dropbox,holdout,
 StageE,model/reward/seed change or Howardapproval. Finite failure stops this new
 attempt without repair/retry;report outcomes without guaranteeingRLbenefit.
+
+#### Evaluation recovery1: zero-call startup failure and delivery lesson
+
+2026-10-02T10:50Z: execution0ff5d3d froze implementation0b7f39c and406source/
+93input locks after45focused artificial tests/fullcompileall. The first layout
+binding failed after2.203s because the new entry omitted decimal-string seed
+normalization. All streams store strings;the backend expects an int. No model
+or reference load,no new environment construction/step,no optimizer call;the
+ledger has no debits and no operation receipts. The eleven old raw evaluations
+were merely copied. Both PIDs76488/76501 exited. The attempt is terminal failed,
+not a scientific negative result. Source/results retained,no repair or retry.
+Readout:specs/2026-10-02-cohort-evaluation-recovery/terminal-readout.md.
+
+Zhaowei explicitly requested remembering this mistake and reducing repeated
+evaluation/readiness/audit cycles. Use real persisted metadata in the actual
+mock entry path before freezing;reuse valid completed checks;prioritize one
+complete cost/patient comparison over test/commit counts. This is a delivery
+rule,not new retry authority. Samegcn-rl automationPAUSED. A new scientific
+restart still requires an amended permit;no new training is needed for the
+outstanding comparison. Existing models,original settings and evidence stay
+fixed. No remote/export/holdout/StageE or Howardapproval claim.

@@ -1,6 +1,27 @@
 # Autonomous local research queue
 
-## Live checkpoint: evaluation-only recovery approved; additive implementation
+## Live checkpoint: recovery startup failed; delivery lesson recorded
+
+2026-10-02T10:50Z. Recovery1 execution0ff5d3d failed in binding after2.203s,
+before model loading,environment construction/step or optimizer update. New
+adapter omitted int conversion for persisted decimal-string seeds;the old
+backend rejected the layout seed. This is our integration error,not RL failure.
+No retries occurred. PID76488/76501 both exited. Terminal/readout:
+specs/2026-10-02-cohort-evaluation-recovery/terminal-readout.md and resultroot
+results/dynamic_candidate_cohort_objective_20261002_evaluation_recovery1/launcher/.
+The22copied event files are11oldprefix/tailpairs,not new scientific evidence.
+Old9trainingjobs/288cohorts/1920updates/12models and11full evaluations are retained.
+
+User explicitly requested remembering the efficiency lesson. Persistent memory
+note saved;project rule:prioritize the actual paired cost/patient comparison;
+reuse valid checks/models;exercise real persisted metadata through the mock
+entry path before freeze;consolidate necessary tests;do not count audit/test/
+commit volume as research progress. No new diagnostic chain or history reaudit.
+Current source remains frozen;no automatic fix-and-retry permission inferred.
+SameautomationPAUSED. Next consequential action needs amended evaluation-only
+restart permission;ordinary stages within an approved package need no reapproval.
+
+## Previous recovery preparation checkpoint
 
 2026-10-02T10:47Z. Zhaowei's direct `继续` accepts the preceding complete
 evaluation-only recovery question:reuse12sealed models and11complete evaluations,

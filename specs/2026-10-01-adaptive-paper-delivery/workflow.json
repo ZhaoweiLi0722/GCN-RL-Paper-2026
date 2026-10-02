@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 36,
-  "updated_at_utc": "2026-10-02T10:47:28Z",
+  "revision": 37,
+  "updated_at_utc": "2026-10-02T10:50:26Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "013b29d5974132491edc708b8cac7bb205ff1373",
@@ -9,8 +9,10 @@
   "execution_config": "specs/2026-10-02-terminal-obligation/frozen.json",
   "execution_authorization": "specs/2026-10-02-terminal-obligation/authorization.json",
   "scientific_execution_authorized": false,
-  "authorization_state": "Latest direct continue accepts the explicit evaluation-only recovery; source/runtime/input freeze and packet authorization pending; old attempt remains terminal",
-  "status": "cohort_evaluation_recovery_approved_additive_integration",
+  "authorization_state": "Evaluation recovery1 authorization consumed by terminal startup failure; no automatic retry or new training permitted",
+  "status": "cohort_evaluation_recovery1_startup_failed_delivery_lesson_recorded",
+  "evaluation_recovery1_terminal": {"execution_commit": "0ff5d3d", "status": "failed", "scope": "runtime_input_binding", "elapsed_seconds": 2.203431, "cause": "new entry omitted decimal-string seed to integer normalization", "model_loads": 0, "new_environment_calls": 0, "optimizer_calls": 0, "pids_absent": [76488,76501], "automatic_retry": false, "readout": "specs/2026-10-02-cohort-evaluation-recovery/terminal-readout.md"},
+  "delivery_efficiency_lesson": "Prioritize complete performance comparisons;reuse valid verification and sealed models;test real persisted metadata through mock actual entry before freeze;no audit/test/commit counts as research gains;no automatic scientific retry inferred",
   "execution_commit": "098b83f3e0457a3ec65568cbba90147670215bc6",
   "running_processes": [],
   "terminal_process_check": {"original_supervisor_pid": 72066, "original_child_pid": 72081, "both_absent_after_exit": true, "supervisor_exit_code": 1, "child_exit_code": -15},
@@ -36,7 +38,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Complete additive evaluation-only zero-fit integration tests and compileall,commit source,freeze exact authorization/runtime/inputs,and launch the already approved single recovery. No retraining or settings changes.",
+  "next_concrete_action": "Retain failed evidence and delivery lesson;await amended evaluation-only restart authority. Do not repeat training verification,add diagnostic campaigns or treat engineering failure as an RL null result.",
   "cohort_objective_preparation": {
     "proposal": "specs/2026-10-02-terminal-obligation/proposal.json",
     "protocol": "specs/2026-10-02-terminal-obligation/protocol.md",

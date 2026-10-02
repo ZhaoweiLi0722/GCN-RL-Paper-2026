@@ -1,8 +1,54 @@
 # Substantive next step after the completed null
 
-2026-10-02. Preparation only, zero new scientific calls.
+2026-10-02T13:09Z. Preparation only, zero new scientific calls.
 
-## Delivered
+## Current integrated components
+
+- `paired_cohort_collection.py`: full-state conditional-future clones; only RNG
+  changes before the first original float64 candidate; fixed R4 continuation
+  and common tail; complete prefix/tail restoration and terminal failed steps.
+- `paired_cohort_verification.py`: independent raw JSON/NumPy cost, patient,
+  request, resource, lineage and full-tail reconciliation; complete36-context
+  class/replication matrix; readonly float64 labels with public-only examples.
+- `paired_cohort_actor.py`: same-initializer actor/BC forks, frozen critic,
+  fixed full-batch updates, nonrefundable attempts, atomic numerical rollback,
+  optimizer/global RNG restoration and sealed dataset/definition checks.
+- `paired_cohort_recording.py` and `paired_cohort_training.py`: non-overwriting
+  branch records/full states, integrated serial per-block acquisition and
+  fitting loops, independent label-to-actor adapter, per-update saved boundaries.
+- `paired_cohort_resources.py`: exact existing-ledger phase/owner translation,
+  prospective128bit world and63bit neural streams, explicit JSON seed transport,
+  pinned initializer/PPO input selection from actual historical JSON metadata.
+- `paired_cohort_sequence.py`: the complete phase cursor and12model file barrier
+  before18evaluation owners, terminal failure and no-refund boundary restore.
+
+The88focused tests passed in10.915s, all with zero actual optimizer steps and
+no scientific checkpoints or patient environments loaded. Fullcompileall passed.
+One complete fake block dispatched12contexts x3canonical classes x2futures,
+3096authored row records; fake actor owners completed128counter-only steps per
+arm. Primitive-cost and loss accounting were read independently from the disk
+records. A separate full phase-callback test verifies order/seals, but is not a
+native end-to-end campaign acceptance test. The actual initial/evaluation packet
+metadata are covered without scientific model access. No new patient result.
+
+Integration repaired the new reader's erroneous63bit world-seed ceiling and
+the JSON list/tuple boundary before any science. Future RNG strings now preserve
+all digits; original candidate requests and small float64 cost differences are
+retained. Failed artificial checks were fixed within preparation, not retried
+scientific attempts. No old locked implementation/result was modified.
+
+Remaining native work: reference-only training-context session with exact
+4/20/36snapshots; saved-model binding, counted original/clone preflight, whole
+campaign persistence/watchdog and six-controller evaluation reader. The old
+sample-only training session cannot be used by relabeling reference episodes.
+Connect these to the tested components, then test the native entry once with
+fake backends before source/authorization/input/runtime/seed freeze. No extra
+fit or diagnostic gate. Scope approval is still absent; do not load or score
+scientific models during preparation. Existing automation continues engineering,
+not training. Hubble's actor/reader assignments are closed; prior efficiency
+advice is reused rather than spawning another reviewer.
+
+## Earlier objective delivery
 
 - `src/rl/paired_cohort_objective.py`: differentiable all-candidate expected
   cost loss, detached raw diagnostics and explicit paired seed declarations.
@@ -33,7 +79,7 @@ remains uncertain. Full-cohort branches differ from the older short-horizon
 labels, but may still be noisy or offer no usable headroom. One direct comparison,
 not an indefinitely escalating signal-screen ladder, will decide this mechanism.
 
-## Remaining blockers and authority
+## Original preparation boundary (retained)
 
 The pure objective is usable but the scientific runner is NOT ready: a new
 versioned snapshot/conditional-future branch collector, actor-only update wrapper,

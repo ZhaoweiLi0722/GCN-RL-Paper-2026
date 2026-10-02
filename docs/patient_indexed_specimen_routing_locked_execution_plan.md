@@ -2933,3 +2933,22 @@ does not approve it. Finish versioned integration and fake-entry tests, then
 bind source/runtime/input/seed locks and exact authorization before any science.
 No new baseline/horizon sweep,repeat history audit,toy fitting or reward search.
 The finite advancement and efficiency assignments are complete and closed.
+
+#### Paired-cohort engineering integration; execution still unapproved
+
+2026-10-02T13:09Z: additive conditional-branch collection, actor-only fixed
+updates/restoration, independent raw label reader, non-overwriting recording,
+serial block jobs, exact owner budgets/streams and12model test barrier are
+implemented. Actual saved JSON metadata and authored fake traces exercise the
+interfaces;88zero-update tests and fullcompileall passed. No scientific model
+loaded/forwarded, patient environment stepped or actual optimizer called.
+Neither test counts nor fake row dispatches are performance improvements.
+
+Native reference-context/session and whole campaign/evaluation/admission wiring
+remain. The already-asked33318environment/768actor/0critic/14400second one-shot
+package remains unapproved and its original draft staysfalse. Finish these
+specific interfaces without new fitting gates; commit a complete frozen packet
+and accurate authorization before scientific execution. No changes to the
+scientific scope, old locked code/evidence, reward, scenario, support, holdout,
+StageE, sharing or remote permissions. Existing efficiency advice reused; the
+finite advancement assignments closed. This is engineering progress only.

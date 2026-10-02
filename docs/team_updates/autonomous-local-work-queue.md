@@ -1,6 +1,60 @@
 # Autonomous local research queue
 
-## Live checkpoint: next learning objective implemented, new scope pending
+## Live checkpoint: branch and actor jobs integrated, native campaign pending
+
+2026-10-02T13:09Z. Entry HEAD5a42999. No matching research process was present
+at entry and at the final read-only process check; no new scientific model load/forward, patient environment call or
+optimizer update occurred. Existing recovery2 comparison and archives were
+not rerun. The new proposal still has no scope-specific approval response.
+
+Delivered additive conditional-future collection with exact full-state restore,
+original float64 requests, first-candidate-once then R4 and common tail, plus
+non-overwriting branch raw/restore files. The independent JSON-only reader
+recomputes primitive remaining costs and patient outcomes from captured counts,
+checks all candidate/replication slots, and builds float64 labels. The actor-only
+adapter uses sealed same-block public examples, fresh fixed Adam, fixed update
+caps, untouched critic, terminal failure rollback and complete RNG/optimizer
+restore. JSON tuple and arbitrary-size seed transport are integrated explicitly.
+
+Usable serial block functions now connect collection -> durable budget -> raw
+writer -> independent reader, and verified labels -> actor/BC adapter -> every
+update's saved state. The prospective exact phase/owner plan uses the existing
+ledger; stream preparation keeps seeds as lossless decimal strings. A full fake
+block exercised12contexts,72deduplicated branches and3096invented row dispatches.
+Two full mock fit jobs exercised256 counter-only steps, no real optimizer. Actual
+saved initializer/evaluation packet metadata are read in the regression without
+opening scientific checkpoint payloads. A complete serial cursor/file callback
+test covers the12model seal barrier before18evaluation owners. These are not a
+complete native scientific campaign or performance evidence.
+
+Question answered: the proposed all-candidate cost objective now has working
+collection, label, update and persistence interfaces; it is no longer only an
+objective sketch. Integrated88zero-update tests passed in10.915s; fullcompileall
+passed. No historical scientific source, config or result was edited. Hubble
+delivered actor and independent reader in disjoint bounded assignments and was
+closed; Newton's prior efficiency advice is reused, no additional audit gate.
+
+Remaining critical path, in this order:
+1. Native reference-context collection: explicit training/reference mode with
+   full-cohort persistence and snapshots after4/20/36, without bypassing the old
+   sample-only training collector guards or requalifying saved initializers.
+2. Bind the saved initializers and saved cohort-PPO once; connect counted
+   original/clone preflight, all block jobs,12model seals,216greedy evaluations
+   and a versioned six-controller raw comparison to the native entry/watchdog.
+3. Exercise that actual entry with real persisted metadata and fake backends;
+   commit completed code plus exact authorization/source/runtime/input/seed
+   locks only after the already-asked numerical package is approved. No extra
+   toy fitting, scientific screen or historical archive audit.
+
+Still pending exactly the same single decision:33318environment calls,
+768actor/0critic updates,216evaluations,14400seconds,oneattempt,no retry. Do not
+repeat the question while finishing authorized engineering. The finite chain
+is not yet complete, so the existing automation is not paused for approval alone.
+No science may start merely because engineering or a scheduler exists. Continue
+the next native adapter, not another baseline/epoch/reward variant. Preserve all
+old evidence and local-only boundaries; no remote, export or Howard claim.
+
+## Previous objective-core checkpoint
 
 2026-10-02T11:58Z. Recovery2 remains completed with the exact observed null;
 no further old evaluation or historical archive audit was run. User requested

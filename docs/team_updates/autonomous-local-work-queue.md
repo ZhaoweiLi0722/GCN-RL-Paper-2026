@@ -1,6 +1,57 @@
 # Autonomous local research queue
 
-## Live checkpoint: target and collection integration complete; campaign wiring next
+## Live checkpoint: complete time-baseline entrypoint frozen; numeric approval pending
+
+2026-10-02T05:35Z. Entry HEAD e9934ae; implementation committed as
+1baa0a958a5656e38ab823304e4ff5cba2c5386d. The finite engineering chain is complete.
+No new scientific checkpoint loads, forwards, patient calls, optimizer updates,
+test access or result root. Host PID/PPID/command check at05:35Z found only the
+inspection commands, no matching research process. Previous attempts stay closed.
+
+Delivered the six-controller factory, backend and serial campaign; separate
+preflight RNG owners preserve the identical training starts. The full invented
+two-step path covers33sections,54fake episodes,126fake environment debits,
+30metadata-only optimizer debits,12model seals and18fake evaluation episodes.
+Saved collection/update state restores without rereading historical models,
+refunding calls, rewinding persisted rows or exposing tests before all seals.
+All actual Adam/SGD steps are forbidden in these fixtures; parameters stay fixed.
+
+The independent readers now reconcile continuous resources, integer patients,
+raw costs, patient outcomes and exact six-controller paired worlds. A separate
+scalar reader checks both PPO arms' raw reward/value/return/LOEO target receipts;
+it cannot mistake lower internal loss for better patient performance. The real
+wrapper requires a committed scope-specific approval and an exclusive new root,
+with per-owner, phase, total and closure watchdog limits and no automatic retry.
+124focused/regression tests passed in26.972s; full compileall and diff-check passed.
+
+Canonical preparation evidence:
+specs/2026-10-02-time-baseline-comparison/integration-readout.md and frozen.json.
+Packet SHA2565279726f8fc069905ec1097fc961c13136c25241136a99383edae78bcd3c6300.
+371source files,12input files and runtime bound. Local collision scan covers520
+historical config/seed/stream/manifest/frozen JSON files, including the original
+failed attempt; no collisions among138new world and19neural/analysis streams.
+This does not establish freshness against unavailable external files. Preparation
+does not open any scientific tensor or change the original proposal.
+
+Only remaining decision: the already-asked single522episode/27216environment/
+1920optimizer/10800second package. No specific numeric approval is present.
+Do not ask a duplicate preparation question. Upon explicit approval, record the
+actual reply, append change control and commit the bound authorization; then run
+this entire one-shot package without more routine-step permission requests.
+Do not refit initializers, add a toy gate, extend the sample or reuse old budgets.
+If null, unchanged greedy behavior or diagnostic-only benefit, close the baseline
+route and use reward-pivot.md for the next objective decision, not reward fitting.
+
+Aquinas completed the disjoint raw verifier and later new-name watchdog, then
+was closed. Coordinator delivered campaign/target verifier/admission and integrated
+the tests. Carson's completed efficiency advice was reused; no new reviewer gate.
+gcn-rl was updated and read back PAUSED on the same thread, retained in the list.
+Automation TOML SHA256c53977751298849e30d56e2dbdebc3c7f51ccfcaaf82274626fbcb4a21236ca7.
+No idle polling, remote action, Dropbox export, holdout use or Stage E reopening.
+Engineering completion is not RL benefit. The prior observed RL increment remains
+zero for the tested greedy policies; this new comparison has not run.
+
+## Previous checkpoint: target and collection integration complete; campaign wiring next
 
 2026-10-02T05:05Z. Entry HEAD42997b35e2d49ff0f933a7f40621914d2a216753.
 The user asked to start now after requesting automatic updates. Authorized

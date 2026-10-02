@@ -2629,3 +2629,29 @@ reporting visible in any later proposal. Do not tune weights to obtain a win.
 No reward training/search is authorized by this direction. Continue only local
 engineering,zero-update fixtures and proposal preparation under the existing
 heartbeat;no remote/Dropbox/holdout/Howard approval assertion or Stage E change.
+
+#### Baseline comparison engineering frozen, execution still unapproved
+
+2026-10-02T05:35Z: the finite engineering chain is complete at implementation
+1baa0a958a5656e38ab823304e4ff5cba2c5386d. The additive six-controller entrypoint,
+saved-owner forks, separate preflight RNG, whole-trajectory-excluded targets,
+raw cost/patient and target verification, full in-owner restore, exclusive
+admission and phase/global/closure watchdog passed124zero-update/mock tests
+and full compileall. No scientific checkpoint/forward/environment/optimizer call
+was made and no new attempt root exists. Old code/results were not edited.
+
+specs/2026-10-02-time-baseline-comparison/frozen.json binds371source files,
+12reused inputs,runtime and520local historical seed declaration files;no collision
+among138world and19neural/analysis streams within that stated local scope.
+Packet SHA2565279726f8fc069905ec1097fc961c13136c25241136a99383edae78bcd3c6300.
+This is an engineering receipt, not a scientific authorization or performance
+finding. The proposal and its522episode/27216environment/1920optimizer/10800s
+limits remain unchanged. The specific numeric reply is still pending.
+
+Upon that reply, record verbatim approval and append the actual execution change
+control before committing authorization against this packet. Then the full
+single attempt can proceed without additional toy-fit gates or per-stage
+questions. No automatic retry, extension or reward experiment is authorized.
+The prior comparison remains terminal and its budget is not reusable. The
+existing gcn-rl automation is PAUSED and retained visibly while only this decision
+remains. Canonical integration readout and Live checkpoint give the handoff.

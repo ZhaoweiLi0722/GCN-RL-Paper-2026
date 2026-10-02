@@ -1,5 +1,96 @@
 # Time-baseline integration checkpoint
 
+## Completed preparation at2026-10-02T05:35Z
+
+The six-controller comparison is implemented and locally frozen, not executed.
+Implementation commit:1baa0a958a5656e38ab823304e4ff5cba2c5386d.
+Frozen packet: `frozen.json`; content SHA256
+5279726f8fc069905ec1097fc961c13136c25241136a99383edae78bcd3c6300.
+This supersedes the remaining-engineering list in the previous checkpoint below.
+The original proposal/protocol/reward-pivot and old scientific artifacts are intact.
+
+### Named blockers removed
+
+- `time_baseline_factory.py`, `time_baseline_backend.py` and
+  `time_baseline_campaign.py` connect original PPO, LOEO PPO, BC, own frozen,
+  R4 and full MDL-2 through the complete33-section schedule. Qualified saved
+  initializers are imported once, with old initialization metadata kept separate
+  from fresh comparison streams. Preflight sampling owners do not consume the
+  training RNG state. Collection/update/phase/optimizer/RNG restoration retains
+  the live nonrefundable budget and cannot rewind recorded raw rows.
+- `time_baseline_verification.py` independently reads raw costs and patient
+  outcomes, exact decimal world seeds, continuous resource requests and integer
+  patient/specimen fields. It enforces the216-world/controller matrix, greedy
+  test selection for all four learned controllers and six paired contrasts.
+  It reports patient adverse directions and whether the greedy requests changed;
+  lower training loss alone cannot satisfy the prespecified performance screen.
+- `time_baseline_target_verification.py` independently recomputes unchanged
+  float32 critic returns and original-V/whole-trajectory-excluded LOEO targets
+  from saved raw training events and phase receipts. Its baseline/advantage
+  variance diagnostics are not measurements of policy-gradient variance.
+  Segment hash syntax is checked, but full segment-payload reconstruction is
+  explicitly not claimed by this scalar reader.
+- `time_baseline_execution.py`, `time_baseline_watchdog.py` and the thin
+  `experiments/scripts/run_time_baseline_comparison.py` supply source/input/runtime
+  binding, exact human-authorization matching, exclusive one-attempt ownership,
+  separate load/build caps, and an external watchdog for setup/owner/phase/global
+  and post-child closure limits. All scientific execution fails closed without
+  the new authorization. Old execution modules and artifacts were not edited.
+
+### Verification and freeze
+
+124focused/regression tests passed in26.972s across the scalar baseline,
+integration/plan/sequence, campaign, raw and target verifiers, admission/watchdog,
+and existing dynamic update/continuation modules. Full repository compileall
+and staged diff-check passed. Only invented data and metadata-only fake optimizers
+were used; actual Adam/SGD calls are blocked. The complete two-step FakeEnv fixture
+uses54episodes,126environment debits,30fake optimizer debits and12model seals;
+both local archive boundaries are checked. This is engineering evidence only.
+
+Preparation bound371source files,12input files and the runtime. The local numeric
+collision scan parsed520named historical declaration files, including preserved
+original-attempt declarations, against138world and19neural/analysis streams.
+No collisions were found. Scope is local tracked JSON configs and named
+seed/stream/manifest/config/frozen JSON in results/reports/specs, excluding this
+prospective directory and new result root. Unavailable external files are not
+covered. No scientific model was decoded or scored by the freeze/readback.
+
+The hash-only freeze and binding readback passed. The prospective result root
+does not exist and no authorization.json is present. Host process inspection
+found no matching scientific job. A first artificial campaign test failed because
+its test fixture selected a draft without the effective candidate-support fields;
+the fixture was corrected to the committed prior effective config before this
+passing suite. No scientific attempt failed or was consumed. A TOML read utility
+also required the available vendored parser because this Python lacks tomllib;
+that administrative failure made no research call or artifact change.
+
+Aquinas delivered the disjoint raw verifier and watchdog and was closed. The
+coordinator integrated the factory/backend/campaign, independent target reader,
+admission, tests and freeze. Prior Carson efficiency advice was reused, not
+turned into another release gate.
+
+### Next decision, not another preparation cycle
+
+The already-presented numeric package remains unapproved:3blocks,32episodes per
+training arm/block,522episodes total,27216environment calls,1920optimizer calls,
+10800seconds,one attempt with fixed phase/owner limits. No reward, architecture,
+support, initialization, entropy or evaluation change is authorized. No old
+unused allocation transfers into this package.
+
+After an explicit reply to this package, record the verbatim authorization and
+change control, commit them against frozen.json, verify the clean binding, and
+run the complete package once using the entrypoint (without --freeze). Do not
+launch the command or its --child mode before that approval. No additional
+qualification rescore, toy fit, critic gate or routine per-stage question is
+needed. The independent performance readout governs the prewritten reward pivot;
+a terminal scientific failure preserves evidence and does not license a retry.
+
+Automation gcn-rl is PAUSED and retained in the list, read back from the same
+thread's TOML. Approval is the sole remaining execution blocker. No new RL
+performance result can be claimed from this preparation.
+
+## Previous checkpoint: target and collection integration
+
 2026-10-02T05:05Z. Entry commit:42997b35e2d49ff0f933a7f40621914d2a216753.
 Engineering only. No new scientific model access, patient episodes, parameter
 updates or result directory. The numeric execution question remains pending;

@@ -1,0 +1,20 @@
+{
+  "format": "cohort-objective-approval-intent-v1",
+  "recorded_at_utc": "2026-10-02T08:41:13Z",
+  "user_literal": "直接启动新实验 进度太慢了",
+  "interpretation": "Execute the already proposed bounded cohort-objective comparison after the existing engineering and source-freeze prerequisites; routine stages need no further approval.",
+  "proposal_sha256": "5f7e360cd88dbec653f911d33e76a4c5eaa675aceec77bd58e27d9d203ad6ec9",
+  "protocol_sha256": "a681036e0c1c3e2ef1ec21ccdc060744b4aecc62f42b6726dddcb54df0a5c0b7",
+  "objective_amendment_approved": true,
+  "main_episodes": 522,
+  "environment_calls_max": 33186,
+  "optimizer_calls_max": 1920,
+  "wall_seconds_max": 10800,
+  "attempts": 1,
+  "automatic_retry": false,
+  "automatic_followon": false,
+  "no_new_weights_or_search": true,
+  "approval_precedes_final_source_freeze": true,
+  "execution_started": false,
+  "requires_final_packet_bound_authorization_before_claim": true
+}

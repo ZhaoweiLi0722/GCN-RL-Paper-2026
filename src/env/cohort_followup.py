@@ -237,7 +237,10 @@ class ClosedCohortClockMixin:
                 or any(type(c) not in (int, float) or not math.isfinite(c) or c < 0 for c in costs)
                 or (resolved is not None and (type(resolved) is not int or not 0 <= resolved <= count))
                 or saved["ids"] != tuple(sorted(self.patient_registry))
-                or type(saved["enrolled"]) is not int or saved["enrolled"] != self.cumulative_enrolled):
+                or type(saved["enrolled"]) not in (int, float)
+                or not math.isfinite(saved["enrolled"]) or saved["enrolled"] < 0
+                or not float(saved["enrolled"]).is_integer()
+                or saved["enrolled"] != self.cumulative_enrolled):
             raise ValueError("tail progress, identity or cost receipts differ")
         candidate = copy.deepcopy(self)
         candidate.close_enrollment()

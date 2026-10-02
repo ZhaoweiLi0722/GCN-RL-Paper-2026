@@ -1,6 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: cohort prefix, persistence and bounded continuation integrated
+## Live checkpoint: cohort integration passed, freeze then launch approved package
+
+2026-10-02T08:41Z. Entry HEAD013b29d5974132491edc708b8cac7bb205ff1373.
+Latest direct user request: start the new experiment. Scope-specific approval
+is recorded in specs/2026-10-02-terminal-obligation/approval-intent.json, binding
+the unchanged proposal/protocol:522main episodes,33186environment calls,
+1920optimizer calls,10800seconds,one attempt,no retries or follow-on. This
+approves the changed cohort objective, not a cost-weight search. Original
+draft false flag and closed historical attempts remain unchanged.
+
+Coordinator delivered cohort_backend.py and cohort_campaign.py: serial six
+controllers, original-engine prefix parity, two budgeted restore clones,
+complete-tail admission, twelve-model test barrier and owned reconstruction.
+At08:46Z all98focused tests passed (67in29.663s,31in6.423s), full-worktree
+compileall and diff checks exit0. No scientific start yet. Mill delivered
+raw-bundle/target verification; Pauli delivered the execution wrapper after one
+read-only efficiency check. Both finite agents are closed. Existing watchdog,
+budget, saved qualification and archives are reused; no additional gate.
+
+Next: commit implementation, freeze exact
+runtime/input/source/prospective streams, bind final authorization and commit,
+then launch this single approved package without another routine permission
+round. No prior qualification, terminal diagnosis or baseline study rerun.
+No research process was present at entry. Scheduling is not evidence of a run.
+
+## Previous checkpoint: cohort prefix, persistence and bounded continuation integrated
 
 2026-10-02T08:29Z. Entry HEAD93496179594cfaa48378d6b026c2e2b59cd83cef.
 Latest user request: continue. Authority remains local engineering only, not the

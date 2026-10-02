@@ -2,6 +2,38 @@
 
 ## Current Integration Boundary
 
+2026-10-02T08:46Z: complete additive entrypoint and independent verification
+are now integrated. Direct user START approval is recorded in
+approval-intent.json against the unchanged numerical proposal/protocol. This
+supersedes the preparation-only state below, not any historical result.
+
+Delivered CohortPatientBackend/CohortCampaign reuse the existing saved-owner,
+budget, sealing and archive machinery. All33sections, six controllers, original
+prefix parity, prefix/tail clones and in-owner phase/collector/optimizer/RNG
+restoration pass an invented full-chain test. Clone copies exclude recorder
+handles. Integral-float patient counters are preserved without rounding while
+nonintegral values are rejected. Only the previously unexecuted cohort module
+was adjusted; historical source/evidence is unchanged.
+
+Independent bundle and target readers verify primitive costs, integer patient
+counts, continuous resource flows, common public tail actions, clipped stocks,
+complete paired inventories and once-only tail charges against saved kernel
+receipts. They do not rerun inference or optimizers. Scope-specific execution
+and watchdog bind the approval intent, runtime, source, historical inputs and
+prospective streams; no hidden retry or renewed qualification.
+
+Validation:67component/campaign tests passed in29.663s;31execution/raw-verifier
+tests passed in6.423s (98total). Real patient construction/steps and real Adam/
+SGD updates were forbidden; fake optimizer metadata only. Full-worktree
+compileall and diff whitespace checks exit0. Mill delivered the two independent
+readers/tests; Pauli delivered the entrypoint/tests after one efficiency review;
+both finite agents are closed. No scientific work has started at this milestone.
+
+Next: commit implementation, hash-only freeze, commit packet-bound authorization,
+then launch the single approved package. Do not ask again for routine steps.
+
+## Previous Integration Boundary
+
 2026-10-02T08:29Z; entry93496179594cfaa48378d6b026c2e2b59cd83cef.
 Local engineering milestone only. No new patient-performance evidence or
 scientific execution approval. The previous component report below is retained

@@ -2770,3 +2770,23 @@ prefix parity, two clone boundaries, full campaign restore and enclosing raw
 verification are next. No new scientific parameter or proposed budget changed.
 The cohort-objective numerical scope still needs complete freeze and one explicit
 approval. No performance claim, remote/export, holdout, StageE or Howard approval.
+
+#### Cohort objective: scope-specific start authorization
+
+2026-10-02T08:41Z: Zhaowei directly requested starting the new experiment.
+This authorizes the already specified terminal-obligation proposal/protocol,
+not an open-ended reward search. Approval intent records the literal request
+and original hashes. The fixed scope is522main63step episodes plus declared
+parity/clone work,33186environment calls,1920optimizer calls,10800seconds,
+one attempt with all original nontransferable phase/owner caps. The intervention
+is inclusion of common post-window primitive costs in the cohort-PPO target;
+no new monetary weights, new actions, extra initialization or qualification.
+
+Complete the existing integration tests/compileall and commit source before
+freezing source/runtime/input/fresh-stream bindings. Commit the final effective
+packet and authorization before exclusive claim. Approval precedes final freeze
+and must not be represented as a later review of implementation hashes. Once
+those existing prerequisites pass, execute the approved serial chain without
+asking at each stage. Any terminal scientific failure closes this attempt;
+preserve evidence and do not fix/retry. Historical studies remain closed.
+No remote/export/messages,holdout,StageE reopening or Howard-approval claim.

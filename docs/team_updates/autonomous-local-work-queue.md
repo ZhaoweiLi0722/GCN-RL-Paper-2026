@@ -1,6 +1,43 @@
 # Autonomous local research queue
 
-## Live checkpoint: conservative two-round experiment launched and progressing
+## Live checkpoint: conservative two-round comparison complete; monitor paused
+
+2026-10-02T23:52Z: single approved attempt completed exit0, elapsed12973.902s.
+Original12670/12683both absent; no related scientific process, failure record,
+forced kill or stderr. This is a completed negative comparison, not an abort.
+Preflight3/3,collection12/12cohorts/36states,800/800actual branches (cap864),
+paired6/6andBC6/6round-fits,768/768actor/0critic,9/9seals,180/180evaluations,
+environment46362/49626. ETA0. No extra scientific calls or parameter changes.
+
+Independent raw JSON/JSONL readout confirms both primary contrasts exactly0
+for cost and patient outcomes in all36paired worlds,0/1872changed requested
+or executed prefix steps, and36/36identical final simulator states. R4 also
+matches. Prespecified decision:close_two_round_mechanism;screen not met.
+Vs fullMDL2, equal-block cost -0.391866%,losses -19.972222/cohort, but waiting
++47.611111patient-steps and completed-patient turnaround +0.092076time units.
+These MDL2 differences are shared by frozen/BC/R4,not this training's gain.
+
+All1080raw evaluation file references and482current locks match. Both existing
+archives independently verified member by member and against unchanged sources:
+10137payload files and853launcher snapshot files. Final closure/terminal
+receipts remain outside the fixed launcher snapshot as designed. No repeated
+archive, Dropbox export, cloud-sync/Howard-access claim or historical re-audit.
+Euler delivered the separate saved-result interpretation and was closed;
+prior efficiency advice reused. Existing training/seal checks and engineering
+tests/compileall reused; documentation JSON/diff checks only in this handoff.
+
+Canonical readout:specs/2026-10-02-conservative-cohort-improvement/terminal-readout.md.
+Evidence:reports/2026-10-02-conservative-cohort-independent-readout.json and
+reports/2026-10-02-conservative-cohort-terminal-verification.json.
+The same gcn-rl automation is tool-confirmed PAUSED,local TOML readback matches,
+and the visible task is retained. No remaining authorized scientific work.
+Next decision: authorize preparation of a separate dynamic-capacity/continuous-
+resource protocol, or proceed with truthful existing paper claims. No protocol
+execution, new training, reward/scene search or automatic follow-on authorized.
+This result does not establish global optimality,an incorrect reward,allRL
+being ineffective or an isolated GCN contribution. StageE remains closed.
+
+### Previous evaluation milestone
 
 2026-10-02T23:15:35Z: both rounds fully trained; paired6/6 and BC6/6fits,
 768/768actor updates,0critic. Last128finite sequential update receipts and

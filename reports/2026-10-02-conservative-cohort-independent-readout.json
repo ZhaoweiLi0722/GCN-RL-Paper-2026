@@ -1,0 +1,299 @@
+{
+  "observed_at_utc": "2026-10-02T23:46:05.310827+00:00",
+  "format": "conservative-cohort-independent-stdlib-readout-v1",
+  "run_root": "results/conservative_cohort_improvement_20261002",
+  "comparison_sha256": "42a55d858344a10b2a81cab956c158912dc06d53cc83f028ec63b3a624d240a5",
+  "index_sha256": "11976f12cfa37f64dc4f1c02e78e42fbdb3bed7fa34ca85b8036e53f4dc815f0",
+  "files_byte_hash_verified": 1080,
+  "evaluation_cohorts": 180,
+  "raw_steps": 11340,
+  "all_expected_slots_present_once": true,
+  "fresh_seed_schedule_matched": true,
+  "paired_initial_states_match": true,
+  "policies_constant_within_test": true,
+  "all_terminal_patients_settled": true,
+  "all_metrics_match_saved_comparator": true,
+  "max_per_step_primitive_cost_sum_difference": 1.4901161193847656e-8,
+  "contrasts": [
+    {
+      "name": "paired_cost-minus-own_frozen",
+      "blocks": [
+        {
+          "block": 60,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        },
+        {
+          "block": 61,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        },
+        {
+          "block": 62,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        }
+      ],
+      "equal_block_relative_cost_change_percent": 0,
+      "equal_block_mean_differences": {
+        "cost": 0,
+        "prefix_cost": 0,
+        "tail_cost": 0,
+        "losses": 0,
+        "completions": 0,
+        "waiting_patient_steps": 0,
+        "expiry_losses": 0,
+        "turnaround_sum": 0,
+        "average_turnaround_time": 0
+      },
+      "paired_worlds": 36,
+      "prefix_steps": 1872,
+      "requested_changed_steps": 0,
+      "executed_changed_steps": 0,
+      "exact_final_state_matches": 36,
+      "development_screen_met": false,
+      "per_world_differences_reconciled": 36
+    },
+    {
+      "name": "paired_cost-minus-bc_continue",
+      "blocks": [
+        {
+          "block": 60,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        },
+        {
+          "block": 61,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        },
+        {
+          "block": 62,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        }
+      ],
+      "equal_block_relative_cost_change_percent": 0,
+      "equal_block_mean_differences": {
+        "cost": 0,
+        "prefix_cost": 0,
+        "tail_cost": 0,
+        "losses": 0,
+        "completions": 0,
+        "waiting_patient_steps": 0,
+        "expiry_losses": 0,
+        "turnaround_sum": 0,
+        "average_turnaround_time": 0
+      },
+      "paired_worlds": 36,
+      "prefix_steps": 1872,
+      "requested_changed_steps": 0,
+      "executed_changed_steps": 0,
+      "exact_final_state_matches": 36,
+      "development_screen_met": false,
+      "per_world_differences_reconciled": 36
+    },
+    {
+      "name": "paired_cost-minus-r4",
+      "blocks": [
+        {
+          "block": 60,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        },
+        {
+          "block": 61,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        },
+        {
+          "block": 62,
+          "mean_differences": {
+            "cost": 0,
+            "prefix_cost": 0,
+            "tail_cost": 0,
+            "losses": 0,
+            "completions": 0,
+            "waiting_patient_steps": 0,
+            "expiry_losses": 0,
+            "turnaround_sum": 0,
+            "average_turnaround_time": 0
+          },
+          "relative_cost_change": 0
+        }
+      ],
+      "equal_block_relative_cost_change_percent": 0,
+      "equal_block_mean_differences": {
+        "cost": 0,
+        "prefix_cost": 0,
+        "tail_cost": 0,
+        "losses": 0,
+        "completions": 0,
+        "waiting_patient_steps": 0,
+        "expiry_losses": 0,
+        "turnaround_sum": 0,
+        "average_turnaround_time": 0
+      },
+      "paired_worlds": 36,
+      "prefix_steps": 1872,
+      "requested_changed_steps": 0,
+      "executed_changed_steps": 0,
+      "exact_final_state_matches": 36,
+      "development_screen_met": false,
+      "per_world_differences_reconciled": 36
+    },
+    {
+      "name": "paired_cost-minus-full_mdl2",
+      "blocks": [
+        {
+          "block": 60,
+          "mean_differences": {
+            "cost": -18754067.981327176,
+            "prefix_cost": -20941898.715164185,
+            "tail_cost": 2187830.7338370406,
+            "losses": -31.75,
+            "completions": 31.75,
+            "waiting_patient_steps": 51.666666666666664,
+            "expiry_losses": -19.25,
+            "turnaround_sum": 512.1666666666666,
+            "average_turnaround_time": 0.1007549238527176
+          },
+          "relative_cost_change": -0.006787381476604446
+        },
+        {
+          "block": 61,
+          "mean_differences": {
+            "cost": -6752641.585154454,
+            "prefix_cost": -15523982.280008554,
+            "tail_cost": 8771340.694854083,
+            "losses": -15.25,
+            "completions": 15.25,
+            "waiting_patient_steps": 55.416666666666664,
+            "expiry_losses": -5.083333333333333,
+            "turnaround_sum": 399.75,
+            "average_turnaround_time": 0.09352165051256452
+          },
+          "relative_cost_change": -0.0023478070069166664
+        },
+        {
+          "block": 62,
+          "mean_differences": {
+            "cost": -7371335.127100468,
+            "prefix_cost": -14666710.315838179,
+            "tail_cost": 7295375.188737762,
+            "losses": -12.916666666666666,
+            "completions": 12.916666666666666,
+            "waiting_patient_steps": 35.75,
+            "expiry_losses": -5.583333333333333,
+            "turnaround_sum": 344.8333333333333,
+            "average_turnaround_time": 0.08195090598952944
+          },
+          "relative_cost_change": -0.0026207866478564807
+        }
+      ],
+      "equal_block_relative_cost_change_percent": -0.3918658377125865,
+      "equal_block_mean_differences": {
+        "cost": -10959348.231194032,
+        "prefix_cost": -17044197.103670307,
+        "tail_cost": 6084848.872476295,
+        "losses": -19.97222222222222,
+        "completions": 19.97222222222222,
+        "waiting_patient_steps": 47.61111111111111,
+        "expiry_losses": -9.972222222222221,
+        "turnaround_sum": 418.9166666666667,
+        "average_turnaround_time": 0.09207582678493718
+      },
+      "paired_worlds": 36,
+      "prefix_steps": 1872,
+      "requested_changed_steps": 1608,
+      "executed_changed_steps": 1603,
+      "exact_final_state_matches": 0,
+      "development_screen_met": false,
+      "per_world_differences_reconciled": 36
+    }
+  ],
+  "decision": "close_two_round_mechanism",
+  "primary_development_screen_met": false,
+  "scientific_calls_performed": 0,
+  "verification_method": "Independent stdlib parse of all 180 prefix/tail JSON/JSONL records; fsum 11 primitive cost terms, registry lost/delivered counts and scalars, per-world request/executed equality, means and baseline-relative block differences. No shared scientific verifier invoked."
+}

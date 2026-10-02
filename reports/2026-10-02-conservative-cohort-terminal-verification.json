@@ -1,0 +1,265 @@
+{
+  "observed_at_utc": "2026-10-02T23:47:09.218695+00:00",
+  "head": "472f5ea2c778b042ddb979f12b1dc626f450bc27",
+  "claim": {
+    "authorization_sha256": "43082f5c97efc8dcb922527e401c20011dcad9fd5cba473ee28a814a8b59dafa",
+    "automatic_retry": false,
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "880defba211bf0e444bb8781c8be5735fb0cabe0",
+    "packet_sha256": "c571729b094dd02e6034434273d04fc72c23c9db31a0d2f0e69fdc6c01bd0d66",
+    "pid": 12670,
+    "ppid": 1,
+    "started": 972872.163295
+  },
+  "child_claim": {
+    "pid": 12683,
+    "ppid": 12670
+  },
+  "phase": "closure",
+  "completed_sections": [
+    "binding",
+    "preflight/block60",
+    "preflight/block61",
+    "preflight/block62",
+    "contexts/round0/block60",
+    "branches/round0/block60",
+    "paired_actor/round0/block60",
+    "bc_actor/round0/block60",
+    "contexts/round0/block61",
+    "branches/round0/block61",
+    "paired_actor/round0/block61",
+    "bc_actor/round0/block61",
+    "contexts/round0/block62",
+    "branches/round0/block62",
+    "paired_actor/round0/block62",
+    "bc_actor/round0/block62",
+    "contexts/round1/block60",
+    "branches/round1/block60",
+    "paired_actor/round1/block60",
+    "bc_actor/round1/block60",
+    "contexts/round1/block61",
+    "branches/round1/block61",
+    "paired_actor/round1/block61",
+    "bc_actor/round1/block61",
+    "contexts/round1/block62",
+    "branches/round1/block62",
+    "paired_actor/round1/block62",
+    "bc_actor/round1/block62",
+    "seal",
+    "evaluation/block60/own_frozen",
+    "evaluation/block60/paired_cost",
+    "evaluation/block60/bc_continue",
+    "evaluation/block60/r4",
+    "evaluation/block60/full_mdl2",
+    "evaluation/block61/own_frozen",
+    "evaluation/block61/paired_cost",
+    "evaluation/block61/bc_continue",
+    "evaluation/block61/r4",
+    "evaluation/block61/full_mdl2",
+    "evaluation/block62/own_frozen",
+    "evaluation/block62/paired_cost",
+    "evaluation/block62/bc_continue",
+    "evaluation/block62/r4",
+    "evaluation/block62/full_mdl2",
+    "raw_verification",
+    "archive",
+    "closure"
+  ],
+  "counts": {
+    "environment": 46362,
+    "optimizer": 768
+  },
+  "completed_phase_seconds": {
+    "binding": 6.2790870000608265,
+    "preflight": 89.84329099999741,
+    "contexts": 121.61020199989434,
+    "branches": 9760.11785899999,
+    "paired_actor": 195.97550199984107,
+    "bc_actor": 195.00850899971556,
+    "seal": 0.19613099994603544,
+    "evaluation": 1605.4179969998077,
+    "raw_verification": 106.32155600003898,
+    "archive": 866.9525099999737,
+    "closure": 17.423384999972768
+  },
+  "terminal_or_failure": {
+    "terminal.json": {
+      "automatic_followon": false,
+      "automatic_retry": false,
+      "exit_code": 0,
+      "final_terminal_outside_archive": true,
+      "scientific_completion_verified": true,
+      "status": "completed",
+      "supervisor": {
+        "automatic_retry": false,
+        "clock_id": "posix-clock-monotonic-v1",
+        "closure_deadline": 986608.17842,
+        "command": [
+          "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+          "-m",
+          "experiments.scripts.run_conservative_cohort_improvement",
+          "--child"
+        ],
+        "cwd": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
+        "elapsed_seconds": 12973.902234000037,
+        "error": null,
+        "exit_code": 0,
+        "final_deadline": 986608.17842,
+        "forced_kill": false,
+        "format": "paired-cohort-supervisor-v1",
+        "last_ledger_sha256": "ae95bec47cbc0012a83d7126b15ecd0820723691946e018ef42b05ee1a3280f3",
+        "maximum_seconds": 28800,
+        "passed": true,
+        "pid": 12683,
+        "poll_seconds": 0.1,
+        "ppid": 12670,
+        "reason": "child_exited",
+        "started": 972872.163295,
+        "termination_grace_seconds": 1
+      }
+    },
+    "closure.json": {
+      "automatic_followon": false,
+      "branches": 800,
+      "complete": true,
+      "contexts": 36,
+      "counts": {
+        "environment": 46362,
+        "optimizer": 768
+      },
+      "engineering_fixture": false,
+      "evaluations": 180,
+      "models": 9,
+      "round_fits": 12
+    }
+  },
+  "archive_receipts_present": [
+    "launcher-archive.json",
+    "payload-archive.json"
+  ],
+  "logs_and_archives": {
+    "results/conservative_cohort_improvement_20261002/launcher/stderr.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:23.306137+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/stdout.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:23.306095+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/budget.jsonl": {
+      "bytes": 24413916,
+      "mtime_utc": "2026-10-02T23:46:34.362494+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/admission.jsonl": {
+      "bytes": 17213776,
+      "mtime_utc": "2026-10-02T23:46:16.939005+00:00"
+    },
+    "reports/conservative_cohort_20261002_detached_launcher.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:20.902880+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/archives/launcher.tar.gz": {
+      "bytes": 7357544,
+      "mtime_utc": "2026-10-02T23:46:34.218625+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/archives/launcher.tar.gz.manifest.json": {
+      "bytes": 99656,
+      "mtime_utc": "2026-10-02T23:46:34.361559+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/archives/payload.tar.gz": {
+      "bytes": 2572706004,
+      "mtime_utc": "2026-10-02T23:45:44.473182+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/archives/payload.tar.gz.manifest.json": {
+      "bytes": 1362310,
+      "mtime_utc": "2026-10-02T23:46:16.751557+00:00"
+    }
+  },
+  "episode_failures": [],
+  "format": "conservative-cohort-terminal-handoff-v1",
+  "status": "completed",
+  "exit_code": 0,
+  "scientific_comparison_complete": true,
+  "overall_package_completed": true,
+  "process_evidence": {
+    "inspected_at_utc": "2026-10-02T23:48Z",
+    "pids_absent": [
+      12670,
+      12683
+    ],
+    "matching_scientific_processes": 0,
+    "duplicate_scientific_processes": 0
+  },
+  "failure_records_present": [],
+  "failure_priority_check_passed": true,
+  "preflight_complete": 3,
+  "context_cohorts": 12,
+  "context_states": 36,
+  "branches_complete": 800,
+  "actual_branch_total": 800,
+  "branch_upper_bound": 864,
+  "paired_round_fits": 6,
+  "bc_round_fits": 6,
+  "actor_updates": 768,
+  "critic_updates": 0,
+  "final_model_seals": 9,
+  "evaluations": 180,
+  "training_and_seal_check_reused": "reports/2026-10-02-conservative-cohort-monitor-2315.json",
+  "independent_raw_readout": "reports/2026-10-02-conservative-cohort-independent-readout.json",
+  "raw_comparison_sha256": "42a55d858344a10b2a81cab956c158912dc06d53cc83f028ec63b3a624d240a5",
+  "decision": "close_two_round_mechanism",
+  "primary_development_screen_met": false,
+  "archive_verification": {
+    "observed_at_utc": "2026-10-02T23:49:08.801584+00:00",
+    "current_locks_checked": 482,
+    "lock_mismatches": [],
+    "archives": [
+      {
+        "name": "payload",
+        "file_count": 10137,
+        "archive_bytes": 2572706004,
+        "archive_sha256": "68606cb8ee8d3f1c0894aa5778058fc8157e69733260e4c3c32513838aa98dd3",
+        "archive_bytes_verified": true,
+        "all_members_independently_verified": true,
+        "source_tree_unchanged": true,
+        "receipt_matches_manifest": true
+      },
+      {
+        "name": "launcher",
+        "file_count": 853,
+        "archive_bytes": 7357544,
+        "archive_sha256": "92e8ff71a64606ecc3aa791804a05b995a9d79d3650dba09d218d998cc2b2ae6",
+        "archive_bytes_verified": true,
+        "all_members_independently_verified": true,
+        "source_tree_unchanged": true,
+        "receipt_matches_manifest": true
+      }
+    ],
+    "launcher_scope": "Immutable snapshot before final closure and supervisor/terminal receipts; originals and final receipts remain in run root",
+    "dropbox_exported": false,
+    "cloud_sync_verified": false,
+    "howard_access_verified": false,
+    "archives_created_by_monitor": 0,
+    "scientific_calls_performed": 0
+  },
+  "source_unchanged": true,
+  "independent_agent": {
+    "id": "01a0ff00-9090-7763-8a85-60ad13e25e9a",
+    "name": "Euler",
+    "state": "completed_closed",
+    "scope": "Independent saved-comparator interpretation only; no duplicate raw verification, gate or scientific calls",
+    "agreement": "Both primary contrasts have zero action/cost/patient change; MDL2 benefit inherited with waiting/turnaround tradeoff."
+  },
+  "automation": {
+    "id": "gcn-rl",
+    "status": "PAUSED",
+    "tool_confirmed": true,
+    "local_toml_readback_confirmed": true,
+    "deleted": false,
+    "other_automations_changed": false
+  },
+  "eta_minutes": 0,
+  "automatic_retry": false,
+  "automatic_followon": false,
+  "scientific_calls_by_monitor": 0
+}

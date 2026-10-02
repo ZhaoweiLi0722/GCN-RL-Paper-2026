@@ -2,6 +2,33 @@
 
 ## Live checkpoint: conservative two-round experiment launched and progressing
 
+2026-10-02T23:15:35Z: both rounds fully trained; paired6/6 and BC6/6fits,
+768/768actor updates,0critic. Last128finite sequential update receipts and
+both block62 checkpoint hashes match; earlier640checks reused. All9final
+model files match their seal hashes. Seal finished at ledger sequence35848,
+before first evaluation sequence35849. No test-driven model selection.
+
+Preflight3/3,collection12/12cohorts and36/36states,branches800/800actual
+(frozen upper bound864; aliases reduced counts). Finalseals9/9,evaluation
+82/180complete: all60block60cohorts,12block61frozen and10block61paired.
+Current phase evaluation/block61/paired_cost; environment40251/49626.
+Original12670/PPID1 and12683/PPID12670 remain live with matching full
+commands and new completed training/seal/evaluation boundaries. No duplicate,
+terminal/failure/overrun,episode failure or stderr. Current source unchanged;
+prior482current-lock check reused; current9sealed-model bytes checked.
+
+Evidence:reports/2026-10-02-conservative-cohort-monitor-2315.json.
+Conditional ETA30-60minutes: six completed evaluation owners/72cohorts
+took639.13seconds,about8.9seconds per cohort. Remaining98cohorts imply
+about15minutes at that rate; raw readout/archive timing remains unmeasured.
+Next: existing process completes the fixed180cohort comparison and archives;
+then read saved full costs/patient outcomes and close the finite handoff.
+No interim performance analysis, model load/forward, extra update or trajectory
+by monitor. Training completion is not performance gain. Same monitor ACTIVE;
+remaining routine phases authorized, no new approval or scientific retry.
+
+### Previous collection milestone
+
 2026-10-02T22:43:46Z: second-round block61 paired and BC fits complete.
 Paired5/6 and BC5/6 round-fits,640/768actor updates,0critic. The two new
 checkpoint hashes and128new sequential finite receipts match; earlier checks

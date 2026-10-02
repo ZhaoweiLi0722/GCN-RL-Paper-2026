@@ -1,0 +1,290 @@
+{
+  "observed_at_utc": "2026-10-02T23:15:35.607981+00:00",
+  "head": "69ebe9006a2d24e8fb041c327c462ad147b57419",
+  "claim": {
+    "authorization_sha256": "43082f5c97efc8dcb922527e401c20011dcad9fd5cba473ee28a814a8b59dafa",
+    "automatic_retry": false,
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "880defba211bf0e444bb8781c8be5735fb0cabe0",
+    "packet_sha256": "c571729b094dd02e6034434273d04fc72c23c9db31a0d2f0e69fdc6c01bd0d66",
+    "pid": 12670,
+    "ppid": 1,
+    "started": 972872.163295
+  },
+  "child_claim": {
+    "pid": 12683,
+    "ppid": 12670
+  },
+  "current_section": "evaluation/block61/paired_cost",
+  "completed_sections": [
+    "binding",
+    "preflight/block60",
+    "preflight/block61",
+    "preflight/block62",
+    "contexts/round0/block60",
+    "branches/round0/block60",
+    "paired_actor/round0/block60",
+    "bc_actor/round0/block60",
+    "contexts/round0/block61",
+    "branches/round0/block61",
+    "paired_actor/round0/block61",
+    "bc_actor/round0/block61",
+    "contexts/round0/block62",
+    "branches/round0/block62",
+    "paired_actor/round0/block62",
+    "bc_actor/round0/block62",
+    "contexts/round1/block60",
+    "branches/round1/block60",
+    "paired_actor/round1/block60",
+    "bc_actor/round1/block60",
+    "contexts/round1/block61",
+    "branches/round1/block61",
+    "paired_actor/round1/block61",
+    "bc_actor/round1/block61",
+    "contexts/round1/block62",
+    "branches/round1/block62",
+    "paired_actor/round1/block62",
+    "bc_actor/round1/block62",
+    "seal",
+    "evaluation/block60/own_frozen",
+    "evaluation/block60/paired_cost",
+    "evaluation/block60/bc_continue",
+    "evaluation/block60/r4",
+    "evaluation/block60/full_mdl2",
+    "evaluation/block61/own_frozen"
+  ],
+  "counts": {
+    "environment": 40251,
+    "optimizer": 768
+  },
+  "preflight_complete": 3,
+  "context_cohorts": 12,
+  "context_states": 36,
+  "completed_branch_boundaries": 800,
+  "branches_by_owner": {
+    "round0/block60": 136,
+    "round0/block61": 136,
+    "round0/block62": 132,
+    "round1/block60": 136,
+    "round1/block61": 132,
+    "round1/block62": 128
+  },
+  "max_branches": 864,
+  "actual_branch_total": 800,
+  "all_branch_owners_complete": true,
+  "paired_round_fits": 6,
+  "bc_round_fits": 6,
+  "final_model_seals": 9,
+  "sealed_files_verified": [
+    {
+      "key": "block60/bc_continue",
+      "bytes": 263963,
+      "path": "payload/sealed/block60/bc_continue.pt",
+      "sha256": "5c30f22580906528aa320e9da854e34a4f5ab320f17533b35809a2e05ea1edf3",
+      "verified": true
+    },
+    {
+      "key": "block60/own_frozen",
+      "bytes": 263963,
+      "path": "payload/sealed/block60/own_frozen.pt",
+      "sha256": "88e9a20e7baa40d17756dc69254c345d7f3128e0cb1f9d6ac56591785cd60abb",
+      "verified": true
+    },
+    {
+      "key": "block60/paired_cost",
+      "bytes": 263963,
+      "path": "payload/sealed/block60/paired_cost.pt",
+      "sha256": "49a9263b201c08309956e1bacfde200a09dd3d49bb07dbae1ee4c93e46b3dd5d",
+      "verified": true
+    },
+    {
+      "key": "block61/bc_continue",
+      "bytes": 263963,
+      "path": "payload/sealed/block61/bc_continue.pt",
+      "sha256": "da7dacf23af276b77451a44fd7015d0de323fe60f3f382101eb134c3619d6b0f",
+      "verified": true
+    },
+    {
+      "key": "block61/own_frozen",
+      "bytes": 263963,
+      "path": "payload/sealed/block61/own_frozen.pt",
+      "sha256": "530880f20f4d12d4c96719fdb6b1ef13ed398038a850c3b5e8d6fc0d291f050f",
+      "verified": true
+    },
+    {
+      "key": "block61/paired_cost",
+      "bytes": 263963,
+      "path": "payload/sealed/block61/paired_cost.pt",
+      "sha256": "8641ad41dd10236b6c98e3f1765a351875820caa3093028a7fc66c93cd42026d",
+      "verified": true
+    },
+    {
+      "key": "block62/bc_continue",
+      "bytes": 263963,
+      "path": "payload/sealed/block62/bc_continue.pt",
+      "sha256": "0c4c10759fd3ae68ecb609b92ff8abf051130d82be4aaab41e0264770bed30f2",
+      "verified": true
+    },
+    {
+      "key": "block62/own_frozen",
+      "bytes": 263963,
+      "path": "payload/sealed/block62/own_frozen.pt",
+      "sha256": "5a1976dc154be868cd2c651a11b004850b61c6afc361ce238c1dee04b1687bbf",
+      "verified": true
+    },
+    {
+      "key": "block62/paired_cost",
+      "bytes": 263963,
+      "path": "payload/sealed/block62/paired_cost.pt",
+      "sha256": "63ca750e02a6295d217dbd02a886dca423acad7b61f4ecc66b524db11214d7dd",
+      "verified": true
+    }
+  ],
+  "seal_before_first_evaluation": true,
+  "seal_finish_sequence": 35848,
+  "first_evaluation_sequence": 35849,
+  "completed_evaluations": 82,
+  "evaluations_by_owner": {
+    "block60/bc_continue": 12,
+    "block60/full_mdl2": 12,
+    "block60/own_frozen": 12,
+    "block60/paired_cost": 12,
+    "block60/r4": 12,
+    "block61/own_frozen": 12,
+    "block61/paired_cost": 10
+  },
+  "new_training_evidence": [
+    {
+      "block": 62,
+      "round": 1,
+      "arm": "paired_cost",
+      "receipts": 64,
+      "finite": true,
+      "sequential": true,
+      "critic_steps": 0,
+      "final_receipt": {
+        "actor_grad_norm_before_clip": 0.00005307540777721442,
+        "arm": "paired_cost",
+        "attempted_optimizer_steps": 64,
+        "context_count": 6,
+        "critic_optimizer_steps": 0,
+        "loss": 0.00028342758089804695,
+        "optimizer_steps": 64,
+        "step": 64
+      }
+    },
+    {
+      "block": 62,
+      "round": 1,
+      "arm": "bc_continue",
+      "receipts": 64,
+      "finite": true,
+      "sequential": true,
+      "critic_steps": 0,
+      "final_receipt": {
+        "actor_grad_norm_before_clip": 1.016913652420044,
+        "arm": "bc_continue",
+        "attempted_optimizer_steps": 64,
+        "context_count": 6,
+        "critic_optimizer_steps": 0,
+        "loss": 0.8454305008683374,
+        "optimizer_steps": 64,
+        "step": 64
+      }
+    }
+  ],
+  "new_model_files": [
+    {
+      "bytes": 528661,
+      "path": "payload/models/round1/block62/paired_cost/final.pt",
+      "sha256": "2628200e52983b9a41e634fa9fd47d5ff617c8446ed28cbeebe248b9c2ef9846",
+      "verified": true
+    },
+    {
+      "bytes": 528661,
+      "path": "payload/models/round1/block62/bc_continue/final.pt",
+      "sha256": "a8165868385f208d43dc1f52acce15d0a984a69afadb6b905901b4231034aa44",
+      "verified": true
+    }
+  ],
+  "previous_training_evidence_reused": [
+    "reports/2026-10-02-conservative-cohort-monitor-2243.json"
+  ],
+  "current_source_unchanged": true,
+  "full_current_lock_check_reused": "reports/2026-10-02-conservative-cohort-monitor-2143.json",
+  "completed_phase_seconds": {
+    "binding": 6.2790870000608265,
+    "preflight": 89.84329099999741,
+    "contexts": 121.61020199989434,
+    "branches": 9760.11785899999,
+    "paired_actor": 195.97550199984107,
+    "bc_actor": 195.00850899971556,
+    "seal": 0.19613099994603544,
+    "evaluation": 639.1295769999269
+  },
+  "admission_last": {
+    "before_operation": true,
+    "clock": 983985.481477,
+    "count": 6174,
+    "event": "operation",
+    "operation": "episode_step",
+    "previous": "897c215ebffc03aaa809c1b255a35383ab6a6580d06c6c2cbc87bf287b488cd1",
+    "section": "evaluation/block61/paired_cost",
+    "section_count": 693,
+    "sequence": 42159,
+    "sha256": "467e3c647f59d99a941af1d219af8efdd65798da2e461a5eb5bb05f04a2301ad"
+  },
+  "logs": {
+    "results/conservative_cohort_improvement_20261002/launcher/stderr.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:23.306137+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/stdout.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:23.306095+00:00"
+    },
+    "reports/conservative_cohort_20261002_detached_launcher.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:20.902880+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/budget.jsonl": {
+      "bytes": 21108959,
+      "mtime_utc": "2026-10-02T23:15:34.376591+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/admission.jsonl": {
+      "bytes": 14951849,
+      "mtime_utc": "2026-10-02T23:15:34.242173+00:00"
+    }
+  },
+  "terminal_or_failure": {},
+  "episode_failure_files": [],
+  "anomalies": [],
+  "new_scientific_calls_by_monitor": 0,
+  "interim_performance_analysis_performed": false,
+  "training_is_not_performance": true,
+  "process_evidence": {
+    "supervisor_pid": 12670,
+    "supervisor_ppid": 1,
+    "child_pid": 12683,
+    "child_ppid": 12670,
+    "matching_commands": true,
+    "duplicate_scientific_processes": 0,
+    "supervisor_elapsed": "03:02:06",
+    "child_elapsed": "03:02:03",
+    "supervisor_command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_conservative_cohort_improvement --launch",
+    "child_command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_conservative_cohort_improvement --child"
+  },
+  "running_evidence": "Matching original live process tree plus last branch owner and both fits completed, all-model seal, and six complete evaluation owners since prior observation.",
+  "eta": {
+    "remaining_minutes": [
+      30,
+      60
+    ],
+    "basis": "Six completed evaluation owners (72 cohorts) used 639.13 seconds, approximately 8.9 seconds/cohort; 98 cohorts remain in this snapshot, approximately 15 minutes at that rate. Raw verification and archives add unmeasured time; range is conditional, not a deadline.",
+    "global_cap_hours": 8
+  },
+  "snapshot_note": "Read-only non-atomic monitoring; no model deserialization or forward and no interim performance analysis. Existing first 640 update checks reused, last 128 checked this turn.",
+  "monitor_notes": [
+    "Initial in-memory seal-order query encountered the ledger initialization record without a section; guarded query succeeded. This did not alter any file or scientific process and is not an experiment retry."
+  ]
+}

@@ -1,6 +1,50 @@
 # Autonomous local research queue
 
-## Live checkpoint: saved qualification passed; no continuation started
+## Live checkpoint: continuation-only engineering passed; freeze next
+
+2026-10-02T01:48Z. User requested routine continuation after the saved-only
+qualification succeeded. This authorizes engineering preparation, not an
+unlisted new scientific budget. Entry HEAD562b7d45bd65d7351d219388ae3e8b0c63a67b35
+was clean on the integration branch. Host PID/PPID/command inspection found no
+matching research process. No new scientific run has started.
+
+New additive recovery_plan/campaign/execution modules and the thin
+run_dynamic_candidate_recovery entrypoint connect the three qualified saved
+initializers to identical frozen/PPO/BC forks, retained preflight, continuation,
+all-model sealing, paired evaluation and corrected raw resource verification.
+Old locked modules and evidence are untouched. The new same-owner restore keeps
+external budgets/clocks and raw prefixes; it cannot revive either closed attempt.
+
+The full mock dispatcher passed with42 invented two-step episodes,99 mock
+environment debits and18 metadata-only optimizer debits. Real Adam/SGD steps
+were forbidden. Final combined suite:120tests passed in40.539seconds,including
+11recovery and27independent admission cases plus affected existing regressions.
+Whole-repository compileall passed. Test-only path-alias and fixture-key errors
+were fixed. Independent tests found and fixed a source gap allowing episode
+construction outside episode phases;no scientific execution occurred. Next:
+local source commit and JSON/hash-only source/input/runtime freeze.
+
+Prospective protocol/proposal and preparation readout are in
+specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-*. The independently
+derived budget agrees with the implementation:387 episodes,20,184 simulator
+calls including60clones,768actor+384critic=1,152optimizer calls,3saved initializer
+and3R4 loads,390environment constructions,17,400seconds,one attempt. Same reward,
+scenario,options,models,thresholds and original unopened stream allocations.
+No initialization refit,qualification rescore or final-test peeking.
+
+Advancement agent Avicenna delivered the concrete prospective protocol/JSON and
+27disjoint admission fixtures,completed and closed. Read-only efficiency agent Wegener
+completed and closed:reuse qualified inputs,keep the runner thin,and request
+one full continuation/evaluation decision. No additional reviewer gate exists.
+The coordinator integrated the phase fix and owns Live/workflow and local commits.
+
+The supported answer remains qualification fidelity,not RL gain. The missing
+patient-performance comparison is PPO-own_frozen and PPO-BC. After this full
+packet is frozen,ask one complete approval question,then stop awaiting it.
+Automation gcn-rl remains PAUSED and visible. No remote/Dropbox/holdout/Howard
+action,Stage E reopening or authority to execute continuation has been added.
+
+## Previous checkpoint: saved qualification passed; no continuation started
 
 2026-10-01T23:56Z. The separately authorized saved-only attempt completed exit0
 in8.584168seconds at execution commite6eec08dcd362f3084d15f1eb10a8ca66a9cfaca.

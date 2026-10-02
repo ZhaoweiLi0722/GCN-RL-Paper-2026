@@ -1,0 +1,2443 @@
+{
+  "schema": "dynamic-candidate-continuation-recovery-proposal-v1",
+  "status": "PROSPECTIVE_COMPLETE_PROTOCOL_NOT_AUTHORIZED_NOT_EXECUTION_FROZEN",
+  "workspace": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
+  "branch": "codex/september-research-integration",
+  "result_root": "results/dynamic_candidate_continuation_recovery_20261001",
+  "protocol": "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-protocol.md",
+  "source_reading_commit": "562b7d45bd65d7351d219388ae3e8b0c63a67b35",
+  "approved": false,
+  "scientific_execution_authorized": false,
+  "ready_to_launch": false,
+  "approvals": {
+    "protocol_approved": false,
+    "continuation_execution_approved": false,
+    "historical_loads_approved": false,
+    "new_environment_calls_approved": false,
+    "optimizer_updates_approved": false,
+    "final_test_approved": false,
+    "external_actions_approved": false,
+    "automatic_followon_approved": false
+  },
+  "execution_freeze": {
+    "implementation_commit": null,
+    "source_frozen": false,
+    "approval_file": "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-authorization.json",
+    "approval_file_created_by_preparation": false,
+    "requires_new_frozen_source_input_runtime_packet": true,
+    "require_user_words_and_timestamp": true,
+    "require_committed_change_control_before_launch": true,
+    "preparation_is_not_launch_authorization": true
+  },
+  "attempt": {
+    "maximum_attempts": 1,
+    "claim": "exclusive_new_root_before_any_numerical_work",
+    "root_must_not_exist": true,
+    "automatic_retry": false,
+    "automatic_resume": false,
+    "alternative_root_retry": false,
+    "old_s1_reopened": false,
+    "saved_qualification_reopened": false,
+    "restore_old_campaign_cursor": false,
+    "restore_old_budget": false,
+    "transfer_old_unused_budget": false,
+    "parallel_scientific_jobs": 1,
+    "terminal_failure_closes_entire_attempt": true
+  },
+  "inheritance": {
+    "original_proposal": {
+      "path": "specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json",
+      "bytes": 319610,
+      "sha256": "8f4cb4f581855851f53d42d9127a7023f14290b608c6e67774b364650c1169af"
+    },
+    "original_archived_proposal": {
+      "path": "results/dynamic_candidate_pilot_20261001/payload/locks/worktree/specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json",
+      "bytes": 319610,
+      "sha256": "8f4cb4f581855851f53d42d9127a7023f14290b608c6e67774b364650c1169af"
+    },
+    "original_packet_content_sha256": "a997a5afbfb83e876b0b48b1de73068f3310b3cb47b1d251b3b421bbef080070",
+    "original_implementation_commit": "db8f17e38586083aa6531bae0964880dbf773b4a",
+    "scientific_config_sha256": "935b8a655f2350d8758fd73a033feca609f254d3749367fda4ce0a99747a6639",
+    "streams_sha256": "ab6b0f9f5b02a28a21048abab5737872b39591eed76a8a70e14130b2affa3065",
+    "canonical_digest": "SHA256 of UTF-8 Python json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)",
+    "scientific_config_semantics": "Exact original object, including original historical accounting and draft metadata; not the new execution budget or current authorization. Preserve original source bytes and retain unchanged original_config; the runner may derive the narrowly allowed effective accounting copy.",
+    "effective_config_copy": {
+      "original_config_unchanged": true,
+      "allowed_changed_top_level_fields": ["phase_budgets", "totals", "recovery"],
+      "all_other_fields_equal_original_config": true,
+      "purpose": "Retained phase scheduling and 387-row verification, build and accounting limits; no scientific-setting change",
+      "budget_plan_draft_sha256": "original_scientific_config_digest"
+    },
+    "inherited_stream_manifest_semantics": "Exact original allocation record, not a current global consumed/freshness assertion. Admit only stream_reuse roles and their declared uses.",
+    "numerical_settings_changed": false,
+    "new_execution_scope": "Omit prototype_preflight, initialization_collection, initialization_fit, qualification; retain remaining phases unchanged and allocate fresh binding plus fresh execution clocks.",
+    "execution_budget_precedence": "execution_budget and budget_plan govern all new spending. The runner's separate effective accounting config derives matching phase_budgets, totals and recovery metadata from unchanged original_config. Never use the original unreduced accounting totals or original stream episode_uses as this run's budget.",
+    "inherited_core_source_records": [
+      {
+        "path": "src/rl/dynamic_candidate_resources.py",
+        "bytes": 18471,
+        "sha256": "1db5819aa8c1bdae5d1aeb56e4424b38b863e12b50fcf549c54ec7daca982ad7"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_campaign.py",
+        "bytes": 33126,
+        "sha256": "3ebec5a93c2d64b8c679bdbacf7bbb07d61fe19eb6c5ee416b53dc33acd31dd7"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_factory.py",
+        "bytes": 8443,
+        "sha256": "bfb434b45aaaf5c5a09ed2a0f2ee222f7ac2e88e5b3b5a07720826b9b9d12a51"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_backend.py",
+        "bytes": 6504,
+        "sha256": "6142b1be813745c1f556875ddb29b57ff220889e1fe740cc7c2964115fbc848b"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_sequence.py",
+        "bytes": 5377,
+        "sha256": "ef8716c4ccc83251d49aad0e113bb75f5007576d8f785d80b6f1356b934fbb1c"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_watchdog.py",
+        "bytes": 7775,
+        "sha256": "f3ccb5dd14a60cfbafc074f9376056102f174e782a14f908a9eae9295b6b0e30"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_continuation.py",
+        "bytes": 10465,
+        "sha256": "08b915cd1f517f3936dca1306500e35bba12075a8710f1989b141a5eb4ca3aa7"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_verification.py",
+        "bytes": 22508,
+        "sha256": "bdadd746c8989f561693f38278fbf25e2335751c28175be1825adb5964af6fe1"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_ppo.py",
+        "bytes": 18834,
+        "sha256": "5d4ee2b08ead915b376cd9e065bdfeecd5e198fa0bfb38487fde11dc3b7ea744"
+      },
+      {
+        "path": "src/rl/dynamic_candidate_imitation.py",
+        "bytes": 13932,
+        "sha256": "b4db8bd4609628ee94c23008aabe6a95771ab87a91504eae16e4a2a88aaf9927"
+      }
+    ]
+  },
+  "scientific_config": {
+    "a1": {
+      "complete_passes": 1,
+      "fits": 9,
+      "new_artificial_fit_calls_in_this_budget": 0,
+      "passed_or_waived_by_this_draft": false,
+      "prospective_committed_amendment_required": true,
+      "status": "failed_acceptance_attempt_closed"
+    },
+    "accounting": {
+      "automatic_retry": false,
+      "clock_includes_setup_inference_validation_io_archive": true,
+      "deadline_before_forward_backward_restore": true,
+      "durable_debit_before_every_call": true,
+      "external_watchdog_required": true,
+      "failure_preserve": [
+        "partial_weights",
+        "optimizer",
+        "rng",
+        "ledger",
+        "stderr"
+      ],
+      "parallel_scientific_jobs": 1,
+      "preservation_overrun": "report_incomplete_no_numerical_resume",
+      "refund": false,
+      "resource_unit_environment": "individual_env.step_including_all_branches",
+      "resource_unit_optimizer": "individual_optimizer.step_not_minibatch",
+      "restore_budget_from_model_checkpoint": false,
+      "scope_phase_global_caps": true,
+      "separate_actor_critic_counters": true,
+      "separate_main_optional_counters": true,
+      "terminal_failure_closes_entire_attempt": true,
+      "transfer": false
+    },
+    "attempts": 1,
+    "blocks": [
+      60,
+      61,
+      62
+    ],
+    "branch": "codex/september-research-integration",
+    "candidate_message_graph": "specimen_routes",
+    "candidate_support": {
+      "canonicalization": "integer_requested_net_not_realized_equivalence",
+      "evaluation": "greedy_class_with_lexicographic_class_key_tie_break",
+      "generation": "residual_option_actions_from_state",
+      "hidden_feasibility_mask": false,
+      "include_frozen_reference": true,
+      "include_full_mdl2": true,
+      "max_original_requests": 6,
+      "options": [
+        {
+          "epsilon": 0.05,
+          "group": "specimen_transfer",
+          "sign": -1
+        },
+        {
+          "epsilon": 0.05,
+          "group": "specimen_transfer",
+          "sign": 1
+        },
+        {
+          "epsilon": 0.1,
+          "group": "specimen_transfer",
+          "sign": -1
+        },
+        {
+          "epsilon": 0.1,
+          "group": "specimen_transfer",
+          "sign": 1
+        }
+      ],
+      "require_common_non_specimen_actions": true,
+      "submission": "original_request_as_float64"
+    },
+    "continuation": {
+      "batch_size": 64,
+      "bc_continue": {
+        "actor_adam_calls_per_block": 128,
+        "actor_adam_calls_total": 384,
+        "collection": "current_categorical_policy",
+        "critic_adam_calls_per_block": 0,
+        "critic_unchanged": true,
+        "loss": "r4_class_cross_entropy_only"
+      },
+      "checkpoint_selection": "fixed_final_only",
+      "environment_steps_per_arm_per_block": 1664,
+      "environment_steps_total": 9984,
+      "episodes_per_arm_per_block": 32,
+      "episodes_per_rollout": 4,
+      "epochs": 4,
+      "event_level_crn_equality_claim": false,
+      "example_presentations_per_arm_per_block": 6656,
+      "frozen_training_episodes": 0,
+      "full_episodes_total": 192,
+      "minibatch_sizes": [
+        64,
+        64,
+        64,
+        16
+      ],
+      "minibatches_per_arm_per_block": 128,
+      "minibatches_per_rollout": 16,
+      "ppo": {
+        "actor_adam_calls_per_block": 128,
+        "actor_adam_calls_total": 384,
+        "actor_then_critic_per_minibatch": true,
+        "advantage_normalization_epsilon": 1e-08,
+        "advantage_std_unbiased": false,
+        "clip_ratio": 0.2,
+        "critic_adam_calls_per_block": 128,
+        "critic_adam_calls_total": 384,
+        "critic_target": "sampled_terminal_monte_carlo_return",
+        "entropy_coef": 0.01,
+        "extra_critic_warmup_calls": 0,
+        "fixed_behavior_advantages_and_returns": true,
+        "normalize_advantages_once_per_full_rollout": true,
+        "oracle_or_counterfactual_labels": false,
+        "value_loss_coef": 0.5
+      },
+      "rollouts_per_arm_per_block": 8,
+      "rows_per_rollout": 208,
+      "same_start_policy_critic_buffers": true,
+      "same_start_ppo_bc_sampling_rng": true,
+      "same_world_starts_across_arms": true
+    },
+    "draft_validation": {
+      "arithmetic_check_status": "PASS",
+      "broad_historical_audit": false,
+      "checked": [
+        "phase_episode_step_sums",
+        "all_Adam_owner_sums",
+        "phase_global_time_sums",
+        "replacement_and_epoch_counts",
+        "optional_cap",
+        "168_unique_ordinal_slots",
+        "426_controller_episode_uses",
+        "19_distinct_neural_role_paths",
+        "source_reference_paths_exist"
+      ],
+      "coordinator_owns_compileall_and_integration": true,
+      "environment_calls": 0,
+      "holdout_actions": 0,
+      "method": "stdlib_json_math_hashlib_and_arithmetic_only_no_project_imports",
+      "model_forward_calls": 0,
+      "optimizer_calls": 0,
+      "remote_actions": 0
+    },
+    "evaluation": {
+      "adverse_patient_direction_means_tradeoff_not_overall_success": true,
+      "all_nine_learned_artifacts_sealed_before_any_test": true,
+      "bootstrap": {
+        "blocks_per_draw": 3,
+        "descriptive_low_precision_three_blocks": true,
+        "draws": 10000,
+        "kind": "hierarchical_paired_block_then_world",
+        "saved_data_only": true,
+        "worlds_per_sampled_block": 12
+      },
+      "clinical_margin": null,
+      "controllers_per_block": 5,
+      "environment_steps": 9360,
+      "environment_steps_per_controller_per_block": 624,
+      "extra_stochastic_mode": false,
+      "formal_holdout": false,
+      "fresh_paired_worlds_per_block": 12,
+      "independent_training_units": 3,
+      "learned_selection": "greedy_lexicographic_class_key_tie_break",
+      "nonpositive_relative_denominator": "undefined_not_passed",
+      "optimizer_calls": 0,
+      "primary": "paired_raw_total_cost_ppo_minus_own_frozen",
+      "proposed_practical_relative_cost_reduction_percent": 1.0,
+      "relative_change": "equal_mean_over_blocks_of_100_times_mean_paired_cost_delta_divided_by_mean_frozen_cost",
+      "required_favorable_cost_blocks": 3,
+      "required_outcomes": [
+        "raw_cost",
+        "losses",
+        "completions",
+        "waiting",
+        "terminal_active",
+        "requested_actions",
+        "executed_actions",
+        "compute_cost"
+      ],
+      "secondary_contrasts": [
+        "ppo_minus_bc_continue",
+        "ppo_minus_r4",
+        "ppo_minus_full_mdl2",
+        "own_frozen_minus_r4"
+      ],
+      "total_episodes": 180,
+      "total_worlds": 36
+    },
+    "final_controllers": [
+      "own_frozen",
+      "own_ppo",
+      "own_bc_continue",
+      "r4",
+      "full_mdl2"
+    ],
+    "initialization": {
+      "actor_adam_calls_per_block": 256,
+      "actor_adam_calls_total": 768,
+      "actor_target": "contemporaneous_r4_canonical_class",
+      "batch_size": 64,
+      "checkpoint": "final_only",
+      "collector": "r4_reference",
+      "critic_adam_calls_per_block": 0,
+      "critic_initialization": "independent_construction_with_zero_final_output_no_prefit",
+      "demonstration_episodes_per_block": 8,
+      "example_presentations_per_block": 16384,
+      "example_presentations_total": 49152,
+      "examples_per_block": 416,
+      "fits_per_block": 1,
+      "loss": "cross_entropy_only",
+      "qualification_or_test_fitting": false,
+      "reuse_initializer_adam_moments": false,
+      "sample_with_replacement": true
+    },
+    "interpretation": {
+      "all_environment_channels_retained": true,
+      "clinical_noninferiority_claim": false,
+      "deployment_adaptation_claim": false,
+      "full_joint_control_claim": false,
+      "historical_r4_graph_representation_identical": false,
+      "isolated_graph_effect_established": false,
+      "non_specimen_candidate_components_shared": true,
+      "question": "simulation_interaction_learning_beyond_own_frozen_and_continued_imitation",
+      "scope": "restricted_specimen_coordination_mechanism_not_final_method_ceiling"
+    },
+    "launch_prerequisites_not_satisfied_by_draft": [
+      "prospective_approved_committed_A1_prerequisite_amendment_retaining_failed_result",
+      "accepted_frozen_new_implementation_and_zero_update_contracts",
+      "explicit_unchanged_finite_horizon_objective_decision",
+      "prospective_seed_collision_and_input_runtime_source_freeze",
+      "one_consolidated_explicit_user_authorization"
+    ],
+    "model_proposal": {
+      "actor_parameter_count": 31346,
+      "critic_parameter_count": 28721,
+      "device": "cpu",
+      "dtype": "float32",
+      "encoder_width": 16,
+      "exact_initialization_and_preprocessing": "dynamic_candidate_policy_v1_linear_defaults_then_zero_critic_final",
+      "fixed_reference_log_prior": false,
+      "graph": "specimen_routes",
+      "head_width": 32,
+      "hidden_feasibility_mask": false,
+      "independent_critic_encoder_parameters_optimizer": true,
+      "initial_reference_bias": 0.0,
+      "kind": "new_dynamic_request_conditioned_scalar_scorer",
+      "learnable_reference_preference": true,
+      "max_original_requests": 6,
+      "new_model_restore_acceptance": "zero_update_contract_tests_not_scientific_success",
+      "output_clipping": false,
+      "restricted_anchor_is_full_mdl2": false,
+      "same_public_information": true,
+      "specimen_epsilon_sign_pairs": [
+        [
+          0.05,
+          -1
+        ],
+        [
+          0.05,
+          1
+        ],
+        [
+          0.1,
+          -1
+        ],
+        [
+          0.1,
+          1
+        ]
+      ],
+      "submitted_request_dtype": "float64_original"
+    },
+    "objective": {
+      "action_width": 80,
+      "clinical_margin": null,
+      "clinical_noninferiority_claim": false,
+      "cost_weights_changed": false,
+      "deployment_adaptation_claim": false,
+      "full_lifecycle_claim": false,
+      "gae_lambda": 1.0,
+      "gamma": 1.0,
+      "horizon": 52,
+      "num_facilities": 20,
+      "raw_state_width": 561,
+      "reward": "negative_absolute_environment_step_cost",
+      "reward_scale": 1e-09,
+      "scenario": "routing_nominal_history",
+      "terminal_bootstrap": 0.0,
+      "terminal_cost_added": 0.0,
+      "transfer_scale": 120
+    },
+    "optimizer": {
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "foreach": false,
+      "gradient_norm_cap_each_owner": 0.5,
+      "kind": "Adam",
+      "learning_rate": 0.0003,
+      "weight_decay": 0
+    },
+    "optional_counterfactual": {
+      "aliases_padded_to_fill_budget": false,
+      "blocks": 3,
+      "class_order": "canonical",
+      "effective_seconds_if_disabled": 0,
+      "effective_steps_if_disabled": 0,
+      "fresh_worlds": 0,
+      "include_optional_counterfactual": false,
+      "labels_enter_learner_or_gates": false,
+      "max_canonical_classes_per_snapshot": 6,
+      "max_environment_steps_if_elected": 72,
+      "max_seconds_if_elected": 300,
+      "model_rescoring_calls": 0,
+      "optimizer_calls": 0,
+      "selection_deadline": "consolidated_future_approval_before_any_numerical_call",
+      "snapshot_t_per_block": [
+        13,
+        26,
+        39,
+        51
+      ],
+      "source": "own_frozen_same_start_preflight_snapshots",
+      "steps_per_class_clone": 1,
+      "unused_slots_transferable": false
+    },
+    "owner_budgets": {
+      "bc_each_block": {
+        "actor_adam_calls": 128,
+        "critic_adam_calls": 0,
+        "environment_steps": 1664,
+        "seconds": 900
+      },
+      "evaluation_each_controller_each_block": {
+        "environment_steps": 624,
+        "optimizer_calls": 0,
+        "seconds": 300
+      },
+      "initialization_fit_each_block": {
+        "actor_adam_calls": 256,
+        "critic_adam_calls": 0,
+        "seconds": 600
+      },
+      "ppo_each_block": {
+        "actor_adam_calls": 128,
+        "critic_adam_calls": 128,
+        "environment_steps": 1664,
+        "seconds": 1500
+      }
+    },
+    "phase_budgets": [
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "runtime_input_binding",
+        "mandatory_clone_steps": 0,
+        "seconds": 600,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 3,
+        "id": "prototype_preflight",
+        "mandatory_clone_steps": 12,
+        "seconds": 600,
+        "trajectory_steps": 156
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 24,
+        "id": "initialization_collection",
+        "mandatory_clone_steps": 0,
+        "seconds": 900,
+        "trajectory_steps": 1248
+      },
+      {
+        "actor_adam_calls": 768,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "initialization_fit",
+        "mandatory_clone_steps": 0,
+        "seconds": 1800,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 12,
+        "id": "qualification",
+        "mandatory_clone_steps": 0,
+        "seconds": 900,
+        "trajectory_steps": 624
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 15,
+        "id": "same_start_preflight",
+        "mandatory_clone_steps": 60,
+        "seconds": 1200,
+        "trajectory_steps": 780
+      },
+      {
+        "actor_adam_calls": 384,
+        "critic_adam_calls": 384,
+        "episodes": 96,
+        "id": "ppo_continuation",
+        "mandatory_clone_steps": 0,
+        "seconds": 4500,
+        "trajectory_steps": 4992
+      },
+      {
+        "actor_adam_calls": 384,
+        "critic_adam_calls": 0,
+        "episodes": 96,
+        "id": "bc_continuation",
+        "mandatory_clone_steps": 0,
+        "seconds": 2700,
+        "trajectory_steps": 4992
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "all_model_seal",
+        "mandatory_clone_steps": 0,
+        "seconds": 300,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 180,
+        "id": "final_evaluation",
+        "mandatory_clone_steps": 0,
+        "seconds": 4500,
+        "trajectory_steps": 9360
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "saved_data_verification_analysis",
+        "mandatory_clone_steps": 0,
+        "seconds": 1200,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "local_archive_verification",
+        "mandatory_clone_steps": 0,
+        "seconds": 1200,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "supervisor_dispatch_terminal_closure",
+        "mandatory_clone_steps": 0,
+        "seconds": 900,
+        "trajectory_steps": 0
+      }
+    ],
+    "preflight": {
+      "disposable_rng_copies_only": true,
+      "optimizer_calls": 0,
+      "preflight_consumed_as_training": false,
+      "prototype": {
+        "clones": 3,
+        "controllers_per_block": 1,
+        "full_episodes": 3,
+        "main_steps": 156,
+        "restore_steps_per_clone": 4,
+        "restore_steps_total": 12,
+        "selection": "sample_disposable_unfitted_template_copy",
+        "total_steps": 168
+      },
+      "restore_at_t": 26,
+      "same_start": {
+        "clones": 15,
+        "controllers_per_block": 5,
+        "fork_greedy_comparison_contexts_per_block": 52,
+        "fork_greedy_comparison_extra_environment_steps": 0,
+        "full_episodes": 15,
+        "main_steps": 780,
+        "paired_worlds_per_block": 1,
+        "restore_steps_per_clone": 4,
+        "restore_steps_total": 60,
+        "selections": {
+          "full_mdl2": "full_anchor",
+          "own_bc_continue": "sample",
+          "own_frozen": "greedy",
+          "own_ppo": "sample",
+          "r4": "reference"
+        },
+        "total_steps": 840
+      }
+    },
+    "prohibited": [
+      "new_reward_or_scenario_search",
+      "extra_fit_or_warmup",
+      "formal_holdout",
+      "remote_actions",
+      "dropbox_export",
+      "stage_e_reopening",
+      "automatic_followon",
+      "clinical_margin_invention",
+      "claim_A1_passed"
+    ],
+    "prospective_choices_requiring_packet_approval": {
+      "failed_artificial_prerequisite": "remains_failed_1_of_9_prospective_replacement_requires_approval",
+      "graph": {
+        "original_draft": "physical_shared_relations",
+        "proposed": "specimen_routes",
+        "reason": "existing public producer preserves heterogeneous environment relations without collapsing them"
+      },
+      "initial_reference_bias": {
+        "original_draft": "unresolved",
+        "proposed": 0.0,
+        "selection_based_on_fitted_results": false,
+        "trainable": true
+      }
+    },
+    "public_input_dimensions": {
+      "facility_nodes": 20,
+      "global_features": 1,
+      "message_adjacency": [
+        20,
+        20
+      ],
+      "node_features": 28
+    },
+    "qualification": {
+      "all_blocks_required": true,
+      "block_mean_development_rejection_screen": {
+        "clinical_noninferiority_interpretation": false,
+        "completions": "initializer_minus_r4_gte_zero",
+        "cost": "initializer_minus_r4_lte_zero",
+        "losses": "initializer_minus_r4_lte_zero",
+        "terminal_active": "initializer_minus_r4_lte_zero"
+      },
+      "controllers": [
+        "r4",
+        "initializer_greedy"
+      ],
+      "environment_steps": 624,
+      "failure": "close_entire_attempt_no_refit_or_seed_replacement",
+      "fresh_worlds_per_block": 2,
+      "full_episodes": 12,
+      "minimum_multiclass_reference_agreement_each_path": 0.95,
+      "minimum_multiclass_rows_each_path": 1,
+      "minimum_reference_agreement_each_path": 0.95,
+      "optimizer_calls": 0,
+      "own_policy_rows_per_block": 104,
+      "reference_rows_per_block": 104
+    },
+    "ready_to_launch": false,
+    "reference": {
+      "config_template": "seed{block}/config.json",
+      "directory": "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd",
+      "hash_verification_status": "future_freeze_required_not_performed_here",
+      "locks": {
+        "60": {
+          "config": "24eedf3322ac27c099a19680f2513518e5414a05104e209efa19007e96352b37",
+          "policy": "2cc16c4208c0ace7370748695ee8191d54e8161bcb20cb16a8de494bfd12f675"
+        },
+        "61": {
+          "config": "507c1ed67c20820be60aaa72cdffb0e24512370318fec0637e991cf301949b97",
+          "policy": "a875c3455b29c422216c02a85d7ae52277be32598e4b9442c241738554c1371a"
+        },
+        "62": {
+          "config": "d4013e4ec8eda9c763aefb1a1c3363fc8c8dafcc05ea9d0b04fb5066801fd76c",
+          "policy": "4a2fec7fd0ff1c3a58fbea1375418bc1fd3208a77fac55ef172df3a7d1cd784d"
+        }
+      },
+      "new_reference_fits": 0,
+      "policy_template": "seed{block}/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed{block}_pretrain.pt",
+      "restore_historical_critic_optimizer_replay": false,
+      "role": "existing_R4_replacement_pretrain_not_original_F1"
+    },
+    "representations": [
+      "graph"
+    ],
+    "rng_proposal": {
+      "block_ordinal_ranges": {
+        "60": {
+          "demonstration": [
+            6,
+            13
+          ],
+          "fork_preflight": [
+            3,
+            3
+          ],
+          "prototype_preflight": [
+            0,
+            0
+          ],
+          "qualification": [
+            30,
+            31
+          ],
+          "test": [
+            132,
+            143
+          ],
+          "training": [
+            36,
+            67
+          ]
+        },
+        "61": {
+          "demonstration": [
+            14,
+            21
+          ],
+          "fork_preflight": [
+            4,
+            4
+          ],
+          "prototype_preflight": [
+            1,
+            1
+          ],
+          "qualification": [
+            32,
+            33
+          ],
+          "test": [
+            144,
+            155
+          ],
+          "training": [
+            68,
+            99
+          ]
+        },
+        "62": {
+          "demonstration": [
+            22,
+            29
+          ],
+          "fork_preflight": [
+            5,
+            5
+          ],
+          "prototype_preflight": [
+            2,
+            2
+          ],
+          "qualification": [
+            34,
+            35
+          ],
+          "test": [
+            156,
+            167
+          ],
+          "training": [
+            100,
+            131
+          ]
+        }
+      },
+      "environment_derivation": "(int.from_bytes(sha256(namespace.encode()).digest()[:12], 'big') << 16) + ordinal",
+      "freshness_verified": false,
+      "global_role_paths": [
+        "analysis/bootstrap"
+      ],
+      "historical_collision_audit": "NOT_PERFORMED",
+      "namespace": "APD-single-gcn-pilot-20261001-v1",
+      "neural_derivation": "int.from_bytes(sha256((namespace + '/' + role_path).encode()).digest()[:8], 'big') % 2**63",
+      "role_paths_per_block": [
+        "block{b}/graph/actor_initialization",
+        "block{b}/graph/critic_initialization",
+        "block{b}/graph/bc_init/shuffle",
+        "block{b}/graph/continuation/sample",
+        "block{b}/graph/ppo/shuffle",
+        "block{b}/graph/bc_continue/shuffle"
+      ],
+      "seeds_consumed_by_draft": 0,
+      "uses_per_world": {
+        "demonstration": 1,
+        "fork_preflight": 5,
+        "prototype_preflight": 1,
+        "qualification": 2,
+        "test": 5,
+        "training": 2
+      }
+    },
+    "schema": "dynamic-candidate-prospective-binding-v1",
+    "scientific_execution_authorized": false,
+    "single_implementation_blocker": "No source-frozen contract-accepted dynamic-candidate GCN plus independent-critic runner implements this enumerated schedule.",
+    "source_bindings": {
+      "original_draft": {
+        "bytes": 19052,
+        "path": "specs/2026-10-01-adaptive-paper-delivery/pilot-budget-draft.json",
+        "sha256": "a5fc1b6c721dc1350b81099cade4b94faa6ce50c498d71e6276254dc8a451c92"
+      },
+      "reference_input_declarations": {
+        "bytes": 7738,
+        "path": "experiments/configs/candidate_return_pilot_20260930.json",
+        "sha256": "fe7d1cc4227e86c0d16360e6b285748e5b4be268c19270b9df29afc442eb5052"
+      }
+    },
+    "source_reading_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
+    "source_references": [
+      {
+        "lines": [
+          2317,
+          2349
+        ],
+        "path": "docs/patient_indexed_specimen_routing_locked_execution_plan.md",
+        "purpose": "failed_A1_closed_attempt"
+      },
+      {
+        "lines": [
+          95,
+          129
+        ],
+        "path": "specs/2026-10-01-rl-improvement-workflow/plan.md",
+        "purpose": "old_A3_gate_and_incomplete_subtotal"
+      },
+      {
+        "lines": [
+          32,
+          52
+        ],
+        "path": "specs/2026-10-01-rl-improvement-workflow/candidate-contract-readout.md",
+        "purpose": "new_dynamic_policy_not_yet_accepted"
+      },
+      {
+        "path": "specs/2026-10-01-rl-improvement-workflow/reward-decision.md",
+        "purpose": "retain_objective_no_clinical_margin"
+      },
+      {
+        "lines": [
+          68,
+          148
+        ],
+        "path": "experiments/configs/candidate_return_pilot_20260930.json",
+        "purpose": "init_and_continuation_schedule_conventions"
+      },
+      {
+        "lines": [
+          68,
+          160
+        ],
+        "path": "src/rl/candidate_imitation.py",
+        "purpose": "replacement_CE_and_epoch_Adam_counts"
+      },
+      {
+        "lines": [
+          75,
+          238
+        ],
+        "path": "src/rl/candidate_ppo_kernel.py",
+        "purpose": "old_joint_Adam_requires_new_separate_owner_implementation"
+      },
+      {
+        "lines": [
+          36,
+          90
+        ],
+        "path": "src/rl/candidate_ppo_objective.py",
+        "purpose": "normalization_and_fixed_target_losses"
+      },
+      {
+        "lines": [
+          50,
+          105
+        ],
+        "path": "src/models/candidate_policy.py",
+        "purpose": "current_widths_shared_encoder_and_dynamic_scorer"
+      },
+      {
+        "lines": [
+          48,
+          104
+        ],
+        "path": "src/rl/candidate_pilot_driver.py",
+        "purpose": "initializer_forks_and_serial_seals"
+      },
+      {
+        "lines": [
+          395,
+          415
+        ],
+        "path": "src/rl/candidate_pilot_driver.py",
+        "purpose": "reference_row_only_qualification"
+      },
+      {
+        "lines": [
+          19,
+          225
+        ],
+        "path": "src/rl/candidate_pilot_resources.py",
+        "purpose": "seeds_and_durable_nonrefundable_caps"
+      },
+      {
+        "lines": [
+          210,
+          317
+        ],
+        "path": "src/rl/candidate_pilot_campaign.py",
+        "purpose": "prototype_preflight_restore_collection_fitting"
+      },
+      {
+        "lines": [
+          377,
+          425
+        ],
+        "path": "src/rl/candidate_pilot_campaign.py",
+        "purpose": "evaluation_and_legacy_archive_path"
+      },
+      {
+        "lines": [
+          27,
+          159
+        ],
+        "path": "src/rl/candidate_patient_session.py",
+        "purpose": "full_MDL2_split_guards_and_charge_before_step"
+      }
+    ],
+    "status": "PROPOSED_BINDING_NOT_EXECUTABLE_NOT_AUTHORIZED",
+    "totals": {
+      "backend_layout_builds": 3,
+      "build_env_calls_max": 429,
+      "combined_environment_steps_max": 22296,
+      "combined_optimizer_calls_max": 1920,
+      "fresh_episode_builds": 426,
+      "global_elapsed_seconds": 21600,
+      "main_actor_adam_calls": 1536,
+      "main_critic_adam_calls": 384,
+      "main_environment_steps": 22224,
+      "main_full_episodes": 426,
+      "main_optimizer_calls": 1920,
+      "main_phase_seconds": 21300,
+      "main_trajectory_steps": 22152,
+      "mandatory_restore_clone_steps": 72,
+      "mandatory_restored_session_clones": 18,
+      "old_incomplete_continuation_plus_evaluation_steps": 19344,
+      "optional_environment_clones_max": 72,
+      "optional_environment_steps_max": 72,
+      "optional_seconds_max": 300,
+      "prospective_not_measured": true,
+      "unique_world_start_allocations": 168,
+      "unscheduled_reset_calls": 0
+    },
+    "unresolved_parts_of_that_blocker": [
+      "exact_model_initialization_preprocessing_parameter_counts_restore_schema",
+      "independent_actor_critic_Adam_ownership_and_type_contracts",
+      "greedy_qualification_session_and_own_path_competency_gate",
+      "graph_only_preflight_without_self_only_sibling_assumption",
+      "expanded_phase_owner_optional_call_ledgers_and_serial_job_manifest",
+      "project_local_only_archive_path_without_legacy_external_copy"
+    ]
+  },
+  "inherited_stream_manifest": {
+    "consumed": false,
+    "environment": {
+      "60": {
+        "demonstration": [
+          4292615209384789272390987701551110,
+          4292615209384789272390987701551111,
+          4292615209384789272390987701551112,
+          4292615209384789272390987701551113,
+          4292615209384789272390987701551114,
+          4292615209384789272390987701551115,
+          4292615209384789272390987701551116,
+          4292615209384789272390987701551117
+        ],
+        "fork_preflight": [
+          4292615209384789272390987701551107
+        ],
+        "prototype_preflight": [
+          4292615209384789272390987701551104
+        ],
+        "qualification": [
+          4292615209384789272390987701551134,
+          4292615209384789272390987701551135
+        ],
+        "test": [
+          4292615209384789272390987701551236,
+          4292615209384789272390987701551237,
+          4292615209384789272390987701551238,
+          4292615209384789272390987701551239,
+          4292615209384789272390987701551240,
+          4292615209384789272390987701551241,
+          4292615209384789272390987701551242,
+          4292615209384789272390987701551243,
+          4292615209384789272390987701551244,
+          4292615209384789272390987701551245,
+          4292615209384789272390987701551246,
+          4292615209384789272390987701551247
+        ],
+        "training": [
+          4292615209384789272390987701551140,
+          4292615209384789272390987701551141,
+          4292615209384789272390987701551142,
+          4292615209384789272390987701551143,
+          4292615209384789272390987701551144,
+          4292615209384789272390987701551145,
+          4292615209384789272390987701551146,
+          4292615209384789272390987701551147,
+          4292615209384789272390987701551148,
+          4292615209384789272390987701551149,
+          4292615209384789272390987701551150,
+          4292615209384789272390987701551151,
+          4292615209384789272390987701551152,
+          4292615209384789272390987701551153,
+          4292615209384789272390987701551154,
+          4292615209384789272390987701551155,
+          4292615209384789272390987701551156,
+          4292615209384789272390987701551157,
+          4292615209384789272390987701551158,
+          4292615209384789272390987701551159,
+          4292615209384789272390987701551160,
+          4292615209384789272390987701551161,
+          4292615209384789272390987701551162,
+          4292615209384789272390987701551163,
+          4292615209384789272390987701551164,
+          4292615209384789272390987701551165,
+          4292615209384789272390987701551166,
+          4292615209384789272390987701551167,
+          4292615209384789272390987701551168,
+          4292615209384789272390987701551169,
+          4292615209384789272390987701551170,
+          4292615209384789272390987701551171
+        ]
+      },
+      "61": {
+        "demonstration": [
+          4292615209384789272390987701551118,
+          4292615209384789272390987701551119,
+          4292615209384789272390987701551120,
+          4292615209384789272390987701551121,
+          4292615209384789272390987701551122,
+          4292615209384789272390987701551123,
+          4292615209384789272390987701551124,
+          4292615209384789272390987701551125
+        ],
+        "fork_preflight": [
+          4292615209384789272390987701551108
+        ],
+        "prototype_preflight": [
+          4292615209384789272390987701551105
+        ],
+        "qualification": [
+          4292615209384789272390987701551136,
+          4292615209384789272390987701551137
+        ],
+        "test": [
+          4292615209384789272390987701551248,
+          4292615209384789272390987701551249,
+          4292615209384789272390987701551250,
+          4292615209384789272390987701551251,
+          4292615209384789272390987701551252,
+          4292615209384789272390987701551253,
+          4292615209384789272390987701551254,
+          4292615209384789272390987701551255,
+          4292615209384789272390987701551256,
+          4292615209384789272390987701551257,
+          4292615209384789272390987701551258,
+          4292615209384789272390987701551259
+        ],
+        "training": [
+          4292615209384789272390987701551172,
+          4292615209384789272390987701551173,
+          4292615209384789272390987701551174,
+          4292615209384789272390987701551175,
+          4292615209384789272390987701551176,
+          4292615209384789272390987701551177,
+          4292615209384789272390987701551178,
+          4292615209384789272390987701551179,
+          4292615209384789272390987701551180,
+          4292615209384789272390987701551181,
+          4292615209384789272390987701551182,
+          4292615209384789272390987701551183,
+          4292615209384789272390987701551184,
+          4292615209384789272390987701551185,
+          4292615209384789272390987701551186,
+          4292615209384789272390987701551187,
+          4292615209384789272390987701551188,
+          4292615209384789272390987701551189,
+          4292615209384789272390987701551190,
+          4292615209384789272390987701551191,
+          4292615209384789272390987701551192,
+          4292615209384789272390987701551193,
+          4292615209384789272390987701551194,
+          4292615209384789272390987701551195,
+          4292615209384789272390987701551196,
+          4292615209384789272390987701551197,
+          4292615209384789272390987701551198,
+          4292615209384789272390987701551199,
+          4292615209384789272390987701551200,
+          4292615209384789272390987701551201,
+          4292615209384789272390987701551202,
+          4292615209384789272390987701551203
+        ]
+      },
+      "62": {
+        "demonstration": [
+          4292615209384789272390987701551126,
+          4292615209384789272390987701551127,
+          4292615209384789272390987701551128,
+          4292615209384789272390987701551129,
+          4292615209384789272390987701551130,
+          4292615209384789272390987701551131,
+          4292615209384789272390987701551132,
+          4292615209384789272390987701551133
+        ],
+        "fork_preflight": [
+          4292615209384789272390987701551109
+        ],
+        "prototype_preflight": [
+          4292615209384789272390987701551106
+        ],
+        "qualification": [
+          4292615209384789272390987701551138,
+          4292615209384789272390987701551139
+        ],
+        "test": [
+          4292615209384789272390987701551260,
+          4292615209384789272390987701551261,
+          4292615209384789272390987701551262,
+          4292615209384789272390987701551263,
+          4292615209384789272390987701551264,
+          4292615209384789272390987701551265,
+          4292615209384789272390987701551266,
+          4292615209384789272390987701551267,
+          4292615209384789272390987701551268,
+          4292615209384789272390987701551269,
+          4292615209384789272390987701551270,
+          4292615209384789272390987701551271
+        ],
+        "training": [
+          4292615209384789272390987701551204,
+          4292615209384789272390987701551205,
+          4292615209384789272390987701551206,
+          4292615209384789272390987701551207,
+          4292615209384789272390987701551208,
+          4292615209384789272390987701551209,
+          4292615209384789272390987701551210,
+          4292615209384789272390987701551211,
+          4292615209384789272390987701551212,
+          4292615209384789272390987701551213,
+          4292615209384789272390987701551214,
+          4292615209384789272390987701551215,
+          4292615209384789272390987701551216,
+          4292615209384789272390987701551217,
+          4292615209384789272390987701551218,
+          4292615209384789272390987701551219,
+          4292615209384789272390987701551220,
+          4292615209384789272390987701551221,
+          4292615209384789272390987701551222,
+          4292615209384789272390987701551223,
+          4292615209384789272390987701551224,
+          4292615209384789272390987701551225,
+          4292615209384789272390987701551226,
+          4292615209384789272390987701551227,
+          4292615209384789272390987701551228,
+          4292615209384789272390987701551229,
+          4292615209384789272390987701551230,
+          4292615209384789272390987701551231,
+          4292615209384789272390987701551232,
+          4292615209384789272390987701551233,
+          4292615209384789272390987701551234,
+          4292615209384789272390987701551235
+        ]
+      }
+    },
+    "episode_uses": 426,
+    "format": "dynamic-candidate-streams-v1",
+    "namespace": "APD-single-gcn-pilot-20261001-v1",
+    "neural": {
+      "analysis/bootstrap": 5103747212375785473,
+      "block60/graph/actor_initialization": 7819403969701993160,
+      "block60/graph/bc_continue/shuffle": 8756787725584291491,
+      "block60/graph/bc_init/shuffle": 2741230430591461175,
+      "block60/graph/continuation/sample": 6624574577826948621,
+      "block60/graph/critic_initialization": 6338074816435897415,
+      "block60/graph/ppo/shuffle": 2177572490553955914,
+      "block61/graph/actor_initialization": 856662503866453824,
+      "block61/graph/bc_continue/shuffle": 3641177858170851305,
+      "block61/graph/bc_init/shuffle": 797030382227154528,
+      "block61/graph/continuation/sample": 622153352024180762,
+      "block61/graph/critic_initialization": 9197241717086105297,
+      "block61/graph/ppo/shuffle": 361808487260132397,
+      "block62/graph/actor_initialization": 6394622027597111965,
+      "block62/graph/bc_continue/shuffle": 3123628019153982548,
+      "block62/graph/bc_init/shuffle": 1939921480986312122,
+      "block62/graph/continuation/sample": 3502594597173645040,
+      "block62/graph/critic_initialization": 308445679416715004,
+      "block62/graph/ppo/shuffle": 3089753171221186821
+    },
+    "scientific_execution_authorized": false,
+    "seed_freshness_verified": false,
+    "unique_worlds": 168,
+    "uses_per_world": {
+      "demonstration": 1,
+      "fork_preflight": 5,
+      "prototype_preflight": 1,
+      "qualification": 2,
+      "test": 5,
+      "training": 2
+    }
+  },
+  "inherited_runtime": {
+    "budget_clock": {
+      "api": "time.clock_gettime(time.CLOCK_MONOTONIC)",
+      "id": "posix-clock-monotonic-v1",
+      "resolution_seconds": 0.0000010000000000000002,
+      "scope": "same_host_same_boot_live_processes"
+    },
+    "default_dtype": "torch.float32",
+    "deterministic": true,
+    "device": "cpu",
+    "numpy": "2.0.2",
+    "package_entry_locks": {
+      "/Users/lizhaowei/GCN-RL Paper 2026/.venv/lib/python3.9/site-packages/numpy/__init__.py": "c09e25b58f6b2f8e2cb3c158168f902d447f8171e5ea6513c0aca41ecbda7c2b",
+      "/Users/lizhaowei/GCN-RL Paper 2026/.venv/lib/python3.9/site-packages/torch/__init__.py": "2f0deb66d5dff6b9c02a62832c3bf3824c2ee031c462a3afeb9ca170466da5bf"
+    },
+    "platform": "macOS-26.3-arm64-arm-64bit",
+    "python": "3.9.6 (default, Jan  9 2026, 11:03:41) \n[Clang 17.0.0 (clang-1700.6.4.2)]",
+    "python_executable": "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+    "torch": "2.8.0",
+    "torch_build": "PyTorch built with:\n  - GCC 4.2\n  - C++ Version: 201703\n  - clang 15.0.0\n  - OpenMP 201811\n  - LAPACK is enabled (usually provided by MKL)\n  - NNPACK is enabled\n  - CPU capability usage: NO AVX\n  - Build settings: BLAS_INFO=accelerate, BUILD_TYPE=Release, COMMIT_SHA=a1cb3cc05d46d198467bebbb6e8fba50a325d4e7, CXX_COMPILER=/usr/bin/c++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DLIBKINETO_NOXPUPTI=ON -DUSE_PYTORCH_QNNPACK -DAT_BUILD_ARM_VEC256_WITH_SLEEF -DUSE_XNNPACK -DUSE_PYTORCH_METAL_EXPORT -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -DUSE_COREML_DELEGATE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=braced-scalar-init -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wvla-extension -Wsuggest-override -Wnewline-eof -Winconsistent-missing-override -Winconsistent-missing-destructor-override -Wno-pass-failed -Wno-error=old-style-cast -Wconstant-conversion -Qunused-arguments -faligned-new -fno-math-errno -fno-trapping-math -Werror=format -DUSE_MPS -Wno-missing-braces, LAPACK_INFO=accelerate, TORCH_VERSION=2.8.0, USE_CUDA=OFF, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_EIGEN_FOR_BLAS=ON, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=OFF, USE_MKLDNN=OFF, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n",
+    "torch_interop_threads": 1,
+    "torch_threads": 1
+  },
+  "parameter_counts": {
+    "actor": 31346,
+    "critic": 28721,
+    "shared": 0,
+    "total": 60067
+  },
+  "reuse": {
+    "initializer_files": [
+      {
+        "block": 60,
+        "path": "results/dynamic_candidate_pilot_20261001/payload/initialization/block60/graph/final.pt",
+        "bytes": 532467,
+        "sha256": "0822665a503fdc825ca65183bc2293c4af21d6ef3d9b35b9c8fb2eb07cffecc3",
+        "qualified_kernel_sha256": "591eed7bcd6097bbdc5f96be2462c0c72016cda2f2e6eeea2ff262dbd3b47a3e",
+        "completed_actor_initialization_steps": 256
+      },
+      {
+        "block": 61,
+        "path": "results/dynamic_candidate_pilot_20261001/payload/initialization/block61/graph/final.pt",
+        "bytes": 532467,
+        "sha256": "5e302b42edac8bf9217a39164fab405ac5208ef485115bf8eda952caa017b852",
+        "qualified_kernel_sha256": "f70a5a13a62c8116fc09d58b41e2c7b63109cc0e79b46f18a7ce2f559f2e7c74",
+        "completed_actor_initialization_steps": 256
+      },
+      {
+        "block": 62,
+        "path": "results/dynamic_candidate_pilot_20261001/payload/initialization/block62/graph/final.pt",
+        "bytes": 532467,
+        "sha256": "100c456c2bdc84133389f59c1b4d24492229a85320c6eaed15f198967662b242",
+        "qualified_kernel_sha256": "c450ec0645468763764000b437725201b50598ca943d5cdb9b10fe146365d4ac",
+        "completed_actor_initialization_steps": 256
+      }
+    ],
+    "reference_input_files": [
+      {
+        "path": "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed60/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed60_pretrain.pt",
+        "bytes": 2515933,
+        "sha256": "2cc16c4208c0ace7370748695ee8191d54e8161bcb20cb16a8de494bfd12f675"
+      },
+      {
+        "path": "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed60/config.json",
+        "bytes": 15204,
+        "sha256": "24eedf3322ac27c099a19680f2513518e5414a05104e209efa19007e96352b37"
+      },
+      {
+        "path": "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed61/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed61_pretrain.pt",
+        "bytes": 2515933,
+        "sha256": "a875c3455b29c422216c02a85d7ae52277be32598e4b9442c241738554c1371a"
+      },
+      {
+        "path": "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed61/config.json",
+        "bytes": 15204,
+        "sha256": "507c1ed67c20820be60aaa72cdffb0e24512370318fec0637e991cf301949b97"
+      },
+      {
+        "path": "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed62/checkpoints/gcn_residual_mdl2_network_ddpg_afd_seed62_pretrain.pt",
+        "bytes": 2515933,
+        "sha256": "4a2fec7fd0ff1c3a58fbea1375418bc1fd3208a77fac55ef172df3a7d1cd784d"
+      },
+      {
+        "path": "results/frozen_baseline_rebuild_20260929/payload/training/frozen_baseline_rebuild_20260929/gcn_residual_mdl2_network_ddpg_afd/seed62/config.json",
+        "bytes": 15204,
+        "sha256": "d4013e4ec8eda9c763aefb1a1c3363fc8c8dafcc05ea9d0b04fb5066801fd76c"
+      }
+    ],
+    "receipt_files": [
+      {
+        "path": "specs/2026-10-01-adaptive-paper-delivery/pilot-protocol.md",
+        "bytes": 7967,
+        "sha256": "4f17ff2efcf5e3facac9d4d0af392ee5573f4077e3d965ebcb3059903d1fb0c3"
+      },
+      {
+        "path": "specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json",
+        "bytes": 319610,
+        "sha256": "8f4cb4f581855851f53d42d9127a7023f14290b608c6e67774b364650c1169af"
+      },
+      {
+        "path": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-frozen.json",
+        "bytes": 91507,
+        "sha256": "d72a95c05c95b0522c3327fc2ca11cc09d8d8ea435624ce08e4da3ca585ca2c8"
+      },
+      {
+        "path": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-authorization.json",
+        "bytes": 1426,
+        "sha256": "c08f58c87ced55b867c1803e79c43051c15115d9aff5cdb8091938742292dbb1"
+      },
+      {
+        "path": "specs/2026-10-01-adaptive-paper-delivery/execution-authorization.json",
+        "bytes": 1357,
+        "sha256": "3c5448e0b8164618c8ae8b5eb5cbe6312cc9ca261680671fec30e0fe009324ea"
+      },
+      {
+        "path": "specs/2026-10-01-adaptive-paper-delivery/terminal-preservation.json",
+        "bytes": 904,
+        "sha256": "a2ff60a919925979ac31272f575a941bb7859a48d93cf47575f9dc948351989e"
+      },
+      {
+        "path": "reports/2026-10-01-s1-saved-qualification/readout.md",
+        "bytes": 5666,
+        "sha256": "56dab8fa395a50ad272053a6970ec734569cd9e1171ad8005fa571feaedd99cc"
+      },
+      {
+        "path": "reports/2026-10-01-s1-saved-readback/readout.json",
+        "bytes": 177568,
+        "sha256": "ccd6186ee9bdea9a1b1baa75bedb7d5927a9debe8d99d8d53d0ed0d31bc152b0"
+      },
+      {
+        "path": "results/dynamic_candidate_pilot_20261001/launcher/terminal.json",
+        "bytes": 1025,
+        "sha256": "c0b69a18e3ea34ec5a1fa6287f6f21e01491c598142eb6ff5bbe1aa8b950c00b"
+      },
+      {
+        "path": "results/dynamic_candidate_pilot_20261001/launcher/budget.jsonl",
+        "bytes": 1523232,
+        "sha256": "52a4b5ccd714edd9ec172533d6e12a31c6291af9960e0b43a15873a7923c29be"
+      },
+      {
+        "path": "results/dynamic_candidate_pilot_20261001/payload/locks/worktree/specs/2026-10-01-adaptive-paper-delivery/frozen-proposal/proposal.json",
+        "bytes": 319610,
+        "sha256": "8f4cb4f581855851f53d42d9127a7023f14290b608c6e67774b364650c1169af"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/qualification.json",
+        "bytes": 34656,
+        "sha256": "f1b271a72b4bfa1d0b9d16deb3651af60f1d56aedbf4dc541ded0f133257b9b6"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/terminal.json",
+        "bytes": 1055,
+        "sha256": "5617d5fc053efcea92073f18f2a0d46e7b4efd1f4925bf455c770dcb3ce28906"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/debits.jsonl",
+        "bytes": 149194,
+        "sha256": "518264f296dcd7e79d14417a4662ec497e6eabd1566f740df280b6a24b05700d"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/claim.json",
+        "bytes": 369,
+        "sha256": "7ab6f0fb580cbf613c06f6c04537ba7fec92bd25772ef3ef6fdd3faa552a3ef6"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/child-claim.json",
+        "bytes": 36,
+        "sha256": "180e6b2696041af8d720c1cb23b8e1b32ab0e9f528722c2532d6c8411a4e97b6"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/binding.json",
+        "bytes": 97081,
+        "sha256": "49e47acfe92aa05e55b6d837b1b7152e817ca05624d4265b71ca490b630bc433"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/supervisor.json",
+        "bytes": 799,
+        "sha256": "06030f0cff3b859f4ebd8e92cba3b8d1069b08b602de2377b13af8980e1ce2e1"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/paths/block60-initializer_greedy.json",
+        "bytes": 200,
+        "sha256": "1ac176af9e2238e97f6412f1636d1ad675ff910778389e795040e91381ec4363"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/paths/block60-r4.json",
+        "bytes": 200,
+        "sha256": "1ac176af9e2238e97f6412f1636d1ad675ff910778389e795040e91381ec4363"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/paths/block61-initializer_greedy.json",
+        "bytes": 200,
+        "sha256": "0058e6eef6fb26fd2a1928b78b41650e9de2e5f54ebccc9729cb87fa93aa307d"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/paths/block61-r4.json",
+        "bytes": 200,
+        "sha256": "0058e6eef6fb26fd2a1928b78b41650e9de2e5f54ebccc9729cb87fa93aa307d"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/paths/block62-initializer_greedy.json",
+        "bytes": 200,
+        "sha256": "341828ec4fce96fd6c6599e672f04a00cad2f7efe98fb5371c86fd729506b1ce"
+      },
+      {
+        "path": "results/dynamic_candidate_saved_qualification_20261001/paths/block62-r4.json",
+        "bytes": 200,
+        "sha256": "341828ec4fce96fd6c6599e672f04a00cad2f7efe98fb5371c86fd729506b1ce"
+      }
+    ],
+    "qualification": {
+      "status": "completed_all_three_blocks_passed",
+      "result_path": "results/dynamic_candidate_saved_qualification_20261001/qualification.json",
+      "terminal_path": "results/dynamic_candidate_saved_qualification_20261001/terminal.json",
+      "packet_content_sha256": "0f46307d6ecca4f3b317fe8a18b88c6291af5b6b866c86c0764be209475e2afb",
+      "last_debit_sha256": "1e6c240e5a32782c08f272b7e818d2cda360d91c0a7bb6827acae5edcc3fc632",
+      "original_thresholds_retained": true,
+      "qualification_rescorings_allowed": 0,
+      "qualification_episode_builds_allowed": 0,
+      "reuse_original_gate_verdict_only": true,
+      "raw_outcomes_reused_not_new_performance": true
+    },
+    "collection_checkpoint": {
+      "bytes": 35213709,
+      "path": "results/dynamic_candidate_pilot_20261001/launcher/recovery/000027-collection-block-complete.pt",
+      "sha256": "4fbd06f5a2ffb66c094c03387053e1a20ead10e2ae8b18882a4a57b6742c7ea6",
+      "role": "provenance_only_already_used_by_saved_qualification",
+      "new_loads_allowed": 0,
+      "rehash_status": "hash_in_qualified_input_receipt_not_rehashed_in_this_preparation"
+    },
+    "receipt_validation": "Validate bound file bytes, original source/config identity, terminal completion, all three passed verdicts and exact initializer kernel digests; not a new scientific qualification gate or 624-forward rerun.",
+    "old_attempts": {
+      "original_s1": "terminal_failed_closed",
+      "saved_qualification": "completed_single_attempt_consumed"
+    },
+    "hash_verification": "Initializer files, six R4 inputs, listed receipt files and inherited core source records rehashed as bytes in this preparation. No tensor deserialization."
+  },
+  "stream_reuse": {
+    "namespace": "APD-single-gcn-pilot-20261001-v1",
+    "new_namespace": false,
+    "new_seed_draws": 0,
+    "integer_encoding": "Explicit seed inventories below use base-10 strings to prevent IEEE-754 loss. Parse directly to arbitrary-precision integers and compare to inherited_stream_manifest; never round through float.",
+    "environment": {
+      "60": {
+        "fork_preflight": [
+          "4292615209384789272390987701551107"
+        ],
+        "test": [
+          "4292615209384789272390987701551236",
+          "4292615209384789272390987701551237",
+          "4292615209384789272390987701551238",
+          "4292615209384789272390987701551239",
+          "4292615209384789272390987701551240",
+          "4292615209384789272390987701551241",
+          "4292615209384789272390987701551242",
+          "4292615209384789272390987701551243",
+          "4292615209384789272390987701551244",
+          "4292615209384789272390987701551245",
+          "4292615209384789272390987701551246",
+          "4292615209384789272390987701551247"
+        ],
+        "training": [
+          "4292615209384789272390987701551140",
+          "4292615209384789272390987701551141",
+          "4292615209384789272390987701551142",
+          "4292615209384789272390987701551143",
+          "4292615209384789272390987701551144",
+          "4292615209384789272390987701551145",
+          "4292615209384789272390987701551146",
+          "4292615209384789272390987701551147",
+          "4292615209384789272390987701551148",
+          "4292615209384789272390987701551149",
+          "4292615209384789272390987701551150",
+          "4292615209384789272390987701551151",
+          "4292615209384789272390987701551152",
+          "4292615209384789272390987701551153",
+          "4292615209384789272390987701551154",
+          "4292615209384789272390987701551155",
+          "4292615209384789272390987701551156",
+          "4292615209384789272390987701551157",
+          "4292615209384789272390987701551158",
+          "4292615209384789272390987701551159",
+          "4292615209384789272390987701551160",
+          "4292615209384789272390987701551161",
+          "4292615209384789272390987701551162",
+          "4292615209384789272390987701551163",
+          "4292615209384789272390987701551164",
+          "4292615209384789272390987701551165",
+          "4292615209384789272390987701551166",
+          "4292615209384789272390987701551167",
+          "4292615209384789272390987701551168",
+          "4292615209384789272390987701551169",
+          "4292615209384789272390987701551170",
+          "4292615209384789272390987701551171"
+        ]
+      },
+      "61": {
+        "fork_preflight": [
+          "4292615209384789272390987701551108"
+        ],
+        "test": [
+          "4292615209384789272390987701551248",
+          "4292615209384789272390987701551249",
+          "4292615209384789272390987701551250",
+          "4292615209384789272390987701551251",
+          "4292615209384789272390987701551252",
+          "4292615209384789272390987701551253",
+          "4292615209384789272390987701551254",
+          "4292615209384789272390987701551255",
+          "4292615209384789272390987701551256",
+          "4292615209384789272390987701551257",
+          "4292615209384789272390987701551258",
+          "4292615209384789272390987701551259"
+        ],
+        "training": [
+          "4292615209384789272390987701551172",
+          "4292615209384789272390987701551173",
+          "4292615209384789272390987701551174",
+          "4292615209384789272390987701551175",
+          "4292615209384789272390987701551176",
+          "4292615209384789272390987701551177",
+          "4292615209384789272390987701551178",
+          "4292615209384789272390987701551179",
+          "4292615209384789272390987701551180",
+          "4292615209384789272390987701551181",
+          "4292615209384789272390987701551182",
+          "4292615209384789272390987701551183",
+          "4292615209384789272390987701551184",
+          "4292615209384789272390987701551185",
+          "4292615209384789272390987701551186",
+          "4292615209384789272390987701551187",
+          "4292615209384789272390987701551188",
+          "4292615209384789272390987701551189",
+          "4292615209384789272390987701551190",
+          "4292615209384789272390987701551191",
+          "4292615209384789272390987701551192",
+          "4292615209384789272390987701551193",
+          "4292615209384789272390987701551194",
+          "4292615209384789272390987701551195",
+          "4292615209384789272390987701551196",
+          "4292615209384789272390987701551197",
+          "4292615209384789272390987701551198",
+          "4292615209384789272390987701551199",
+          "4292615209384789272390987701551200",
+          "4292615209384789272390987701551201",
+          "4292615209384789272390987701551202",
+          "4292615209384789272390987701551203"
+        ]
+      },
+      "62": {
+        "fork_preflight": [
+          "4292615209384789272390987701551109"
+        ],
+        "test": [
+          "4292615209384789272390987701551260",
+          "4292615209384789272390987701551261",
+          "4292615209384789272390987701551262",
+          "4292615209384789272390987701551263",
+          "4292615209384789272390987701551264",
+          "4292615209384789272390987701551265",
+          "4292615209384789272390987701551266",
+          "4292615209384789272390987701551267",
+          "4292615209384789272390987701551268",
+          "4292615209384789272390987701551269",
+          "4292615209384789272390987701551270",
+          "4292615209384789272390987701551271"
+        ],
+        "training": [
+          "4292615209384789272390987701551204",
+          "4292615209384789272390987701551205",
+          "4292615209384789272390987701551206",
+          "4292615209384789272390987701551207",
+          "4292615209384789272390987701551208",
+          "4292615209384789272390987701551209",
+          "4292615209384789272390987701551210",
+          "4292615209384789272390987701551211",
+          "4292615209384789272390987701551212",
+          "4292615209384789272390987701551213",
+          "4292615209384789272390987701551214",
+          "4292615209384789272390987701551215",
+          "4292615209384789272390987701551216",
+          "4292615209384789272390987701551217",
+          "4292615209384789272390987701551218",
+          "4292615209384789272390987701551219",
+          "4292615209384789272390987701551220",
+          "4292615209384789272390987701551221",
+          "4292615209384789272390987701551222",
+          "4292615209384789272390987701551223",
+          "4292615209384789272390987701551224",
+          "4292615209384789272390987701551225",
+          "4292615209384789272390987701551226",
+          "4292615209384789272390987701551227",
+          "4292615209384789272390987701551228",
+          "4292615209384789272390987701551229",
+          "4292615209384789272390987701551230",
+          "4292615209384789272390987701551231",
+          "4292615209384789272390987701551232",
+          "4292615209384789272390987701551233",
+          "4292615209384789272390987701551234",
+          "4292615209384789272390987701551235"
+        ]
+      }
+    },
+    "environment_ordinal_ranges": {
+      "60": {
+        "fork_preflight": [
+          3,
+          3
+        ],
+        "training": [
+          36,
+          67
+        ],
+        "test": [
+          132,
+          143
+        ]
+      },
+      "61": {
+        "fork_preflight": [
+          4,
+          4
+        ],
+        "training": [
+          68,
+          99
+        ],
+        "test": [
+          144,
+          155
+        ]
+      },
+      "62": {
+        "fork_preflight": [
+          5,
+          5
+        ],
+        "training": [
+          100,
+          131
+        ],
+        "test": [
+          156,
+          167
+        ]
+      }
+    },
+    "uses_per_world": {
+      "fork_preflight": 5,
+      "training": 2,
+      "test": 5
+    },
+    "unique_worlds": 135,
+    "controller_episode_uses": 387,
+    "excluded_scientific_episode_roles": [
+      "prototype_preflight",
+      "demonstration",
+      "qualification"
+    ],
+    "layout_only_original_prototype_seeds": {
+      "60": "4292615209384789272390987701551104",
+      "61": "4292615209384789272390987701551105",
+      "62": "4292615209384789272390987701551106"
+    },
+    "layout_seed_use": "One new zero-step layout construction per block as required by inherited backend.prepare; NOT another prototype episode, fresh world claim, reward observation or training record.",
+    "continuation_and_analysis_neural_seeds": {
+      "analysis/bootstrap": "5103747212375785473",
+      "block60/graph/bc_continue/shuffle": "8756787725584291491",
+      "block60/graph/continuation/sample": "6624574577826948621",
+      "block60/graph/ppo/shuffle": "2177572490553955914",
+      "block61/graph/bc_continue/shuffle": "3641177858170851305",
+      "block61/graph/continuation/sample": "622153352024180762",
+      "block61/graph/ppo/shuffle": "361808487260132397",
+      "block62/graph/bc_continue/shuffle": "3123628019153982548",
+      "block62/graph/continuation/sample": "3502594597173645040",
+      "block62/graph/ppo/shuffle": "3089753171221186821"
+    },
+    "construction_only_neural_seeds": {
+      "block60/graph/actor_initialization": "7819403969701993160",
+      "block60/graph/bc_init/shuffle": "2741230430591461175",
+      "block60/graph/critic_initialization": "6338074816435897415",
+      "block61/graph/actor_initialization": "856662503866453824",
+      "block61/graph/bc_init/shuffle": "797030382227154528",
+      "block61/graph/critic_initialization": "9197241717086105297",
+      "block62/graph/actor_initialization": "6394622027597111965",
+      "block62/graph/bc_init/shuffle": "1939921480986312122",
+      "block62/graph/critic_initialization": "308445679416715004"
+    },
+    "neural_seed_scope": "Retain exact original fork sampler/shuffle/bootstrap seeds. Template construction and discarded preflight copies may have initialized or drawn related RNGs previously; do not claim all neural scalar seeds are globally unused. Fresh forks use the original declared starts; no initializer retraining or shuffled demonstrations.",
+    "preflight_sampling": "Disposable copies only; never advance live training RNG from preflight or append preflight rows to learner buffers.",
+    "pairing": "Same assigned world starts, not guaranteed event-level common randomness after different actions.",
+    "audit": {
+      "method": "stdlib JSON/header/ledger inspection and byte hashing; no project imports or checkpoint deserialization",
+      "scope": [
+        "results/dynamic_candidate_pilot_20261001/",
+        "results/dynamic_candidate_saved_qualification_20261001/",
+        "reports/2026-10-01-s1-saved-readback/readout.json"
+      ],
+      "header_count": 39,
+      "headers_match_saved_readout": true,
+      "header_records_sha256": "38ac36b2638ea336d04fbf69e1600239b1dc98577a276bbcd9ceaf4783a88c25",
+      "historical_unique_world_starts": 33,
+      "remaining_unique_world_starts": 135,
+      "overlap_count": 0,
+      "split_counts": {
+        "demonstration": 24,
+        "preflight": 3,
+        "qualification": 12
+      },
+      "begun_sections": [
+        "runtime_input_binding",
+        "prototype_preflight",
+        "initialization_collection",
+        "initialization_fit/block60",
+        "initialization_fit/block61",
+        "initialization_fit/block62",
+        "qualification"
+      ],
+      "closed_sections": [
+        "runtime_input_binding",
+        "prototype_preflight",
+        "initialization_collection",
+        "initialization_fit/block60",
+        "initialization_fit/block61",
+        "initialization_fit/block62"
+      ],
+      "last_budget_sequence": 2821,
+      "last_budget_sha256": "73cba36d83d41b537e9826362040a067f869361dd0d163f8c2bb218b6b9d7ad9",
+      "ledger_records": 2822,
+      "absent_paths": [
+        "results/dynamic_candidate_pilot_20261001/payload/preflight/fork",
+        "results/dynamic_candidate_pilot_20261001/payload/episodes/preflight/fork",
+        "results/dynamic_candidate_pilot_20261001/payload/episodes/training",
+        "results/dynamic_candidate_pilot_20261001/payload/episodes/evaluation",
+        "results/dynamic_candidate_pilot_20261001/payload/models",
+        "results/dynamic_candidate_pilot_20261001/payload/model-seals.json"
+      ],
+      "new_root_absent": true,
+      "historical_receipt_chain_revalidated_here": false,
+      "qualification_rescored": false
+    },
+    "revalidation_before_admission": "Recheck bound receipt hashes and scoped absence of original fork/training/test outputs plus new-root exclusivity before any load or build. Reject any newly discovered consumption; no replacement namespace, seeds or extra audit experiment.",
+    "audit_scope_limit": "Unopened in the inspected original S1 and saved-qualification evidence roots; not a new repository-wide or external universal freshness claim."
+  },
+  "execution_budget": {
+    "derivation": {
+      "source": "inheritance.original_proposal#/scientific_config/phase_budgets",
+      "excluded_phases": [
+        "prototype_preflight",
+        "initialization_collection",
+        "initialization_fit",
+        "qualification"
+      ],
+      "retained_phase_seconds_unchanged": true,
+      "original_episode_cap": 426,
+      "excluded_episodes": 39,
+      "original_trajectory_steps": 22152,
+      "excluded_trajectory_steps": 2028,
+      "original_clone_steps": 72,
+      "excluded_clone_steps": 12,
+      "original_actor_calls": 1536,
+      "excluded_actor_calls": 768,
+      "original_critic_calls": 384,
+      "excluded_critic_calls": 0,
+      "original_phase_seconds": 21300,
+      "excluded_phase_seconds": 4200,
+      "original_global_seconds": 21600,
+      "new_global_formula": "21300 - (600+900+1800+900) + 300 = 17400; independent new cap, not remaining old clock",
+      "episode_formula": "3*5 + 3*2*32 + 3*5*12 = 387",
+      "environment_formula": "387*52 + 3*5*4 = 20184",
+      "optimizer_formula": "3*(128+128+128) = 1152"
+    },
+    "phase_budgets": [
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "runtime_input_binding",
+        "mandatory_clone_steps": 0,
+        "seconds": 600,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 15,
+        "id": "same_start_preflight",
+        "mandatory_clone_steps": 60,
+        "seconds": 1200,
+        "trajectory_steps": 780
+      },
+      {
+        "actor_adam_calls": 384,
+        "critic_adam_calls": 384,
+        "episodes": 96,
+        "id": "ppo_continuation",
+        "mandatory_clone_steps": 0,
+        "seconds": 4500,
+        "trajectory_steps": 4992
+      },
+      {
+        "actor_adam_calls": 384,
+        "critic_adam_calls": 0,
+        "episodes": 96,
+        "id": "bc_continuation",
+        "mandatory_clone_steps": 0,
+        "seconds": 2700,
+        "trajectory_steps": 4992
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "all_model_seal",
+        "mandatory_clone_steps": 0,
+        "seconds": 300,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 180,
+        "id": "final_evaluation",
+        "mandatory_clone_steps": 0,
+        "seconds": 4500,
+        "trajectory_steps": 9360
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "saved_data_verification_analysis",
+        "mandatory_clone_steps": 0,
+        "seconds": 1200,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "local_archive_verification",
+        "mandatory_clone_steps": 0,
+        "seconds": 1200,
+        "trajectory_steps": 0
+      },
+      {
+        "actor_adam_calls": 0,
+        "critic_adam_calls": 0,
+        "episodes": 0,
+        "id": "supervisor_dispatch_terminal_closure",
+        "mandatory_clone_steps": 0,
+        "seconds": 900,
+        "trajectory_steps": 0
+      }
+    ],
+    "totals": {
+      "full_episodes": 387,
+      "trajectory_steps": 20124,
+      "mandatory_clone_steps": 60,
+      "environment_step_calls": 20184,
+      "actor_optimizer_calls": 768,
+      "critic_optimizer_calls": 384,
+      "optimizer_step_calls": 1152,
+      "phase_seconds": 17100,
+      "global_elapsed_seconds": 17400,
+      "global_minutes": 290,
+      "nontransferable_global_slack_seconds": 300,
+      "episode_environment_builds": 387,
+      "layout_environment_builds": 3,
+      "environment_builds_max": 390,
+      "restored_session_clones": 15,
+      "historical_initializer_checkpoint_loads": 3,
+      "historical_r4_checkpoint_loads": 3,
+      "historical_checkpoint_loads_max": 6,
+      "saved_test_envelope_reads": 180,
+      "saved_preflight_envelope_reads": 15,
+      "saved_envelope_reads_max": 195,
+      "unique_remaining_world_starts": 135,
+      "unscheduled_reset_calls": 0,
+      "optional_counterfactual_steps": 0,
+      "qualification_rescorings": 0,
+      "new_initialization_optimizer_calls": 0
+    },
+    "owner_caps": {
+      "runtime_input_binding": {
+        "seconds": 600,
+        "time_scope": "one aggregate retained section shared by startup, input/runtime binding, all loads, layout builds, initializer restore validation and forks; no separate additive allowance",
+        "per_block_historical_initializer_loads": 1,
+        "per_block_historical_r4_loads": 1,
+        "per_block_layout_builds": 1,
+        "per_block_same_start_model_forks": 3,
+        "optimizer_step_calls": 0,
+        "environment_step_calls": 0,
+        "qualification_forward_calls": 0
+      },
+      "same_start_preflight": {
+        "seconds": 1200,
+        "time_scope": "one inherited aggregate section, no invented per-block 400-second limit",
+        "per_block_episodes": 5,
+        "per_block_trajectory_steps": 260,
+        "per_block_clone_steps": 20,
+        "per_block_environment_step_calls": 280,
+        "per_block_restore_envelope_reads": 5,
+        "per_block_greedy_comparison_contexts": 52,
+        "greedy_policies_compared_per_context": 3,
+        "optimizer_step_calls": 0
+      },
+      "ppo_each_block": {
+        "actor_adam_calls": 128,
+        "critic_adam_calls": 128,
+        "environment_steps": 1664,
+        "seconds": 1500
+      },
+      "bc_each_block": {
+        "actor_adam_calls": 128,
+        "critic_adam_calls": 0,
+        "environment_steps": 1664,
+        "seconds": 900
+      },
+      "evaluation_each_controller_each_block": {
+        "environment_steps": 624,
+        "optimizer_calls": 0,
+        "seconds": 300
+      }
+    },
+    "load_admission": {
+      "mechanism": "Separate durable nonrefundable operation admission ledger, integrated with active phase and same monotonic deadline; debit immediately before each actual historical checkpoint load or environment build",
+      "historical_checkpoint_loads_total": 6,
+      "per_block_total": 2,
+      "initializer": 3,
+      "r4": 3,
+      "phase": "runtime_input_binding",
+      "qual_collection_checkpoint": 0,
+      "additional_historical_reload": 0,
+      "failed_load_consumes_slot": true,
+      "reads_not_historical_loads": {
+        "preflight_midpoint_envelope_reads": 15,
+        "evaluation_sealed_owner_envelope_reads": 180,
+        "total": 195
+      },
+      "envelope_read_policy": "Existing retained methods only, evidenced by the existing preflight midpoint paths/restore raw evidence and evaluation sealed header/check receipts under their phase caps. No dedicated extra read counter, repeated audit loop or new gate; no extra allowance or hidden restoration/selection",
+      "dedicated_envelope_read_counter_required": false,
+      "receipt_only_json_reads": "Subject to existing phase/global deadlines; not tensor loads",
+      "episode_builds_max": 387,
+      "layout_builds_max": 3,
+      "all_environment_builds_max": 390,
+      "new_gate": false
+    },
+    "construction_policy": "All admitted future model construction must serve restoration of exact three saved initializers or the nine mandatory same-start forks; no alternate initialization, selection, warmup or fit. Temporary constructor RNG is restored/isolated, and full saved initializer identity is checked before forking.",
+    "numeric_operation_policy": "Debit trajectory, clone, actor and critic calls before execution; durable counters survive failure and cannot be refunded/restored from checkpoints. Zero extra scientific calls in binding, seal, verification, archive or closure.",
+    "clocks": {
+      "api": "time.clock_gettime(time.CLOCK_MONOTONIC)",
+      "clock_id": "posix-clock-monotonic-v1",
+      "origin": "outer supervisor before binding, package imports, hashing and numerical child dispatch",
+      "startup_and_binding_seconds": 600,
+      "global_seconds": 17400,
+      "phase_seconds": 17100,
+      "unassigned_global_slack_seconds": 300,
+      "slack_funds_extra_work": false,
+      "phase_scope_global_enforced": true,
+      "deadline_before_forward_backward_restore_load_build": true,
+      "external_same_host_watchdog_required": true,
+      "poll_seconds": 0.1,
+      "termination_grace_seconds": 1,
+      "grace_is_not_execution_allowance": true,
+      "all_setup_inference_validation_io_preservation_included": true,
+      "phase_transfer": false,
+      "refund": false,
+      "timeout_result": "terminal failure; report measured polling/termination/preservation overrun and incomplete evidence, never success or retry"
+    }
+  },
+  "budget_plan": {
+    "format": "dynamic-candidate-budget-plan-v1",
+    "draft_sha256": "935b8a655f2350d8758fd73a033feca609f254d3749367fda4ce0a99747a6639",
+    "limits": {
+      "trajectory": 20124,
+      "clone": 60,
+      "actor": 768,
+      "critic": 384,
+      "seconds": 17400
+    },
+    "phases": {
+      "runtime_input_binding": {
+        "trajectory": 0,
+        "clone": 0,
+        "actor": 0,
+        "critic": 0,
+        "seconds": 600
+      },
+      "same_start_preflight": {
+        "trajectory": 780,
+        "clone": 60,
+        "actor": 0,
+        "critic": 0,
+        "seconds": 1200
+      },
+      "ppo_continuation": {
+        "trajectory": 4992,
+        "clone": 0,
+        "actor": 384,
+        "critic": 384,
+        "seconds": 4500
+      },
+      "bc_continuation": {
+        "trajectory": 4992,
+        "clone": 0,
+        "actor": 384,
+        "critic": 0,
+        "seconds": 2700
+      },
+      "all_model_seal": {
+        "trajectory": 0,
+        "clone": 0,
+        "actor": 0,
+        "critic": 0,
+        "seconds": 300
+      },
+      "final_evaluation": {
+        "trajectory": 9360,
+        "clone": 0,
+        "actor": 0,
+        "critic": 0,
+        "seconds": 4500
+      },
+      "saved_data_verification_analysis": {
+        "trajectory": 0,
+        "clone": 0,
+        "actor": 0,
+        "critic": 0,
+        "seconds": 1200
+      },
+      "local_archive_verification": {
+        "trajectory": 0,
+        "clone": 0,
+        "actor": 0,
+        "critic": 0,
+        "seconds": 1200
+      },
+      "supervisor_dispatch_terminal_closure": {
+        "trajectory": 0,
+        "clone": 0,
+        "actor": 0,
+        "critic": 0,
+        "seconds": 900
+      }
+    },
+    "sections": {
+      "all_model_seal": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "all_model_seal",
+        "seconds": 300,
+        "trajectory": 0
+      },
+      "bc_continuation/block60": {
+        "actor": 128,
+        "clone": 0,
+        "critic": 0,
+        "phase": "bc_continuation",
+        "seconds": 900,
+        "trajectory": 1664
+      },
+      "bc_continuation/block61": {
+        "actor": 128,
+        "clone": 0,
+        "critic": 0,
+        "phase": "bc_continuation",
+        "seconds": 900,
+        "trajectory": 1664
+      },
+      "bc_continuation/block62": {
+        "actor": 128,
+        "clone": 0,
+        "critic": 0,
+        "phase": "bc_continuation",
+        "seconds": 900,
+        "trajectory": 1664
+      },
+      "final_evaluation/block60/full_mdl2": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block60/own_bc_continue": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block60/own_frozen": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block60/own_ppo": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block60/r4": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block61/full_mdl2": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block61/own_bc_continue": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block61/own_frozen": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block61/own_ppo": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block61/r4": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block62/full_mdl2": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block62/own_bc_continue": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block62/own_frozen": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block62/own_ppo": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "final_evaluation/block62/r4": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "final_evaluation",
+        "seconds": 300,
+        "trajectory": 624
+      },
+      "local_archive_verification": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "local_archive_verification",
+        "seconds": 1200,
+        "trajectory": 0
+      },
+      "ppo_continuation/block60": {
+        "actor": 128,
+        "clone": 0,
+        "critic": 128,
+        "phase": "ppo_continuation",
+        "seconds": 1500,
+        "trajectory": 1664
+      },
+      "ppo_continuation/block61": {
+        "actor": 128,
+        "clone": 0,
+        "critic": 128,
+        "phase": "ppo_continuation",
+        "seconds": 1500,
+        "trajectory": 1664
+      },
+      "ppo_continuation/block62": {
+        "actor": 128,
+        "clone": 0,
+        "critic": 128,
+        "phase": "ppo_continuation",
+        "seconds": 1500,
+        "trajectory": 1664
+      },
+      "runtime_input_binding": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "runtime_input_binding",
+        "seconds": 600,
+        "trajectory": 0
+      },
+      "same_start_preflight": {
+        "actor": 0,
+        "clone": 60,
+        "critic": 0,
+        "phase": "same_start_preflight",
+        "seconds": 1200,
+        "trajectory": 780
+      },
+      "saved_data_verification_analysis": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "saved_data_verification_analysis",
+        "seconds": 1200,
+        "trajectory": 0
+      },
+      "supervisor_dispatch_terminal_closure": {
+        "actor": 0,
+        "clone": 0,
+        "critic": 0,
+        "phase": "supervisor_dispatch_terminal_closure",
+        "seconds": 900,
+        "trajectory": 0
+      }
+    }
+  },
+  "implementation_contract": {
+    "design": "New additive campaign with independent constructor, sequence and budget; preserve unchanged original_config and derive an effective config changing only phase_budgets, totals and recovery metadata for the new accounting/387-row verification. Reuse unchanged inherited core methods for retained work only.",
+    "forbidden_reuse": [
+      "old constructor's full job schedule",
+      "old campaign.advance from failed cursor",
+      "old recovery checkpoint as new budget or sequence",
+      "old original 426-episode totals in new verifier"
+    ],
+    "serial_job_order": [
+      "runtime_input_binding",
+      "same_start_preflight",
+      "ppo_continuation/block60",
+      "ppo_continuation/block61",
+      "ppo_continuation/block62",
+      "bc_continuation/block60",
+      "bc_continuation/block61",
+      "bc_continuation/block62",
+      "all_model_seal",
+      "final_evaluation/block60/own_frozen",
+      "final_evaluation/block60/own_ppo",
+      "final_evaluation/block60/own_bc_continue",
+      "final_evaluation/block60/r4",
+      "final_evaluation/block60/full_mdl2",
+      "final_evaluation/block61/own_frozen",
+      "final_evaluation/block61/own_ppo",
+      "final_evaluation/block61/own_bc_continue",
+      "final_evaluation/block61/r4",
+      "final_evaluation/block61/full_mdl2",
+      "final_evaluation/block62/own_frozen",
+      "final_evaluation/block62/own_ppo",
+      "final_evaluation/block62/own_bc_continue",
+      "final_evaluation/block62/r4",
+      "final_evaluation/block62/full_mdl2",
+      "saved_data_verification_analysis",
+      "local_archive_verification",
+      "supervisor_dispatch_terminal_closure"
+    ],
+    "binding": "Validate qualified evidence and file hashes; prepare block layouts/R4 once; admit/load exact initializer once per block; validate full kernel digest and 256 completed initializer actor steps; fork same policy/critic/buffers into own_frozen, own_ppo, own_bc_continue with fresh continuation optimizers and original sampling starts. Persist new binding/fork receipts.",
+    "same_start_preflight": "Run all five controllers on one original fork_preflight world per block; clone at t=26 and replay exactly four calls per controller; compare full restored action/reward/patient/RNG state. Compare all three greedy fork distributions and classes at 52 own_frozen contexts per block with zero extra environment calls.",
+    "continuation": "All three PPO blocks, then all three BC-CONTINUE blocks; each 32 episodes in eight four-episode rollouts with fixed 4 epochs and 64/64/64/16 batches. Retain final checkpoints only. Frozen arm receives no training trajectories or updates.",
+    "seal": "Seal all nine learned artifacts together and check byte seals before each test. A failed/missing block closes the entire attempt; no surviving-block evaluation.",
+    "evaluation": "Exactly original five controllers x 12 original test worlds x three blocks, greedy learned classes with original lexicographic tie break, unchanged R4 and full MDL-2. No test fit, stochastic appendix or checkpoint choice.",
+    "verification": "Independent saved-data reader verifies 387 new full episodes, 20124 trajectory and 60 clone calls, 768 actor and 384 critic calls, six admitted historical loads, three layout builds and 387 episode builds, source/input/seal identity, raw patient/action/cost records and paired comparisons. Inherited 39 episodes are provenance, never counted as new episodes or pooled with evaluation.",
+    "unchanged_core_required": true,
+    "additive_runner_implemented_by": "coordinating parent task; not claimed complete by this proposal",
+    "no_new_artificial_gate": true
+  },
+  "analysis": {
+    "specification": "scientific_config.evaluation exactly inherited",
+    "primary": "paired raw total cost own_ppo minus own_frozen",
+    "relative_change": "equal mean over three blocks of 100 * block mean paired raw-cost delta / block mean own_frozen raw cost",
+    "screen": "relative change <= -1.0 percent and favorable cost direction in all three blocks; patient-adverse directions require trade-off reporting, not overall success",
+    "nonpositive_denominator": "undefined, not passed",
+    "secondary_contrasts": [
+      "ppo_minus_bc_continue",
+      "ppo_minus_r4",
+      "ppo_minus_full_mdl2",
+      "own_frozen_minus_r4"
+    ],
+    "bootstrap": {
+      "blocks_per_draw": 3,
+      "descriptive_low_precision_three_blocks": true,
+      "draws": 10000,
+      "kind": "hierarchical_paired_block_then_world",
+      "saved_data_only": true,
+      "worlds_per_sampled_block": 12,
+      "seed_decimal": "5103747212375785473",
+      "new_simulations": 0,
+      "new_model_forwards": 0
+    },
+    "mandatory_reporting": [
+      "all worlds and blocks, no excluded failures",
+      "paired raw cost and patient completions/losses/waiting/terminal-active obligations",
+      "raw requested and executed actions, changed-action frequencies and model lineage",
+      "per-phase/per-block calls, build/load/read counts, elapsed and inference time",
+      "uncertainty and null/negative/trade-off results"
+    ],
+    "interpretation": "Three training blocks yield descriptive low-precision development evidence only. This restricted graph-aware simulation PPO comparison is not online deployment adaptation, isolated graph attribution, full joint control, PPO-vs-DDPG superiority or clinical noninferiority.",
+    "publication_guaranteed": false,
+    "rl_improvement_guaranteed": false
+  },
+  "preservation": {
+    "immutable_inputs": true,
+    "local_only": true,
+    "payload_archive": "results/dynamic_candidate_continuation_recovery_20261001/archives/completed-payload.tar.gz",
+    "source_and_input_locks": "Preserve exact source, runtime, original scientific config/proposal, this execution proposal, actual approval, input byte manifests, qualified initializer provenance, new raw records, ledger, all model/full state and RNG receipts.",
+    "verification": "Per-file SHA256, every archive member and archive byte SHA256; no overwrite of different bytes; retain originals. Seal completed payload before parent supervisor writes later terminal receipts.",
+    "terminal_receipt_archive": "A distinct local terminal/launcher closure archive or equivalent verified supplement includes final parent claim/supervisor/terminal receipts and a link to completed payload archive; complete within the 900-second closure and global caps. Never silently omit post-payload receipts or recursively include an archive in itself.",
+    "failure": "Preserve available partial weights, optimizer, RNG, collector state, raw logs, ledgers, stdout/stderr and error, under remaining capped closure time. No numerical recovery; report incomplete preservation explicitly.",
+    "restore_permission": "Only mandatory in-owner preflight clones in the one running attempt; no restart after interruption, native crash, timeout or terminal failure.",
+    "dropbox_export": false,
+    "cloud_sync_claim": false,
+    "collaborator_access_claim": false,
+    "remote_push": false,
+    "pr_or_merge": false,
+    "messaging": false
+  },
+  "prohibitions": [
+    "retrain/reinitialize a scientific candidate",
+    "rescore saved qualification",
+    "load the historical collection checkpoint",
+    "resume any closed attempt",
+    "new namespace or replacement seed",
+    "new reward, scenario, cost weight, threshold, actor/PPO/BC setting or comparison",
+    "model/hyperparameter/seed/checkpoint search",
+    "critic prefit or warmup",
+    "counterfactual/oracle labels or optional clone appendix",
+    "extra stochastic evaluation",
+    "early success stop or drop failing block",
+    "formal holdout reuse or Stage E reopening",
+    "new patient/model/optimizer execution during preparation",
+    "unapproved external action or automatic followon"
+  ],
+  "preparation": {
+    "kind": "documentation_JSON_arithmetic_byte_hashing_with_separate_mock_only_admission_tests",
+    "patient_environment_builds": 0,
+    "environment_step_calls": 0,
+    "checkpoint_loads": 0,
+    "model_forwards": 0,
+    "optimizer_step_calls": 0,
+    "scientific_execution": 0,
+    "commits": 0,
+    "write_set": [
+      "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-protocol.md",
+      "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-proposal.json",
+      "tests/test_dynamic_candidate_recovery_admission.py"
+    ],
+    "root_created": false
+  }
+}

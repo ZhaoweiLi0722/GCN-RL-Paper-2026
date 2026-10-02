@@ -1,6 +1,30 @@
 # Autonomous local research queue
 
-## Live checkpoint: conservative two-round package authorized; freeze then launch
+## Live checkpoint: conservative two-round experiment launched and progressing
+
+2026-10-02T20:11:28Z. Single detached experiment launched at execution
+880defba211bf0e444bb8781c8be5735fb0cabe0; frozen implementationc9d5290,
+scientific sourcea98b1fa. Packet SHA256
+c571729b094dd02e6034434273d04fc72c23c9db31a0d2f0e69fdc6c01bd0d66.
+Supervisor12670/PPID1 and child12683/PPID12670 have matching live full native
+commands. New boundary: binding and preflight blocks60/61 finished; block62
+active. Observed272/49626environment calls,0actor/0critic,0fits,0evaluations.
+This is real scientific execution, not yet actor training or performance gain.
+Launcher stdout/stderr were empty; no failure/terminal record observed.
+No other matching research process. New result root:
+results/conservative_cohort_improvement_20261002.
+
+The same gcn-rl heartbeat is tool-confirmed ACTIVE at30minute cadence, scoped
+only to this already-running attempt. It does not start another process.
+Next: existing child finishes the3preflight pairs, then first-round current-
+policy collection/conditional cost labels,64updates per arm/block,second round,
+9model seals and180evaluations. All routine phases are already authorized.
+No repeat permission, reinitialization, extra gate or automatic retry.8hours
+is the total cap, not a measured ETA. Report each true training/result boundary.
+At termination complete the existing raw readout/preservation and pause this
+same monitor. Protocol/inputs/source/runtime remain locked and unchanged.
+
+### Approved launch preparation
 
 2026-10-02T20:08:16Z. Zhaowei replied `我们的下一步是什么 继续` after the
 complete package question and capped final summary. Exact contextual approval

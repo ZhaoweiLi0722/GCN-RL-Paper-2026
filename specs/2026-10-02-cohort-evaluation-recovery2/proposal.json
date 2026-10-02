@@ -1,0 +1,25 @@
+{
+  "schema": "cohort-evaluation-recovery2-proposal-v1",
+  "scientific_execution_authorized": false,
+  "reason": "Repair decimal-string seed transport after recovery1 failed with zero scientific calls",
+  "scope": {
+    "reused_evaluations": 11,
+    "new_evaluations": 205,
+    "environment_calls": 12915,
+    "optimizer_calls": 0,
+    "seconds": 7200,
+    "owner_seconds": 240,
+    "policy_loads": 12,
+    "reference_loads": 3,
+    "layout_builds": 3,
+    "episode_builds": 205,
+    "attempts": 1,
+    "automatic_retry": false,
+    "scientific_settings_changed": false,
+    "old_attempt_remains_terminal": true
+  },
+  "phase_seconds": {"runtime_input_binding": 300, "final_evaluation": 4320, "raw_verification": 600, "payload_archive": 900, "supervisor_closure": 600},
+  "old_models_and_test_worlds_unchanged": true,
+  "automatic_followon": false,
+  "remote_or_dropbox_actions": false
+}

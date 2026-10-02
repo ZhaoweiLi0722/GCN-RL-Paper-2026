@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: recovery startup failed; delivery lesson recorded
+## Live checkpoint: recovery2 seed repair; explicit single-run approval received
+
+2026-10-02T11:03Z. Zhaowei explicitly answered `批准这一次仅评估续接` to the
+205remaining-evaluations/12915steps/zerooptimizer/240s-owner/7200s-global question.
+New additive entry src/rl/cohort_evaluation_recovery2.py converts canonical
+saved decimal seeds to Python integers once at the runtime boundary. Original
+frozen JSON,models,old source/results and scientific settings remain unchanged.
+The same converted values feed backend layouts,episodes and raw metadata. No
+float conversion. Shared collection/reader/budget/watchdog remain reused.
+
+One advancement agent delivered the focused real-saved-metadata/mock-entry
+regression and is closed;prior efficiency advice is reused,not repeated.
+Sevenfocused tests,including the fullmocked child entry,and fullcompileall passed.
+No scientific calls or models
+loaded this turn yet. Previous PIDs76488/76501 confirmed absent. Old run remains
+failed with zero new scientific calls;new result root is distinct.
+
+Next:complete the focused regression,commit source,hash-only freeze and committed
+packet-bound authorization,then directly execute the already approved recovery2.
+No further routine approval. Do not add a diagnostic/training chain or repeat old
+verification;deliver paired raw cost/patient differences from216complete worlds.
+
+## Previous startup-failure checkpoint
 
 2026-10-02T10:50Z. Recovery1 execution0ff5d3d failed in binding after2.203s,
 before model loading,environment construction/step or optimizer update. New

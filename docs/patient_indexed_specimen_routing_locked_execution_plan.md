@@ -2863,3 +2863,24 @@ rule,not new retry authority. Samegcn-rl automationPAUSED. A new scientific
 restart still requires an amended permit;no new training is needed for the
 outstanding comparison. Existing models,original settings and evidence stay
 fixed. No remote/export/holdout/StageE or Howardapproval claim.
+
+#### Evaluation recovery2: explicit restart authorization, seed transport only
+
+2026-10-02T11:03Z: Zhaowei answered the complete numerical question with
+`批准这一次仅评估续接`. This authorizes one new recovery2 attempt in a fresh
+root after the additive canonical decimal-string seed repair and targeted
+real-metadata/mock-entry tests. The original and recovery1 attempts remain
+terminal. Keep12sealed models/3R4references/11complete oldevaluations,complete205
+remaining original63step worlds:12915newenvironment calls,0optimizer calls,
+12policyloads/3referenceloads/3layoutbuilds/205episodebuilds. No scientific
+settings,model,reward,world,sample,metric or training changes. No preflight or
+qualification;no automaticretry. Binding300s,evaluation18x240s,rawreader600s,
+payloadarchive900s,closure600s;global7200s with no budget transfer.
+
+Exact proposal/protocol and literal approval are in
+specs/2026-10-02-cohort-evaluation-recovery2/. Approval precedes implementation
+freeze;commit source and frozen runtime/input/authorization before launch.
+Existing valid checks and models are reused;no training/history reaudit.
+The deliverable is the complete original cost/patient comparison,not readiness
+counts. No repeated routine approval is required. All prior local-only,holdout,
+StageE,remote/export and Howard-approval boundaries remain unchanged.

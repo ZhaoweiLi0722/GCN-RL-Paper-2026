@@ -1,0 +1,15 @@
+{
+  "format": "cohort-evaluation-recovery2-approval-intent-v1",
+  "approved": true,
+  "user": "Zhaowei",
+  "user_literal": "批准这一次仅评估续接",
+  "recorded_at_utc": "2026-10-02T11:03:32Z",
+  "proposal_sha256": "dc7cc1109ffa87f1f22b01abb79096d7231988502407162c363096e407aab2be",
+  "protocol_sha256": "9e8939a36439a36224443794b335cc7785423e3d8ea4239cc251515d890b246b",
+  "question": "修复通过后，在新目录单次完成剩余205个原定评估回合；沿用12个封存模型和11个完整回合，不重训、不改奖励/种子；最多12915个环境步、0次优化器更新、每个控制器/区块240秒、总计2小时，失败不自动重跑。",
+  "approval_precedes_final_implementation_freeze": true,
+  "old_attempts_remain_terminal": true,
+  "automatic_retry": false,
+  "automatic_followon": false,
+  "remote_or_dropbox_actions": false
+}

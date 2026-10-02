@@ -1,0 +1,1162 @@
+{
+  "branches": [
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3220,
+      "remaining_losses": 2325,
+      "remaining_raw_cost": 2568984873.127033,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3228,
+      "remaining_losses": 2317,
+      "remaining_raw_cost": 2569031212.079123,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3221,
+      "remaining_losses": 2324,
+      "remaining_raw_cost": 2566942278.952139,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3218,
+      "remaining_losses": 2327,
+      "remaining_raw_cost": 2567515891.223773,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3192,
+      "remaining_losses": 2353,
+      "remaining_raw_cost": 2599516310.099691,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3043,
+      "remaining_losses": 3230,
+      "remaining_raw_cost": 3405418696.8779426,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3059,
+      "remaining_losses": 3214,
+      "remaining_raw_cost": 3392556766.06697,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3066,
+      "remaining_losses": 3207,
+      "remaining_raw_cost": 3388659920.4429436,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3053,
+      "remaining_losses": 3220,
+      "remaining_raw_cost": 3393804022.974968,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort0/after4",
+      "remaining_completions": 3079,
+      "remaining_losses": 3194,
+      "remaining_raw_cost": 3380658532.5145154,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2179,
+      "remaining_losses": 2055,
+      "remaining_raw_cost": 2083695256.1498196,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2192,
+      "remaining_losses": 2042,
+      "remaining_raw_cost": 2075925404.503063,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2124,
+      "remaining_losses": 2110,
+      "remaining_raw_cost": 2125021997.0992951,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2176,
+      "remaining_losses": 2058,
+      "remaining_raw_cost": 2085420388.2230306,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2164,
+      "remaining_losses": 2070,
+      "remaining_raw_cost": 2097062337.8161976,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 5,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2139,
+      "remaining_losses": 2095,
+      "remaining_raw_cost": 2109027482.9750154,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2192,
+      "remaining_losses": 2166,
+      "remaining_raw_cost": 2186551075.490555,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2182,
+      "remaining_losses": 2176,
+      "remaining_raw_cost": 2196175813.9630766,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2188,
+      "remaining_losses": 2170,
+      "remaining_raw_cost": 2191637344.3504515,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2179,
+      "remaining_losses": 2179,
+      "remaining_raw_cost": 2198393060.734504,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2186,
+      "remaining_losses": 2172,
+      "remaining_raw_cost": 2189733455.2388344,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 5,
+      "context_id": "block60/cohort0/after20",
+      "remaining_completions": 2182,
+      "remaining_losses": 2176,
+      "remaining_raw_cost": 2185739016.243058,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1343,
+      "remaining_losses": 1312,
+      "remaining_raw_cost": 1321576506.7948425,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1339,
+      "remaining_losses": 1316,
+      "remaining_raw_cost": 1323280768.82155,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1338,
+      "remaining_losses": 1317,
+      "remaining_raw_cost": 1323879430.3236725,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1337,
+      "remaining_losses": 1318,
+      "remaining_raw_cost": 1322901722.8427439,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1338,
+      "remaining_losses": 1317,
+      "remaining_raw_cost": 1323183096.33471,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 5,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1342,
+      "remaining_losses": 1313,
+      "remaining_raw_cost": 1322841211.2557266,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1315,
+      "remaining_losses": 1376,
+      "remaining_raw_cost": 1375098142.2756507,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1316,
+      "remaining_losses": 1375,
+      "remaining_raw_cost": 1374662686.2783442,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1315,
+      "remaining_losses": 1376,
+      "remaining_raw_cost": 1375261347.7804666,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1319,
+      "remaining_losses": 1372,
+      "remaining_raw_cost": 1370844555.283692,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1308,
+      "remaining_losses": 1383,
+      "remaining_raw_cost": 1378144698.722822,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 5,
+      "context_id": "block60/cohort0/after36",
+      "remaining_completions": 1321,
+      "remaining_losses": 1370,
+      "remaining_raw_cost": 1371530441.447068,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3297,
+      "remaining_losses": 2545,
+      "remaining_raw_cost": 2764601226.1837044,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3298,
+      "remaining_losses": 2544,
+      "remaining_raw_cost": 2759086537.745277,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3311,
+      "remaining_losses": 2531,
+      "remaining_raw_cost": 2748182697.817866,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3337,
+      "remaining_losses": 2505,
+      "remaining_raw_cost": 2729754302.2387366,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3338,
+      "remaining_losses": 2504,
+      "remaining_raw_cost": 2731142151.24079,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3364,
+      "remaining_losses": 2495,
+      "remaining_raw_cost": 2732698516.971812,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3367,
+      "remaining_losses": 2492,
+      "remaining_raw_cost": 2718698440.1425824,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3366,
+      "remaining_losses": 2493,
+      "remaining_raw_cost": 2718106061.6349607,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3345,
+      "remaining_losses": 2514,
+      "remaining_raw_cost": 2728526985.500287,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort1/after4",
+      "remaining_completions": 3371,
+      "remaining_losses": 2488,
+      "remaining_raw_cost": 2715170818.4800057,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2313,
+      "remaining_losses": 1775,
+      "remaining_raw_cost": 1893570699.913763,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2313,
+      "remaining_losses": 1775,
+      "remaining_raw_cost": 1892821559.7364843,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2311,
+      "remaining_losses": 1777,
+      "remaining_raw_cost": 1894851224.1491237,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2302,
+      "remaining_losses": 1786,
+      "remaining_raw_cost": 1897568503.9775794,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2299,
+      "remaining_losses": 1789,
+      "remaining_raw_cost": 1896094128.0948744,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2313,
+      "remaining_losses": 1875,
+      "remaining_raw_cost": 1992595617.2593713,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2323,
+      "remaining_losses": 1865,
+      "remaining_raw_cost": 1987780947.1299767,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2315,
+      "remaining_losses": 1873,
+      "remaining_raw_cost": 1993541012.4267259,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2309,
+      "remaining_losses": 1879,
+      "remaining_raw_cost": 1991130408.8207216,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort1/after20",
+      "remaining_completions": 2307,
+      "remaining_losses": 1881,
+      "remaining_raw_cost": 1990429798.622664,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1371,
+      "remaining_losses": 1293,
+      "remaining_raw_cost": 1332646549.9253118,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1362,
+      "remaining_losses": 1302,
+      "remaining_raw_cost": 1337586282.195499,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1363,
+      "remaining_losses": 1301,
+      "remaining_raw_cost": 1336985267.8899436,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1365,
+      "remaining_losses": 1299,
+      "remaining_raw_cost": 1334927761.303807,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1364,
+      "remaining_losses": 1300,
+      "remaining_raw_cost": 1332487658.9594533,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1380,
+      "remaining_losses": 1177,
+      "remaining_raw_cost": 1227442814.2816498,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1377,
+      "remaining_losses": 1180,
+      "remaining_raw_cost": 1231370914.8251214,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1384,
+      "remaining_losses": 1173,
+      "remaining_raw_cost": 1225479330.5276573,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1380,
+      "remaining_losses": 1177,
+      "remaining_raw_cost": 1224816730.683216,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort1/after36",
+      "remaining_completions": 1386,
+      "remaining_losses": 1171,
+      "remaining_raw_cost": 1219371016.4146101,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3230,
+      "remaining_losses": 2583,
+      "remaining_raw_cost": 2769474267.73395,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3293,
+      "remaining_losses": 2520,
+      "remaining_raw_cost": 2721046921.8763437,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3366,
+      "remaining_losses": 2447,
+      "remaining_raw_cost": 2668881210.425913,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3346,
+      "remaining_losses": 2467,
+      "remaining_raw_cost": 2685958856.475439,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3339,
+      "remaining_losses": 2474,
+      "remaining_raw_cost": 2695824891.0172462,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3285,
+      "remaining_losses": 2408,
+      "remaining_raw_cost": 2627168193.934112,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3332,
+      "remaining_losses": 2361,
+      "remaining_raw_cost": 2590067231.1818533,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3381,
+      "remaining_losses": 2312,
+      "remaining_raw_cost": 2547955192.110496,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3386,
+      "remaining_losses": 2307,
+      "remaining_raw_cost": 2550422323.7274942,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort2/after4",
+      "remaining_completions": 3394,
+      "remaining_losses": 2299,
+      "remaining_raw_cost": 2547984915.360599,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2363,
+      "remaining_losses": 1806,
+      "remaining_raw_cost": 1955195875.4145167,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2363,
+      "remaining_losses": 1806,
+      "remaining_raw_cost": 1954789409.2043872,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2371,
+      "remaining_losses": 1798,
+      "remaining_raw_cost": 1954761733.650811,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2352,
+      "remaining_losses": 1817,
+      "remaining_raw_cost": 1967821614.239747,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2360,
+      "remaining_losses": 1809,
+      "remaining_raw_cost": 1962316293.941412,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2371,
+      "remaining_losses": 1778,
+      "remaining_raw_cost": 1893482296.921461,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2370,
+      "remaining_losses": 1779,
+      "remaining_raw_cost": 1895145439.1819906,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2384,
+      "remaining_losses": 1765,
+      "remaining_raw_cost": 1888469636.3188367,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2380,
+      "remaining_losses": 1769,
+      "remaining_raw_cost": 1890722301.7392855,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort2/after20",
+      "remaining_completions": 2387,
+      "remaining_losses": 1762,
+      "remaining_raw_cost": 1888150968.0768962,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1354,
+      "remaining_losses": 1454,
+      "remaining_raw_cost": 1417658389.740107,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1358,
+      "remaining_losses": 1450,
+      "remaining_raw_cost": 1415467187.6767142,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1358,
+      "remaining_losses": 1450,
+      "remaining_raw_cost": 1415467187.6767142,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1358,
+      "remaining_losses": 1450,
+      "remaining_raw_cost": 1415467187.6767142,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1358,
+      "remaining_losses": 1450,
+      "remaining_raw_cost": 1415467867.2520344,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 5,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1337,
+      "remaining_losses": 1471,
+      "remaining_raw_cost": 1430824680.5144258,
+      "replication": 0,
+      "steps": 27
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1348,
+      "remaining_losses": 1417,
+      "remaining_raw_cost": 1374721383.3451862,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1345,
+      "remaining_losses": 1420,
+      "remaining_raw_cost": 1376892885.7077365,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1345,
+      "remaining_losses": 1420,
+      "remaining_raw_cost": 1376892885.7077365,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1345,
+      "remaining_losses": 1420,
+      "remaining_raw_cost": 1376892885.7077365,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1345,
+      "remaining_losses": 1420,
+      "remaining_raw_cost": 1376893565.283057,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 5,
+      "context_id": "block60/cohort2/after36",
+      "remaining_completions": 1331,
+      "remaining_losses": 1434,
+      "remaining_raw_cost": 1390092074.1797745,
+      "replication": 1,
+      "steps": 27
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3314,
+      "remaining_losses": 2675,
+      "remaining_raw_cost": 2899989148.4084024,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3327,
+      "remaining_losses": 2662,
+      "remaining_raw_cost": 2887213917.07291,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3308,
+      "remaining_losses": 2681,
+      "remaining_raw_cost": 2897727476.1310506,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3295,
+      "remaining_losses": 2694,
+      "remaining_raw_cost": 2908634320.7331023,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3310,
+      "remaining_losses": 2679,
+      "remaining_raw_cost": 2897639473.6498175,
+      "replication": 0,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3375,
+      "remaining_losses": 2175,
+      "remaining_raw_cost": 2424669059.986745,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3361,
+      "remaining_losses": 2189,
+      "remaining_raw_cost": 2426526465.31823,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3365,
+      "remaining_losses": 2185,
+      "remaining_raw_cost": 2425216899.923436,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3373,
+      "remaining_losses": 2177,
+      "remaining_raw_cost": 2424120931.3985066,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort3/after4",
+      "remaining_completions": 3372,
+      "remaining_losses": 2178,
+      "remaining_raw_cost": 2421036114.8654203,
+      "replication": 1,
+      "steps": 59
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2311,
+      "remaining_losses": 2030,
+      "remaining_raw_cost": 2111901930.3006697,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2297,
+      "remaining_losses": 2044,
+      "remaining_raw_cost": 2120175091.5461483,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2312,
+      "remaining_losses": 2029,
+      "remaining_raw_cost": 2110773433.0087407,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2301,
+      "remaining_losses": 2040,
+      "remaining_raw_cost": 2115595562.5991042,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2305,
+      "remaining_losses": 2036,
+      "remaining_raw_cost": 2110673790.6370978,
+      "replication": 0,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2336,
+      "remaining_losses": 1878,
+      "remaining_raw_cost": 1986355004.1757152,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 1,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2322,
+      "remaining_losses": 1892,
+      "remaining_raw_cost": 1994362041.7473814,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 2,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2327,
+      "remaining_losses": 1887,
+      "remaining_raw_cost": 1995138032.4904463,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 3,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2321,
+      "remaining_losses": 1893,
+      "remaining_raw_cost": 1998823932.0404692,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 4,
+      "context_id": "block60/cohort3/after20",
+      "remaining_completions": 2329,
+      "remaining_losses": 1885,
+      "remaining_raw_cost": 1994297028.6559248,
+      "replication": 1,
+      "steps": 43
+    },
+    {
+      "candidate_index": 0,
+      "context_id": "block60/cohort3/after36",
+      "remaining_completions": 1349,
+      "remaining_losses": 1163,
+      "remaining_raw_cost": 1148876773.0148675,
+      "replication": 0,
+      "steps": 27
+    }
+  ],
+  "complete_branch_calls": 5111,
+  "complete_branches": 117,
+  "format": "paired-cohort-failed-run-saved-branch-verification-v1",
+  "ledger": {
+    "active": "paired_branches/block60",
+    "closed": [
+      "binding",
+      "same_start_preflight/block60",
+      "same_start_preflight/block61",
+      "same_start_preflight/block62",
+      "reference_contexts/block60",
+      "reference_contexts/block61",
+      "reference_contexts/block62"
+    ],
+    "counts": {
+      "environment": 6246
+    },
+    "events": 6262,
+    "last_sha256": "2b948c4ce9186690f183a951585d97894504d8497246f0666daf07da41b62a1f",
+    "owner_counts": {
+      "global:clone": 5301,
+      "global:trajectory": 945,
+      "phase/paired_branches:clone": 5112,
+      "phase/reference_contexts:trajectory": 756,
+      "phase/same_start_preflight:clone": 189,
+      "phase/same_start_preflight:trajectory": 189,
+      "section/paired_branches/block60:clone": 5112,
+      "section/reference_contexts/block60:trajectory": 252,
+      "section/reference_contexts/block61:trajectory": 252,
+      "section/reference_contexts/block62:trajectory": 252,
+      "section/same_start_preflight/block60:clone": 63,
+      "section/same_start_preflight/block60:trajectory": 63,
+      "section/same_start_preflight/block61:clone": 63,
+      "section/same_start_preflight/block61:trajectory": 63,
+      "section/same_start_preflight/block62:clone": 63,
+      "section/same_start_preflight/block62:trajectory": 63
+    },
+    "phase_seconds": {
+      "binding": 8.129344000015408,
+      "reference_contexts": 126.97993600007612,
+      "same_start_preflight": 95.81947099999525
+    },
+    "plan_sha256": "63c9709f02ee304e059f6526fdbcdf557230ddd533c5b6729f2004d93216c26e"
+  },
+  "new_environment_calls": 0,
+  "new_independent_performance_evaluation": false,
+  "new_optimizer_calls": 0,
+  "operation_counts": {
+    "binding": 1,
+    "branch_step": 5112,
+    "checkpoint_load": 6,
+    "clone_step": 189,
+    "conditional_branch_clone": 118,
+    "episode_build": 15,
+    "episode_dispatch": 15,
+    "episode_step": 945,
+    "input_hash_verification": 12,
+    "layout_environment_build": 3,
+    "paired_branches/block60": 1,
+    "preflight_clone": 3,
+    "reference_and_layout_build": 3,
+    "reference_checkpoint_load": 3,
+    "reference_contexts/block60": 1,
+    "reference_contexts/block61": 1,
+    "reference_contexts/block62": 1,
+    "same_start_preflight/block60": 1,
+    "same_start_preflight/block61": 1,
+    "same_start_preflight/block62": 1
+  },
+  "scientific_model_loads": 0,
+  "terminal": {
+    "automatic_followon": false,
+    "automatic_retry": false,
+    "exit_code": 1,
+    "scientific_completion_verified": false,
+    "status": "failed",
+    "supervisor": {
+      "automatic_retry": false,
+      "clock_id": "posix-clock-monotonic-v1",
+      "closure_deadline": null,
+      "command": [
+        "/Users/lizhaowei/GCN-RL Paper 2026/.venv/bin/python",
+        "-m",
+        "experiments.scripts.run_paired_cohort_improvement",
+        "--child"
+      ],
+      "cwd": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
+      "elapsed_seconds": 1437.574030000018,
+      "error": null,
+      "exit_code": -15,
+      "final_deadline": 953037.238675,
+      "forced_kill": false,
+      "format": "paired-cohort-supervisor-v1",
+      "last_ledger_sha256": "2b948c4ce9186690f183a951585d97894504d8497246f0666daf07da41b62a1f",
+      "maximum_seconds": 14400,
+      "passed": false,
+      "pid": 92443,
+      "poll_seconds": 0.1,
+      "ppid": 92429,
+      "reason": "wall_clock_deadline",
+      "started": 951599.799272,
+      "termination_grace_seconds": 1.0
+    }
+  },
+  "verified_file_references": 819
+}

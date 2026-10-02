@@ -1,6 +1,59 @@
 # Autonomous local research queue
 
-## Live checkpoint: single experiment launched, all preflights passed
+## Live checkpoint: owner-timeout, saved work verified and archived
+
+2026-10-02T14:46Z (10:46EDT). The single attempt at execution3da1a09 ended
+exit1; supervisor reported wall_clock_deadline at paired_branches/block60,
+1200seconds for this owner. Overall elapsed1437.574s was below the14400s global
+cap. Child exited-15 after supervisorSIGTERM, no forcedSIGKILL; both92429/92443
+are absent. stdout/stderr0bytes. No retry, repair, reward change or additional
+scientific call was performed after termination.
+
+Completed and preserved:all3same-start preflights,12reference cohorts,36context
+snapshots and117full branches. Spend6246environment calls =378preflight+
+756reference+5111complete branch calls+1interrupted charged call. Actor/critic
+updates0,new policy fits0,evaluations0. The short phase-time estimate was an
+engineering budget mistake, not evidence that policy improvement failed.
+No new comparative performance claim is possible.
+
+Independent saved-JSON reread reconciled117branches/819file references with
+their original raw costs and patients; no model construction/forward or simulator
+replay. Report:reports/2026-10-02-paired-cohort-closure/saved-branch-verification.json,
+SHA2565074c0dc7445206e6db309841bf0d22fc4d35795fb42614ebba41557aa252fc6.
+Current source/runtime/input and pre-archive seed locks matched the frozen packet.
+The entire failed root was archived once:2704files,408225014compressed bytes,
+SHA256fe49aad6af2cf4e1dd2c7c602ccdc4ab8adc4f299fb56f0837b682d4ce8ae7fb;
+every member read/hashed and original source unchanged. This is a verified local
+archive only, noDropbox/cloud/collaborator-access claim. The large archive is
+locally retained and ignored by Git; its receipt/manifest are kept as metadata.
+
+Next decision: propose a separately approved remaining-work continuation that
+reuses all finished evidence and completes the same fixed scientific matrix,
+with realistic branch wall-clock limits. No automatic relaunch or reinterpretation
+of unused budget. The exact remainder and interruption recoverability belong in
+specs/2026-10-02-paired-cohort-improvement/terminal-readout.md. Do not run another
+preflight, initializer, reference cohort or completed branch to manufacture
+progress. No reward/model/scenario/sample/seed search. Samegcn-rl monitor PAUSED,
+tool-confirmed2026-10-02T14:46:46Z,retained rather than deleted.
+
+The independent finite handoff is complete and its agent closed. Exact saved
+support gives402branches/17158calls;117completebranches cover5111calls. Remaining:
+block60=11branches/297calls,block61=140/6020,block62=134/5730. The interrupted
+27step branch has a valid initial envelope and one raw row but no post-step
+checkpoint; any approved recovery must recompute that one branch in full,
+retain its old1chargedcall, and never replay the117completed branches.
+
+A single next-scope question has now been asked. Proposal in
+specs/2026-10-02-paired-cohort-improvement/recovery-proposal.json:285branches/
+12047calls plus216evaluations/13608calls =25655newenvironment calls;original
+6fits/768actor/0critic,global18000s,branchowners600/2400/2400s,evaluationowners360s.
+Total phasecaps16500s. Same reward,seeds,samples,architecture and outcomes;
+cumulative calls including the failed debit would be31901. No reply yet.
+Saved-data validity is established, but the additive import/continuation entry
+is not implemented or live-tested. Approval must precede that package's new
+scientific execution; no real restore probe outside its counted scope.
+
+## Previous launched checkpoint
 
 2026-10-02T14:17Z (10:17EDT). Execution HEAD3da1a09; supervisor92429 and
 child92443 verified with matching native --launch/--child commands. Packet

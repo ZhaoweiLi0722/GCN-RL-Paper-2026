@@ -1,0 +1,12 @@
+{
+  "archive": "failed-run.tar.gz",
+  "archive_sha256": "fe49aad6af2cf4e1dd2c7c602ccdc4ab8adc4f299fb56f0837b682d4ce8ae7fb",
+  "cloud_sync_verified": false,
+  "dropbox_exported": false,
+  "file_count": 2704,
+  "howard_access_verified": false,
+  "local_archive_verified": true,
+  "size_bytes": 408225014,
+  "source_unchanged": true,
+  "verified_by_reading_every_archive_member": true
+}

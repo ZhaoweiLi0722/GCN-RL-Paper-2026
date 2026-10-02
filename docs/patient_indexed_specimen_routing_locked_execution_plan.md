@@ -2997,3 +2997,25 @@ reapproval or additional diagnostic gate. No change to reward,scenario,support,
 architecture,primary outcome,threshold,seednamespace,budget or single-attempt
 termination. Old attempts remain consumed. No automatic retry/follow-on,
 holdout/StageE/remote/export/Howard-signoff action is authorized.
+
+#### Paired-cohort attempt terminated at branch-owner time cap
+
+2026-10-02T14:46Z: approved execution3da1a09 ran once and ended at the1200s
+paired_branches/block60 owner cap,not its14400s global cap. Overall elapsed
+1437.574s;parentexit1,childSIGTERMexit-15,no forcedkill,stderr0,bothPIDsabsent.
+All3preflight pairs,12referencecohorts,36states and117branches completed.
+Environmentspend6246 comprises378preflight+756reference+5111completebranchcalls
+plus1interrupted chargedcall. No actor/critic update or new evaluation occurred.
+The phase-time estimate was too short; this is an engineering-budget failure,
+not an algorithm-performance finding or justification to change reward weights.
+
+An independent saved-raw reader verified117branches and819file references,with
+zero new scientific loads/calls. Source/runtime/input and pre-archive seed locks
+matched. One local archive preserves2704files,408225014compressedbytes,
+SHA256fe49aad6af2cf4e1dd2c7c602ccdc4ab8adc4f299fb56f0837b682d4ce8ae7fb;
+all members read/hashed,original source unchanged. No Dropbox/export action.
+The attempt and any unused budget are consumed; no repair/retry was executed.
+Prepare only a separate remaining-work decision that reuses finished evidence,
+with scientifically unchanged settings and realistic time allowances. Do not
+repeat completed data collection or manufacture a fresh qualification gate.
+The same monitor isPAUSED and visible after terminal preservation.

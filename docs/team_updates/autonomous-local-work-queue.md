@@ -2,6 +2,26 @@
 
 ## Live checkpoint: conservative two-round experiment launched and progressing
 
+2026-10-02T21:13:43Z: round0/block61 paired and BC fits completed, each64
+updates; cumulative256/768actor,0critic,paired2/6andBC2/6round-fits. Newly
+saved checkpoint hashes match;128new receipts are sequential and finite.
+Prior block60 check reused. Current phase branches/round0/block62.
+Preflight3/3,collection6/12cohorts and18/36states,287complete branches
+(136+136+15; global upper bound864,final alias-reduced total not yet known),
+finalseals0/9,evaluation0/180,environment13255/49626. Matching live original
+12670/12683parent chain and fresh completed boundaries; no duplicate/error/
+terminal record,all logs0bytes. Scientific source unchanged; previous current
+482lock check reused. No new model forward/update/trajectory by monitor.
+
+Evidence:reports/2026-10-02-conservative-cohort-monitor-2113.json.
+Estimated2.5-4hours remaining, conditional on remaining branches/evaluation/
+archive; first2branch owners took3281seconds for272branches.8hours is a cap.
+Next: existing process finishes round0/block62 then its scheduled second
+round and sealed evaluation, without reapproval or extra diagnostic gates.
+No performance benefit established. Same monitor remains ACTIVE.
+
+### Previous training milestone
+
 2026-10-02T20:47:08Z: first real training milestone complete. Round0/block60
 paired-cost and BC each completed64actor updates;128/768total,0critic. Both
 final checkpoints exist and their hashes match recorded boundaries; all128

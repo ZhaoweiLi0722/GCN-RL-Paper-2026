@@ -1,0 +1,21 @@
+{
+  "format": "cohort-evaluation-recovery-intent-v1",
+  "user": "Zhaowei",
+  "user_literal": "继续",
+  "recorded_at_utc": "2026-10-02T10:41:26Z",
+  "context": "Acceptance of the immediately preceding explicit evaluation-only recovery question in terminal-readout.md; not authorization for new training.",
+  "reused_evaluations": 11,
+  "new_evaluations": 205,
+  "environment_calls": 12915,
+  "optimizer_calls": 0,
+  "seconds": 7200,
+  "owner_seconds": 240,
+  "policy_loads": 12,
+  "reference_loads": 3,
+  "layout_builds": 3,
+  "episode_builds": 205,
+  "attempts": 1,
+  "automatic_retry": false,
+  "scientific_settings_changed": false,
+  "old_attempt_remains_terminal": true
+}

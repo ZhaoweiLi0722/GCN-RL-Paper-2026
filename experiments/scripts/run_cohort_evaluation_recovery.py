@@ -1,0 +1,30 @@
+"""Freeze or execute the explicitly approved sealed-model evaluation recovery."""
+
+import time
+STARTED = time.clock_gettime(time.CLOCK_MONOTONIC)
+
+import argparse
+from pathlib import Path
+from src.rl.candidate_pilot_execution import configure_runtime
+from src.rl.candidate_pilot_recording import write_json_once
+from src.rl.cohort_evaluation_recovery import FROZEN, child, freeze, launch
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--freeze", action="store_true")
+    group.add_argument("--child", action="store_true")
+    args = parser.parse_args()
+    root = Path(__file__).resolve().parents[2]
+    configure_runtime()
+    if args.freeze:
+        packet = freeze(root)
+        write_json_once(root / FROZEN, packet)
+        print(packet["packet_sha256"])
+        return 0
+    return child(root) if args.child else launch(root, STARTED)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

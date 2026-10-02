@@ -1,6 +1,32 @@
 # Autonomous local research queue
 
-## Live checkpoint: cohort training complete; evaluation deadline terminated attempt
+## Live checkpoint: evaluation-only recovery approved; additive implementation
+
+2026-10-02T10:47Z. Zhaowei's direct `继续` accepts the preceding complete
+evaluation-only recovery question:reuse12sealed models and11complete evaluations,
+finish205remaining original63step cohorts,12915newenvironment calls,zerooptimizer,
+240seconds/owner,7200seconds globally,oneattempt. Protocol/approval intent:
+specs/2026-10-02-cohort-evaluation-recovery/. Old attempt remains terminal and its
+partial17steps remain spent. No source/config/evidence of that run is changed.
+
+The new runner caches restored evaluation-only native model owners, rejects
+optimizer steps, preserves the original raw collector/independent reader and
+watchdog, and reuses the completed training-target receipt. No repeated training
+verification or archive of the old training tree. James delivered the restoration
+adapter and8invented-tensor tests;Noether delivered one read-only efficiency
+check. Both finite agents are now closed. Coordinator is integrating fake serial
+tests and then freezing source/runtime/input and exact approval before launch.
+One synthetic regression exposed sparse zero entries in the ledger;the new
+reader now treats absent optimizer counts as zero. No scientific model loaded,
+environment stepped or new comparison launched yet. Process inspection verified
+no related research job;the unrelated dashboard process is untouched.
+
+Focused45zero-fit tests and fullrepository compileall have now PASSED. No science
+has started. Next:local source commit,hash-only
+freeze and committed packet authorization,then execute this single approved
+recovery without another routine question. No extra scientific scope required.
+
+## Previous terminal checkpoint retained as history
 
 2026-10-02T10:19Z. The single cohort-objective run is TERMINAL FAILED,not
 running. launcher/terminal.json overrides the last running status snapshot.

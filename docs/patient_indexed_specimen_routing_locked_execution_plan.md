@@ -2820,3 +2820,25 @@ controllers/objective/metrics;no retraining or retuning. No approval received at
 this entry. This is not a continuation permit;oldSTART authority and unused
 time do not override the consumed-attempt rule. No remote/Dropbox/holdout/StageE
 or Howard-approval action occurred.
+
+#### Cohort evaluation-only recovery: explicit acceptance
+
+2026-10-02T10:41Z: Zhaowei replied `继续` to the preceding explicit numerical
+recovery question. Accept this exact evaluation-only scope,not new training:
+retain12sealed artifacts and11complete own-frozen/block60 worlds0-10;finish205
+remaining originally planned evaluations (12915newenvironment calls),zero
+optimizer calls,240seconds per18block/controller owners,7200seconds global.
+One attempt;noautomatic retry. Binding300s,evaluation4320s,rawverification600s,
+newpayload archive900s,closure600s. No transfer of phase/owner slack. Twelve
+policy loads,three originalR4loads,three layout builds,205episode builds;no
+qualification,preflight,clone,fit or new test worlds. The old17partialcalls remain
+spent and its original evidence/source immutable. This is not fresh confirmation.
+
+Additive implementation/protocol under specs/2026-10-02-cohort-evaluation-recovery/.
+Reuse the successful saved training reconciliation and failed-run archive;only
+new/reused evaluation evidence and necessary dependencies enter the new archive.
+Freeze source/runtime/inputs and commit exact authorization before claim. Then
+execute routine serial evaluation,independent original-cost/patient comparison
+and preservation without further stage approvals. No remote,Dropbox,holdout,
+StageE,model/reward/seed change or Howardapproval. Finite failure stops this new
+attempt without repair/retry;report outcomes without guaranteeingRLbenefit.

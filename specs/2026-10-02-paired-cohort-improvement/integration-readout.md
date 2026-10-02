@@ -45,8 +45,11 @@ needs zero-update mock tests and the approved counted preflight, not an uncounte
 real environment probe.
 
 Scope-specific execution approval and final committed source/runtime/input/seed
-locks are also pending. The existing `gcn-rl` automation remains PAUSED; no
-training or evaluation process is running. No full historical audit repeated.
+locks are also pending. Following local commit96d60df,the existing `gcn-rl`
+automation was updated toACTIVE for the finite remaining engineering chain;
+the native tool confirmed it,with the same30minute cadence. This is not a
+running scientific job or new authority. No training/evaluation process is
+running. No full historical audit repeated.
 
 One advancement agent completed the pure objective and22artificial tests, then
 closed. Coordinator integrated the float64-to-float32 gradient regression and

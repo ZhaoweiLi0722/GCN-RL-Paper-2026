@@ -41,8 +41,13 @@ Advancement agentSartre delivered its disjoint objective/tests and is closed;
 efficiency agentNewton returned three advisory delays to remove and is closed.
 Coordinator delivered integration precision regression,branch plan and proposal.
 Both are finite completed assignments,not background training. No research
-process is running;the samegcn-rl automation remainsPAUSED. Old attempts stay
-closed,no remote/export/holdout/StageE action or Howardapproval claim.
+process is running. After local implementation commit96d60df,the samegcn-rl
+automation was updated toACTIVE,tool-confirmed,with the unchanged30minute
+cadence and finite next-engineering instructions. This follows the user's
+standing automatic-advancement request;it is not scientific execution authority.
+Complete integration without waiting for routine continue messages;pause only
+once the finite engineering chain ends and the single scope approval is absent.
+Old attempts stay closed,no remote/export/holdout/StageE action or Howard claim.
 
 ## Previous complete-comparison checkpoint
 

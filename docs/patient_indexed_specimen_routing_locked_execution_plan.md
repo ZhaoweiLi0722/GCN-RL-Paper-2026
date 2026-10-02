@@ -3044,3 +3044,24 @@ Routine phases then continue without another approval. No automatic retry,
 reward/seed/sample/model/support changes, holdout/StageE or external action.
 This is simulator-assisted policy improvement, not a guaranteed RL benefit or
 an online-deployment/model-free attribution claim. Howardapproval not claimed.
+
+#### Paired-cohort recovery consumed: negative complete comparison and closure timeout
+
+2026-10-02T18:29Z: all285remaining branches/402total,6fits/768actor updates,
+0critic,12seals and216evaluations completed; newcalls25655,cumulative31901.
+Childexit0. Overall launcherexit1 after its final archive exceeded the frozen
+closure deadline; authoritative launch-failure retained. Both processes exited.
+Both produced archives completed member verification, but package success is
+not claimed. No rerun, repair, source/config change or new archive was made.
+
+Complete raw comparison changes1088/1872prefix requests but worsens mean
+cost vs both own-frozen andBC by0%,14.8065%,0.5439%in blocks60/61/62;extra
+losses0,656,29.75per cohort. Both primary screens fail. Prespecified decision:
+close_one_shot_mechanism. Independent saved-raw arithmetic and finite agent
+readout agree. This is an adverse result for this simulator-label-assisted
+recipe, not universal RL failure or proof of wrong reward weights. Seen test
+worlds remain seen; no confirmation or further fitting is authorized.
+Full evidence and preservation limitations are recorded in
+specs/2026-10-02-paired-cohort-improvement/recovery1/terminal-readout.md.
+The same monitor isPAUSED and retained after handoff. New scope requires a
+separate bounded decision; no Howard approval, external action or StageE change.

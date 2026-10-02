@@ -1,6 +1,40 @@
 # Autonomous local research queue
 
-## Live checkpoint: actual actor training complete, evaluation running
+## Live checkpoint: complete negative comparison; launcher archive timeout
+
+2026-10-02T18:29:38Z. All scientific jobs finished:285/285new and402/402total
+branches;3paired+3BCfits;768actor/0critic;12seals;216/216evaluations;
+25655/25655new environment calls,31901cumulative including old interrupted
+debit. The child exited0, but the launcher endedexit1 at18:27:24Z after its
+final archive exceeded the closure deadline. Its authoritative launch-failure
+overrides the child success. Both99624/99636are absent;stderr/stdout0.
+
+The new policy changed1088/1872prefix requests, but against BOTH frozen andBC
+cost changes were0%,+14.8065%,+0.5439%across blocks60/61/62; losses changed
+0,+656,+29.75per cohort. Equal-block mean cost+5.1168%,losses+228.58.
+Both primary screens fail:close_one_shot_mechanism,no confirmation or retry.
+No claim of general RL failure, reward-weight error, online adaptation or
+isolated GCN contribution. This is no longer merely an unchanged-policy null.
+
+Coordinator raw arithmetic reconciled216episodes,1296file hashes and2376
+metric checks; finite independent agent agreed and is closed.450source and
+15input locks/runtime/reused data matched; existing completion checker passed
+all exact serial counts/seals. Both existing archives verified locally:
+payload7488files/1.882GB,launcher455files/1.163GB. Launcher archive excludes
+later terminal failure records, which remain original and are separately
+recorded in the handoff. No new archive, scientific call or external action.
+
+Readout:specs/2026-10-02-paired-cohort-improvement/recovery1/terminal-readout.md.
+Evidence:reports/2026-10-02-paired-cohort-recovery-{raw-arithmetic.json,
+independent-readout.md,terminal-verification.json}. Existing training check
+reused. Documentation-only work:JSON/diff checks;no repeated code tests.
+
+The samegcn-rl automation is PAUSED,tool-confirmed and retained. No current
+science authority remains. Next decision:keep frozen reference and decide
+separately whether a scientifically distinct bounded follow-up is justified.
+Do not append training, alter rewards or relabel seen worlds as confirmation.
+
+### Previous Running Observation
 
 2026-10-02T17:36:18Z. New fixed evaluation boundary:60/216complete,
 block60 own_frozen/paired_cost/BC/saved_PPO/R4 each12/12. Budget15827/25655

@@ -1,0 +1,346 @@
+{
+  "all_cost_components_finite_and_reconciled": true,
+  "all_main_and_secondary_block_differences_reconciled": true,
+  "all_paired_seeds_and_initial_states_equal": true,
+  "all_terminal_patient_registry_counts_reconciled": true,
+  "comparison_sha256": "18f149fb4e01056648f5348311b43f7bbb8a0cfd7eb046ecf8c96c9fe6763d35",
+  "complete_prefix_rows": 11232,
+  "complete_tail_rows": 2376,
+  "contrasts": [
+    {
+      "blocks": [
+        {
+          "block": 60,
+          "changed_prefix_executions": 0,
+          "changed_prefix_requests": 0,
+          "mean_differences": {
+            "average_turnaround_time": 0,
+            "blocked_requests": 0,
+            "completions": 0,
+            "cost": 0,
+            "enrolled": 0,
+            "expiry_losses": 0,
+            "losses": 0,
+            "prefix_cost": 0,
+            "route_count": 0,
+            "tail_cost": 0,
+            "waiting_patient_steps": 0
+          },
+          "relative_cost_change_percent": 0
+        },
+        {
+          "block": 61,
+          "changed_prefix_executions": 612,
+          "changed_prefix_requests": 624,
+          "mean_differences": {
+            "average_turnaround_time": -0.2017358957911548,
+            "blocked_requests": 1309.4166666666667,
+            "completions": -656,
+            "cost": 423034113.54673034,
+            "enrolled": 0,
+            "expiry_losses": 558.0833333333334,
+            "losses": 656,
+            "prefix_cost": 400063729.996754,
+            "route_count": 259.4166666666667,
+            "tail_cost": 22970383.54997632,
+            "waiting_patient_steps": 700.4166666666666
+          },
+          "relative_cost_change_percent": 14.806505091598636
+        },
+        {
+          "block": 62,
+          "changed_prefix_executions": 462,
+          "changed_prefix_requests": 464,
+          "mean_differences": {
+            "average_turnaround_time": -0.10726700444800241,
+            "blocked_requests": -345.25,
+            "completions": -29.75,
+            "cost": 15650587.95019281,
+            "enrolled": 0,
+            "expiry_losses": 15.166666666666666,
+            "losses": 29.75,
+            "prefix_cost": 20752217.05327292,
+            "route_count": -321.0833333333333,
+            "tail_cost": -5101629.103080086,
+            "waiting_patient_steps": -76.75
+          },
+          "relative_cost_change_percent": 0.5439487389049669
+        }
+      ],
+      "changed_prefix_executions": 1074,
+      "changed_prefix_requests": 1088,
+      "equal_block_relative_cost_change_percent": 5.116817943501201,
+      "name": "paired_cost-minus-own_frozen"
+    },
+    {
+      "blocks": [
+        {
+          "block": 60,
+          "changed_prefix_executions": 0,
+          "changed_prefix_requests": 0,
+          "mean_differences": {
+            "average_turnaround_time": 0,
+            "blocked_requests": 0,
+            "completions": 0,
+            "cost": 0,
+            "enrolled": 0,
+            "expiry_losses": 0,
+            "losses": 0,
+            "prefix_cost": 0,
+            "route_count": 0,
+            "tail_cost": 0,
+            "waiting_patient_steps": 0
+          },
+          "relative_cost_change_percent": 0
+        },
+        {
+          "block": 61,
+          "changed_prefix_executions": 612,
+          "changed_prefix_requests": 624,
+          "mean_differences": {
+            "average_turnaround_time": -0.2017358957911548,
+            "blocked_requests": 1309.4166666666667,
+            "completions": -656,
+            "cost": 423034113.54673034,
+            "enrolled": 0,
+            "expiry_losses": 558.0833333333334,
+            "losses": 656,
+            "prefix_cost": 400063729.996754,
+            "route_count": 259.4166666666667,
+            "tail_cost": 22970383.54997632,
+            "waiting_patient_steps": 700.4166666666666
+          },
+          "relative_cost_change_percent": 14.806505091598636
+        },
+        {
+          "block": 62,
+          "changed_prefix_executions": 462,
+          "changed_prefix_requests": 464,
+          "mean_differences": {
+            "average_turnaround_time": -0.10726700444800241,
+            "blocked_requests": -345.25,
+            "completions": -29.75,
+            "cost": 15650587.95019281,
+            "enrolled": 0,
+            "expiry_losses": 15.166666666666666,
+            "losses": 29.75,
+            "prefix_cost": 20752217.05327292,
+            "route_count": -321.0833333333333,
+            "tail_cost": -5101629.103080086,
+            "waiting_patient_steps": -76.75
+          },
+          "relative_cost_change_percent": 0.5439487389049669
+        }
+      ],
+      "changed_prefix_executions": 1074,
+      "changed_prefix_requests": 1088,
+      "equal_block_relative_cost_change_percent": 5.116817943501201,
+      "name": "paired_cost-minus-bc_continue"
+    },
+    {
+      "blocks": [
+        {
+          "block": 60,
+          "changed_prefix_executions": 0,
+          "changed_prefix_requests": 0,
+          "mean_differences": {
+            "average_turnaround_time": 0,
+            "blocked_requests": 0,
+            "completions": 0,
+            "cost": 0,
+            "enrolled": 0,
+            "expiry_losses": 0,
+            "losses": 0,
+            "prefix_cost": 0,
+            "route_count": 0,
+            "tail_cost": 0,
+            "waiting_patient_steps": 0
+          },
+          "relative_cost_change_percent": 0
+        },
+        {
+          "block": 61,
+          "changed_prefix_executions": 612,
+          "changed_prefix_requests": 624,
+          "mean_differences": {
+            "average_turnaround_time": -0.2017358957911548,
+            "blocked_requests": 1309.4166666666667,
+            "completions": -656,
+            "cost": 423034113.54673034,
+            "enrolled": 0,
+            "expiry_losses": 558.0833333333334,
+            "losses": 656,
+            "prefix_cost": 400063729.996754,
+            "route_count": 259.4166666666667,
+            "tail_cost": 22970383.54997632,
+            "waiting_patient_steps": 700.4166666666666
+          },
+          "relative_cost_change_percent": 14.806505091598636
+        },
+        {
+          "block": 62,
+          "changed_prefix_executions": 462,
+          "changed_prefix_requests": 464,
+          "mean_differences": {
+            "average_turnaround_time": -0.10726700444800241,
+            "blocked_requests": -345.25,
+            "completions": -29.75,
+            "cost": 15650587.95019281,
+            "enrolled": 0,
+            "expiry_losses": 15.166666666666666,
+            "losses": 29.75,
+            "prefix_cost": 20752217.05327292,
+            "route_count": -321.0833333333333,
+            "tail_cost": -5101629.103080086,
+            "waiting_patient_steps": -76.75
+          },
+          "relative_cost_change_percent": 0.5439487389049669
+        }
+      ],
+      "changed_prefix_executions": 1074,
+      "changed_prefix_requests": 1088,
+      "equal_block_relative_cost_change_percent": 5.116817943501201,
+      "name": "paired_cost-minus-saved_cohort_ppo"
+    },
+    {
+      "blocks": [
+        {
+          "block": 60,
+          "changed_prefix_executions": 0,
+          "changed_prefix_requests": 0,
+          "mean_differences": {
+            "average_turnaround_time": 0,
+            "blocked_requests": 0,
+            "completions": 0,
+            "cost": 0,
+            "enrolled": 0,
+            "expiry_losses": 0,
+            "losses": 0,
+            "prefix_cost": 0,
+            "route_count": 0,
+            "tail_cost": 0,
+            "waiting_patient_steps": 0
+          },
+          "relative_cost_change_percent": 0
+        },
+        {
+          "block": 61,
+          "changed_prefix_executions": 612,
+          "changed_prefix_requests": 624,
+          "mean_differences": {
+            "average_turnaround_time": -0.2017358957911548,
+            "blocked_requests": 1309.4166666666667,
+            "completions": -656,
+            "cost": 423034113.54673034,
+            "enrolled": 0,
+            "expiry_losses": 558.0833333333334,
+            "losses": 656,
+            "prefix_cost": 400063729.996754,
+            "route_count": 259.4166666666667,
+            "tail_cost": 22970383.54997632,
+            "waiting_patient_steps": 700.4166666666666
+          },
+          "relative_cost_change_percent": 14.806505091598636
+        },
+        {
+          "block": 62,
+          "changed_prefix_executions": 462,
+          "changed_prefix_requests": 464,
+          "mean_differences": {
+            "average_turnaround_time": -0.10726700444800241,
+            "blocked_requests": -345.25,
+            "completions": -29.75,
+            "cost": 15650587.95019281,
+            "enrolled": 0,
+            "expiry_losses": 15.166666666666666,
+            "losses": 29.75,
+            "prefix_cost": 20752217.05327292,
+            "route_count": -321.0833333333333,
+            "tail_cost": -5101629.103080086,
+            "waiting_patient_steps": -76.75
+          },
+          "relative_cost_change_percent": 0.5439487389049669
+        }
+      ],
+      "changed_prefix_executions": 1074,
+      "changed_prefix_requests": 1088,
+      "equal_block_relative_cost_change_percent": 5.116817943501201,
+      "name": "paired_cost-minus-r4"
+    },
+    {
+      "blocks": [
+        {
+          "block": 60,
+          "changed_prefix_executions": 535,
+          "changed_prefix_requests": 537,
+          "mean_differences": {
+            "average_turnaround_time": 0.08522958767155282,
+            "blocked_requests": 319.8333333333333,
+            "completions": 30.166666666666668,
+            "cost": -19002132.024831336,
+            "enrolled": 0,
+            "expiry_losses": -12.75,
+            "losses": -30.166666666666668,
+            "prefix_cost": -25697713.4110623,
+            "route_count": 296.4166666666667,
+            "tail_cost": 6695581.386231045,
+            "waiting_patient_steps": 15.25
+          },
+          "relative_cost_change_percent": -0.6941394587057754
+        },
+        {
+          "block": 61,
+          "changed_prefix_executions": 612,
+          "changed_prefix_requests": 624,
+          "mean_differences": {
+            "average_turnaround_time": -0.12808584728505065,
+            "blocked_requests": 1664.6666666666667,
+            "completions": -628.0833333333334,
+            "cost": 403905140.1456626,
+            "enrolled": 0,
+            "expiry_losses": 540.0833333333334,
+            "losses": 628.0833333333334,
+            "prefix_cost": 378384907.2364583,
+            "route_count": 558,
+            "tail_cost": 25520232.909204334,
+            "waiting_patient_steps": 679.6666666666666
+          },
+          "relative_cost_change_percent": 14.042955416469692
+        },
+        {
+          "block": 62,
+          "changed_prefix_executions": 0,
+          "changed_prefix_requests": 0,
+          "mean_differences": {
+            "average_turnaround_time": 0,
+            "blocked_requests": 0,
+            "completions": 0,
+            "cost": 0,
+            "enrolled": 0,
+            "expiry_losses": 0,
+            "losses": 0,
+            "prefix_cost": 0,
+            "route_count": 0,
+            "tail_cost": 0,
+            "waiting_patient_steps": 0
+          },
+          "relative_cost_change_percent": 0
+        }
+      ],
+      "changed_prefix_executions": 1147,
+      "changed_prefix_requests": 1161,
+      "equal_block_relative_cost_change_percent": 4.449605319254639,
+      "name": "paired_cost-minus-full_mdl2"
+    }
+  ],
+  "environment_calls": 0,
+  "episode_numeric_fields_reconciled": 2376,
+  "episodes": 216,
+  "format": "paired-cohort-independent-raw-arithmetic-v1",
+  "independent_of_campaign_reader_arithmetic": true,
+  "observed_at_utc": "2026-10-02T18:09:54Z",
+  "optimizer_calls": 0,
+  "patient_identity_recounts": 216,
+  "raw_files_hashed": 1296,
+  "scientific_forward_calls": 0
+}

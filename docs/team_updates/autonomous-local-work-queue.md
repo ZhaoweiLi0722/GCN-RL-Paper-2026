@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete negative comparison; launcher archive timeout
+## Live checkpoint: new conservative two-round runner; one approval pending
+
+2026-10-02T19:18Z. Zhaowei requested `启动新实验 我们现在的目的就是优化performance`.
+Prepared the complete two-round, current-policy-state/current-policy-continuation
+comparison in specs/2026-10-02-conservative-cohort-improvement/. This targets the
+leading coverage/drift hypothesis, not a proven cause or a reward-weight change.
+The complete numerical package was asked once via async approval:49626maximum
+environment calls,768actor/0critic,180evaluations,28800seconds,one attempt.
+No subsequent answer observed; no execution approval or scientific run inferred.
+
+Delivered: new bounded actor with KL coefficient0.05, versioned greedy context
+and current-policy branch collectors, two-round training bridge, pure budgets,
+typed fresh streams, three-initializer binding, native serial admission/runner,
+sealed five-controller comparison and independent raw-cost/patient reader.
+Both arms share the original start and public data; round2continues each arm's
+own weights. All9final models seal after12round-fit boundaries before tests.
+Full states remain in per-episode/branch/update artifacts; launcher checkpoints
+do not recopy immutable datasets. Archiving is inside the watched child stages.
+
+Validation:46related unit/mock tests passed, including actual persisted metadata
+with fake scientific backends and exact native admission. Whole-repository
+compileall passed (exit0). Fake end-to-end calls are not experiment
+data. New scientific model loads/forwards/environment/optimizer calls all0.
+Live ps at19:14Z found no matching research process (only the scan itself).
+The previous recovery remains terminal; no results or source from it changed.
+
+Finite advancement agent Bacon delivered actor/tests and is closed. Coordinator
+implemented integration and tests; prior efficiency advice reused without an
+extra audit gate. No always-running agent or active training is claimed.
+The existing scheduler was alreadyPAUSED; this turn has not changed it.
+
+Next: after the single package approval, record the exact literal/hashes,
+append approved change control, freeze committed source/runtime/input/seeds,
+then launch the entire one-attempt package. No per-round permission needed.
+Remaining blocker is scope approval plus its deterministic lock/launch steps,
+not another qualification fit. Evidence and entry commands:
+specs/2026-10-02-conservative-cohort-improvement/integration-readout.md.
+
+### Previous Complete Comparison: Negative Result and Archive Timeout
 
 2026-10-02T18:29:38Z. All scientific jobs finished:285/285new and402/402total
 branches;3paired+3BCfits;768actor/0critic;12seals;216/216evaluations;

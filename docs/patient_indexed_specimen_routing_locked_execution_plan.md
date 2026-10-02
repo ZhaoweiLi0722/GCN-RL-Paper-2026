@@ -3065,3 +3065,35 @@ Full evidence and preservation limitations are recorded in
 specs/2026-10-02-paired-cohort-improvement/recovery1/terminal-readout.md.
 The same monitor isPAUSED and retained after handoff. New scope requires a
 separate bounded decision; no Howard approval, external action or StageE change.
+
+#### Conservative current-policy comparison prepared, not yet executed
+
+2026-10-02T19:18Z: Zhaowei requested
+`启动新实验 我们现在的目的就是优化performance`.
+Prepared the separate two-round scope documented at
+specs/2026-10-02-conservative-cohort-improvement/protocol.md and
+experiments/configs/conservative_cohort_improvement_20261002.json.
+Leading unproven hypothesis: sparse reference-policy state coverage, conditional
+label noise and closed-loop policy drift. No evidence establishes reward-weight
+error. Preserve the original objective, model, public inputs, candidate support
+and scenario; use learner-visited states and the frozen current-policy branch
+continuation with four futures and fixed0.05KL regularization. This changes the
+training mechanism, not the scientific interpretation of the previous failure.
+
+One prospective full-package approval question was sent:3blocks,2rounds,12context
+cohorts/36states,up to864branches/37152calls,6actors each128totalupdates,180final
+evaluation cohorts. Total49626environment calls/768actor/0critic/28800seconds;
+phase/owner caps in the draft. No new initializer training, old-test reuse or
+automatic retries. Same-start frozen/BC andR4/fullMDL2 controls are fixed.
+The preceding generic request is direction/engineering authority only; no reply
+to these later numerical limits was observed at this checkpoint. Draft remains
+false. No freeze, authorization, model load/forward, simulation or fit occurred.
+This entry records preparation, not an execution permit. Append exact approved
+change control and committed locks before any scientific launch.
+
+Additive source includes the full serial entry and raw comparator.46zero-real-
+update artificial/mock tests passed, including actual stored metadata under fake
+loaders and native admission. The finite advancement agent delivered and closed;
+prior efficiency advice reused. No new historical audit or toy fitting campaign.
+The new child handles archives within its watched budgets; old results and the
+old closure failure are untouched. Still no promised performance or publication.

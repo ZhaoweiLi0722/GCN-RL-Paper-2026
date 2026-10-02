@@ -2884,3 +2884,32 @@ Existing valid checks and models are reused;no training/history reaudit.
 The deliverable is the complete original cost/patient comparison,not readiness
 counts. No repeated routine approval is required. All prior local-only,holdout,
 StageE,remote/export and Howard-approval boundaries remain unchanged.
+
+#### Evaluation recovery2: completed, exact observed null closes this route
+
+2026-10-02T11:42Z: execution e453037 completed normally, exit0, with all216
+original evaluations (11reused plus205new), exactly12915new environment calls
+and zero optimizer calls. Both runner PIDs79988/80002 are absent. No duplicate,
+retraining, reward/seed/metric change or retry occurred. The original17partial
+calls and both historical failures remain preserved. This is not a new
+independent confirmation sample.
+
+The independent216episode reader found identical greedy requests, raw costs
+and final states in all36paired worlds for cohort PPO versus own-frozen,
+window PPO, BC-CONTINUE andR4. Each primary comparison has0/1872changed prefix
+requests and zero cost,loss,completion and waiting differences in every block.
+The locked decision is close_one_shot_route: no positive incremental RL effect.
+The shared -0.474826%cost difference againstMDL-2 is inherited R4/frozen behavior,
+not an addedRL or isolatedGCN effect. Reduced simulated patient losses coexist
+with longer waiting/turnaround and block60expiry worsening; all are reported.
+
+Payload2637files and launcher645files are locally archived with every member
+read/hashed and original payload unchanged. The existing runner verified locks
+at closure;stderr is empty, no forced kill. No repeated history/training audit.
+Readout:specs/2026-10-02-cohort-evaluation-recovery2/terminal-readout.md;
+raw comparison SHA256b4c993de4d48fa111ea5d9f9f2b06d2eee250042924e13fd4cc27db58f44ff60.
+The samegcn-rl automation is PAUSED and visible after completing its finite chain.
+No further fitting, trajectory, objective-weight search or automatic follow-on
+is authorized. Paper framing may use this bounded null, but any different
+scientific hypothesis needs a fresh prospective finite scope. StageE stays
+closed, holdout untouched, no remote/Dropbox action or Howardapproval claim.

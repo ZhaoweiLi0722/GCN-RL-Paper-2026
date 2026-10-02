@@ -1,6 +1,60 @@
 # Autonomous local research queue
 
-## Live checkpoint: recovery2 seed repair; explicit single-run approval received
+## Live checkpoint: complete comparison, exact observed RL null
+
+2026-10-02T11:42Z (07:42EDT). Recovery2 completed exit0; all216evaluations and
+the independent raw comparison are complete. PIDs79988/80002 are absent. The
+samegcn-rl automation is PAUSED,tool-confirmed,not deleted. No active scientific
+workload or automatic follow-on authority remains.
+
+New supported answer:cohort-objective PPO changed0/1872greedy prefix requests
+against each primary control; all36paired worlds have identical cost and final
+state against own-frozen,windowPPO,BC-CONTINUE andR4. Primary cost,patient loss,
+completion and waiting increments are exactly0 in all3blocks. The prespecified
+decision is close_one_shot_route,not promotion. Shared -0.474826%cost and
+-21.56simulated patient losses percohort versusMDL-2 are inherited R4/frozen
+performance,not newRL or isolatedGCN evidence. Waiting+30.83patient-steps and
+turnaround+0.08707simulator units remain reported trade-offs.
+
+Exactly205new evaluations/12915environment calls/0optimizer calls;11old full
+evaluations and12sealed models reused. Elapsed2133.496s;stderr0bytes. Payload
+archive2637files/745774457bytes and launcher645files/1170279bytes verified by
+member readback;noDropbox/cloud/access claim. Source/input locks and payload
+unchanged at runner closure. No repeated training/history audit performed.
+Sevenfocused mock-entry tests and fullcompileall passed before execution.
+
+Readout and supported manuscript wording:
+specs/2026-10-02-cohort-evaluation-recovery2/terminal-readout.md.
+Evidence:results/dynamic_candidate_cohort_objective_20261002_evaluation_recovery2/
+payload/{comparison.json,independent-verification.json,compute-accounting.json},
+launcher/{terminal.json,closure.json,archive-receipt.json},closure-archive-receipt.json.
+Next concrete decision:close this recipe and decide whether to center the paper
+on the supported graph-aware package with an explicit RL boundary result;any
+newRL scenario/formulation requires a separate finite prospective package.
+No routine evaluation remains. Do not add an audit,fit or retry to keep the
+automation alive. This result does not prove allRLuseless or global optimality.
+Graph attribution must still rely on actual matched ablations.
+
+## Previous running checkpoint
+
+2026-10-02T11:06Z (07:06EDT). Executione453037,implementation
+63058e6b4d9d30bf7f3ec5aa64e111f89a8b0e30;frozenpacket
+61ea95b9b4c7b4cde8152e28df4a54ed2929c383c78ad2f29557e0838e4e3ae8.
+SupervisorPID79988 and child80002(PPID79988) verified live with the exact
+run_cohort_evaluation_recovery2 commands. Twelve model bindings completed;
+evaluation advanced to16/216complete cohorts (11reused,5new),currentblock60/
+window_ppo. The previous incomplete own-frozen world11 is complete in the new
+root. New boundaries and process evidence confirm actual execution,not merely
+automation. Resultroot:results/dynamic_candidate_cohort_objective_20261002_evaluation_recovery2.
+No new training/optimizer or scientific settings changes. No outcome claim yet.
+
+The samegcn-rl automation is ACTIVE with the recovery2-only monitor and will
+pause at terminal completion/failure. Coordinator remains attached to the running
+exec session;do not launch a duplicate. Next:complete205newcohorts,read the
+original216paired raw outcomes once,archive the newpayload,reportcost/patient
+contrasts. All of this is authorized;no extra routine approval required.
+
+## Previous recovery2 preparation checkpoint
 
 2026-10-02T11:03Z. Zhaowei explicitly answered `批准这一次仅评估续接` to the
 205remaining-evaluations/12915steps/zerooptimizer/240s-owner/7200s-global question.

@@ -2913,3 +2913,23 @@ No further fitting, trajectory, objective-weight search or automatic follow-on
 is authorized. Paper framing may use this bounded null, but any different
 scientific hypothesis needs a fresh prospective finite scope. StageE stays
 closed, holdout untouched, no remote/Dropbox action or Howardapproval claim.
+
+#### Next mechanism preparation, not execution authorization
+
+2026-10-02T11:58Z: user requested immediate substantive progress after the
+completed comparison. Local additive preparation delivered an all-candidate
+expected-cost objective and full remaining-horizon branch planner. The proposed
+model-assisted one-step policy-improvement package is in
+specs/2026-10-02-paired-cohort-improvement/ and
+experiments/configs/paired_cohort_improvement_20261002.json. It holds reward,
+scenario,architecture,request support and actor information fixed, but replaces
+the learning objective and uses additional simulator-generated training labels.
+This is not an isolated pairing ablation,model-free PPO/DDPG or deployment-online
+adaptation. Old attempts remain consumed;no new science has run.
+
+One explicit numerical question is pending:33318environment calls,768actor
+updates,zero critic updates,216evaluations,14400seconds,one attempt. This entry
+does not approve it. Finish versioned integration and fake-entry tests, then
+bind source/runtime/input/seed locks and exact authorization before any science.
+No new baseline/horizon sweep,repeat history audit,toy fitting or reward search.
+The finite advancement and efficiency assignments are complete and closed.

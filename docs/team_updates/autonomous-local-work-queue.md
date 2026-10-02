@@ -1,6 +1,50 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete comparison, exact observed RL null
+## Live checkpoint: next learning objective implemented, new scope pending
+
+2026-10-02T11:58Z. Recovery2 remains completed with the exact observed null;
+no further old evaluation or historical archive audit was run. User requested
+immediate substantive advancement after completion. This authorizes local
+preparation, not a silently expanded scientific attempt.
+
+Delivered a usable all-candidate expected-cost objective and complete remaining-
+horizon branch planner, not another value-baseline tweak. Raw costs stayfloat64
+through reference subtraction, with gradients reaching the existingfloat32
+actor. A prospective one-step rollout policy-improvement package now fixes all
+data/fitting/comparison/preservation limits in
+experiments/configs/paired_cohort_improvement_20261002.json and
+specs/2026-10-02-paired-cohort-improvement/{protocol.md,integration-readout.md}.
+Twenty-eight zero-optimizer forward/gradient/accounting tests passed. Full
+compileall passed. No new scientific model loaded, environment stepped or
+optimizer called. Historical scientific source/results were not modified.
+
+Question answered: the completed comparison rules out an observed increment
+for the old recipe; prior saved-data evidence rules out literally no exploration
+or probability movement in that earlier continuation. Neither proves the causal
+bottleneck. Next hypothesis directly compares candidate remaining costs under
+fixedR4 continuation, rather than further PPO baseline/horizon tuning. This is
+model-assisted policy improvement, not DDPG/PPO superiority, isolatedGCN gain
+or deployment-online adaptation. Reward, scenario, support and public actor
+information stay fixed; extra simulator training access must be disclosed.
+
+Outstanding implementation: versioned conditional-future branch collection,
+actor-only update/restore binding, serial entry and raw comparison integration.
+Reuse existing recording/budget/seal/archive facilities; test the actual persisted
+metadata through fake entry before freeze, no extra toy-fitting campaign.
+One concrete complete approval question has been asked:12reference cohorts,
+36context states,up to432branches,6actor fits at128updates,216evaluations;
+33318environment calls/768actor updates/0critic/14400seconds,oneattempt,no retry.
+No reply yet. Complete source/runtime/input/seed locks after integration and
+approval, before any science. No routine reapproval inside the approved package.
+
+Advancement agentSartre delivered its disjoint objective/tests and is closed;
+efficiency agentNewton returned three advisory delays to remove and is closed.
+Coordinator delivered integration precision regression,branch plan and proposal.
+Both are finite completed assignments,not background training. No research
+process is running;the samegcn-rl automation remainsPAUSED. Old attempts stay
+closed,no remote/export/holdout/StageE action or Howardapproval claim.
+
+## Previous complete-comparison checkpoint
 
 2026-10-02T11:42Z (07:42EDT). Recovery2 completed exit0; all216evaluations and
 the independent raw comparison are complete. PIDs79988/80002 are absent. The

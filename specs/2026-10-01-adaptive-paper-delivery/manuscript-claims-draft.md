@@ -75,6 +75,19 @@ comparisons above or add evidence to their holdout sample.
 
 ## Limitations and next decision
 
+A subsequent saved-record diagnosis reconstructed 4,992 PPO training decisions
+without new simulation or model evaluation. On the last collected rollout in
+each block, the value baseline explained only 0.106%-0.282% of return variance,
+while pooled return-to-go correlated strongly with episode step (0.959-0.975).
+This identifies weak collection-time baseline discrimination, not its causal
+contribution to the null result or the final checkpoint's value accuracy.
+Sampled action-return associations are state- and policy-confounded; they do
+not establish absent headroom. Separate policy/entropy parameter gradients were
+not retained, so their causal contributions cannot be decomposed retrospectively.
+See the [saved-return diagnosis](../../reports/2026-10-02-saved-return-ranking/readout.md).
+A prospectively controlled value-baseline comparison is a more specific next
+hypothesis than changing rewards on the basis of this null result alone.
+
 Historical replay/target and graph-contract limitations are documented, but
 they do not identify a single causal explanation for the null RL increment.
 Engineering tests and exact restoration are not performance results. The

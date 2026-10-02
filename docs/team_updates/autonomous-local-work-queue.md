@@ -1,6 +1,45 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete comparison closed; no incremental greedy PPO benefit
+## Live checkpoint: saved-data value-baseline bottleneck identified
+
+2026-10-02T04:26Z. User requested the next step and automatic progression.
+Entry HEAD44cfc2783019dcea71f75920d52f3818ccf6ce4f was clean; host PID/PPID/command
+inspection found no matching research process. Existing gcn-rl heartbeat updated
+and read back ACTIVE on the same thread, every30minutes. This schedules local
+saved-data diagnosis/paper/proposal preparation, not background training.
+
+New report:reports/2026-10-02-saved-return-ranking/readout.md and diagnostic.json.
+All96PPO training episodes/4,992decisions/24rollouts/384minibatches inspected using
+99hash-matched phase/event files, without model loading/forward/env/optimizer.
+First-minibatch loss arithmetic reconciles within3.503e-7. Last collected-rollout
+value explained variance is0.002817/0.001061/0.002136 for blocks60/61/62,while
+return-step correlations are0.959-0.975. The baseline changes level but barely
+distinguishes statewise returns. This is a concrete learning limitation,not
+proof of causality,wrong reward,no headroom or final-checkpoint value quality.
+Observed action-return associations do not replicate direction across blocks.
+Entropy-specific parameter gradients were not saved;do not blame entropy based
+on loss magnitudes or an analytic logit-space calculation.
+
+Independent source-contract note is complete:normalized_time reaches the
+critic;returns are not minibatch-normalized;actor andcritic owners are separate.
+This rules out those wiring/unit explanations,not saturation or optimization.
+Next authorized delivery N3:prepare a single complete end-to-end value-baseline comparison proposal with
+current PPO,same-start frozen and BC-CONTINUE controls,exact new stream binding,
+initialization,unchanged reward/scenario and complete compute/time budgets.
+No additional fit-only gate or repeat archive audit. Prepare only;new model
+loads/scorings,optimizer calls and patient episodes require the complete new
+scientific approval. The completed continuation attempt remains consumed.
+Update paper wording and Live/workflow,then ask one consolidated decision and
+pause the visible automation when only execution approval remains.
+
+Coordinator owns JSON arithmetic/tests/integration. Advancement agent Rawls
+completed the disjoint source-contract note and was closed;efficiency agent Carson completed one
+read-only pass and was closed. Its advice is adopted:no repeat null-result audit,
+one decision memo and no extra toy campaign. Seven scalar tests and full
+compileall passed. The next packet is not yet frozen or approved. No remote,
+Dropbox,holdout,Howard sign-off or Stage E reopening.
+
+## Previous checkpoint: complete comparison closed; no incremental greedy PPO benefit
 
 2026-10-02T03:05Z. Approved continuation execution63c2383 completed successfully.
 Owned session7219 exited0;terminal and required closure archive both verified.

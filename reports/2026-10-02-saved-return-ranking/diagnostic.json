@@ -1,0 +1,3041 @@
+{
+  "blocks": [
+    {
+      "all": {
+        "advantage_step_correlation": 0.8852908093870636,
+        "group_counts": {
+          "nonreference": 1288,
+          "reference": 376
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.0006384038055409567,
+        "mean_reference_logit_policy_ascent_signal": 0.007731741399628896,
+        "return_step_correlation": 0.9685030382280689,
+        "rows": 1664,
+        "within_update_time_nonreference_minus_reference_mean_return": 0.0022800280280560296,
+        "within_update_time_return_sd": 0.17419042580475813
+      },
+      "block": 60,
+      "episodes": 32,
+      "first16episodes": {
+        "advantage_step_correlation": 0.938062014510951,
+        "group_counts": {
+          "nonreference": 620,
+          "reference": 212
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.0010126373071339184,
+        "mean_reference_logit_policy_ascent_signal": 0.013180572305126008,
+        "return_step_correlation": 0.9546246161925863,
+        "rows": 832,
+        "within_update_time_nonreference_minus_reference_mean_return": -0.00494759242027766,
+        "within_update_time_return_sd": 0.21678577354198011
+      },
+      "last16episodes": {
+        "advantage_step_correlation": 0.9629683479799301,
+        "group_counts": {
+          "nonreference": 668,
+          "reference": 164
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.00026417030394799496,
+        "mean_reference_logit_policy_ascent_signal": 0.0022829104941317875,
+        "return_step_correlation": 0.982797886461462,
+        "rows": 832,
+        "within_update_time_nonreference_minus_reference_mean_return": 0.010975670499369199,
+        "within_update_time_return_sd": 0.1169980225212854
+      },
+      "rows": 1664,
+      "updates": [
+        {
+          "advantage": {
+            "max": -0.05313629669023889,
+            "mean": -1.446471430643564,
+            "min": -2.5625135547861286,
+            "n": 208,
+            "sd": 0.767975773354702
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9805892208754571,
+            "group_counts": {
+              "nonreference": 154,
+              "reference": 54
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0009865472582424155,
+            "mean_reference_logit_policy_ascent_signal": 0.040195328258250854,
+            "return_step_correlation": 0.9805892208754571,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.0028943945805779783,
+            "within_update_time_return_sd": 0.12287500233937447
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 6.046964584616177e-08,
+            "value": 1.7704642418792105e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.07216938405180007,
+            "mean": 0.036577550889654836,
+            "min": 0.015750745893171603,
+            "n": 208,
+            "sd": 0.014754019014899717
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.001544986180234859,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.19001717865467072,
+              "mean": 0.10031577269546688,
+              "min": 0.015728119760751724,
+              "n": 16,
+              "sd": 0.05301927018715449
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 7.4027099609375,
+              "mean": 5.127234190702438,
+              "min": 2.548546075820923,
+              "n": 16,
+              "sd": 1.6179281661354135
+            },
+            "entropy": {
+              "max": 1.7109843492507935,
+              "mean": 1.6857665553689003,
+              "min": 1.6703448295593262,
+              "n": 16,
+              "sd": 0.010208942280669273
+            },
+            "policy_loss": {
+              "max": 0.26538845896720886,
+              "mean": 0.010115575976669788,
+              "min": -0.25028160214424133,
+              "n": 16,
+              "sd": 0.12655554930002375
+            },
+            "value_loss": {
+              "max": 3.1194686889648438,
+              "mean": 2.5465370267629623,
+              "min": 2.150477886199951,
+              "n": 16,
+              "sd": 0.2632989065940162
+            }
+          },
+          "returns": {
+            "max": -0.05313629669023889,
+            "mean": -1.446471430643564,
+            "min": -2.5625135547861286,
+            "n": 208,
+            "sd": 0.767975773354702
+          },
+          "rows": 208,
+          "update": 1,
+          "value_explained_variance": 0.0,
+          "value_rmse": 1.6377015564893964,
+          "values": {
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "n": 208,
+            "sd": 0.0
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.10214335088759315,
+            "mean": -1.4881270187934919,
+            "min": -2.8857896883379683,
+            "n": 208,
+            "sd": 0.8667936824339741
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9547214249191656,
+            "group_counts": {
+              "nonreference": 161,
+              "reference": 47
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0010398055389368517,
+            "mean_reference_logit_policy_ascent_signal": 0.024648731982625457,
+            "return_step_correlation": 0.9547956973746,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.029262559952672948,
+            "within_update_time_return_sd": 0.22937511496335866
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 7.560821146945784e-08,
+            "value": 1.2381983083287196e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.07515872662055556,
+            "mean": 0.038945805344208224,
+            "min": 0.017211125586888754,
+            "n": 208,
+            "sd": 0.015274720118378474
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0016225552022153481,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.31388381123542786,
+              "mean": 0.1297828711103648,
+              "min": 0.023206677287817,
+              "n": 16,
+              "sd": 0.06826825503995769
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 9.40803337097168,
+              "mean": 7.865919083356857,
+              "min": 6.440672874450684,
+              "n": 16,
+              "sd": 0.7735554064241137
+            },
+            "entropy": {
+              "max": 1.724851131439209,
+              "mean": 1.6879175454378128,
+              "min": 1.64396333694458,
+              "n": 16,
+              "sd": 0.018638656681018675
+            },
+            "policy_loss": {
+              "max": 0.29578620195388794,
+              "mean": -0.005097967106848955,
+              "min": -0.27017778158187866,
+              "n": 16,
+              "sd": 0.1557963296369823
+            },
+            "value_loss": {
+              "max": 3.3155508041381836,
+              "mean": 2.7195858359336853,
+              "min": 1.9481148719787598,
+              "n": 16,
+              "sd": 0.3500761512727043
+            }
+          },
+          "returns": {
+            "max": -0.04029036695927728,
+            "mean": -1.6344368455314782,
+            "min": -3.027249719608949,
+            "n": 208,
+            "sd": 0.8691350931823434
+          },
+          "rows": 208,
+          "update": 2,
+          "value_explained_variance": 0.0053806524192258065,
+          "value_rmse": 1.7221652975166626,
+          "values": {
+            "max": -0.13667695224285126,
+            "mean": -0.14630982673798615,
+            "min": -0.15022648870944977,
+            "n": 208,
+            "sd": 0.0034380798970897034
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.26973094124509306,
+            "mean": -1.1949629135796918,
+            "min": -2.550316238975484,
+            "n": 208,
+            "sd": 0.8200329970551012
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9729029278186698,
+            "group_counts": {
+              "nonreference": 157,
+              "reference": 51
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0009633314246483151,
+            "mean_reference_logit_policy_ascent_signal": 0.013787118356811227,
+            "return_step_correlation": 0.9728729705502284,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.014440720550797394,
+            "within_update_time_return_sd": 0.16752626210088734
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 1.648464830750207e-07,
+            "value": 4.2189993720853636e-09
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.07964643627121593,
+            "mean": 0.03655991171439688,
+            "min": 0.018333419479816815,
+            "n": 208,
+            "sd": 0.015833889405638537
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.001534981560202912,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.3751921057701111,
+              "mean": 0.10330664995126426,
+              "min": 0.03539193421602249,
+              "n": 16,
+              "sd": 0.08076339290621988
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 8.821449279785156,
+              "mean": 6.525999456644058,
+              "min": 5.28298807144165,
+              "n": 16,
+              "sd": 0.8279889431303554
+            },
+            "entropy": {
+              "max": 1.737809181213379,
+              "mean": 1.7086499705910683,
+              "min": 1.63087797164917,
+              "n": 16,
+              "sd": 0.02416772286710733
+            },
+            "policy_loss": {
+              "max": 0.5132696032524109,
+              "mean": 0.02636087767314166,
+              "min": -0.19693514704704285,
+              "n": 16,
+              "sd": 0.1696285369440713
+            },
+            "value_loss": {
+              "max": 2.9781432151794434,
+              "mean": 1.9683186933398247,
+              "min": 1.4279834032058716,
+              "n": 16,
+              "sd": 0.3538438836303112
+            }
+          },
+          "returns": {
+            "max": -0.04577220897959263,
+            "mean": -1.5111907529796806,
+            "min": -2.865110600566823,
+            "n": 208,
+            "sd": 0.8207521301271439
+          },
+          "rows": 208,
+          "update": 3,
+          "value_explained_variance": 0.0017516080624464525,
+          "value_rmse": 1.44927239713245,
+          "values": {
+            "max": -0.3127205967903137,
+            "mean": -0.31622783939998883,
+            "min": -0.3174351751804352,
+            "n": 208,
+            "sd": 0.0010223510892692215
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.4337404414419439,
+            "mean": -1.0763899728017141,
+            "min": -2.826237485080102,
+            "n": 208,
+            "sd": 0.8674593262800168
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.931030724166475,
+            "group_counts": {
+              "nonreference": 148,
+              "reference": 60
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0010608650067080914,
+            "mean_reference_logit_policy_ascent_signal": -0.02590888937718351,
+            "return_step_correlation": 0.9310744212743132,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.03293362769978061,
+            "within_update_time_return_sd": 0.30365774876154283
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 1.0395144736663475e-07,
+            "value": 2.297824333030718e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.08170478211700694,
+            "mean": 0.041186430789927196,
+            "min": 0.01773747768309608,
+            "n": 208,
+            "sd": 0.016999512886993515
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0016959354987492686,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.21705427765846252,
+              "mean": 0.1123148127226159,
+              "min": 0.023708848282694817,
+              "n": 16,
+              "sd": 0.05353958776321748
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 7.284727573394775,
+              "mean": 5.851416319608688,
+              "min": 4.536154747009277,
+              "n": 16,
+              "sd": 0.7682483420305151
+            },
+            "entropy": {
+              "max": 1.7212858200073242,
+              "mean": 1.6934116184711456,
+              "min": 1.6455881595611572,
+              "n": 16,
+              "sd": 0.017978596698542015
+            },
+            "policy_loss": {
+              "max": 0.34409478306770325,
+              "mean": 0.020627232268452644,
+              "min": -0.2700863480567932,
+              "n": 16,
+              "sd": 0.14626445147771097
+            },
+            "value_loss": {
+              "max": 2.524747848510742,
+              "mean": 1.7860094159841537,
+              "min": 1.2157071828842163,
+              "n": 16,
+              "sd": 0.35309314505654515
+            }
+          },
+          "returns": {
+            "max": -0.0435016707177851,
+            "mean": -1.5542815580898537,
+            "min": -3.303305164246896,
+            "n": 208,
+            "sd": 0.8678266249682038
+          },
+          "rows": 208,
+          "update": 4,
+          "value_explained_variance": 0.0008463002860867874,
+          "value_rmse": 1.3824257869044023,
+          "values": {
+            "max": -0.4737752079963684,
+            "mean": -0.47789158528813946,
+            "min": -0.478511244058609,
+            "n": 208,
+            "sd": 0.0007212475848629578
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.5810632470608998,
+            "mean": -0.902780602615999,
+            "min": -2.1131317330754773,
+            "n": 208,
+            "sd": 0.816171072940399
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9812163770202404,
+            "group_counts": {
+              "nonreference": 160,
+              "reference": 48
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0006305795010707715,
+            "mean_reference_logit_policy_ascent_signal": -0.03634317792591461,
+            "return_step_correlation": 0.9812020294383256,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.03850930887010241,
+            "within_update_time_return_sd": 0.13742493409055
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 5.29523962681383e-08,
+            "value": 8.3925248972605e-09
+          },
+          "fraction_actor_minibatches_clipped": 0.0625,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.049090691079848536,
+            "mean": 0.015475806230391033,
+            "min": 0.007228703960676652,
+            "n": 208,
+            "sd": 0.007249496727408054
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0009876355578941729,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.5399138927459717,
+              "mean": 0.1467060117283836,
+              "min": 0.02596612460911274,
+              "n": 16,
+              "sd": 0.11987538125830166
+            },
+            "clip_fraction": {
+              "max": 0.1875,
+              "mean": 0.03515625,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.06334872945401115
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 5.503396987915039,
+              "mean": 4.8368470668792725,
+              "min": 3.6114020347595215,
+              "n": 16,
+              "sd": 0.5237559203672559
+            },
+            "entropy": {
+              "max": 1.7440128326416016,
+              "mean": 1.7202829718589783,
+              "min": 1.6995272636413574,
+              "n": 16,
+              "sd": 0.01301332402683685
+            },
+            "policy_loss": {
+              "max": 0.2257622331380844,
+              "mean": 0.008769426611252129,
+              "min": -0.18682771921157837,
+              "n": 16,
+              "sd": 0.10074393987424551
+            },
+            "value_loss": {
+              "max": 1.5745480060577393,
+              "mean": 1.364866677671671,
+              "min": 0.9772047400474548,
+              "n": 16,
+              "sd": 0.15691128477389063
+            }
+          },
+          "returns": {
+            "max": -0.05588313307749738,
+            "mean": -1.5405753135983034,
+            "min": -2.7504069520391004,
+            "n": 208,
+            "sd": 0.8165874988657031
+          },
+          "rows": 208,
+          "update": 5,
+          "value_explained_variance": 0.0010196574056400287,
+          "value_rmse": 1.2170242547970802,
+          "values": {
+            "max": -0.6356737017631531,
+            "mean": -0.6377947109823043,
+            "min": -0.6383860111236572,
+            "n": 208,
+            "sd": 0.0005809261122584117
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.7425866908576408,
+            "mean": -0.6647390841925025,
+            "min": -1.806477485431731,
+            "n": 208,
+            "sd": 0.7941025876820494
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.987085212552371,
+            "group_counts": {
+              "nonreference": 168,
+              "reference": 40
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00016738560583202353,
+            "mean_reference_logit_policy_ascent_signal": 0.011223756299333578,
+            "return_step_correlation": 0.9870810364104136,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.006275039944015671,
+            "within_update_time_return_sd": 0.10310289522630388
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 1.3198893818178181e-08,
+            "value": 5.084426146773069e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.0037483850254902418,
+            "mean": 0.0009735295370719091,
+            "min": 0.00070231196705417,
+            "n": 208,
+            "sd": 0.0004250558988933558
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.00023898075075140358,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.1565425992012024,
+              "mean": 0.0518157189944759,
+              "min": 0.0123318275436759,
+              "n": 16,
+              "sd": 0.032913315311972904
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 5.799859046936035,
+              "mean": 3.4173506647348404,
+              "min": 2.0760598182678223,
+              "n": 16,
+              "sd": 0.8201617738968114
+            },
+            "entropy": {
+              "max": 1.7570220232009888,
+              "mean": 1.73371259868145,
+              "min": 1.6997556686401367,
+              "n": 16,
+              "sd": 0.013508035172497195
+            },
+            "policy_loss": {
+              "max": 0.5190885663032532,
+              "mean": 0.0057347811525687575,
+              "min": -0.24603362381458282,
+              "n": 16,
+              "sd": 0.17029256503755688
+            },
+            "value_loss": {
+              "max": 1.6034471988677979,
+              "mean": 0.9830729141831398,
+              "min": 0.578028678894043,
+              "n": 16,
+              "sd": 0.203154871659241
+            }
+          },
+          "returns": {
+            "max": -0.05326811604238354,
+            "mean": -1.4619688584887862,
+            "min": -2.6033276898995044,
+            "n": 208,
+            "sd": 0.7944594695413218
+          },
+          "rows": 208,
+          "update": 6,
+          "value_explained_variance": 0.0008982250571379913,
+          "value_rmse": 1.035604639723294,
+          "values": {
+            "max": -0.7946319580078125,
+            "mean": -0.7972297742962837,
+            "min": -0.7977461814880371,
+            "n": 208,
+            "sd": 0.0005190579518015498
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.90344646657641,
+            "mean": -0.5688213624651635,
+            "min": -1.8281292879125637,
+            "n": 208,
+            "sd": 0.8471943731675571
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9897591443519238,
+            "group_counts": {
+              "nonreference": 170,
+              "reference": 38
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00012951374369926576,
+            "mean_reference_logit_policy_ascent_signal": 0.016019268553797185,
+            "return_step_correlation": 0.9897533035543653,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.003111599640871653,
+            "within_update_time_return_sd": 0.09309596681566706
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 4.789245716674273e-08,
+            "value": 1.4708657691819838e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.0011529349655479137,
+            "mean": 0.0005533281896676431,
+            "min": 0.0004917798795756045,
+            "n": 208,
+            "sd": 0.00010273574155174775
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0001792893395530613,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.19132079184055328,
+              "mean": 0.04999317092006095,
+              "min": 0.007271898444741964,
+              "n": 16,
+              "sd": 0.04607391908548489
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 4.048774719238281,
+              "mean": 2.8406162038445473,
+              "min": 1.6791008710861206,
+              "n": 16,
+              "sd": 0.7013944268587101
+            },
+            "entropy": {
+              "max": 1.7798535823822021,
+              "mean": 1.7554392665624619,
+              "min": 1.734224557876587,
+              "n": 16,
+              "sd": 0.010280313183721915
+            },
+            "policy_loss": {
+              "max": 0.22328391671180725,
+              "mean": -1.1700787581503391e-05,
+              "min": -0.24510814249515533,
+              "n": 16,
+              "sd": 0.13423553026934784
+            },
+            "value_loss": {
+              "max": 1.2472007274627686,
+              "mean": 0.9734157025814056,
+              "min": 0.8494207859039307,
+              "n": 16,
+              "sd": 0.10133169768852814
+            }
+          },
+          "returns": {
+            "max": -0.05087497745816641,
+            "mean": -1.525080015626781,
+            "min": -2.784202750875668,
+            "n": 208,
+            "sd": 0.8476369815538346
+          },
+          "rows": 208,
+          "update": 7,
+          "value_explained_variance": 0.0010440621116708515,
+          "value_rmse": 1.020439144840835,
+          "values": {
+            "max": -0.9543214440345764,
+            "mean": -0.9562586531616174,
+            "min": -0.9568150639533997,
+            "n": 208,
+            "sd": 0.0005856327255173015
+          }
+        },
+        {
+          "advantage": {
+            "max": 1.0701297871951418,
+            "mean": -0.43490399605586894,
+            "min": -1.7185165951362555,
+            "n": 208,
+            "sd": 0.8210596549113551
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9775114558348534,
+            "group_counts": {
+              "nonreference": 170,
+              "reference": 38
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00012920236518991891,
+            "mean_reference_logit_policy_ascent_signal": 0.018231795049311,
+            "return_step_correlation": 0.9775191591712596,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.00416679663437949,
+            "within_update_time_return_sd": 0.12873022389626623
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 5.2371784020621703e-08,
+            "value": 8.61715053757095e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.0008935741683659959,
+            "mean": 0.000537335556803474,
+            "min": 0.00047819908969404246,
+            "n": 208,
+            "sd": 7.485140345023927e-05
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0001804131996651208,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.09307832270860672,
+              "mean": 0.038153943460201845,
+              "min": 0.006519717629998922,
+              "n": 16,
+              "sd": 0.026207308279629145
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 2.934129476547241,
+              "mean": 2.064352013170719,
+              "min": 1.3649449348449707,
+              "n": 16,
+              "sd": 0.38563914460101906
+            },
+            "entropy": {
+              "max": 1.745654582977295,
+              "mean": 1.7297930642962456,
+              "min": 1.688628911972046,
+              "n": 16,
+              "sd": 0.01238545116808516
+            },
+            "policy_loss": {
+              "max": 0.09736138582229614,
+              "mean": -0.0095710534369573,
+              "min": -0.1583799421787262,
+              "n": 16,
+              "sd": 0.06934140524326336
+            },
+            "value_loss": {
+              "max": 0.9107690453529358,
+              "mean": 0.786293026059866,
+              "min": 0.5030037760734558,
+              "n": 16,
+              "sd": 0.09505229048525285
+            }
+          },
+          "returns": {
+            "max": -0.04199310613829327,
+            "mean": -1.5492823194045378,
+            "min": -2.8335771629920905,
+            "n": 208,
+            "sd": 0.8222184742409727
+          },
+          "rows": 208,
+          "update": 8,
+          "value_explained_variance": 0.0028167762140073327,
+          "value_rmse": 0.929128862272891,
+          "values": {
+            "max": -1.110040545463562,
+            "mean": -1.1143783233486688,
+            "min": -1.115636944770813,
+            "n": 208,
+            "sd": 0.001394043554265961
+          }
+        }
+      ]
+    },
+    {
+      "all": {
+        "advantage_step_correlation": 0.8863695735668414,
+        "group_counts": {
+          "nonreference": 1324,
+          "reference": 340
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.0002956359557336426,
+        "mean_reference_logit_policy_ascent_signal": -0.009259746818784694,
+        "return_step_correlation": 0.9754099009125959,
+        "rows": 1664,
+        "within_update_time_nonreference_minus_reference_mean_return": -0.009806710117490614,
+        "within_update_time_return_sd": 0.14379666562137824
+      },
+      "block": 61,
+      "episodes": 32,
+      "first16episodes": {
+        "advantage_step_correlation": 0.9481339011399589,
+        "group_counts": {
+          "nonreference": 648,
+          "reference": 184
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.0004269015293387689,
+        "mean_reference_logit_policy_ascent_signal": -0.02122443592089192,
+        "return_step_correlation": 0.9767169130541351,
+        "rows": 832,
+        "within_update_time_nonreference_minus_reference_mean_return": 0.0013974079971440278,
+        "within_update_time_return_sd": 0.13421545786592154
+      },
+      "last16episodes": {
+        "advantage_step_correlation": 0.9492629880516497,
+        "group_counts": {
+          "nonreference": 676,
+          "reference": 156
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.00016437038212851628,
+        "mean_reference_logit_policy_ascent_signal": 0.002704942283322533,
+        "return_step_correlation": 0.9743194327742748,
+        "rows": 832,
+        "within_update_time_nonreference_minus_reference_mean_return": -0.02251090562471802,
+        "within_update_time_return_sd": 0.1527781822037884
+      },
+      "rows": 1664,
+      "updates": [
+        {
+          "advantage": {
+            "max": -0.04985643479004199,
+            "mean": -1.4964626237595364,
+            "min": -2.9423568751228015,
+            "n": 208,
+            "sd": 0.7977170745983864
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9815158425855787,
+            "group_counts": {
+              "nonreference": 152,
+              "reference": 56
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0008730184194693925,
+            "mean_reference_logit_policy_ascent_signal": -0.021059973231001713,
+            "return_step_correlation": 0.9815158425855787,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.03229349281431492,
+            "within_update_time_return_sd": 0.13819679258502204
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 1.4160111000416364e-07,
+            "value": 5.596039720501267e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.07299992029487012,
+            "mean": 0.034474885501589066,
+            "min": 0.016860839312998532,
+            "n": 208,
+            "sd": 0.014173881261362183
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0014309362367787176,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.3096502423286438,
+              "mean": 0.13683452433906496,
+              "min": 0.029538899660110474,
+              "n": 16,
+              "sd": 0.08613351225477826
+            },
+            "clip_fraction": {
+              "max": 0.375,
+              "mean": 0.115234375,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.13698356050858576
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 7.445904731750488,
+              "mean": 5.4205062687397,
+              "min": 2.450498580932617,
+              "n": 16,
+              "sd": 1.6709415431718901
+            },
+            "entropy": {
+              "max": 1.767512321472168,
+              "mean": 1.7400231584906578,
+              "min": 1.7151151895523071,
+              "n": 16,
+              "sd": 0.01626421310697317
+            },
+            "policy_loss": {
+              "max": 0.1469428837299347,
+              "mean": -0.034788890508934855,
+              "min": -0.29029250144958496,
+              "n": 16,
+              "sd": 0.12295054226154362
+            },
+            "value_loss": {
+              "max": 3.1950840950012207,
+              "mean": 2.6457881331443787,
+              "min": 1.7943522930145264,
+              "n": 16,
+              "sd": 0.3331722674581746
+            }
+          },
+          "returns": {
+            "max": -0.04985643479004199,
+            "mean": -1.4964626237595364,
+            "min": -2.9423568751228015,
+            "n": 208,
+            "sd": 0.7977170745983864
+          },
+          "rows": 208,
+          "update": 1,
+          "value_explained_variance": 0.0,
+          "value_rmse": 1.6958045038904348,
+          "values": {
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "n": 208,
+            "sd": 0.0
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.10314719292079871,
+            "mean": -1.4331592623951648,
+            "min": -2.802960393242892,
+            "n": 208,
+            "sd": 0.872448208949879
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9775643247648265,
+            "group_counts": {
+              "nonreference": 160,
+              "reference": 48
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0003599670661066048,
+            "mean_reference_logit_policy_ascent_signal": -0.0290153154863241,
+            "return_step_correlation": 0.9775498484236785,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.02037441673642397,
+            "within_update_time_return_sd": 0.15840045531872837
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 1.1199478934520446e-07,
+            "value": 1.6953730330726557e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.013373908430559744,
+            "mean": 0.005518493137365998,
+            "min": 0.003238653372227729,
+            "n": 208,
+            "sd": 0.001918181201612361
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0005653188433109464,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.2531279921531677,
+              "mean": 0.12182774092070758,
+              "min": 0.042156025767326355,
+              "n": 16,
+              "sd": 0.06430945034362358
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 8.521992683410645,
+              "mean": 7.577146023511887,
+              "min": 6.5374884605407715,
+              "n": 16,
+              "sd": 0.5520658467337176
+            },
+            "entropy": {
+              "max": 1.7877147197723389,
+              "mean": 1.7652785256505013,
+              "min": 1.749117374420166,
+              "n": 16,
+              "sd": 0.01044409839254724
+            },
+            "policy_loss": {
+              "max": 0.20361700654029846,
+              "mean": -0.01003352040424943,
+              "min": -0.18998879194259644,
+              "n": 16,
+              "sd": 0.10607093758540653
+            },
+            "value_loss": {
+              "max": 3.114941120147705,
+              "mean": 2.5875277519226074,
+              "min": 2.1501636505126953,
+              "n": 16,
+              "sd": 0.255992277813731
+            }
+          },
+          "returns": {
+            "max": -0.04422453132713372,
+            "mean": -1.5826551003185907,
+            "min": -2.950353992395457,
+            "n": 208,
+            "sd": 0.8737961535153099
+          },
+          "rows": 208,
+          "update": 2,
+          "value_explained_variance": 0.0030828812185479393,
+          "value_rmse": 1.6778293562483952,
+          "values": {
+            "max": -0.1425521969795227,
+            "mean": -0.14949583792342588,
+            "min": -0.15251483023166656,
+            "n": 208,
+            "sd": 0.002029747184769671
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.2555688870824445,
+            "mean": -1.2830950836399677,
+            "min": -2.641753382088995,
+            "n": 208,
+            "sd": 0.8651250865160988
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.989104368188725,
+            "group_counts": {
+              "nonreference": 164,
+              "reference": 44
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00024733974204494796,
+            "mean_reference_logit_policy_ascent_signal": 0.011790309854774188,
+            "return_step_correlation": 0.9890651426792161,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.021818270884270446,
+            "within_update_time_return_sd": 0.09024313894918558
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 5.987395694517783e-08,
+            "value": 9.328245420547887e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.005157837006354304,
+            "mean": 0.002422167770882249,
+            "min": 0.0015622422786245593,
+            "n": 208,
+            "sd": 0.000752949559129296
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0003739305707332048,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.17379911243915558,
+              "mean": 0.0623544265399687,
+              "min": 0.013891086913645267,
+              "n": 16,
+              "sd": 0.038523174511520236
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 8.175050735473633,
+              "mean": 6.998109191656113,
+              "min": 5.601546764373779,
+              "n": 16,
+              "sd": 0.7768024148183701
+            },
+            "entropy": {
+              "max": 1.77850341796875,
+              "mean": 1.762768805027008,
+              "min": 1.7442152500152588,
+              "n": 16,
+              "sd": 0.010665496325221875
+            },
+            "policy_loss": {
+              "max": 0.3395591378211975,
+              "mean": 0.017540398286655545,
+              "min": -0.2796689569950104,
+              "n": 16,
+              "sd": 0.16228306353675548
+            },
+            "value_loss": {
+              "max": 2.6667473316192627,
+              "mean": 2.24127858877182,
+              "min": 1.7656118869781494,
+              "n": 16,
+              "sd": 0.2845011578697538
+            }
+          },
+          "returns": {
+            "max": -0.060457770737303386,
+            "mean": -1.5998640005368705,
+            "min": -2.9579127496503355,
+            "n": 208,
+            "sd": 0.8656322315587087
+          },
+          "rows": 208,
+          "update": 3,
+          "value_explained_variance": 0.0011713900301916214,
+          "value_rmse": 1.5475058671877606,
+          "values": {
+            "max": -0.3136499524116516,
+            "mean": -0.3167689168969026,
+            "min": -0.31771907210350037,
+            "n": 208,
+            "sd": 0.0007692004711107781
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.4329196906556016,
+            "mean": -0.9262298537693758,
+            "min": -2.137657812669289,
+            "n": 208,
+            "sd": 0.7881956793989833
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.979895491256526,
+            "group_counts": {
+              "nonreference": 172,
+              "reference": 36
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00022728088973413015,
+            "mean_reference_logit_policy_ascent_signal": -0.046612764821016055,
+            "return_step_correlation": 0.9798929678015137,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.0004231242212025582,
+            "within_update_time_return_sd": 0.1404360162752624
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 1.3762468414890705e-08,
+            "value": 1.30582975321758e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.00404466848451146,
+            "mean": 0.0020212099823103255,
+            "min": 0.0013515911710537676,
+            "n": 208,
+            "sd": 0.0006106963345867822
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0003435342781557234,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.23595407605171204,
+              "mean": 0.07628287811530754,
+              "min": 0.010684900917112827,
+              "n": 16,
+              "sd": 0.05029620661017405
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 6.815589904785156,
+              "mean": 4.998766049742699,
+              "min": 3.8366541862487793,
+              "n": 16,
+              "sd": 0.7889665291637312
+            },
+            "entropy": {
+              "max": 1.7728188037872314,
+              "mean": 1.7569906115531921,
+              "min": 1.7206568717956543,
+              "n": 16,
+              "sd": 0.013532546604982912
+            },
+            "policy_loss": {
+              "max": 0.4233413636684418,
+              "mean": 0.02556166669819504,
+              "min": -0.26225531101226807,
+              "n": 16,
+              "sd": 0.16736990892709983
+            },
+            "value_loss": {
+              "max": 2.052473545074463,
+              "mean": 1.3868528790771961,
+              "min": 0.9987933039665222,
+              "n": 16,
+              "sd": 0.2532930278588484
+            }
+          },
+          "returns": {
+            "max": -0.04436733360396567,
+            "mean": -1.403836014478867,
+            "min": -2.614806136920464,
+            "n": 208,
+            "sd": 0.7884412803021742
+          },
+          "rows": 208,
+          "update": 4,
+          "value_explained_variance": 0.0006229066304879183,
+          "value_rmse": 1.2162048228143416,
+          "values": {
+            "max": -0.47600775957107544,
+            "mean": -0.47760616070949113,
+            "min": -0.47808346152305603,
+            "n": 208,
+            "sd": 0.00041600547297226183
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.5829790412915399,
+            "mean": -0.9036681555520035,
+            "min": -2.2472231014689648,
+            "n": 208,
+            "sd": 0.8223877834374319
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9818013681443002,
+            "group_counts": {
+              "nonreference": 175,
+              "reference": 33
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00019261253639459044,
+            "mean_reference_logit_policy_ascent_signal": -0.015865469183812705,
+            "return_step_correlation": 0.9817848191442189,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.015092308508249608,
+            "within_update_time_return_sd": 0.12813890268086575
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 2.485354963499553e-08,
+            "value": 7.759146947172724e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.002599086253952665,
+            "mean": 0.0014133276748583118,
+            "min": 0.000993746768101822,
+            "n": 208,
+            "sd": 0.000380345781270364
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.00028397475040431046,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.08152469247579575,
+              "mean": 0.03735635709017515,
+              "min": 0.00980580784380436,
+              "n": 16,
+              "sd": 0.019151465552743666
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 5.462646961212158,
+              "mean": 4.805646359920502,
+              "min": 3.5809240341186523,
+              "n": 16,
+              "sd": 0.5993509010287423
+            },
+            "entropy": {
+              "max": 1.7790409326553345,
+              "mean": 1.7676132768392563,
+              "min": 1.756188154220581,
+              "n": 16,
+              "sd": 0.006951491907506864
+            },
+            "policy_loss": {
+              "max": 0.22826887667179108,
+              "mean": 0.009818601771257818,
+              "min": -0.24347981810569763,
+              "n": 16,
+              "sd": 0.11716315225215677
+            },
+            "value_loss": {
+              "max": 1.6549937725067139,
+              "mean": 1.3655196391046047,
+              "min": 0.9780238270759583,
+              "n": 16,
+              "sd": 0.20131555474441082
+            }
+          },
+          "returns": {
+            "max": -0.05360738639705879,
+            "mean": -1.5408033812583792,
+            "min": -2.8841237052401745,
+            "n": 208,
+            "sd": 0.8226410822973378
+          },
+          "rows": 208,
+          "update": 5,
+          "value_explained_variance": 0.0006157238407257237,
+          "value_rmse": 1.2218583394591587,
+          "values": {
+            "max": -0.6359811425209045,
+            "mean": -0.6371352257063756,
+            "min": -0.6375578045845032,
+            "n": 208,
+            "sd": 0.0003600506040555982
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.7471481083937762,
+            "mean": -0.6796336291397878,
+            "min": -2.052200508999661,
+            "n": 208,
+            "sd": 0.8151678667597737
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9779177367332933,
+            "group_counts": {
+              "nonreference": 168,
+              "reference": 40
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0001665023186942604,
+            "mean_reference_logit_policy_ascent_signal": 0.01950093724190732,
+            "return_step_correlation": 0.9779196844849884,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.05081855777733071,
+            "within_update_time_return_sd": 0.15045192147515457
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 1.2561764503593587e-07,
+            "value": 1.1488470907927706e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.001700666541570861,
+            "mean": 0.0009990045893583312,
+            "min": 0.0006936327002611264,
+            "n": 208,
+            "sd": 0.00026950720503871365
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.00024180380543229252,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.15891945362091064,
+              "mean": 0.04261271347058937,
+              "min": 0.004975426010787487,
+              "n": 16,
+              "sd": 0.0380592342382347
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 5.298487186431885,
+              "mean": 3.5870722979307175,
+              "min": 1.7389254570007324,
+              "n": 16,
+              "sd": 0.7881709173387625
+            },
+            "entropy": {
+              "max": 1.7796440124511719,
+              "mean": 1.755467727780342,
+              "min": 1.7339625358581543,
+              "n": 16,
+              "sd": 0.009301176656674102
+            },
+            "policy_loss": {
+              "max": 0.38336437940597534,
+              "mean": 0.024036700720898807,
+              "min": -0.2774823307991028,
+              "n": 16,
+              "sd": 0.1525773111417691
+            },
+            "value_loss": {
+              "max": 1.2433850765228271,
+              "mean": 1.0260594189167023,
+              "min": 0.6286598443984985,
+              "n": 16,
+              "sd": 0.15560934089107112
+            }
+          },
+          "returns": {
+            "max": -0.04835121640480782,
+            "mean": -1.4758439336155353,
+            "min": -2.8483132848022734,
+            "n": 208,
+            "sd": 0.8154308737545405
+          },
+          "rows": 208,
+          "update": 6,
+          "value_explained_variance": 0.0006449708698255119,
+          "value_rmse": 1.061320178294655,
+          "values": {
+            "max": -0.7950364947319031,
+            "mean": -0.7962103044757476,
+            "min": -0.7966427803039551,
+            "n": 208,
+            "sd": 0.0003568868958368945
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.8959503779051248,
+            "mean": -0.6086018416180732,
+            "min": -2.0081701016156046,
+            "n": 208,
+            "sd": 0.816963843414292
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9673278530500516,
+            "group_counts": {
+              "nonreference": 168,
+              "reference": 40
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00014395099400393797,
+            "mean_reference_logit_policy_ascent_signal": -0.005357836977017413,
+            "return_step_correlation": 0.9673373082002333,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.006468706171596049,
+            "within_update_time_return_sd": 0.18668787415682014
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 4.3065209214682154e-08,
+            "value": 4.6788785956763945e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.0010743773897903264,
+            "mean": 0.0007257560831861742,
+            "min": 0.0005702181330413669,
+            "n": 208,
+            "sd": 0.00014202269447118428
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0002065564961073132,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.15235917270183563,
+              "mean": 0.04940423718653619,
+              "min": 0.009078187867999077,
+              "n": 16,
+              "sd": 0.03954011046083988
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 4.13433837890625,
+              "mean": 2.98880235850811,
+              "min": 1.8054423332214355,
+              "n": 16,
+              "sd": 0.6161484446114651
+            },
+            "entropy": {
+              "max": 1.7796292304992676,
+              "mean": 1.763965480029583,
+              "min": 1.7539703845977783,
+              "n": 16,
+              "sd": 0.0066169210196152925
+            },
+            "policy_loss": {
+              "max": 0.1485675573348999,
+              "mean": -0.0168759556254372,
+              "min": -0.27525225281715393,
+              "n": 16,
+              "sd": 0.11438121472352904
+            },
+            "value_loss": {
+              "max": 1.2160005569458008,
+              "mean": 0.9421712048351765,
+              "min": 0.6323825120925903,
+              "n": 16,
+              "sd": 0.14884235511743066
+            }
+          },
+          "returns": {
+            "max": -0.058348893201595205,
+            "mean": -1.56368516712333,
+            "min": -2.963148925277409,
+            "n": 208,
+            "sd": 0.817262965540741
+          },
+          "rows": 208,
+          "update": 7,
+          "value_explained_variance": 0.0007318755382285103,
+          "value_rmse": 1.0187375143122797,
+          "values": {
+            "max": -0.9535164833068848,
+            "mean": -0.9550833255052567,
+            "min": -0.9555159211158752,
+            "n": 208,
+            "sd": 0.00040466063049748136
+          }
+        },
+        {
+          "advantage": {
+            "max": 1.0613791604595786,
+            "mean": -0.3683739680900245,
+            "min": -1.5214215757008471,
+            "n": 208,
+            "sd": 0.7794277706689131
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9752425104941704,
+            "group_counts": {
+              "nonreference": 165,
+              "reference": 43
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.00015441567942127632,
+            "mean_reference_logit_policy_ascent_signal": 0.012542138052212933,
+            "return_step_correlation": 0.9752413930112479,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.02935707279272553,
+            "within_update_time_return_sd": 0.1394882447267894
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 3.139015818109936e-09,
+            "value": 7.255658285298949e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 0.9375,
+          "old_policy_entropy_gap": {
+            "max": 0.001303765703855042,
+            "mean": 0.0008222512662081371,
+            "min": 0.0006090001363272535,
+            "n": 208,
+            "sd": 0.0001808818835620098
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.00022178196536430273,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.2036655694246292,
+              "mean": 0.04872722690925002,
+              "min": 0.01002552080899477,
+              "n": 16,
+              "sd": 0.044110948381563334
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 2.2511544227600098,
+              "mean": 1.621477629058063,
+              "min": 0.1735944002866745,
+              "n": 16,
+              "sd": 0.576135702033455
+            },
+            "entropy": {
+              "max": 1.75668466091156,
+              "mean": 1.746002733707428,
+              "min": 1.733843207359314,
+              "n": 16,
+              "sd": 0.007385764469486539
+            },
+            "policy_loss": {
+              "max": 0.14246460795402527,
+              "mean": -0.04425536352209747,
+              "min": -0.4956422448158264,
+              "n": 16,
+              "sd": 0.16641323932877963
+            },
+            "value_loss": {
+              "max": 0.9603155851364136,
+              "mean": 0.7063572481274605,
+              "min": 0.47552359104156494,
+              "n": 16,
+              "sd": 0.10682152787782226
+            }
+          },
+          "returns": {
+            "max": -0.05165484947389303,
+            "mean": -1.482122243406703,
+            "min": -2.635250830804912,
+            "n": 208,
+            "sd": 0.779841540662948
+          },
+          "rows": 208,
+          "update": 8,
+          "value_explained_variance": 0.0010608827639485563,
+          "value_rmse": 0.8620945598113366,
+          "values": {
+            "max": -1.1116567850112915,
+            "mean": -1.1137482753166785,
+            "min": -1.1142501831054688,
+            "n": 208,
+            "sd": 0.0004999934899561355
+          }
+        }
+      ]
+    },
+    {
+      "all": {
+        "advantage_step_correlation": 0.9185057057236019,
+        "group_counts": {
+          "nonreference": 1215,
+          "reference": 449
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.0008851126748616908,
+        "mean_reference_logit_policy_ascent_signal": 0.005184746931974628,
+        "return_step_correlation": 0.9587293732897002,
+        "rows": 1664,
+        "within_update_time_nonreference_minus_reference_mean_return": -0.02373688411941633,
+        "within_update_time_return_sd": 0.18443348444115226
+      },
+      "block": 62,
+      "episodes": 32,
+      "first16episodes": {
+        "advantage_step_correlation": 0.9567182347007908,
+        "group_counts": {
+          "nonreference": 597,
+          "reference": 235
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.0010521568155467912,
+        "mean_reference_logit_policy_ascent_signal": 0.017750790892186685,
+        "return_step_correlation": 0.971497804504647,
+        "rows": 832,
+        "within_update_time_nonreference_minus_reference_mean_return": -0.009681885963876466,
+        "within_update_time_return_sd": 0.1621132170939345
+      },
+      "last16episodes": {
+        "advantage_step_correlation": 0.9467769401194599,
+        "group_counts": {
+          "nonreference": 618,
+          "reference": 214
+        },
+        "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+        "mean_reference_logit_entropy_ascent_signal": -0.0007180685341765906,
+        "mean_reference_logit_policy_ascent_signal": -0.0073812970282374265,
+        "return_step_correlation": 0.9581299502611128,
+        "rows": 832,
+        "within_update_time_nonreference_minus_reference_mean_return": -0.03868622287557727,
+        "within_update_time_return_sd": 0.20432994202921992
+      },
+      "rows": 1664,
+      "updates": [
+        {
+          "advantage": {
+            "max": -0.045085271130309586,
+            "mean": -1.4943109408775885,
+            "min": -2.624676486741003,
+            "n": 208,
+            "sd": 0.8031784918440571
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9878737032186268,
+            "group_counts": {
+              "nonreference": 164,
+              "reference": 44
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0011134459269398172,
+            "mean_reference_logit_policy_ascent_signal": 0.02725711972302108,
+            "return_step_correlation": 0.9878737032186268,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.009433451743590919,
+            "within_update_time_return_sd": 0.08719939518165752
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 8.745684132449583e-08,
+            "value": 7.028386050933477e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.09282270532867853,
+            "mean": 0.04555564743539496,
+            "min": 0.02127311379667196,
+            "n": 208,
+            "sd": 0.021814006389012135
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0017132625026527128,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.4393749535083771,
+              "mean": 0.1430026872549206,
+              "min": 0.019733615219593048,
+              "n": 16,
+              "sd": 0.10191703353693436
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 8.743124961853027,
+              "mean": 5.793532684445381,
+              "min": 3.165024995803833,
+              "n": 16,
+              "sd": 1.6007680303109606
+            },
+            "entropy": {
+              "max": 1.7105046510696411,
+              "mean": 1.6912262216210365,
+              "min": 1.6277265548706055,
+              "n": 16,
+              "sd": 0.01874780799302696
+            },
+            "policy_loss": {
+              "max": 0.3021150231361389,
+              "mean": -0.015067629748955369,
+              "min": -0.39385542273521423,
+              "n": 16,
+              "sd": 0.16289087957232556
+            },
+            "value_loss": {
+              "max": 3.227853298187256,
+              "mean": 2.6861045360565186,
+              "min": 2.1655874252319336,
+              "n": 16,
+              "sd": 0.3202653115892084
+            }
+          },
+          "returns": {
+            "max": -0.045085271130309586,
+            "mean": -1.4943109408775885,
+            "min": -2.624676486741003,
+            "n": 208,
+            "sd": 0.8031784918440571
+          },
+          "rows": 208,
+          "update": 1,
+          "value_explained_variance": 0.0,
+          "value_rmse": 1.6964848592862118,
+          "values": {
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "n": 208,
+            "sd": 0.0
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.09779713671107791,
+            "mean": -1.275418560976201,
+            "min": -2.449916811052562,
+            "n": 208,
+            "sd": 0.7820844939272904
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9843113488065941,
+            "group_counts": {
+              "nonreference": 132,
+              "reference": 76
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0013472521103952732,
+            "mean_reference_logit_policy_ascent_signal": 0.03763082155987978,
+            "return_step_correlation": 0.9841132662125326,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.021071555619218807,
+            "within_update_time_return_sd": 0.1163369546492112
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 5.585408295594174e-09,
+            "value": 3.3635677532117825e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.09831075193892191,
+            "mean": 0.05667041468832315,
+            "min": 0.024235641177847933,
+            "n": 208,
+            "sd": 0.025950156270867962
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.002080791209629303,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.3681145906448364,
+              "mean": 0.12826441647484899,
+              "min": 0.03215967118740082,
+              "n": 16,
+              "sd": 0.07856421799738068
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 7.480135917663574,
+              "mean": 6.693292260169983,
+              "min": 4.660654067993164,
+              "n": 16,
+              "sd": 0.652893946950832
+            },
+            "entropy": {
+              "max": 1.702025294303894,
+              "mean": 1.6572758331894875,
+              "min": 1.6248254776000977,
+              "n": 16,
+              "sd": 0.017152401770401945
+            },
+            "policy_loss": {
+              "max": 0.14517363905906677,
+              "mean": -0.011506674345582724,
+              "min": -0.4813658595085144,
+              "n": 16,
+              "sd": 0.14507369348948532
+            },
+            "value_loss": {
+              "max": 2.3180723190307617,
+              "mean": 2.0196386352181435,
+              "min": 1.1772414445877075,
+              "n": 16,
+              "sd": 0.2762760970525587
+            }
+          },
+          "returns": {
+            "max": -0.04891458530525662,
+            "mean": -1.4261561630966095,
+            "min": -2.592649908128978,
+            "n": 208,
+            "sd": 0.7832188821082434
+          },
+          "rows": 208,
+          "update": 2,
+          "value_explained_variance": 0.002894635718803107,
+          "value_rmse": 1.4961111794663218,
+          "values": {
+            "max": -0.14265967905521393,
+            "mean": -0.15073760212040865,
+            "min": -0.15402851998806,
+            "n": 208,
+            "sd": 0.002522867871352959
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.2666520843549922,
+            "mean": -1.2698357010521142,
+            "min": -2.6417694939430394,
+            "n": 208,
+            "sd": 0.8519906048402627
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.96956163880557,
+            "group_counts": {
+              "nonreference": 158,
+              "reference": 50
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0010433313343536277,
+            "mean_reference_logit_policy_ascent_signal": -0.01861249307476947,
+            "return_step_correlation": 0.969493919766417,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.007686783485785991,
+            "within_update_time_return_sd": 0.17976681385594803
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 6.830161275450664e-08,
+            "value": 1.5668921538036784e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.09610467023817693,
+            "mean": 0.042071367659616485,
+            "min": 0.02194961932391748,
+            "n": 208,
+            "sd": 0.02077968334925517
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0016457909510296464,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.27732303738594055,
+              "mean": 0.12607539212331176,
+              "min": 0.05049702897667885,
+              "n": 16,
+              "sd": 0.0615124715690159
+            },
+            "clip_fraction": {
+              "max": 0.0625,
+              "mean": 0.005859375,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.016457323775735076
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 7.582572937011719,
+              "mean": 6.796632647514343,
+              "min": 5.81658411026001,
+              "n": 16,
+              "sd": 0.47719338098782693
+            },
+            "entropy": {
+              "max": 1.7510067224502563,
+              "mean": 1.7199015691876411,
+              "min": 1.6969785690307617,
+              "n": 16,
+              "sd": 0.013632476350877993
+            },
+            "policy_loss": {
+              "max": 0.12239596247673035,
+              "mean": -0.011158502253238112,
+              "min": -0.16158804297447205,
+              "n": 16,
+              "sd": 0.08327348721543859
+            },
+            "value_loss": {
+              "max": 2.5154953002929688,
+              "mean": 2.126068226993084,
+              "min": 1.653395652770996,
+              "n": 16,
+              "sd": 0.20559580461211213
+            }
+          },
+          "returns": {
+            "max": -0.04961320066011398,
+            "mean": -1.5869160643968019,
+            "min": -2.9558733357246556,
+            "n": 208,
+            "sd": 0.8524962670940016
+          },
+          "rows": 208,
+          "update": 3,
+          "value_explained_variance": 0.0011859577695639834,
+          "value_rmse": 1.5291732074564317,
+          "values": {
+            "max": -0.31399786472320557,
+            "mean": -0.3170803633446877,
+            "min": -0.3181931972503662,
+            "n": 208,
+            "sd": 0.0010023621503040833
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.4151940141194081,
+            "mean": -1.0507637429969394,
+            "min": -2.523126146689665,
+            "n": 208,
+            "sd": 0.8478941486793149
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9581978327221293,
+            "group_counts": {
+              "nonreference": 143,
+              "reference": 65
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0007045978904984468,
+            "mean_reference_logit_policy_ascent_signal": 0.024727715360615337,
+            "return_step_correlation": 0.9581846520639785,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.04541931323055985,
+            "within_update_time_return_sd": 0.22730739478767953
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 9.725075872379918e-08,
+            "value": 3.5023168853953734e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.06590245619874713,
+            "mean": 0.018115457921498122,
+            "min": 0.008328128123820777,
+            "n": 208,
+            "sd": 0.01129720375803737
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.001117934345609696,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.4920515716075897,
+              "mean": 0.15728706866502762,
+              "min": 0.05254444479942322,
+              "n": 16,
+              "sd": 0.12642424928784224
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 6.742711067199707,
+              "mean": 5.527815759181976,
+              "min": 3.9164257049560547,
+              "n": 16,
+              "sd": 0.7519045698329666
+            },
+            "entropy": {
+              "max": 1.7222250699996948,
+              "mean": 1.7026287093758583,
+              "min": 1.6496667861938477,
+              "n": 16,
+              "sd": 0.015948213591455332
+            },
+            "policy_loss": {
+              "max": 0.17545552551746368,
+              "mean": -0.015051469672471285,
+              "min": -0.2721533477306366,
+              "n": 16,
+              "sd": 0.13444518253850532
+            },
+            "value_loss": {
+              "max": 2.1344401836395264,
+              "mean": 1.6790126487612724,
+              "min": 1.2637540102005005,
+              "n": 16,
+              "sd": 0.2331996728145385
+            }
+          },
+          "returns": {
+            "max": -0.06092547435829882,
+            "mean": -1.5282637058529298,
+            "min": -2.9989176308071728,
+            "n": 208,
+            "sd": 0.8482666370474072
+          },
+          "rows": 208,
+          "update": 4,
+          "value_explained_variance": 0.0008780413347068139,
+          "value_rmse": 1.3501958861445098,
+          "values": {
+            "max": -0.4753324091434479,
+            "mean": -0.4774999628559901,
+            "min": -0.47824105620384216,
+            "n": 208,
+            "sd": 0.0006966672071222329
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.5878735588334913,
+            "mean": -1.0741028459200797,
+            "min": -2.490216525077927,
+            "n": 208,
+            "sd": 0.8959822741319028
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9753879158715729,
+            "group_counts": {
+              "nonreference": 144,
+              "reference": 64
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0009193707576080379,
+            "mean_reference_logit_policy_ascent_signal": -0.002732017160515271,
+            "return_step_correlation": 0.9753655528582043,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.035968009017066635,
+            "within_update_time_return_sd": 0.1611816253181875
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 4.553041266230906e-08,
+            "value": 3.3742995508845297e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.08559384962786121,
+            "mean": 0.031343623936020276,
+            "min": 0.01675115565425589,
+            "n": 208,
+            "sd": 0.017885892015338103
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0014559825345293281,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.3951212167739868,
+              "mean": 0.12209647754207253,
+              "min": 0.032577820122241974,
+              "n": 16,
+              "sd": 0.09400816293473137
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 6.838873863220215,
+              "mean": 5.7907068729400635,
+              "min": 5.097699165344238,
+              "n": 16,
+              "sd": 0.47519620816930136
+            },
+            "entropy": {
+              "max": 1.7406809329986572,
+              "mean": 1.7160251289606094,
+              "min": 1.672715663909912,
+              "n": 16,
+              "sd": 0.014388736205797005
+            },
+            "policy_loss": {
+              "max": 0.2094372659921646,
+              "mean": 0.009172762569505721,
+              "min": -0.14197660982608795,
+              "n": 16,
+              "sd": 0.08556442460593225
+            },
+            "value_loss": {
+              "max": 2.1513466835021973,
+              "mean": 1.8047347366809845,
+              "min": 1.4566179513931274,
+              "n": 16,
+              "sd": 0.19395539492512975
+            }
+          },
+          "returns": {
+            "max": -0.04847284095059682,
+            "mean": -1.7108743867223384,
+            "min": -3.125678213119614,
+            "n": 208,
+            "sd": 0.8964255310612811
+          },
+          "rows": 208,
+          "update": 5,
+          "value_explained_variance": 0.0009886986147780163,
+          "value_rmse": 1.3987427065662186,
+          "values": {
+            "max": -0.6347447633743286,
+            "mean": -0.6367715408022587,
+            "min": -0.6375194191932678,
+            "n": 208,
+            "sd": 0.0006538852105750613
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.7461651278279882,
+            "mean": -0.8286493753167362,
+            "min": -2.1571571025715457,
+            "n": 208,
+            "sd": 0.8425123034857582
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9809312769736475,
+            "group_counts": {
+              "nonreference": 167,
+              "reference": 41
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.000865802360621326,
+            "mean_reference_logit_policy_ascent_signal": -0.012955509362585788,
+            "return_step_correlation": 0.9809031613752001,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.025855406492250193,
+            "within_update_time_return_sd": 0.12859295292799638
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 7.582926165802806e-08,
+            "value": 4.560978728029852e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.04447771927540667,
+            "mean": 0.02624009656491065,
+            "min": 0.01215808206548008,
+            "n": 208,
+            "sd": 0.01018738697705044
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0013300055597472156,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.27086228132247925,
+              "mean": 0.13105555542279035,
+              "min": 0.029449841007590294,
+              "n": 16,
+              "sd": 0.06396186995180358
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 5.721640110015869,
+              "mean": 4.371151238679886,
+              "min": 2.831895112991333,
+              "n": 16,
+              "sd": 0.7211946945720878
+            },
+            "entropy": {
+              "max": 1.7217872142791748,
+              "mean": 1.7079808115959167,
+              "min": 1.6707463264465332,
+              "n": 16,
+              "sd": 0.012929237967943727
+            },
+            "policy_loss": {
+              "max": 0.3238382339477539,
+              "mean": 0.007867839303798974,
+              "min": -0.3101934790611267,
+              "n": 16,
+              "sd": 0.14440647137243182
+            },
+            "value_loss": {
+              "max": 1.5989793539047241,
+              "mean": 1.2863438054919243,
+              "min": 1.0444567203521729,
+              "n": 16,
+              "sd": 0.17064304726939458
+            }
+          },
+          "returns": {
+            "max": -0.04818025104774426,
+            "mean": -1.6244735422771774,
+            "min": -2.952037731157361,
+            "n": 208,
+            "sd": 0.8429585964176435
+          },
+          "rows": 208,
+          "update": 6,
+          "value_explained_variance": 0.001058592419434068,
+          "value_rmse": 1.1817304128851451,
+          "values": {
+            "max": -0.794070303440094,
+            "mean": -0.7958241669604411,
+            "min": -0.7964754700660706,
+            "n": 208,
+            "sd": 0.0006205131711231853
+          }
+        },
+        {
+          "advantage": {
+            "max": 0.9135851134644464,
+            "mean": -0.5964899866016797,
+            "min": -2.1797994636046303,
+            "n": 208,
+            "sd": 0.8760720288032706
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9573834591966226,
+            "group_counts": {
+              "nonreference": 151,
+              "reference": 57
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0005232952084814345,
+            "mean_reference_logit_policy_ascent_signal": 0.003604949748028901,
+            "return_step_correlation": 0.9574098901353806,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": 0.0009976964810376296,
+            "within_update_time_return_sd": 0.23583183755059275
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 4.743035987575528e-08,
+            "value": 1.3927827402504533e-07
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 1.0,
+          "old_policy_entropy_gap": {
+            "max": 0.021556683522605757,
+            "mean": 0.010426105539817897,
+            "min": 0.005261339710132429,
+            "n": 208,
+            "sd": 0.004274167799762354
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0008236852643918087,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.20002886652946472,
+              "mean": 0.09987768577411771,
+              "min": 0.05088574439287186,
+              "n": 16,
+              "sd": 0.03823378705578495
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 6.162994861602783,
+              "mean": 3.1679626181721687,
+              "min": 1.4133356809616089,
+              "n": 16,
+              "sd": 1.1670223190861737
+            },
+            "entropy": {
+              "max": 1.761638879776001,
+              "mean": 1.736472524702549,
+              "min": 1.7183749675750732,
+              "n": 16,
+              "sd": 0.012047389708511847
+            },
+            "policy_loss": {
+              "max": 0.5780515670776367,
+              "mean": 0.032936171628534794,
+              "min": -0.27732712030410767,
+              "n": 16,
+              "sd": 0.21824963750277368
+            },
+            "value_loss": {
+              "max": 1.8744757175445557,
+              "mean": 1.0997726172208786,
+              "min": 0.8004748821258545,
+              "n": 16,
+              "sd": 0.2805152235687548
+            }
+          },
+          "returns": {
+            "max": -0.03990156752005075,
+            "mean": -1.5510423834470388,
+            "min": -3.1336586736189735,
+            "n": 208,
+            "sd": 0.8765940500048474
+          },
+          "rows": 208,
+          "update": 7,
+          "value_explained_variance": 0.0011906669157720762,
+          "value_rmse": 1.0598596622985286,
+          "values": {
+            "max": -0.9522484540939331,
+            "mean": -0.9545523968453591,
+            "min": -0.9552562832832336,
+            "n": 208,
+            "sd": 0.0007371190432996227
+          }
+        },
+        {
+          "advantage": {
+            "max": 1.0431997941182367,
+            "mean": -0.7206880003164332,
+            "min": -2.197583888496011,
+            "n": 208,
+            "sd": 0.9826488872973329
+          },
+          "descriptive": {
+            "advantage_step_correlation": 0.9531522240390614,
+            "group_counts": {
+              "nonreference": 156,
+              "reference": 52
+            },
+            "interpretation": "Descriptive on-policy association; states and action probabilities differ. Not a counterfactual advantage or significance test.",
+            "mean_reference_logit_entropy_ascent_signal": -0.0005638058099955641,
+            "mean_reference_logit_policy_ascent_signal": -0.01744261133787755,
+            "return_step_correlation": 0.9532053055564326,
+            "rows": 208,
+            "within_update_time_nonreference_minus_reference_mean_return": -0.13969681431196418,
+            "within_update_time_return_sd": 0.2624320509259756
+          },
+          "first_minibatch_reconstruction_error": {
+            "policy": 4.458002429664695e-08,
+            "value": 2.5372293377401434e-08
+          },
+          "fraction_actor_minibatches_clipped": 0.0,
+          "fraction_critic_minibatches_clipped": 0.9375,
+          "old_policy_entropy_gap": {
+            "max": 0.02209588366084847,
+            "mean": 0.011892195300590758,
+            "min": 0.005553028390987036,
+            "n": 208,
+            "sd": 0.0044353225171946805
+          },
+          "old_policy_logit_norm_ratio_entropy_to_surrogate": 0.0008857463780895737,
+          "recorded_minibatches": {
+            "actor_grad_norm_before_clip": {
+              "max": 0.48862916231155396,
+              "mean": 0.12076631304807961,
+              "min": 0.04896008223295212,
+              "n": 16,
+              "sd": 0.10613806630300446
+            },
+            "clip_fraction": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 16,
+              "sd": 0.0
+            },
+            "critic_grad_norm_before_clip": {
+              "max": 5.044070720672607,
+              "mean": 3.585859199985862,
+              "min": 0.3370262086391449,
+              "n": 16,
+              "sd": 1.1861185179883467
+            },
+            "entropy": {
+              "max": 1.7731879949569702,
+              "mean": 1.7287214696407318,
+              "min": 1.6850969791412354,
+              "n": 16,
+              "sd": 0.01848679307897868
+            },
+            "policy_loss": {
+              "max": 0.19323435425758362,
+              "mean": -0.025089901173487306,
+              "min": -0.5408767461776733,
+              "n": 16,
+              "sd": 0.19382110710328712
+            },
+            "value_loss": {
+              "max": 1.866301417350769,
+              "mean": 1.3918807692825794,
+              "min": 0.8400149941444397,
+              "n": 16,
+              "sd": 0.21881844686581217
+            }
+          },
+          "returns": {
+            "max": -0.06638040999184439,
+            "mean": -1.8334408688954171,
+            "min": -3.3104685291896754,
+            "n": 208,
+            "sd": 0.9837001924881198
+          },
+          "rows": 208,
+          "update": 8,
+          "value_explained_variance": 0.0021363082382874765,
+          "value_rmse": 1.2186016697456088,
+          "values": {
+            "max": -1.1088584661483765,
+            "mean": -1.1127528685789843,
+            "min": -1.1139106750488281,
+            "n": 208,
+            "sd": 0.0012911499163990947
+          }
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "bytes": 180338,
+      "path": "payload/phases/ppo_continuation/block60.json",
+      "sha256": "0369fe489cc4ffe99f3a2fc7df1596fa387fd24cf81f371247216f2d9c9e1ad4"
+    },
+    {
+      "bytes": 2529903,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode00/events.jsonl",
+      "sha256": "eebb5b28e89ea8a5f0129d9aa995aa338db0fd60aa8e3f02f84435bcdda0caed"
+    },
+    {
+      "bytes": 2589988,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode01/events.jsonl",
+      "sha256": "fcba1d710e2d9547d08c3ecf80e6d21a64d145ba9e0c4897d52311d9f93ef7ec"
+    },
+    {
+      "bytes": 2647575,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode02/events.jsonl",
+      "sha256": "3991db8dd68369dce6166efb6c1b8deb4128f9bdac322e91259da2bf0e7b2031"
+    },
+    {
+      "bytes": 2558291,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode03/events.jsonl",
+      "sha256": "4d62b03d4248b60bff9ab54985ee0c79259b274d93b3a9baf0eb759337d22ad5"
+    },
+    {
+      "bytes": 2523167,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode04/events.jsonl",
+      "sha256": "9dc0086555457d75134dd885b1a22b6d412a1583b438ad0ff4f91bb52fc50bce"
+    },
+    {
+      "bytes": 2568282,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode05/events.jsonl",
+      "sha256": "7b7720dfaad482d4210643ef98a2ee6abcc2a26cd3f9bf61e8703b335bfe8f0d"
+    },
+    {
+      "bytes": 2507225,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode06/events.jsonl",
+      "sha256": "fed010a976bdda08b9569e1bf2f6970fdeb58da95e36231d4af9c9ebb123baf6"
+    },
+    {
+      "bytes": 2603956,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode07/events.jsonl",
+      "sha256": "b927a09beb223ca9ed90d7e9b64e58aa934c170a3de8a398f8835985f52686dd"
+    },
+    {
+      "bytes": 2681671,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode08/events.jsonl",
+      "sha256": "bd5ecf52cab9847ea4f3525e9f0154e9a8456949dcb98169e4e4a82ea041332b"
+    },
+    {
+      "bytes": 2544986,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode09/events.jsonl",
+      "sha256": "932a09648dc68ae3df4907927e63bed2b1c112803936def84872ec605da9b0d5"
+    },
+    {
+      "bytes": 2536506,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode10/events.jsonl",
+      "sha256": "ea9dc67770db0c0df258ab602b9a583d58eab1d23288bcd0f1e5469396f876d3"
+    },
+    {
+      "bytes": 2558133,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode11/events.jsonl",
+      "sha256": "041b194c58415bff11a8e0a652b52b2518a4e48fb521e8df1b8b3d30427e9cf0"
+    },
+    {
+      "bytes": 2542401,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode12/events.jsonl",
+      "sha256": "45c7cd4775c89c81baaff563fd794948d0d825a457959d46cde1deadf65164b7"
+    },
+    {
+      "bytes": 2532897,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode13/events.jsonl",
+      "sha256": "daa81c8a33a6824986a75aa180cb2ab5e4244084dabfebecf10b0b045fe81cb9"
+    },
+    {
+      "bytes": 2588165,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode14/events.jsonl",
+      "sha256": "c75d5ec92585f7c0dbeae5f4ccd6b1264079da690bc56edcc0b898b353a17011"
+    },
+    {
+      "bytes": 2631524,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode15/events.jsonl",
+      "sha256": "b5b4d62fbfd8e1a86b647417dd8ca6128f5092394bcdaa937ce30b1a590d0173"
+    },
+    {
+      "bytes": 2600364,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode16/events.jsonl",
+      "sha256": "76d363bd86551a0debb68b403b32f975517f9aacfd7a515ebfaf1e0aea7b9590"
+    },
+    {
+      "bytes": 2545259,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode17/events.jsonl",
+      "sha256": "0025d4c5cf76d8370c26ee71c9cb97edaff4aaf8b7768c479bc09bfa218333cf"
+    },
+    {
+      "bytes": 2637979,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode18/events.jsonl",
+      "sha256": "cd2d2b6c83953642dcc6a68eb9c27563ade5c608a1b8a11dd9c034cceb4c55ac"
+    },
+    {
+      "bytes": 2659825,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode19/events.jsonl",
+      "sha256": "bdcae0626c8d1532dda77b9e774ff702d07fdacfeac07ca38289a3dec42505a2"
+    },
+    {
+      "bytes": 2642586,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode20/events.jsonl",
+      "sha256": "fa71c7da5424bf94cbf7f5a4983ec4323b60c19d947756c517a9d42fe2284929"
+    },
+    {
+      "bytes": 2561709,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode21/events.jsonl",
+      "sha256": "04ee21499a54479f6454461662ad503747c1bfc37f0abb6d54954d64c05f537d"
+    },
+    {
+      "bytes": 2514538,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode22/events.jsonl",
+      "sha256": "29da2b510910f6c733efab20cac1732984423ec414b3f645f5db8257fec408c5"
+    },
+    {
+      "bytes": 2578151,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode23/events.jsonl",
+      "sha256": "12b37a55b682b4c359dc83aec7e3aae11d21e9685caf570316087713eb8f916c"
+    },
+    {
+      "bytes": 2533196,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode24/events.jsonl",
+      "sha256": "9195f0aa1a0e28d8b46f9237010f612465e0a40a3c12b6763bb4027b76eaf2c8"
+    },
+    {
+      "bytes": 2546855,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode25/events.jsonl",
+      "sha256": "782b7939e5b1094d90a3c4d86c1e9c578629525a91811b141d488bdc468c37eb"
+    },
+    {
+      "bytes": 2478530,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode26/events.jsonl",
+      "sha256": "034794bc39307f54cdadecf4a5a96d95165bb3eedd7933c9e0998e50ad539d9f"
+    },
+    {
+      "bytes": 2602743,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode27/events.jsonl",
+      "sha256": "10e382171347eab2a4b3437fe758924c02b7d3e270942a67d47f3dfff555b18a"
+    },
+    {
+      "bytes": 2572623,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode28/events.jsonl",
+      "sha256": "114574d850dd1284e0b34b83dacaf04d074e3c86ff39ea489991959a700336e1"
+    },
+    {
+      "bytes": 2592347,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode29/events.jsonl",
+      "sha256": "0bceffe9a8faef3242652c6b16d6f797fa95faa6fab4a1d5a217346612156ace"
+    },
+    {
+      "bytes": 2577317,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode30/events.jsonl",
+      "sha256": "596e60263d839898d8f79c5cef28cdcc409f97aec5e17777d251a0b98b12c771"
+    },
+    {
+      "bytes": 2645358,
+      "path": "payload/episodes/training/block60/graph/own_ppo/episode31/events.jsonl",
+      "sha256": "d752da709ea0e059a2029c8d116f41e166b2549d26048a0dd998e533af4f953d"
+    },
+    {
+      "bytes": 180376,
+      "path": "payload/phases/ppo_continuation/block61.json",
+      "sha256": "4a6b011a9aaa06e2b7dc2cfe9412061e65820c6f17c130bf473ab6244beb8392"
+    },
+    {
+      "bytes": 2563804,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode00/events.jsonl",
+      "sha256": "c6a371612af96874fbaae7003918319846a36155028dafb367b063fadbc09a4c"
+    },
+    {
+      "bytes": 2614865,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode01/events.jsonl",
+      "sha256": "864a1ac19b247cfabda388b2797c99b047f30f11f5841553ffe4a44ed52e8d51"
+    },
+    {
+      "bytes": 2651296,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode02/events.jsonl",
+      "sha256": "24e27f529331abdd84bf6cee5786b80039db94ca2992b2b59cb9eb862d5ed2ec"
+    },
+    {
+      "bytes": 2563593,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode03/events.jsonl",
+      "sha256": "5bbab69b763698ff8aa1356265f395fc3aa303f26707ee9280ed0c43480193e5"
+    },
+    {
+      "bytes": 2600241,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode04/events.jsonl",
+      "sha256": "7786ac911607d5170de813f17b570851e2521547ab5da09cbcbf5c5f09863e62"
+    },
+    {
+      "bytes": 2620944,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode05/events.jsonl",
+      "sha256": "154d6b5df6ea49abef1065770791ed92b9a0831ad253a0ed44791f8a7c9e4b88"
+    },
+    {
+      "bytes": 2542114,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode06/events.jsonl",
+      "sha256": "c5e0b3e28edfd2b0c2c6b165668ad4a3702e44aec6c89c13dcb2d871905173f6"
+    },
+    {
+      "bytes": 2554946,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode07/events.jsonl",
+      "sha256": "adc60a707e144b75860bac534a79cf332d156b36053e94c696aea29ffc161d4c"
+    },
+    {
+      "bytes": 2535542,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode08/events.jsonl",
+      "sha256": "5aa31c1918ad165fa8f8fb94213b1dc719c86e1eea0d5a3166984f989708502c"
+    },
+    {
+      "bytes": 2541847,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode09/events.jsonl",
+      "sha256": "716df30baf2fde936ae7ef6dedf9068e47a5aa2e42e92b8927260d0056886595"
+    },
+    {
+      "bytes": 2578315,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode10/events.jsonl",
+      "sha256": "db9d66b2071be1cd154416316ec3fa3d870a05a092bcce0599e78ba3fde21c18"
+    },
+    {
+      "bytes": 2552727,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode11/events.jsonl",
+      "sha256": "6e1306c03622e9e794b2c9466e03b0b92c6a31805da079145f9b95c1a861917c"
+    },
+    {
+      "bytes": 2651383,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode12/events.jsonl",
+      "sha256": "7dfa413a396dab6b9e2e0506e4175fe9657689ee44b259ae501480615df9b8cc"
+    },
+    {
+      "bytes": 2661392,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode13/events.jsonl",
+      "sha256": "11187a0cf27acba5fb793e6153111dd26d7a8d6b2ce6f818fc9dd964b964a8e5"
+    },
+    {
+      "bytes": 2566456,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode14/events.jsonl",
+      "sha256": "fec99438ed8d026910858010161e613821b445e75fa8f6bd57ab00cb3cb123f5"
+    },
+    {
+      "bytes": 2557062,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode15/events.jsonl",
+      "sha256": "c64a507f35b9fb68c7e0cf466a110a5c097f297339685eac54fb8d09f6ffc69e"
+    },
+    {
+      "bytes": 2558388,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode16/events.jsonl",
+      "sha256": "8ce0fbe33cd4d348463ac0db86d738deb7d5fec4328b16fe4349c0b0104061c7"
+    },
+    {
+      "bytes": 2558678,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode17/events.jsonl",
+      "sha256": "1bdf5001c25609724d8e7ed09d7d1e604a2dc2af297bff639f58d1029def5301"
+    },
+    {
+      "bytes": 2539277,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode18/events.jsonl",
+      "sha256": "fa9bef699b17ca98bdcdff28e0ea7339cd0e47533d155466a04fcfaad6b32837"
+    },
+    {
+      "bytes": 2570537,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode19/events.jsonl",
+      "sha256": "81446647ac5c5b6c0955415f6b791f9991d4f622e57e097fdd8bf26d3b2c6acc"
+    },
+    {
+      "bytes": 2536028,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode20/events.jsonl",
+      "sha256": "a0de29ce78a00ab939603da3799c8daabd15ddc2ac0eb9ca78e05388ee5b4c5a"
+    },
+    {
+      "bytes": 2583099,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode21/events.jsonl",
+      "sha256": "820ab71dfb1d49ac5fb979e21f91e2e9210b08e9306e40f0ca9edce5cb944637"
+    },
+    {
+      "bytes": 2627006,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode22/events.jsonl",
+      "sha256": "9754ae7355b9de2de56ed083defc2e17951010231d1c1fb5450759e27f1c9cea"
+    },
+    {
+      "bytes": 2595257,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode23/events.jsonl",
+      "sha256": "0ff782ba65db4dcd7262c451cba301d2c7101dcb199a4f5c5b5a92023195fb9e"
+    },
+    {
+      "bytes": 2603940,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode24/events.jsonl",
+      "sha256": "2664e54849a2b44300e5ded129528e3668990a1cd80e357a72c471fbe02b280f"
+    },
+    {
+      "bytes": 2586177,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode25/events.jsonl",
+      "sha256": "5d210c3f2e89e1203f069f07d18bc70c234b536ead8f6aae8a42a40315bbac63"
+    },
+    {
+      "bytes": 2632325,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode26/events.jsonl",
+      "sha256": "5efa50dd0390e90c0bd8c3bcadd63c4e91afccb499774a97c01b3f6f34417579"
+    },
+    {
+      "bytes": 2618814,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode27/events.jsonl",
+      "sha256": "165bf286c288c00ddd088a20d9d9a84fb2bc12e91225f4c9a3c5e238f0b26821"
+    },
+    {
+      "bytes": 2571490,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode28/events.jsonl",
+      "sha256": "a65ab9f413626b649c1a197b3d8dccfece1ac19efd6edd03af1ad4a4d6d8eb07"
+    },
+    {
+      "bytes": 2520356,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode29/events.jsonl",
+      "sha256": "f46b41b3c1fde50982e650c65bbfa500a02eb9d7dd95c8075892f3ee8a32fcf2"
+    },
+    {
+      "bytes": 2619623,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode30/events.jsonl",
+      "sha256": "28c34ae4e8112c12c22f99d75f92cbbc7a80cb83a24776779e9fab0e34c0caa0"
+    },
+    {
+      "bytes": 2616811,
+      "path": "payload/episodes/training/block61/graph/own_ppo/episode31/events.jsonl",
+      "sha256": "ab335f4e2c89892de3fa9af725a5c1e4940c50953549c9df951898fd2f65e6e1"
+    },
+    {
+      "bytes": 180290,
+      "path": "payload/phases/ppo_continuation/block62.json",
+      "sha256": "fba88cea09216ffb2c5db3acde1eb5ae3012372ae08bfb49bad8daa9e6910bab"
+    },
+    {
+      "bytes": 2520393,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode00/events.jsonl",
+      "sha256": "4934b916563821395a2ad96b87b47473260603911433f991a9560bfde75391e7"
+    },
+    {
+      "bytes": 2549116,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode01/events.jsonl",
+      "sha256": "99dc95add7416b7d4be8fbc3cb00ee1cc2d7084e6877d150fba52e1a28d4c3eb"
+    },
+    {
+      "bytes": 2560911,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode02/events.jsonl",
+      "sha256": "0b9b643f8c43a71404bf66a9b8ddcd441a17f8625068aeb645c196ce7f69ec51"
+    },
+    {
+      "bytes": 2599697,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode03/events.jsonl",
+      "sha256": "a1bdd0e0ddcd6e4ba859fafe995b6e2e1afcae51d9394c0a811c882e7456c830"
+    },
+    {
+      "bytes": 2554579,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode04/events.jsonl",
+      "sha256": "092fef02ba8d5f933d341de91b0b2bc633e8643d88965aff7f49584ae2c493a5"
+    },
+    {
+      "bytes": 2479110,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode05/events.jsonl",
+      "sha256": "1ff4d5b0beb2f73712bfbe2daa90eb5aa6ca519375faaf9a701936c95701a1eb"
+    },
+    {
+      "bytes": 2560451,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode06/events.jsonl",
+      "sha256": "a9eb2318f1a0b4097f65a64fc4de24f98d25d9a277566519dbaca314452fc344"
+    },
+    {
+      "bytes": 2603224,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode07/events.jsonl",
+      "sha256": "bac2a03a93e5d7c4e558e36751b215e019ff862f9635d04972ebec144a9c169e"
+    },
+    {
+      "bytes": 2557653,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode08/events.jsonl",
+      "sha256": "346ec8c5e390c95398a31d690459e24a4e717fa98b1fb6e540aa628ebfa36543"
+    },
+    {
+      "bytes": 2570991,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode09/events.jsonl",
+      "sha256": "a1b93274a6784571a238ed5bcd5a399f46f0bb62e2be5714a568ccf560f1346f"
+    },
+    {
+      "bytes": 2526012,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode10/events.jsonl",
+      "sha256": "fbe95f6205318046b66c1e2d0ba076dc3bdc2d9c135850aa2e39e4f5e94250f9"
+    },
+    {
+      "bytes": 2606175,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode11/events.jsonl",
+      "sha256": "6d80b53f09610852fd1ba548436510c9ea1d4b36ecb92051d9d4b3254394dcb5"
+    },
+    {
+      "bytes": 2564728,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode12/events.jsonl",
+      "sha256": "39355d50de943cfef5f0a090a21ba3aa943d7aa8d22d1eff0c5c5ce80a5bb115"
+    },
+    {
+      "bytes": 2634764,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode13/events.jsonl",
+      "sha256": "fddc53c01de26799cc619af81d2d89854f4e6ee6b50bd014f4eb231f76a0b5b7"
+    },
+    {
+      "bytes": 2584346,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode14/events.jsonl",
+      "sha256": "0bf99adc495d207a0406f595153a3abc2f571d3a1653559a680b0089acf72ffa"
+    },
+    {
+      "bytes": 2567914,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode15/events.jsonl",
+      "sha256": "3739fb27025943ff931911160e62fd5b8241137b28c53d956ad1f494bc68fbbf"
+    },
+    {
+      "bytes": 2503919,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode16/events.jsonl",
+      "sha256": "98335d91dd8da12136f78c6fc9da4f0d8a48d898e7b439815d6dc9df94d96292"
+    },
+    {
+      "bytes": 2542775,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode17/events.jsonl",
+      "sha256": "42d70132cdb617521c565893e2446373d6e45e99c2e6c66559f4c823d6847e0a"
+    },
+    {
+      "bytes": 2526484,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode18/events.jsonl",
+      "sha256": "2e796c0bf99ce575216c3e1b8d372d477590d29be66db77d544c9d7f3af326f0"
+    },
+    {
+      "bytes": 2542559,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode19/events.jsonl",
+      "sha256": "4c4f72f219fa73f415495d82276a856936eaca4ff34c347b03715a80e805bb2b"
+    },
+    {
+      "bytes": 2669915,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode20/events.jsonl",
+      "sha256": "b342efff6cbcc717a11ef90d5e5257e33e184f33aba158cc0fea31e8481d5cd4"
+    },
+    {
+      "bytes": 2514568,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode21/events.jsonl",
+      "sha256": "589106f6425b0c515af8e7f2548f276fb8143e82d98f48f80644dc8967b1cefe"
+    },
+    {
+      "bytes": 2577715,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode22/events.jsonl",
+      "sha256": "faf1a39e9914f9e7456d8c185d596ae9cb11918952855b362c02fff7ceef0603"
+    },
+    {
+      "bytes": 2563684,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode23/events.jsonl",
+      "sha256": "ab70ca9a2efa13658a4470691f070f0c34e39bf2ca31c03bc20538452f296304"
+    },
+    {
+      "bytes": 2540648,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode24/events.jsonl",
+      "sha256": "b0228e5ef85b749600019d7db4b312eb5cc09566d519f3c2fcad1e59345661ab"
+    },
+    {
+      "bytes": 2488199,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode25/events.jsonl",
+      "sha256": "dbb21675034fee59081f78ba265be39d3cbfc21ab2eede306efca8afd6325a89"
+    },
+    {
+      "bytes": 2623549,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode26/events.jsonl",
+      "sha256": "68155cf1a07ad2cd9091d475a6df0e8767060c6df11b15cf2bc32cfaa26de5ad"
+    },
+    {
+      "bytes": 2644784,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode27/events.jsonl",
+      "sha256": "672e99fb1998eb239093a9bccdd1e0a4c41faef1d4d7419d5efb2600d0d95986"
+    },
+    {
+      "bytes": 2511152,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode28/events.jsonl",
+      "sha256": "00301fb906e35ace5957e09d6c55bf7e738542ae02ef600511bc7227714988d1"
+    },
+    {
+      "bytes": 2556968,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode29/events.jsonl",
+      "sha256": "23219b69dbb64bc90a534c157db3a47c25b3399593792a583cfd6c2720715df1"
+    },
+    {
+      "bytes": 2616824,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode30/events.jsonl",
+      "sha256": "f5ae6e1f97d625241b7b085377b7b58a04e6c56c35e8a3af258bef1de95e9f97"
+    },
+    {
+      "bytes": 2515489,
+      "path": "payload/episodes/training/block62/graph/own_ppo/episode31/events.jsonl",
+      "sha256": "2235be8fe9ff39b7b6b6c577dde6adcec87d7935f9ab1c670db169c3041cb23a"
+    }
+  ],
+  "limits": [
+    "On-policy state/action confounding remains after update/time centering.",
+    "Step rows are correlated, not independent replicates; no new significance claims.",
+    "Logit gradients at the OLD policy are analytic score-space quantities, not parameter gradients or actual Adam updates.",
+    "Saved actor norm combines policy and entropy; separate parameter-gradient contribution is unavailable.",
+    "No counterfactual headroom, stochastic deployment benefit, reward defect or global optimality is established."
+  ],
+  "method": "Float64 arithmetic from saved raw rewards/values; gamma=lambda=1, terminal bootstrap=0. Normalize within each208-row rollout. First-minibatch losses reconciled to saved float32 receipts within2e-5.",
+  "schema": "saved-return-ranking-diagnostic-v1",
+  "scientific_calls": {
+    "environment": 0,
+    "model_forwards": 0,
+    "model_loads": 0,
+    "optimizer": 0
+  },
+  "script_sha256": "9b932c9d3f19146f55f9682e04b23d75df8084775d5ccd212e14a391488f7eb4",
+  "source_inventory_sha256": "e04a801afc91302cddd5a5d9c13e36c4ef98d9b31d3ec4cc8a90429708d4eb37"
+}

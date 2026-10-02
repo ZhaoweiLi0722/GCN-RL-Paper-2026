@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 17,
-  "updated_at_utc": "2026-10-02T03:05:00Z",
+  "revision": 18,
+  "updated_at_utc": "2026-10-02T04:26:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "7b5a96e9e8b787876bbe2e0bd8ebf7076cecb25f",
@@ -10,9 +10,9 @@
   "execution_authorization": "specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-authorization.json",
   "scientific_execution_authorized": false,
   "authorization_state": "Complete continuation attempt successfully executed and consumed;no automatic follow-on or retry",
-  "status": "continuation_recovery_completed_no_incremental_greedy_ppo_benefit",
+  "status": "saved_return_diagnosis_complete_bounded_baseline_proposal_next",
   "execution_commit": "63c2383d33f5795f22ec1173bd75222a30a63a4a",
-  "current_task": "S1_CONTINUATION_RECOVERY_CLOSED",
+  "current_task": "N3_VALUE_BASELINE_COMPARISON_PROPOSAL",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -26,7 +26,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Finite chain complete. Hand off canonical negative continuation result and inherited baseline trade-off. Next decision should discriminate weak return-driven ranking from limited candidate headroom using existing records before proposing any new experiment;no automatic fit,reward change,scenario,stochastic appendix or retry.",
+  "next_concrete_action": "Integrate source-contract note and draft one complete bounded value-baseline intervention comparison against current PPO,own frozen and BC-CONTINUE. Keep reward/scenario/support fixed;explicit initialization,new streams,all loads/episodes/updates/time counts. No fit-only gate. Ask one complete execution approval then pause;no scientific calls authorized.",
   "saved_qualification_authorization": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-authorization.json",
   "authority": {
     "local_code_preparation": true,
@@ -55,8 +55,11 @@
     "kind": "heartbeat",
     "cadence_minutes": 30,
     "creation_verified": true,
-    "status": "PAUSED",
-    "pause_reason": "Full authorized continuation,evaluation and local archives complete;single attempt consumed;no new scientific scope approved",
+    "status": "ACTIVE",
+    "pause_reason": null,
+    "current_scope": "Finite N1-N3 saved JSON diagnosis and prospective comparison packet only;no scientific execution",
+    "active_update_verified_at_utc": "2026-10-02T04:26:00Z",
+    "active_toml_sha256": "31a14dd71f8a5c0907e1c515f2fca9f01f35c4c181fc0a70d1c225df1090e001",
     "terminal_closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/s1-monitor-closure.json",
     "current_receipt": "specs/2026-10-01-adaptive-paper-delivery/saved-qualification-pause.json",
     "closure_receipt": "specs/2026-10-01-adaptive-paper-delivery/automation-closure.json",
@@ -88,6 +91,9 @@
     "note": "Historical approval consumed by the recorded failed attempt. Original protocol/authorization remain immutable; unused caps grant no retry."
   },
   "tasks": [
+    {"id": "N1_SOURCE_CONTRACT", "state": "completed", "authorized": true, "deliverable": "Exact frozen objective/value/input/logging contract;time input present;no model access"},
+    {"id": "N2_SAVED_RETURN_DIAGNOSIS", "state": "completed", "authorized": true, "deliverable": "99 hash-matched files,4992 saved PPO rows;near-constant value baseline identified;zero scientific calls"},
+    {"id": "N3_VALUE_BASELINE_COMPARISON_PROPOSAL", "state": "next_authorized_preparation", "authorized": true, "deliverable": "One full bounded comparison packet and paper update;ask execution approval then pause"},
     {"id": "D1", "state": "completed_zero_update", "authorized": true, "deliverable": "New variable-bank actor and separate value model with zero-update contract tests", "exit": "Usable implementation, not a numerical fit gate"},
     {"id": "D2", "state": "completed_fixture_integration", "authorized": true, "depends_on": ["D1"], "deliverable": "Complete 33-scope fixture runner, qualification/forks/collection/updates/test seals/verifier/archive wiring; independent scalar verifier separately tested. In-owner restoration only; no scientific execution acceptance", "exit": "Complete mock chain passed; real entrypoint fails closed without explicit bound approval"},
     {"id": "D3", "state": "completed_source_frozen_engineering", "authorized": true, "deliverable": "Exclusive claim, committed approval/live admission, external watchdog, inner compute and terminal deadlines; 334 source/6 input/runtime locks plus 499-file local seed audit frozen and reread from clean commits", "exit": "One complete S1 decision in approval-request.md; no real scientific preflight performed"},
@@ -103,6 +109,23 @@
     {"id": "M1_PREP", "state": "completed_local_draft", "authorized": true, "deliverable": "manuscript-claims-draft.md reuses the existing evidence map, separates historical package gain, unestablished RL increment and prospective mechanism scope; no new outcome analysis"}
   ],
   "progress": {
+    "saved_return_diagnosis": {
+      "readout": "reports/2026-10-02-saved-return-ranking/readout.md",
+      "raw_diagnostic": "reports/2026-10-02-saved-return-ranking/diagnostic.json",
+      "source_contract": "reports/2026-10-02-saved-return-ranking/source-contract.md",
+      "files_bound": 99,
+      "ppo_training_decisions": 4992,
+      "rollouts": 24,
+      "minibatches": 384,
+      "last_collection_value_explained_variance": [0.0028167762140073327, 0.0010608827639485563, 0.0021363082382874765],
+      "final_checkpoint_value_accuracy_measured": false,
+      "new_scientific_calls": 0,
+      "scalar_tests_passed": 7,
+      "compileall_passed": true,
+      "advancement_agent": "Rawls completed source-contract and closed",
+      "efficiency_agent": "Carson completed one read-only pass and closed",
+      "next_scope": "Prepare one targeted complete comparison;no execution authorization"
+    },
     "continuation_recovery_execution": {
       "status": "completed",
       "exit_code": 0,

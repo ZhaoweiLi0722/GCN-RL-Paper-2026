@@ -1,6 +1,6 @@
 # Autonomous local research queue
 
-## Live checkpoint: cohort integration passed, freeze then launch approved package
+## Live checkpoint: cohort scope approved and frozen, single launch is next
 
 2026-10-02T08:41Z. Entry HEAD013b29d5974132491edc708b8cac7bb205ff1373.
 Latest direct user request: start the new experiment. Scope-specific approval
@@ -19,11 +19,18 @@ raw-bundle/target verification; Pauli delivered the execution wrapper after one
 read-only efficiency check. Both finite agents are closed. Existing watchdog,
 budget, saved qualification and archives are reused; no additional gate.
 
-Next: commit implementation, freeze exact
-runtime/input/source/prospective streams, bind final authorization and commit,
-then launch this single approved package without another routine permission
-round. No prior qualification, terminal diagnosis or baseline study rerun.
-No research process was present at entry. Scheduling is not evidence of a run.
+Implementation committed8a45c72269d23a99d36c2d6ca16c3eacb1b99e1a. Hash-only
+freeze binds401source files,12historical inputs and668local seed metadata files;
+scoped collision audit passed. Packet7737ecffadb106a929901f58e1e00cacbbf83d1cbe2ae583c66e105c57e8bd85.
+authorization.json binds the literal pre-freeze user request to this packet.
+The original draft false flags remain historical/prospective metadata, not a
+launch permission; execution reads the separate committed authorization.
+
+Next: commit frozen packet/authorization, verify no duplicate process, launch
+experiments.scripts.run_cohort_objective once in this worktree. Result root:
+results/dynamic_candidate_cohort_objective_20261002. No prior qualification,
+terminal diagnosis or baseline rerun. No research process at entry; no launch
+claimed yet. Same gcn-rl schedule updated ACTIVE for this approved bounded chain.
 
 ## Previous checkpoint: cohort prefix, persistence and bounded continuation integrated
 

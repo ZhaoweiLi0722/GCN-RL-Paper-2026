@@ -1,0 +1,103 @@
+{
+  "actor_updates": 768,
+  "critic_updates": 0,
+  "fits_completed": 6,
+  "format": "paired-cohort-recovery-training-milestone-v1",
+  "models": [
+    {
+      "arm": "paired_cost",
+      "block": 60,
+      "final_loss": -0.00019117434018878264,
+      "final_model": {
+        "bytes": 529217,
+        "path": "payload/models/block60/paired_cost/final.pt",
+        "sha256": "872d23eeeb690b7f40f5e55ee1abdb10cae1d5ba46c43540a1191ee859964062"
+      },
+      "final_policy_state_sha256": "a36065d8e17416ce51efe69be72a0bf52ccbbe89fe1b92af0cd8ad0d8dfb7575",
+      "first_loss": 0.0006554608254973274,
+      "initial_policy_state_sha256": "8a17ff76825810143f028f53420e421f155c62846495a6fe0fd6b7c4e2bf3f94",
+      "policy_changed": true,
+      "steps": 128
+    },
+    {
+      "arm": "bc_continue",
+      "block": 60,
+      "final_loss": 0.9307804009627295,
+      "final_model": {
+        "bytes": 529217,
+        "path": "payload/models/block60/bc_continue/final.pt",
+        "sha256": "793b60b74eb064fd02c7edd75a885138e2f5d0edf1701b3f026ca47e2a4ca5d7"
+      },
+      "final_policy_state_sha256": "d38ca8190bb4c06f9f83938c75ac6e2174b46e34cbf2940d1a38c1b7a32f2242",
+      "first_loss": 1.2211933335806184,
+      "initial_policy_state_sha256": "8a17ff76825810143f028f53420e421f155c62846495a6fe0fd6b7c4e2bf3f94",
+      "policy_changed": true,
+      "steps": 128
+    },
+    {
+      "arm": "paired_cost",
+      "block": 61,
+      "final_loss": -0.0025672279123339467,
+      "final_model": {
+        "bytes": 529217,
+        "path": "payload/models/block61/paired_cost/final.pt",
+        "sha256": "03c2fa6ad57a1ca069ae96a549fc73baf0f759354dbe256b88bd081b8de74a29"
+      },
+      "final_policy_state_sha256": "fc4f2c1e64061ca84598d7aecabd44f59160cd9c7a91e6b203d828e7a8eca90f",
+      "first_loss": -0.002208992576553811,
+      "initial_policy_state_sha256": "1c946c443470e260e6ad9e008142879cea034b9812d306ff63bd6c83d942b0b2",
+      "policy_changed": true,
+      "steps": 128
+    },
+    {
+      "arm": "bc_continue",
+      "block": 61,
+      "final_loss": 1.1532135123320189,
+      "final_model": {
+        "bytes": 529217,
+        "path": "payload/models/block61/bc_continue/final.pt",
+        "sha256": "e0e4834bbe009154f324571ccf1a80c21f8df503fb0fb002556aa1fcb2751e48"
+      },
+      "final_policy_state_sha256": "2f4d144aee3a6ba320a96a056ce9764bdb6e025301cf0e89fc55e4238110343a",
+      "first_loss": 1.3973596448081487,
+      "initial_policy_state_sha256": "1c946c443470e260e6ad9e008142879cea034b9812d306ff63bd6c83d942b0b2",
+      "policy_changed": true,
+      "steps": 128
+    },
+    {
+      "arm": "paired_cost",
+      "block": 62,
+      "final_loss": -0.0017846226504239736,
+      "final_model": {
+        "bytes": 529217,
+        "path": "payload/models/block62/paired_cost/final.pt",
+        "sha256": "2a3ba335434acc3734fa9070afb149db562ddc70650109c17a53cafe9570865f"
+      },
+      "final_policy_state_sha256": "d7987dfc0bfa3209b623a2a3ebe824561cf5fd84255ea0d73dfe6d34933fdbf8",
+      "first_loss": -0.001301940293353177,
+      "initial_policy_state_sha256": "98510c224b72f23d26475594910f3fc487b34de2045335329d6ee6be4b0c3bf3",
+      "policy_changed": true,
+      "steps": 128
+    },
+    {
+      "arm": "bc_continue",
+      "block": 62,
+      "final_loss": 0.9978868206025696,
+      "final_model": {
+        "bytes": 529217,
+        "path": "payload/models/block62/bc_continue/final.pt",
+        "sha256": "46e383239840db6bc329ad6847dca73c61659871e8c2cca39390b699db3f5b87"
+      },
+      "final_policy_state_sha256": "4acc752ebec7efdee749ef54514d1122083f8e147d04ccb2deed3b430b192ec4",
+      "first_loss": 1.2616701775437633,
+      "initial_policy_state_sha256": "98510c224b72f23d26475594910f3fc487b34de2045335329d6ee6be4b0c3bf3",
+      "policy_changed": true,
+      "steps": 128
+    }
+  ],
+  "performance_comparison_complete": false,
+  "scientific_forward_or_update_for_this_readout": 0,
+  "sealed_models": 12,
+  "source_execution": "e75e342",
+  "training_loss_is_not_patient_benefit": true
+}

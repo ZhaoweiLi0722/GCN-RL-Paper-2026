@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: remaining-work recovery running, no actor update yet
+## Live checkpoint: actual actor training complete, evaluation running
+
+2026-10-02T17:27:49Z. All6original fits completed:3paired-cost and3BC,
+128actual actor updates each,768total/0critic. Twelve models sealed before
+test. All6saved policy payloads differ from their own initializer; all768
+training receipts have finite loss/gradient and0critic updates. No model
+forward or update was used for this saved-checkpoint readout. Proof:
+reports/2026-10-02-paired-cohort-recovery-training-milestone.json,
+SHA25660c67dffd3b1e70d3651f854c6d58cc6a3efedfab6575636d59e72e7e0db497b.
+
+All285remaining branches are complete; combined original matrix402/402.
+Actual training is no longer a pending step. Both99624/99636remain live with
+matching commands and parent chain. Evaluation is underway,9/216completed
+world receipts; last observed stderr0,no failure or terminal. Training losses
+decreased and weights changed, but neither establishes patient benefit.
+The full six-controller cost/patient comparison is still pending. Next: let
+the existing one-shot process finish all216evaluations, independent raw
+comparison and local archive; then report every block and trade-off. The
+samegcn-rl monitor stays ACTIVE; no additional approval for these fixed phases,
+no duplicate/retry/extra fitting or reward change. Banach's finite integration
+assignment is delivered and closed; earlier efficiency advice reused.
+
+### Earlier Running Observations
 
 Latest observation2026-10-02T16:50:45Z: both original PIDs still live with
 matching parent/commands. Blocks60/61 branch owners completed. Block62 now

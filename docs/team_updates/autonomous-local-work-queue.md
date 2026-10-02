@@ -2,6 +2,29 @@
 
 ## Live checkpoint: conservative two-round experiment launched and progressing
 
+2026-10-02T20:47:08Z: first real training milestone complete. Round0/block60
+paired-cost and BC each completed64actor updates;128/768total,0critic. Both
+final checkpoints exist and their hashes match recorded boundaries; all128
+step receipts are sequential with finite loss/gradient. This proves training,
+not improved performance. No test evaluation or final-model seal yet.
+
+Current phase branches/round0/block61. Preflight3/3,contexts4/12cohorts and
+12/36states,completed branches161 (136block60+25block61; global cap864,final
+alias-reduced count not yet known),paired roundfits1/6,BCroundfits1/6,
+finalseals0/9,evaluation0/180. Latestenvironment7914/49626. Both12670/12683
+remain live with exact launch/child commands and parent chain; no duplicate.
+New completed owner boundaries establish progress. All three logs0bytes,
+no terminal/failure/overrun records;482current source/input/scope locks match.
+No extra scientific calls, tests, model forwards or parameter changes by monitor.
+
+Evidence:reports/2026-10-02-conservative-cohort-monitor-2047.json.
+Conditional remaining estimate3-5hours, based on27.57minutes for the first136
+branches; later branch sizes/evaluation/archive timing remain uncertain.
+Existing serial process continues current labels,remaining fits and sealed
+evaluation; no new approval or audit gate. Same monitor stays ACTIVE.
+
+### Earlier launch observations
+
 2026-10-02T20:12:38Z update: all3preflight pairs and round0/block60's2context
 cohorts/6states finished. Current phase branches/round0/block60; latest sample
 562environment calls,0actor/0critic. Both12670/12683 remain live with matching

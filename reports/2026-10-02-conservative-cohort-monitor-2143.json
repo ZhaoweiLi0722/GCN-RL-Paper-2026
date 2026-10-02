@@ -1,0 +1,173 @@
+{
+  "observed_at_utc": "2026-10-02T21:43:35.431252+00:00",
+  "head": "093c29d5ffa82440f6ac5d24b6d6681741a9f6c9",
+  "claim": {
+    "authorization_sha256": "43082f5c97efc8dcb922527e401c20011dcad9fd5cba473ee28a814a8b59dafa",
+    "automatic_retry": false,
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "880defba211bf0e444bb8781c8be5735fb0cabe0",
+    "packet_sha256": "c571729b094dd02e6034434273d04fc72c23c9db31a0d2f0e69fdc6c01bd0d66",
+    "pid": 12670,
+    "ppid": 1,
+    "started": 972872.163295
+  },
+  "child_claim": {
+    "pid": 12683,
+    "ppid": 12670
+  },
+  "current_section": "branches/round1/block60",
+  "completed_sections": [
+    "binding",
+    "preflight/block60",
+    "preflight/block61",
+    "preflight/block62",
+    "contexts/round0/block60",
+    "branches/round0/block60",
+    "paired_actor/round0/block60",
+    "bc_actor/round0/block60",
+    "contexts/round0/block61",
+    "branches/round0/block61",
+    "paired_actor/round0/block61",
+    "bc_actor/round0/block61",
+    "contexts/round0/block62",
+    "branches/round0/block62",
+    "paired_actor/round0/block62",
+    "bc_actor/round0/block62",
+    "contexts/round1/block60"
+  ],
+  "counts": {
+    "environment": 19285,
+    "optimizer": 384
+  },
+  "preflight_complete": 3,
+  "context_cohorts": 8,
+  "context_states": 24,
+  "completed_branch_boundaries": 425,
+  "branches_by_owner": {
+    "round0/block62": 132,
+    "round0/block61": 136,
+    "round0/block60": 136,
+    "round1/block60": 21
+  },
+  "max_branches": 864,
+  "actual_branch_total_not_yet_known": true,
+  "paired_round_fits": 3,
+  "bc_round_fits": 3,
+  "final_model_seals": 0,
+  "completed_evaluations": 0,
+  "new_training_evidence": [
+    {
+      "block": 62,
+      "round": 0,
+      "arm": "paired_cost",
+      "receipts": 64,
+      "finite": true,
+      "sequential": true,
+      "critic_steps": 0,
+      "final_receipt": {
+        "actor_grad_norm_before_clip": 0.0005213270196691155,
+        "arm": "paired_cost",
+        "attempted_optimizer_steps": 64,
+        "context_count": 6,
+        "critic_optimizer_steps": 0,
+        "loss": 0.001075107081293709,
+        "optimizer_steps": 64,
+        "step": 64
+      }
+    },
+    {
+      "block": 62,
+      "round": 0,
+      "arm": "bc_continue",
+      "receipts": 64,
+      "finite": true,
+      "sequential": true,
+      "critic_steps": 0,
+      "final_receipt": {
+        "actor_grad_norm_before_clip": 1.0444992780685425,
+        "arm": "bc_continue",
+        "attempted_optimizer_steps": 64,
+        "context_count": 6,
+        "critic_optimizer_steps": 0,
+        "loss": 1.094753357463391,
+        "optimizer_steps": 64,
+        "step": 64
+      }
+    }
+  ],
+  "new_model_files": [
+    {
+      "bytes": 528725,
+      "path": "payload/models/round0/block62/paired_cost/final.pt",
+      "sha256": "70ba89f1d1e10d2697d9fcdbe105ee706f87df87ba2c6d9ec3ef700e6a2fa641",
+      "verified": true
+    },
+    {
+      "bytes": 528725,
+      "path": "payload/models/round0/block62/bc_continue/final.pt",
+      "sha256": "5ee91e900173c24787d98a46bc7150d4884d2a637a492642ea8904c411ff7b99",
+      "verified": true
+    }
+  ],
+  "previous_training_evidence_reused": [
+    "reports/2026-10-02-conservative-cohort-monitor-2047.json",
+    "reports/2026-10-02-conservative-cohort-monitor-2113.json"
+  ],
+  "current_locks_checked": 482,
+  "lock_mismatches": [],
+  "completed_branch_owners": 3,
+  "completed_phase_seconds": {
+    "bc_actor": 96.75632799987216,
+    "binding": 6.2790870000608265,
+    "branches": 4906.8989179999335,
+    "contexts": 80.72421099990606,
+    "paired_actor": 97.4275399998296,
+    "preflight": 89.84329099999741
+  },
+  "logs": {
+    "results/conservative_cohort_improvement_20261002/launcher/stderr.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:23.306137+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/stdout.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:23.306095+00:00"
+    },
+    "reports/conservative_cohort_20261002_detached_launcher.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T20:10:20.902880+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/budget.jsonl": {
+      "bytes": 10024710,
+      "mtime_utc": "2026-10-02T21:43:35.236087+00:00"
+    },
+    "results/conservative_cohort_improvement_20261002/launcher/admission.jsonl": {
+      "bytes": 7139101,
+      "mtime_utc": "2026-10-02T21:43:34.992635+00:00"
+    }
+  },
+  "terminal_or_failure": {},
+  "anomalies": [],
+  "new_scientific_calls_by_monitor": 0,
+  "training_is_not_performance": true,
+  "process_evidence": {
+    "supervisor_pid": 12670,
+    "supervisor_ppid": 1,
+    "child_pid": 12683,
+    "child_ppid": 12670,
+    "matching_commands": true,
+    "duplicate_scientific_processes": 0,
+    "supervisor_elapsed": "01:32:19",
+    "child_elapsed": "01:32:16",
+    "module": "experiments.scripts.run_conservative_cohort_improvement"
+  },
+  "running_evidence": "Matching live original processes plus completed block62 branches and paired/BC fits, then round1/block60 collection since the prior observation.",
+  "eta": {
+    "remaining_hours": [
+      2,
+      3.5
+    ],
+    "basis": "Three completed branch owners used 4906.90 seconds for 404 branches; remaining second-round owners, evaluation and archive timing can vary.",
+    "global_cap_hours": 8
+  }
+}

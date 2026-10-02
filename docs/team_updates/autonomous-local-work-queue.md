@@ -2,6 +2,25 @@
 
 ## Live checkpoint: conservative two-round experiment launched and progressing
 
+2026-10-02T21:43:35Z: first round complete across all3blocks. Paired3/6and
+BC3/6round-fits,384/768actor updates,0critic. Newly saved block62 checkpoint
+hashes and128new finite sequential receipts verified; earlier checks reused.
+Current second-round phase branches/round1/block60. Preflight3/3,collection
+8/12cohorts and24/36states;425complete branches (first round404,second21;
+global upper bound864,final alias-reduced total not yet known). Finalseals0/9,
+evaluation0/180,environment19285/49626. Both original12670/12683processes
+live with matching commands/parents; new completed owners establish progress.
+No duplicate,terminal/failure/overrun or stderr;482current locks match.
+
+Evidence:reports/2026-10-02-conservative-cohort-monitor-2143.json.
+Conditional ETA2-3.5hours remaining, using4906.90seconds for404completed
+first-round branches; final evaluation/archives remain uncertain. Keep current
+serial second round and monitor ACTIVE. No model forward/update/new trajectory
+by monitor, no parameter change or extra audit. No performance claim before
+the sealed180cohort comparison. Next is the existing second-round fits.
+
+### Previous block milestone
+
 2026-10-02T21:13:43Z: round0/block61 paired and BC fits completed, each64
 updates; cumulative256/768actor,0critic,paired2/6andBC2/6round-fits. Newly
 saved checkpoint hashes match;128new receipts are sequential and finite.

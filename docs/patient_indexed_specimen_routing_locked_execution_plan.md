@@ -2790,3 +2790,33 @@ those existing prerequisites pass, execute the approved serial chain without
 asking at each stage. Any terminal scientific failure closes this attempt;
 preserve evidence and do not fix/retry. Historical studies remain closed.
 No remote/export/messages,holdout,StageE reopening or Howard-approval claim.
+
+#### Cohort objective: completed training, terminal evaluation timing failure
+
+2026-10-02T10:19Z: the single authorized package ran at execution098b83f3e0457a3ec65568cbba90147670215bc6,
+after implementation8a45c72269d23a99d36c2d6ca16c3eacb1b99e1a and98focused tests/
+full compileall. All18real preflight cohorts,300declared parity/clone calls,
+9training jobs/288cohorts/1920optimizer calls and12-model sealing completed.
+The first evaluation owner,final_evaluation/block60/own_frozen,hit its frozen
+90second deadline after11complete worlds and17prefix steps of the next world.
+The watchdog terminated the child;supervisor exit1,elapsed5214.478837seconds.
+The global10800second cap was not binding. stderr remained empty and both original
+runner PIDs were confirmed absent. This is an operational time-budget failure,
+not a null performance finding. There is no trained-controller test contrast.
+
+All12model seals,401source locks and12historical-input locks were read back and
+matched. The22234-entry budget chain verifies20288charged environment calls,
+1152actor and768critic calls. Partial calls remain spent;no refund or restart.
+Preserve original results and frozen source/config. Saved-only training-target
+verification and failed-run archival belong to closure,not new scientific calls.
+Terminal readout:specs/2026-10-02-terminal-obligation/terminal-readout.md.
+Metadata evidence:reports/2026-10-02-cohort-objective-closure/metadata-verification.json.
+
+The samegcn-rl automation is PAUSED and visible after failure. One new proposal
+was asked:reuse all12sealed models and11complete evaluation worlds;complete205
+remaining63step cohorts with12915environment calls,0optimizer calls,240seconds
+perowner and7200seconds globally,one attempt. Keep original36worlds/six
+controllers/objective/metrics;no retraining or retuning. No approval received at
+this entry. This is not a continuation permit;oldSTART authority and unused
+time do not override the consumed-attempt rule. No remote/Dropbox/holdout/StageE
+or Howard-approval action occurred.

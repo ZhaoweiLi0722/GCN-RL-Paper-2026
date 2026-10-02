@@ -1,0 +1,86 @@
+{
+  "archive_bytes": 2574714967,
+  "archive_path": "reports/2026-10-02-cohort-objective-closure/archives/failed-run.tar.gz",
+  "archive_sha256": "d8b01bb8527532fbeb6a9770f7c291e3513bd7d745c430222679f0990d646705",
+  "archived_files": 5297,
+  "automatic_retry": false,
+  "automation_status": "PAUSED",
+  "cloud_sync_verified": false,
+  "complete_evaluations": 11,
+  "dropbox_exported": false,
+  "evidence": [
+    {
+      "bytes": 369,
+      "path": "results/dynamic_candidate_cohort_objective_20261002/launcher/claim.json",
+      "sha256": "418a4ea20dcbd039655cc5b60a93cd42ae29e77b93b5046bf51cb67a49dc0d02"
+    },
+    {
+      "bytes": 1198,
+      "path": "results/dynamic_candidate_cohort_objective_20261002/launcher/terminal.json",
+      "sha256": "8ac3a13a59554fcd3f845ef97c8c0f8d572968f4f092f474c34618e426e2dff4"
+    },
+    {
+      "bytes": 903,
+      "path": "results/dynamic_candidate_cohort_objective_20261002/launcher/supervisor.json",
+      "sha256": "73470c9f07ddb30674e7107475317c2500b17766a7ee834aed556a320454bcf5"
+    },
+    {
+      "bytes": 11612299,
+      "path": "results/dynamic_candidate_cohort_objective_20261002/launcher/budget.jsonl",
+      "sha256": "c9f9d48e4a6fe12a90b5b32e719c599a788c1640e9b637b436505f23fc4de8f3"
+    },
+    {
+      "bytes": 2451,
+      "path": "results/dynamic_candidate_cohort_objective_20261002/payload/model-seals.json",
+      "sha256": "cd809ef7daa64e471f029e7f64310d52128c10399daf0336062f7f0a80446006"
+    },
+    {
+      "bytes": 2954,
+      "path": "reports/2026-10-02-cohort-objective-closure/metadata-verification.json",
+      "sha256": "d450bafd090eda6571c371a6ee259b9f5acdef7d6c0283e7f84402430a5be6ab"
+    },
+    {
+      "bytes": 437299,
+      "path": "reports/2026-10-02-cohort-objective-closure/independent-training-targets.json",
+      "sha256": "7bc54baecc61a32b7d882a17ce77605250bff8371692fa8736a5a99da31998c5"
+    },
+    {
+      "bytes": 834803,
+      "path": "reports/2026-10-02-cohort-objective-closure/archives/failed-run.tar.gz.manifest.json",
+      "sha256": "10219ea64ac43ae37462672347d5eb6e6418470e66d69118c1c473e09797aa1d"
+    },
+    {
+      "bytes": 6035,
+      "path": "specs/2026-10-02-terminal-obligation/terminal-readout.md",
+      "sha256": "60645e54c2f702bafbe6545a2a3386b06f0bf0ffa054cae3b1b7d5125a164cce"
+    },
+    {
+      "bytes": 432542,
+      "path": "specs/2026-10-02-terminal-obligation/frozen.json",
+      "sha256": "b7513d6afbcbe4315df8687fceac72c4bc7903cc6029cff0123569daad7dae5a"
+    },
+    {
+      "bytes": 2063,
+      "path": "specs/2026-10-02-terminal-obligation/authorization.json",
+      "sha256": "2f0b889b722e34b2f0ca545d43b6b9d84560b52ed6cbd6faadae59f7f8011141"
+    }
+  ],
+  "execution_commit": "098b83f3e0457a3ec65568cbba90147670215bc6",
+  "format": "cohort-objective-terminal-closure-index-v1",
+  "howard_access_verified": false,
+  "independent_target_rollouts": 48,
+  "local_archive_verified": true,
+  "models_sealed_and_hash_verified": 12,
+  "new_scientific_calls_for_closure": 0,
+  "partial_evaluation_prefix_calls": 17,
+  "performance_comparison_complete": false,
+  "recovery_approval_requested": true,
+  "recovery_approved": false,
+  "scientific_status": "failed_evaluation_owner_deadline",
+  "source_tree_unchanged_during_archive": true,
+  "spent_environment_calls": 20288,
+  "spent_optimizer_calls": 1920,
+  "training_cohorts": 288,
+  "training_complete": true,
+  "training_jobs": 9
+}

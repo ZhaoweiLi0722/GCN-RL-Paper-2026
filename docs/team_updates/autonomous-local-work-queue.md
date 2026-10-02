@@ -1,6 +1,83 @@
 # Autonomous local research queue
 
-## Live checkpoint: cohort scope approved and frozen, single launch is next
+## Live checkpoint: cohort training complete; evaluation deadline terminated attempt
+
+2026-10-02T10:19Z. The single cohort-objective run is TERMINAL FAILED,not
+running. launcher/terminal.json overrides the last running status snapshot.
+Supervisor returned1 after sending SIGTERM to child72081 at the first evaluation
+owner's90second deadline; the global elapsed time was5214.479seconds,not the
+10800second global limit. Both original PIDs72066/72081 are absent,verified
+after exit. No Traceback/stderr output; no training failure is reported.
+
+All9training jobs completed288cohorts and1920optimizer calls; all12model files
+were sealed before testing and their bytes/SHA256 match those seals. Evaluation
+has11complete own-frozen/block60 worlds and17persisted prefix steps of world11;
+no trained-controller test result or paired performance comparison exists yet.
+Final ledger:20288environment calls =1434preflight+18144training+710evaluation.
+The partial17steps remain spent; no budget refund. This is a runtime-budget
+failure,not evidence that cohort PPO is ineffective. Old results remain intact.
+
+Saved-training-target reconciliation PASSED at10:29Z:48PPO rollouts,192PPO
+cohorts/full288three-arm inventory,1935file references;immutable prefix/once-only
+tail charges/kernel histories match. No learned-policy inference or optimizer
+reexecution. Metadata checks passed401source/12input/12model locks,the22234entry
+budget chain,and finite numeric fields in all9training phase records. Receipts:
+reports/2026-10-02-cohort-objective-closure/. Post-termination failed-run archive
+finished exit0:5297files,2574714967bytes,every member read/hashed and original
+tree unchanged. ArchiveSHA256d8b01bb8527532fbeb6a9770f7c291e3513bd7d745c430222679f0990d646705.
+Manifest:archives/failed-run.tar.gz.manifest.json beneath the report directory.
+This is local preservation only;no cloud/export/collaborator-access claim.
+The SAME gcn-rl schedule is PAUSED,tool-confirmed after terminal failure; no
+automatic retry. No source/config changed after freeze; no remote/Dropbox action.
+
+One explicit question was sent: approve evaluation-only recovery using the12
+sealed models,retain11complete worlds and finish205remaining cohorts,12915new
+environment calls,0optimizer calls,240seconds per owner and7200seconds globally,
+one attempt. Same original36test worlds/six controllers/objective/metrics; no
+training,retuning or automatic retry. Await this NEW scope approval. Do not infer
+approval from the old START request or reuse the old attempt's unspent allowance.
+All closure helper processes have exited. Next action is the single recovery
+decision above;there is no active scientific or closure workload in this turn.
+
+## Running checkpoints retained as history
+
+Launch verified at2026-10-02T08:48Z. Execution HEAD
+098b83f3e0457a3ec65568cbba90147670215bc6. SupervisorPID72066, childPID72081
+withPPID72066, exact command experiments.scripts.run_cohort_objective --child.
+Claim:results/dynamic_candidate_cohort_objective_20261002/launcher/claim.json.
+At08:58Z same_start_preflight completed18/18cohorts and all300parity/clone
+calls,1134main preflight steps (1434total), in561.565seconds under600s cap.
+Status000004.json opens window_ppo/block60; training environment calls now
+advance. PID72066/72081 verified live at this new phase, exact parent/commands
+unchanged; stderr0bytes. No performance conclusion before sealed evaluation.
+This is actual scientific execution, not just scheduling.
+
+At09:07Z window_ppo/block60 completed32episodes,8updates,256optimizer calls;
+phase receipt payload/phases/window_ppo/block60.json has finite persisted losses
+and nonzero actor gradients. Status advances to window_ppo/block61. Global
+counts at that boundary3450environment,256optimizer. No test episodes opened,
+no performance gain claim; source/input locks unchanged. stderr remains empty.
+
+At09:19Z window_ppo/block61 also completed32episodes; two complete jobs now
+provide64training episodes and512optimizer calls. Block62 is in progress.
+Supervisor72066/child72081,PPID72066 verified live with the same exact commands;
+status shows the new block62 boundary. stderr0bytes. No evaluation opened.
+
+At10:00Z both PPO arms completed all3blocks each:6complete training jobs,
+192episodes,1536optimizer calls. BC-CONTINUE/block60 has20complete episodes
+and5updates; global persisted boundary14790environment/1616optimizer calls.
+Same supervisor72066/child72081 and PPID72066 verified live. No stderr output,
+no terminal failure and no evaluation opened. Continue the SAME serial run;
+remaining BC blocks,12-model sealing,216evaluations and closure are already
+authorized. These are completed training comparisons,not patient gains yet.
+
+Do not edit frozen source/config/inputs, relaunch, rerun qualification, or start
+a duplicate. Observe existing process and new episode/update/phase boundaries.
+After terminal closure read independent verification and archive receipts;
+failure is terminal, no automatic fix/retry. The approved global and all owner
+subcaps remain unchanged. Current exec session49757 is owned by this turn.
+
+## Launch Preparation Evidence
 
 2026-10-02T08:41Z. Entry HEAD013b29d5974132491edc708b8cac7bb205ff1373.
 Latest direct user request: start the new experiment. Scope-specific approval
@@ -26,11 +103,11 @@ authorization.json binds the literal pre-freeze user request to this packet.
 The original draft false flags remain historical/prospective metadata, not a
 launch permission; execution reads the separate committed authorization.
 
-Next: commit frozen packet/authorization, verify no duplicate process, launch
-experiments.scripts.run_cohort_objective once in this worktree. Result root:
-results/dynamic_candidate_cohort_objective_20261002. No prior qualification,
-terminal diagnosis or baseline rerun. No research process at entry; no launch
-claimed yet. Same gcn-rl schedule updated ACTIVE for this approved bounded chain.
+These preparation steps completed at execution commit098b83f and the one launch
+recorded above. Result root:results/dynamic_candidate_cohort_objective_20261002.
+No prior qualification,terminal diagnosis or baseline rerun. Same gcn-rl schedule
+was updated ACTIVE for this approved bounded chain,read back09:19Z; it is not
+permission for a second launch.
 
 ## Previous checkpoint: cohort prefix, persistence and bounded continuation integrated
 

@@ -136,16 +136,65 @@ counts measure unresolved obligations at an administrative cutoff, not observed
 future deaths or a complete clinical endpoint. Preserve the earlier conservative
 reporting flag and block61 concern without overstating either as proven harm.
 
-The prospective design fixes the52step enrollment window and follows the same
-cohort to modeled infusion/loss under a common declared continuation rule,
-initially proposed as full MDL-2. It would record subsequent primitive costs,
-not select penalty weights to favor RL. This changes the estimand to closed-cohort
-prefix control under that rule; it is not an indefinitely operating network or
-evidence of deployment adaptation. Resource settlement, follow-up bound, patient
-safeguards and a complete numerical package are not yet frozen or approved.
-No such follow-up or reward training has occurred. See the
+The subsequent design fixes the52step enrollment window and follows the same
+cohort to modeled infusion/loss under a common declared continuation rule.
+It records subsequent primitive costs rather than selecting penalty weights to
+favor RL. This changes the estimand to closed-cohort prefix control under that
+rule; it is not an indefinitely operating network or deployment adaptation.
+On2026-10-02 the numerical package was explicitly approved and frozen, and its
+single execution started. Real preflight completed18cohorts, original-engine
+prefix parity and both restoration boundaries. All288training cohorts and1920
+optimizer calls completed and12models sealed. The first evaluation task exceeded
+its90second owner limit after11complete frozen-policy worlds and17steps of the
+next world. The attempt terminated; no comparative performance result exists.
+This is an operational time-budget failure,not a null effect of the amended
+objective. A separately authorized evaluation-only recovery is proposed. See the
 [terminal diagnosis](../../reports/2026-10-02-terminal-obligation/readout.md)
-and [prospective design](../2026-10-02-terminal-obligation/design.md).
+and [frozen cohort protocol](../2026-10-02-terminal-obligation/protocol.md).
+
+### Methods Draft: Fixed-Cohort Objective Comparison
+
+We preserve the original52-step enrollment, observation and candidate-action
+process in the nominal-history simulator. At the administrative cutoff, new
+enrollment ceases. A common full-MDL-2 rule with zero future demand and demand-rate
+priors resolves the existing cohort; after all patients resolve, no new transfers
+or replenishment orders are placed. All controllers retain the same fixed
+11-transition follow-up and63-step economic endpoint, including costs after
+earlier patient resolution. Existing resource stocks, supplier evolution and
+primitive cost coefficients are retained. We record residual stocks and clipped
+overflow without inventing a salvage credit or assigning deaths to unfinished
+patients. This is finite-window economic accounting, not lifetime valuation.
+
+For each of three training blocks, frozen, window-PPO, cohort-PPO and continued-
+imitation branches share identical qualified initial weights. The two PPO arms
+retain the same collected-value baseline, optimizer settings, candidate support,
+entropy term and training allocation. Window-PPO uses the original52negative-cost
+rewards. Cohort-PPO adds the negative sum of the11follow-up primitive costs once
+to the final prefix training reward. Original recorded rewards remain immutable;
+follow-up actions supply neither PPO decisions nor imitation examples. Thus the
+sole PPO-arm intervention is whether common post-window costs enter the return,
+not an arbitrary penalty, extra decision authority or longer learned policy.
+
+Each continuation arm receives32complete cohorts per block. All12learned
+artifacts must be sealed before evaluation on12new starts per block across six
+controllers, including R4 and full MDL-2. The primary comparisons are cohort-PPO
+against its frozen start, window-PPO and continued imitation. We report raw63-step
+cost, original52-step outcomes, cohort resolution/losses, resource effects and
+greedy-request changes. The prespecified development screen requires strictly
+lower mean cost in every block and pooled, with no observed block-level loss
+increase against each primary comparator. Paired block-then-world intervals
+remain descriptive with only three independently trained blocks; the screen is
+neither clinical noninferiority nor independent confirmation. Shared starting
+seeds do not guarantee identical exogenous paths after state-dependent random
+number consumption diverges.
+
+Execution provenance: implementation8a45c72269d23a99d36c2d6ca16c3eacb1b99e1a,
+execution098b83f3e0457a3ec65568cbba90147670215bc6, separate
+[authorization](../2026-10-02-terminal-obligation/authorization.json) and
+[frozen bindings](../2026-10-02-terminal-obligation/frozen.json). Current outputs
+are terminal/incomplete and must not be substituted for the closed historical
+studies. The primary screen was not evaluated; neither benefit nor failure to
+benefit from the amended objective has been established.
 
 Historical replay/target and graph-contract limitations are documented, but
 they do not identify a single causal explanation for the null RL increment.

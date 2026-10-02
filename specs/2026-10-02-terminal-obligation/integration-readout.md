@@ -2,6 +2,17 @@
 
 ## Current Integration Boundary
 
+Terminal update2026-10-02T10:19Z: integration/freeze and the approved real run
+were completed through all training and model sealing. Evaluation terminated
+at the first90second owner deadline;the scientific attempt is closed,incomplete.
+See [terminal readout](terminal-readout.md) and
+`reports/2026-10-02-cohort-objective-closure/metadata-verification.json`.
+Do not treat the historical preparation instructions below as permission to
+launch again. No training needs to be repeated for the proposed evaluation-only
+recovery;that numerical recovery awaits one new explicit approval.
+
+## Pre-Launch Integration Boundary
+
 2026-10-02T08:46Z: complete additive entrypoint and independent verification
 are now integrated. Direct user START approval is recorded in
 approval-intent.json against the unchanged numerical proposal/protocol. This

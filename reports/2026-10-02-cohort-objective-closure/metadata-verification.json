@@ -1,0 +1,98 @@
+{
+  "charged_global_owners": {
+    "global:actor": 1152,
+    "global:clone": 300,
+    "global:critic": 768,
+    "global:trajectory": 19988
+  },
+  "charged_totals": {
+    "environment": 20288,
+    "optimizer": 1920
+  },
+  "format": "cohort-terminal-metadata-verification-v1",
+  "input_files": 12,
+  "last_ledger_sha256": "cd8e5e8a903fcd9f5d5e2a59c67b115810afd78dbb3a35af04016865bce99bfb",
+  "ledger_hash_chain_verified": true,
+  "ledger_rows": 22234,
+  "lock_mismatches": [],
+  "model_seal_count": 12,
+  "model_seal_mismatches": [],
+  "new_scientific_calls": 0,
+  "scientific_attempt_status": "failed",
+  "scope": "saved metadata/hash verification only;no model inference,environment or optimizer calls",
+  "source_files": 401,
+  "training_phases": [
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 60,
+      "episodes": 32,
+      "role": "window_ppo",
+      "rollout_updates": 8,
+      "sha256": "d6d63c69aef91fa8726d30d567db76e1baaad197a95769905359545f973f0eb5"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 61,
+      "episodes": 32,
+      "role": "window_ppo",
+      "rollout_updates": 8,
+      "sha256": "4fb105a7d657720567069ce2a1687e8c3a857bc8a94112185c50c48f0949730e"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 62,
+      "episodes": 32,
+      "role": "window_ppo",
+      "rollout_updates": 8,
+      "sha256": "d594c9b428c78eb6d74df0cc1cc338c3414ea91aab50ad3644a292c246c54d81"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 60,
+      "episodes": 32,
+      "role": "cohort_ppo",
+      "rollout_updates": 8,
+      "sha256": "e90adf283df7113dcbaf5fb88b7235e44140b13e34a90adecd93c58deec363fa"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 61,
+      "episodes": 32,
+      "role": "cohort_ppo",
+      "rollout_updates": 8,
+      "sha256": "75941df1a40eb69e8a05426f4a96cd1f8204e252aae988227208d467d2a697a0"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 62,
+      "episodes": 32,
+      "role": "cohort_ppo",
+      "rollout_updates": 8,
+      "sha256": "ffe4d95cad3323b57b9a9d63698d14c5185a47ff0de0837af44165e51d4d826c"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 60,
+      "episodes": 32,
+      "role": "bc_continue",
+      "rollout_updates": 8,
+      "sha256": "e28138cc272e909094b971f8e9eee06513f07d0be8ef8b2cba338b60dd91498b"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 61,
+      "episodes": 32,
+      "role": "bc_continue",
+      "rollout_updates": 8,
+      "sha256": "57d5e2f794dc786fb1c25a129ce81ac5580438594a9576b14d6bcace655bcb1e"
+    },
+    {
+      "all_persisted_numeric_fields_finite": true,
+      "block": 62,
+      "episodes": 32,
+      "role": "bc_continue",
+      "rollout_updates": 8,
+      "sha256": "cc19672e037bfaa985d8d38bdddd9272768dba5086e9ecba170d4eaf014803c4"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "kind": "completed_continuation_closure_index_v1",
+  "execution_commit": "63c2383d33f5795f22ec1173bd75222a30a63a4a",
+  "result_root": "results/dynamic_candidate_continuation_recovery_20261001",
+  "owned_exec_session": 7219,
+  "owned_exec_exit_code": 0,
+  "scientific_completion_verified": true,
+  "required_closure_archive_verified": true,
+  "no_related_process_verified": true,
+  "process_check_utc": "2026-10-02T03:03:01Z",
+  "supervisor_child_elapsed_seconds": 3349.9732899999944,
+  "observed_parent_completion_elapsed_upper_bound_seconds": 3516.930435000104,
+  "closure_receipt_mtime_utc": "2026-10-02T03:02:18.225994+00:00",
+  "elapsed_note": "The parent-completion value is a post-exit observation upper bound,not an exact duration recorded at parent exit.",
+  "episodes": 387,
+  "final_evaluation_episodes": 180,
+  "environment_calls": 20184,
+  "actor_calls": 768,
+  "critic_calls": 384,
+  "operation_receipts": {"checkpoint_load": 3, "reference_checkpoint_load": 3, "layout_environment_build": 3, "episode_build": 387},
+  "closed_sections": 27,
+  "stderr_bytes": 0,
+  "stdout_bytes": 0,
+  "payload_archive": {
+    "path": "archives/completed-payload.tar.gz",
+    "files": 2426,
+    "bytes": 697297439,
+    "sha256": "d2838aa5b491ccced3fc158cca116176943e2a30d0e14d72a885f2ff58f5b320",
+    "every_member_verified_by_campaign": true
+  },
+  "launcher_archive": {
+    "path": "archives/completed-launcher.tar.gz",
+    "files": 588,
+    "bytes": 497640409,
+    "sha256": "98999db5ee040413c28cfc19397e896bc8e798d594e0b34b2e22686bbc1da1b4",
+    "every_member_verified_by_campaign": true
+  },
+  "receipt_sha256": {
+    "launcher/terminal.json": "89f741515001baaa0b38e563dcdf20a6aa8dbf997c19508e320fad5e51359fe1",
+    "launcher/supervisor.json": "7c4f4b4cfed4f323f0bbe5e46e4d61793597c005c8cbefd7c07dcfccc1054dde",
+    "launcher/archive-receipt.json": "2d2ca722cbca2315cc8edd4ed68838a8062a09ddf94bfda1969fd5e9c32eaf25",
+    "closure-archive-receipt.json": "f9302404938314b853a2bb2edf124cbf9807ae443a57483a49fcc106293442e5",
+    "payload/independent-verification.json": "9fa88a999ec79a96c20b35d8e23f94716db8ade807a30b4a2c710f490a60dd4e"
+  },
+  "attempt_consumed": true,
+  "automatic_retry": false,
+  "automatic_followon": false,
+  "dropbox_exported": false,
+  "cloud_sync_verified": false,
+  "howard_access_verified": false
+}

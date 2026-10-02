@@ -1,0 +1,831 @@
+{
+  "all_episode_verification_sha256": "49f34c821cb1b63e9b4464370cc85d94eafee8dffb4169c847cc16f2bbafaeb0",
+  "evaluation_by_block_role": [
+    {
+      "block": 60,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.44831190992676145,
+        "mean": 0.3374385370898723,
+        "min": 0.25113580467285335,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.30626283318197656,
+        "mean": 0.14196584088178257,
+        "min": 0.046377643591136636,
+        "n": 624
+      },
+      "role": "own_bc_continue",
+      "rows": 624
+    },
+    {
+      "block": 60,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.3332886262367441,
+        "mean": 0.264548947783256,
+        "min": 0.2146601861215916,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.16249289930675365,
+        "mean": 0.07074463300890935,
+        "min": 0.020146278796735473,
+        "n": 624
+      },
+      "role": "own_frozen",
+      "rows": 624
+    },
+    {
+      "block": 60,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.21638781516005273,
+        "mean": 0.19051967924932958,
+        "min": 0.17830346563124716,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.018024001700586656,
+        "mean": 0.014887347738400298,
+        "min": 0.013507308644947397,
+        "n": 624
+      },
+      "role": "own_ppo",
+      "rows": 624
+    },
+    {
+      "block": 61,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.3992815642599541,
+        "mean": 0.3236002247937956,
+        "min": 0.2706886368016537,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.24727864935045651,
+        "mean": 0.14048053871785224,
+        "min": 0.06050868614536503,
+        "n": 624
+      },
+      "role": "own_bc_continue",
+      "rows": 624
+    },
+    {
+      "block": 61,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.33186374503736993,
+        "mean": 0.2567382683348851,
+        "min": 0.21952550661170656,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.16083367173320645,
+        "mean": 0.06673543064227781,
+        "min": 0.025064066347312425,
+        "n": 624
+      },
+      "role": "own_frozen",
+      "rows": 624
+    },
+    {
+      "block": 61,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.22128772903385943,
+        "mean": 0.1902343189884109,
+        "min": 0.17978979070978057,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.02601193342608918,
+        "mean": 0.016140324368457536,
+        "min": 0.01277339856374518,
+        "n": 624
+      },
+      "role": "own_ppo",
+      "rows": 624
+    },
+    {
+      "block": 62,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.4929987266789304,
+        "mean": 0.37352813833407067,
+        "min": 0.25912507052162725,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.3566804278512437,
+        "mean": 0.18023135384161365,
+        "min": 0.040648461257981605,
+        "n": 624
+      },
+      "role": "own_bc_continue",
+      "rows": 624
+    },
+    {
+      "block": 62,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.36596928507050763,
+        "mean": 0.28723324738713474,
+        "min": 0.21838378055676905,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.19897457973369537,
+        "mean": 0.09069597632902249,
+        "min": 0.013836454080187882,
+        "n": 624
+      },
+      "role": "own_frozen",
+      "rows": 624
+    },
+    {
+      "block": 62,
+      "reference_chosen": 624,
+      "reference_probability": {
+        "max": 0.2596804822761117,
+        "mean": 0.21740407719258764,
+        "min": 0.18869334346852762,
+        "n": 624
+      },
+      "reference_probability_margin": {
+        "max": 0.06684523285109659,
+        "mean": 0.03313023618332453,
+        "min": 0.012401847423774676,
+        "n": 624
+      },
+      "role": "own_ppo",
+      "rows": 624
+    }
+  ],
+  "interpretation": "Recorded probabilities can change while greedy requests remain identical; no fresh state, stochastic deployment or headroom experiment was performed.",
+  "kind": "posthoc_saved_decision_description_v1",
+  "new_environment_calls": 0,
+  "new_model_calls": 0,
+  "new_optimizer_calls": 0,
+  "paired_test_states": 1872,
+  "probability_l1_change_from_frozen": [
+    {
+      "block": 60,
+      "max": 0.23004661399046247,
+      "mean": 0.1601619353732058,
+      "min": 0.10902159118463421,
+      "n": 624,
+      "nonzero_rows": 624,
+      "role": "own_bc_continue"
+    },
+    {
+      "block": 60,
+      "max": 0.2928492831830021,
+      "mean": 0.19459976187685266,
+      "min": 0.13700375063672238,
+      "n": 624,
+      "nonzero_rows": 624,
+      "role": "own_ppo"
+    },
+    {
+      "block": 61,
+      "max": 0.17821151586677142,
+      "mean": 0.13889366812547296,
+      "min": 0.11105645245167287,
+      "n": 624,
+      "nonzero_rows": 624,
+      "role": "own_bc_continue"
+    },
+    {
+      "block": 61,
+      "max": 0.2834324864328578,
+      "mean": 0.17812268912037452,
+      "min": 0.12714173924038685,
+      "n": 624,
+      "nonzero_rows": 624,
+      "role": "own_ppo"
+    },
+    {
+      "block": 62,
+      "max": 0.2541351189482001,
+      "mean": 0.17960381383345614,
+      "min": 0.11015986911799312,
+      "n": 624,
+      "nonzero_rows": 624,
+      "role": "own_bc_continue"
+    },
+    {
+      "block": 62,
+      "max": 0.2689869601157548,
+      "mean": 0.17330924477686793,
+      "min": 0.12147548201462569,
+      "n": 624,
+      "nonzero_rows": 624,
+      "role": "own_ppo"
+    }
+  ],
+  "raw_event_files": [
+    {
+      "bytes": 2513466,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world00/events.jsonl",
+      "sha256": "f139a57a74bbe876b913ba324f91f42bce2f8d445e19b941490af2e12f70bc38"
+    },
+    {
+      "bytes": 2514148,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world00/events.jsonl",
+      "sha256": "39de447a61d2235fdd073f0031f27c8b3b54e3508c09e5dd2ec37b8636b86546"
+    },
+    {
+      "bytes": 2513717,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world00/events.jsonl",
+      "sha256": "8b8c601bb054082b13945469ac2fe621ed08897e22901fa4d45927206352c89a"
+    },
+    {
+      "bytes": 2497620,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world01/events.jsonl",
+      "sha256": "a73205fe7f63e18487cc6be7f08392fa3ce126e47074b955418ec6ab02c617cf"
+    },
+    {
+      "bytes": 2498293,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world01/events.jsonl",
+      "sha256": "b88aa8adbb978dac21be5dc54c68cfd2482debe15859f65abb19ac02b9b42ffd"
+    },
+    {
+      "bytes": 2497870,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world01/events.jsonl",
+      "sha256": "269bf64a3c563539b81b380608caae44afdb7403e3166191d72bd3eb8076e365"
+    },
+    {
+      "bytes": 2511702,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world02/events.jsonl",
+      "sha256": "c13cb15fdc8648f0f77f2c4e7aec45e2650953c5a53de61be0fe8e4e930ddb3f"
+    },
+    {
+      "bytes": 2512399,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world02/events.jsonl",
+      "sha256": "7f628edd94755f06882394e9277e60a1ec50efeaf25ec0c9e02ab5275c9adfee"
+    },
+    {
+      "bytes": 2511983,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world02/events.jsonl",
+      "sha256": "024241a1cd84207208d70a6999c3d4d10fce83e5631918d7aa3a76b2dbb65fd2"
+    },
+    {
+      "bytes": 2491843,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world03/events.jsonl",
+      "sha256": "94b6e90d7333016545330404ce4723910d8129087fec7536410ef8afa648801e"
+    },
+    {
+      "bytes": 2492521,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world03/events.jsonl",
+      "sha256": "a8ffe82038572dc689695772e0df3b150de3abab13e9e189d3adddcda7a59518"
+    },
+    {
+      "bytes": 2492096,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world03/events.jsonl",
+      "sha256": "28e8df45d48bda622d0d6ad7967b3bd11c1108bed0be2a184aacf6f6e0a9affb"
+    },
+    {
+      "bytes": 2530512,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world04/events.jsonl",
+      "sha256": "42154a9de86111a17eaf7fd7fad503a80c78519cdb9fc3812937e7776cd39f38"
+    },
+    {
+      "bytes": 2531193,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world04/events.jsonl",
+      "sha256": "03f3c679b3b7d1615145aaa49e3d026a84e0251b62c7c913c32b74e9bcb23174"
+    },
+    {
+      "bytes": 2530768,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world04/events.jsonl",
+      "sha256": "7177f36016b4d4c1a5ce996fa8b305060fce1399c99c5a6fa42b47fa06467386"
+    },
+    {
+      "bytes": 2486144,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world05/events.jsonl",
+      "sha256": "89d26c7755994fb32e8e68d49617dc155444676fa9f28aca4b2cc62b5e0ce053"
+    },
+    {
+      "bytes": 2486814,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world05/events.jsonl",
+      "sha256": "701b526d2994e23b5f16d8fbc5e080048dc31fad8bbf916b82aa0f72274b45c2"
+    },
+    {
+      "bytes": 2486399,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world05/events.jsonl",
+      "sha256": "35994a95dc3d4aa4c8431a3065807ad81ea8ec5058348b303261751d0c8f55c3"
+    },
+    {
+      "bytes": 2467245,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world06/events.jsonl",
+      "sha256": "4a2801bb735d86c19849a10ccd24d4a0f2a48c2ab44cd634a5d718dbc434225e"
+    },
+    {
+      "bytes": 2467955,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world06/events.jsonl",
+      "sha256": "e8e4196b29a7bce5c566418413613b61f2c32f71998bcf4056938218b16066d2"
+    },
+    {
+      "bytes": 2467500,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world06/events.jsonl",
+      "sha256": "2355f86586c9c9185f1deefed3938cad09877224a03c3ba30e0caa1f2edd6a3d"
+    },
+    {
+      "bytes": 2410752,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world07/events.jsonl",
+      "sha256": "691b97e3f4c72fec227dfa6f3a861ef48dde4a86aad50880bd1daf3525d15c30"
+    },
+    {
+      "bytes": 2411426,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world07/events.jsonl",
+      "sha256": "af8728f175cdd502fbe42e30c08f58fed8c07fa8a656385fc603735406ffae43"
+    },
+    {
+      "bytes": 2411005,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world07/events.jsonl",
+      "sha256": "f6c9b47c6793a404bac201e793166b5d4950fa539b31806c2d76665440afa223"
+    },
+    {
+      "bytes": 2514952,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world08/events.jsonl",
+      "sha256": "df9631e7ef0647634e60b172f2b9b698bd0cbd7a3517565bf6cc9f88297c1577"
+    },
+    {
+      "bytes": 2515664,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world08/events.jsonl",
+      "sha256": "3c07cd4e70e933987bed0a8dc9611d4a306a991f9b7641445187fc7f15e4aba1"
+    },
+    {
+      "bytes": 2515215,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world08/events.jsonl",
+      "sha256": "b29dd0b631ae3483c7b743a80c71b4476e8bdedde8d9a7643b0102ec3ccc1b85"
+    },
+    {
+      "bytes": 2617120,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world09/events.jsonl",
+      "sha256": "5fc592403da64d7f272033303195e0135e211fc1d86e18a94b3638d83f4baece"
+    },
+    {
+      "bytes": 2617798,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world09/events.jsonl",
+      "sha256": "cfe9d201628869b61812e24eefc204ee3d4517d981ba18fdad0c95cff2b14675"
+    },
+    {
+      "bytes": 2617370,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world09/events.jsonl",
+      "sha256": "6c158c5859a5b801fa863465abe5e06f9dca6396b667d538a506d0b916f69489"
+    },
+    {
+      "bytes": 2460493,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world10/events.jsonl",
+      "sha256": "694366f2a24e5e62736f179485d8f9e485f4fac1a8156c19b119e17ae8224501"
+    },
+    {
+      "bytes": 2461184,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world10/events.jsonl",
+      "sha256": "89a856b8584836f308ec5ff8190259bd60ccc86386878e2d90b6258422dfedec"
+    },
+    {
+      "bytes": 2460755,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world10/events.jsonl",
+      "sha256": "73957762e5e4bd0564b35abe1468331c3a06f8eef7f6d3f8d9d61ef1d366eaf5"
+    },
+    {
+      "bytes": 2476079,
+      "path": "payload/episodes/evaluation/block60/own_frozen/world11/events.jsonl",
+      "sha256": "0b932e9a1934b5339fcb9092f9a31bdfffb1e77294118037eb854daddcac5e4a"
+    },
+    {
+      "bytes": 2476779,
+      "path": "payload/episodes/evaluation/block60/own_ppo/world11/events.jsonl",
+      "sha256": "d37abc8d57a8c4ea7724331c9e640461ab2cdcbb4ebed84ef16bbedac5293bd9"
+    },
+    {
+      "bytes": 2476335,
+      "path": "payload/episodes/evaluation/block60/own_bc_continue/world11/events.jsonl",
+      "sha256": "41ac2441cf0d4b460e183e99ee918308368417116f1c59beb95dcfaf5d5a3539"
+    },
+    {
+      "bytes": 2520086,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world00/events.jsonl",
+      "sha256": "dfaacfd6f58ee9c3f276a82f9c9623a02d3c6edea81f150a571080d4eb7b68b7"
+    },
+    {
+      "bytes": 2520771,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world00/events.jsonl",
+      "sha256": "576bff412273ecb14a6bedd4c9583fe8199323f26e4652d81f434af3ba2ea9e3"
+    },
+    {
+      "bytes": 2520326,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world00/events.jsonl",
+      "sha256": "47f1422ce4b54b930501e949f49fee9ed39c7ccf107446e528f008919370046b"
+    },
+    {
+      "bytes": 2525556,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world01/events.jsonl",
+      "sha256": "6b3630398c0c6877d271113a51b6e61cf868a39b764273a82f6d1a7396edbecb"
+    },
+    {
+      "bytes": 2526243,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world01/events.jsonl",
+      "sha256": "9316a6cdec92cc77e8a4f77c72d86216485526c7d973d5bf531fe5994d26d976"
+    },
+    {
+      "bytes": 2525811,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world01/events.jsonl",
+      "sha256": "6f31e530910153f69c60b0a5e23e29b64a50233d6a652fd8f86d93cf8b94fd3f"
+    },
+    {
+      "bytes": 2449067,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world02/events.jsonl",
+      "sha256": "44e0c1bf9965c05ca6ca458b109031b384b2cc7359ac40339c91916179d60438"
+    },
+    {
+      "bytes": 2449771,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world02/events.jsonl",
+      "sha256": "b3c7b91bf3e77dacec895719b5357b5d7a7d1dc05e6dc5645acfe79761fbb06b"
+    },
+    {
+      "bytes": 2449337,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world02/events.jsonl",
+      "sha256": "912b5fc801a42ef1ca77da09f600fbed4b3f1b00b85ac8571e5dc2140af29bca"
+    },
+    {
+      "bytes": 2523837,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world03/events.jsonl",
+      "sha256": "c5ab5f7a5a00f3b082b13a03f33bc215078e7fcb7ea3a322214d1633a65db63d"
+    },
+    {
+      "bytes": 2524525,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world03/events.jsonl",
+      "sha256": "1a66208bc9f7442c0b49652c9cb5bced2e1e5e50f2831ef5c1e4503c6c2f8093"
+    },
+    {
+      "bytes": 2524089,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world03/events.jsonl",
+      "sha256": "0057101da98e9d4f5e894b42a4c01baa4efddb24b97fe6bcd432b97453b8d664"
+    },
+    {
+      "bytes": 2502993,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world04/events.jsonl",
+      "sha256": "d7de7e116639eaa0b07c7cfe1e715515c236c926687782caf5be25335591f86f"
+    },
+    {
+      "bytes": 2503658,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world04/events.jsonl",
+      "sha256": "0547b97fc0f39b759e0653af206544ea67f15143b2378184df0cae7815cdac25"
+    },
+    {
+      "bytes": 2503249,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world04/events.jsonl",
+      "sha256": "da4d5712e1a54fa2a0f38be9bdabd0f3122181ef3718e192dfc70e85b124e275"
+    },
+    {
+      "bytes": 2525870,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world05/events.jsonl",
+      "sha256": "deba649c617a0e2c791137baad1837fb9a1f9e1b608464fae45e6d75b10219cb"
+    },
+    {
+      "bytes": 2526523,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world05/events.jsonl",
+      "sha256": "11aac0faa0b1710ead6522b9223d2eec003792a67a8f9b86482d2993e917a92e"
+    },
+    {
+      "bytes": 2526107,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world05/events.jsonl",
+      "sha256": "a6d3a07c345b69898b071af5f6be4d05330b87682a9b062e1d608ff36a325525"
+    },
+    {
+      "bytes": 2473638,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world06/events.jsonl",
+      "sha256": "1bedb7a1f92ad024eda2841f24473787ddcd93918e7cff435fca5b6b892a8dfe"
+    },
+    {
+      "bytes": 2474335,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world06/events.jsonl",
+      "sha256": "63e6758c1d349347dcc7d24accf6d03519f0df247fef57d1d039429af6ffa07b"
+    },
+    {
+      "bytes": 2473895,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world06/events.jsonl",
+      "sha256": "514372045707591844aad96abc5e074a1848073d97eaaa03963eb49eab599a8c"
+    },
+    {
+      "bytes": 2569495,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world07/events.jsonl",
+      "sha256": "1238bd477acbe6bb1bfbafebea017bcf9beaf7470f3fcc069d5556ac25999eab"
+    },
+    {
+      "bytes": 2570190,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world07/events.jsonl",
+      "sha256": "15a879534b5caf9724849ea2e1d370e42e4530f9650eda19ca652c80cf3fa0ce"
+    },
+    {
+      "bytes": 2569751,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world07/events.jsonl",
+      "sha256": "e404b1d028259988f9303fc1f47c8818552fc4cfdaf5df58aec1645b8e509000"
+    },
+    {
+      "bytes": 2485964,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world08/events.jsonl",
+      "sha256": "bafe9cb894e01b369c4853b514dd55b6cf7d6d78c97a4514043dc20ff5124129"
+    },
+    {
+      "bytes": 2486629,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world08/events.jsonl",
+      "sha256": "abaab1d54c1a14b094b90bb182ac787e687fe404cd5c1c81a832cb7251bbf5d6"
+    },
+    {
+      "bytes": 2486202,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world08/events.jsonl",
+      "sha256": "420206e0e6ebbc65372bad755ba9181de96e0253b9303909ef6b857fe8785248"
+    },
+    {
+      "bytes": 2574635,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world09/events.jsonl",
+      "sha256": "cb68da2df17c1f635c08a7d3b13e9402db3d68c27de012d01b67f0e1a3dc9783"
+    },
+    {
+      "bytes": 2575319,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world09/events.jsonl",
+      "sha256": "c405b728024159d2a73063b5107cc3372b02104dc965ddc61c4b74f0b320ed8a"
+    },
+    {
+      "bytes": 2574903,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world09/events.jsonl",
+      "sha256": "cc99a37315b2cc6896e805b492479cf1d2d95bff746ef9e6e6db6933a712dad6"
+    },
+    {
+      "bytes": 2562700,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world10/events.jsonl",
+      "sha256": "449583f4963b1a4de656a02bb80af37c0cda89fb606dae8329ff9559732b1c75"
+    },
+    {
+      "bytes": 2563390,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world10/events.jsonl",
+      "sha256": "c73ebac99024a9311c448e19a6f89c8082d167359592ea0185b9607e9ed024c7"
+    },
+    {
+      "bytes": 2562948,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world10/events.jsonl",
+      "sha256": "bfa9fadc781bb9b0590e113f845c7841353fad8bdba1db3020be4612bc843eb7"
+    },
+    {
+      "bytes": 2506527,
+      "path": "payload/episodes/evaluation/block61/own_frozen/world11/events.jsonl",
+      "sha256": "a6189d70e7243db930688dc31ead9f45301d57f7fd3b79074c751057c709eec6"
+    },
+    {
+      "bytes": 2507186,
+      "path": "payload/episodes/evaluation/block61/own_ppo/world11/events.jsonl",
+      "sha256": "38f9e820674f9d099c0d7e70c14b8db00c0b058fc71b90892004f5a54cbc2582"
+    },
+    {
+      "bytes": 2506772,
+      "path": "payload/episodes/evaluation/block61/own_bc_continue/world11/events.jsonl",
+      "sha256": "07947e4e02bd0ad0a96160f7c4d89fac8b2c978264065bc277f73e7d4e4c6584"
+    },
+    {
+      "bytes": 2484285,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world00/events.jsonl",
+      "sha256": "2adc237b1062e031835a88952d35800b76b0035320cbf418d9abc58dacbfd4c2"
+    },
+    {
+      "bytes": 2484945,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world00/events.jsonl",
+      "sha256": "d65e2e3bd060d31ba6c340e9bb524b80b4eb078db41eb53556aaff69ae502b5b"
+    },
+    {
+      "bytes": 2484531,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world00/events.jsonl",
+      "sha256": "514c6623c655e2c226528f61b1b06eb88771f8619cea0e9ab8198a77a76363a8"
+    },
+    {
+      "bytes": 2566141,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world01/events.jsonl",
+      "sha256": "117726d6ec2ce6849fa095cfcb65370f9fa8a93475dc2ba0e0672e0b2bff5953"
+    },
+    {
+      "bytes": 2566826,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world01/events.jsonl",
+      "sha256": "a12c9543026c303a75802a6b94bd177488104920c077107324e9126f4116dd67"
+    },
+    {
+      "bytes": 2566388,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world01/events.jsonl",
+      "sha256": "580f22ad5be6fdc67dcae400385156a57dd817092589d2c4d35fba9da1107a30"
+    },
+    {
+      "bytes": 2467767,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world02/events.jsonl",
+      "sha256": "605fceafb4ebafae74da8809b31c91db97de8fc0b3c4b9d87d59310d44896f26"
+    },
+    {
+      "bytes": 2468445,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world02/events.jsonl",
+      "sha256": "5b5b865bbf420d5474ac92563cb4beb1f2c36f39fd66635cd305fc13fc76e5b5"
+    },
+    {
+      "bytes": 2468025,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world02/events.jsonl",
+      "sha256": "108f7a677230d09af95f31f60ebbfc77ce1a374a02ad65bf6573488c1f1b2b98"
+    },
+    {
+      "bytes": 2521504,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world03/events.jsonl",
+      "sha256": "3b23a5d6dc128a667de864445f9cb17807a205b5736c7173979faa4e49cf2de4"
+    },
+    {
+      "bytes": 2522198,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world03/events.jsonl",
+      "sha256": "2d030ceeea577203591ead54bab841293c48fdd57d2b9be1580c02735033f08f"
+    },
+    {
+      "bytes": 2521746,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world03/events.jsonl",
+      "sha256": "fc664f7131714380fefd24d17b409bdfe75ffd3b613d11d903df5ae629c996c7"
+    },
+    {
+      "bytes": 2549933,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world04/events.jsonl",
+      "sha256": "ef65d0fcc5eb128566cab4cab965994615be490381e6107b83e005b0501bf754"
+    },
+    {
+      "bytes": 2550632,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world04/events.jsonl",
+      "sha256": "881753dc622e43dda3dd86f537a57a73206fb8747b8d7c4188812bd7c40fef36"
+    },
+    {
+      "bytes": 2550185,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world04/events.jsonl",
+      "sha256": "a424e019ccd83fc05ae0186e4966d8dbe86e267adb59b87dd26d2a02e48a773d"
+    },
+    {
+      "bytes": 2532741,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world05/events.jsonl",
+      "sha256": "40a46c2a8eba2720ad41759f19caf874398e7ccb778b877c684b7222f58539ce"
+    },
+    {
+      "bytes": 2533417,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world05/events.jsonl",
+      "sha256": "58f8876b77add752de745bc37899d6e79463572cef2775242994fa31b5a92fb0"
+    },
+    {
+      "bytes": 2533006,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world05/events.jsonl",
+      "sha256": "95f5b6d1c060987f19e4c8132466f74b301d33e694138f2cb9ad2f1aecfb4011"
+    },
+    {
+      "bytes": 2471229,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world06/events.jsonl",
+      "sha256": "874e9b3f55decf7ae5071b6726e86f853017cd9928a56023de02f100787b47e6"
+    },
+    {
+      "bytes": 2471903,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world06/events.jsonl",
+      "sha256": "bde8321ae08ddfc28358852cfee0f9783b914a20947d587d2efb8a9d6408a108"
+    },
+    {
+      "bytes": 2471485,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world06/events.jsonl",
+      "sha256": "5b9dfb509e1802eff4efbc154519105719331f2381716b44a71e5a08ea5fd25c"
+    },
+    {
+      "bytes": 2493293,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world07/events.jsonl",
+      "sha256": "28100210f083ef33708ebe88fce73e2c4ef0cf37be3095c148a8e2c6cb5debb4"
+    },
+    {
+      "bytes": 2493983,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world07/events.jsonl",
+      "sha256": "8cd3747ea133f5c3113a40c92ee21f7f532e903d6144f0df4c3adf233dfc533a"
+    },
+    {
+      "bytes": 2493546,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world07/events.jsonl",
+      "sha256": "3fe6407ce86512e4904bb017eec72b053e8adadb4f0ee238d361700145c02dd7"
+    },
+    {
+      "bytes": 2424034,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world08/events.jsonl",
+      "sha256": "52944ce5ff97884877715ec1fa5ae717ce2120876415399a8722fda34983edb2"
+    },
+    {
+      "bytes": 2424718,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world08/events.jsonl",
+      "sha256": "ac265cb92cce6fef9636c601935220dc0fa9ec662cc6846593f672ec1e6067f6"
+    },
+    {
+      "bytes": 2424288,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world08/events.jsonl",
+      "sha256": "97d060059f4fa1b2e0ffd55627d06679c8bc1fd22b108c367886c0f8a9d533aa"
+    },
+    {
+      "bytes": 2564400,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world09/events.jsonl",
+      "sha256": "2255b7a9601fc75eae1883611c4a745acac090f1e9b97cf6b91edb6b09fba799"
+    },
+    {
+      "bytes": 2565092,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world09/events.jsonl",
+      "sha256": "8f95ec025fe82cd84269f8c4312f5a2feaa79534bb8c758c6348fc2853799b38"
+    },
+    {
+      "bytes": 2564633,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world09/events.jsonl",
+      "sha256": "5d61e102600a7eb05453d167643a4fed9127583e2743b928d07fec32bbc23158"
+    },
+    {
+      "bytes": 2525592,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world10/events.jsonl",
+      "sha256": "0077ccb55361d040e0b87c8743a4aa4ea10b81006cf88cc4d202395874a06a7c"
+    },
+    {
+      "bytes": 2526294,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world10/events.jsonl",
+      "sha256": "b9b9f40c092e86010dc795d3246e54b6c691112ea480ece00bc8f5a4ef6179b6"
+    },
+    {
+      "bytes": 2525855,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world10/events.jsonl",
+      "sha256": "04d36817a053d9519fd13ff91b64d2611e70e7c29ec5ce3220338c2f4a814695"
+    },
+    {
+      "bytes": 2503652,
+      "path": "payload/episodes/evaluation/block62/own_frozen/world11/events.jsonl",
+      "sha256": "32cc986f62faa27138290e9360c9c0e7067059384988de53b49f18094864b02b"
+    },
+    {
+      "bytes": 2504356,
+      "path": "payload/episodes/evaluation/block62/own_ppo/world11/events.jsonl",
+      "sha256": "167152013fe8f9a630f03646343d56cfe3ae6f43270b21adc42567992cdf60b0"
+    },
+    {
+      "bytes": 2503909,
+      "path": "payload/episodes/evaluation/block62/own_bc_continue/world11/events.jsonl",
+      "sha256": "2137b834ef12c3cae4af8c73397706230a7a955a6357f0a05c5ac9d64676492f"
+    }
+  ],
+  "role_state_rows": 5616,
+  "same_context_and_bank_pairs_verified": 3744,
+  "scope": "Post-hoc descriptive explanation of the fixed primary null; not a new prespecified endpoint or independent confirmation.",
+  "training_sampling": [
+    {
+      "block": 60,
+      "episodes": 32,
+      "nonreference_choices": 1288,
+      "nonreference_fraction": 0.7740384615384616,
+      "reference_choices": 376,
+      "role": "own_ppo",
+      "steps": 1664
+    },
+    {
+      "block": 60,
+      "episodes": 32,
+      "nonreference_choices": 1187,
+      "nonreference_fraction": 0.7133413461538461,
+      "reference_choices": 477,
+      "role": "own_bc_continue",
+      "steps": 1664
+    },
+    {
+      "block": 61,
+      "episodes": 32,
+      "nonreference_choices": 1324,
+      "nonreference_fraction": 0.7956730769230769,
+      "reference_choices": 340,
+      "role": "own_ppo",
+      "steps": 1664
+    },
+    {
+      "block": 61,
+      "episodes": 32,
+      "nonreference_choices": 1195,
+      "nonreference_fraction": 0.7181490384615384,
+      "reference_choices": 469,
+      "role": "own_bc_continue",
+      "steps": 1664
+    },
+    {
+      "block": 62,
+      "episodes": 32,
+      "nonreference_choices": 1215,
+      "nonreference_fraction": 0.7301682692307693,
+      "reference_choices": 449,
+      "role": "own_ppo",
+      "steps": 1664
+    },
+    {
+      "block": 62,
+      "episodes": 32,
+      "nonreference_choices": 1151,
+      "nonreference_fraction": 0.6917067307692307,
+      "reference_choices": 513,
+      "role": "own_bc_continue",
+      "steps": 1664
+    }
+  ],
+  "verification_sha256": "9fa88a999ec79a96c20b35d8e23f94716db8ade807a30b4a2c710f490a60dd4e"
+}

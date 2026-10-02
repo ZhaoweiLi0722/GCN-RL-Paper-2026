@@ -36,16 +36,33 @@ projected outcome rows are not 16,000 independent trained policies. Costs are
 modeled objective units, not demonstrated monetary savings. The intervals are
 the existing crossed-audit sensitivity results, not a newly accessed holdout.
 
-## Prospective mechanism study: not yet executed
+## Completed Development Mechanism Study
 
-The proposed comparison asks whether interaction-based learning improves on
-its own competent initializer, beyond simply continuing imitation. A dynamic
-candidate policy and separate value baseline would use the same public
-information and candidate support across frozen, PPO and BC-CONTINUE branches.
-R4 and full MDL-2 remain reference controllers. The draft uses three blocks,
-with all learned policies sealed before independent paired test worlds.
+The separately authorized continuation study completed on 2026-10-02 using
+three qualified saved initializers, matched frozen/PPO/BC-CONTINUE branches,
+R4 and full MDL-2 references. All nine learned artifacts were sealed before
+180 paired development-test controller episodes. It completed all 192 continuation
+episodes and 1,152 optimizer calls; the old failed preparation run was not restarted.
+The [canonical readout](../../reports/2026-10-01-s1-continuation-recovery/readout.md)
+reports exactly zero PPO-minus-frozen and PPO-minus-BC cost and patient differences
+on every evaluated world. No incremental greedy PPO benefit was established.
 
-The proposed message graph is explicitly the specimen-transport relation. The
+The post-hoc saved-record description shows changed policy probabilities but
+unchanged greedy requests on all 1,872 shared test decisions. Nonreference
+classes were sampled in 73-80% of PPO training decisions. These observations
+do not establish why return optimization failed to change the ranking, that
+the reference is globally optimal, or that rewards must be changed. The [0, 0]
+primary bootstrap interval reflects resampling identical observed outcomes,
+not population equivalence or confirmatory evidence.
+
+PPO's equal-block cost difference versus full MDL-2 was -13.503781 million
+modeled units (-0.521671%; descriptive 95% relative interval [-0.755552%, -0.213307%]).
+Frozen, BC and R4 shared the same evaluated behavior, so that advantage is inherited,
+not an RL continuation gain. Terminal-active burden increased 15.666667 patients
+per episode on average; block 61 also had fewer completions and more waiting.
+Report the cost/service trade-off rather than overall or clinical superiority.
+
+The evaluated message graph is explicitly the specimen-transport relation. The
 candidate bank contains R4, MDL-2 and four prespecified specimen corrections;
 non-specimen request components must agree within each bank. The policy can
 respond to cross-facility consequences without being a general joint controller
@@ -53,13 +70,15 @@ for every resource. This restricted comparison is a mechanism test, not the
 permanent scope of a final method. Positive results would support only the
 tested intervention, while negative results would delimit that intervention.
 Neither outcome alone establishes a general deployment-adaptation claim.
+This new development result does not overwrite the separate historical formal
+comparisons above or add evidence to their holdout sample.
 
 ## Limitations and next decision
 
 Historical replay/target and graph-contract limitations are documented, but
 they do not identify a single causal explanation for the null RL increment.
-Engineering tests and exact restoration are not performance results. The new
-graph-only pilot cannot establish isolated GCN value or superiority over a
+Engineering tests and exact restoration are not performance results. The
+completed graph-only pilot cannot establish isolated GCN value or superiority over a
 corrected DDPG comparator. A later graph/self-only/flat comparison must match
 information, support, gates and relevant model capacity explicitly.
 
@@ -80,7 +99,9 @@ deployment readiness is inferred from cost improvements.
 - Cost intervals: `specs/2026-09-29-formal-crossed-audit/readout.md`.
 - Attribution limitations: `specs/2026-09-29-formal-graph-contract/readout.md`
   and `specs/2026-09-29-formal-replay-contract/readout.md`.
-- New mechanism scope: this directory's `plan.md`, `workflow.json` and
-  preserved unapproved `pilot-budget-draft.json`.
+- Completed mechanism comparison: `continuation-recovery-authorization.json`,
+  `continuation-recovery-frozen.json` and the canonical continuation readout.
+- Earlier unapproved `pilot-budget-draft.json` remains historical provenance,
+  not the current execution permit or result.
 
 No claim here guarantees a positive RL result or journal acceptance.

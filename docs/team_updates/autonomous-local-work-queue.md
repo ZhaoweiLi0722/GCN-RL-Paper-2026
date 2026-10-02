@@ -1,6 +1,72 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete continuation approved; single launch next
+## Live checkpoint: complete comparison closed; no incremental greedy PPO benefit
+
+2026-10-02T03:05Z. Approved continuation execution63c2383 completed successfully.
+Owned session7219 exited0;terminal and required closure archive both verified.
+Host process scan at03:03Z found no related Python. Child elapsed3349.973seconds;
+complete parent exit observed within3516.931seconds (58.62minutes,upper bound).
+No retry,timeout,forced kill or stderr output. All27sections closed with exactly
+387episodes,20,184environment calls,1,152optimizer calls and180final evaluations.
+Three initializer/three R4 loads and390environment constructions are receipted.
+
+Canonical answer and compact closure index:
+reports/2026-10-01-s1-continuation-recovery/readout.md and closure-index.json.
+PPO-own_frozen,PPO-BC,PPO-R4 andown_frozen-R4 have exactzero cost/patient and
+requested/executed action differences on all36paired test worlds. Relative to
+full MDL-2,cost is0.521671389%lower but terminal-active patients increase15.667
+per episode on average. This is inherited reference behavior,not RL benefit;
+not an isolated GCN effect,clinical noninferiority or deployment adaptation.
+
+Post-hoc saved-record diagnosis:all1,872shared test decisions still choose R4.
+Recorded probabilities change on every tested state despite unchanged greedy
+requests. PPO training sampled nonreference classes73-80%of the time. Thus
+neitherzero updates norzero sampled action coverage explains the null. Do not
+infer near-optimality,absence of headroom,entropy causality or a wrong reward.
+No additional model load,forward,simulation or optimizer call was used for this
+diagnostic. Actual bound-data assertions,three artificial helper checks and
+full compileall passed;frozen120-test acceptance reused without source changes.
+
+Local payload archive2426files/697,297,439bytes and launcher archive588files/
+497,640,409bytes each passed every-member verification. Originals retained.
+No Dropbox/cloud/Howard access claim. Advancement agent Pasteur completed the
+canonical readout and was closed;efficiency agent Tesla remains completed/closed.
+Methods/results/limitations draft updated without changing historical results.
+
+Finite approved chain is complete and consumed. gcn-rl stays PAUSED and visible;
+no experiment is running. Next decision:use existing records to discriminate
+weak return-driven ranking from an uninformative candidate decision space before
+proposing another bounded intervention. No new fit,stochastic appendix,reward
+change,scenario,holdout,remote action or Stage E reopening is authorized here.
+Do not rerun this packet or turn remaining time into another attempt.
+
+## Previous checkpoint: authorized continuation running; do not relaunch
+
+2026-10-02T02:37Z. The single attempt started at execution commit
+63c2383d33f5795f22ec1173bd75222a30a63a4a. Owned exec session7219 is active.
+Host process evidence:parent51957/PPID30450 and child51969/PPID51957,matching
+run_dynamic_candidate_recovery and its --child command and recorded claims.
+Runtime/input binding and15-episode/60-clone same-start preflight completed.
+All six continuation blocks completed192episodes and1,152optimizer calls:
+PPO1176.901seconds,BC587.376seconds. All nine learned artifacts sealed before
+the first test. Current phase is final_evaluation/block60/own_frozen;latest
+environment count11,422includes598final-test steps. Preflight took121.236seconds.
+New phase boundaries confirm progress;stderr remains0bytes. No test outcome
+interpretation until the complete180episode matrix and raw verification finish.
+
+Coordinator owns process observation and terminal closure;do not launch another
+instance or restart a failure. Entire approved serial chain continues without
+another user reply. Source/config/input locks remain unchanged. Canonical result
+root:results/dynamic_candidate_continuation_recovery_20261001. Expected completed
+readout will be reports/2026-10-01-s1-continuation-recovery/readout.md,not yet a
+result. Advancement agent Pasteur completed and closed,delivering disjoint
+methods-and-interpretation.md in that report directory without reading outcomes;
+read-only efficiency agent Tesla completed and closed. Apply its advice:one
+canonical result readout and compact closure index,no repeated history audit.
+Scheduler gcn-rl remains PAUSED because this foreground owner is active;this is
+not idle and not a second execution permit. No new RL benefit established yet.
+
+## Previous checkpoint: complete continuation approved; single launch next
 
 2026-10-02T02:03:18Z. Zhaowei directly replied "approved" to the complete
 continuation/evaluation package. Exact Chinese text is preserved in

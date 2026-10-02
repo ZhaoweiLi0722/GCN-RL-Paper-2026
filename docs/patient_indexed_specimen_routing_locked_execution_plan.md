@@ -2563,3 +2563,38 @@ data or fitting. Report raw costs and patient trade-offs regardless of direction
 No remote action,Dropbox export,holdout,Howard sign-off or Stage E reopening.
 The scheduler may remain paused while one foreground owned run completes;
 process evidence,not a scheduler state,establishes actual execution.
+
+#### Continuation completed with a null greedy-policy increment
+
+2026-10-02: execution63c2383d33f5795f22ec1173bd75222a30a63a4a completed the
+approved full continuation-only attempt. Parent session7219 exited0;both required
+archives verified,stderr/stdout empty,no matching process after closure. All27
+sections closed;387episodes,20,184environment calls,768actor+384critic updates,
+180final test episodes. Nine learned artifacts sealed before any test. Child
+elapsed3349.973seconds;observed parent-completion upper bound3516.931seconds.
+
+Primary PPO-own_frozen and PPO-BC cost/patient differences are exactlyzero in
+every paired test world. PPO,R4,frozen andBC also have identical evaluated
+requested/executed actions. Secondary cost versus full MDL-2 is-0.521671389%
+(descriptive95%interval[-0.755552405%,-0.213307447%]),with+15.666667 terminal-active
+patients per episode on average. This is inherited R4-like performance with
+patient trade-offs,not a PPO increment or an isolated GCN claim. A degenerate
+primary[0,0]interval describes these identical traces,not population equivalence.
+
+Post-hoc read-only raw-decision description matched1,872shared states:probability
+vectors changed but greedy choices stayed R4 everywhere. PPO sampled nonreference
+classes73-80%during training. No new model calls,simulation or updates were used.
+This distinguishes absent behavior change from absent training;it does not prove
+the reward is wrong,entropy caused the null or the baseline is globally optimal.
+The approved single attempt is consumed,not eligible for extension or retry.
+
+Canonical report:reports/2026-10-01-s1-continuation-recovery/readout.md;closure
+index and saved-decision diagnostic sit beside it. Payload archive2426members,
+697297439bytes,SHA256d2838aa5b491ccced3fc158cca116176943e2a30d0e14d72a885f2ff58f5b320.
+Launcher archive588members,497640409bytes,SHA256
+98999db5ee040413c28cfc19397e896bc8e798d594e0b34b2e22686bbc1da1b4.
+Both verified member-by-member under the approved runtime;originals retained.
+Only local artifacts/commits,no Dropbox,remote action,holdout or Stage E change.
+Automation remains PAUSED and visible. New experimental scope needs a separate
+evidence-based decision;do not launch extra seeds,reward tuning or a stochastic
+evaluation appendix merely because the primary result is null.

@@ -2,6 +2,13 @@
 
 ## Live checkpoint: conservative two-round experiment launched and progressing
 
+2026-10-02T20:12:38Z update: all3preflight pairs and round0/block60's2context
+cohorts/6states finished. Current phase branches/round0/block60; latest sample
+562environment calls,0actor/0critic. Both12670/12683 remain live with matching
+commands/parent chain. Logs0bytes,no failure or terminal file. Existing process
+continues to labels then the first actor fits; no further action or approval
+is needed to move between these scheduled phases.
+
 2026-10-02T20:11:28Z. Single detached experiment launched at execution
 880defba211bf0e444bb8781c8be5735fb0cabe0; frozen implementationc9d5290,
 scientific sourcea98b1fa. Packet SHA256

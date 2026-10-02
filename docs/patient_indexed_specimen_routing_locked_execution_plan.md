@@ -2510,3 +2510,34 @@ attempt. Neither supplies automatic training authority. Retain the saved models
 for a separately proposed same-start PPO/frozen/BC continuation comparison;
 no refitting,reward change,retry,holdout,Stage E reopening,remote or Dropbox action.
 The visible automation remains paused because the finite approved scope ended.
+
+#### Continuation-only recovery engineering frozen; no execution authorization
+
+2026-10-01 (freeze recorded2026-10-02T01:51Z): following the user's request to
+continue preparation,additive implementation82a947404db18ba034fed241155336d4786b9898
+connects the three qualified saved initializers to the original retained
+same-start preflight,PPO/BC continuation,sealing,evaluation and local archives.
+Original failed S1 and completed saved qualification remain immutable and closed.
+120 artificial/mock tests and full compileall passed. No scientific model load,
+forward,environment call or optimizer update occurred during this preparation.
+
+The complete prospective protocol/proposal and JSON/hash-only frozen packet are
+specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-*. Packet content
+SHA2568f0698cc8bdf41725e07ed78b0a856695473588cdcbbb817d90fa9d8c0223107 binds349
+source files,73 saved inputs and runtime. Scientific values and original unopened
+streams are unchanged;only the new attempt's accounting removes already completed
+initialization and qualification. No refit,rescore or additional numerical gate.
+
+Proposed complete attempt:3 initializer and3 R4 historical loads,15 preflight,
+192 continuation and180 final evaluation episodes;387 totalepisodes,20,184
+environment calls including60 clones,768actor+384critic=1,152optimizer calls,
+390 environment constructions and17,400seconds including verification/archives.
+One attempt,no automatic retry,expansion or favorable checkpoint selection.
+Report PPO-own_frozen and PPO-BC raw paired costs and patient-outcome trade-offs.
+This is not a deployment-adaptation or isolated graph-architecture comparison.
+
+Execution remains unapproved. Ask one complete bounded decision,then require an
+exact committed authorization/change-control before launch. Routine approved
+stages would not need repeated permission. Until then keep gcn-rl PAUSED and
+visible;no new result root,no training,holdout,remote/Dropbox action,Howard
+approval assertion or Stage E reopening. Source readiness is not RL benefit.

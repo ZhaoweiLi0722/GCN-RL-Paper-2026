@@ -76,6 +76,13 @@ frozen campaign, raw-reader, saved-loader and watchdog regressions. Full-repo
 `compileall -q .` passed. No real numerical optimizer was used in these tests.
 Final freeze identities are recorded in the Live checkpoint and `workflow.json`.
 
+Implementation: `82a947404db18ba034fed241155336d4786b9898`.
+Frozen packet: `continuation-recovery-frozen.json`, content SHA256
+`8f0698cc8bdf41725e07ed78b0a856695473588cdcbbb817d90fa9d8c0223107`.
+JSON/hash-only freeze binds349 source files,73 saved inputs and the runtime.
+All four new research-call counters remain zero;the proposed result root and
+new execution authorization do not exist. No scientific attempt was consumed.
+
 One complete decision remains: approve this source-frozen continuation and
 evaluation packet once, with the full limits above. Routine progression inside
 that approval would not require further per-phase permission. Until then, the

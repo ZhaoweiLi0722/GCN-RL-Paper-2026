@@ -1,6 +1,34 @@
 # Autonomous local research queue
 
-## Live checkpoint: continuation-only engineering passed; freeze next
+## Live checkpoint: complete continuation packet frozen; execution decision pending
+
+2026-10-02T01:51Z. Additive implementation committed locally at
+82a947404db18ba034fed241155336d4786b9898. JSON/hash-only freeze completed exit0:
+specs/2026-10-01-adaptive-paper-delivery/continuation-recovery-frozen.json,
+packet SHA256 8f0698cc8bdf41725e07ed78b0a856695473588cdcbbb817d90fa9d8c0223107.
+349 source files,73 saved inputs and the runtime are bound. New model loads,
+forwards,patient calls and optimizer updates are all zero. Neither a new result
+root nor a continuation authorization exists. Reuse the120 passing tests and
+full compileall;no further preparation gate or scientific scoring is required.
+
+One complete decision is ready: reuse3 qualified initializers and3 R4 references;
+15 same-start preflight episodes,192 continuation episodes (96PPO/96BC) and180
+final evaluation episodes. Total387 episodes,20,184 environment calls including
+60 clones,1,152 optimizer calls,390 environment constructions and17,400 seconds
+(4h50m) maximum including verification/local archives. One attempt,no retry.
+Reward,scenario,models,thresholds and unopened original streams stay unchanged.
+The protocol and preparation readout specify paired PPO-own_frozen and PPO-BC
+comparisons plus R4/MDL-2,with raw cost and patient outcomes reported together.
+
+Next authorized action is to ask that single complete execution question,not
+to launch. If approved,record the exact authorization/change control and commit
+before running its routine stages without another per-stage question. Old S1
+and saved qualification stay closed. No initialization refit,qualification
+rescore,extra audit chain,remote/Dropbox action or Stage E reopening. Both finite
+agents are completed and closed;gcn-rl remains PAUSED and visible. Engineering
+readiness and initialization fidelity are not a positive RL result.
+
+## Previous checkpoint: continuation-only engineering passed; freeze next
 
 2026-10-02T01:48Z. User requested routine continuation after the saved-only
 qualification succeeded. This authorizes engineering preparation, not an

@@ -1,6 +1,112 @@
 # Autonomous local research queue
 
-## Live checkpoint: numeric package approved; exclusive single launch next
+## Live checkpoint: comparison completed; baseline route closed, objective decision next
+
+2026-10-02T07:19Z. The authorized single attempt completed and exec session35201
+exited0. All33sections,522episodes(18preflight/288training/216evaluation),27216
+environment calls and1920optimizer calls completed. Twelve learned artifacts
+sealed before test;zero stderr,no failure/overrun marker. Known parent64112 and
+child64125 absent on host process check at07:17Z. No research process is claimed.
+
+Supported answer: time-baseline PPO has exactly zero cost/patient differences
+from own frozen,current PPO,BC andR4 on every evaluated world;all1872paired
+greedy requests/executions unchanged for these contrasts. The time baseline
+improved scalar MSE/advantage diagnostics but not patient performance. Close this
+baseline route;do not add epochs,seeds,alternative baselines or a retry. This is
+a completed limited negative development result,not a failure of execution or
+proof of global optimality,absent headroom,wrong reward or universal RL futility.
+
+Versus full MDL-2,cost -0.564443% is inherited from unchanged reference behavior,
+not an RL increment. Terminal-active burden +15.916667patients/episode;block61
+has fewer completions and more waiting. Retain these trade-offs in the paper.
+Canonical report and decision:reports/2026-10-02-time-baseline-comparison/.
+closure-index.json links exact receipts/hashes. Both local archives verified
+member-by-member by the authorized runner:3595payload files and777launcher files.
+No Dropbox export,cloud-sync or Howard-access claim. Historical evidence retained.
+
+Einstein completed independent readout/decision and is closed;coordinator owns
+closure,status and manuscript integration. Existing124tests/compileall reused,
+since only documentation/report JSON changed after source freeze. No new gate.
+
+Next single decision: should the intended objective include post-step52 care
+obligations of already enrolled patients,using a justified stage/risk terminal
+liability,or remain an explicitly finite52step objective? Recommend defining
+the full obligation before selecting any coefficient. Calibration remains
+missing;unfinished is not dead. This is objective-design preparation only,not
+approved reward fitting or permission to reuse the consumed experiment budget.
+No new scientific execution remains authorized. gcn-rl updated/read back PAUSED,
+retained in the list at30minute cadence,same thread. TOML SHA256
+68744e5d64a809151b6d719d31f87d10548abc77bcaf4443a66130f52286262f.
+Await this one objective decision;no repeated audits or invented experiments.
+
+## Previous checkpoint: all training complete; sealed-model final evaluation running
+
+2026-10-02T06:41Z. Same single attempt/session35201. All9training jobs and
+288/288training episodes completed: original PPO96,time-baseline PPO96,BC96.
+All1920optimizer calls consumed exactly;12learned models sealed before test.
+Final evaluation18/216episodes complete at latest observation,13/33sections
+closed. Ledger16939/27216environment calls;stderr0bytes,no terminal/failure.
+
+No test-performance conclusion before the full declared evaluation/readout.
+Coordinator monitors execution and preservation; a finite independent advancement
+agent will own only reports/2026-10-02-time-baseline-comparison/readout.md and
+decision.json at the terminal boundary. It must not inspect partial test outcomes
+or launch any science. Existing efficiency advice reused, no extra acceptance gate.
+Continue the current run only;no new training, reward change, expansion or retry.
+
+## Previous checkpoint: both PPO arms complete; BC continuation running
+
+2026-10-02T06:30Z. Same single attempt/session35201. Original PPO96/96 and
+time-baseline PPO96/96training episodes complete; BC block60 active with6/96
+episodes complete at latest observation. Training total198/288; evaluation0/216.
+Ledger11305/27216environment calls and1552/1920optimizer calls;8/33sections
+closed. Stderr0bytes,no failure/terminal marker. No final patient-performance
+comparison yet;all12learned-model seals remain a prerequisite to test access.
+
+Next: allow the remaining BC/evaluation/verification/archive phases of this
+already-launched attempt to finish. No additional sample, retry or parameter
+change. Final independent readout must separate baseline diagnostics from real
+greedy action and patient/cost changes. Active heartbeat only monitors this run.
+
+## Previous checkpoint: current-PPO controls complete; time-baseline PPO running
+
+2026-10-02T06:10Z. Same unique execution45a5e16/session35201 and parent64112,
+child64125; process command tree confirmed, no duplicate launcher. Three original
+PPO blocks completed96/96training episodes and768optimizer calls. Time-baseline
+PPO block60 active:5/96candidate training episodes complete at latest observation;
+BC0/96,evaluation0/216. Totals101/288training episodes,6275/27216environment
+debits,800/1920optimizer calls;5/33serial sections closed. Preflight18episodes
+and72clone steps had passed. Stderr remains0bytes,no failure/terminal marker.
+
+No performance readout yet; final evaluation remains sealed until all12learned
+models finish. Continue the already-running attempt only, retaining all caps and
+no-retry/no-reward-change rule. Reuse validated preparation; do not start another
+scientific probe while waiting. gcn-rl monitoring is ACTIVE. At terminal boundary,
+independent raw outcome readout and preservation,then the prespecified decision.
+
+## Previous checkpoint: single time-baseline attempt running in real preflight
+
+2026-10-02T05:48Z. Execution HEAD45a5e16cd8e26364edaacb3aab885d7e4203621c.
+Authorization and change control committed before launch. Actual exec session35201,
+parentPID64112/PPID30450 and childPID64125/PPID64112 match launcher/claim.json and
+child-claim.json under results/dynamic_candidate_time_baseline_20261002.
+Input binding completed in6.183353seconds; current stage same_start_preflight.
+Budget ledger grew from138environment calls at05:47 to530at05:48 with zero
+optimizer calls;stderr0bytes,no terminal/failure marker. This is live scientific
+execution,not a completed result. All scientific source/config/input locks remain
+unchanged; no test data inspected or new fit gate introduced.
+
+gcn-rl monitor updated/read back ACTIVE, same thread and30-minute cadence.
+TOML SHA25684a9f23df80769702c9221a838455b31a821f3cc83f6bc024b77950108798a27.
+Monitor may observe only this already-claimed attempt, never launch another.
+Next: let the fixed33-section serial run complete within phase/global caps;
+report independent raw cost/patient differences and archives at terminal boundary.
+If failed, preserve evidence and do not restart. If performance-null or only
+internal diagnostics improve, close baseline route and prepare the next reward
+decision from existing records,without new reward training. No per-phase approval.
+All previous attempts remain terminal; no remote/export/holdout/Stage E changes.
+
+## Previous checkpoint: numeric package approved; exclusive single launch next
 
 2026-10-02T05:45Z. Entry HEAD8edc507ed9e0811dc02f41e90d46b824e97b8ddd clean.
 Zhaowei replied "推进" directly to the complete numeric handoff. Scope-specific

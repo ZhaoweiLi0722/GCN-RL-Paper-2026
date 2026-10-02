@@ -1,0 +1,43 @@
+{
+  "format": "time-baseline-closure-index-v1",
+  "observed_at_utc": "2026-10-02T07:17:11Z",
+  "root": "results/dynamic_candidate_time_baseline_20261002",
+  "execution_commit": "45a5e16cd8e26364edaacb3aab885d7e4203621c",
+  "implementation_commit": "1baa0a958a5656e38ab823304e4ff5cba2c5386d",
+  "packet_sha256": "5279726f8fc069905ec1097fc961c13136c25241136a99383edae78bcd3c6300",
+  "exec_session": 35201,
+  "exec_exit_code": 0,
+  "terminal_status": "completed",
+  "child_elapsed_seconds": 5155.571511999937,
+  "parent_closure_archive_required_and_observed": true,
+  "sections_completed": 33,
+  "episodes": {"preflight": 18, "training": 288, "evaluation": 216, "total": 522},
+  "calls": {"environment": 27216, "optimizer": 1920, "restore_clone_environment_subset": 72},
+  "stderr_bytes": 0,
+  "failure_or_overrun_markers": [],
+  "known_parent_and_child_absent_at_20261002_0717Z": true,
+  "process_inspection": "Read-only host ps -p 64112,64125 returned no rows; owned exec returned0",
+  "source_tests_reused": {"passed": 124, "elapsed_seconds": 26.972, "compileall_passed": true, "source_changed_since_freeze": false},
+  "archives": [
+    {"path": "archives/completed-payload.tar.gz", "sha256": "3b4508ee154296f0df0064407ae82542c03f9393b4fb6a76393d7517ee180408", "file_count": 3595, "bytes": 983284303, "every_member_verified_by_authorized_runner": true},
+    {"path": "archives/completed-launcher.tar.gz", "sha256": "b9656338a8a8c83ba0ffb376d08b1051c0c86b3b3ec029be9d35ea8caeb48bed", "file_count": 777, "bytes": 1366103243, "every_member_verified_by_authorized_runner": true}
+  ],
+  "receipt_sha256": {
+    "launcher/terminal.json": "454820bc8c7a64c59471bf8d1ab2b1f8ce8c28aab3235624c5e6a2e7fd835a8c",
+    "launcher/closure.json": "3cd6365ee159f58c78e032f4b1c0420bd39f336b49e0e9e2a336859be3fbe91d",
+    "closure-archive-receipt.json": "72993aab53402b74d4cc1c944e13e0d2d5eaefa268f06ca6110389faf7c8a7d0",
+    "launcher/archive-receipt.json": "29cefb4e50a8a8b2734641da91e3261856ac26298524680632c5ed6a3d951417",
+    "payload/independent-verification.json": "10e39f64877137100376c9781c13e3fc0179985c944ea05963e59f73c7fd7e8f",
+    "payload/independent-target-verification.json": "6729e33446feb6961e67744427cd25ca09c4f8f87629c9ed3a00a4a988bda389",
+    "payload/all-episode-verification.json": "860a640e362b46ea35adf9ecba80774b22c5f959c627cd16c9d5cc312520ad5f",
+    "payload/compute-accounting.json": "fbf3c54bfe62232d6dbbc4d00cc1820543980e0ef954d7f817b0dc4a9852d151",
+    "payload/artifact-inventory.json": "655890fbd866a46ef05eabc31bd5ab37e5ee61a5315277222ecbf63a8478169e"
+  },
+  "decision": "limited_negative_or_inconclusive",
+  "baseline_route_closed": true,
+  "new_science_authorized": false,
+  "automatic_retry": false,
+  "dropbox_exported": false,
+  "cloud_sync_verified": false,
+  "howard_access_verified": false
+}

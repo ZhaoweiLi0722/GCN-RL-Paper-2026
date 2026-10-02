@@ -1,8 +1,9 @@
 # Paper-facing claim draft
 
 Local drafting only. Reuses the existing
-[September 29 evidence checkpoint](../../docs/team_updates/2026-09-29-manuscript-evidence-checkpoint.md);
-no new outcome analysis, patient episode, fitting or formal confirmation.
+[September 29 evidence checkpoint](../../docs/team_updates/2026-09-29-manuscript-evidence-checkpoint.md)
+and the separately authorized completed development evaluations linked below.
+This text introduces no additional patient episode, fitting or formal confirmation.
 This is not a replacement of the frozen historical methods or results.
 
 ## Methods: historical study
@@ -85,8 +86,35 @@ Sampled action-return associations are state- and policy-confounded; they do
 not establish absent headroom. Separate policy/entropy parameter gradients were
 not retained, so their causal contributions cannot be decomposed retrospectively.
 See the [saved-return diagnosis](../../reports/2026-10-02-saved-return-ranking/readout.md).
-A prospectively controlled value-baseline comparison is a more specific next
-hypothesis than changing rewards on the basis of this null result alone.
+A separately authorized, prospectively controlled time-baseline comparison has
+now completed all 216 development evaluation episodes. It replaces only the
+policy-advantage baseline with a training-only leave-one-episode-out time
+baseline, not the reward, critic targets or deployment rule. Three blocks each
+trained original PPO, time-baseline PPO and BC for 32 episodes from identical
+qualified starts; all 12 learned artifacts were sealed before evaluation.
+The independent raw verifier reports exactly zero time-baseline PPO differences
+from frozen, original PPO, BC and R4 for cost and all recorded patient outcomes.
+Greedy requests remained unchanged; the prespecified development screen failed.
+This delimits the tested baseline intervention, not all RL or the global
+optimality of R4. See the [time-baseline readout](../../reports/2026-10-02-time-baseline-comparison/readout.md).
+
+Relative to full MDL-2, the equal-block cost difference was -14.867150 million
+modeled objective units (-0.564443%), inherited from the unchanged reference
+behavior rather than RL continuation. Mean completions increased 7.5 and losses
+decreased 23.416667, but terminal-active patients increased 15.916667 per episode;
+block 61 had fewer completions and more waiting. These are cost/service trade-offs,
+not clinical superiority, and the three-block development sample is not an
+independent confirmation of the historical formal result.
+
+The tested baseline route is closed without more epochs, seeds or alternative
+baselines. The next objective-definition question is whether the intended
+evaluation prices only the 52-step window or also residual patient obligations
+beyond it. The current finite-window objective is not thereby a proven bug.
+Any terminal-liability amendment needs justified stage/risk valuation and a
+new prospective authorization; unfinished patients must not be equated to deaths.
+Full-MC potential shaping can simply shift the advantage baseline, so it is not
+an independent breakthrough by default. No reward change or new training follows
+automatically from this result.
 
 Historical replay/target and graph-contract limitations are documented, but
 they do not identify a single causal explanation for the null RL increment.

@@ -3097,3 +3097,24 @@ loaders and native admission. The finite advancement agent delivered and closed;
 prior efficiency advice reused. No new historical audit or toy fitting campaign.
 The new child handles archives within its watched budgets; old results and the
 old closure failure are untouched. Still no promised performance or publication.
+
+#### Conservative two-round package authorized in context
+
+2026-10-02T20:08:16Z: following the complete numerical package question and
+the final answer restating its caps, Zhaowei replied
+`我们的下一步是什么 继续`. Record that exact literal and contextual approval
+in specs/2026-10-02-conservative-cohort-improvement/approval-intent.json.
+This authorizes the unchanged two-round package: blocks60/61/62,12collection
+cohorts/36states,four futures/up to864branches,768actor/0critic updates,
+180final evaluation cohorts,49626environment calls and28800seconds including
+recording and archives. Retain all existing stage/owner limits and fixed0.05KL.
+Protocol/config hashes are bound in the intent; original draft remains false.
+
+Reuse the completed46zero-science tests and whole-repository compileall from
+implementationa98b1fa. No code changes, repeated qualification fitting or
+historical audit. Commit authority, freeze exact source/runtime/input/seed locks,
+commit the effective authorization, check live processes and launch once.
+All routine phases then continue without new permission requests. New scope,
+retries, reward changes, remote/Dropbox actions and Howard approval are excluded.
+The prior attempt stays consumed; neither performance gain nor acceptance is
+guaranteed. No model-free, deployment-online or isolated-GCN claim is authorized.

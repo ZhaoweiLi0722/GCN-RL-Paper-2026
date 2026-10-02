@@ -1,6 +1,23 @@
 # Autonomous local research queue
 
-## Live checkpoint: new conservative two-round runner; one approval pending
+## Live checkpoint: conservative two-round package authorized; freeze then launch
+
+2026-10-02T20:08:16Z. Zhaowei replied `我们的下一步是什么 继续` after the
+complete package question and capped final summary. Exact contextual approval
+is recorded in the new approval-intent.json, binding protocol/config hashes.
+Scope remains49626environment/768actor/0critic/180evaluation/28800seconds,
+one attempt with original owner/phase limits. Same-start controls,0.05KL,
+two rounds and unchanged reward/scenario/model/support. No Howard signoff.
+
+Live PID/PPID/full-command check found no matching research process; only the
+scan itself. No scientific calls or attempt yet. Sourcea98b1fa and its46tests/
+whole compileall are reused without re-running qualification or historical
+audits. Next immediate action: commit authority, freeze source/runtime/inputs/
+prospective streams, commit effective authorization, launch once and observe a
+real phase boundary. Routine phases no longer need approval. Reactivate the
+same finite monitor only after verified launch; no duplicate task or experiment.
+
+### Previous preparation checkpoint
 
 2026-10-02T19:18Z. Zhaowei requested `启动新实验 我们现在的目的就是优化performance`.
 Prepared the complete two-round, current-policy-state/current-policy-continuation

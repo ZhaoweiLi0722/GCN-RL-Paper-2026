@@ -10,6 +10,8 @@ import numpy as np
 from src.env.cohort_followup import ClosedCohortClockMixin, CohortTailSpec
 from src.rl.cohort_objective import cohort_reward_receipt
 from src.rl.cohort_collection import CohortCollection
+from src.rl.prospective_ddpg_kernel import state_digest
+from src.rl.prospective_patient_session import decode_arrays, encode_arrays
 
 
 class FakeEngine:
@@ -64,12 +66,15 @@ class FakeEngine:
 
     def state_dict(self):
         return {k: copy.deepcopy(v) for k, v in self.__dict__.items()
-                if not k.startswith("_cohort") and k not in ("cohort_spec", "rng")} | {
+                if not k.startswith("_cohort") and k not in ("cohort_spec", "rng", "config")} | {
+                    "config": vars(self.config).copy(),
                     "rng_state": copy.deepcopy(self.rng.bit_generator.state)}
 
     def load_state_dict(self, state):
         for key, value in state.items():
-            if key != "rng_state":
+            if key == "config":
+                self.config = SimpleNamespace(**value)
+            elif key != "rng_state":
                 setattr(self, key, copy.deepcopy(value))
         self.rng.bit_generator.state = copy.deepcopy(state["rng_state"])
 
@@ -278,6 +283,7 @@ class CohortObjectiveTests(unittest.TestCase):
 class FakePrefix:
     def __init__(self):
         self.env, self.index = make(), 0
+        self.events = []
 
     @property
     def closed(self):
@@ -287,13 +293,84 @@ class FakePrefix:
         before_step()
         _, reward, done, info = self.env.step(IDLE)
         self.index += 1
-        return dict(raw_reward=reward, done=done, info=info)
+        event = dict(raw_reward=reward, done=done, info=info)
+        self.events.append(copy.deepcopy(event))
+        return event
 
     def state_dict(self):
-        return dict(index=self.index, environment=self.env.state_dict())
+        return dict(index=self.index, environment=self.env.state_dict(), events=copy.deepcopy(self.events))
+
+    def load_state_dict(self, saved):
+        from src.rl.prospective_patient_session import decode_arrays
+        state = decode_arrays(saved)
+        self.env.load_state_dict(state["environment"])
+        self.index, self.events = state["index"], copy.deepcopy(state["events"])
 
 
 class CohortCollectionTests(unittest.TestCase):
+    def collection(self, **kwargs):
+        return CohortCollection(FakePrefix(), objective="cohort", split="training",
+            trajectory_id="invented/0", followup_action=lambda env: IDLE,
+            finish_prefix=lambda _: {"finished": True}, enabled=True, **kwargs)
+
+    def test_raw_prefix_last_row_precedes_finish_and_tail_recording(self):
+        calls = []
+        run = self.collection(record_prefix=lambda p, e: calls.append(("prefix", p.index)),
+                              record_tail=lambda c, e: calls.append(("tail", e["index"])))
+        run.finish_prefix = lambda p: calls.append(("finish", p.index)) or {"finished": True}
+        for _ in range(5):
+            run.step(before_step=lambda: None)
+        self.assertEqual(calls, [("prefix", 1), ("prefix", 2), ("finish", 2),
+                                 ("tail", 1), ("tail", 2), ("tail", 3)])
+
+    def test_prefix_tail_and_closed_restore_without_replay_or_recording(self):
+        run = self.collection()
+        for index in range(1, 6):
+            run.step(before_step=lambda: None)
+            saved = run.state_dict()
+            restored = self.collection(record_prefix=lambda *a: self.fail("unexpected write"),
+                                       record_tail=lambda *a: self.fail("unexpected write"))
+            with patch.object(FakeEngine, "step", side_effect=AssertionError("replay forbidden")):
+                restored.load_state_dict(saved)
+                restored.load_state_dict(saved)
+            self.assertEqual(restored.index, index)
+            self.assertEqual(state_digest(saved), state_digest(restored.state_dict()))
+            self.assertEqual(run.env.rng.bit_generator.state, restored.env.rng.bit_generator.state)
+        self.assertEqual(restored.target_receipt(), run.target_receipt())
+
+    def test_restore_rejects_tamper_atomically_and_never_rewinds_or_retries(self):
+        run = self.collection()
+        run.step(before_step=lambda: None)
+        early = run.state_dict()
+        for _ in range(3):
+            run.step(before_step=lambda: None)
+        before = state_digest(run.state_dict())
+        with self.assertRaises(ValueError):
+            run.load_state_dict(early)
+        for change in ("cost", "clock", "demand", "patient", "index"):
+            saved = decode_arrays(run.state_dict())
+            if change == "cost":
+                saved["tail_events"][0]["cost"] += 1
+            elif change == "clock":
+                saved["followup"]["environment"]["t"] += 1
+            elif change == "demand":
+                saved["followup"]["environment"]["demand"][0] = 1.
+            elif change == "patient":
+                saved["followup"]["environment"]["patient_registry"]["extra"] = "waiting"
+            else:
+                saved["tail_events"][0]["index"] = 999
+            with self.subTest(change=change), self.assertRaises((ValueError, AssertionError)):
+                run.load_state_dict(encode_arrays(saved))
+            self.assertEqual(before, state_digest(run.state_dict()))
+        def fail(*args):
+            raise RuntimeError("invented disk failure")
+        saved = run.state_dict()
+        run.record_tail = fail
+        with self.assertRaises(RuntimeError):
+            run.step(before_step=lambda: None)
+        with self.assertRaises(ValueError):
+            run.load_state_dict(saved)
+
     def test_complete_mock_dispatch_preserves_prefix_and_defers_target(self):
         recorded, debits = [], []
         def finish(prefix):

@@ -1,6 +1,52 @@
 # Autonomous local research queue
 
-## Live checkpoint: cohort bounds, target adapter and raw-tail components delivered
+## Live checkpoint: cohort prefix, persistence and bounded continuation integrated
+
+2026-10-02T08:29Z. Entry HEAD93496179594cfaa48378d6b026c2e2b59cd83cef.
+Latest user request: continue. Authority remains local engineering only, not the
+new numerical cohort-objective package. Old attempts and evidence remain closed.
+
+New usable implementation removes the prefix/tail training-boundary blocker:
+the last prefix event is recorded before t52 finalization; all11tail costs are
+recorded and independently recounted before prefix PPO segments or BC examples
+are admitted. Tail actions remain common-rule only, never learned actions or
+new BC examples. Prefix/tail collection and complete-batch continuation restore
+preserve environment/RNG/model/optimizer state and retain external spent budget;
+failure cannot turn into a retry. Same live owners cannot rewind acquisition.
+
+Delivered: cohort_public.py, cohort_recording.py, cohort_continuation.py,
+cohort_factory.py and cohort_sequence.py; extended only the previously unexecuted
+cohort_followup/collection modules. Public adapter preserves specimen-route
+schema, originalfloat64 requests and time denominator52, and refuses inference
+after enrollment closes. Four learned forks have identical starting weights and
+fresh separate optimizer/RNG owners. Twelve model files must seal before any
+of the18evaluation sections can enter. Configuration stays unauthorized.
+
+Validation:94 focused/regression tests passed in21.066s. Artificial optimizer
+doubles change metadata only; real Adam/SGD calls are guarded forbidden. Full
+repository compileall completed exit0; JSON and diff whitespace checks passed.
+Darwin delivered the disjoint public adapter/session and tests; integrated and
+closed. Reused existing efficiency advice, no additional reviewer/gate/toy fit.
+No real patient environment, historical model load, research forward, new
+trajectory or real optimizer call occurred. No new performance conclusion.
+
+Remaining concrete blocker: outer six-controller campaign/backend, including
+original-engine prefix parity and both prefix/tail budgeted clone comparisons;
+whole-campaign persisted-boundary restoration; complete raw policy/resource/
+target/paired-outcome verifier. These are integration tasks, not a new study.
+Then freeze source/runtime/input and scoped fresh-stream locks and ask ONE
+complete numerical approval. Do not reimplement the delivered components or
+repeat the closed baseline/terminal diagnosis. The proposed522episodes,
+33186environment calls,1920optimizer calls,10800seconds and one attempt remain
+unchanged and unapproved. No execution question yet; no research runner started.
+
+Same gcn-rl engineering schedule remains the continuation mechanism; last
+confirmed ACTIVE08:04Z. No schedule edit this turn and no background training
+claim. Host process check08:31Z found only inspection PIDs70623/70626, no matching
+research launcher. Pause visibly only after remaining engineering/freeze leaves a single
+new scientific approval. No remote/export/holdout/StageE/Howard-approval action.
+
+## Previous checkpoint: cohort bounds, target adapter and raw-tail components delivered
 
 2026-10-02T08:04Z. Entry HEAD62056c12cb84b27ca1acb401045472ea3e83c428.
 Zhaowei requested continuing under the roadmap. Current authority is local

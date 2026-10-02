@@ -12,6 +12,19 @@ import math
 import numpy as np
 
 
+def same_payload(left, right):
+    if isinstance(left, np.ndarray):
+        return (isinstance(right, np.ndarray) and left.dtype == right.dtype
+                and np.array_equal(left, right))
+    if isinstance(left, dict):
+        return (isinstance(right, dict) and set(left) == set(right)
+                and all(same_payload(left[k], right[k]) for k in left))
+    if isinstance(left, (tuple, list)):
+        return (type(left) is type(right) and len(left) == len(right)
+                and all(same_payload(a, b) for a, b in zip(left, right)))
+    return type(left) is type(right) and left == right
+
+
 @dataclass(frozen=True)
 class CohortTailSpec:
     enrollment_steps: int
@@ -139,7 +152,7 @@ class ClosedCohortClockMixin:
             if self.t != self.cohort_spec.enrollment_steps + index:
                 raise ValueError("tail clock discontinuity")
             cost = float(info["cost"])
-            if not math.isfinite(cost) or not math.isfinite(float(reward)) or reward != -cost:
+            if cost < 0 or not math.isfinite(cost) or not math.isfinite(float(reward)) or reward != -cost:
                 raise ValueError("raw cost/reward mismatch")
             if bool(done) != (index == self.cohort_spec.accounting_steps):
                 raise ValueError("fixed accounting endpoint required")
@@ -196,20 +209,62 @@ class ClosedCohortClockMixin:
             raise ValueError("restore cannot change contract, progress, receipts or failure")
         # Prefix state is immutable provenance; compare structured values,
         # including RNG, without accepting ambiguous ndarray truth values.
-        def same(left, right):
-            if isinstance(left, np.ndarray):
-                return isinstance(right, np.ndarray) and left.dtype == right.dtype and np.array_equal(left, right)
-            if isinstance(left, dict):
-                return isinstance(right, dict) and set(left) == set(right) and all(same(left[k], right[k]) for k in left)
-            if isinstance(left, (tuple, list)):
-                return type(left) is type(right) and len(left) == len(right) and all(same(a, b) for a, b in zip(left, right))
-            return type(left) is type(right) and left == right
-        if not same(saved["prefix_state"], current["prefix_state"]):
+        if not same_payload(saved["prefix_state"], current["prefix_state"]):
             raise ValueError("prefix provenance changed")
         # No reconstruction/resimulation is needed for a checkpoint readback.
-        if not same(saved["environment"], current["environment"]):
+        if not same_payload(saved["environment"], current["environment"]):
             raise ValueError("restore must be at the exact persisted environment boundary")
         super().load_state_dict(saved["environment"])
+
+    def reconstruct_followup_from_prefix(self, state):
+        """Restore an owned tail from its separately verified completed prefix.
+
+        No calls are replayed and no RNG is reseeded. The outer collection owns
+        receipt hashes and the durable nonrefundable budget. This method never
+        clears a failure or rewinds an already active tail.
+        """
+        self._cohort_live()
+        current, saved = self.followup_state_dict(), copy.deepcopy(state)
+        if (self._cohort_closed or self.t != self.cohort_spec.enrollment_steps
+                or not isinstance(saved, dict) or set(saved) != set(current)
+                or saved["format"] != current["format"] or saved["contract"] != current["contract"]
+                or saved["closed"] is not True or saved["failure"] is not None
+                or not same_payload(saved["prefix_state"], current["environment"])):
+            raise ValueError("exact completed prefix and live same-contract tail required")
+        count, costs, resolved = saved["steps"], saved["costs"], saved["resolution_step"]
+        if (type(count) is not int or not 0 <= count <= self.cohort_spec.accounting_steps
+                or not isinstance(costs, list) or len(costs) != count
+                or any(type(c) not in (int, float) or not math.isfinite(c) or c < 0 for c in costs)
+                or (resolved is not None and (type(resolved) is not int or not 0 <= resolved <= count))
+                or saved["ids"] != tuple(sorted(self.patient_registry))
+                or type(saved["enrolled"]) is not int or saved["enrolled"] != self.cumulative_enrolled):
+            raise ValueError("tail progress, identity or cost receipts differ")
+        candidate = copy.deepcopy(self)
+        candidate.close_enrollment()
+        initial_active = candidate._cohort_counts()
+        super(ClosedCohortClockMixin, candidate).load_state_dict(saved["environment"])
+        if not same_payload(candidate.state_dict(), saved["environment"]):
+            raise ValueError("tail environment/RNG did not roundtrip")
+        candidate._cohort_steps, candidate._cohort_costs = count, costs
+        candidate._cohort_resolution_step = resolved
+        active = candidate._cohort_counts()
+        if (candidate.t != self.cohort_spec.enrollment_steps + count
+                or np.any(candidate.demand != 0) or np.any(candidate.demand_forecast != 0)
+                or candidate.demand_forecast_error != 0
+                or (active == 0) != (resolved is not None)
+                or (initial_active == 0) != (resolved == 0)
+                or (count >= self.cohort_spec.patient_resolution_steps and active)
+                or (resolved is not None and resolved > self.cohort_spec.patient_resolution_steps)):
+            raise ValueError("tail clock, enrollment closure or resolution boundary differs")
+        if count == self.cohort_spec.accounting_steps:
+            for field in ("specimen_transfer_pipeline", "reagent_transfer_pipeline",
+                          "capacity_transfer_pipeline", "reagent_purchase_pipeline"):
+                pipeline = np.asarray(getattr(candidate, field, ()), dtype=float)
+                if not np.isfinite(pipeline).all() or np.any(pipeline != 0):
+                    raise ValueError("restored final resource flow is not settled")
+        if not same_payload(candidate.followup_state_dict(), saved):
+            raise ValueError("full tail envelope did not roundtrip")
+        self.__dict__.update(candidate.__dict__)
 
     def common_followup_request(self, anchor_config):
         """Public full MDL-2 under zero prospective demand; no learned actor."""

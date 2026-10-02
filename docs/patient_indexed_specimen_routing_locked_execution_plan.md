@@ -2751,3 +2751,22 @@ engineering chain at30minute cadence. Scientific attempts remain closed and no
 new research process is claimed. Pause visibly when only new scope approval
 remains. No historical source/results overwritten, no new fit gate, no remote,
 export,holdout,StageE reopening or Howard approval assertion.
+
+#### Cohort prefix, persistence and bounded continuation integration
+
+2026-10-02T08:29Z: latest user "continue" advances local additive engineering,
+not a new scientific attempt. Entry93496179594cfaa48378d6b026c2e2b59cd83cef.
+Delivered public-producer bridge/versioned prefix session, two-part evidence
+writer, owned prefix/tail reconstruction, complete-batch continuation with
+nonrefundable budget, equal-weight window/cohort/BC/frozen forks, and33-section
+twelve-model sealing barrier. The52step raw prefix and float64 requests remain
+unchanged; all11tail costs must be persisted before training admission. Tail
+actions are not learned actions or BC examples. Historical implementations and
+evidence are untouched.94 artificial/regression tests passed, real optimizers
+and patient engines were forbidden; no scientific checkpoint was loaded.
+
+This is not end-to-end execution readiness. Outer backend/campaign, original
+prefix parity, two clone boundaries, full campaign restore and enclosing raw
+verification are next. No new scientific parameter or proposed budget changed.
+The cohort-objective numerical scope still needs complete freeze and one explicit
+approval. No performance claim, remote/export, holdout, StageE or Howard approval.

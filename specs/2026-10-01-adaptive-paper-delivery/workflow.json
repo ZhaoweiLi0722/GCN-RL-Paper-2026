@@ -1,16 +1,16 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 29,
-  "updated_at_utc": "2026-10-02T08:04:00Z",
+  "revision": 30,
+  "updated_at_utc": "2026-10-02T08:29:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
-  "entry_head": "62056c12cb84b27ca1acb401045472ea3e83c428",
+  "entry_head": "93496179594cfaa48378d6b026c2e2b59cd83cef",
   "plan": "specs/2026-10-01-adaptive-paper-delivery/plan.md",
   "execution_config": "specs/2026-10-02-time-baseline-comparison/frozen.json",
   "execution_authorization": "specs/2026-10-02-time-baseline-comparison/authorization.json",
   "scientific_execution_authorized": false,
   "authorization_state": "All scientific attempts closed;latest continue permits saved-data diagnosis and prospective objective design,not a new reward experiment or unspecified numerical calls",
-  "status": "cohort_bound_target_and_raw_components_delivered_campaign_integration_pending",
+  "status": "cohort_prefix_persistence_continuation_and_sealing_delivered_outer_campaign_pending",
   "execution_commit": "45a5e16cd8e26364edaacb3aab885d7e4203621c",
   "current_task": "N8_COHORT_OBJECTIVE_PACKET_PREPARATION",
   "scientific_intent": {
@@ -26,7 +26,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Finish additive public-producer bridge/versioned session,full cohort collector and continuation restore,two-part persistence,serial six-controller entrypoint and independent bundle verification;then source/runtime/input/fresh-stream freeze and one complete scientific approval. Reuse39passed zero-update tests,do not repeat historical diagnosis or fit more toys.",
+  "next_concrete_action": "Wire delivered cohort public/session/collection/recording/continuation/factory/sequence into outer six-controller backend/campaign;add prefix parity and both clone boundaries,whole-campaign restore and raw policy/resource/target/paired-bundle verification. Then freeze source/runtime/input/scoped fresh streams and ask one complete scientific approval. Reuse94passed tests,no historical re-audit or toy fit.",
   "cohort_objective_preparation": {
     "proposal": "specs/2026-10-02-terminal-obligation/proposal.json",
     "protocol": "specs/2026-10-02-terminal-obligation/protocol.md",
@@ -38,10 +38,10 @@
     "economic_endpoint": 63,
     "source_bound_only_not_live_validated": true,
     "no_new_cost_weight": true,
-    "delivered": ["unregistered_closed_cohort_clock", "two_stage_dispatch_and_snapshot", "pure_objective_receipt", "objective_bound_ppo_and_restore", "budget_and_prospective_stream_plan", "independent_raw_tail_verifier"],
-    "remaining": ["structural_public_producer_bridge_and_prefix_session", "complete_collection_continuation_reconstruction", "two_part_persistence_and_serial_campaign", "enclosing_raw_policy_resource_target_verifier", "source_runtime_input_stream_locks", "explicit_scientific_approval"],
-    "focused_regression_tests_passed": 39,
-    "test_seconds": 1.832,
+    "delivered": ["unregistered_closed_cohort_clock", "two_stage_dispatch_and_owned_reconstruction", "pure_objective_receipt", "objective_bound_ppo_and_restore", "budget_and_prospective_stream_plan", "independent_raw_tail_verifier", "structural_public_producer_and_prefix_session", "two_part_persisted_recording", "complete_batch_continuation_and_restore", "equal_weight_forks_and_explicit_objective_config", "fixed_33_section_twelve_model_seal_barrier"],
+    "remaining": ["outer_backend_campaign_parity_and_two_clone_boundaries", "whole_campaign_persisted_boundary_restore", "enclosing_raw_policy_resource_target_paired_verifier", "source_runtime_input_stream_locks", "explicit_scientific_approval"],
+    "focused_regression_tests_passed": 94,
+    "test_seconds": 21.066,
     "compileall_passed": true,
     "new_scientific_calls": 0,
     "proposed_main_episodes": 522,
@@ -611,6 +611,7 @@
     }
   ],
   "finite_agents": [
+    {"id": "01a0fbac-e1fb-70c2-b9af-1b6e94e82717", "role": "advancement", "name": "Darwin", "state": "completed_closed", "artifact": "Disjoint cohort public producer/prefix session and artificial tests;coordinator integrated two-part recording,collection and continuation restore,equal-weight forks and serial model seals.94test suite passed;existing efficiency advice reused,no new scientific call or gate."},
     {"id": "01a0fb90-c115-7991-9e78-1b662f098e0c", "role": "advancement", "name": "Arendt", "state": "completed_closed", "artifact": "Disjoint source-derived8step patient/3step pipeline bound andresource settlement memo;coordinator refined common63step endpoint andintegrated sixcode modules/39tests. Existing efficiency advice reused,no new gate."},
     {"id": "01a0fb80-691c-7551-a98b-9835493c8cdc", "role": "advancement", "name": "Turing", "state": "delivered_closed", "artifact": "Disjoint source-contract.md maps terminal ordering,cost and identity conservation;recommends explicit fixed-cohort follow-up and identifies settlement/estimand limits. Coordinator delivered tested saved reader and numerical design synthesis;existing efficiency advice reused."},
     {"id": "01a0fb5a-8979-7161-9b9a-1ba0f481dd9a", "role": "advancement", "name": "Einstein", "state": "completed_closed", "artifact": "Independent final six-contrast readout/decision from persisted full evaluation,target,compute and archive reports;scalar diagnostic gain distinguished from zero patient gain;one terminal-objective decision,no scientific calls. Existing efficiency advice reused."},

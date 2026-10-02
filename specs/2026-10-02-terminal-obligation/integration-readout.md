@@ -1,5 +1,60 @@
 # Cohort Objective: Implementation Handoff
 
+## Current Integration Boundary
+
+2026-10-02T08:29Z; entry93496179594cfaa48378d6b026c2e2b59cd83cef.
+Local engineering milestone only. No new patient-performance evidence or
+scientific execution approval. The previous component report below is retained
+as history; its pending public/session/collection tasks are now delivered.
+
+New interfaces:
+
+- `CohortObservationProducer(env, layout_producer, enabled=True)` bridges the
+  explicit cohort subclass to the original already-budgeted layout. No historical
+  exact-type guard changes. `CohortPrefixSession` retains52-step time semantics,
+  candidate support, float64 requests and inherited public receipt restoration;
+  it rejects any inference or ordinary prefix reopening after enrollment closure.
+- `CohortCollection` records the final prefix row BEFORE the original recorder
+  finalizes, saves its original endpoint, then closes enrollment. Separate tail
+  rows include public observations, full-precision actions, before/after state
+  hashes and resource snapshots. Owned recovery reconstructs from the validated
+  prefix without replay; failed or rewound live collections are rejected.
+- `CohortRecorder` writes exclusive `prefix/` and `tail/` evidence, independently
+  recounts saved primitive costs and patient flows, and saves target/lineage only
+  for the two PPO objectives. No test-data target or tail BC sample is created.
+  Current boundary hashes cannot truncate later data to imitate an old checkpoint.
+- `CohortContinuation` extends the existing budget/update transaction. Its factory
+  accepts `restore_state`; restoration must use an owned cached collector, not
+  silently open a second recorder or build/replay another environment. The outer
+  campaign supplies `finish_collection`, which must persist and verify the whole
+  cohort before any prefix segment/example is admitted. Only52prefix actions
+  enter learning, while all63environment calls consume budget. Pending batches,
+  kernel, RNG, optimizer and last/active collector envelopes restore together.
+- `cohort_config`/`fork_cohort_initializer` bind the unchanged prefix mechanisms
+  to explicit window/cohort objectives and four equal-weight fresh-owner forks.
+  `CohortSequence` maps33sections and seals all12learned artifacts before tests.
+  Neither configuration nor factory provides scientific admission.
+
+Validation:94focused/regression tests passed in21.066s, including every prefix/
+tail/update restoration boundary, complete window/cohort/BC dispatch with mock
+Adam metadata, nonrefundable failures, raw recording, pure config arithmetic and
+all-model barriers. Full repository compileall exited0; JSON/diff checks passed.
+Host process inspection08:31Z found only inspection commands, no matching
+research launcher. Weights do not change under those optimizer doubles; real
+optimizer steps and patient constructors/steps are forbidden by test guards.
+Darwin delivered only the public bridge/session and their tests, then closed.
+Existing efficiency advice reused. No new fitting gate or retrospective audit.
+
+Still required, in order: outer backend/campaign binding (reuse the delivered
+interfaces), full52step original-engine parity and two clone boundaries, owned
+whole-campaign restoration, enclosing raw public-action/resource/target/paired
+verification, then committed runtime/source/input and scoped stream locks.
+The real scientific backend must remain disabled until the complete packet has
+one explicit approval. Current522episode/33186call/1920update/10800second draft
+is unchanged. Remaining work is implementation, not waiting on that approval yet.
+
+## Previous Component Milestone
+
 2026-10-02. Entry commit62056c12cb84b27ca1acb401045472ea3e83c428.
 Scope: authorized local preparation only. No new research checkpoint was loaded,
 no patient environment was constructed or stepped, and no real optimizer update

@@ -2,6 +2,33 @@
 
 ## Live checkpoint: conservative two-round experiment launched and progressing
 
+2026-10-02T22:43:46Z: second-round block61 paired and BC fits complete.
+Paired5/6 and BC5/6 round-fits,640/768actor updates,0critic. The two new
+checkpoint hashes and128new sequential finite receipts match; earlier checks
+reused. All12/12collection cohorts and36/36states complete,preflight3/3.
+Current phase branches/round1/block62, the last branch owner. Completed
+branches707 (672in five finished owners,35in the last); global cap864,
+final alias-reduced total not yet counted. Final seals0/9,evaluation0/180,
+environment31514/49626. No scientific model loads/forwards/updates or new
+trajectories by this monitor. An optional context-JSON inventory found none;
+the monitor left the final canonical total unclaimed, without model loading.
+
+Original supervisor12670/PPID1 and child12683/PPID12670 remain live with
+matching complete commands and new completed boundaries. No duplicate,
+terminal/failure/overrun or stderr evidence. Current source unchanged; reuse
+the21:43:35 check of482current locks. No new historical audit or test gate.
+Evidence:reports/2026-10-02-conservative-cohort-monitor-2243.json.
+
+Conditional ETA1-2.5hours remaining, based on8176.90seconds for672branches
+in five completed owners. Existing process next finishes block62 labels and
+two64-update fits, seals9models, runs180evaluation cohorts, then raw readout
+and watched archives. Evaluation/archive speed remains uncertain. The main
+cost/patient comparison is still unavailable; training is not a performance
+gain. Remaining routine phases are authorized, no new approval required.
+Keep the same monitor ACTIVE; no retry, parameter change or new experiment.
+
+### Previous second-round milestone
+
 2026-10-02T22:18:06Z: second-round block60 paired and BC fits complete.
 Paired4/6 and BC4/6 round-fits,512/768 actor updates,0critic. The two new
 checkpoint hashes and128new sequential finite receipts match; first-round

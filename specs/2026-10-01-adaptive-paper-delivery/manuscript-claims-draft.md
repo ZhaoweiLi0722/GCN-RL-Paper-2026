@@ -110,11 +110,42 @@ The tested baseline route is closed without more epochs, seeds or alternative
 baselines. The next objective-definition question is whether the intended
 evaluation prices only the 52-step window or also residual patient obligations
 beyond it. The current finite-window objective is not thereby a proven bug.
-Any terminal-liability amendment needs justified stage/risk valuation and a
-new prospective authorization; unfinished patients must not be equated to deaths.
+Any terminal-liability amendment needs justified valuation and a new prospective
+authorization; unfinished patients must not be equated to deaths. The subsequent
+saved-data diagnosis favors explicit fixed-cohort follow-up over an invented
+per-patient terminal penalty, as detailed below.
 Full-MC potential shaping can simply shift the advantage baseline, so it is not
 an independent breakthrough by default. No reward change or new training follows
 automatically from this result.
+
+### Terminal-cohort interpretation and prospective objective design
+
+A saved-only review of all 216 time-baseline evaluation episodes verified 433
+source files unchanged. Original PPO, time-baseline PPO, BC and R4 each have
+identical full final states to frozen in all 36 paired worlds. Thus any common
+deterministic terminal valuation applied to these states preserves zero RL
+increment; retrospective reward reweighting cannot establish a learning benefit.
+
+The R4-like versus MDL-2 terminal-active difference also requires care: with
+identical enrollment, active+15.916667 exactly reconciles with completed+7.5
+and lost-23.416667. More active patients alone do not demonstrate clinical harm.
+Final-step entrants average122.5 in both groups, making up17.2853% of the
+reference-like terminal-active count but none of the between-arm difference.
+These entrants arrive after that step's processing opportunities. Terminal-active
+counts measure unresolved obligations at an administrative cutoff, not observed
+future deaths or a complete clinical endpoint. Preserve the earlier conservative
+reporting flag and block61 concern without overstating either as proven harm.
+
+The prospective design fixes the52step enrollment window and follows the same
+cohort to modeled infusion/loss under a common declared continuation rule,
+initially proposed as full MDL-2. It would record subsequent primitive costs,
+not select penalty weights to favor RL. This changes the estimand to closed-cohort
+prefix control under that rule; it is not an indefinitely operating network or
+evidence of deployment adaptation. Resource settlement, follow-up bound, patient
+safeguards and a complete numerical package are not yet frozen or approved.
+No such follow-up or reward training has occurred. See the
+[terminal diagnosis](../../reports/2026-10-02-terminal-obligation/readout.md)
+and [prospective design](../2026-10-02-terminal-obligation/design.md).
 
 Historical replay/target and graph-contract limitations are documented, but
 they do not identify a single causal explanation for the null RL increment.

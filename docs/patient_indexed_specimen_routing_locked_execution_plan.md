@@ -2680,3 +2680,40 @@ and permits saved-evidence interpretation only, not a repair/retry. A null,
 unchanged-greedy or diagnostic-only result closes the baseline route and proceeds
 to the existing reward-design memo; no reward fitting or new numerical scope is
 approved. No remote,Dropbox,holdout,Howard-approval claim or Stage E change.
+
+#### Completed baseline closure and saved terminal-obligation design continuation
+
+2026-10-02T07:33Z: the approved time-baseline attempt completed all33sections,
+522episodes,27216environment calls and1920optimizer calls at execution commit
+45a5e16cd8e26364edaacb3aab885d7e4203621c. Twelve learned models were sealed before
+216evaluations. Independent raw checks found no greedy cost/patient increment
+over frozen,currentPPO,BC orR4; lower baseline diagnostics did not improve
+performance. Both local archives were verified,stderr was empty,and the runner
+exited0. The prespecified null screen closes the baseline route; no retry or
+additional baseline/epoch/sample is authorized. Canonical closure:
+reports/2026-10-02-time-baseline-comparison/closure-index.json.
+
+Zhaowei then replied "continue" to objective investigation. This authorizes
+saved-record diagnosis and prospective design, not an unspecified reward trial.
+The additive reader/config were committed5260cff before reading216saved episodes.
+Nine invented-JSON tests and full compileall passed. All433source inputs match
+the prior archive receipt and remained unchanged; no model/environment/optimizer
+was executed. Diagnostic SHA256:
+4d97cca522ba34bfc7308e25a66f9a7123fc7d0b1ea7abf1efe5d83e3933216b.
+
+All reference-like controllers have identical final states in36/36paired worlds;
+common terminal revaluation therefore cannot retrospectively create RL benefit.
+Active+15.916667 versusMDL-2 reconciles with completed+7.5 andloss-23.416667;
+the prior adverse-direction reporting flag is not proof of clinical harm.
+Equal122.5final-step entrants explain part of absolute terminal counts, not the
+between-arm difference. Preserve old evidence,flags and block61 concerns.
+
+The integrated design now favors fixed52step enrollment with explicit common
+follow-up to modeled resolution before selecting a stage/risk terminal penalty.
+Closing inflow changes the estimand. Post-window procurement,resource settlement,
+resolution bound,patient safeguards and exact numerical caps must be specified
+in one prospective packet. Old reward,scenario and all completed results remain
+locked. No new follow-up,fit,coefficient search or scientific execution is approved.
+Canonical design:specs/2026-10-02-terminal-obligation/design.md. gcn-rl remains
+PAUSED and visible; no active scientific workload is claimed. Only local work;
+no export,remote,holdout,Howard approval assertion or Stage E reopening.

@@ -1,6 +1,51 @@
 # Autonomous local research queue
 
-## Live checkpoint: comparison completed; baseline route closed, objective decision next
+## Live checkpoint: saved terminal diagnosis delivered; cohort-objective design next
+
+2026-10-02T07:33Z. Entry HEAD e916c414c89bc334ad96e4cde48536535228791d.
+Zhaowei's "continue" advanced saved-data diagnosis and prospective design, not
+an unspecified reward experiment. The new reader and fixed analysis scope were
+committed as5260cff64df7603b8e9b3b4b8805d1768c9bdce8 before execution. Nine
+invented-JSON tests and full repository compileall passed. The saved-only reader
+completed216episodes, verified433source files and found them unchanged. No model
+loads, forward passes, environment calls or optimizer calls occurred.
+
+New decision-changing evidence: original PPO,time-baseline PPO,BC andR4 have
+identical full final states to frozen in all36paired worlds. Any common
+deterministic terminal valuation on these states therefore preserves zero RL
+increment; retrospective reward reweighting cannot manufacture a gain. Relative
+toMDL-2, active+15.916667 reconciles exactly with completions+7.5 and
+losses-23.416667. More active patients are unresolved obligations, not by
+themselves evidence of harm. Final-step entrants average122.5 in both groups,
+17.2853%of frozen terminal-active count, but explain none of the arm difference.
+Retain the previous conservative adverse flag and block61 waiting/completion
+concern; qualify their interpretation rather than rewriting historical evidence.
+
+Canonical report: reports/2026-10-02-terminal-obligation/readout.md.
+Diagnostic SHA2564d97cca522ba34bfc7308e25a66f9a7123fc7d0b1ea7abf1efe5d83e3933216b.
+Turing delivered the independent source contract and is closed; coordinator
+delivered the tested reader, numerical readout and integrated prospective design.
+Reuse prior efficiency advice, no new reviewer or fitting gate.
+
+Recommended next action: prepare one bounded cohort-objective comparison packet
+from specs/2026-10-02-terminal-obligation/design.md. Keep52step enrollment, then
+follow those identities to modeled resolution under one fixed fullMDL-2 rule;
+account for actual subsequent primitive costs before considering invented
+terminal penalties. Closing inflow changes the estimand and requires explicit
+prospective scope, not a claim that the old reward was buggy. Resolve procurement,
+residual-resource settlement and a source-derived follow-up bound in that packet;
+match acquisition/updates across old-window and cohort-objective PPO, with
+frozen/BC controls. No calibration, coefficient, new sample cap or scientific
+execution is approved by this design. Already viewed data are not confirmation.
+
+Current scientific attempts remain closed; no research process is claimed.
+The read-only prior-PID check found the old runner/child absent. gcn-rl remains
+PAUSED as last verified07:19Z, unchanged this turn. This is a local saved-analysis
+milestone, not resumed training or a new background workflow. Next approval must
+be one complete numerical packet, not repeated preparation questions. No remote,
+Dropbox, holdout, Howard-approval assertion or Stage E change.
+
+## Previous checkpoint: comparison completed; baseline route closed, objective decision next
 
 2026-10-02T07:19Z. The authorized single attempt completed and exec session35201
 exited0. All33sections,522episodes(18preflight/288training/216evaluation),27216

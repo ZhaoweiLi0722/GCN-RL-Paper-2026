@@ -2655,3 +2655,28 @@ questions. No automatic retry, extension or reward experiment is authorized.
 The prior comparison remains terminal and its budget is not reusable. The
 existing gcn-rl automation is PAUSED and retained visibly while only this decision
 remains. Canonical integration readout and Live checkpoint give the handoff.
+
+#### Explicit numeric package approval and single-attempt launch authorization
+
+2026-10-02T05:45Z: after the preceding handoff restated the complete522episode,
+27216environment-call,1920optimizer-call,10800second,one-attempt package,
+Zhaowei replied verbatim "推进". This is authorization to proceed with that exact
+package, not the older direction-only reply. The exact reply, context, caps,
+phase/owner-plan hash and frozen implementation binding are recorded in
+specs/2026-10-02-time-baseline-comparison/authorization.json.
+
+The prior null greedy-policy comparison and99-file saved-value diagnosis motivate
+only this prespecified baseline intervention. Reward, critic targets, support,
+scenario, architecture, saved initialization, optimizer, entropy and evaluation
+stay fixed. Reuse the three qualified initializers without a refit or rescore.
+All12learned models must be sealed before216final evaluations. Every scheduled
+phase, clone, optimizer call and preservation step counts against this new budget;
+prior unused allocations cannot be transferred. Source/input/runtime and local
+seed inventory bindings passed unchanged before this authorization record.
+
+Commit authorization and this amendment before the unique attempt starts.
+Routine phases need no further question. A terminal failure consumes the attempt
+and permits saved-evidence interpretation only, not a repair/retry. A null,
+unchanged-greedy or diagnostic-only result closes the baseline route and proceeds
+to the existing reward-design memo; no reward fitting or new numerical scope is
+approved. No remote,Dropbox,holdout,Howard-approval claim or Stage E change.

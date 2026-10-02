@@ -1,0 +1,33 @@
+{
+  "format": "time-baseline-authorization-v1",
+  "approved": true,
+  "packet_sha256": "5279726f8fc069905ec1097fc961c13136c25241136a99383edae78bcd3c6300",
+  "implementation_commit": "1baa0a958a5656e38ab823304e4ff5cba2c5386d",
+  "limits": {
+    "attempts": 1,
+    "blocks": [60, 61, 62],
+    "episodes": 522,
+    "training_episodes_per_arm_block": 32,
+    "environment_steps": 27216,
+    "optimizer_calls": 1920,
+    "seconds": 10800,
+    "historical_initializer_loads": 3,
+    "reference_loads": 3,
+    "layout_builds": 3,
+    "episode_builds": 522,
+    "final_test_episodes": 216,
+    "phase_and_owner_plan_sha256": "0373cdb9024c60eac2296071ae4418207c7f24eaee81e1214c21402b009f2f94"
+  },
+  "automatic_retry": false,
+  "remote_or_dropbox_actions": false,
+  "reward_change_authorized": false,
+  "old_attempts_remain_terminal": true,
+  "reuse_completed_qualification_without_rescoring": true,
+  "user_approval": {
+    "user": "Zhaowei",
+    "verbatim": "推进",
+    "recorded_at_utc": "2026-10-02T05:45:37.102388+00:00",
+    "reply_to_numeric_package": true,
+    "context": "Direct reply to the immediately preceding completed-preparation handoff specifying522episodes,27216environment calls,1920optimizer calls,10800seconds and one attempt. Interpreted as permission to proceed with that exact package, not a new or expanded scope."
+  }
+}

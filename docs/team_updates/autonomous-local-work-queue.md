@@ -1,6 +1,29 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete time-baseline entrypoint frozen; numeric approval pending
+## Live checkpoint: numeric package approved; exclusive single launch next
+
+2026-10-02T05:45Z. Entry HEAD8edc507ed9e0811dc02f41e90d46b824e97b8ddd clean.
+Zhaowei replied "推进" directly to the complete numeric handoff. Scope-specific
+authorization is now recorded in specs/2026-10-02-time-baseline-comparison/
+authorization.json, alongside the locked-plan amendment. Bound implementation
+1baa0a958a5656e38ab823304e4ff5cba2c5386d and packet SHA256
+5279726f8fc069905ec1097fc961c13136c25241136a99383edae78bcd3c6300 unchanged.
+
+Fresh source/input/runtime/520-file local seed bindings passed; no new result
+root exists. Host PID/PPID/command scan found only inspection commands, no matching
+scientific process. Reuse124passing tests and full compileall because no source,
+runtime or dependency changed; no extra toy fit or scientific gate.
+
+Next: commit this authorization and change control, verify clean admitted state,
+then launch exactly one complete comparison using run_time_baseline_comparison.
+Caps:522episodes,27216environment calls,1920optimizer calls,10800seconds plus
+the fixed nontransferable phase/owner sublimits. Preflight/clone/preservation count.
+No routine per-phase approval; no automatic retry, reward change or old run reuse.
+Actual PID/claim/status and boundary growth must establish running, not the schedule.
+gcn-rl is still PAUSED until launch state is recorded and its monitoring prompt
+is updated. No new scientific completion or performance is claimed here.
+
+## Previous checkpoint: complete time-baseline entrypoint frozen; numeric approval pending
 
 2026-10-02T05:35Z. Entry HEAD e9934ae; implementation committed as
 1baa0a958a5656e38ab823304e4ff5cba2c5386d. The finite engineering chain is complete.

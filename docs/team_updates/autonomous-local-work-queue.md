@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: owner-timeout, saved work verified and archived
+## Live checkpoint: approved continuation to actual actor training
+
+2026-10-02T16:21Z. User replied `我觉得你要至少进入训练阶段吧` to the exact
+remaining-work package. Contextual authorization recorded literally in
+specs/2026-10-02-paired-cohort-improvement/recovery1/approval-intent.json.
+No scientific process is running; read-only PID/PPID/command scan found no
+paired-cohort runner. No new update or evaluation has yet occurred.
+
+Coordinator delivered saved-context/completed-branch import and remaining
+collector/campaign; Banach delivered disjoint execution/admission/CLI and
+tests. Existing efficiency advice reused. All34targeted recovery tests covered:
+33passed in the integrated run, one zero-count fixture assertion corrected and
+passed individually. Wholecompileall passed. The real saved schedule, native
+admission and complete fake pipeline reached all768counter-only updates and
+216fake evaluations. No real environment/optimizer call was made. Next:
+commit/freeze and launch the one approved25655call/768actor/0critic/18000second
+continuation. These are implementation checks, not performance gains.
+Reuse all117finished branches and36states; no repeated initializer/preflight
+or reference trajectory. Full original402branch labels precede actor fitting.
+No scope change or additional gate. Original attempt remains terminal; its
+one interrupted chargedcall is retained. Performance still untested.
+
+## Previous terminal checkpoint: owner-timeout, saved work verified and archived
 
 2026-10-02T14:46Z (10:46EDT). The single attempt at execution3da1a09 ended
 exit1; supervisor reported wall_clock_deadline at paired_branches/block60,

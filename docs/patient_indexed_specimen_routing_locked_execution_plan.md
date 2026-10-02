@@ -3019,3 +3019,28 @@ Prepare only a separate remaining-work decision that reuses finished evidence,
 with scientifically unchanged settings and realistic time allowances. Do not
 repeat completed data collection or manufacture a fresh qualification gate.
 The same monitor isPAUSED and visible after terminal preservation.
+
+#### Paired-cohort remaining-work continuation authorized in context
+
+2026-10-02T16:05Z: after the complete remaining-work numerical proposal,
+Zhaowei replied `我觉得你要至少进入训练阶段吧`. Record this literal and
+context in recovery1/approval-intent.json. This authorizes the proposed single
+continuation, not changing the question or treating unused failed-run budget
+as authority. Reuse36saved contexts/117completed branches and all previous
+preflights/reference cohorts. Complete285remaining branches/12047calls,
+6original128step actor fits/768updates/0critic and216evaluations/13608calls.
+New cap25655environment calls/18000seconds; branchowners600/2400/2400seconds,
+evaluationowners360seconds. All phase caps remain as in recovery-proposal.json.
+Recompute only the one interrupted27step branch from its original savedstate
+and seed; retain its old1chargedcall. Cumulative calls may total31901.
+
+The original draft and failed attempt remain immutable. Add a versioned
+saved-data import/remaining-work runner, test true persisted schemas with
+fake backends and zero actual updates, then commit source/runtime/input locks
+and a separate effective authorization before execution. No new qualification
+or preflight, no repeated reference/completed branch trajectory. Training must
+use the full original label matrix, not a selectively shortened subset.
+Routine phases then continue without another approval. No automatic retry,
+reward/seed/sample/model/support changes, holdout/StageE or external action.
+This is simulator-assisted policy improvement, not a guaranteed RL benefit or
+an online-deployment/model-free attribution claim. Howardapproval not claimed.

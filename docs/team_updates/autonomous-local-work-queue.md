@@ -1,6 +1,23 @@
 # Autonomous local research queue
 
-## Live checkpoint: approved continuation to actual actor training
+## Live checkpoint: remaining-work recovery running, no actor update yet
+
+2026-10-02T16:24Z. Single recovery launched at execution
+e75e3425b56b155c6e2c629de162b131c7c8b30d; implementationecf8b03.
+Packet1fed8d54cbd4e912a9b8ba5f2b4081b847bbe176dfcc9382fa0c850502adfa38.
+Supervisor99624/PPID1 and child99636/PPID99624 have matching native commands.
+Binding/import completed and the live ledger entered paired_branches/block60
+with104new environment calls,0optimizer. stderr0, nofailure records.
+All36contexts/117complete branches reused; no new preflight/reference cohort.
+
+Next: existing process completes285remaining branches, then6original actor
+fits/768updates,12seals and216evaluations automatically. Do not launch another
+copy or reinterpret an eventual failure as permission to retry. The same
+gcn-rl monitor is ACTIVE, tool-confirmed, at30minute cadence and explicitly
+bound to this recovery root/commit/packet. Actual process+boundary evidence,
+not the schedule, establishes running. No training/performance claim yet.
+
+## Previous approved integration checkpoint
 
 2026-10-02T16:21Z. User replied `我觉得你要至少进入训练阶段吧` to the exact
 remaining-work package. Contextual authorization recorded literally in

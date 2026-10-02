@@ -2,6 +2,12 @@
 
 ## Live checkpoint: remaining-work recovery running, no actor update yet
 
+Latest observation2026-10-02T16:50:45Z: both original PIDs still live with
+matching parent/commands. Blocks60/61 branch owners completed. Block62 now
+active;156/285new branches completed (11+140+5),6651new environment calls,
+0optimizer,stderr0,no failure. Full labels are the only remaining prerequisite
+to the already-authorized fixed fits; no new audit/qualification is scheduled.
+
 2026-10-02T16:24Z. Single recovery launched at execution
 e75e3425b56b155c6e2c629de162b131c7c8b30d; implementationecf8b03.
 Packet1fed8d54cbd4e912a9b8ba5f2b4081b847bbe176dfcc9382fa0c850502adfa38.

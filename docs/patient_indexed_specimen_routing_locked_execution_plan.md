@@ -2952,3 +2952,27 @@ and accurate authorization before scientific execution. No changes to the
 scientific scope, old locked code/evidence, reward, scenario, support, holdout,
 StageE, sharing or remote permissions. Existing efficiency advice reused; the
 finite advancement assignments closed. This is engineering progress only.
+
+#### Paired-cohort native source delivered; pending scope approval
+
+2026-10-02T13:50Z: the additive reference-context backend, saved-model binding,
+whole serial campaign, independent six-role raw comparison and exclusive
+admission/watchdog entry are implemented. Integrated145artificial tests passed;
+the entry's final32tests and wholecompileall passed. The actual saved metadata
+plus fake backends traversed the complete native phase and operation contract,
+including36contexts,12model seals and216fake evaluations. No scientific model
+payload load/forward, patient environment or real optimizer step occurred.
+
+This removes the remaining implementation blocker, not the authorization
+boundary. The same33318environment/768actor/0critic/14400second package is still
+awaiting its previously requested explicit approval. The original draft stays
+false and no frozen execution packet has been generated. After approval, commit
+the accurate intent/change control and source/runtime/input/seed locks before
+running the one complete attempt. No old budget or approval is reused. Existing
+reward/scenario/support, attribution limitations and all external-action/holdout/
+StageE boundaries remain unchanged. No further preparation-only fitting gate.
+
+The samegcn-rl automation was PAUSED and retained after its finite engineering
+chain; no duplicate schedule or scientific task was started. Banach's disjoint
+assignments are closed, prior efficiency advice reused. All prior failed and
+completed evidence remains untouched. Current handoff is the Live checkpoint.

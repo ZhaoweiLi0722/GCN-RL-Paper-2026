@@ -1,6 +1,68 @@
 # Substantive next step after the completed null
 
-2026-10-02T13:09Z. Preparation only, zero new scientific calls.
+2026-10-02T13:50Z. Native engineering complete; scientific execution unapproved.
+
+## Native end-to-end delivery
+
+The missing interfaces are now connected, without modifying historical locked
+implementations or weakening the old sample-only collector contract:
+
+- `paired_cohort_backend.py` and `paired_cohort_episode.py`: explicit fixed-R4
+  training contexts, snapshots after4/20/36, original float64 requests, full
+  cohort recording, counted63step clone preflight and exact numerical boundaries.
+  The completed reference world's owned simulator is recycled in place for
+  branch templates; no uncounted extra simulator clone/build is introduced.
+- `paired_cohort_binding.py`: once-only declared saved initializer/PPO loads,
+  existing qualification linkage, identical public contracts and lossless seeds.
+  No initializer retraining or repeat qualification is part of this package.
+- `paired_cohort_campaign.py`: serial binding/preflight/context/branch/actor/BC/
+  sealing/evaluation/raw-read/archive/closure phases; full owned state/RNG/ledger
+  boundaries. A terminated attempt cannot use restoration to refund budget.
+- `paired_cohort_comparison.py`: independent raw52+11step costs, final patient
+  outcomes, requests and continuous-resource reconciliation for all six roles;
+  paired block/world contrasts with three-block uncertainty explicitly limited.
+- `paired_cohort_execution.py` and its thin CLI: committed intent/protocol/source/
+  runtime/input/seed bindings, exclusive claim, before-operation admission,
+  per-owner exact spend and outer time enforcement. Completion follows successful
+  preservation; terminal failure records override an earlier apparent success.
+
+Integrated145zero-update tests passed in26.347s; final entry32tests and full
+repositorycompileall passed. The entire campaign ran with real persisted JSON
+metadata and fake scientific backends, including exact native admission caps:
+36contexts,216invented canonical branches,6invented fits,12seals,216evaluation
+slots,24030counter-only environment dispatches and768counter-only actor debits.
+Real patient constructors/steps and optimizer steps were forbidden in those
+fixtures. These counts do not describe a scientific experiment. Separate
+artificial session tests exercise actual63step recording/clone/context wiring.
+
+The real CLI --prepare read only the two pinned historical JSON packets. It
+reported6model input records,0new model loads,source_frozen=false and
+ready_to_launch=false. It did not freeze, fit, simulate, re-audit historical
+results or use evaluation data. No new scientific result exists.
+
+## Exact next action
+
+The source path is ready for the approval/freeze boundary. The already-asked
+33318environment/768actor/0critic/14400second single package still has no explicit
+approval reply. Do not reinterpret old approvals. Once approved, record the exact
+literal in the new approval intent and append change control; commit it and the
+implementation, generate/commit the frozen packet and authorization, then run
+the existing --launch entry once. Its counted preflight and all routine later
+phases belong to that same attempt, not separately re-approved jobs. A terminal
+failure preserves evidence and does not authorize repair/retry or budget reuse.
+
+The original draft staysfalse. Fresh-stream collision checking, runtime/input
+freeze and scientific preflight are intentionally not reported as completed.
+No additional fitting gate, toy training or historical audit is needed. The
+same-thread automation is PAUSED and retained while that one decision is pending.
+Banach's comparison/entry assignments are closed; prior efficiency advice reused.
+
+This remains extra-simulator-label policy improvement, not model-free PPO/DDPG
+superiority or deployment-online adaptation. Reward, scenarios, architecture,
+candidate support and actor information are unchanged. Positive, null and adverse
+cost/patient trade-offs will all be reported under the unchanged protocol.
+
+## Prior block integration delivery (2026-10-02T13:09Z)
 
 ## Current integrated components
 

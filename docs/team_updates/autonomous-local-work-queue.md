@@ -1,6 +1,59 @@
 # Autonomous local research queue
 
-## Live checkpoint: branch and actor jobs integrated, native campaign pending
+## Live checkpoint: native campaign delivered, one scope approval remains
+
+2026-10-02T13:50Z. Entry HEAD9f4c4d3749b9a84d0e6952d5a56743760c8dc9df.
+No related scientific process was present at entry or final read-only process
+check. No scientific checkpoint payload was loaded, no scientific forward,
+patient call or optimizer step occurred. Original proposal remainsfalse. The
+old comparison, failures and archives were not rerun or edited.
+
+Delivered the missing end-to-end implementation: explicit reference-only
+training context sessions with4/20/36snapshots, saved initializer/PPO binding,
+counted same-start original/clone preflight, serial branch/actor/BC jobs,
+12model seal barrier,216evaluation slots, independent six-controller raw cost
+and patient comparison, exclusive admission, phase/owner/global watchdog,
+non-refundable exact operation accounting and local archive closure. Completed
+status is issued only after archive success; a failure override is authoritative.
+Historical sample-only collectors were not weakened or relabeled.
+
+The complete fake campaign used the actual saved JSON metadata and the native
+admission/budget interfaces:36contexts,216fake deduplicated branches,6fake fit
+jobs,12model seals and216fake evaluations;24030authored environment dispatches
+and768counter-only actor debits, zero real optimizer steps. These are engineering
+fixture counts, not scientific trajectories or outcomes. The native CLI's
+read-only --prepare returned6declared model inputs,0model loads,source_frozen=false
+andready_to_launch=false. Integrated145tests passed in26.347s; the entry's final
+32focused tests and whole-repositorycompileall passed. No extra toy fitting or
+scientific acceptance screen was added.
+
+Question answered: the proposed comparison now has a complete runnable source
+path, rather than disconnected objectives or block helpers. The only remaining
+release actions are the already-requested numerical scope approval and its
+routine committed authorization/source/runtime/input/seed freeze. After that,
+run the one complete package including its counted preflight; no repeated
+per-phase user question. No new performance conclusion exists yet.
+
+Pending decision unchanged:12reference cohorts/36states,at most432conditional
+branches,3new policies+3BC fits at128actor steps each,216evaluations;at most
+33318environment calls/768actor/0critic/14400seconds,oneattempt,no automaticretry.
+No explicit reply to this exact package is present. Do not infer approval from
+older direction approvals or the consumed recovery2 authorization. Do not repeat
+the question or create another diagnostic campaign while awaiting the answer.
+
+Banach completed the disjoint comparison reader and entry/watchdog assignments
+and is closed; coordinator delivered collection/binding/campaign integration.
+Newton's existing efficiency advice was reused, not made a new gate. The same
+gcn-rl automation is PAUSED, tool-confirmed2026-10-02T13:50Z, preserving its name,
+prompt, cadence and thread. No other automation changed. Resume only for an
+explicit authorized next action, not to repeat waiting. Local-only boundaries,
+unchanged reward/scenario/support, closed StageE and holdout remain in force.
+
+Evidence:specs/2026-10-02-paired-cohort-improvement/integration-readout.md;
+src/rl/paired_cohort_{backend,binding,episode,campaign,comparison,execution}.py;
+experiments/scripts/run_paired_cohort_improvement.py and corresponding tests.
+
+## Previous block integration checkpoint
 
 2026-10-02T13:09Z. Entry HEAD5a42999. No matching research process was present
 at entry and at the final read-only process check; no new scientific model load/forward, patient environment call or

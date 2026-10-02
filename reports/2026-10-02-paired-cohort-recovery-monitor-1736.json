@@ -1,0 +1,81 @@
+{
+  "schema": "paired-cohort-recovery-monitor-v1",
+  "completed_evaluation_owners": [
+    "block60/bc_continue.json",
+    "block60/own_frozen.json",
+    "block60/r4.json",
+    "block60/paired_cost.json",
+    "block60/saved_cohort_ppo.json"
+  ],
+  "evaluation_cohorts": 60,
+  "failure_files": [],
+  "last_budget_entry": {
+    "clock": 963624.242716,
+    "event": "finish",
+    "phase_seconds": 562.8870599999791,
+    "previous": "bbcb70e330454ae712339acccb9bd563155ae6cdb2bc1f79be380a8481ee1613",
+    "seconds": 112.44276699994225,
+    "section": "evaluation/block60/r4",
+    "sequence": 16627,
+    "sha256": "1cef61d4243721e57fe9050dccd9dfd5da99abe18efacf29067fc375be9483af"
+  },
+  "log_stats": {
+    "admission.jsonl": {
+      "bytes": 6091064,
+      "mtime_utc": "2026-10-02T17:36:11Z"
+    },
+    "budget.jsonl": {
+      "bytes": 8717984,
+      "mtime_utc": "2026-10-02T17:36:13Z"
+    },
+    "stderr.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T16:22:58Z"
+    },
+    "stdout.log": {
+      "bytes": 0,
+      "mtime_utc": "2026-10-02T16:22:58Z"
+    }
+  },
+  "observed_at_utc": "2026-10-02T17:36:18Z",
+  "stderr_bytes": 0,
+  "terminal_present": false,
+  "totals": {
+    "environment": 15827,
+    "optimizer": 768
+  },
+  "execution_commit": "e75e3425b56b155c6e2c629de162b131c7c8b30d",
+  "observed_head": "af35fde098367c7abc1345684fdc289b62cc4cb0",
+  "packet_sha256": "1fed8d54cbd4e912a9b8ba5f2b4081b847bbe176dfcc9382fa0c850502adfa38",
+  "processes": [
+    {
+      "pid": 99624,
+      "ppid": 1,
+      "command": "Python -m experiments.scripts.run_paired_cohort_recovery --launch"
+    },
+    {
+      "pid": 99636,
+      "ppid": 99624,
+      "command": "Python -m experiments.scripts.run_paired_cohort_recovery --child"
+    }
+  ],
+  "process_commands_matched": true,
+  "duplicate_runner_observed": false,
+  "completed_new_branches": 285,
+  "completed_total_branches": 402,
+  "paired_fits": 3,
+  "bc_fits": 3,
+  "actor_updates": 768,
+  "critic_updates": 0,
+  "sealed_models": 12,
+  "training_evidence_reused": "reports/2026-10-02-paired-cohort-recovery-training-milestone.json",
+  "locked_src_tests_experiments_changed": false,
+  "full_comparison_complete": false,
+  "scientific_calls_by_monitor": 0,
+  "eta_remaining_minutes": [
+    30,
+    45
+  ],
+  "eta_includes_archive": true,
+  "permission": "Observe existing one-shot only; no relaunch, additional fit, parameter or reward change"
+}

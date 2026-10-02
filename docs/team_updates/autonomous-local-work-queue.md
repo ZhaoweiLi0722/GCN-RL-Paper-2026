@@ -2,6 +2,27 @@
 
 ## Live checkpoint: actual actor training complete, evaluation running
 
+2026-10-02T17:36:18Z. New fixed evaluation boundary:60/216complete,
+block60 own_frozen/paired_cost/BC/saved_PPO/R4 each12/12. Budget15827/25655
+environment calls;768/768actor updates,0critic,3paired+3BCfits,12seals.
+All285new/402total branches remain complete. Original99624/PPID1 and
+99636/PPID99624 have matching live native commands; no duplicate runner.
+Both phase logs remain0bytes; budget/admission records grew with new completed
+owners. No terminal, failure or overrun record. Source/tests/experiments are
+unchanged from executione75e342; protocol and approval-intent hashes match
+authorization. Reused the completed training receipt check, without repeating
+model loading, fitting, tests or historical audits. Snapshot:
+reports/2026-10-02-paired-cohort-recovery-monitor-1736.json.
+
+Next: existing serial evaluator completes the remaining156worlds, then raw
+comparison/archive/closure. Estimated30-45minutes remaining including archive,
+based on observed evaluation boundaries; not a deadline guarantee. No new
+approval needed for these fixed phases. Partial test metrics were not used
+to select or change anything. Performance benefit remains unestablished.
+Keep the samegcn-rl monitor ACTIVE; pause only after terminal handoff.
+
+### Completed Training Milestone
+
 2026-10-02T17:27:49Z. All6original fits completed:3paired-cost and3BC,
 128actual actor updates each,768total/0critic. Twelve models sealed before
 test. All6saved policy payloads differ from their own initializer; all768

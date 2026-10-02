@@ -2,6 +2,33 @@
 
 ## Live checkpoint: conservative two-round experiment launched and progressing
 
+2026-10-02T22:18:06Z: second-round block60 paired and BC fits complete.
+Paired4/6 and BC4/6 round-fits,512/768 actor updates,0critic. The two new
+checkpoint hashes and128new sequential finite receipts match; first-round
+checks reused. Current phase branches/round1/block61. Preflight3/3,
+collection10/12cohorts and30/36states;589complete branches (404first round,
+136second-round block60,49block61; cap864,final alias-reduced count unknown).
+Final model seals0/9,evaluation0/180,environment26203/49626. The boundary
+models field is not a seal count; no model-seals file exists yet.
+
+Original supervisor12670/PPID1 and child12683/PPID12670 remain live with
+matching full commands; newly completed training and collection boundaries
+establish progress. No duplicate,terminal/failure/overrun or stderr evidence.
+Current scientific source unchanged; the21:43 check of482current locks is
+reused. No scientific model load/forward/update/trajectory by this monitor.
+One read-only monitor count-parsing error was corrected in memory; it did
+not affect the scientific process, files, or consumed attempt.
+
+Evidence:reports/2026-10-02-conservative-cohort-monitor-2218.json.
+Conditional ETA1.5-3hours remaining from6572.14seconds for540branches in
+four completed owners; evaluation/archive timing remains uncertain. No
+performance conclusion is available yet. Next: existing process completes
+second-round blocks61/62, then seals9models and runs180evaluation cohorts.
+All remaining routine phases are authorized; monitor stays ACTIVE. No new
+approval, audit gate, retry or parameter change is needed or permitted.
+
+### Previous round milestone
+
 2026-10-02T21:43:35Z: first round complete across all3blocks. Paired3/6and
 BC3/6round-fits,384/768actor updates,0critic. Newly saved block62 checkpoint
 hashes and128new finite sequential receipts verified; earlier checks reused.

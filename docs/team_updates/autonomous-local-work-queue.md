@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: one-shot time-baseline comparison prepared; integration next
+## Live checkpoint: target and collection integration complete; campaign wiring next
+
+2026-10-02T05:05Z. Entry HEAD42997b35e2d49ff0f933a7f40621914d2a216753.
+The user asked to start now after requesting automatic updates. Authorized
+engineering proceeded immediately; no new numerical execution answer is assumed.
+No new scientific model loads/forwards,patient steps,optimizer calls or result
+root. Host process inspection found no matching research process this turn.
+
+Usable new modules:time_baseline_ppo,time_baseline_collection,time_baseline_plan
+andtime_baseline_sequence under src/rl. New target receipts bind raw rewards,
+original critic returns,ordered independent training episodes and behavior.
+Both original-V and LOEO methods now collect,update and fully restore on fake
+episodes. Original-method losses/counters match the historical kernel. Separate
+actor/critic failures retain debits and reject retry; old source stays intact.
+The unchanged proposal maps to33serial sections and12learned model seals before
+test access. Plan streams pair arms without sharing preflight sampling state;
+internal uniqueness is not a historical freshness claim.
+
+57focused/regression tests passed (53in2.792s plus4in0.078s);full compileall passed.
+All optimizer calls were forbidden or zero-moment metadata mocks;no parameters
+were fitted. These checks remove target/collector/ordering implementation
+blockers,not demonstrate RL benefit. Canonical integration readout:
+specs/2026-10-02-time-baseline-comparison/integration-readout.md.
+
+Next concrete authorized work:wire the real six-controller campaign/factory and
+versioned independent raw verifier,then reuse exclusive claim/watchdog/recovery/
+archive infrastructure for one mock end-to-end path and source/runtime/input
+freeze with scoped seed-conflict check. Do not repeat these completed tests or
+old-history audits unless dependencies change. No additional fit-only gate.
+Source integration/freeze and numeric execution approval remain incomplete.
+The existing522episode/27216env/1920optimizer/10800second question remains the
+only scientific decision;do not ask a duplicate during engineering.
+
+Helmholtz completed the disjoint plan/stream adapter and19tests and was closed.
+Coordinator completed target/collector/sequence integration. Reuse Carson's
+completed efficiency advice;no new reviewer chain. gcn-rl read back ACTIVE at
+30-minute cadence,same thread;this is not a running experiment. One unhelpful
+comparison closes the baseline route and moves to reward-design preparation,
+not unapproved reward training. No remote/Dropbox/holdout/Stage E changes.
+
+## Previous checkpoint: one-shot time-baseline comparison prepared; integration next
 
 2026-10-02T04:49Z. Entry HEAD32b4f7159865235912a908a425339b9fc6774362.
 Zhaowei approved the direction and requested a fast reward pivot if it fails.

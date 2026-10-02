@@ -1,0 +1,26 @@
+{
+  "format": "saved-terminal-obligation-scope-v1",
+  "direction_reply": "继续",
+  "interpretation": "Continue saved-data diagnosis and prospective objective design; not a numeric reward or simulation authorization",
+  "result_root": "results/dynamic_candidate_time_baseline_20261002",
+  "closure_index": "reports/2026-10-02-time-baseline-comparison/closure-index.json",
+  "blocks": [60, 61, 62],
+  "roles": ["own_frozen", "current_ppo", "time_baseline_ppo", "bc_continue", "r4", "full_mdl2"],
+  "worlds": 12,
+  "horizon": 52,
+  "read_only_inputs": ["payload/episodes/evaluation/*/*/*/final_state.json", "payload/episodes/evaluation/*/*/*/outcome.json", "launcher/archive-receipt.json", "payload/independent-verification.json"],
+  "outputs": "reports/2026-10-02-terminal-obligation/diagnostic.json",
+  "questions": [
+    "How much terminal burden is unavoidable final-step enrollment versus older active patients?",
+    "Which active stages account for the inherited difference versus MDL-2?",
+    "Are patient enrollment attributes aligned before interpreting identity-level transitions?",
+    "Could any common terminal-state valuation retrospectively create an RL increment when all final states are identical?"
+  ],
+  "analysis": "Exact cohort/age/stage counts, conservation and descriptive paired differences; no fitted risk model, coefficient selection, sensitivity sweep or new bootstrap",
+  "new_model_loads": 0,
+  "new_model_forwards": 0,
+  "new_environment_calls": 0,
+  "new_optimizer_calls": 0,
+  "old_evidence_modified": false,
+  "scientific_execution_authorized": false
+}

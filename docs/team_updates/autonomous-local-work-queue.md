@@ -1,6 +1,39 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC running; first real value update and saved model verified
+## Live checkpoint: value-MPC first block fully trained and sealed; block1 running
+
+2026-10-03T23:44Z. Same execution654ff0f5/packet50fab0f5, supervisor55669/PPID1
+andchild55682/PPID55669 match livefullcommands. No duplicate related Python.
+Newfit/cohort/8-step boundaries since launch verify progress, not the scheduler.
+Snapshot: initial33/72, continuation24/72, total57/144training worlds;
+1824/4608real value updates, actor0; initial/final seals each1/3;
+evaluation0/144, native3656/18432. Currentinitial block1condition0replicate3,
+seed62901003,epoch7. Block0initial andfinal models have768/1536updates and their
+saved bytes match metadata hashes. No test worlds have been opened.
+
+Periodic current-scope checks: packet/authorization hashes,542frozen sourcefiles
+and locked proposal/protocol/inheritedsystem/intent match; execution commit is
+an ancestor of currentHEAD012bfea. Global/phase counters remain insidecaps.
+Checked1792persisted loss/gradient receipts finite; all57completedfit boundaries
+have state/target/update/summary files. Rawpayload about44.8MB at inspection.
+Stderr/stdout/detachedlog0bytes; nofailure/overrun/terminalmarker. No new model
+loads/forwards, environment calls, fits, tests or archival work by this monitor.
+
+Shared-clock elapsed1953s; recent10complete worldmean34.14s. Approximately
+87training plus108planned evaluation worlds remain, along with36fixed worlds
+andreadout/archive: allow about2h more at the current rate, not a guarantee.
+Use src.utils.research_clock.shared_monotonic for cross-process elapsed time;
+this host Python's plain time.monotonic is process-relative and is not comparable
+to the shared launcher start. This monitoring calculation does not affect the
+scientific budget or supervisor, which already use the shared clock.
+
+Next: observe the existing serial task through remaining models andfrozen
+comparison; no duplicate launch/retry, parameter changes or early test-based
+adaptation. Samegcn-rl remainsACTIVE. Training and sealing are established;
+performance gain is still unassessed. On terminal completion/failure perform
+the already authorized saved-data handoff and thenPAUSED. Allotherlocks unchanged.
+
+## Previous checkpoint: value-MPC running; first real value update and saved model verified
 
 2026-10-03T23:13Z. Single launch from execution654ff0f5a4f07116f6fe1ba3fdef22e17aa907c4;
 frozenimplementation0fa338b6b1eced4468db3279029a0c7219f1f694,scientificsourceae5fe4b.

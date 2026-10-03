@@ -1,6 +1,36 @@
 # Autonomous local research queue
 
-## Live checkpoint: precision correction delivered; freeze and launch once
+## Live checkpoint: capacity recovery1 running; first full trajectory saved
+
+2026-10-03T03:42:33Z. Implementation56a85d2, execution18ee090decf3c1473097464737b698a0241f5297.
+Packet1e6a59ff5f83d2c11e61a5a047aff3fff0d376b3b9e72402739841a2a379186c.
+The separately authorized one-shot is actually running in
+results/dynamic_capacity_adaptation_20261003_recovery1. Supervisor29491/PPID1
+and child29504/PPID29491 match the --launch/--child full commands and claims.
+Progress advanced from8native steps to88 with a complete first trajectory and
+the next world at recorded epoch23. This is live execution, not scheduler status.
+
+At the sample: teacher1/36 complete; offline0/36; final evaluation0/216;
+actor0/3936,critic0/3936; offline seals0/3;88/18432native steps,92/19008native
+operations; planner27648/1327104; filter8800/1843200. No terminal/failure record,
+stderr0bytes. Model fitting has NOT begun: initial teacher data collection is
+part of the unchanged package. No performance claim or early-test inspection.
+
+Same gcn-rl automation tool-confirmedACTIVE,30minute interval, now pinned to
+this recovery entry and read-only monitoring/terminal handoff. Independent agent
+closed. Preparation took roughly13minutes from the entry reads to real launch;
+no repeated historical audit. First fixed world is the counted real preflight,
+not a separate run. Original failure/source/locks remain unchanged.
+
+Next already-authorized actions run serially in the existing child: finish
+teacher data, BC/critic warmup, offline DDPG, seal all3models, then216evaluations,
+raw comparison and archive. Do not launch anything else, modify science, change
+budgets or retry. Monitor new saved boundaries only. First observed rate is too
+early for a reliable completion ETA;5400seconds remains the hard overall cap.
+Actual optimizer receipts and checkpoints will establish the training milestone;
+only full paired cost/patient results can establish improvement.
+
+## Previous checkpoint: precision correction delivered; freeze and launch once
 
 2026-10-03 UTC. Entry53c0448, clean matching worktree; read-only process check
 found no remaining capacity runner. Current user `继续推进` follows the complete

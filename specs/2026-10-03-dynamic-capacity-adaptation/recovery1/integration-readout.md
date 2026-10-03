@@ -43,3 +43,14 @@ then launch once into the new recovery1 result root. The original draft remains
 unauthorized and unchanged; do not launch the old entry. Preserve original
 budgets/seeds/design and no-second-retry rule. No further toy fit or historical
 audit precedes this comparison. Three offline seals must precede all evaluation.
+
+## Executed Admission
+
+Implementation56a85d2 frozen under packet
+1e6a59ff5f83d2c11e61a5a047aff3fff0d376b3b9e72402739841a2a379186c;
+effective locks committed18ee090decf3c1473097464737b698a0241f5297.
+Supervisor29491/PPID1 and child29504/PPID29491 were independently observed
+with matching full commands. At03:42:33UTC,88native steps and one complete
+teacher trajectory were saved; optimizer updates and evaluation remain zero.
+The original failing boundary was crossed, but this is not a performance result.
+Same30minute monitor is tool-confirmedACTIVE for this single running attempt.

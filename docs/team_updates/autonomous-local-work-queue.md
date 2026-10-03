@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: recovery2 running; second trained seal completed
+## Live checkpoint: recovery2 complete; no reliable online benefit; paused
+
+2026-10-03T09:39Z. Entrybabbcb7, same branch/worktree. Terminal exit0 after
+2213.987seconds; supervisor35197/child35211 exited and no related runner remains.
+Teacher36/36,offline36/36,seals3/3,eval216/216,288complete trajectories.
+Newactor3104/critic3104 plus reused832each =3936each;1440evaluation online
+DDPG pairs actually ran. Newnative16145/16145 and all other counters exactly
+match the frozen packet. Source/input/packet hashes match; no failure markers,
+stderr0bytes. This is a complete performance comparison, not an engineering abort.
+
+Locked screen false: persistent-change mean paired cost savings0.341%vs frozen
+history but4.5extra lost patients/world;0.066%vs matched-exploration frozen but
+2.75extra lost. Block directions differ and both descriptive intervals cross0;
+both primary contrasts fail all3criteria. Online is4.934%more costly with16.667
+extra lost versusID-MPC,4.623%more costly with21.75extra lost versusfixed. These
+are synthetic modeled results; no clinical or independent-confirmation claim.
+
+Independent raw reader:216gzip/13824rows,388mean numbers and504component totals
+agree; all patient counts reconcile. Fixed-allocation contrast absent from the
+original comparison table was supplied from raw records without altering the
+locked primary screen. Archive951members and source hashes match;190323059bytes,
+SHA25668ff62373ccf58d7f2206ab445e2ba5799e83197cf18044bafd0bac0b1471a9f.
+No archive rebuilt, old history re-audited or scientific execution added.
+
+Readout: specs/2026-10-03-dynamic-capacity-adaptation/recovery2/terminal-readout.md.
+Reports: reports/dynamic_capacity_recovery2_20261003_{independent_raw_check,
+terminal_evidence}.json. Hypatia completed the finite independent raw task and
+closed; efficiency advice reused. No source code edits; reuse16tests/compileall.
+Samegcn-rlmonitor tool-confirmedPAUSED. No active experiment or pending ETA.
+
+Supported next direction: stop extending this DDPG package; consider a
+patient-outcome-constrained objective and controller improvement against
+ID-MPC/fixed baselines. Their gap rebuts an unsupported blanket "no headroom"
+explanation, but does not guarantee RL can exploit it. Lower purchase/shortage
+costs offset higher loss/expiry costs; this is arithmetic trade-off, not proof
+reward weights or accounting are wrong. One next decision is whether to prepare
+that new constrained-comparison package. New science still needs explicit scope
+and numerical approval. Preserve mixed initializer, missingE1, partial secondary
+hours144/216, old failures, StageEclosed/holdout/local-only restrictions.
+
+## Previous checkpoint: recovery2 running; second trained seal completed
 
 2026-10-03T09:01:10Z. Execution9690b4d8fb3d0e3f881698b9d88250e0aa8e9e1e,
 implementation674bf60, packetd09725aba00cbc11c23d4f1883e0d66c150f7bfeb73acc7eb6b8b4e0f42f7240.

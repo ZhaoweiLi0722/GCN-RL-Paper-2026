@@ -1,5 +1,13 @@
 # Resource Repair And Approved Remaining-Only Integration
 
+## Terminal Result
+
+The run completed exit0 in36.90minutes, with3seals and216/216evaluations.
+See terminal-readout.md for the full cost/patient result and independent raw
+verification. Both frozen primary contrasts failed the prespecified online
+benefit screen. No further execution is authorized; the same monitor is paused.
+All earlier checkpoints below are retained as dated implementation history.
+
 ## Execution Milestone
 
 2026-10-03T09:01:10Z. Implementation674bf60, execution9690b4d,

@@ -1,6 +1,24 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC entry and manuscript ready; numerical approval pending
+## Live checkpoint: value-MPC complete package approved; freezing then direct launch
+
+2026-10-03T23:11Z. Exact user reply: `批准这个完整实验包`. The existing complete
+288-world/4608-value-update/4h/4GiB scope is approved, with all subsidiary caps.
+Original protocol/config hashes are unchanged. Implementationae5fe4b remains
+clean;20zero-update tests andcompileall reused. No related scientific Python
+process exists; no run has yet started. No duplicate launch or extra smoke.
+
+Next authorized steps: commit exact approval/change control, freeze and commit
+source/runtime/input/prospective-stream locks, directly launch the single full
+initialization/continuation/144frozen-evaluation/readout/archive sequence.
+No further stagewise decision required. Update samegcn-rl monitor only after
+verifying actualclaim/PID/command and a new scientific boundary. Expected2-4h,
+hardcap4h includingIO. Report real updates/checkpoints separately from benefit.
+Finite preparation agents already delivered and closed; reuse advice/tests,
+do not add a new audit gate. Old attempts, E1absence, StageE/holdout and all
+external-action restrictions remain unchanged; no Howard approval is claimed.
+
+## Previous checkpoint: value-MPC entry and manuscript ready; numerical approval pending
 
 2026-10-03T20:49Z. Zhaowei approved the GCN TD-value plus MPC direction and
 asked for rapid training/comparison and manuscript revision. One complete

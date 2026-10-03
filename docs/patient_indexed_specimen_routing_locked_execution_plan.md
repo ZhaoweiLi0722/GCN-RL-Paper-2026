@@ -3443,3 +3443,24 @@ commit source/runtime/input/seed locks, then execute the single whole package
 directly without a second launch question. Until then the same automation remains
 PAUSED. Failure consumes the attempt; no silent retry, reward/model/scenario
 search, extra epochs, holdout, StageE reopening, remote actions or Dropbox.
+
+#### GCN value-MPC complete package explicitly approved
+
+2026-10-03T23:11Z. Zhaowei replied `批准这个完整实验包` to the exact submitted
+288-world/4608-value-update/14400-second/4GiB comparison. This literal is recorded
+in specs/2026-10-03-value-augmented-mpc/approval-intent.json. Proposal SHA256
+5e968c0b011860f09ef92a2105021c1ded64724e8c76f4b512bbce5671667c9b and protocol
+b9c0c235434a8a4d6495ec4826f4bca83982dc9cea014f5d5703924c7d97f630 stay unchanged.
+The original config remains false; derive a separately committed effective
+authorization with exact source/runtime/input/seed locks before one launch.
+
+Implementation ae5fe4b and its20zero-update tests/compileall are unchanged and
+reused. No extra preflight world or fitting screen. All3initial and3final seals
+precede144test evaluations; zero evaluation optimizer calls. Complete the
+approved serial initialization, continuation, raw comparison and archive without
+another stage or launch question. Keep every global/phase/owner/query/forward/
+storage cap and all negative or trade-off outcomes. A terminal failure consumes
+the single attempt; preserve evidence, no automatic repair/retry or expansion.
+This is not Howard approval, deployed online adaptation or isolated GCN evidence.
+Old experiments stay closed; no reward/scenario/model search, external action,
+holdout or StageE reopening is authorized.

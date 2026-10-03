@@ -1,5 +1,19 @@
 # Fixed-Budget Allocation: Integrated Entry Ready
 
+## Execution Update
+
+2026-10-03T12:50Z. Zhaowei explicitly replied `批准` to the complete package.
+Approvalintent andchangecontrol committed, then packet174c1d00adaecdad79f4aac43b0aef3b7f69768fd5fb3e005a856ec4766d75d1
+frozen from199da3d andexecuted once from28e8987. Originalscientificsourcedee08da
+unchanged;23tests/compileall reused.531source/1158seedmetadata locks andprospective
+collisioncheckpassed. Supervisor44564/PPID1,child44576/PPID44564 verified against
+claims/fullcommands,newtrajectory/update/model boundaries. Block0trainedfinal
+savedafter576actor/1664critic includingwarmup; block1inprogress. Noeval opened,
+stderr0,no failure. Samegcn-rlmonitorACTIVE; no scientificbenefit claimed yet.
+The preparation-only record below is historical, not currentauthorization.
+
+## Preparation Record
+
 2026-10-03T12:34Z. Proposal commit67fea31; same persistent worktree and branch.
 The complete180-world/6720-optimizer/5400-second package has been asked once.
 No exact execution approval has arrived as of this checkpoint. Preparation is

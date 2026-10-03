@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: fixed-budget complete package approved; freeze then direct single launch
+## Live checkpoint: fixed-budget experiment running; first real trained model saved
+
+2026-10-03T12:50Z. Single launch completed from execution28e8987db9e07a2b3a2fc3d4b2d762ef9bca0e79;
+scientificsourcedee08da,frozenimplementation199da3de0bb63be50daa4a5ff8e937d4555af077.
+Packet174c1d00adaecdad79f4aac43b0aef3b7f69768fd5fb3e005a856ec4766d75d1;
+531sourcefiles and1158seedmetadatafiles locked, streamconflictauditpassed.
+Runtime/config/inputlocks committed before launch; no additional smoke or fits.
+
+Supervisor44564/PPID1 andchild44576/PPID44564 match actualclaims/fullcommands.
+New trajectory/warmup/fit/model boundaries demonstrate realrunning. At12:50Z,
+24referenceworlds and12learnedworlds completed; block0finalmodel saved after
+576actor/1664critic updates including512warmupcritic. Block1warmup is inprogress.
+Current global receipt:576actor,2048critic,12dual,2304native,1initial+1finalseal.
+No testworlds opened; all3finalseals remain required. Stderr0bytes,nofailuremarker.
+
+Samegcn-rlmonitor updatedACTIVE for exactly thispacket/PIDs,toolconfirmed.
+It only observes currentrun andfinishes savedrawanalysis/closure,no launch/retry.
+Next: finish3fits,108greedyfrozen evaluations andoriginalcost/patientcomparison/
+archive automatically insideapprovedcaps. Firstmodel istraining,not a benefit.
+Report allconditions/blocks andfixed/ID-MPC; fixed8hours isnot safety assurance.
+No newscientificapproval neededwithinthisattempt; alloldattempts remainclosed.
+
+## Previous checkpoint: fixed-budget complete package approved; freeze then direct single launch
 
 2026-10-03T12:48Z. Exact reply `批准` after the complete180-world/6720-optimizer/
 5400-second package. Authority recorded in fixed-budget-allocation/approval-intent.

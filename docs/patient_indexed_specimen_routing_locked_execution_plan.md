@@ -3345,3 +3345,31 @@ with all declared subsidiary caps. No redundant launch question or stagewise
 approval. Negative results and trade-offs must be retained. A terminal failure
 consumes the attempt; no repair-and-retry authority, automatic follow-on, hidden
 budget change, external action, Howard approval, holdout or StageE reopening.
+
+#### Fixed-budget allocation proposal and integrated preparation
+
+2026-10-03T12:34Z. The completed patient-constrained study has no useful training
+signal and remains closed. Two constrained blocks under-allocated total flexible
+labor; this is an observed failure mode, not proof of its cause. Zhaowei's
+`继续推进` authorizes preparing a bounded redistribution direction. The complete
+new numerical execution question was asked once and remains unanswered.
+
+Commit67fea31 contains specs/2026-10-03-fixed-budget-allocation/protocol.md
+(SHAe39083319435793d278aea5a6c6d6de8a15132b9e1496d4f6323849019e15c03)
+andexperiments/configs/fixed_budget_capacity_20261003.json
+(SHA2d0f56ee76905573030479e887b54b97263d88f567b017a193c622ba106cb5a5).
+This proposes one fresh constrained learner/block, total8hours allocated by
+centered-tanh logits withsitebounds0.5..3.5,3blocks,180worlds including108frozen
+evaluations,11520native steps,6720optimizer,5400seconds andallnamed subsidiary
+caps. No reward/physical-system changes, historical model reuse, new scenarios,
+or guarantee of patient safety. ID-MPC retains its original decisions; it is not
+forced to consume8hours. New stream manifest requires conflict checking atfreeze.
+
+Additive actor/learner/runner/reader/budget/binding are ready;23zero-update tests
+andwhole-repositorycompileall passed, no actual scientific calls. On exact
+approval recordtheliteralreply, commit source/runtime/input/seed locks and
+execute the whole single package directly, without another launch question.
+No authority exists yet to loadscientificmodels, simulate, fit or opennewtests.
+Prepare-and-execute preference does not silently approve this unasked-newbudget.
+Old attempts/evidence, StageEclosure, holdout andexternal-action prohibitions
+remain unchanged. No Howard approval is represented.

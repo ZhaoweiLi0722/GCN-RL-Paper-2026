@@ -1,6 +1,40 @@
 # Autonomous local research queue
 
-## Live checkpoint: patient-constrained comparison complete; no useful RL training gain
+## Live checkpoint: fixed-budget allocation entry ready; complete package approval pending
+
+2026-10-03T12:34Z. Same persistent worktree/branch; proposalcommit67fea31.
+Zhaowei's `继续推进` authorizes proceeding with the proposed fixed-resource
+direction. One complete180-world/6720-optimizer/5400-second execution question
+has now been asked; no later exact approval received at this checkpoint.
+Prepare-and-execute remains the default once this complete package is approved:
+do not ask another launch question or invent intermediate diagnostic studies.
+
+Delivered new versioned actor/learner/resources/runner/analysis/execution and thin
+entry. The map holds control-epoch total8hours,sitebounds0.5..3.5; logit-noise
+before mapping, float64 native requests, distinct complete snapshot semantics.
+One constrained learner/block plusfixed andcorrectedMPC, three final seals before
+tests, alloriginalcosts/patientconstraints retained. The action family prevents
+total-resource withdrawal, NOT patient harm or poor allocation. No performance
+claim until complete raw comparison; prior negative result remains unchanged.
+
+23zero-update tests passed and whole-repositorycompileall passed. Full actual
+entry withfake backends accounts180worlds/6720optimizerdebits/11520native/
+21120forwards/6seals/39restores and independent raw readout; those are artificial
+accounting receipts, not real training.16384artificial allocation vectors satisfy
+strictnativebudget. Hypatia's disjoint model/learner assignment completed and
+closed; efficiency advice reused, no new audit gate. Readout at
+specs/2026-10-03-fixed-budget-allocation/integration-readout.md.
+
+No research runner is present (full-command process inspection12:34Z). No new
+scientific loads/forwards/optimizer/environment calls; no run directory or
+frozen execution packet. Samegcn-rlautomation remainsPAUSED, current TOML checked.
+Necessary implementation is ready; only remaining decision is the already asked
+complete numerical scope. On approval: recordexactreply/changecontrol, commit
+source/runtime/input/derived-stream locks, directsinglelaunch, finish training/
+108frozen evaluations/readout/archive. Estimate30-45min runtime,90min hardcap.
+No oldattemptretry, rewardsearch, externalactions, holdout or StageEreopening.
+
+## Previous checkpoint: patient-constrained comparison complete; no useful RL training gain
 
 2026-10-03T12:03Z. Same worktree/branch. Approved preparation and execution ran
 through without another launch question. Executionc77bd4e,implementation0ca0502,

@@ -1,6 +1,17 @@
 # Autonomous local research queue
 
-## Live checkpoint: fixed-budget allocation entry ready; complete package approval pending
+## Live checkpoint: fixed-budget complete package approved; freeze then direct single launch
+
+2026-10-03T12:48Z. Exact reply `批准` after the complete180-world/6720-optimizer/
+5400-second package. Authority recorded in fixed-budget-allocation/approval-intent.
+Implementationdee08da and23zero-update tests/compileall are unchanged and reused.
+No duplicate research runner observed by full-command process inspection.
+Next: commit authority/changecontrol, freeze source/runtime/input/derived-stream
+locks, commit effective packet and directly launchonce. No additional user
+decision or diagnostic screen needed inside this package. Scope/limits unchanged;
+results not yet available. Existing monitor remainsPAUSED until actual launch.
+
+## Previous checkpoint: fixed-budget allocation entry ready; complete package approval pending
 
 2026-10-03T12:34Z. Same persistent worktree/branch; proposalcommit67fea31.
 Zhaowei's `继续推进` authorizes proceeding with the proposed fixed-resource

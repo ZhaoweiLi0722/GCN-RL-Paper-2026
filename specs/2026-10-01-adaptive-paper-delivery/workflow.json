@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 81,
-  "updated_at_utc": "2026-10-03T12:34:00Z",
+  "revision": 82,
+  "updated_at_utc": "2026-10-03T12:48:23Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "847f5d2",
@@ -10,15 +10,17 @@
   "execution_config": null,
   "execution_authorization": null,
   "scientific_execution_authorized": false,
-  "authorization_state": "Fixed-budget direction/preparation approved; exact180-world/6720-optimizer/5400-second package asked once and pending. Prior authority consumed. On exact approval, commit locks and execute directly with no redundant launch question.",
-  "status": "fixed_budget_allocation_engineering_ready_scope_pending_paused",
+  "authorization_state": "Exact reply批准 approves complete180-world/6720-optimizer/5400-second package; recordauthority,commitlocks,then directsinglelaunch without another question. Prior attempts remainclosed.",
+  "status": "fixed_budget_allocation_approved_freezing_then_launch",
   "fixed_budget_allocation": {
     "proposal_commit": "67fea31",
     "preparation_approved": true,
-    "user_literal": "继续推进",
+    "user_literal": "批准",
     "scientific_execution_authorized": false,
+    "scope_approved": true,
+    "approval_intent": "specs/2026-10-03-fixed-budget-allocation/approval-intent.json",
     "complete_package_question_asked": true,
-    "complete_package_reply_received": false,
+    "complete_package_reply_received": true,
     "implementation_ready": true,
     "focused_zero_update_tests_passed": 23,
     "compileall_passed": true,
@@ -41,7 +43,7 @@
     "proposed_seconds": 5400,
     "attempts": 1,
     "automatic_retry": false,
-    "next": "Exact package approval,committed source/runtime/input/seed locks,then directsinglelaunch; no more diagnostic studies"
+    "next": "Commitexactauthority andsource/runtime/input/seedlocks,then directsinglelaunch; no more diagnostic studies orlaunchquestion"
   },
   "patient_constrained_improvement": {
     "preparation_approved": true,
@@ -474,7 +476,7 @@
   "cohort_failed_archive": {"local_verified": true, "file_count": 5297, "archive_bytes": 2574714967, "archive_sha256": "d8b01bb8527532fbeb6a9770f7c291e3513bd7d745c430222679f0990d646705", "original_tree_unchanged": true, "path": "reports/2026-10-02-cohort-objective-closure/archives/failed-run.tar.gz", "dropbox_exported": false, "cloud_sync_verified": false, "howard_access_verified": false},
   "current_result_root": null,
   "implementation_commit": null,
-  "current_task": "N16_FIXED_BUDGET_ALLOCATION_EXACT_PACKAGE_DECISION",
+  "current_task": "N16_FIXED_BUDGET_ALLOCATION_SINGLE_EXECUTION",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -488,7 +490,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Fixed-budget implementation and23zero-update tests complete. On the already asked180-world package approval, record authority and freeze committed source/runtime/input/seed locks, then execute once without another launch question. RemainPAUSED while scope reply is absent.",
+  "next_concrete_action": "Exact package approved. Commitauthority,freeze andcommitlocks,launchonce; then automatically complete180worlds andrawcomparison/archive within the fixedcaps.",
   "cohort_objective_preparation": {
     "proposal": "specs/2026-10-02-terminal-obligation/proposal.json",
     "protocol": "specs/2026-10-02-terminal-obligation/protocol.md",

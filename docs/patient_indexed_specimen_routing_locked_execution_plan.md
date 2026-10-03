@@ -3373,3 +3373,21 @@ No authority exists yet to loadscientificmodels, simulate, fit or opennewtests.
 Prepare-and-execute preference does not silently approve this unasked-newbudget.
 Old attempts/evidence, StageEclosure, holdout andexternal-action prohibitions
 remain unchanged. No Howard approval is represented.
+
+#### Fixed-budget complete package approved for direct execution
+
+2026-10-03T12:48Z. Zhaowei replied `批准` to the exact180-world/6720-optimizer/
+5400-second fixed-budget package. Literal reply and context are preserved in
+specs/2026-10-03-fixed-budget-allocation/approval-intent.json. This covers the
+necessary locks and direct single training/evaluation/readout/archive attempt;
+no further launch question. Original proposal/protocol hashes stay unchanged,
+and the original draft remains false. Implementationdee08da passed23necessary
+zero-update tests andcompileall; reuse these unchanged checks.
+
+Keep all phase/owner/forward/planner/filter/I/O caps, fixed3blocks/seeds/worlds,
+original costs/patient constraint,3-seal test barrier andsingle-attempt rule.
+Commit exact source/runtime/input/derived-stream locks before launch. On terminal
+failure preserve evidence and stop, without repair/retry or budget reuse. No
+automatic follow-on, reward/model/scenario search, remote actions, holdout,
+Howard approval claim orStageEreopening. This is a fresh restricted allocation
+training comparison, not continuation of the old consumed trial.

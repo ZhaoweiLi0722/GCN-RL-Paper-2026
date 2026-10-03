@@ -1,6 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: native capacity package frozen; single launch next
+## Live checkpoint: native capacity attempt failed before fitting; correction decision
+
+2026-10-03T03:25Z. The approved one-shot WAS launched at execution6f40734;
+supervisor28124/PPID1 and child28136/PPID28124 exited after5.37343s with exit1.
+Read-only ps confirms both absent. First teacher world reached two native steps;
+the third ID-MPC decision failed the midpoint/interval compatibility check.
+No trained model, neural forward, optimizer update or completed evaluation.
+This is engineering failure, not an RL null or reason to change the reward.
+
+Evidence and exact counts:
+specs/2026-10-03-dynamic-capacity-adaptation/terminal-readout.md.
+Four native operations,200filter transitions,1152reserved forecast calls
+(768completed chunks plus152dispatched in the interrupted chunk). All11run
+files are locally archived with member hashes; no cloud export. Independent
+saved-data-only analysis records the two partial rows, not a full outcome.
+Existing implementation/tests are retained; do not rerun the consumed root.
+
+The finite chain is closed. Next is one consolidated correction decision:
+repair the planner consistency implementation and one same-design, separately
+budgeted attempt in a new directory, no reward/seed/sample/architecture change
+or further automatic retry. Exact proposed caps are in terminal-readout.md.
+No such second-attempt approval yet; one consolidated exact-budget question
+has been asked. Same gcn-rl automation is tool-confirmedPAUSED, retaining
+visible status and all evidence; do not manufacture another preparation gate.
+
+## Previous checkpoint: native capacity package frozen; single launch next
 
 2026-10-03T03:22Z. Entry HEAD5c0cf89, authorization intent committed0a33e9d.
 Zhaowei answered the complete numerical question with `继续推进`, followed by

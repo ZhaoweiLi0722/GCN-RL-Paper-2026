@@ -1,0 +1,26 @@
+{
+  "archive": {
+    "archive": "dynamic_capacity_adaptation_20261003-failed.tar.gz",
+    "archive_sha256": "7b5abab028fa12a929bd906ad564a652e5d4bff5a6bbfae748497fd6b1829f3c",
+    "file_count": 11,
+    "files": {
+      "launcher/budget.jsonl": "c20ee192bebc6f77959aa38395b68b13f7f54c73734ab72d89180a3ff1ea9b93",
+      "launcher/child-claim.json": "b723964aa653adfc7ba8334fb1ec94af240130c72fa9cab06b7bf0f248eb941a",
+      "launcher/child-failure.json": "8b7d05a468473e0c28d2cab6eb7d69e6998b4ffe3e65dc256f2d1076d5495466",
+      "launcher/claim.json": "e0ca81da828d9fede5b2575699ab621e5c40d0069f4ed2f1ac5b14b76275ed35",
+      "launcher/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "launcher/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "launcher/terminal.json": "b30a0a51b852c71eeeb631fba73403ac3058c489e0b49f8ffd0dea5189daca41",
+      "payload/failure-state.pkl.gz": "16110e097b53f77aac8e8070a8cb27c31fd604b487dc7ff2ea86592c6a1d21a7",
+      "payload/progress.jsonl": "a4f93873b66b06a03e2010a86635aff85083d85c124e917bb11a6b95ca317e4f",
+      "payload/raw/teacher_bc_critic_warmup-b0-c0-j0-teacher.jsonl.gz": "91d1f2540064f9ae25475673462daa85d26862585bb1203451bb7114da73fee4",
+      "payload/tapes/teacher_bc_critic_warmup-b0-c0-j0-exogenous.json": "56deb98738efb484869f251a5e3184d6a179a3c50ff6282b48754036d839e4c7"
+    },
+    "schema_version": 1,
+    "size_bytes": 28968,
+    "verified_by_reading_every_archive_member": true
+  },
+  "cloud_verified": false,
+  "dropbox_exported": false,
+  "local_verified": true
+}

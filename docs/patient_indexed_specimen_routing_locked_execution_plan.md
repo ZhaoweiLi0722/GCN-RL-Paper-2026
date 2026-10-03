@@ -3221,3 +3221,16 @@ Commit frozen.json and its exact effective authorization before launch. Scope
 and original proposal hashes are unchanged; user approval is already recorded.
 The one real first teacher trajectory counts as preflight, no duplicate smoke.
 No separate screening/fit gate, no scientific retry and no old evidence changes.
+
+#### Dynamic-capacity first attempt consumed before fitting
+
+2026-10-03T03:25Z. Execution6f40734 launched supervisor28124/child28136.
+The native first teacher world completed2steps; the third ID-MPC forecast
+decision failed internal midpoint/interval compatibility.4native operations,
+200filter transitions,1152reserved/768completed-chunk forecast epochs and
+152dispatched in the failed chunk; zero neural initialization/forward/optimizer.
+Terminal exit1 after5.37343s, processes absent,11files locally archived and
+saved-data-only partial analysis complete. No performance or reward conclusion.
+Preserve this consumed run/source and do not automatically repair/relaunch it.
+One same-design engineering-correction attempt is proposed in terminal-readout;
+it requires a new explicit user decision with its own full budget and directory.

@@ -32,3 +32,9 @@ protocol. No extra toy gate, unbudgeted smoke, historical rerun or new approval.
 Hypatia's finite learner assignment completed and closed; previous efficiency
 advice reused. Exact physical ledger weights are unchanged; the constrained
 learning objective is explicitly new and its feasibility is not guaranteed.
+
+Implementation committed as0ca0502. Source/runtime/inherited-input hashes and
+prospective local seed collision check passed during freeze. Packet SHA256:
+dece9e38ffcbc8d6f8b4797854dc121c7454c8a6e1a335094cd678dda8e425b5.
+frozen.json and authorization.json are the exact effective execution binding.
+After this lock commit, launch proceeds directly with no additional experiment.

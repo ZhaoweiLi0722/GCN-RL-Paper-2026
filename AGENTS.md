@@ -30,6 +30,14 @@ replace that comparison with an indefinite sequence of toy acceptance tests.
 Neither statistical significance alone nor guaranteed positive RL outcomes
 is the definition of publication readiness. Acceptance cannot be promised.
 
+On 2026-10-03 UTC Zhaowei reiterated that preparation must not drag and the
+priority remains improving model performance. For future authorized comparisons,
+state the concrete performance question, minimum remaining preparation and a
+realistic preparation-time estimate. If preparation overruns, identify the actual
+blocker and defer nonessential work; do not start another audit or toy-test chain.
+Move from necessary entry checks directly to the authorized full comparison.
+This prospective guidance does not reopen failed attempts or alter frozen locks.
+
 - The advancement agent owns one concrete deliverable with disjoint file
   ownership: usable code, decision-changing saved-data analysis, or an already
   authorized bounded experiment. It must proceed through routine steps inside

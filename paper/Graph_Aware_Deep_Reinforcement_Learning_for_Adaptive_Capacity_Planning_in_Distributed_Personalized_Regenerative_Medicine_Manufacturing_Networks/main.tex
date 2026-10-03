@@ -707,6 +707,56 @@ Each stability-oriented backbone reuses this encoder and projection layer unchan
 \subsection*{Summary}
 
 The proposed method is therefore an advantage-filtered residual GCN--DDPG controller: graph encoders provide neighborhood-aware state representations; shared edge heads produce bounded corrections to a transparent look-ahead anchor; and the executor enforces inventory, capacity, supplier, patient identity, route history, and connectivity constraints. The critic and gate have fixed-order readouts, while the actor has shared network-residual heads. The routing-primary comparison holds specimen-routing availability, the anchor, residual action space, teacher cache, executor, training budget, and evaluation seeds fixed between complete graph and parameter-matched flat controllers. Their internal feature transforms, heads, and gate inputs differ as detailed above. The earlier backbone comparison instead holds the graph architecture fixed while replacing DDPG with TD3. Residual SAC and PPO remain secondary family extensions requiring additional matched empirical evaluation, not evidence of backbone robustness in the routing-primary results.
+\subsection*{Prospective extension: GCN value-augmented MPC}
+\textbf{Status: proposed method; numerical design not frozen; experiment pending.}
+This extension is separate from the historical AFR-GCN--DDPG method above.
+We propose using a GCN to estimate long-term return through temporal-difference
+(TD) learning from simulated transitions. Its value estimate would augment
+short-horizon candidate scores in the existing public-input model predictive
+controller (MPC). The planner would select the feasible action; the GCN would
+not supply a DDPG action head. Both planning and value inputs would be restricted
+to decision-time public observations and beliefs derived from their history,
+excluding latent simulator states and future realizations.
+
+The conceptual inspiration is TD-MPC of Hansen, Su, and Wang~\cite{Hansen2022TDMPC},
+which combines a learned task-oriented latent dynamics model with a learned
+terminal value. Here the proposed extension would retain the existing
+public-input predictor and add a TD-learned graph value component. We do not
+claim to implement full TD-MPC or to reproduce its jointly learned latent
+dynamics architecture. The draft protocol fixes an eight-step planning horizon
+and represents remaining cost as $V_\theta(b)=H(b)+s f_\theta(b)$, where $H$ is
+the existing terminal patient-risk heuristic, $s=10^6$, and the residual head is
+initialized to zero. Thus, before training, the planner retains its original
+terminal score. For a settled 64-step trajectory and $u=\min(t+8,64)$, the
+residual target is
+\[
+ y_t = \frac{\sum_{k=t}^{u-1}c_k-H(b_t)}{s}
+       +\mathbf{1}_{u<64}\left[\frac{H(b_u)}{s}+f_{\theta_{\mathrm{old}}}(b_u)\right].
+\]
+The full cost objective and patient-loss weights are unchanged. Targets are
+fixed before each cohort's 32 updates; all 16 settlement transitions are
+retained, and the terminal bootstrap is zero. This residual parameterization
+does not add the heuristic twice. A shared 31-field public-belief schema is
+used for observed and forecast states, with two 32-wide GCN layers. The public
+predictor and compressed belief remain approximations, including a possible
+forecast-to-observed distribution shift.
+
+The pending comparison holds public information, candidate actions,
+predictor, and planning budget fixed when testing the added learned value.
+Each of three blocks has 24 initialization cohorts under plain MPC, followed
+by 24 continuation cohorts under value-augmented MPC from the exact initial
+model and optimizer state. The 144 frozen evaluations compare plain MPC,
+initial-value MPC, updated-value MPC, and uniform allocation. All three final
+models must be sealed before evaluation. The primary contrast is updated
+versus initial-value MPC under persistent capacity change, with cost and
+patient outcomes reported together. Additional continuation data and compute
+are part of that treatment, not an equal-budget algorithm comparison.
+Matched non-graph or message-edge ablations would be needed to isolate a GCN
+contribution. Simulation training with frozen evaluation would test training
+value, not deployment-time parameter adaptation; any latter claim requires a
+separate frozen-versus-updating comparison. No performance result for this
+extension is reported here.
+
 \section{Computational Experiments}
 \label{sec:experiments}
 \label{sec:casestudies}
@@ -1556,6 +1606,62 @@ authority is concentrated in projected discrete specimen choices, while the
 channels that preserve continuous action geometry expose little clinically
 noninferior material headroom.
 
+\subsection{Completed fixed-budget allocation development study}
+\label{sec:fixed-budget-development}
+% Evidence: specs/2026-10-03-fixed-budget-allocation/terminal-readout.md;
+% reports/fixed_budget_capacity_20261003_independent_readout.md.
+A separate development study completed on 3 October 2026 tested constrained
+GCN--DDPG training within a restricted fixed-total support-labor allocation
+family, not the proposed value-augmented MPC. Three independent training blocks
+used 36 reference and 36 training worlds in total, followed by 108 frozen
+controller evaluations on 36 matched worlds. Each condition comprised four
+worlds per block. All final models were sealed before evaluation, with no
+evaluation-time optimizer updates. Worlds included 48 control epochs and
+16 zero-request settlement epochs. Both the trained and same-start uniform
+policies committed and eventually applied 384 support-labor hours per world.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Completed fixed-budget development comparison. Differences are trained
+minus comparator; positive values are worse. Each row averages 12 matched
+worlds across three training blocks. Cost units are synthetic; percentages
+average paired-world percentage changes, not ratios of pooled mean costs.
+Losses denote simulated patients lost per world. ID-MPC is the
+system-identification MPC comparator.}
+\label{tab:fixed-budget-development}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}lXrrr@{}}
+\toprule
+Condition & Comparator & Cost change & Change (\%) & Extra losses \\
+\midrule
+No change & Uniform fixed & $+111{,}647.35$ & $+0.2462$ & $+0.7500$ \\
+Persistent & Uniform fixed & $+692{,}496.69$ & $+1.8183$ & $+4.1667$ \\
+Fast fluctuation & Uniform fixed & $+579{,}698.21$ & $+1.4309$ & $+0.4167$ \\
+No change & ID-MPC & $+1{,}660{,}214.72$ & $+4.2187$ & $+4.1667$ \\
+Persistent & ID-MPC & $+1{,}323{,}733.01$ & $+3.2592$ & $-0.1667$ \\
+Fast fluctuation & ID-MPC & $-347{,}781.11$ & $-0.6333$ & $-23.0833$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+None of the three prespecified benefit criteria was met: positive persistent-
+change savings in every block, a positive lower endpoint of the persistent-
+change savings interval, and nonpositive mean extra losses in every condition.
+For the primary persistent-change contrast against uniform allocation,
+the descriptive 95\% savings interval was
+$[-1{,}441{,}883.59,+389{,}180.54]$ synthetic cost units; the extra-loss interval
+was $[-0.91875,+8.41875]$ patients. Both crossed zero. These unfavorable sample
+means establish neither clinical harm nor safety or equivalence.
+Fast-fluctuation means favored the trained policy over ID-MPC, but not over
+the same-start uniform control (Table~\ref{tab:fixed-budget-development}).
+ID-MPC could vary total hours and use a wider site-allocation range, so it was
+a performance comparator, not a matched action-map ablation. This completed
+negative result concerns learning within the restricted allocation family;
+it does not establish global optimality of uniform allocation, isolated GCN
+value, or deployment-time online adaptation. The support-labor model remains
+uncalibrated and synthetic, with operational calibration data still absent.
+
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
 This study develops a patient-condition and geography-aware simulation of a
@@ -1708,6 +1814,21 @@ effect remains continuous after execution and is not removed by integer-lot
 rounding or absorbed by a tuned look-ahead anchor. Such a study requires a
 separate preregistration, new comparators, independent streams, and the four
 admissibility gates above; it is not an extension of the frozen formal result.
+\paragraph{Prospective value-guided planning.}
+The completed fixed-budget study (Section~\ref{sec:fixed-budget-development})
+did not establish a stable patient-preserving training gain, even with equal
+total labor. It motivates testing a different role for learning, but neither
+identifies the cause of failure nor predicts success for value-augmented MPC.
+The proposed GCN value component would guide the existing planner's assessment
+of downstream consequences instead of directly generating resource requests.
+Its implementation, training, and performance comparison remain pending in
+this manuscript; the numerical design is not frozen. Evaluation must report
+full settled costs, patient outcomes, independent-training-block uncertainty,
+and condition-specific robustness. A combined GCN-value-plus-MPC advantage
+would be a controller-package result unless matched ablations isolate the
+learned-value and graph contributions. This proposal does not replace the
+historical method, reopen its completed tests, or imply a positive RL result.
+
 Longer-term models should integrate production scheduling,
 product preparation and distribution, and treatment operations.
 

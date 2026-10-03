@@ -1,0 +1,21 @@
+{
+  "schema": "capacity-value-mpc-study-v1",
+  "scientific_execution_authorized": false,
+  "inherit": {"proposal": "specs/2026-10-03-dynamic-capacity-adaptation/pilot-proposal.json", "sha256": "f46f6d5ae417a67c5974516b1c9e2b5b05ba9e2de56681aaedbfe276e9f355a9"},
+  "design": {"blocks": 3, "model_seeds": [530260510, 530260520, 530260530], "initial_worlds_per_block": 24, "continuation_worlds_per_block": 24, "evaluation_worlds_per_condition_block": 4, "conditions": 3, "roles": ["plain_mpc", "initial_value_mpc", "updated_value_mpc", "fixed_allocation_reference"], "total_worlds": 288, "evaluation_worlds": 144, "all_final_seals_before_tests": true},
+  "streams": {"namespace": "capacity-value-mpc-20261003-v1", "initial_base": 62900000, "continuation_base": 62910000, "evaluation_base": 62920000, "bootstrap_seed": 62990001, "purposes": ["demand", "patient_identity_attributes", "response_change", "exploration", "replay"]},
+  "value": {"width": 32, "lr": 0.0003, "batch_size": 64, "updates_per_world": 32, "gradient_norm_cap": 5.0, "cost_scale": 1000000.0, "td_horizon": 8, "gamma": 1.0, "features": "capacity-value-public-belief-v1", "zero_residual_head": true, "objective": "unchanged_full_64_step_settled_cost", "targets": "frozen_preupdate_8_step_TD_on_current_complete_cohort", "replay_other_policies": false, "evaluation_updates": 0},
+  "budget": {
+    "worlds": 288, "native_steps": 18432, "native_operations": 19008,
+    "value_optimizer_steps": 4608, "actor_optimizer_steps": 0, "forwards": 11664,
+    "planner_decisions": 12096, "planner_rollouts": 580608, "planner_epochs": 4644864,
+    "filter_transitions": 1843200, "maximum_forward_batch": 64,
+    "seconds": {"admission_lock_binding": 300, "initial_value_learning": 3600, "continuation_value_learning": 3600, "frozen_evaluation": 5400, "analysis_archive_verification": 900, "failure_flush_shutdown_reserve": 600, "global": 14400},
+    "owner_seconds": {"world": 90, "fit": 30, "seal": 60},
+    "rss_bytes": 4294967296, "raw_bytes": 2147483648, "archive_bytes": 2147483648, "combined_disk_bytes": 4294967296, "file_cap": 2500, "compute_threads": 4, "workers": 1,
+    "attempts": 1, "automatic_retry": false, "includes_io": true
+  },
+  "readout": {"primary_condition": 1, "primary_pair": ["updated_value_mpc", "initial_value_mpc"], "secondary_references": ["plain_mpc", "fixed_allocation_reference"], "bootstrap_resamples": 2000, "signal": "positive_cost_savings_in_all_persistent_blocks_and_descriptive95_lower_above_zero_and_no_positive_mean_extra_losses_in_each_condition", "selection": "final_only", "report_all_outcomes": true},
+  "limitations": ["simulation_training_not_deployment_online_updates", "graph_contribution_not_isolated", "public_belief_and_predictor_are_approximations", "support_labor_uncalibrated_synthetic", "three_independent_training_blocks", "additional_continuation_data_and_compute_are_part_of_treatment", "no_clinical_safety_guarantee"],
+  "forbidden": ["historical_attempt_resume", "reward_weight_search", "scenario_search", "extra_epochs", "test_based_selection", "holdout", "StageE_reopen", "remote_push", "PR", "Dropbox", "external_messages", "Howard_approval_claim"]
+}

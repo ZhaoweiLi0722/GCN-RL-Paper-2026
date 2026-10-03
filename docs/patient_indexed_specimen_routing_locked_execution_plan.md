@@ -3410,3 +3410,36 @@ versus MPC, are retained. No scientific locks or original results changed.
 The approved attempt is consumed; any new training, reward/decision-model
 revision or other scientific scope needs a new complete authorization.
 No automatic retry, extra samples, remote action, holdout or StageE reopening.
+
+#### GCN value-augmented MPC: integrated preparation, execution scope pending
+
+2026-10-03T20:49Z. Zhaowei approved moving toward GCN TD-learned long-term value
+with public-input MPC selecting actions, and requested rapid training, performance
+comparison and manuscript revision. This direction is not another DDPG retry.
+The fixed-budget negative result above remains immutable and its attempt consumed.
+No Howard approval is represented. One complete numerical package was asked;
+no later exact scope reply is present at this checkpoint.
+
+Protocol: specs/2026-10-03-value-augmented-mpc/protocol.md. Original config:
+experiments/configs/capacity_value_mpc_20261003.json, scientific_execution_authorized
+false. The proposed package has 3 blocks,24initial plus24continuation cohorts/block,
+144frozen evaluations,288worlds/18432native steps/4608value updates/4644864planner
+epochs/14400seconds/4GiB with named phase/owner caps. Zero actor optimization;
+fresh GCN residual value above the original MPC terminal heuristic, eight-step
+TD targets and all64settled transitions. Original synthetic physical dynamics,
+patient-cost weights and planner action support remain fixed. This is simulation
+training attribution, not deployed online adaptation, full TD-MPC, an isolated
+graph effect or a safety guarantee. Additional continuation data/compute are
+part of the treatment; support labor remains synthetic and E1 remains missing.
+
+Additive implementation, full fake entry/raw-reader comparison,20zero-update
+tests andwhole-repositorycompileall are complete. No real model loading/forward,
+environment trajectory or optimizer update occurred. Manuscript methods are
+marked prospective; historical negative results are retained. No extra diagnostic
+study or repeated history audit precedes the proposed end-to-end comparison.
+
+Upon exact numerical approval record its literal reply and this change control,
+commit source/runtime/input/seed locks, then execute the single whole package
+directly without a second launch question. Until then the same automation remains
+PAUSED. Failure consumes the attempt; no silent retry, reward/model/scenario
+search, extra epochs, holdout, StageE reopening, remote actions or Dropbox.

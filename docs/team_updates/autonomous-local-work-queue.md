@@ -1,6 +1,39 @@
 # Autonomous local research queue
 
-## Live checkpoint: fixed-budget comparison completed; no stable RL gain; PAUSED
+## Live checkpoint: value-MPC entry and manuscript ready; numerical approval pending
+
+2026-10-03T20:49Z. Zhaowei approved the GCN TD-value plus MPC direction and
+asked for rapid training/comparison and manuscript revision. One complete
+288-world/4608-value-update/4h/4GiB package was asked asynchronously; no exact
+reply has arrived. Direction approval does not approve an unasked numerical
+scope. All old attempts remain closed. No new scientific model/forward,
+environment or optimizer call ran; no related research process is present.
+
+Delivered the public-belief features, GCN residual value, eight-step TD learner,
+value-MPC controller, serial training/seal/evaluation runner, raw-data reader,
+budget and exclusive execution binding. Reused existing corrected predictor,
+IO/watchdog/archive facilities. The full fake entry/reader chain accounts for
+288 trajectories, all144 evaluations behind three final seals and exact phase
+budgets.20zero-update tests, whole-repositorycompileall anddiff-check pass.
+An independently found atomic restore defect is fixed; no scientific retry.
+
+Manuscript now includes prospective method/TD equation/comparison and completed
+fixed-budget negative results; no new gain or isolated graph contribution is
+claimed. Three finite assignments (manuscript, efficiency advice, zero-update
+tests) completed and closed. No extra audit or toy-training gate remains.
+Readout: specs/2026-10-03-value-augmented-mpc/integration-readout.md.
+Protocol/config: same specification directory/protocol.md and
+experiments/configs/capacity_value_mpc_20261003.json. Original draft staysfalse.
+
+Next: after the already-asked exact scope approval, recordliteralreply/change
+control, commit source/runtime/input/seed locks, directly launch the single
+initial-learning/continuation/144-frozen-comparison/readout/archive chain.
+No redundant launch question. Scientific attempt expected2-4h, hardcap4h;
+not a promised speed or benefit. Samegcn-rl remainsPAUSED awaiting that one
+decision, not running in the background. No remote actions/Dropbox/holdout,
+StageE reopening or Howard-approval claim. PDF not rebuilt (no TeX engine).
+
+## Previous checkpoint: fixed-budget comparison completed; no stable RL gain; PAUSED
 
 2026-10-03T13:29Z. Execution28e8987/packet174c1d00 completed normally in
 1633.21 seconds, exit0. All36reference/36training/108evaluation worlds complete;

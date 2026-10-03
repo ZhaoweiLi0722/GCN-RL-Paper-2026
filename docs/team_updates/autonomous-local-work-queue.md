@@ -1,6 +1,45 @@
 # Autonomous local research queue
 
-## Live checkpoint: fake campaign delivered; one pilot scope decision pending
+## Live checkpoint: approved native capacity entry integrated; freeze and launch next
+
+2026-10-03T03:22Z. Entry HEAD5c0cf89, authorization intent committed0a33e9d.
+Zhaowei answered the complete numerical question with `继续推进`, followed by
+`进度又慢了`. This is recorded approval of the unchanged bounded package, not
+a reason to ask the same question again or to launch an unfrozen implementation.
+No matching scientific process was observed at entry; no new scientific calls
+have yet been made. Source changes are additive to this unregistered pilot.
+
+Real delivery now includes the native fixed patient/config/tape binding,
+same-information per-ID filter, adaptive and approximate ID-MPC controls,
+fresh capacity GCN-DDPG/BC/critic/replay/restore, public features, real serial
+entry, independent raw analysis and phase/global budget supervision. Actual
+entry fake-backend integration reconciles the complete fixed schedule and
+sealed-model test barrier. No optimizer.step or native patient environment
+is used by those artificial tests. Code and explanation are in
+specs/2026-10-03-dynamic-capacity-adaptation/integration-readout.md.
+
+Parfit delivered the learner and then the disjoint saved-data analysis;
+Socrates delivered the public filter/adaptive/MPC. Both finite tasks are closed.
+Prior efficiency advice reused. No historical replay/audit/new toy fitting.
+Final combined87relevant tests passed in18.761s. Recording additions then
+passed33affected tests in16.968s; whole-repository compileall passed. These are
+artificial engineering checks, not performance trials.
+
+Next concrete action, already authorized: commit implementation and the exact
+source/runtime/input/seed locks plus effective authorization, verify no duplicate
+PID, then launch ONE run_dynamic_capacity_pilot --launch. Scientific result
+root results/dynamic_capacity_adaptation_20261003 does not yet exist at this
+checkpoint. If it exists on continuation, inspect claim/terminal before any
+action; never relaunch. Any scientific terminal failure consumes this attempt.
+
+Same gcn-rl heartbeat is tool-confirmed ACTIVE for this finite integrated trial,
+with the unchanged288trajectory/216evaluation/7872optimizer/19008native-operation/
+5400second/2GiB scope. It is not itself proof of training. Historical patient
+weights remain fixed, new labor is explicit synthetic accounting, E1 remains
+missing, and no positive performance or isolated GCN claim is made. No remote,
+Dropbox, holdout, StageE reopening or Howard approval.
+
+## Previous checkpoint: fake campaign delivered; one pilot scope decision pending
 
 2026-10-03T02:53Z. Entry HEAD 6e4131b792a17c9e23964d7aec3ba3b8dea58189;
 same branch/worktree, initially clean. Read-only PID/command filter found no

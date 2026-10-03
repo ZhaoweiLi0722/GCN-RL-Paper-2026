@@ -61,6 +61,7 @@ class PublicPatientViewTests(unittest.TestCase):
         env.reagent_purchase_pipeline = np.zeros((0, 2))
         env.supplier_available = np.ones(2)
         env.demand_forecast = np.array([1.0, 1.0])
+        env.demand = np.array([0.0, 0.0])
         return env
 
     def action(self):

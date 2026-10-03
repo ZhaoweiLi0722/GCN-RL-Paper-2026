@@ -1,6 +1,18 @@
 # Patient Support Integration Delivery
 
-## Current Milestone: Public IDs and Complete Fake Serial Campaign
+## Current Milestone: Approved Real Entry Integrated
+
+2026-10-03T03:22Z. See [integration-readout.md](integration-readout.md) for the
+actual native patient binding, same-information controls, fresh capacity learner,
+serial entry and independent saved-data analysis. The full numerical scope is
+now approved in intent commit0a33e9d; the original proposal remains unchanged.
+The entry has been exercised on fake backends without real optimization or
+patient simulation. Complete final tests, commit source and freeze matching
+runtime/input/seed/effective-authorization locks, then one authorized trial.
+Both finite implementing agents completed and closed. No new performance data
+exist yet; same automation ACTIVE is a schedule, not a training process.
+
+## Previous Milestone: Public IDs and Complete Fake Serial Campaign
 
 2026-10-03T02:53Z, entry HEAD `6e4131b`. Added
 `src/env/patient_support_public.py` and `src/rl/public_support_input.py`:

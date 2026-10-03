@@ -88,11 +88,13 @@ class PublicSupportOperations:
     supplier_available: tuple[float, ...]
     demand_forecast: tuple[float, ...]
     last_service: PublicSupportServiceEvent | None
+    current_arrivals: tuple[float, ...] = ()
 
     def __post_init__(self):
         object.__setattr__(self, "site_ids", tuple(self.site_ids))
         object.__setattr__(self, "patients", tuple(self.patients))
         object.__setattr__(self, "waiting_order", _ids_by_site(self.waiting_order))
+        object.__setattr__(self, "current_arrivals", _vector(self.current_arrivals))
         for field in ("reagents", "supplier_available", "demand_forecast"):
             object.__setattr__(self, field, _vector(getattr(self, field)))
         for field in ("bioreactors", "reagent_transfers", "capacity_transfers", "reagent_orders"):
@@ -131,6 +133,8 @@ def validate_public_operations(view):
     for values in (view.reagents, view.supplier_available, view.demand_forecast):
         if len(_vector(values)) != n:
             raise ValueError("public facility vector mismatch")
+    if view.current_arrivals and len(view.current_arrivals) != n:
+        raise ValueError("public current arrivals dimension mismatch")
     if len(_matrix(view.bioreactors)) != n:
         raise ValueError("public bioreactor facility dimension mismatch")
     for values in (view.reagent_transfers, view.capacity_transfers, view.reagent_orders):
@@ -193,7 +197,8 @@ class PublicPatientSupportCapacityEnv(PatientSupportCapacityEnv):
             tuple(tuple(p.patient_id for p in row) for row in self.patient_queues),
             _vector(self.reagents), _matrix(self.bioreactors), _matrix(self.reagent_transfer_pipeline),
             _matrix(self.capacity_transfer_pipeline), _matrix(self.reagent_purchase_pipeline),
-            _vector(self.supplier_available), _vector(self.demand_forecast), self._last_public_service)
+            _vector(self.supplier_available), _vector(self.demand_forecast), self._last_public_service,
+            _vector(self.demand))
         return validate_public_operations(result)
 
     def state_dict(self):

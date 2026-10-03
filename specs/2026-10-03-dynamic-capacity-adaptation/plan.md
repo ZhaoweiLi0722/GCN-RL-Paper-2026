@@ -2,7 +2,8 @@
 
 Prepared 2026-10-03 UTC, following Zhaowei's instruction to proceed if this
 direction could help establish RL value. Direction and local implementation
-preparation are authorized; no numerical scientific execution packet exists.
+preparation are authorized; a complete numerical proposal now exists but no
+frozen executable scientific packet or numerical execution approval exists.
 No Howard approval, site calibration, positive result or publication guarantee
 is inferred. The closed two-round attempt stays closed.
 
@@ -117,7 +118,7 @@ claim from a null or a few seeds. Development and confirmation remain distinct.
    and booked costs, and restores receipt history at a boundary. Artificial
    gradient/receipt tests use no optimizer or environment. No production
    collector or patient-layer integration is claimed.
-2. **Next authorized engineering:** implement the additive patient support
+2. **Delivered in source/fake integration:** the additive patient support
    adapter and matched baseline interface, using fake patient records first.
    Preserve survival aging, reagent/reactor conservation, job identity and
    complete terminal obligations. Reuse old service-work machinery where its
@@ -126,19 +127,24 @@ claim from a null or a few seeds. Development and confirmation remain distinct.
    completions to flexible effort or drop ordinary staffing from the accounting.
    The producer must bind both to actual resource availability; receipt-shape
    validation alone is not physical verification.
-3. **Then one integrated proposal:** freeze the synthetic operating assumptions,
-   one initializer/learner and all six comparator implementations. Specify all
+3. **Decision-ready proposal, not an executable campaign:** prospectively specify
+   synthetic operating assumptions, one initializer/learner and six comparators. Specify all
    seeds, condition cells, initialization/update/interaction/model-query caps,
    preflight and settlement calls, wall-clock/I/O limits, endpoints and one-
    attempt failure rule in one complete numeric package. Include the planned
    direct training comparison; do not insert repeated toy-fitting gates or
    a succession of action-ranking campaigns.
-4. **Only after specific execution approval and source/input/runtime locks:**
+   `pilot-proposal.{md,json}` and the fake-only serial campaign now provide this
+   decision. Complete real controller/estimator/settlement/recording bindings to
+   the approved scope before freezing; fake dispatch tokens are not algorithms.
+4. **Only after specific execution approval, real integration and source/input/runtime locks:**
    run the one end-to-end pilot, analyze all prespecified worlds and preserve
    its outputs. Routine stages need no additional permission. Failure or a
    null result does not authorize a retry or a new scenario/severity/weight.
 
-The current permission covers steps 1-3, not step 4. Missing E1 operating data
+The02:35heartbeat ends this finite chain at fake integration and the numerical
+decision. Do not delay that decision with another indefinite preparation chain.
+The current permission covers steps1-3, not step4. Missing E1 operating data
 remain missing; synthetic parameters must be labeled as assumptions. New
 modeling assumptions and the full finite execution budget go into one user
 decision, not repeated routine-step questions. No actual trial is running.

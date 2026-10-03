@@ -94,9 +94,13 @@
     {"id": "fast_independent_fluctuation", "index": 2, "response": "iid_uniform_response_values_per_site_per_epoch", "includes_settlement": true}
   ],
   "information": {
-    "proposed_extra_public_view_implemented": false,
+    "proposed_extra_public_view_implemented": true,
+    "public_view_source": "src/env/patient_support_public.py",
+    "common_input_source": "src/rl/public_support_input.py",
+    "public_view_validation": "artificial_records_only_not_operational_measurement_validation",
     "current_collector_fields": ["base_observation", "capacity_history", "pending_hours", "ready_counts"],
-    "missing_public_api": ["individual_patient_identity", "current_individual_survival", "individual_material_age", "entry_exit_completion_identity_events", "actual_host_support_priority_order"],
+    "missing_public_api": [],
+    "added_public_fields": ["individual_patient_identity", "current_individual_survival", "individual_material_age", "entry_exit_completion_identity_events", "actual_host_support_priority_order", "public_resource_pipelines"],
     "history_window": 8, "max_history_epochs": 64,
     "receipt_known_at": "epoch_plus_one",
     "public": ["operational_counts", "inventories", "pipelines", "current_survival", "material_ages", "job_entries_exits_completions", "raw_requests", "executed_commitments", "ordinary_hours", "matured_flexible_hours", "completion_counts", "cohort_closure_time", "shared_filter_state"],
@@ -289,13 +293,12 @@
   "remaining_integration": [
     "Bind_coordinator_unregistered_patient_support_producer_to_exact_synthetic_config_and_response_formula",
     "Bind_ordinary_labor_cost_in_place_start_counts_closed_cohort_and_conservation",
-    "Missing_individual_identity_survival_material_age_priority_event_API_beyond_delivered_base_history_pending_ready_view",
     "Public_observation_whitelist_and_MDL2_adapter_without_private_env_access",
     "Shared_completion_censored_per_ID_interval_estimator_with_priority_changes_and_transfer_carry_not_existing_EWMA",
     "Capacity_GCN_actor_critic_BC_TD_DDPG_and_settled_typed_replay",
     "Six_controllers_adaptive_solver_and_16_sequence_approximate_ID_MPC",
     "Deterministic_48_plus_16_settlement_and_complete_liability_reconciliation",
-    "Serial_executor_all_operation_query_optimizer_time_IO_counters_and_watchdog",
+    "Scientific_binding_of_delivered_fake_serial_campaign_plus_durable_time_IO_counters_and_watchdog",
     "Identity_keyed_CRNs_world_restore_persisted_schema_fake_loader_tests",
     "Raw_analysis_descriptive_bootstrap_local_archive_and_failure_preservation",
     "Specific_prospective_approval_and_committed_source_runtime_input_seed_locks_outside_this_draft"

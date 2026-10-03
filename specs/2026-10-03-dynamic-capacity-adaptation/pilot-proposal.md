@@ -6,7 +6,9 @@ snapshot `aac47b090e2cb8ba6eba6b8b7bba9f5b19bcc2f3` and the coordinator's
 current support-subclass implementation decision. This is not an executable
 protocol, implemented campaign, fitted controller, calibration, or result.
 The companion [pilot-proposal.json](pilot-proposal.json) carries the numerical
-contract. Only these two files belong to this assignment.
+contract. The public patient view and fake-only serial campaign have since been
+implemented and tested at entry HEAD `6e4131b`. Actual learners, estimator,
+planner, native settlement and durable execution binding remain unfinished.
 
 ## Decision and Evidence
 
@@ -91,14 +93,16 @@ closure is public; no change notification or exact scheduled-change feature is
 given. Randomized change timing reduces, but does not eliminate, a learned
 hazard cue. That limitation applies to every controller.
 
-The proposed matched public view, still requiring implementation, gives all
+The versioned matched public view now implemented with artificial tests gives all
 arms current operational counts, inventory/pipelines, current survival
 and material ages, public job entry/exit/completion identities, their own raw and
 executed requests, ordinary/matured flexible hours, and end-of-epoch completion
-receipts known at t+1. The current collector supplies only the base observation
-plus capacity history, pending hours and ready counts; it does **not** supply
-this additional patient-ID/survival/material-age API. Neither the estimator nor
-MPC below can be claimed integrated until that public view is implemented.
+receipts known at t+1. `patient_support_public.py` and `public_support_input.py`
+add the patient-ID/survival/material-age API to the original collector's base
+observation, capacity history, pending hours and ready counts. Actual service
+order and completed IDs are released only after the step, including routing.
+True numerical remaining work and latent health/efficiency are not exported.
+Neither the estimator nor MPC below is implemented by that public view.
 Use an 8-receipt masked feature window and the same causal
 response estimator. Histories can differ after different actions. Full receipts
 are retained for restoration, never future observations. If work-progress
@@ -407,17 +411,18 @@ The existing interface provides legal effort and typed receipt/history checks;
 the old service fixture exposes work and explicitly has an unsettled terminal
 ledger. Its `PublicServiceResponseEstimator` consumes delivered-work receipts
 and **cannot** be used unchanged under completion-only measurement. The
-coordinator is implementing an unregistered patient-support subclass, ledger
-and native adapter; this proposal does not claim they or the following are done:
+unregistered patient-support subclass, ledger and public view now exist with
+fake-host tests. The fake-only campaign reconciles the complete numerical
+schedule, seals, isolated forks, delayed last update and nonrefundable counters.
+It is not a real learner or launcher. The following scientific bindings remain:
 
 1. Bind the four-site synthetic config, eta*(ordinary+flexible) formula,
    in-place start counts, ordinary expense, host-priority support with per-ID
    transfer carry, and closed-cohort
    arrivals to the native producer. Verify old overtime is rejected and all
    resource/patient aging rules remain once-per-epoch with fake records.
-2. Implement the missing public individual identity/survival/material-age view
-   beyond the delivered base observation/history/pending/ready counts, and
-   whitelist common MDL-2
+2. Connect the delivered public individual identity/survival/material-age view
+   and whitelist common MDL-2
    inputs; connect ring logistics and separate staff eligibility; implement the
    shared per-ID interval filter with variable urgency order and transfers,
    without actual remaining-work or latent leakage.
@@ -429,14 +434,14 @@ and native adapter; this proposal does not claim they or the following are done:
 5. Implement fixed 48+16 collection/settlement, zero-arrival boundary, drain
    purchases, patient/work/resource/expense reconciliation and failure cases.
    A liability ledger alone is not automatic settlement.
-6. Implement one serial executor, counters for every construction/reset/step,
+6. Bind the delivered fake serial interface to real components and counters for every construction/reset/step,
    query/optimizer and I/O, CRN identity tapes, world-local restores, watchdog,
    raw comparator/bootstrap and local preservation. Reuse existing fake tests;
    include actual persisted schemas with fake loaders. No extra fitting gate.
 7. Reconcile source/config against this packet, freeze exact source/runtime/
    input/seed locks, and record one specific prospective execution approval
-   and committed change-control entry **outside this draft**. This task does
-   not authorize that commit or any scientific admission.
+   and committed change-control entry **outside this draft**. This draft alone
+   does not authorize scientific admission.
 
 Unsettled assumptions requiring that one decision are physical support-work
 validity; staff eligibility and eta acting on ordinary as well as flexible
@@ -444,6 +449,11 @@ hours; completion-only observability; synthetic demand, workload, costs and
 response persistence; unchanged common-controller competence; sufficient offline
 learning and 16-epoch drainage; and achievable local runtime/storage. Engineering
 mismatch must be resolved transparently before locking, not silently substituted.
-No repeated approval chain for routine phases once the complete later packet is
-approved. Until then: zero scientific loads/forwards, constructors, simulation,
-training and planner queries. No commits, remote actions or automation here.
+The single decision covers the numbers and modeling assumptions above,
+completion of their real implementation and one execution only after matching
+source/runtime/input/seed locks have been committed. Approval is not a claim of
+readiness: unresolved implementation must still be completed. A scientific
+scope mismatch cannot be silently substituted. No extra fitting screen or
+repeated approval for routine phases is needed. Until specific approval:
+zero scientific loads/forwards, constructors, simulation, training and planner
+queries. Local engineering commits remain allowed; external actions do not.

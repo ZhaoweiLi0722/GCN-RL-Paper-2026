@@ -3167,3 +3167,31 @@ settlement and runner integration without another toy campaign; then obtain
 one complete numerical decision and commit exact locks before science.
 No fresh patient data, training, reward search, retry or external action is
 implied. Only actual paired cost/patient results can establish incremental value.
+
+#### Dynamic-capacity fake integration and numerical decision boundary
+
+2026-10-03T02:53Z, entry6e4131b: the02:35heartbeat explicitly limits this
+preparation chain to public patient support records, same-information fake
+six-controller orchestration and one complete prospective pilot decision.
+Those interfaces are delivered.23new artificial tests and fullcompileall pass;
+prior34patient-adapter tests reused. Actual science remains zero. Volta's finite
+disjoint campaign task is closed; prior efficiency advice reused. No historical
+implementation/evidence is changed or scientific retry implied.
+
+One complete scope question was sent for the existing numerical proposal:
+3training seeds/3conditions/6arms,288total trajectories including216evaluation,
+18432native steps/19008operations with construction/reset,7872optimizer calls,
+25824network forwards,1327104planner epochs,1843200filter transitions,
+5400seconds/2GiB, once only. Synthetic support work, staffing, delayed effort
+and new labor charges are explicit; historical patient weights are not tuned.
+No answer is recorded. Existing direction approval is not this scope approval.
+
+Real estimator/learner/controllers, native settlement/config/identity tapes,
+durable budget/recording/analysis bindings and source/runtime/input/seed locks
+remain unfinished. A later approval covers completing that exact implementation
+and then a single locked trial, not launching the artificial backend or claiming
+it trained six algorithms. Any scientific mismatch requires transparent scope
+resolution, not an unreported substitution. No additional toy-fitting gates.
+The same gcn-rl automation is tool/TOML-confirmedPAUSED at this decision boundary,
+retained visibly. StageE, holdout, all historical attempts and external-action
+restrictions remain unchanged. No Howard approval or practical calibration.

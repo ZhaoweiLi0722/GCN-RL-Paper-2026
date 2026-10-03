@@ -1,6 +1,55 @@
 # Patient Support Integration Delivery
 
-## Current Milestone: Patient Adapter and Common Collector
+## Current Milestone: Public IDs and Complete Fake Serial Campaign
+
+2026-10-03T02:53Z, entry HEAD `6e4131b`. Added
+`src/env/patient_support_public.py` and `src/rl/public_support_input.py`:
+immutable, whitelisted individual identity/status/location/survival/material
+age, public inventory/pipelines and causal service order/completed-ID events.
+Actual post-routing eligibility is published at t+1 and reconciled with the
+aggregate ordinary/flexible receipt. Partial work, health/shock state and
+response tapes are never policy input. v1 and old result sources are unchanged.
+Current status/survival availability remains an uncalibrated measurement
+assumption. This is not proof of practical sensing or physical calibration.
+
+`src/rl/capacity_adaptation_campaign.py`, delivered by finite advancement agent
+Volta, accepts an explicitly artificial JSON backend only. It exercises the
+proposal's serial stages, complete offline seals before evaluation, independent
+same-start forks, matching exploration keys, private per-arm histories and
+online-only evaluation update dispatches. Construction, reset, environment,
+network, optimizer and predictive queries debit separate counters before work;
+failure preserves debits and snapshot restoration never reopens an attempt.
+The final control update is deferred until the full fixed tail cost arrives.
+
+The full mock schedule reconciles 288 trajectory tokens, 18432 step tokens,
+19008 native operation tokens,3936actor/3936critic dispatches,25824network
+forward tokens and1327104planner epoch tokens. No actual optimizer, network,
+patient environment or planner ran. The artificial backend does not implement
+six fitted algorithms, native settlement, real CRNs or durable watchdog/storage.
+
+Coordinator integration: `python -m unittest tests.test_patient_support_public
+tests.test_capacity_adaptation_campaign -v`: **23passed,13.006s**. Full
+repository compileall passed. Tests fabricate patient records and patch native
+construction/stepping; no scientific smoke. Prior34checks reused. Volta closed;
+Lagrange's previous efficiency advice reused, no extra review gate.
+
+The numerical proposal has been updated to distinguish delivered interfaces
+from missing real bindings. Scientific values/budgets are unchanged. One full
+scope decision has been requested: complete the specified real binding, freeze
+source/runtime/input/seed locks, then execute exactly once within the proposal.
+No approval is recorded yet. This is a decision-ready numerical proposal, not
+an executable scientific packet. Same automation PAUSED with tool/TOML evidence.
+
+The02:35heartbeat explicitly closes this finite chain at fake integration and
+the full numerical decision. That supersedes the previous milestone's intent
+to finish every real implementation before asking: it avoids an open-ended
+preparation sequence without creating authority for any scientific call.
+Remaining blockers are the real filter/learner/controllers, native synthetic
+configuration and identity tapes, public MDL-2 adapter, settlement, durable
+budget/recording/raw-comparison binding and committed admission locks. Resolve
+them to the approved spec, not with another toy-fitting or screening campaign.
+
+## Previous Milestone: Patient Adapter and Common Collector
 
 2026-10-03 UTC. Entry HEAD `aac47b0`. In response to `火速推进`, completed
 additive source rather than another audit of old campaigns:

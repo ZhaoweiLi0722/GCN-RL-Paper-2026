@@ -1,6 +1,56 @@
 # Autonomous local research queue
 
-## Live checkpoint: patient support adapter delivered; finish controllers next
+## Live checkpoint: fake campaign delivered; one pilot scope decision pending
+
+2026-10-03T02:53Z. Entry HEAD 6e4131b792a17c9e23964d7aec3ba3b8dea58189;
+same branch/worktree, initially clean. Read-only PID/command filter found no
+related scientific process. No new performance experiment is running.
+
+Delivered additive v2 public patient/resource view and same-information input:
+src/env/patient_support_public.py and src/rl/public_support_input.py. Actual
+post-routing service order, completed identities and ordinary/flexible exposure
+are available only at the next boundary. Partial remaining work, latent health
+and efficiency tapes stay private. Patient-status/survival observability is a
+proposed synthetic assumption, not verified E1 data.
+
+Volta delivered src/rl/capacity_adaptation_campaign.py and its tests and is
+closed. The explicitly artificial backend exercises all six roles, complete
+offline seal barrier, same-start forks, matched noise keys, own histories,
+online-only deployment updates, deferred final control update and separate
+nonrefundable operation/query counters. Restored mock snapshots cannot resume.
+The full artificial schedule reconciles 288 trajectories/18432 native epochs,
+3936 actor +3936 critic dispatch tokens and1327104 planner-epoch tokens. Actual
+scientific environment/model/optimizer/planner calls remain ZERO.
+
+Validation:23new targeted tests passed in13.006s; full repository compileall
+passed. Prior34patient-adapter checks are reused, not repeated. No historical
+rerun, audit or archive; no scientific checkpoint loaded; no external action.
+
+Complete numerical scope is in
+specs/2026-10-03-dynamic-capacity-adaptation/pilot-proposal.{md,json}.
+It includes3seeds/3conditions/6arms,288total/216evaluation trajectories,
+18432steps/19008native operations,7872optimizer calls,25824network forwards,
+1327104planner epochs,1843200filter hypothesis transitions,5400seconds and
+2GiB storage. These remain proposed caps, not actual science or an ETA.
+
+One exact execution-scope question was sent at this milestone; no answer yet.
+Approval would cover completing the fixed real estimator/learner/controllers,
+native settlement/CRNs/recording/resource enforcement and then ONE comparison
+after matching committed source/runtime/input/seed locks. Those real components
+are not yet implemented; approval must not be mistaken for readiness. No extra
+toy fitting gate, severity/reward search or repeated routine-phase permission.
+If a scientific assumption/budget cannot be met, report the mismatch rather
+than silently substituting a new experiment.
+
+Plan adjustment: the02:35heartbeat defines this finite chain as public producer,
+fake six-controller integration and numerical decision. Complete that chain
+now instead of indefinitely postponing the decision for further implementation.
+Old scientific locks and zero-current-science allowance are unchanged. Existing
+efficiency advice reused; no new audit agent. Same gcn-rl automation is PAUSED,
+tool and TOML confirmed, preserving its visible record while this decision is
+pending. Next action is the single complete scope decision, not another monitor.
+
+### Previous patient-adapter milestone
 
 2026-10-03T02:20Z. User requested `火速推进`. Entry HEAD aac47b0; same branch
 and worktree, initially clean. No related scientific process matched the actual

@@ -3281,3 +3281,24 @@ training or independent confirmation. Source amendment changes the predictor,
 not patient costs/reward/live filter/architecture/seed/sample/decision rule.
 The continuation runner is not yet implemented; no numerical approval received.
 StageE, holdout, local-only and external-action restrictions remain unchanged.
+
+#### Dynamic-capacity remaining-only recovery2 approved in context
+
+2026-10-03T08:58Z. Zhaowei replied `推进` after the complete remaining-work
+numerical question. Record the exact reply in recovery2/approval-intent.json;
+it approves the one submitted remainder, not restarting block0 or repeated
+retries. Draft proposal SHA256 b515376d10f44a6e690983cfc187b2cd85ed9683c70baee3a7be4af008b85a83
+remains false. Preserve the existing seal,35completed trajectories and47saved
+partial rows. New limits16145native steps/16651native ops/6208optimizer/
+21344forward/885120planner/1689600filter transitions/5400seconds/2GiB, including
+751saved-receipt reconstructions and216final evaluations; all sublimits apply.
+
+The additive saved-teacher loader and remaining-only entry now preserve original
+world/row order, filter terminal state, cost targets, partial native state and
+three-seal-before-test boundary. No recollection fallback or refund. Validate
+with fake native/learner backends and saved metadata, then commit source and
+effective source/runtime/input/seed locks before the single launch. No extra
+qualification fit or real smoke. Earlier teacher decisions remain historical,
+not proven equivalent; disclose mixed initialization. Within each block online
+and frozen arms share one exact seal. Original science and old evidence stay
+unchanged. No Howard approval, remote actions, holdout or StageE reopening.

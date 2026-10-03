@@ -1,4 +1,29 @@
-# Resource Repair: Executed Engineering Regression, No New Trial
+# Resource Repair And Approved Remaining-Only Integration
+
+## Current Integration
+
+2026-10-03T08:58Z. Zhaowei replied `推进` to the complete remainder question;
+approval-intent.json binds the exact original and remainder hashes. Additive
+capacity_recovery2_runner/resources/execution and saved_teacher_replay deliver
+the remaining-work entry. The real builder is exercised end to end with fake
+native/learner backends:751saved receipts,47-step boundary restoration,
+16145new native steps,6208optimizer hook calls,3seals before216evaluations,
+unchanged old bytes and exact terminal counters. Fake hook calls are not actual
+optimizer updates. The independent loader has13artificial contract tests.
+Saved real teacher metadata schemas were checked without filter/model/native
+execution. No extra scientific preflight or toy fit is needed.
+
+Final builder-integrated16artificial tests passed in9.345seconds, and whole
+compileall passed. Real patient stepping, model loading and optimization remain
+zero in this engineering validation; no additional scientific qualification gate.
+
+This entry imports block0 as seal bytes and preserves mixed initializer history;
+it does not restart training at block0. The advance agent completed the disjoint
+loader and is closed; reuse the earlier efficiency advice. Next: final relevant
+tests/compileall are complete; local source/authority commit, freeze and commit effective
+locks, then execute once. Science has not started at this checkpoint.
+
+## Previous Repair Checkpoint
 
 2026-10-03 UTC. Entry d0c94ee. Zhaowei requested `火速推进` immediately
 after the explanation proposing a targeted predictor repair and remaining-work
@@ -74,4 +99,3 @@ One approval would cover finishing that exact integration then freezing and
 running once, without routine-stage questions. No recollection fallback,
 reward changes or automatic further retry. Same automation remains PAUSED;
 no experiment is currently running and no completion ETA is claimed.
-

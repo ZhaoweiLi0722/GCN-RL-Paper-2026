@@ -1,6 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: resource defect fixed; one remainder decision pending
+## Live checkpoint: approved remaining-only entry delivered; freezing next
+
+2026-10-03T08:58:08Z. Same worktree/branch, entry9939cc7. Zhaowei replied
+`推进` to the full recovery2 remainder package; exact approval is recorded in
+recovery2/approval-intent.json and appended to change control. No Howard approval.
+No scientific runner is active and no new science has yet executed this turn.
+
+Delivered the saved-teacher reconstruction and partial-boundary continuation,
+versioned remaining-only budget/entry and actual CLI. Reuse35complete trajectories,
+47partial steps and block0 seal; no native replay or block0 retraining. Fake
+end-to-end counters match the complete remainder, with3seals before216evaluations.
+Final builder-integrated16artificial tests passed in9.345seconds and full
+compileall passed. Actual saved metadata schema check passed with
+zero filter/model/native calls. Hypatia finished the disjoint loader and is
+closed. Earlier efficiency advice reused; no additional audit gate.
+
+Remaining critical path: local source/authority commit, freeze
+source/runtime/consumed-input/seeds, commit effective authority,
+one launch. Authorized budgets are16145native/16651native ops/6208optimizer/
+21344forward/885120forecast/1689600filter including751saved receipts;
+5400seconds includingI/O,2GiB,216final evaluations. All original sublimits and
+mixed-initializer disclosure apply. Draft stays false, effective execution locks
+are not yet frozen. Same automation is PAUSED until a verified launch. Do not
+ask for routine-phase approval or add another diagnostic campaign.
+
+## Previous checkpoint: resource defect fixed; one remainder decision pending
 
 2026-10-03T08:20:41Z. Entryd0c94ee, clean matching worktree/branch.
 User `火速推进` authorizes the proposed narrow repair and remainder preparation,

@@ -3302,3 +3302,31 @@ qualification fit or real smoke. Earlier teacher decisions remain historical,
 not proven equivalent; disclose mixed initialization. Within each block online
 and frozen arms share one exact seal. Original science and old evidence stay
 unchanged. No Howard approval, remote actions, holdout or StageE reopening.
+
+#### Patient-constrained training proposal: preparation only
+
+2026-10-03T10:08Z. Recovery2 has completed with no reliable online benefit;
+its authority is consumed. Zhaowei replied `继续` to the offered preparation
+of a new patient-outcome-constrained comparison. This permits preparation,
+not an unasked numerical experiment. No Howard approval is represented.
+
+New protocol: specs/2026-10-03-patient-constrained-improvement/protocol.md;
+draft config: experiments/configs/patient_constrained_capacity_20261003.json.
+Exact fixed-allocation actor initialization avoids mixed/weak imitation and
+supplies the same-start frozen comparator. Compare constrained and lambda-zero
+cost-only GCN training, with matched dual-critic compute, versus fixed and
+corrected ID-MPC. Keep physical costs and the existing synthetic environment;
+add an explicit expected patient-loss constraint relative to paired fixed
+training worlds. This is not a guarantee of safety or a validated clinical
+margin. Both learned policies are frozen during evaluation: the proposed claim
+is simulation RL training gain, not deployment-online adaptation or graph gain.
+
+Proposed one attempt: 3blocks,108reference/training plus144evaluation worlds,
+16128native steps,16632native operations,11904optimizer calls plus36scalar
+multiplier updates,38400forwards,663552planner epochs,1612800filter transitions,
+7200seconds includingI/O,2GiB. All phase/owner caps are in the proposal. No BC,
+historical model reuse, extra screen, retry, selection or follow-on study.
+Fresh seeds are prospective and still need derived-manifest conflict validation.
+Before any scientific admission obtain exact package approval, implement the
+additive entry with fake tests, and commit source/runtime/input/seed locks.
+StageE/holdout and all external-action restrictions remain unchanged.

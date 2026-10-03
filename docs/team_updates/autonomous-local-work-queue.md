@@ -1,6 +1,55 @@
 # Autonomous local research queue
 
-## Live checkpoint: recovery2 complete; no reliable online benefit; paused
+## Live checkpoint: bounded patient-constrained training proposal ready; not launched
+
+2026-10-03T10:08Z. Entryfa211c6; same branch/worktree. Zhaowei's `继续` responds
+to preparing the next constrained-performance proposal, not an unasked run
+budget. No related capacity runner process is present. Samegcn-rlmonitor remains
+PAUSED. This turn added no scientific model load/forward, environment or update.
+
+Delivered specs/2026-10-03-patient-constrained-improvement/protocol.md and
+experiments/configs/patient_constrained_capacity_20261003.json. New answer: avoid
+another weak/mixed imitation initializer by making the GCN actor's exact start
+equal fixed [2,2,2,2]hours. Compare patient-constrained and compute-matched
+cost-only RL training from the same full state against fixed and corrected
+ID-MPC. Patient-loss constraints enter the training objective, not just a
+post-hoc test screen. Full physical cost weights remain unchanged. This is a
+proposed algorithm, not a demonstrated safe controller or performance gain.
+
+Deliberate scope adjustment: evaluate fully frozen trained policies first;
+deployment-online adaptation is deferred, not relabeled as solved. Reason:
+the completed online learner failed even simple-controller comparisons.
+Keep three existing conditions, exact public information, settled cost/patient
+endpoints and fresh paired worlds. No graph-attribution or clinical claim.
+
+One proposed attempt: 3blocks,108training/reference plus144evaluation worlds,
+16128native steps,16632native operations,3456actor+8448critic=11904optimizer
+calls,36scalar dual updates,38400forwards,663552planner epochs,1612800filter
+transitions,7200seconds includingI/O,2GiB. Six final trained seals precede tests.
+Protocol defines stage/owner caps and closed-attempt rules. No automatic retry,
+new scenarios, weight search, holdout, StageE reopening, external actions or
+online follow-on. Draft scientific_execution_authorized remains false.
+
+Remaining implementation: additive dual-critic/loss labels, matched-reference
+serial runner, raw reader and actual-entry fake tests; reuse native/filter/
+projection/archive/watchdog, not historical audits. Preparation estimate60-120min,
+run estimate45-90min under2h hard cap, neither a guarantee. If prep overruns,
+name the concrete blocker and drop optional reporting, not add toy gates.
+
+Hypatia supplied one finite read-only design deliverable and closed; existing
+efficiency advice reused. JSON/hash/arithmetic checks, diff check and whole-repo
+compileall passed; preparation-readout.md records exactly what was checked.
+No dual-critic integration test is claimed before its implementation.
+Candidate seed bases/model seeds had no exact match in existing
+specs/configs; derived historical-manifest conflict check is still required at
+freeze. No scientific execution or new performance result claimed.
+
+Next permission: approve this complete numerical package for necessary local
+implementation, zero-update tests, committed locks and one end-to-end attempt.
+Routine stages then need no separate approval. Until then preparation only;
+do not launch. Previous completed result remains authoritative below.
+
+## Previous checkpoint: recovery2 complete; no reliable online benefit; paused
 
 2026-10-03T09:39Z. Entrybabbcb7, same branch/worktree. Terminal exit0 after
 2213.987seconds; supervisor35197/child35211 exited and no related runner remains.

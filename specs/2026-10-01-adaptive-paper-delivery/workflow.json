@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 77,
-  "updated_at_utc": "2026-10-03T11:25:30Z",
+  "revision": 78,
+  "updated_at_utc": "2026-10-03T11:27:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "4854563",
@@ -11,7 +11,7 @@
   "execution_authorization": "specs/2026-10-03-patient-constrained-improvement/authorization.json",
   "scientific_execution_authorized": true,
   "authorization_state": "User explicitly approved the complete preparation-and-execution package. Scientific admission awaits necessary committed source/runtime/input/seed locks, not another user decision. Historical recovery2 remains consumed.",
-  "status": "patient_constrained_approved_entry_tested_freezing_then_launching",
+  "status": "patient_constrained_single_attempt_running_actual_actor_training",
   "patient_constrained_improvement": {
     "preparation_approved": true,
     "user_literal": "准备 并且执行实验 以后不要单独进行 准备好直接进行实验",
@@ -25,8 +25,16 @@
     "runtime_source_input_locks_frozen": true,
     "implementation_commit": "0ca0502",
     "packet_sha256": "dece9e38ffcbc8d6f8b4797854dc121c7454c8a6e1a335094cd678dda8e425b5",
-    "new_scientific_forwards_environment_optimizer": 0,
-    "related_runner_absent_verified": true,
+    "execution_commit": "c77bd4e8ce0339a330600370cf5f82f93c810d69",
+    "result_root": "results/patient_constrained_capacity_20261003",
+    "scientific_launch_performed": true,
+    "supervisor_pid": 40789,
+    "child_pid": 40801,
+    "pid_ppid_full_command_and_new_boundary_verified": true,
+    "first_complete_learned_arm": "block0_constrained",
+    "first_arm_actual_actor_updates": 576,
+    "first_arm_actual_critic_updates_including_shared_warmup": 1664,
+    "evaluations_opened": false,
     "proposal": {
       "blocks": 3,
       "training_reference_worlds": 108,
@@ -55,8 +63,9 @@
     "proposal_json_hash_arithmetic_passed": true,
     "compileall_passed": true,
     "efficiency_advice_reused": true,
-    "automation_status": "PAUSED",
-    "next": "Commit source,freeze and commit exact locks/effective authorization,then directly launch the approved single attempt. No redundant approval,no extra preparation campaign."
+    "automation_status": "ACTIVE",
+    "automation_tool_confirmed": true,
+    "next": "Observe the one existing serial attempt through six final fits,sealed evaluation,independent raw readout and archive. Do not launch again or retry;no repeated stage approval."
   },
   "dynamic_capacity_recovery2": {
     "scope_approved": true,

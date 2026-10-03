@@ -1,6 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: patient-constrained package approved; entry tested; freezing then launching
+## Live checkpoint: patient-constrained single experiment running; real actor training reached
+
+2026-10-03T11:27Z. Executionc77bd4e8ce0339a330600370cf5f82f93c810d69;
+implementation0ca0502; packetdece9e38ffcbc8d6f8b4797854dc121c7454c8a6e1a335094cd678dda8e425b5.
+The one approved attempt was launched exactly once in
+results/patient_constrained_capacity_20261003. Supervisor40789/PPID1 and
+child40801/PPID40789 match full command/claims; new eight-step and completed
+trajectory/model boundaries verify actual running, not just the schedule.
+
+Block0 constrained training completed576actor and1664critic updates including
+shared warmup512critic; its final model is persisted. This is actual training,
+not a performance result. First initial seal and finite optimizer receipts exist;
+evaluation has not opened. The serial runner proceeds through the other arm/
+blocks, then144frozen evaluations only after all six final model seals.
+Stderr and detached-launch log are empty; no failure marker observed.
+
+Samegcn-rlautomation updated ACTIVE for this exact packet/PIDs. It monitors the
+existing process only; no retry/freeze/launch permitted. Continue saved evidence
+readout and terminal handoff automatically within the package. User's preparation
+and execution preference is inAGENTS. Next: complete all six fits then paired
+cost/patient comparison. No additional decision is needed within this attempt.
+Current elapsed pace is faster than the45-90min initial estimate, but corrected
+ID-MPC remains the expected evaluation bottleneck; report ETA from its observed
+rate once reached. Scientific scope/limits unchanged; no remote actions.
+
+## Previous checkpoint: patient-constrained package approved; entry tested; freezing then launching
 
 2026-10-03T11:25Z. Entry4854563; same branch/worktree. Exact user approval:
 `准备 并且执行实验 以后不要单独进行 准备好直接进行实验`.

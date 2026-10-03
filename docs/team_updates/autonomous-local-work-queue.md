@@ -1,6 +1,29 @@
 # Autonomous local research queue
 
-## Live checkpoint: native capacity attempt failed before fitting; correction decision
+## Live checkpoint: precision correction delivered; freeze and launch once
+
+2026-10-03 UTC. Entry53c0448, clean matching worktree; read-only process check
+found no remaining capacity runner. Current user `继续推进` follows the complete
+one-shot correction question and performance-first reminder; exact contextual
+authority recorded in recovery1/approval-intent.json and appended locked plan.
+Original failed attempt stays consumed and preserved. No new science yet.
+
+Exact bug identified and fixed in additive recovery1 planner: adding a positive
+half-ULP work remainder to8 erased strict slack. Signed compensated prefix sums
+and consistent midpoint service retain work, without tolerance or reward change.
+Public-only saved fixture now completes384forecast calls; live filter unchanged.
+14focused tests passed in2.020s; fullcompileall passed with permitted cache path.
+Heisenberg's disjoint horizon tests delivered and closed; efficiency advice
+reused. No new toy fit, historical audit, patient episode or optimizer update.
+
+Readout: specs/2026-10-03-dynamic-capacity-adaptation/recovery1/integration-readout.md.
+Next authorized action: commit implementation/intent, freeze current locks and
+effective authorization, commit, then launch the same-design one-shot new root
+results/dynamic_capacity_adaptation_20261003_recovery1. No repeated stage approval.
+Preparation estimate15-20minutes; only this binding remains. Complete cost and
+patient comparisons, not test counts, decide performance. No automatic retry.
+
+## Previous checkpoint: native capacity attempt failed before fitting; correction decision
 
 2026-10-03T03:25Z. The approved one-shot WAS launched at execution6f40734;
 supervisor28124/PPID1 and child28136/PPID28124 exited after5.37343s with exit1.

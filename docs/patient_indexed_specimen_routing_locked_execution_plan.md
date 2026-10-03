@@ -3234,3 +3234,22 @@ saved-data-only partial analysis complete. No performance or reward conclusion.
 Preserve this consumed run/source and do not automatically repair/relaunch it.
 One same-design engineering-correction attempt is proposed in terminal-readout;
 it requires a new explicit user decision with its own full budget and directory.
+
+#### Dynamic-capacity precision correction approved in context
+
+2026-10-03 UTC: Zhaowei replied `继续推进` after the complete one-shot correction
+question and the reminder to keep preparation short. Record this exact reply in
+recovery1/approval-intent.json. It authorizes that same-design single correction
+attempt, not a third retry or scientific search. Original288trajectory/216eval/
+7872optimizer/18432step/19008native/1327104planner/1843200filter/25824forward/
+5400second/2GiB caps and all sublimits remain unchanged. Prior calls stay charged
+to the consumed first attempt; same seeds are explicitly reused, not independent
+confirmation. No reward, architecture, scenario, sample or threshold change.
+
+The saved public boundary reproduces loss of a positive half-ULP remainder in
+the planner's strict-prefix check. A new versioned predictor evaluates the same
+inequalities and midpoint service with signed compensated sums; no tolerance,
+patient rounding or alteration of the live filter. Legacy source and failed
+results remain immutable. Freeze current source/runtime/input/old-failure locks
+before the new entry may run. Existing training/analysis machinery and valid
+checks are reused. No Howard approval, remote action, holdout or StageE reopening.

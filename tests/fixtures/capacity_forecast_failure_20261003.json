@@ -1,0 +1,1048 @@
+{
+  "source_path": "results/dynamic_capacity_adaptation_20261003/payload/failure-state.pkl.gz",
+  "source_sha256": "16110e097b53f77aac8e8070a8cb27c31fd604b487dc7ff2ea86592c6a1d21a7",
+  "purpose": "Public-only regression fixture; not evaluation or a resumable experiment",
+  "controller": {
+    "format": "capacity-completion-control-v1",
+    "filter": {
+      "format": "completion-interval-filter-v1",
+      "weights": [
+        [
+          0.0,
+          0.0,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        [
+          0.0,
+          0.0,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        [
+          0.0,
+          0.0,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        [
+          0.0,
+          0.0,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ]
+      ],
+      "boxes": [
+        [
+          {},
+          {},
+          {},
+          {},
+          {}
+        ],
+        [
+          {
+            "world62600000:patient00000005": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000005": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000005": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000005": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000005": [
+              4.0,
+              4.0
+            ]
+          }
+        ],
+        [
+          {
+            "world62600000:patient00000003": [
+              2.0,
+              4.0
+            ],
+            "world62600000:patient00000006": [
+              4.0,
+              4.0
+            ],
+            "world62600000:patient00000007": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000003": [
+              2.0,
+              4.0
+            ],
+            "world62600000:patient00000006": [
+              4.0,
+              4.0
+            ],
+            "world62600000:patient00000007": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000003": [
+              4.0,
+              4.0
+            ],
+            "world62600000:patient00000006": [
+              4.0,
+              4.0
+            ],
+            "world62600000:patient00000007": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000003": [
+              3.0,
+              3.0
+            ],
+            "world62600000:patient00000006": [
+              4.0,
+              4.0
+            ],
+            "world62600000:patient00000007": [
+              4.0,
+              4.0
+            ]
+          },
+          {
+            "world62600000:patient00000003": [
+              2.0,
+              2.0
+            ],
+            "world62600000:patient00000006": [
+              4.0,
+              4.0
+            ],
+            "world62600000:patient00000007": [
+              4.0,
+              4.0
+            ]
+          }
+        ],
+        [
+          {},
+          {},
+          {},
+          {},
+          {}
+        ]
+      ],
+      "location": {
+        "world62600000:patient00000003": 2,
+        "world62600000:patient00000005": 1,
+        "world62600000:patient00000006": 2,
+        "world62600000:patient00000007": 2
+      },
+      "closed": [
+        "world62600000:patient00000000",
+        "world62600000:patient00000001",
+        "world62600000:patient00000002",
+        "world62600000:patient00000004"
+      ],
+      "patients": {
+        "world62600000:patient00000000": {
+          "patient_id": "world62600000:patient00000000",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 0,
+          "material_site": 0,
+          "manufacturing_site": 0,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.9517715245617243,
+          "support_complete": true
+        },
+        "world62600000:patient00000001": {
+          "patient_id": "world62600000:patient00000001",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 1,
+          "material_site": 1,
+          "manufacturing_site": 1,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.96517102239846,
+          "support_complete": true
+        },
+        "world62600000:patient00000002": {
+          "patient_id": "world62600000:patient00000002",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": 2,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.9607862236798571,
+          "support_complete": true
+        },
+        "world62600000:patient00000003": {
+          "patient_id": "world62600000:patient00000003",
+          "enrollment_epoch": 0,
+          "status": "waiting",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": null,
+          "age": 1,
+          "specimen_age": 1,
+          "survival": 0.9569864191378438,
+          "support_complete": false
+        },
+        "world62600000:patient00000004": {
+          "patient_id": "world62600000:patient00000004",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 3,
+          "material_site": 3,
+          "manufacturing_site": 3,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.9772299974551986,
+          "support_complete": true
+        },
+        "world62600000:patient00000005": {
+          "patient_id": "world62600000:patient00000005",
+          "enrollment_epoch": 1,
+          "status": "waiting",
+          "collection_site": 1,
+          "material_site": 1,
+          "manufacturing_site": null,
+          "age": 0,
+          "specimen_age": 0,
+          "survival": 1.0,
+          "support_complete": false
+        },
+        "world62600000:patient00000006": {
+          "patient_id": "world62600000:patient00000006",
+          "enrollment_epoch": 1,
+          "status": "waiting",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": null,
+          "age": 0,
+          "specimen_age": 0,
+          "survival": 1.0,
+          "support_complete": false
+        },
+        "world62600000:patient00000007": {
+          "patient_id": "world62600000:patient00000007",
+          "enrollment_epoch": 1,
+          "status": "waiting",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": null,
+          "age": 0,
+          "specimen_age": 0,
+          "survival": 1.0,
+          "support_complete": false
+        }
+      },
+      "epoch": 2,
+      "last_view": {
+        "common": {
+          "epoch": 2,
+          "site_ids": [
+            "S0",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "base_observation": [
+            3.0,
+            0.0,
+            7.0,
+            7.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            7.0,
+            7.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            3.0,
+            7.0,
+            7.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            7.0,
+            7.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.9517714977264404,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            0.0,
+            1.0,
+            0.9651710391044617,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            3.0,
+            0.9856621623039246,
+            0.0,
+            1.0,
+            0.9607862234115601,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.9772300124168396,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.03125
+          ],
+          "capacity_history": [
+            [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                2.0,
+                0.0,
+                4.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                4.0,
+                0.0,
+                4.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                2.0,
+                0.0,
+                4.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                1.3333333333333333,
+                0.0,
+                4.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                2.0,
+                0.0,
+                4.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                1.3333333333333333,
+                0.0,
+                4.0,
+                2.0,
+                1.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                2.0,
+                0.0,
+                4.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                1.3333333333333333,
+                0.0,
+                4.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ]
+          ],
+          "pending_hours": [
+            [
+              2.0,
+              2.0,
+              2.0,
+              2.0
+            ],
+            [
+              4.0,
+              1.3333333333333333,
+              1.3333333333333333,
+              1.3333333333333333
+            ]
+          ],
+          "ready_waiting_counts": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "operations": {
+          "epoch": 2,
+          "site_ids": [
+            "S0",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "patients": [
+            {
+              "patient_id": "world62600000:patient00000000",
+              "enrollment_epoch": 0,
+              "status": "in_production",
+              "collection_site": 0,
+              "material_site": 0,
+              "manufacturing_site": 0,
+              "age": 1,
+              "specimen_age": 0,
+              "survival": 0.9517715245617243,
+              "support_complete": true
+            },
+            {
+              "patient_id": "world62600000:patient00000001",
+              "enrollment_epoch": 0,
+              "status": "in_production",
+              "collection_site": 1,
+              "material_site": 1,
+              "manufacturing_site": 1,
+              "age": 1,
+              "specimen_age": 0,
+              "survival": 0.96517102239846,
+              "support_complete": true
+            },
+            {
+              "patient_id": "world62600000:patient00000002",
+              "enrollment_epoch": 0,
+              "status": "in_production",
+              "collection_site": 2,
+              "material_site": 2,
+              "manufacturing_site": 2,
+              "age": 1,
+              "specimen_age": 0,
+              "survival": 0.9607862236798571,
+              "support_complete": true
+            },
+            {
+              "patient_id": "world62600000:patient00000003",
+              "enrollment_epoch": 0,
+              "status": "waiting",
+              "collection_site": 2,
+              "material_site": 2,
+              "manufacturing_site": null,
+              "age": 1,
+              "specimen_age": 1,
+              "survival": 0.9569864191378438,
+              "support_complete": false
+            },
+            {
+              "patient_id": "world62600000:patient00000004",
+              "enrollment_epoch": 0,
+              "status": "in_production",
+              "collection_site": 3,
+              "material_site": 3,
+              "manufacturing_site": 3,
+              "age": 1,
+              "specimen_age": 0,
+              "survival": 0.9772299974551986,
+              "support_complete": true
+            },
+            {
+              "patient_id": "world62600000:patient00000005",
+              "enrollment_epoch": 1,
+              "status": "waiting",
+              "collection_site": 1,
+              "material_site": 1,
+              "manufacturing_site": null,
+              "age": 0,
+              "specimen_age": 0,
+              "survival": 1.0,
+              "support_complete": false
+            },
+            {
+              "patient_id": "world62600000:patient00000006",
+              "enrollment_epoch": 1,
+              "status": "waiting",
+              "collection_site": 2,
+              "material_site": 2,
+              "manufacturing_site": null,
+              "age": 0,
+              "specimen_age": 0,
+              "survival": 1.0,
+              "support_complete": false
+            },
+            {
+              "patient_id": "world62600000:patient00000007",
+              "enrollment_epoch": 1,
+              "status": "waiting",
+              "collection_site": 2,
+              "material_site": 2,
+              "manufacturing_site": null,
+              "age": 0,
+              "specimen_age": 0,
+              "survival": 1.0,
+              "support_complete": false
+            }
+          ],
+          "waiting_order": [
+            [],
+            [
+              "world62600000:patient00000005"
+            ],
+            [
+              "world62600000:patient00000003",
+              "world62600000:patient00000006",
+              "world62600000:patient00000007"
+            ],
+            []
+          ],
+          "reagents": [
+            7.0,
+            7.0,
+            7.0,
+            7.0
+          ],
+          "bioreactors": [
+            [
+              7.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              7.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              7.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              7.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "reagent_transfers": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "capacity_transfers": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "reagent_orders": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "supplier_available": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "demand_forecast": [
+            1.5,
+            1.5,
+            1.5,
+            1.5
+          ],
+          "last_service": {
+            "epoch": 1,
+            "known_at": 2,
+            "eligible_order": [
+              [
+                "world62600000:patient00000000"
+              ],
+              [
+                "world62600000:patient00000001"
+              ],
+              [
+                "world62600000:patient00000002",
+                "world62600000:patient00000003"
+              ],
+              [
+                "world62600000:patient00000004"
+              ]
+            ],
+            "completed_ids": [
+              [
+                "world62600000:patient00000000"
+              ],
+              [
+                "world62600000:patient00000001"
+              ],
+              [
+                "world62600000:patient00000002"
+              ],
+              [
+                "world62600000:patient00000004"
+              ]
+            ],
+            "ordinary_hours": [
+              4.0,
+              4.0,
+              4.0,
+              4.0
+            ],
+            "applied_hours": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "current_arrivals": [
+            3.0,
+            0.0,
+            2.0,
+            0.0
+          ]
+        }
+      },
+      "reset_events": []
+    },
+    "lifecycle": {
+      "epoch": 2,
+      "records": {
+        "world62600000:patient00000000": {
+          "patient_id": "world62600000:patient00000000",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 0,
+          "material_site": 0,
+          "manufacturing_site": 0,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.9517715245617243,
+          "support_complete": true
+        },
+        "world62600000:patient00000001": {
+          "patient_id": "world62600000:patient00000001",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 1,
+          "material_site": 1,
+          "manufacturing_site": 1,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.96517102239846,
+          "support_complete": true
+        },
+        "world62600000:patient00000002": {
+          "patient_id": "world62600000:patient00000002",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": 2,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.9607862236798571,
+          "support_complete": true
+        },
+        "world62600000:patient00000003": {
+          "patient_id": "world62600000:patient00000003",
+          "enrollment_epoch": 0,
+          "status": "waiting",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": null,
+          "age": 1,
+          "specimen_age": 1,
+          "survival": 0.9569864191378438,
+          "support_complete": false
+        },
+        "world62600000:patient00000004": {
+          "patient_id": "world62600000:patient00000004",
+          "enrollment_epoch": 0,
+          "status": "in_production",
+          "collection_site": 3,
+          "material_site": 3,
+          "manufacturing_site": 3,
+          "age": 1,
+          "specimen_age": 0,
+          "survival": 0.9772299974551986,
+          "support_complete": true
+        },
+        "world62600000:patient00000005": {
+          "patient_id": "world62600000:patient00000005",
+          "enrollment_epoch": 1,
+          "status": "waiting",
+          "collection_site": 1,
+          "material_site": 1,
+          "manufacturing_site": null,
+          "age": 0,
+          "specimen_age": 0,
+          "survival": 1.0,
+          "support_complete": false
+        },
+        "world62600000:patient00000006": {
+          "patient_id": "world62600000:patient00000006",
+          "enrollment_epoch": 1,
+          "status": "waiting",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": null,
+          "age": 0,
+          "specimen_age": 0,
+          "survival": 1.0,
+          "support_complete": false
+        },
+        "world62600000:patient00000007": {
+          "patient_id": "world62600000:patient00000007",
+          "enrollment_epoch": 1,
+          "status": "waiting",
+          "collection_site": 2,
+          "material_site": 2,
+          "manufacturing_site": null,
+          "age": 0,
+          "specimen_age": 0,
+          "survival": 1.0,
+          "support_complete": false
+        }
+      },
+      "stages": {
+        "world62600000:patient00000000": 4,
+        "world62600000:patient00000001": 4,
+        "world62600000:patient00000002": 4,
+        "world62600000:patient00000004": 4
+      },
+      "destinations": {},
+      "transferred": [],
+      "recorded_epoch": 1
+    },
+    "last_plan": null
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "all_receipt_numbers_finite": true,
+  "failure_boundary": {
+    "block": 1,
+    "condition": 2,
+    "phase": "teacher_bc_critic_warmup",
+    "replicate": 3,
+    "role": "teacher",
+    "seed": 62601023
+  },
+  "failure_epoch": 47,
+  "final_update_counts": {
+    "actor_optimizer_steps": 832,
+    "bc_steps": 256,
+    "critic_optimizer_steps": 832,
+    "neural_forward_module_calls": 4480,
+    "offline_pairs": 576,
+    "online_pairs": 0,
+    "optimizer_example_presentations": 106496,
+    "total_optimizer_steps": 1664,
+    "warmup_steps": 256
+  },
+  "modes": {
+    "bc": 256,
+    "offline": 576,
+    "warmup": 256
+  },
+  "no_model_forward_or_environment_execution": true,
+  "no_rl_performance_conclusion": true,
+  "observed_at_utc": "2026-10-03T04:15:41.818997+00:00",
+  "saved_real_public_matrices": {
+    "bioreactors": {
+      "all_finite": true,
+      "minimum": 0.0
+    },
+    "capacity_transfers": {
+      "all_finite": true,
+      "minimum": 0.0
+    },
+    "reagent_orders": {
+      "all_finite": true,
+      "minimum": 0.0
+    },
+    "reagent_transfers": {
+      "all_finite": true,
+      "minimum": 0.0
+    }
+  },
+  "seal_hash_verified": true,
+  "seal_sha256": "68e5ee091c6083e2d67a917d50abed8bd3053ff8d7b248f4763ed8e95b0d6d7d",
+  "sealed_models": 1,
+  "status": "terminal_engineering_failure",
+  "update_receipts": 1088
+}

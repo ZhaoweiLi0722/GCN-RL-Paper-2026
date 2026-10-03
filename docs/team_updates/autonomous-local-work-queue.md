@@ -1,6 +1,39 @@
 # Autonomous local research queue
 
-## Live checkpoint: capacity recovery1 running; first full trajectory saved
+## Live checkpoint: recovery1 stopped after one trained seal; handoff complete
+
+2026-10-03T04:17:42Z. Same worktree/branch, entrya34bb49 initially clean.
+Actual supervisor29491/child29504 are absent. Recovery1 terminal exit1 at
+793.920531seconds: invalid public resource value in internal ID-MPC forecast,
+teacher block1/condition2/replicate3/epoch47. Not a budget timeout. No restart,
+scientific model/forecast execution, environment call or optimizer this heartbeat.
+
+Real retained progress:23/36teacher complete plus47partial steps;12/36offline
+trajectories;actor832/3936,critic832/3936;1/3offline seal;0/216final evaluations.
+Block0 includes256BC,256critic warmup and576DDPG pairs. All1088update receipts
+finite; saved seal hash matches.2287/18432native steps,2359/19008native operations.
+Real training milestone established, but zero deployment-online updates or paired
+performance comparisons. Empty stderr does not negate the captured traceback.
+
+Saved-data raw reconstruction passes35complete trajectories, marks the47-row
+partial record incomplete with live liabilities. Saved real resource matrices
+are finite/nonnegative; exact offending forecast field/value remains unknown.
+Do not call this RL null, reward error, or a proven floating-point root cause.
+154new run files locally archived/member-verified without changing originals.
+No repeated historical audit/archive, source edits, remote or Dropbox actions.
+
+Readout: specs/2026-10-03-dynamic-capacity-adaptation/recovery1/terminal-readout.md.
+Evidence: reports/dynamic_capacity_recovery1_20261003_{partial_analysis,
+terminal_evidence,archive_receipt}.json. Same gcn-rl automation tool-confirmed
+PAUSED. No remaining execution ETA. This finite monitoring chain is complete.
+
+Next decision: whether to authorize targeted predictor resource-accounting repair
+and prepare a remaining-work continuation reusing the existing model/complete
+trajectories. No correction or new scientific attempt is authorized by this
+heartbeat; any eventual run needs one exact new numerical package and locks.
+Do not refund prior calls, rerun completed block0 or create extra toy gates.
+
+## Previous checkpoint: capacity recovery1 running; first full trajectory saved
 
 2026-10-03T03:42:33Z. Implementation56a85d2, execution18ee090decf3c1473097464737b698a0241f5297.
 Packet1e6a59ff5f83d2c11e61a5a047aff3fff0d376b3b9e72402739841a2a379186c.

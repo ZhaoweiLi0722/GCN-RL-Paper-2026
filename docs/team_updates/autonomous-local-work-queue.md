@@ -1,6 +1,36 @@
 # Autonomous local research queue
 
-## Live checkpoint: all fixed-budget models trained and sealed; frozen evaluation running
+## Live checkpoint: fixed-budget comparison completed; no stable RL gain; PAUSED
+
+2026-10-03T13:29Z. Execution28e8987/packet174c1d00 completed normally in
+1633.21 seconds, exit0. All36reference/36training/108evaluation worlds complete;
+1728actor/4992critic/36dual updates,3initial/3final seals,11520native steps.
+All final seals preceded test access; evaluation optimizer calls0. Every phase,
+owner and global cap passed. Stderr0, no failure markers or related processes.
+
+Primary persistent-change comparison versus the same-start uniform policy:
+mean paired cost +1.8183%, extra simulated patient losses +4.1667/world.
+All three prespecified criteria are false; descriptive intervals crosszero.
+No-change and fast-fluctuation cost means also worsen versus uniform. Favorable
+fast-fluctuation means versus MPC do not establish an increment over uniform.
+Actions changed1726/1728boundaries and total applied hours remain384/world;
+there was genuine training and redistribution, but no stable performance gain.
+
+Independent agent recomputed108files/6912rows/72contrasts; patient counts match
+exactly, maximum numeric discrepancy7.45e-9. Agent completed and closed.
+Current531sourcefiles/input/runtime/packet locks match;670existing payload
+hashes and archivebytes match. No repeat archive or historical audit.
+Prior23tests/compileall reused; this closure executed no scientific calls.
+
+Readout: specs/2026-10-03-fixed-budget-allocation/terminal-readout.md.
+Evidence: reports/fixed_budget_capacity_20261003_{independent_raw_check.json,
+independent_readout.md,terminal_evidence.json}. Same gcn-rl automation PAUSED,
+confirmed by tool and saved configuration. Attempt consumed; no automatic
+retry, extra epochs, reward changes or new models. The next decision is whether
+to close this capacity/DDPG recipe and authorize a distinct bounded proposal;
+no new scientific scope is approved. E1 remains missing; StageE/holdout closed.
+
+## Previous checkpoint: all fixed-budget models trained and sealed; frozen evaluation running
 
 2026-10-03T12:53Z. Sameexecution28e8987,packet174c1d00; supervisor44564 and
 child44576 stillmatch claims/fullcommands andnewprogressboundaries. All36fixed

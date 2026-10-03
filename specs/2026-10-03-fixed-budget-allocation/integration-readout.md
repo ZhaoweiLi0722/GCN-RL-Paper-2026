@@ -1,4 +1,14 @@
-# Fixed-Budget Allocation: Integrated Entry Ready
+# Fixed-Budget Allocation: Completed
+
+## Terminal Update
+
+2026-10-03T13:29Z. All180worlds including108frozen evaluations completed,
+exit0,1633.21seconds. No stable patient-preserving training gain: persistent
+cost +1.8183% and extra simulated patient losses +4.1667 versus uniform;
+all three prespecified criteria false. Independent raw readout and existing
+archive/hash checks complete; no residual process. Same gcn-rl task PAUSED.
+See `terminal-readout.md`. The execution and preparation records below are
+historical; the single attempt is consumed, not authority for another launch.
 
 ## Execution Update
 

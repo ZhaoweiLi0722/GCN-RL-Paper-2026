@@ -3391,3 +3391,22 @@ failure preserve evidence and stop, without repair/retry or budget reuse. No
 automatic follow-on, reward/model/scenario search, remote actions, holdout,
 Howard approval claim orStageEreopening. This is a fresh restricted allocation
 training comparison, not continuation of the old consumed trial.
+
+#### Fixed-budget single attempt completed and closed
+
+2026-10-03T13:29Z. Execution28e8987, packet174c1d00 completed all180worlds,
+including108frozen evaluations, within all frozen caps. Exit0; no related
+runner remains. Independent saved-raw comparison and current lock/archive
+hash checks completed; no new science was run for closure. Same gcn-rl
+automation PAUSED and retained. Full handoff is in
+specs/2026-10-03-fixed-budget-allocation/terminal-readout.md.
+
+No stable patient-preserving RL training gain: primary persistent-change mean
+paired cost +1.8183% and extra simulated patient losses +4.1667 versus the
+same-start uniform policy; all three prespecified criteria false. These are
+development observations, not proof of clinical harm, global optimality or
+all-RL impossibility. All outcomes, including favorable fast-fluctuation means
+versus MPC, are retained. No scientific locks or original results changed.
+The approved attempt is consumed; any new training, reward/decision-model
+revision or other scientific scope needs a new complete authorization.
+No automatic retry, extra samples, remote action, holdout or StageE reopening.

@@ -1,0 +1,30 @@
+{
+  "attempts": 1,
+  "automatic_follow_on": false,
+  "automatic_resume": false,
+  "automatic_retry": false,
+  "format": "capacity-value-mpc-authorization-v1",
+  "implementation_commit": "0fa338b6b1eced4468db3279029a0c7219f1f694",
+  "packet_sha256": "50fab0f56d52a8cb07629f59156dc9e5e6a882bc32dbb3f354f93d1af9f4770d",
+  "remote_export": false,
+  "scientific_execution_authorized": true,
+  "user_approval": {
+    "approval_recorded_at_utc": "2026-10-03T23:11:00Z",
+    "attempts": 1,
+    "automatic_retry": false,
+    "complete_package_question_asked_once": true,
+    "complete_package_reply_received": true,
+    "direction_preparation_approved": true,
+    "direction_user_literal": "\u597d\u7684 \u4f60\u53ef\u4ee5\u6309\u7167\u8fd9\u4e2a\u601d\u8def\u6765 \u7136\u540e\u706b\u901f\u63a8\u8fdb \u7136\u540e\u8fdb\u884c\u8bad\u7ec3 \u6d4b\u8bd5\u4e00\u4e0b\u6027\u80fd \u7136\u540e\u518d\u4fee\u6539\u4e00\u4e0bmanuscript\u56e0\u4e3a\u73b0\u5728\u601d\u8def\u53d8\u4e86",
+    "format": "capacity-value-mpc-approval-intent-v1",
+    "howard_approval_claimed": false,
+    "preparation_then_direct_execution_after_exact_approval": true,
+    "proposal_sha256": "5e968c0b011860f09ef92a2105021c1ded64724e8c76f4b512bbce5671667c9b",
+    "protocol_sha256": "b9c0c235434a8a4d6495ec4826f4bca83982dc9cea014f5d5703924c7d97f630",
+    "question": "\u8bf7\u786e\u8ba4\u8fd9\u4e00\u4e2a\u5b8c\u6574\u7684\u51c6\u5907\uff0b\u8bad\u7ec3\uff0b\u8bc4\u4f30\u5305\uff1a3\u4e2a\u72ec\u7acb\u533a\u5757\uff0c\u6bcf\u575724\u56de\u5408\u521d\u59cb\u4ef7\u503c\u5b66\u4e60\uff0b24\u56de\u5408\u7ee7\u7eed\u5b66\u4e60\uff1b\u6700\u540e144\u56de\u5408\u7edf\u4e00\u6bd4\u8f83\u666e\u901aMPC\u3001\u521d\u59cb\u51bb\u7ed3\u4ef7\u503cMPC\u3001\u7ee7\u7eed\u5b66\u4e60\u540e\u51bb\u7ed3\u4ef7\u503cMPC\u548c\u56fa\u5b9a\u5747\u5206\u3002\u603b\u8ba1288\u56de\u5408\u300118,432\u4e2a\u73af\u5883\u6b65\uff0c\u6700\u591a4,608\u6b21\u4ef7\u503c\u7f51\u7edc\u66f4\u65b0\u3001\u7ea6465\u4e07\u9884\u6d4b\u6b65\u30014\u5c0f\u65f6\u53ca4GiB\u672c\u5730\u5b58\u50a8\uff1b\u539f\u573a\u666f\u4e0e\u6210\u672c\u6743\u91cd\u4e0d\u53d8\uff0c\u5355\u6b21\u5c1d\u8bd5\uff0c\u5931\u8d25\u4e0d\u81ea\u52a8\u91cd\u8dd1\u3002\u6279\u51c6\u540e\u51c6\u5907\u5b8c\u6210\u5373\u76f4\u63a5\u6267\u884c\uff0c\u4e0d\u518d\u53e6\u95ee\u542f\u52a8\u8bb8\u53ef\u3002\u662f\u5426\u6279\u51c6\uff1f",
+    "remote_actions_authorized": false,
+    "scope": "capacity-value-mpc-v1",
+    "scope_approved": true,
+    "user_literal": "\u6279\u51c6\u8fd9\u4e2a\u5b8c\u6574\u5b9e\u9a8c\u5305"
+  }
+}

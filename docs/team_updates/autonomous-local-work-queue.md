@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: approved remaining-only entry delivered; freezing next
+## Live checkpoint: recovery2 running; second trained seal completed
+
+2026-10-03T09:01:10Z. Execution9690b4d8fb3d0e3f881698b9d88250e0aa8e9e1e,
+implementation674bf60, packetd09725aba00cbc11c23d4f1883e0d66c150f7bfeb73acc7eb6b8b4e0f42f7240.
+One launch only; live supervisor35197/PPID1 and child35211/PPID35197 match
+the claim and full --launch/--child commands. New reconstruction, trajectory,
+initializer, offline and model-sealed boundaries prove actual progress. No
+failure/overrun/terminal marker; stderr0bytes. No duplicate scientific process.
+
+751/751saved public receipts reconstructed exactly. The interrupted teacher
+completed its remaining17native steps. Block1 completed real256BCactor,
+256critic-warmup and576DDPG-pair updates, and sealed its7543716byte checkpoint:
+869d59db72ba67b4db02d40009cd27d99b3c70c751a680240fb4b718b6a19d78.
+Old block0 was imported unchanged, never re-trained. Teacher24/36complete,
+offline24/36complete, seals2/3, final eval0/216. Newactor832/3104 and
+critic832/3104; including old block0,1664/3936each. Deploymentonline pairs0.
+Current block2 teacher/no-change/replicate0 reached recordedepoch31, with
+817/16145new native steps. Original seeds/reward/model/support remain unchanged;
+mixed historical initializer is disclosed. Training is real, not yet benefit.
+
+Result root results/dynamic_capacity_adaptation_20261003_recovery2;
+launcher/{claim,child-claim,budget.jsonl}, payload/{progress.jsonl,updates,
+models,reuse-provenance.json}. Final16artificial tests/wholecompileall passed
+before freezing; no new gate. Advance agent closed, efficiency advice reused.
+Same gcn-rl automation is tool-confirmed ACTIVE at30minute intervals. Runner
+continues independently; automatic monitoring is not the training process.
+
+Next: observe this one run through block2 seal,216matched comparisons and
+saved-data cost/patient/robustness readout; no routine approval needed. Do not
+freeze/launch again, modify scientific source or retry on failure. Final
+performance ETA not yet reliable this early; hard package ceiling5400seconds
+includingI/O (approximately10:30UTC from09:00launch), not a completion promise.
+Only saved-data analysis and nonlocked handoff docs while running. At terminal,
+preserve evidence, complete independent raw readout and pause same automation.
+
+## Previous checkpoint: approved remaining-only entry delivered; freezing next
 
 2026-10-03T08:58:08Z. Same worktree/branch, entry9939cc7. Zhaowei replied
 `推进` to the full recovery2 remainder package; exact approval is recorded in

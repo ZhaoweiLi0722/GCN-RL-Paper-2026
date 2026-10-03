@@ -1,5 +1,22 @@
 # Resource Repair And Approved Remaining-Only Integration
 
+## Execution Milestone
+
+2026-10-03T09:01:10Z. Implementation674bf60, execution9690b4d,
+packetd09725aba00cbc11c23d4f1883e0d66c150f7bfeb73acc7eb6b8b4e0f42f7240.
+Single launch verified with supervisor35197/PPID1, child35211/PPID35197 and
+new saved-reconstruction, trajectory, real update and model-seal boundaries.
+751saved receipts exactly reconstructed; epoch47 partial teacher completed.
+Block1 trained256BC+256warmup+576DDPG pairs and sealed its model; block0
+imported unchanged. Teacher24/36, offline24/36, seals2/3, eval0/216.
+Newactor832/3104 andcritic832/3104; cumulative1664/3936each with oldblock0.
+Current block2 teacher epoch31;817new native steps. No failure markers, empty
+stderr. Raw optimizer receipts and checkpoint prove actual training, not benefit.
+Same automation reactivated and tool-confirmed. No further launch is permitted.
+Observe remaining work, then report original cost/patient outcomes and both
+frozen contrasts from complete saved data. Hard package ceiling90minutes;
+early final-comparison ETA is not yet reliable.
+
 ## Current Integration
 
 2026-10-03T08:58Z. Zhaowei replied `推进` to the complete remainder question;

@@ -1,6 +1,33 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC complete package approved; freezing then direct launch
+## Live checkpoint: value-MPC running; first real value update and saved model verified
+
+2026-10-03T23:13Z. Single launch from execution654ff0f5a4f07116f6fe1ba3fdef22e17aa907c4;
+frozenimplementation0fa338b6b1eced4468db3279029a0c7219f1f694,scientificsourceae5fe4b.
+Packet50fab0f56d52a8cb07629f59156dc9e5e6a882bc32dbb3f354f93d1af9f4770d;
+542source files and1797local seed metadata files locked; collision audit passed.
+No new preparation tests or smoke episodes; previous20tests/compileall reused.
+
+Supervisor55669/PPID1 andchild55682/PPID55669 match claim andfullcommands.
+New8-step/cohort/fit boundaries verify real running. First complete64-step world
+finished and32real value optimizer updates have finite loss/gradient receipts.
+Saved model/optimizer/RNG state is
+results/capacity_value_mpc_20261003/payload/states/initial-b0-c0-j0-plain_mpc-after-fit.pkl.gz
+(60859bytes); receipts in payload/updates/initial-b0-c0-j0-plain_mpc.jsonl.
+Startup snapshot: initial1/72, continuation0/72, value32/4608, actor0,
+initial/final seals0/3, eval0/144,native96/18432; block0condition1epoch31.
+Stderr0 andno failure markers at inspection. This is training, not a benefit.
+
+Samegcn-rl monitor isACTIVE (toolconfirmed) for this exact packet only.
+Continue existingserial initial/continuation learning, all3final seals,144frozen
+evaluations, raw comparison andsingle verified archive insideallcaps. No extra
+permission within this attempt, no duplicate launch, source/parameter change,
+test-based tuning or automatic retry. Expected2-4h, hardcap4h includingIO;
+use later observed rates for a firmer estimate. On completion/terminalfailure,
+save readout and update manuscript honestly, thenPAUSED same monitor. No remote
+actions/Dropbox/holdout/StageE reopening or Howard-approval claim.
+
+## Previous checkpoint: value-MPC complete package approved; freezing then direct launch
 
 2026-10-03T23:11Z. Exact user reply: `批准这个完整实验包`. The existing complete
 288-world/4608-value-update/4h/4GiB scope is approved, with all subsidiary caps.

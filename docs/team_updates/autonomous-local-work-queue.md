@@ -1,6 +1,6 @@
 # Autonomous local research queue
 
-## Live checkpoint: approved native capacity entry integrated; freeze and launch next
+## Live checkpoint: native capacity package frozen; single launch next
 
 2026-10-03T03:22Z. Entry HEAD5c0cf89, authorization intent committed0a33e9d.
 Zhaowei answered the complete numerical question with `继续推进`, followed by
@@ -25,9 +25,13 @@ Final combined87relevant tests passed in18.761s. Recording additions then
 passed33affected tests in16.968s; whole-repository compileall passed. These are
 artificial engineering checks, not performance trials.
 
-Next concrete action, already authorized: commit implementation and the exact
-source/runtime/input/seed locks plus effective authorization, verify no duplicate
-PID, then launch ONE run_dynamic_capacity_pilot --launch. Scientific result
+Implementation committed848c192. Freeze completed successfully with packet
+95b9e866e5419d6233a0059f811a368a825823c142f047ac3faa990f7f06e772;
+source/runtime/input and652allocated random streams are bound; local metadata
+collision check passed. Effective authorization is separate from unchanged
+draft. Next concrete action, already authorized: commit these generated locks,
+then launch ONE run_dynamic_capacity_pilot --launch. Actual read-only process
+check immediately before freeze found no matching scientific PID. Scientific result
 root results/dynamic_capacity_adaptation_20261003 does not yet exist at this
 checkpoint. If it exists on continuation, inspect claim/terminal before any
 action; never relaunch. Any scientific terminal failure consumes this attempt.

@@ -3208,3 +3208,16 @@ input/seed locks, then one complete trial. No more routine-phase questions or
 extra toy-fitting screens. Approval is not present engineering readiness or
 evidence of training. All phase caps and original synthetic assumptions remain;
 no reward search, retries, old-attempt reuse, external actions or Howard approval.
+
+#### Dynamic-capacity real entry frozen before first scientific admission
+
+Implementation848c192 delivers the actual patient/CRN/public-control/GCN-DDPG/
+serial-budget/analysis path, not the older fake-only campaign.87focused tests
+plus33affected recording regression checks and fullcompileall passed, without
+scientific environment calls or optimizer updates. Source/runtime/input and
+652prospective stream values are frozen with no local metadata collisions in
+packet95b9e866e5419d6233a0059f811a368a825823c142f047ac3faa990f7f06e772.
+Commit frozen.json and its exact effective authorization before launch. Scope
+and original proposal hashes are unchanged; user approval is already recorded.
+The one real first teacher trajectory counts as preflight, no duplicate smoke.
+No separate screening/fit gate, no scientific retry and no old evidence changes.

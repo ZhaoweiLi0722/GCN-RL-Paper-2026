@@ -3195,3 +3195,16 @@ resolution, not an unreported substitution. No additional toy-fitting gates.
 The same gcn-rl automation is tool/TOML-confirmedPAUSED at this decision boundary,
 retained visibly. StageE, holdout, all historical attempts and external-action
 restrictions remain unchanged. No Howard approval or practical calibration.
+
+#### Dynamic-capacity complete numerical scope approved in context
+
+2026-10-03 UTC: following the full288trajectory/216evaluation/7872optimizer/
+18432step/19008native-operation/1327104planner-query/5400second/2GiB question,
+Zhaowei replied exactly `继续推进`, then `进度又慢了`. Record contextual approval
+in specs/2026-10-03-dynamic-capacity-adaptation/approval-intent.json, bound to
+proposal SHA256 f46f6d5ae417a67c5974516b1c9e2b5b05ba9e2de56681aaedbfe276e9f355a9.
+Finish fixed real implementation, relevant fake-entry tests and source/runtime/
+input/seed locks, then one complete trial. No more routine-phase questions or
+extra toy-fitting screens. Approval is not present engineering readiness or
+evidence of training. All phase caps and original synthetic assumptions remain;
+no reward search, retries, old-attempt reuse, external actions or Howard approval.

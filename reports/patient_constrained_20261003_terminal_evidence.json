@@ -1,0 +1,30 @@
+{
+  "checked_at_utc": "2026-10-03T11:59:15.127102+00:00",
+  "terminal": {
+    "automatic_retry": false,
+    "child_exit_code": 0,
+    "elapsed": 1916.306910000043,
+    "exit_code": 0,
+    "packet_sha256": "dece9e38ffcbc8d6f8b4797854dc121c7454c8a6e1a335094cd678dda8e425b5",
+    "scientific_completion_verified": true,
+    "status": "completed"
+  },
+  "exact_global_and_phase_counts": true,
+  "all_owner_caps_respected": true,
+  "source_input_locks_verified": 525,
+  "packet_hash_verified": "dece9e38ffcbc8d6f8b4797854dc121c7454c8a6e1a335094cd678dda8e425b5",
+  "stderr_bytes": 0,
+  "failure_markers": [],
+  "archive_file_count": 931,
+  "archive_sha256": "3da87299ce67eb36f743bda78ff33a512d4c05b59e3fbf23a0775952b44bfcbf",
+  "archive_members_previously_verified_by_runner": true,
+  "archive_bytes_and_current_source_inventory_rechecked": true,
+  "archive_recreated": false,
+  "raw_file_count": 931,
+  "raw_bytes": 363158798,
+  "related_processes_absent_verified_separately": true,
+  "process_check": "ps -axo pid,ppid,state,etime,command; no run_patient_constrained_capacity runner remained",
+  "dropbox_exported": false,
+  "cloud_sync_verified": false,
+  "howard_access_verified": false
+}

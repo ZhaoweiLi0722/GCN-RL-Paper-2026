@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: all six patient-constrained/cost-only fits sealed; frozen evaluation running
+## Live checkpoint: patient-constrained comparison complete; no useful RL training gain
+
+2026-10-03T12:03Z. Same worktree/branch. Approved preparation and execution ran
+through without another launch question. Executionc77bd4e,implementation0ca0502,
+packetdece9e38ffcbc8d6f8b4797854dc121c7454c8a6e1a335094cd678dda8e425b5.
+Terminalexit0 in1916.307s; supervisor40789/child40801 exited,no related runner.
+All252trajectories complete:36reference/72training/144frozen evaluation;
+3456actor/8448critic/36dual,3initial+6finalseals,16128native. Every global/phase
+counter and time cap matched; evaluation had0updates. Stderr0,no failures.
+
+Actual answer: patient-preserving training signalFALSE,all3criteria fail.
+Persistent condition constrained-vs-fixed mean paired cost+7.729%,extra lost
+patients+40.50/world;vsID-MPC cost+9.581%,extra lost+37.667. Constrained modestly
+improves pooled means overcost-only (cost-1.240%,lost-5.333),but cost interval
+crosses0 andblock directions differ. This is not stable useful RL benefit.
+Relative tofixed,nochange/persistent/fast extra losses26.750/40.500/52.167.
+
+Saved behavior gives a next-decision clue: constrained block0/1/2 mean total
+flexible commitments0.0977/1.2834/7.9996hours vsfixed8.0. Severe under-allocation
+andseed dependence are observed; their cause is not established. No multiplier
+hit its cap. Do not infer reward-weight error or fixed-policy near-optimality.
+Close this attempt,noextraepochs/lambda sweep/retry. A potential next scoped
+question is bounded redistribution around a competent controller while holding
+total resources defined; that would change the action contract and needs its
+own numerical package,not automatic follow-on. No new experiment is running.
+
+Evidence: specs/2026-10-03-patient-constrained-improvement/terminal-readout.md;
+results/patient_constrained_capacity_20261003/payload/comparison.json;
+reports/patient_constrained_20261003_{terminal_evidence,independent_raw_check}.json.
+Hypatia independently recomputed144raw files/9216rows/4870numbers,maxdifference
+1.49e-8 andexact patient counts; completed andclosed. Existing efficiency advice
+reused. Current525source/input locks andpacket verified. Archive931members,
+SHA3da87299ce67eb36f743bda78ff33a512d4c05b59e3fbf23a0775952b44bfcbf,
+269754159bytes; member verification reused pluscurrent bytes/source recheck.
+No rearchive/Dropbox/cloud-access claim/remote action/holdout/StageE reopening.
+Samegcn-rlmonitorPAUSED,tool confirmed; consumed scientific authority cannot
+restart. Earlier18zero-update tests andcompileall remain valid,source unchanged.
+
+## Previous checkpoint: all six patient-constrained/cost-only fits sealed; frozen evaluation running
 
 2026-10-03T11:32Z. Samec77bd4e execution and dece9e38packet. Supervisor40789
 andchild40801 still match claims/full commands. All36reference plus72learned

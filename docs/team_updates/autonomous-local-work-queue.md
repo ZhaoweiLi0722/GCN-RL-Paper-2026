@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: dynamic-capacity direction approved; interface delivered
+## Live checkpoint: patient support adapter delivered; finish controllers next
+
+2026-10-03T02:20Z. User requested `火速推进`. Entry HEAD aac47b0; same branch
+and worktree, initially clean. No related scientific process matched the actual
+read-only PID/command check. Existing prior evidence/checks reused, not rerun.
+
+Delivered additive patient-ID support-work ledger, unregistered native patient
+adapter and shared public collector. Continuous hours now determine which
+integer patients can start, without removing unready patients from aging or
+charging resources for phantom starts. Partial progress follows patient IDs;
+ordinary/flexible charges, delayed commitments, private tapes and full boundary
+restoration are explicit. Old environment and results are unchanged.
+34 artificial/zero-optimizer tests and full compileall pass. No real patient
+environment, scientific model or optimizer call; this is not an RL result.
+
+Code: src/env/patient_support_{work,capacity}.py and
+src/rl/public_support_collector.py. Readout and draft numerical comparison:
+specs/2026-10-03-dynamic-capacity-adaptation/{engineering-readout.md,pilot-proposal.md,pilot-proposal.json}.
+Hilbert delivered the disjoint proposal and is closed; reuse prior efficiency
+advice. Six public role labels are not six implemented scientific controllers.
+
+Next: complete the public individual-patient view, censored response estimator,
+capacity-specific learner, fixed adaptive/ID-MPC controls, and serial settlement
+collector. These are already-authorized additive engineering with artificial
+zero-update/mock tests, not new scientific permission. Do NOT re-audit old
+results or restart the solved toy. Proposed 3-seed/3-condition/6-arm trial has
+288 total trajectories, 18432 native steps (19008 operations with construction
+and reset), 7872 optimizer calls, 25824 neural forward calls, 1327104 predictive
+model steps and 5400 seconds; all remain a draft, not execution authority.
+Finish one integrated packet and ask one specific numerical decision, then
+freeze source/runtime/input/seed locks. No complete packet or training running.
+Keep existing finite engineering schedule ACTIVE while this concrete work
+remains. Pause only once integration is ready and execution approval is the
+only remaining item. No extra science, remote push or new automation.
+
+### Previous interface milestone
 
 2026-10-03 UTC: Zhaowei asked whether the prior result establishes RL benefit,
 and instructed proceeding with the proposed dynamic-capacity direction. It does

@@ -3146,3 +3146,24 @@ engineering chain; PAUSE at the complete pilot proposal and obtain its explicit
 numeric execution authority and committed locks before any new science.
 No old budget reuse, automatic retry, reward/architecture search, holdout,
 StageE reopening, remote action, Dropbox export or external message permitted.
+
+#### Dynamic-capacity patient adapter delivered under engineering authority
+
+2026-10-03 UTC: user requested `火速推进`. Added a versioned patient support-work
+ledger, an unregistered native patient subclass and a common public collector.
+Historical environment files and result evidence are unchanged. Artificial
+patients/fake native stepping and restore plus public-interface tests:34passed;
+full compileall passed. No actual patient constructor/episode, model or optimizer
+execution. Production counts are corrected in place before the parent's
+resource accounting; unready patients still age. No biology/QC acceleration.
+
+The separate numerical proposal lives at
+specs/2026-10-03-dynamic-capacity-adaptation/pilot-proposal.{md,json}.
+It is a draft, not a frozen executable protocol or execution authority. Operating
+assumptions and new labor expenses are synthetic, uncalibrated and prospective.
+The earlier and current generic instructions permit local preparation, not the
+as-yet-unasked numerical package. Finish the existing controller/estimator,
+settlement and runner integration without another toy campaign; then obtain
+one complete numerical decision and commit exact locks before science.
+No fresh patient data, training, reward search, retry or external action is
+implied. Only actual paired cost/patient results can establish incremental value.

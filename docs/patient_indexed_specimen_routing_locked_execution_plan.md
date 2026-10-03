@@ -3330,3 +3330,18 @@ Fresh seeds are prospective and still need derived-manifest conflict validation.
 Before any scientific admission obtain exact package approval, implement the
 additive entry with fake tests, and commit source/runtime/input/seed locks.
 StageE/holdout and all external-action restrictions remain unchanged.
+
+#### Patient-constrained complete package approved for preparation and execution
+
+2026-10-03T11:12Z. Zhaowei explicitly replied `准备 并且执行实验 以后不要单独进行
+准备好直接进行实验` to the complete252-world numerical package. Record exact
+authority in specs/2026-10-03-patient-constrained-improvement/approval-intent.json.
+Proposal8bcf5672916985d8769720047dee3a0a24cfa7a1ee78467906c24e5c98914bae and
+protocola562c0a2222c039381b18156e7f9d60fcae02ecd863ef058a956d007723ed22c
+stay immutable; original draft remains false. The authority covers necessary
+local implementation and zero-update tests, committed source/runtime/input/seed
+locks, then one16128native-step/11904optimizer/36dual-update/7200second attempt
+with all declared subsidiary caps. No redundant launch question or stagewise
+approval. Negative results and trade-offs must be retained. A terminal failure
+consumes the attempt; no repair-and-retry authority, automatic follow-on, hidden
+budget change, external action, Howard approval, holdout or StageE reopening.

@@ -1,0 +1,15 @@
+{
+  "format": "patient-constrained-capacity-approval-intent-v1",
+  "scope_approved": true,
+  "user_literal": "准备 并且执行实验 以后不要单独进行 准备好直接进行实验",
+  "recorded_at_utc": "2026-10-03T11:12:11Z",
+  "context": "Direct reply to the complete three-block252-world proposal with16128native steps,11904optimizer calls,36dual updates,7200seconds and all linked subsidiary caps. Authorizes necessary preparation followed immediately by the single bounded experiment without a separate launch question.",
+  "proposal_sha256": "8bcf5672916985d8769720047dee3a0a24cfa7a1ee78467906c24e5c98914bae",
+  "protocol_sha256": "a562c0a2222c039381b18156e7f9d60fcae02ecd863ef058a956d007723ed22c",
+  "attempts": 1,
+  "automatic_retry": false,
+  "automatic_follow_on": false,
+  "Howard_approval_claim": false,
+  "source_runtime_input_locks_required_before_admission": true,
+  "external_actions_authorized": false
+}

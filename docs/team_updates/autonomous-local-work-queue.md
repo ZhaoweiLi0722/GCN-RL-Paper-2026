@@ -1,6 +1,30 @@
 # Autonomous local research queue
 
-## Live checkpoint: bounded patient-constrained training proposal ready; not launched
+## Live checkpoint: patient-constrained package approved; entry tested; freezing then launching
+
+2026-10-03T11:25Z. Entry4854563; same branch/worktree. Exact user approval:
+`准备 并且执行实验 以后不要单独进行 准备好直接进行实验`.
+This covers the already enumerated252-world/11904-optimizer/7200-second
+single attempt, not further searches or retries. Necessary preparation proceeds
+directly to committed locks and execution without another launch question.
+
+Delivered additive patient_constrained learner/resources/runner/analysis/
+execution and thin script. Actual-entry fake comparison exercises all252worlds,
+11904debits,9seals,78restores and144evaluations with real optimizer.step and
+native patient construction forbidden. Separate critic targets preserve tail
+cost and losses, independent gradients, full restore and exact fixed actor start.
+All18 focused zero-update tests and whole-repository compileall passed. Hypatia
+delivered the disjoint learner and15tests and closed; prior efficiency advice
+reused. No new scientific forward, optimizer or native environment has run yet.
+
+Remaining blocker: commit implementation, freeze exact runtime/source/input/seed
+locks and commit effective authorization, then launch once. Existinggcn-rl
+monitor is PAUSED until actual launch; it is not evidence of a running experiment.
+No need for another scientific approval within this complete unchanged package.
+Prior completed negative results remain unchanged; this new comparison tests
+simulation-trained policy quality, NOT deployment-online or isolated GCN gain.
+
+## Previous checkpoint: bounded patient-constrained training proposal ready; not launched
 
 2026-10-03T10:08Z. Entryfa211c6; same branch/worktree. Zhaowei's `继续` responds
 to preparing the next constrained-performance proposal, not an unasked run

@@ -83,6 +83,13 @@ to delay the end-to-end comparison. Inspect actual processes and record actual
 deliveries, not inferred background progress. See the roadmap for closure and
 consolidated-decision rules; it is not itself an experiment execution permit.
 
+On 2026-10-03 Zhaowei explicitly requested preparation AND execution together:
+after approval of a complete numerical package, finish necessary implementation,
+tests and committed locks and proceed directly to its single scientific attempt.
+Do not stop at readiness to ask for a redundant launch approval. Continue routine
+training, evaluation and readout within that package. This does not authorize
+unasked scientific budgets, changed rewards/scenarios or retries after failure.
+
 ## Coding Guidelines
 
 - Keep environment dynamics, graph construction, model architectures, training loops, and evaluation scripts modular.

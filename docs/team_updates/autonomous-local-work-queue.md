@@ -1,6 +1,23 @@
 # Autonomous local research queue
 
-## Live checkpoint: fixed-budget experiment running; first real trained model saved
+## Live checkpoint: all fixed-budget models trained and sealed; frozen evaluation running
+
+2026-10-03T12:53Z. Sameexecution28e8987,packet174c1d00; supervisor44564 and
+child44576 stillmatch claims/fullcommands andnewprogressboundaries. All36fixed
+reference and36constrained trainingworlds completed. Realoptimizer totals:
+1728actor+4992critic=6720,36scalar dualupdates;3initial+3finalseals persisted.
+The3-final-seal barrier preceded testaccess. First2/108evaluations complete,
+thirdisID-MPC block0condition0replicate0,epoch23; native4760/11520.
+Stderr0,nofailuremarker. No additional optimizer work ispermitted in evaluation.
+
+This milestone establishes actualtrainingcompletion,not performancegain.
+Continue theexisting108frozen comparisons,rawcost/patientreadout andarchive
+automatically insidefixedscope; samegcn-rlmonitorACTIVE. No newpermission needed,
+no extra models/fits/forward/simulation beyondthispacket,no parameter changes.
+ID-MPC isexpected to dominate remainingtime;30-45min overall estimate retained
+pending a stable measured evaluationrate. Do not inspecttestresults toretune.
+
+## Previous checkpoint: fixed-budget experiment running; first real trained model saved
 
 2026-10-03T12:50Z. Single launch completed from execution28e8987db9e07a2b3a2fc3d4b2d762ef9bca0e79;
 scientificsourcedee08da,frozenimplementation199da3de0bb63be50daa4a5ff8e937d4555af077.

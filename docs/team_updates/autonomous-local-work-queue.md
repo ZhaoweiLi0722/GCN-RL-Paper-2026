@@ -1,6 +1,17 @@
 # Autonomous local research queue
 
-## Live checkpoint: patient-constrained single experiment running; real actor training reached
+## Live checkpoint: all six patient-constrained/cost-only fits sealed; frozen evaluation running
+
+2026-10-03T11:32Z. Samec77bd4e execution and dece9e38packet. Supervisor40789
+andchild40801 still match claims/full commands. All36reference plus72learned
+training worlds completed. Actor3456/3456,critic8448/8448,scalar multipliers36/36;
+initial seals3/3,final seals6/6. The six-seal barrier preceded all test access.
+First4/144 frozen evaluations completed (one world across all4controllers),
+native7168/16128. Stderr0bytes,no failure markers. This is a training-completion
+milestone, not established performance benefit. Continue the existing frozen
+evaluation/independent raw readout/archive automatically; no new launch/update.
+
+## Previous checkpoint: patient-constrained single experiment running; real actor training reached
 
 2026-10-03T11:27Z. Executionc77bd4e8ce0339a330600370cf5f82f93c810d69;
 implementation0ca0502; packetdece9e38ffcbc8d6f8b4797854dc121c7454c8a6e1a335094cd678dda8e425b5.

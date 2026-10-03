@@ -1,0 +1,40 @@
+{
+  "schema": "dynamic-capacity-direction-v1",
+  "status": "engineering_preparation_not_execution_spec",
+  "scientific_execution_authorized": false,
+  "direction_approved": true,
+  "plan": "specs/2026-10-03-dynamic-capacity-adaptation/plan.md",
+  "scientific_question": "Incremental online weight-update value beyond equally informed frozen feedback and adaptive control",
+  "mechanism": "Persistent unknown support-work response to qualified staff-hour allocation",
+  "operating_calibration": "missing; proposed synthetic extension only",
+  "public_measurement": "causal completion receipts with separate ordinary and flexible hours",
+  "private_fields": ["realized_efficiency", "future_change_time", "future_random_stream", "unmeasured_remaining_work"],
+  "action": {
+    "units": "qualified_staff_hours",
+    "continuous": true,
+    "shared_budget": true,
+    "site_caps": true,
+    "zero_purchase_allowed": true,
+    "radial_budget_scaling": true,
+    "fractional_patients_allowed": false
+  },
+  "conditions_to_specify_prospectively": ["no_change", "persistent_unannounced_response_change", "fast_independent_fluctuation"],
+  "controllers": ["frozen_history", "frozen_matched_exploration", "online_matched_fork", "adaptive_rule", "id_mpc", "fixed_allocation_reference"],
+  "common_rules": {
+    "routing_and_procurement": "held_common_across_arms",
+    "biological_duration_and_qc": "unchanged",
+    "patient_cost_weights": "no_search",
+    "new_labor_charges": "explicit_accounting_extension_to_be_frozen_before_science",
+    "public_information": "same_schema_and_estimator_access_own_realized_history",
+    "old_specimen_model_is_capacity_initializer": false,
+    "old_attempt_reuse": false
+  },
+  "permitted_now": ["versioned_unregistered_implementation", "artificial_zero_update_tests", "mock_integration", "saved_evidence_synthesis", "complete_numeric_pilot_proposal", "local_commits"],
+  "current_scientific_budget": {"model_loads": 0, "environment_calls": 0, "optimizer_calls": 0, "planner_scientific_queries": 0},
+  "execution_packet_ready": false,
+  "execution_packet_remaining": ["patient_support_producer", "controller_and_estimator_integration", "operating_assumptions", "initializer_and_one_learner", "exact_seeds_and_sample_counts", "all_phase_and_total_budgets", "terminal_settlement", "prospective_effect_and_uncertainty_rules", "specific_execution_approval", "committed_locks"],
+  "automatic_scientific_retry": false,
+  "formal_holdout_allowed": false,
+  "stage_e_reopened": false,
+  "remote_or_export_allowed": false
+}

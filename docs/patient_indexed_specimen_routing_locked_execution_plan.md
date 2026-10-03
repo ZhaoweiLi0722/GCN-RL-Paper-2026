@@ -3118,3 +3118,31 @@ All routine phases then continue without new permission requests. New scope,
 retries, reward changes, remote/Dropbox actions and Howard approval are excluded.
 The prior attempt stays consumed; neither performance gain nor acceptance is
 guaranteed. No model-free, deployment-online or isolated-GCN claim is authorized.
+
+#### Dynamic-capacity direction approved; new science not yet specified
+
+2026-10-03 UTC: after the conservative comparison completed with zero primary
+increment, Zhaowei asked whether dynamic capacity/continuous resources could
+help and explicitly instructed: `这个会对我们证明RL有增益有帮助吗？如果是的话，请进行吧。`
+Interpret this as permission to proceed with the new direction and its local
+implementation/protocol preparation, not a guarantee of benefit or approval
+of unproposed operating assumptions, numerical budgets or scientific runs.
+The closed two-round recipe and its preserved evidence remain unchanged.
+
+The bounded next chain is documented in
+specs/2026-10-03-dynamic-capacity-adaptation/plan.md. Deliver one additive
+patient support-work/qualified-effort interface, matched public information
+and strong frozen/adaptive-control comparators, then one complete numeric
+pilot decision. Existing biological/QC rules and patient identity remain fixed;
+new labor charges are an explicit accounting extension, not disguised historical
+reward equivalence. Missing E1 calibration stays missing. No field validation,
+Howard sign-off, positive RL effect or isolated graph effect is asserted.
+
+First interface delivered with13artificial zero-update tests and fullcompileall;
+no patient environment or scientific model/optimizer has been used. Completed
+old evidence and efficiency advice are reused. No more toy fitting or repeat
+historical audits. The same visible gcn-rl schedule resumes only the finite
+engineering chain; PAUSE at the complete pilot proposal and obtain its explicit
+numeric execution authority and committed locks before any new science.
+No old budget reuse, automatic retry, reward/architecture search, holdout,
+StageE reopening, remote action, Dropbox export or external message permitted.

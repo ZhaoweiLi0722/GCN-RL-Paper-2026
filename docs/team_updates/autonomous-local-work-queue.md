@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: conservative two-round comparison complete; monitor paused
+## Live checkpoint: dynamic-capacity direction approved; interface delivered
+
+2026-10-03 UTC: Zhaowei asked whether the prior result establishes RL benefit,
+and instructed proceeding with the proposed dynamic-capacity direction. It does
+not establish benefit: preserve the completed two-round null, not a retry.
+New direction/preparation approval is recorded in the locked plan; it is not an
+execution permit for numerical parameters that have not yet been proposed.
+
+Delivered `src/rl/capacity_adaptation_interface.py`: continuous effort projection,
+ordinary/flexible exposure separation, causal public completion receipts,
+booked-cost/delay validation and public-history restoration. 13 artificial
+zero-update tests and full compileall pass. No scientific model, patient
+environment, optimizer or new performance trial ran. Same-source tests do not
+establish clinical headroom or a useful learned value gradient.
+
+Plan and actual limitations:
+`specs/2026-10-03-dynamic-capacity-adaptation/{plan.md,prior-evidence.md,engineering-readout.md}`.
+Proposal metadata: `experiments/configs/dynamic_capacity_adaptation_20261003.json`.
+Galileo's saved-evidence note and Lagrange's finite efficiency advice are
+delivered; both agents closed. Avoid repeating the solved small queue or
+closed overtime/cohort recipes. A public-history frozen policy can adapt too.
+
+Next authorized work: additive patient support-work producer and matched
+controller integration with fake records, then one complete prospective pilot
+numeric decision. Preserve discrete patients, biological/QC constraints, full
+terminal liabilities and strong adaptive-rule/ID-MPC controls. E1 operational
+calibration remains absent; label assumptions synthetic. No reward-weight
+search, new science, historical edits or external actions authorized now.
+
+Same `gcn-rl` automation updated to ACTIVE, 30-minute cadence, for this finite
+engineering chain only; no duplicate schedule. No related scientific process
+matched the read-only process check. The automation is not a training process.
+Pause it when the integrated numeric proposal is ready; ask one execution
+decision then, not repeated routine-step questions now.
+
+### Previous terminal milestone
 
 2026-10-02T23:52Z: single approved attempt completed exit0, elapsed12973.902s.
 Original12670/12683both absent; no related scientific process, failure record,

@@ -3253,3 +3253,31 @@ patient rounding or alteration of the live filter. Legacy source and failed
 results remain immutable. Freeze current source/runtime/input/old-failure locks
 before the new entry may run. Existing training/analysis machinery and valid
 checks are reused. No Howard approval, remote action, holdout or StageE reopening.
+
+#### Dynamic-capacity resource repair and remainder proposal, not a retry
+
+2026-10-03T08:20Z. After recovery1 terminal failure and its explanation, Zhaowei
+requested `火速推进`. This approves the proposed narrow resource-accounting repair
+and remaining-work preparation. It does not approve an unasked numerical retry.
+The public-only archived boundary reproduces site3 reagent overdraft from
+floor(stock+1e-12), then a negative zero-request transfer. New additive recovery2
+predictor uses the native strict floor and guards transfer inputs; old source,
+frozen proposal, attempts, evidence and archive remain unchanged. Eleven scoped
+tests and compileall passed; no new native environment or neural/optimizer work.
+
+New recovery2/proposal.json asks one remaining-work decision: retain block0seal,
+35complete trajectories and47partial steps, restore the final teacher control
+step and16tail steps; finish two training blocks and216evaluations. New ceilings
+16145native steps/16651native operations/6208optimizer/21344forwards/885120planner
+epochs/1689600filter transitions with751saved-receipt reconstructions;
+5400seconds includingI/O,2GiB,one attempt. All phase/owner limits are explicit.
+No native recollection, failed-reservation refund or automatic retry. Exact
+authority and source/runtime/input locks must be committed before admission.
+
+No proof that earlier teacher decisions equal corrected forecasts is asserted.
+Preserve mixed/historical initializer provenance; online and frozen arms still
+fork the same sealed model within each block. Do not claim homogeneous corrected
+training or independent confirmation. Source amendment changes the predictor,
+not patient costs/reward/live filter/architecture/seed/sample/decision rule.
+The continuation runner is not yet implemented; no numerical approval received.
+StageE, holdout, local-only and external-action restrictions remain unchanged.

@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: recovery1 stopped after one trained seal; handoff complete
+## Live checkpoint: resource defect fixed; one remainder decision pending
+
+2026-10-03T08:20:41Z. Entryd0c94ee, clean matching worktree/branch.
+User `火速推进` authorizes the proposed narrow repair and remainder preparation,
+not an unasked scientific retry. Read-only process inventory found no capacity
+runner. No new patient environment, neural forward or optimizer was executed.
+
+Exact saved-public reproduction: candidate0/quantile0.5/horizon5 at epoch52;
+epoch51 epsilon-rounded production overdrew site3 reagent by
+1.1102230246251565e-16. Zero-request transfer then propagated that negative stock
+to reagent_transfers[0,0]. New additive recovery2 predictor uses native-consistent
+strict whole-patient floor, rejects invalid transfer inputs and names invalid
+fields. It crosses the saved failure and completes384forecast queries. Eleven
+repair-affected tests pass in1.588s; wholecompileall passed. These public-only
+engineering regressions are not resumed science or performance evidence.
+
+Artifacts: specs/2026-10-03-dynamic-capacity-adaptation/recovery2/
+{integration-readout.md,remaining-work.md,proposal.json}; new predictor,
+tests/test_capacity_resource_recovery.py and the public-only compressed fixture.
+Legacy science/config/results and old archive remain unchanged, no repeat archive.
+Hypatia delivered the disjoint remainder ledger; Poincare delivered one read-only
+efficiency recommendation set. Both completed and closed; no background agents.
+
+Next concrete implementation is a saved-boundary/teacher-row continuation entry,
+not launching the old block0-first runner. Preserve block0's model,35complete
+trajectories and47partial steps. No equivalence claim for earlier teacher actions:
+report historical/mixed initializer provenance; learned arms remain matched
+within each block. No native replay/recollection fallback if restoration fails.
+
+One full decision asked: single remainder with16145native steps,16651native
+operations,6208optimizer calls,21344forwards,885120planner epochs,1689600filter
+transitions including751saved receipts,216final evaluations,5400seconds/2GiB.
+Original seeds/reward/model/sample/metrics remain; failures retain all old debits.
+Proposal is draft false, runner/locks unfinished. Approval not yet received.
+Same gcn-rl automation remains PAUSED; no scientific execution or completion ETA.
+After exact approval: implement the one continuation, fake-entry test, bind
+source/runtime/inputs locally, then one serial run without routine-stage questions.
+
+## Previous checkpoint: recovery1 stopped after one trained seal; handoff complete
 
 2026-10-03T04:17:42Z. Same worktree/branch, entrya34bb49 initially clean.
 Actual supervisor29491/child29504 are absent. Recovery1 terminal exit1 at

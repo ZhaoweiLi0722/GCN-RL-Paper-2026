@@ -1742,18 +1742,91 @@ training in the specified controller, not equal-budget algorithm superiority,
 isolated GCN value, or deployment-time online adaptation. Only three independent
 training blocks were used, and the support-labor model lacks field calibration.
 
-\paragraph{Status of the stronger representation comparison.}
-% Evidence: specs/2026-10-04-value-mpc-comparison/terminal-readout.md.
-A subsequent prespecified five-block comparison of GCN value-MPC, a
-parameter-matched flat value-MPC, plain MPC, and uniform allocation terminated
-before evaluation. The public planning predictor rejected an inconsistency
-between its midpoint completion forecast and its work intervals. The run
-preserved 24 shared initialization cohorts, 47 complete continuation cohorts,
-one partial cohort, and 3,040 finite value-update receipts, but completed none
-of its 240 planned frozen evaluations. This interruption provides no new
-estimate of performance or graph benefit and is not a negative efficacy result.
-The completed three-block findings above remain the available evidence;
-the stronger baseline and representation questions remain unresolved.
+\subsection{Five-block strong-baseline and representation comparison}
+\label{sec:value-mpc-strong-comparison}
+% Evidence: specs/2026-10-04-value-mpc-comparison/recovery1/terminal-readout.md;
+% results/capacity_value_comparison_20261004_recovery1/payload/comparison.json.
+We next compared GCN value-MPC with plain MPC, a parameter-matched flat value
+model, and uniform allocation in five independent training blocks. The GCN
+and flat models contain 3,169 and 3,155 trainable parameters, respectively
+(0.442\% difference), and receive the same public four-site, 31-field inputs.
+Both use the same eight-step TD rule and matched training and planning-query
+budgets. Their depth and inductive biases differ; this is not an isolated
+edge-effect comparison. We collected 120 shared plain-MPC initialization
+cohorts and 240 policy-dependent continuation cohorts, yielding 7,680 value
+updates per architecture. All ten initial and ten final models were sealed
+before the 240 frozen evaluations. Four paired test worlds per condition in
+each block supplied 20 worlds per controller and condition. There were no
+actor or evaluation-time optimizer updates.
+
+The initial attempt stopped when the public predictor's floating-point midpoint
+was inconsistent with its work interval. A separately authorized remaining-only
+recovery preserved 71 complete worlds, 3,040 updates, and a 37-step partial
+world. Exact dyadic boundary handling repaired that numerical inconsistency
+without changing the live filter's tolerance. Recovery completed the original
+600 trajectories and 38,400 raw steps; it did not add a replication. Block 0
+retains mixed historical and repaired predictor training data, while every
+evaluation uses the same repaired predictor. Independent saved-record
+reconstruction reconciled all costs, patient outcomes, actions and applied
+hours with the comparison and its five-block bootstrap summaries.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Five-block value-MPC comparison. Each cell gives mean paired-world
+cost savings (\%) / mean extra simulated patient losses per world. Savings
+are comparator minus first controller; losses are first minus comparator.
+Positive savings and negative extra losses favor the first controller.
+Percentages are paired means, not pooled cost ratios. Uniform denotes fixed
+equal allocation. These development estimates are not clinical outcomes.}
+\label{tab:value-mpc-strong-comparison}
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+\toprule
+First / comparator & No change & Persistent & Fast fluctuation \\
+\midrule
+GCN / plain & $0.70/-7.30$ & $0.61/-5.15$ & $1.82/-12.40$ \\
+Flat / plain & $-0.67/-1.55$ & $-1.42/+0.65$ & $0.78/-6.55$ \\
+GCN / flat & $1.22/-5.75$ & $1.95/-5.80$ & $0.96/-5.85$ \\
+GCN / uniform & $3.72/-2.45$ & $2.07/-3.05$ & $0.83/-0.75$ \\
+Flat / uniform & $2.43/+3.30$ & $0.04/+2.75$ & $-0.22/+5.10$ \\
+Plain / uniform & $2.99/+4.85$ & $1.40/+2.10$ & $-1.08/+11.65$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The primary strong-baseline screen failed. Under persistent change, GCN
+value-MPC saved 0.314 million synthetic objective units per world relative
+to plain MPC, with a descriptive 95\% interval of $[-0.610,1.462]$ million.
+Only three of five blocks had positive mean absolute savings. All three
+condition-specific cost intervals included zero, despite favorable means.
+The separately prespecified secondary GCN/flat screen passed: persistent-change
+absolute savings averaged 0.764 million units, interval $[0.051,1.391]$ million,
+and all five block means were positive. Its mean paired percentage saving was
+1.95\%, but the percentage interval $[-0.17,3.81]$\% included zero. The secondary
+screen concerns absolute cost, not every cost estimand. All intervals use 2,000
+resamples of five blocks and within-block paired worlds; they are descriptive
+and not adjusted for multiple comparisons.
+
+Mean patient losses decreased relative to plain MPC in each condition, but
+persistent-change block 4 had 0.5 additional losses per world. Relative to
+flat, persistent block 2 had 1.25 additional losses despite lower cost. The
+persistent mean extra-loss intervals crossed zero for both GCN/plain
+($[-11.35,0.05]$) and GCN/flat ($[-12.45,0.25]$). Plain and flat MPC incurred
+more mean losses than uniform allocation in every condition. These trade-offs
+preclude patient noninferiority or clinical-safety claims.
+
+Under persistent change, mean applied flexible labor was 323.60 hours for plain
+MPC, 356.80 for GCN, 349.60 for flat, and 384.00 for uniform allocation. GCN/plain
+actions differed at 692 of 960 control boundaries. GCN reduced patient-loss
+cost by 257,500 objective units while increasing reagent purchase, reagent
+shortage, and flexible-labor costs by 164,479, 250,863, and 3,777 units,
+respectively. These accounting differences describe the outcome, not its causal
+mechanism. The results support a bounded secondary representation-package
+signal, not robust cost superiority over plain MPC or deployment-time learning.
+Synthetic-model calibration, limited independent blocks, unequal model depth,
+policy-dependent continuation data, and mixed predictor training provenance
+remain limitations. No reward change or automatic follow-on experiment follows.
 
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
@@ -1907,7 +1980,7 @@ effect remains continuous after execution and is not removed by integer-lot
 rounding or absorbed by a tuned look-ahead anchor. Such a study requires a
 separate preregistration, new comparators, independent streams, and the four
 admissibility gates above; it is not an extension of the frozen formal result.
-\paragraph{Value-guided planning: a bounded positive training result.}
+\paragraph{Value-guided planning: training benefit and strong-baseline limits.}
 The completed fixed-budget study (Section~\ref{sec:fixed-budget-development})
 did not establish a stable patient-preserving training gain, even with equal
 total labor. The completed value-MPC extension
@@ -1915,13 +1988,16 @@ total labor. The completed value-MPC extension
 planner's terminal cost estimate. Continued TD learning improves its own frozen
 initialization under the prespecified criterion, but initialization underperforms
 plain MPC, and final advantages over strong comparators remain condition-specific.
-Thus a learning increment is identifiable in this development design without
-establishing robust superiority over a competent planner. A further, separately
-authorized comparison should prioritize plain MPC and a sufficiently trained
-frozen-value baseline; graph attribution requires matched non-graph or edge
-ablations. The current results neither isolate message passing nor demonstrate
-parameter adaptation during deployment. They retain synthetic-model and
-three-block uncertainty limits and do not reopen the historical formal tests.
+Thus a learning increment is identifiable relative to that initialization,
+without establishing robust superiority over a competent planner. The subsequent
+five-block comparison (Section~\ref{sec:value-mpc-strong-comparison}) directly
+tested plain MPC and a parameter-matched flat value model. It failed the primary
+plain-MPC cost screen but passed the separately labeled secondary absolute-cost
+screen against flat under persistent change. This supports a limited graph-aware
+representation package, not a general claim that RL improves strong planning.
+Neither study isolates message passing or demonstrates parameter adaptation
+during deployment. The synthetic-model, finite-block, and recovery-provenance
+limits remain, and neither study reopens the historical formal tests.
 
 Longer-term models should integrate production scheduling,
 product preparation and distribution, and treatment operations.

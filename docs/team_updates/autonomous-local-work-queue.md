@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: four evaluation blocks complete; final18worlds remain
+## Live checkpoint: comparison completed; primary negative, secondary graph signal
+
+2026-10-04T23:00:46Z terminal handoff. Entry HEAD577bb43 is on the expected
+branch. Recovery1 completed at22:30:27Z with supervisor/child exit0 and
+scientific_completion_verified=true. Rechecked no related experiment process
+or duplicate; no failure/overrun/preservation-error marker. Logs remain empty.
+The same gcn-rl automation is now PAUSED, verified through the tool and TOML.
+
+Initial120/120, continuation240/240, evaluation240/240,600complete worlds.
+Graph/flat each7680value updates,total15360 = old3040 + new12320; actor0,
+evaluation updates0. Initial/final seals10/10 each preceded tests. Newnative
+33819/33819,cumulative38400/38400. Runtime16943.539/29855s includingIO. ETA:
+complete. Old failure, partial37step provenance and mixed predictor training
+remain disclosed. No experiment, model call or retry was added by this handoff.
+
+Supported answer: persistent graph/plain savings0.606871% with absolute-cost
+interval[-0.609844,1.462430]million and only3/5positive blocks: primary screen
+FAILED. Graph/flat saves1.951634% with absolute interval[0.051246,1.391181]million
+and5/5positive blocks: secondary screen PASSED. Its percentage interval still
+crosses0[-0.166213%,3.805774%]. Mean extra losses are-5.15 and-5.80 respectively,
+but persistent block4 graph/plain is+0.5 and block2 graph/flat+1.25. No clinical
+safety, isolated graph-edge, deployment adaptation or robust plain-MPC superiority.
+
+Delivered: specs/2026-10-04-value-mpc-comparison/recovery1/terminal-readout.md
+and the current paper/main.tex strong-comparison section/table and discussion.
+Independent JSON/gzip arithmetic checked600trajectories/38400rows, all18
+condition/contrast cells, five-block intervals, identities/outcomes/actions/hours;
+no material mismatch. Existing archive467290525bytes/4071members and all live
+payload hashes verified, not recreated;4070inventoryentries reconcile. Local
+archive only, no Dropbox/cloud/access claim. Reuse14tests/compileall and source
+checks;7currentinput/2runtimeentry locks match; science paths unchanged.
+Finite interpretation agent Dalton completed and closed. Manuscript source
+checks passed; PDF compilation/rendering is unavailable on this host.
+
+Next decision: recommend paper-first consolidation of supported graph-aware
+results plus bounded value-learning evidence. New mechanism experiments need
+separate prospective scope/approval; no extra epochs/seeds/reward variants are
+authorized. This finite package is complete, not waiting on another routine
+training step. Stage E stays closed; only a local handoff commit, no remote action.
+
+## Previous checkpoint: four evaluation blocks complete; final18worlds remain
 
 2026-10-04T22:21:27Z read-only heartbeat. Entry HEAD79b1c64 is clean on the
 expected branch. Supervisor81985/PPID1 and child81996/81985 match claims and

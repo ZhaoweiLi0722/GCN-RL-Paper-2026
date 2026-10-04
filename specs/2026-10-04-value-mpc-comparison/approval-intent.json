@@ -1,0 +1,21 @@
+{
+  "format": "capacity-value-comparison-approval-intent-v1",
+  "scope": "capacity-value-comparison-v1",
+  "scope_approved": true,
+  "approved_by": "Zhaowei Li",
+  "user_literal": "批准",
+  "recorded_at_utc": "2026-10-04T11:03:00Z",
+  "proposal_sha256": "a073b934aec776488150211d10ee0e852be47748a4d762d49d66507acd8f561f",
+  "protocol_sha256": "22a19c834bbab6d532e7aaf63c40e2d272223a8dee532519e4ea93fe506e3f28",
+  "implementation_commit": "c0cd2c3",
+  "question": "是否批准这一完整训练比较包：5个独立区块，GCN/参数匹配MLP各48个训练回合，初始数据共用；普通MPC、GCN价值MPC、MLP价值MPC、均分共240个冻结评估回合。合计600条轨迹、38,400环境步、15,360价值更新、0 actor更新、最多9小时和8GiB本地存储，单次尝试。保持奖励、场景和规划预算不变，失败不自动重跑。批准后我完成必要集成与锁定就直接训练、评估、出结果，不再另问启动；目前先完成零更新工程测试。",
+  "context": "Direct human reply after the complete question and implementation-ready handoff; covers one preparation-to-readout attempt without a redundant launch question.",
+  "scope_notes": ["Five independent graph/flat blocks; parameter-matched not depth-matched", "120 shared initial worlds plus240 continuation worlds plus240 frozen evaluations", "38400 native steps;39600 native operations;15360 value optimizer;0 actor", "33120 neural forwards;9953280 planner epochs;3840000 filter transitions", "32400 seconds including IO;8589934592 total disk bytes;all phase/owner caps remain fixed", "Original reward,physical scenarios,predictor,action support unchanged", "Both real gains and negative/tradeoff outcomes must be reported"],
+  "attempts": 1,
+  "automatic_retry": false,
+  "automatic_resume": false,
+  "automatic_follow_on": false,
+  "howard_approval_claimed": false,
+  "remote_actions_authorized": false,
+  "original_draft_remains_false": true
+}

@@ -3520,3 +3520,27 @@ screens. On approval record the literal reply, append change control, commit
 source/runtime/input/seed locks and run once directly without another launch
 question. Until then samegcn-rl remainsPAUSED. No automatic retry/expansion,
 remote action, holdout or StageE reopening is authorized.
+
+#### Graph/flat value-MPC complete numerical package approved
+
+2026-10-04T11:03Z. Zhaowei replied `批准` after the exact600-world/15360-value-
+update/32400-second/8GiB question and implementation-ready handoff. The literal
+reply and full question are recorded in
+specs/2026-10-04-value-mpc-comparison/approval-intent.json. Proposal SHA256
+a073b934aec776488150211d10ee0e852be47748a4d762d49d66507acd8f561f and protocol
+22a19c834bbab6d532e7aaf63c40e2d272223a8dee532519e4ea93fe506e3f28 remain unchanged;
+their earlier draft-status text is preserved as historical evidence. Derive a
+separate committed effective authorization and source/runtime/input/seed locks.
+
+Implementationc0cd2c3 and24necessary zero-update tests/compileall are unchanged
+and reused. Proceed directly with this one serial package after committing locks;
+no new fitting screen, smoke world or launch question. Five blocks,120 shared
+initial+240continuation+240frozen evaluation trajectories, all10final seals
+before tests, full64-step cost/patient accounting and every phase/owner/time/IO
+cap stay fixed. Report graph/plain primary and graph/flat secondary honestly.
+
+This is not deployment online adaptation, isolated edge attribution, clinical
+safety or Howard approval. Failure consumes the attempt; preserve evidence and
+do not repair/retry automatically. No extra epochs/seeds, reward/model/scenario
+search, holdout, StageE reopening or external action. After successful completion
+or failure, finish saved-data handoff and pause the same visible monitor.

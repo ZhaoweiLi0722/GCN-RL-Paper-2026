@@ -1,6 +1,23 @@
 # Autonomous local research queue
 
-## Live checkpoint: strong-MPC and matched graph/flat comparison ready; scope pending
+## Live checkpoint: complete graph/flat comparison approved; committing execution locks
+
+2026-10-04T11:03Z. Zhaowei explicitly replied `批准` to the complete600-world/
+15360-value-update/9h/8GiB question. Exact reply/context now recorded in
+specs/2026-10-04-value-mpc-comparison/approval-intent.json and locked change
+control. Reuse implementationc0cd2c3,24passedzero-update tests andcompileall;
+no source or scientific-parameter changes. Fresh live process check found no
+related experiment, and the new result/frozen/authorization paths are absent.
+
+Next authorized action: commit literal approval, freeze current source/runtime/
+input/seed locks, commit derived authority, and launch this single serial
+comparison directly through its training,240frozen evaluations and readout.
+No redundant launch question or extra preparation study. Original draft remains
+false; no launch has yet occurred at this checkpoint. Samegcn-rl will monitor
+this exact run, not create a duplicate. Preserve all prior results and current
+science locks; no retry, reward change or external action.
+
+## Previous checkpoint: strong-MPC and matched graph/flat comparison ready; scope pending
 
 2026-10-04T10:48Z. On clean branch codex/september-research-integration at
 entryc7bd752, Zhaowei said `继续推进` after the four-controller recommendation.

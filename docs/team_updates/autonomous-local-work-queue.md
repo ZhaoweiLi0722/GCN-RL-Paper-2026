@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC two blocks sealed; third block training
+## Live checkpoint: value-MPC training complete; frozen evaluation running
+
+2026-10-04T00:47Z. Same execution654ff0f5/packet50fab0f5 is progressing under
+supervisor55669/PPID1 and child55682/PPID55669; full live commands match claims.
+No duplicate related Python. New training, seal and evaluation boundaries
+since the prior checkpoint verify real progress, independently of scheduling.
+
+Snapshot at00:47:07Z: initial72/72 and continuation72/72 complete;144/144 training
+worlds and4608/4608 real value updates. Actor updates0. Initial/final seals
+each3/3, all six model byte hashes match; each block has initial768/final1536
+updates. All144 after-fit states, summaries, targets and update files exist;
+all4608 persisted loss/gradient receipts are finite. Frozen evaluation30/144,
+native11168/18432. Current evaluation block0 condition1 replicate2,
+seed62920102, updated_value_mpc, epoch31. Completed roles: plain8, initial8,
+updated7, fixed7. The all-models-sealed event precedes every evaluation event;
+the optimizer counter remains4608 throughout evaluation, with no test updates.
+
+Current packet/authorization/proposal/protocol/inherited-input/intent hashes
+match. The last checkpoint commit only changed Live/workflow, so the unchanged
+source lock verification and20zero-update tests/compileall are reused. Global
+and phase counters remain within caps. Raw payload137358574bytes; budget log
+28652744bytes and progress1560233bytes, both growing at00:47:07Z. Stderr, stdout
+and detached log remain0bytes. No failure, overrun or terminal marker exists.
+No new model forward, environment call, optimizer step or archive by the monitor.
+
+Shared-clock elapsed5719.31s; recent10 planned evaluation worlds average34.09s.
+Remaining85 planned evaluations plus29 fixed worlds and readout/archive suggest
+about55-70min more, approximate. Training completion is established, but the
+primary updated-versus-initial benefit remains unassessed until the full readout.
+No partial test result is used for tuning or selection.
+
+Next: let the same serial task finish144 frozen evaluations and its single raw
+comparison/archive. Finish the authorized saved-data handoff and manuscript
+update on terminal completion/failure, thenPAUSED samegcn-rl. Until then it stays
+ACTIVE. No retry, new experiment, source/parameter changes or external actions.
+
+## Previous checkpoint: value-MPC two blocks sealed; third block training
 
 2026-10-04T00:15Z. Same execution654ff0f5/packet50fab0f5, supervisor55669/PPID1
 and child55682/PPID55669 match live full commands. No duplicate related Python.

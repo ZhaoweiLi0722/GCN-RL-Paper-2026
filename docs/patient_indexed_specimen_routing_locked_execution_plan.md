@@ -3570,3 +3570,25 @@ one launch; no redundant approval. The original600-world total,15360updates,
 reward/scenario/model/seeds/metrics stay fixed. Mixed historical predictor data
 must be disclosed; reuse is not independent confirmation. Failure consumes this
 new continuation, no automatic retry, search, remote action or Howard approval.
+
+#### Next integrated value-learning comparison: direction only
+
+2026-10-04T23:18:16Z. Following the completed five-block comparison, Zhaowei
+endorsed and requested preservation of the design in
+docs/team_updates/2026-10-04-next-value-mpc-comparison-decision.md: plain MPC,
+existing/improved GCN-value-MPC, matched-data direct-return regression and a
+longer-horizon plain-MPC compute reference, with new sealed tests and complete
+cost/patient/block/compute reporting. Ranking diagnostics belong inside that
+single comparison, not a separate preliminary campaign.
+
+Zhaowei additionally clarified that reward stays unchanged now but can change
+when necessary. This is not a permanent reward lock or authority to tune weights
+after unfavorable results. Evidence-based accounting/terminal-liability fixes
+or explicit objective revisions remain possible via a prospective amendment.
+Retain current reward/scenarios for the immediate method proposal. Exact method,
+initialization, samples, horizons, seeds and full budgets still require one
+complete numerical proposal and approval before new scientific execution.
+
+This entry authorizes no new model/environment/optimizer calls and changes no
+existing frozen artifact or consumed attempt. The monitor remains paused,
+Stage E closed and work local-only; no Howard approval is implied.

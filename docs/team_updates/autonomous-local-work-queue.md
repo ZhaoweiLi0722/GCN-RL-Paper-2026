@@ -1,6 +1,37 @@
 # Autonomous local research queue
 
-## Live checkpoint: comparison completed; primary negative, secondary graph signal
+## Live checkpoint: next integrated comparison direction recorded
+
+2026-10-04T23:18:16Z. Entry HEAD8c98ba8. Zhaowei endorsed one end-to-end
+comparison and requested a durable summary. Decision record:
+docs/team_updates/2026-10-04-next-value-mpc-comparison-decision.md.
+Compare plain MPC, existing/improved GCN-value-MPC, matched-data direct-return
+regression and a longer-horizon MPC compute reference. Use new sealed test
+worlds, cost/patient/block/compute reporting, and inline ranking diagnostics;
+do not split this into another sequence of toy fits or historical audits.
+
+Latest clarification: reward stays unchanged NOW, not forever. Necessary changes
+can follow evidence of accounting/terminal-liability defects or an explicit
+objective revision, with a prospective bounded amendment. Poor performance alone
+does not justify tuning reward weights. Keep scenario/reward changes separate
+from the immediate learning-method comparison. Direct-return regression may be
+Monte Carlo policy evaluation, not automatically a non-RL control.
+
+Question answered: the next research direction and comparison controls are now
+recorded; no new performance finding or scientific execution. Prior completed
+comparison/readout and all locks remain intact. The monitor remains PAUSED.
+Validation: workflow JSON parses and preserves completed-attempt state, the
+linked terminal readout exists, and git diff --check passes. Documentation only;
+no repeated scientific tests or archive verification.
+
+Next concrete action: one complete numerical package specifying the improvement,
+data/initialization, seeds/samples/horizons and per-arm/phase/total compute/time/IO
+caps plus minimal implementation and preparation estimate. That package has not
+yet been proposed/approved; preparation is endorsed, execution is not. Once
+approved and frozen, routine preparation and execution proceed without another
+launch question. No change to Stage E, holdout or local-only boundaries.
+
+## Previous checkpoint: comparison completed; primary negative, secondary graph signal
 
 2026-10-04T23:00:46Z terminal handoff. Entry HEAD577bb43 is on the expected
 branch. Recovery1 completed at22:30:27Z with supervisor/child exit0 and

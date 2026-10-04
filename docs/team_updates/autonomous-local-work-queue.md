@@ -1,6 +1,40 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete graph/flat comparison approved; committing execution locks
+## Live checkpoint: graph/flat value-MPC launched; real updates and saved states verified
+
+2026-10-04T11:07:33Z. Execution42f1ed5f12d44d147d2b25984d1217ef2aba8462,
+frozenimplementation875af2644a46130aaece6efa9f82ebb4c7d60139, scientificc0cd2c3,
+packet3fb325a35dee08a17e3d7955635b2233f34e840fc77c94aa344f72234d79e8e9.
+Exact user `批准` recorded.551 scientificsourcefiles and1800 local historical
+seed metadata files locked; collision check passed. No extra preparation or
+smoke trajectory;24passedzero-update tests/compileall reused unchanged.
+
+Single detached supervisor67458/PPID1 andchild67481/PPID67458 match live
+commands/claims. New cohort/fit/eight-step boundaries verify real progress;
+no duplicate related experiment. Samegcn-rl confirmedACTIVE in app and stored
+settings with the new exact monitor scope. Scheduling is not training evidence.
+
+Snapshot: sharedinitial3/120 complete,continuation0/240,eval0/240;graph96 and
+flat96 real finite value updates,total192/15360,actor0;seals0/10 each,native
+208/38400. Currentinitialblock0,condition0,replicate1,seed63000001,epoch15.
+First graph/flat after-fit states exist with104574/123451bytes and recorded
+hashes in specs/2026-10-04-value-mpc-comparison/launch-readout.md. Metadata
+confirms3169/3155parameters. All losses/gradients checked finite;stderr0 and
+no failure/overrun/terminal marker. No test evaluation is open or tuned on.
+
+Next: the SAME serial process completes shared initialization and two-model
+continuation acrossfive blocks, seals allten final models, then runs240
+frozen evaluations and one raw comparison/archive. Primarygraph/plain,
+secondarygraph/flat; report allconditions andtrade-offs. The bounded complete
+package is authorized, no per-stage question. Approx5-7h total,9h maximum
+includingIO; refine ETA from actual rates. Real updates are not a gain claim.
+
+No new scientific call by this startup monitor; no duplicate launch, retries,
+source/parameter changes, remote actions orDropbox. On terminal success/failure,
+finish saved-data handoff and truthful manuscript update, thenPAUSED same task.
+Do not restart the consumed old experiment or add scientific scope.
+
+## Previous checkpoint: complete graph/flat comparison approved; committing execution locks
 
 2026-10-04T11:03Z. Zhaowei explicitly replied `批准` to the complete600-world/
 15360-value-update/9h/8GiB question. Exact reply/context now recorded in

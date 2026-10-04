@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: all initialization complete; final training block continuing
+## Live checkpoint: all training complete and sealed; frozen evaluation running
+
+2026-10-04T20:51:34Z read-only heartbeat. Entry HEAD58e884b is clean on the
+expected branch. Supervisor81985/PPID1 and child81996/81985 match claims and
+the full recovery launch/child commands; no duplicate experiment. All training
+has finished, all models are sealed, and fresh evaluation boundaries confirm
+the same authorized process is progressing. No new launch or scientific call.
+
+Shared initial120/120; continuation240/240 (graph120,flat120); evaluation22/240.
+Graph7680/7680 and flat7680/7680 value updates; total15360/15360 = old3040 plus
+new12320/12320, actor0. Initial seals10/10 and final seals10/10. First evaluation
+trajectory_started already records both10seals and15360updates, confirming
+the model-sealing barrier preceded test access. Evaluation ledger has0optimizer
+charges, and all22completed evaluation summaries report0trajectory updates.
+Completed evaluation roles: plain6,graph6,flat5,fixed5. Outcomes not interpreted
+or used for tuning; wait for the full prespecified paired comparison.
+
+Latest boundary newnative19875/33819, cumulative24456/38400; later ledger19880new.
+Current evaluationblock0,condition2,replicate1,seed63020201,flat_value_mpc,epoch7.
+Final after-fit state: continuation-b4-c2-j7-flat_value_fit,139563bytes,
+SHA256e9ea10d3597414d968c11c65492333f6fcc1c577f1d7c1f7b3ca6d251de063b3.
+All15360 loss/gradient receipts finite, no missing completed fit state;20model
+seals and7input hashes match. Reuse18:21source/runtime checks and14necessary
+tests/compileall; only nonlocked status docs changed. No historical audit.
+
+No failure/terminal/overrun marker; stderr/stdout/detachedlog0bytes. Progress
+7625834bytes at20:51:31.263Z; budget55711100bytes at20:51:34.365Z. All phase/global
+counters within caps. Host CLOCK_MONOTONIC: recovery11010.612/29855seconds,
+evaluation609.464/10800seconds, current world8.384/120seconds; no violations.
+Recent20 world-start median34.190seconds,218remaining worlds:2.07h before final
+analysis/IO; provisionally2-2.5h remaining. Role-dependent speeds may differ.
+
+Next: SAME authorized process completes240frozen evaluations and original
+five-block cost/patient comparisons, inventory and archive. No approval or
+additional training needed. Training completion is not a performance gain.
+Samegcn-rl remains ACTIVE; on terminal outcome finish accurate manuscript/readout
+and pause it. No tuning, retries, extra science or external actions.
+
+## Previous checkpoint: all initialization complete; final training block continuing
 
 2026-10-04T20:21:19Z read-only heartbeat. Entry HEAD150dcd7 is clean on the
 expected branch. Supervisor81985/PPID1 and child81996/81985 match claims and

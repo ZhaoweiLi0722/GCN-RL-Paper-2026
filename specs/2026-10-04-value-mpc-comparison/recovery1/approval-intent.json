@@ -1,0 +1,23 @@
+{
+  "format": "capacity-value-comparison-recovery1-approval-intent-v1",
+  "scope": "capacity-value-comparison-recovery1",
+  "scope_approved": true,
+  "approved_by": "Zhaowei Li",
+  "user_literal": "批准 继续跑",
+  "recorded_at_utc": "2026-10-04T17:43:00Z",
+  "protocol_sha256": "5ef055fd1ffa2a9a405d47d4c38f63d6dd8e7e5ccc7cf0d2545e34983a862aa7",
+  "original_packet_sha256": "3fb325a35dee08a17e3d7955635b2233f34e840fc77c94aa344f72234d79e8e9",
+  "context": "Direct human approval to keep running after failed-comparison handoff proposed targeted numerical repair and saved-boundary continuation. Interpreted narrowly as one remaining-only recovery of the already approved full comparison, with no restarted completed trajectory or update.",
+  "original_draft_remains_false": true,
+  "howard_approval_claimed": false,
+  "automatic_retry": false,
+  "remote_actions_authorized": false,
+  "changes": [
+    "Versioned exact midpoint boundary repair, no relaxed consistency tolerance",
+    "Retain original experiment and all history; resume epoch37 only",
+    "Keep old interrupted384-epoch forecast reservation consumed; explicitly charge one replacement decision",
+    "Original total600 worlds/15360 value updates/38400 native steps unchanged",
+    "Remaining global time and phase/owner caps derived after subtracting old use",
+    "Mixed predictor training history disclosed"
+  ]
+}

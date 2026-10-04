@@ -3544,3 +3544,29 @@ safety or Howard approval. Failure consumes the attempt; preserve evidence and
 do not repair/retry automatically. No extra epochs/seeds, reward/model/scenario
 search, holdout, StageE reopening or external action. After successful completion
 or failure, finish saved-data handoff and pause the same visible monitor.
+
+#### Approved numerical predictor repair and remaining-only comparison recovery
+
+2026-10-04T17:44Z. After the interrupted graph/flat comparison handoff, Zhaowei
+explicitly replied `批准 继续跑`. Record a single remaining-only continuation,
+not a restart of consumed work. Full amendment and exact authorization are in
+specs/2026-10-04-value-mpc-comparison/recovery1/{protocol.md,approval-intent.json}.
+The old experiment remains failed and immutable. Preserve71complete worlds,
+3040updates, two initial seals and37saved native steps of the partial flat world.
+
+Additive forecast repair resolves a rounded midpoint equality using exact dyadic
+arithmetic; no live-filter tolerance change. Restore the full saved boundary at
+epoch37 and finish only the original outstanding work.33819new native steps,
+34875operations,12320value updates,0actor,27692forwards,8630400forecast epochs;
+528new world starts plus onepartial completion. All240original evaluations follow
+all10final seals. The old384epoch reservation with13dispatched remains consumed;
+one replacement forecast decision is separately charged, not refunded.
+
+Global remaining29855seconds and original phase/owner caps minus consumed work;
+old+new including copied inputs share8GiB/6000files.14necessary zero-update tests
+andcompileall pass, including saved-state restore and fake full remainder with
+original analyzer. Freeze implementation/runtime/input/remainder and commit before
+one launch; no redundant approval. The original600-world total,15360updates,
+reward/scenario/model/seeds/metrics stay fixed. Mixed historical predictor data
+must be disclosed; reuse is not independent confirmation. Failure consumes this
+new continuation, no automatic retry, search, remote action or Howard approval.

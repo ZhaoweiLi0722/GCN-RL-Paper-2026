@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: graph/flat comparison terminated before evaluation; monitor paused
+## Live checkpoint: approved remaining-only recovery ready for committed launch
+
+2026-10-04T17:44Z. Zhaowei replied `批准 继续跑` after the failure handoff.
+Additive recovery preserves71complete worlds/3040updates and the37-row partial
+world. Exact dyadic midpoint boundary repair resolves the saved public forecast
+defect without relaxed likelihoods, reward changes or extra worlds. Both full
+learners/optimizers/RNGs and native/controller state restore exactly; explicit
+flat value reconnection and no native constructor/reset/receipt replay.
+
+14zero-update tests and fullcompileall pass. Fake remaining end-to-end schedule
+passes the original600-world raw analyzer. Both finite delegates delivered and
+closed. Saved-public384-query regression passed; no new patient/native/optimizer
+execution. See specs/2026-10-04-value-mpc-comparison/recovery1/integration-readout.md.
+
+Next authorized step NOW: commit implementation/approval/change control, freeze
+input/runtime/source/remainder, commit effective authority and launch once.
+New caps33819native/34875operations/12320value/0actor/29855seconds; preserved old
+forecast reservation stays consumed. All10final seals precede240evaluations.
+Original rewards/scenarios/seeds/metrics/sample counts unchanged; mixed predictor
+training history disclosed. No new launch permission needed. Monitor remains
+PAUSED until actual launch is verified. Current performance still unmeasured.
+
+## Previous checkpoint: graph/flat comparison terminated before evaluation; monitor paused
 
 2026-10-04T12:14Z. The12:07 heartbeat found terminal statusfailed,exit1 at
 11:47:52Z after2544.009seconds. Supervisor67458/child67481 and matching commands

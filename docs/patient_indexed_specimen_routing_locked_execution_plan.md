@@ -3489,3 +3489,34 @@ The single attempt is consumed. Confirmation, stronger frozen-value controls,
 graph ablations, new seeds or training require a separate complete prospective
 package and explicit approval; no automatic follow-on, reward search, remote
 actions, holdout use, Howard approval claim or StageE reopening is permitted.
+
+#### Strong-MPC and matched graph/flat comparison: preparation complete, not execution
+
+2026-10-04T10:48Z. Zhaowei said `继续推进` after a recommendation to compare
+final GCN value-MPC with ordinary MPC, matched flat value-MPC and uniform. This
+authorizes the local engineering preparation, not numerical scope not yet asked.
+One complete600-world/15360-value-update/32400-second/8GiB question has now been
+asked and remains unanswered. No Howard approval is represented. Original draft
+experiments/configs/capacity_value_comparison_20261004.json remains false;
+specs/2026-10-04-value-mpc-comparison/protocol.md fixes the proposed science.
+
+New additive runner shares120 initial plain-MPC worlds across graph/flat fits,
+collects240 paired-exogenous continuation worlds and, after all10final seals,
+performs240 frozen evaluations overfive independent blocks. All38400 native
+steps,15360 value updates,0actor,33120forwards,9953280planner epochs andIO are
+bounded. Public inputs, cost/reward, physical scenarios, candidate supports and
+planner budget unchanged; matched flat adds no private state. Models3169/3155
+parameters differ0.4418%, not depth-matched, so attribution is an inductive-bias
+comparison rather than edges alone. Policy-dependent continuation data and
+uncalibrated synthetic labor remain explicit limitations. No claim of deployment
+online adaptation, full convergence, clinical safety or guaranteed publication.
+
+24zero-update/artificial tests andwhole-repositorycompileall passed; new entry
+tested end-to-end only with fake backends. No real host, optimizer, scientific
+model load, new test access, freeze or launch occurred. Prior sources/results
+and manuscript findings remain unchanged. Both finite agents delivered/closed.
+Only remaining decision is the exact complete package, not extra preparation
+screens. On approval record the literal reply, append change control, commit
+source/runtime/input/seed locks and run once directly without another launch
+question. Until then samegcn-rl remainsPAUSED. No automatic retry/expansion,
+remote action, holdout or StageE reopening is authorized.

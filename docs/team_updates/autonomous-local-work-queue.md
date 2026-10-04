@@ -1,6 +1,48 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC completed; bounded positive continuation signal
+## Live checkpoint: strong-MPC and matched graph/flat comparison ready; scope pending
+
+2026-10-04T10:48Z. On clean branch codex/september-research-integration at
+entryc7bd752, Zhaowei said `继续推进` after the four-controller recommendation.
+Prepared the new complete numerical package; asked its exact approval once,
+no answer yet. No scientific call, model loading, patient environment, real
+optimizer, freeze or launch occurred. Existing automation remainsPAUSED.
+Live process inspection succeeded after read-only sandbox escalation: no
+related experiment was running. Previous completed attempts stay closed.
+
+Delivered additive graph/flat comparison entry, shared initialization collection,
+architecture-bound recovery/seals, original TD fitting/trajectory IO reuse,
+budget/authority integration and independent five-block raw reader. Flat uses
+all4x31 public inputs,3155 parameters vs3169 GCN (0.4418%gap), no padding.
+Parameter matching is not depth matching or isolated edge attribution.
+
+New question: final GCN value-MPC versus ordinary MPC primarily, parameter-
+matched flat secondarily, retaining uniform and allthree conditions. Five
+blocks;120 shared plain-MPC initialization worlds,240 continuation worlds,
+240 frozen evaluations=600 total.15360 value updates,0actor,38400native steps,
+39600native operations,33120forwards,9953280planner epochs,3840000filter
+transitions;9h/8GiB upper bound includingIO. Exact details:
+specs/2026-10-04-value-mpc-comparison/protocol.md and
+experiments/configs/capacity_value_comparison_20261004.json (draft false).
+No old test data/models used; all10final seals precede tests. Initial data
+are identical across architectures; continuation tapes paired but endogenous
+data may differ. This is simulation TD training, not deployed online adaptation.
+
+24necessary zero-update/artificial tests pass and whole-repository compileall
+exits0. Real new entry ran all600 FAKE worlds with live optimizer/host forbidden;
+not scientific trajectories. One initial artificial fixture-layout error was
+corrected; no research attempt consumed/retried. Both finite agents delivered
+and closed; efficiency advice reused, no extra gates. Full evidence and exact
+next action: specs/2026-10-04-value-mpc-comparison/integration-readout.md.
+
+Next: exact approval of the already asked complete600-world package, then
+commit authority/source/runtime/input/seed locks and directly execute the single
+comparison. No redundant launch approval, extra screens or historical reaudits.
+Until then only local engineering is authorized, not training. No new reward,
+scenario, search, holdout, StageE reopening, remote actions or Dropbox export.
+Prior performance/manuscript conclusions are unchanged; readiness is not gain.
+
+## Previous checkpoint: value-MPC completed; bounded positive continuation signal
 
 2026-10-04T01:55Z. The single execution654ff0f5/packet50fab0f5 completed at
 01:36:06Z with supervisor/child exit0 in8658.41seconds. PIDs55669 and55682 are

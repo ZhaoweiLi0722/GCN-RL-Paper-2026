@@ -3464,3 +3464,28 @@ the single attempt; preserve evidence, no automatic repair/retry or expansion.
 This is not Howard approval, deployed online adaptation or isolated GCN evidence.
 Old experiments stay closed; no reward/scenario/model search, external action,
 holdout or StageE reopening is authorized.
+
+#### GCN value-MPC single attempt completed; continuation signal with limits
+
+2026-10-04T01:55Z. Execution654ff0f5, packet50fab0f5 completed all288worlds,
+including144frozen evaluations and4608value updates, with exit0/child0 in
+8658.41seconds. No related runner remains. The current samegcn-rl monitor is
+PAUSED and retained. Full handoff and immutable evidence pointers are in
+specs/2026-10-03-value-augmented-mpc/terminal-readout.md. Independent raw cost,
+patient, action and paired-mean reconciliation and existing archive/member
+hash verification passed. No additional scientific execution occurred at closure.
+
+The prespecified continuation-training criterion passes: persistent updated
+versus initial-value MPC savings13.7493%, with fewer simulated losses in every
+condition and all persistent blocks favorable. Initialization underperforms
+plain MPC. Updated versus plain MPC averages2.4573% persistent savings, but its
+descriptive interval crosses zero; fast-fluctuation means versus uniform are
+unfavorable. This is bounded positive simulation TD-training evidence, not
+robust strong-baseline dominance, isolated GCN value, clinical safety or deployed
+online adaptation. Historical negative results and missing E1data remain intact.
+
+The manuscript now records both the positive primary result and these limits.
+The single attempt is consumed. Confirmation, stronger frozen-value controls,
+graph ablations, new seeds or training require a separate complete prospective
+package and explicit approval; no automatic follow-on, reward search, remote
+actions, holdout use, Howard approval claim or StageE reopening is permitted.

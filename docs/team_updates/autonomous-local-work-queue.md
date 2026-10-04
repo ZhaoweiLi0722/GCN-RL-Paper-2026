@@ -1,6 +1,52 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC frozen evaluation 94/144; no new training
+## Live checkpoint: value-MPC completed; bounded positive continuation signal
+
+2026-10-04T01:55Z. The single execution654ff0f5/packet50fab0f5 completed at
+01:36:06Z with supervisor/child exit0 in8658.41seconds. PIDs55669 and55682 are
+absent; no related runner remains. Samegcn-rl is now PAUSED, tool and stored
+status confirmed, retained in the app. No new experiment or retry was started.
+
+All72 initial plus72 continuation training worlds and144 frozen evaluations
+are complete:288 worlds/18432 raw rows,4608 value updates, actor0,3 initial
+and3 final seals,432 full states. Evaluation has zero optimizer updates. Native
+18432, operations19008, forwards11664, planner epochs4644864 and filter
+transitions1843200 are within their exact frozen limits. All phase/owner time
+caps pass. Stderr/stdout/detached log empty; no failure or overrun markers.
+
+Supported answer: the three prespecified continuation-training criteria pass.
+Persistent-change updated versus initial-value MPC has13.7493% mean paired
+savings (descriptive95%[9.9857,17.0320]) and55.4167 fewer simulated patient
+losses/world. Every block has positive savings. But initial-value MPC is13.5086%
+worse than plain MPC in that condition. Final versus plain MPC saves2.4573%
+on average, with interval[-1.1702,5.4154] crossing zero. Fast fluctuation versus
+uniform worsens mean cost0.7170% and adds6.1667 losses/world. This is not uniform
+superiority, isolated GCN benefit, clinical safety or deployed online adaptation.
+
+Independent raw arithmetic reconciles all288 worlds, original costs/components,
+patient identities/outcomes, actions, exact streams and all paired/block means.
+Current542 source locks, packet/authorization/inputs and six model seals match.
+All1492 members of the EXISTING archive match recorded/current payload hashes;
+1491 inventory entries also match. Payload217574269bytes, total run454890618bytes.
+No archive was recreated, no scientific calls made, no old history reaudited.
+Finite independent interpretation agent Fermat delivered and closed; reused
+prior efficiency advice and20zero-update tests/compileall. No extra gates.
+
+Handoff: specs/2026-10-03-value-augmented-mpc/terminal-readout.md contains all
+four contrasts, block detail, limits, costs/resource context and evidence hashes.
+Manuscript abstract/methods/results/discussion now include this bounded positive
+TD-value result and retain the negative actor-update evidence. Targeted number,
+label and table-structure checks pass. PDF not rebuilt: no TeX engine installed.
+Local archive only; no Dropbox/cloud/Howard-access claim or external action.
+
+Next decision, not execution permission: a separately specified confirmation
+against plain MPC and a sufficiently trained frozen-value comparator, with
+graph attribution addressed separately. Do not count recovery from weak
+initialization as robust superiority over the strong planner. This attempt is
+consumed; no continuation, extra seeds, reward changes or new training without
+a new complete package approval. Stage E remains closed and E1 data missing.
+
+## Previous checkpoint: value-MPC frozen evaluation 94/144; no new training
 
 2026-10-04T01:14Z. Same execution654ff0f5/packet50fab0f5 is active under
 supervisor55669/PPID1 and child55682/PPID55669 with matching full live commands.

@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: first evaluation block complete; second approaching completion
+## Live checkpoint: three evaluation blocks complete; fourth running
+
+2026-10-04T21:51:28Z read-only heartbeat. Entry HEAD913f299 is clean on the
+expected branch. Supervisor81985/PPID1 and child81996/81985 match claims and
+exact recovery launch/child commands; no duplicate experiment.67new complete
+evaluation worlds since21:21 plus active eight-step boundaries verify progress.
+No new launch, scientific call, model update or tuning by this monitor.
+
+Initial120/120; continuation240/240 (graph120,flat120); evaluation156/240.
+Evaluation blocks0,1,2 each48/48; block3 at12/48. All four roles have39complete
+evaluations. Graph/flat value updates each7680/7680,total15360/15360 = old3040
+plus new12320/12320, actor0. Initial/final seals both10/10. Evaluation ledger
+and156complete summaries show0optimizer updates. Reuse first-test barrier check;
+no partial performance interpretation before the full prespecified readout.
+
+Current evaluationblock3,condition0,replicate1,seed63023001,plain_mpc,epoch15.
+Boundary newnative28459/33819,cumulative33040/38400; later ledger28465new.
+Latest after-fit state unchanged: continuation-b4-c2-j7-flat_value_fit,
+139563bytes,SHA256e9ea10d3597414d968c11c65492333f6fcc1c577f1d7c1f7b3ca6d251de063b3.
+No missing complete fit state;15360receipts unchanged, latest mtime20:41:25.054Z.
+Reuse20:51finite-metric check.20model seals and7current input locks match.
+Reuse18:21source/runtime checks and14tests/compileall; only nonlocked status
+docs changed. No historical audit or repeated archive.
+
+No failure/terminal/overrun marker; stderr/stdout/detachedlog0bytes. Progress
+10318398bytes at21:51:22.850Z; budget73083192bytes at21:51:27.928Z. Phase/global
+counters within caps. Recovery14603.741/29855seconds,evaluation4202.593/10800,
+current world15.137/120; no time violation. Recent20world-start median34.051s,
+84remaining worlds implies0.79h before analysis/IO, provisionally1-1.5h remaining.
+
+Next: SAME authorized task completes240evaluations and original five-block
+raw comparison, inventory/archive and readout. No fresh approval or experiment.
+Keepgcn-rl ACTIVE; terminal outcome requires truthful manuscript/readout and
+thenPAUSED monitor. Do not infer performance benefit from completion counts.
+
+## Previous checkpoint: first evaluation block complete; second approaching completion
 
 2026-10-04T21:21:28Z read-only heartbeat. Entry HEADb3fbe7e is clean on the
 expected branch. Supervisor81985/PPID1 and child81996/81985 match both claims

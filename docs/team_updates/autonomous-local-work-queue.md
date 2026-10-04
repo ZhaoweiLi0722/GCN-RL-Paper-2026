@@ -1,6 +1,40 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC training complete; frozen evaluation running
+## Live checkpoint: value-MPC frozen evaluation 94/144; no new training
+
+2026-10-04T01:14Z. Same execution654ff0f5/packet50fab0f5 is active under
+supervisor55669/PPID1 and child55682/PPID55669 with matching full live commands.
+No duplicate related Python.64 new completed evaluation boundaries since the
+last checkpoint establish continued progress without a redundant growth wait.
+
+Snapshot at01:14:27Z: initial72/72, continuation72/72,144/144 training worlds;
+value updates4608/4608 and actor0; initial/final seals each3/3. Frozen evaluation
+94/144, native15240/18432. Current evaluation block1 condition2 replicate3,
+seed62921203, updated_value_mpc, epoch7. Completed roles: plain24, initial24,
+updated23, fixed23. Every evaluation follows the all-models-sealed barrier;
+the value optimizer counter is unchanged throughout evaluation. Reuse completed
+six-model hash and144-fit/4608-finite-receipt checks; no new fit has occurred.
+
+Packet/authorization/exact approval and proposal/protocol/inherited-input/intent
+hashes match. Intervening changes are only Live/workflow; unchanged scientific
+source verification and20zero-update tests/compileall are reused. Global and
+phase counters remain within caps. Raw payload180932271bytes; budget log
+36885218bytes at01:14:27Z and progress2099328bytes at01:14:24Z. Stderr/stdout/
+detached log0bytes; no terminal, failure or overrun marker. This monitor made
+no scientific model, optimizer or environment calls and no new archive.
+
+Shared-clock elapsed7359.58s; evaluation phase2456.69/5400s. Recent10 planned
+evaluations average34.71s. Remaining37 planned evaluations plus13 fixed worlds
+and readout/archive suggest about25-35min more, approximate. Partial test costs
+are not used for tuning or a benefit claim; the complete paired comparison is
+still pending. No additional approval is needed inside this existing attempt.
+
+Next: same serial process completes144 evaluations and its single comparison/
+archive; then perform the authorized saved-data handoff and update the manuscript
+from actual terminal results. Samegcn-rl remainsACTIVE until that handoff, then
+PAUSED. No retries, extra training, parameter changes or external actions.
+
+## Previous checkpoint: value-MPC training complete; frozen evaluation running
 
 2026-10-04T00:47Z. Same execution654ff0f5/packet50fab0f5 is progressing under
 supervisor55669/PPID1 and child55682/PPID55669; full live commands match claims.

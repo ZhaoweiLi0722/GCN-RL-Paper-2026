@@ -1,6 +1,48 @@
 # Autonomous local research queue
 
-## Live checkpoint: first shared initialization sealed; graph/flat continuation running
+## Live checkpoint: graph/flat comparison terminated before evaluation; monitor paused
+
+2026-10-04T12:14Z. The12:07 heartbeat found terminal statusfailed,exit1 at
+11:47:52Z after2544.009seconds. Supervisor67458/child67481 and matching commands
+are absent. Samegcn-rlPAUSED confirmed through the app; no retry or repair.
+The previous live snapshot was valid at11:40; its remaining-time ETA is void.
+
+Failure: public MPC predictor raised `midpoint forecast incompatible with its
+public work intervals` at capacity_completion_control_recovery2.py:105.
+Activecontinuationblock0,fastfluctuationcondition2,replicate7,seed63010207,
+flat_value_mpc;37native rows saved through epoch36, next planning action failed.
+This is a forecast consistency exception, not an optimizer/nonfinite failure;
+specific numerical cause remains unresolved without authorized replay.
+
+Preserved:24/120sharedinitial;47/240completecontinuation(graph24,flat23),plus
+onepartialworld;71completeworlds total. Graph1536/7680,flat1504/7680 value
+updates,total3040/15360,actor0. Initialseals2/10,final0/10,eval0/240.
+Native4581/38400;4725nativeoperations,5428forwards,1323264chargedplannerepochs,
+458100filtertransitions. Interrupted384-epoch planner reservation dispatched13
+and stays consumed. No remaining-budget reuse authorization exists.
+
+Read-only check:71complete summaries/4544raw rows reconcile costs/components,
+rewards and unique terminal patient outcomes;37partial rows excluded from
+performance. All3040loss/gradient receipts finite. Both initial models match
+hashes;failure-state gzip is readable and preserved,not scientifically restored.
+All551source locks and current protocol/proposal/intent match. Stderr is0bytes,
+but child-failure contains a real traceback. No full comparison,inventory or
+archive receipt exists; do not claim verified archive or cloud backup.
+
+New supported answer: this attempt cannot answer graph/plain or graph/flat
+performance; no evaluation opened. It is not an RL null result or reward-error
+diagnosis. Old completed study remains unchanged. Manuscript explicitly records
+the interruption,not a new gain. Full evidence/hashes and recovery limitations:
+specs/2026-10-04-value-mpc-comparison/terminal-readout.md.
+
+Next proposed work needs approval: targeted public-predictor consistency repair
+and saved-boundary recovery preparation. Prefer retained71worlds/3040updates
+to fresh training, but do not promise exact continuation before checking restore
+semantics. Any scientific replay/resume requires a separate complete recovery
+scope. No automatic experiment,additional audit chain,reward search or remote
+action. Existing24tests/compileall reused; only status/manuscript docs changed.
+
+## Previous checkpoint: first shared initialization sealed; graph/flat continuation running
 
 2026-10-04T11:40:58Z read-only snapshot. EntryHEADf0551c4 on the expected clean
 branch. Execution42f1ed5, frozenimplementation875af264, scientificc0cd2c3 and

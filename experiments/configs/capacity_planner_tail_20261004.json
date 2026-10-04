@@ -1,0 +1,50 @@
+{
+  "schema": "capacity-planner-tail-study-v1",
+  "scientific_execution_authorized": false,
+  "result_root": "results/capacity_planner_tail_20261004",
+  "inherit": {"proposal": "specs/2026-10-03-dynamic-capacity-adaptation/pilot-proposal.json", "sha256": "f46f6d5ae417a67c5974516b1c9e2b5b05ba9e2de56681aaedbfe276e9f355a9"},
+  "initial_models": {
+    "root": "results/capacity_value_comparison_20261004_recovery1/payload/models",
+    "names": ["block0-graph-final.pt", "block1-graph-final.pt", "block2-graph-final.pt", "block3-graph-final.pt", "block4-graph-final.pt"],
+    "sha256": ["921ea80a67e8b0f0189a3e4d7504e97f59f187a3917418abbc5af0e8dd762c87", "770e5374d7f333f6c9d4182cf36c54ac1fe0fe1dcd9536acca2d65073ec0c22b", "995c5fc0544e3a3157254fe0fdf959cea4279455daa76fc577e0090cb343d541", "9c2c319027b4ed0636ecc828eb2665494927f65b689b9981808b83d2bfc0677e", "814d0e07e5c5bcaa0acccfd4ea42245fe6c0c05bfde3c7133047cc823b92fa0f"],
+    "historical_updates_per_model": 1536,
+    "fork": "identical_weights_fresh_Adam_and_sampling_state_new_update_count_zero"
+  },
+  "design": {
+    "blocks": 5, "conditions": 3, "reference_worlds_per_block": 24,
+    "evaluation_worlds_per_condition_block": 4,
+    "train_roles": ["observed_td", "planner_tail_td", "planner_tail_mc"],
+    "eval_roles": ["plain_h8", "existing_frozen", "observed_td", "planner_tail_td", "planner_tail_mc", "plain_h16"],
+    "reference_behavior": "plain_h8", "all_final_seals_before_tests": true,
+    "selection": "final_only", "new_training_worlds": 120, "evaluation_trajectories": 360,
+    "total_native_trajectories": 480
+  },
+  "planning": {"candidate_sequences": 16, "response_quantiles": [0.1, 0.5, 0.9], "summary_weights": [0.25, 0.5, 0.25], "horizon": 8, "long_reference_horizon": 16},
+  "tails": {"capture_epochs": "world_index_and_world_index_plus_24", "per_world": 96, "final_epoch": 64, "continuation": "same_public_forecast_adaptive_until_48_then_zero_support", "target_rows": "every_tail_state_including_terminal_anchored_TD_rows", "generation": "once_shared_across_TD_and_MC", "ground_truth": false},
+  "value": {"width": 32, "lr": 0.0003, "batch_size": 64, "updates_per_world": 32, "gradient_norm_cap": 5.0, "cost_scale": 1000000.0, "td_horizon": 8, "gamma": 1.0, "targets": "frozen_before_each_world_fit", "sampling": "uniform_over_all_rows_with_identical_TD_MC_indices", "evaluation_updates": 0},
+  "streams": {"namespace": "capacity-planner-tail-20261004-v1", "reference_base": 64000000, "evaluation_base": 64020000, "sampler_seeds": [540270510, 540270530, 540270550, 540270570, 540270590], "bootstrap_seed": 64090001, "purposes": ["demand", "patient_identity_attributes", "response_change", "exploration", "replay"]},
+  "budget": {
+    "native_steps": 30720, "native_operations": 31680,
+    "value_optimizer_steps": 11520, "actor_optimizer_steps": 0, "optimizer_examples": 737280,
+    "forward_calls": 30000, "maximum_forward_batch": 64,
+    "planning_decisions": 23040, "candidate_quantile_rollouts": 1105920,
+    "planning_epochs": 9953280, "training_tail_epochs": 374400,
+    "total_predictor_epochs": 10327680, "forecast_clones": 11520,
+    "filter_transitions": 3072000, "new_final_seals": 15,
+    "seconds": {"admission": 600, "reference_and_tails": 10800, "value_fitting": 3600, "frozen_evaluation": 14400, "analysis_archive": 1200, "failure_preservation": 1800, "global": 32400},
+    "owner_seconds": {"reference_world_with_tails": 240, "evaluation_h8_world": 120, "evaluation_h16_world": 240, "fit": 60, "seal": 60},
+    "rss_bytes": 4294967296, "raw_bytes": 4294967296, "archive_bytes": 4294967296, "combined_disk_bytes": 8589934592, "file_cap": 6000,
+    "compute_threads": 4, "workers": 1, "attempts": 1, "automatic_retry": false, "includes_io": true
+  },
+  "readout": {
+    "primary_condition": 1,
+    "primary_comparators": ["plain_h8", "existing_frozen", "observed_td"],
+    "candidate": "planner_tail_td", "target_comparator": "planner_tail_mc", "compute_reference": "plain_h16",
+    "bootstrap_resamples": 2000,
+    "screen": "positive_absolute_cost_savings_in_all_five_persistent_blocks_and_descriptive95_lower_above_zero_for_each_primary_comparator_and_no_condition_mean_extra_patient_losses_for_those_pairs",
+    "report_all_15_pairs": true, "diagnostics": "final_models_on_saved_training_roots_only_no_selection_no_new_rollouts",
+    "test_optimizer_steps": 0
+  },
+  "limitations": ["synthetic_uncalibrated_E1_missing", "model_based_policy_evaluation_not_deployment_online_adaptation", "public_forecast_tail_returns_not_native_ground_truth", "model_bias_is_not_repaired_by_TD", "reused_five_training_blocks_not_new_independent_training_replication", "historical_mixed_predictor_provenance_retained", "matched_TD_MC_data_and_updates_not_equal_forward_cost", "long_horizon_MPC_has_higher_query_budget", "not_isolated_GCN_attribution", "no_clinical_safety_claim"],
+  "forbidden": ["unapproved_scientific_calls", "historical_attempt_resume", "reward_weight_search", "scenario_search", "architecture_search", "extra_epochs", "test_based_selection", "automatic_retry", "holdout", "StageE_reopen", "remote_push", "PR", "Dropbox", "external_messages", "Howard_approval_claim"]
+}

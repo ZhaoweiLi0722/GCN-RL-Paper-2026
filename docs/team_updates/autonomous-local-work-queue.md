@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: next integrated comparison direction recorded
+## Live checkpoint: planner-aligned end-to-end implementation ready; approval pending
+
+2026-10-04T23:58:01Z. Entry cdaab6e. New protocol/config:
+specs/2026-10-04-planner-aligned-value/protocol.md and
+experiments/configs/capacity_planner_tail_20261004.json.
+Read integration-readout.md in the same spec directory before resuming.
+
+Question specified: can forecast-terminal TD improve over plainH8, existing
+frozen GCN-value-MPC and equally updated observed-TD continuation? Same-tail
+direct regression separates the TD target; plainH16 is the compute reference.
+Reuse five sealed graph models, no new initialization. Reward/scenarios unchanged
+for this package; justified future reward amendments remain possible. Forecast
+labels are NOT native counterfactual returns.
+
+Delivered target builders, variable-row weight-fork learner/rollback, H8/H16
+shared-tail planner, durable budget/serial runner, admission/supervisor entry,
+independent six-role raw reader and local archive handoff.38zero-real-update
+tests and full compileall pass. Actual-entry full480world fake execution passed
+its generated records directly to the independent reader: exact phase counts,
+all15model test barrier,20model byte bindings, tapes and15paired contrasts.
+No scientific calls or performance result. Tesla advancement and Hilbert
+efficiency tasks completed/closed; advice integrated.
+No related experiment in verified process listing; monitor left PAUSED.
+
+Numerical proposal:120shared training+360eval trajectories,11520value/0actor,
+30720native/31680native operations,10327680prediction epochs,30000forwards with
+batch<=64,9h includingIO/8GiB. One attempt, no retry. One full approval question
+sent; no answer yet to that exact package. Earlier direction-level `推进` does
+not approve previously unproposed budgets.
+
+Next: exact numerical package approval, scoped stream collision check and
+committed input/runtime/source/effective-authorization locks, then one launch.
+Integration is complete; remaining admission/launch estimate15-30minutes after
+approval, subject to lock/collision results. No additional toy fits. Scientific
+execution still requires exact package approval and committed locks; then no
+redundant launch question. Full-run estimate6-8hours extrapolated,9hour cap.
+StageE/holdout/local-only boundaries unchanged.
+
+## Previous checkpoint: next integrated comparison direction recorded
 
 2026-10-04T23:18:16Z. Entry HEAD8c98ba8. Zhaowei endorsed one end-to-end
 comparison and requested a durable summary. Decision record:

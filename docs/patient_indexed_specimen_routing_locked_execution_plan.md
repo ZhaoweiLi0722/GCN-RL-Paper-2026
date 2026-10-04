@@ -3592,3 +3592,29 @@ complete numerical proposal and approval before new scientific execution.
 This entry authorizes no new model/environment/optimizer calls and changes no
 existing frozen artifact or consumed attempt. The monitor remains paused,
 Stage E closed and work local-only; no Howard approval is implied.
+
+#### Planner-aligned value package proposed; execution not yet approved
+
+2026-10-04T23:37:33Z. Zhaowei's `推进` moved the direction into six-arm design
+and additive core implementation. See specs/2026-10-04-planner-aligned-value/
+{protocol.md,integration-readout.md} and
+experiments/configs/capacity_planner_tail_20261004.json. Reuse five saved graph
+weights; observed-TD continuation controls extra updates, forecast-tail TD and
+same-tail direct regression compare targets, with plainH8/frozen/plainH16
+references. Reward/scenario/architecture unchanged.
+
+Proposal:120shared training+360eval worlds,11520new value/0actor updates,
+30720native steps,10327680prediction steps,30000forwards,9h includingIO,8GiB,
+one attempt. Asked once, NOT yet approved by the earlier direction-level request.
+Forecast labels are public-model adaptive-tail returns, not native ground truth.
+Historical models/training provenance remain intact and disclosed.
+
+At23:58:01Z the complete serial backend, durable budget/entry/supervisor and
+six-role raw reader are implemented.38artificial/fake zero-update tests and full
+compileall pass. The actual entry completed480fake worlds and its generated
+records passed independent cost/patient/seal/tape/barrier analysis. No scientific
+model, environment or optimizer call was performed. Exact-package approval,
+scoped stream collision check and committed input/runtime/source/effective locks
+remain before execution; then no redundant routine launch question. No old rerun,
+automation or external change. Reward stays unchanged for this package, not
+permanently forbidden from evidence-justified future amendments.

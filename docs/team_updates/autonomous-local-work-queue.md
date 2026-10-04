@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: second-block initialization sealed; continuation progressing
+## Live checkpoint: two training blocks complete; third-block continuation running
+
+2026-10-04T18:51:24Z read-only heartbeat. Entry HEAD80e298a is clean on the
+expected branch. Supervisor81985/PPID1 andchild81996/81985 still match claims
+and full recovery commands; no duplicate experiment. Compared with18:21,
+block1 final models and block2 initial models are newly sealed, and fresh
+trajectory/fit/eight-step boundaries verify continued execution.
+
+Shared initial72/120; continuation101/240 (graph51,flat50); evaluation0/240.
+Graph3936/7680 and flat3904/7680 value updates; total7840/15360 = old3040 plus
+new4800/12320, actor0. Initial seals6/10, final seals4/10. Last persisted
+boundary has newnative6515/33819, cumulative11096/38400; the slightly later
+ledger read has6522new native calls. Current continuationblock2,condition2,
+replicate0,seed63012200,flat_value_mpc,epoch23. No evaluation opened early.
+
+Latest complete after-fit state: continuation-b2-c2-j0-graph_value_fit,
+136099bytes,SHA2565220c241faf979adf25e8ea975039f489a791a9d48874eec44ca707cfcb4c469.
+All7840 persisted loss/gradient receipts finite; no missing completed fit state.
+All10 current model seals and7 locked input hashes match. Reuse the18:21 source
+and runtime checks; only nonlocked status documents changed since that check.
+No old historical-tree audit, scientific calls or tests added by this heartbeat.
+
+No failure/terminal/overrun marker; stderr/stdout/detachedlog0bytes. Progress
+2978193bytes at18:51:17.794Z; budget18682972bytes at18:51:24.427Z. Global and
+phase counters are within caps. Recovery elapsed3800.107/29855seconds; current
+phase2027.100/9110seconds, current world23.467/120seconds, no time violation.
+Recent20 world-start median36.633seconds,427remaining worlds:4.35h before
+final analysis/IO, provisionally4.5-5h remaining. Rates and phases may differ.
+
+Next is the SAME authorized serial task: remaining training,10final seals,
+240frozen evaluations, original paired cost/patient readout and archive. No
+new approval, retry, tuning, reward change or external action. Training progress
+is not a performance gain; all test outcomes remain unread. Samegcn-rl stays
+ACTIVE unchanged. Reuse14necessary tests/compileall. On terminal outcome,
+finish honest manuscript/readout and pause the same monitor.
+
+## Previous checkpoint: second-block initialization sealed; continuation progressing
 
 2026-10-04T18:21:16Z read-only heartbeat. Entry HEAD620b36f is clean on the
 expected branch. Supervisor81985/PPID1 and child81996/81985 match the exact

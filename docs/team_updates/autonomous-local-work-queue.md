@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: recovery crossed the failed boundary; real training resumed
+## Live checkpoint: second-block initialization sealed; continuation progressing
+
+2026-10-04T18:21:16Z read-only heartbeat. Entry HEAD620b36f is clean on the
+expected branch. Supervisor81985/PPID1 and child81996/81985 match the exact
+recovery launch/child commands and claims; no duplicate experiment. New complete
+world, fit, seal and eight-step boundaries establish progress since17:50.
+
+Shared initial48/120; continuation78/240 (graph39,flat39); evaluation0/240.
+Graph2784/7680 and flat2784/7680 value updates: total5568/15360, comprising
+old3040 plus new2528/12320; actor0. Initial seals4/10, final seals2/10.
+At the last persisted boundary, newnative3483/33819 and cumulative8064/38400;
+the slightly later ledger read had3487new native calls. Current continuation
+block1,condition0,replicate5,seed63011005,graph_value_mpc,epoch0.
+
+Second-block initialization is now complete and both models are continuing
+training. Latest complete after-fit state is continuation-b1-c2-j4-flat_value_fit,
+129311bytes, SHA2567fd26af186c44ad51104c94f75d9b404eb97a95f3de515eeea3783f713ac841f.
+All5568 persisted loss/gradient receipts finite, no missing complete fit state;
+all6 current sealed model hashes match.560 current source locks,7 locked inputs
+and2 runtime entry hashes match; claim/packet/authorization agree. Original
+historical tree was not reaudited. Global and phase counters are within caps.
+
+No terminal/failure/overrun marker. Stderr,stdout anddetachedlog0bytes.
+Progress1899089bytes at18:21:13.574Z; budget9980310bytes at18:21:15.846Z.
+Recent20 world-start intervals median36.249seconds;474remaining worlds suggest
+about4.8hours plus final analysis/IO, provisionally about5hours. Rates can change;
+all original remaining time/owner caps stay fixed.
+
+Next authorized work is the SAME live serial task: finish remaining training,
+all10 final seals,240frozen evaluations and raw comparison/archive. No new
+approval or preparation gate. No test performance inspected or tuned; training
+progress is not benefit evidence. Samegcn-rl staysACTIVE unchanged. Existing14
+tests/compileall reused; this heartbeat only read evidence and updated status
+documents locally. On terminal outcome complete honest readout/manuscript and
+pause same monitor. No extra science, retry, reward changes or remote action.
+
+## Previous checkpoint: recovery crossed the failed boundary; real training resumed
 
 2026-10-04T17:50:09Z. Single detached supervisor81985/PPID1 andchild81996/81985
 match live commands andclaims; newworld/fit/eight-step boundaries verify running.

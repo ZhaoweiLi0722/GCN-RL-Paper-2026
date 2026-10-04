@@ -1,0 +1,40 @@
+{
+  "attempts": 1,
+  "automatic_follow_on": false,
+  "automatic_resume": false,
+  "automatic_retry": false,
+  "format": "capacity-value-comparison-authorization-v1",
+  "implementation_commit": "875af2644a46130aaece6efa9f82ebb4c7d60139",
+  "packet_sha256": "3fb325a35dee08a17e3d7955635b2233f34e840fc77c94aa344f72234d79e8e9",
+  "remote_export": false,
+  "scientific_execution_authorized": true,
+  "user_approval": {
+    "approved_by": "Zhaowei Li",
+    "attempts": 1,
+    "automatic_follow_on": false,
+    "automatic_resume": false,
+    "automatic_retry": false,
+    "context": "Direct human reply after the complete question and implementation-ready handoff; covers one preparation-to-readout attempt without a redundant launch question.",
+    "format": "capacity-value-comparison-approval-intent-v1",
+    "howard_approval_claimed": false,
+    "implementation_commit": "c0cd2c3",
+    "original_draft_remains_false": true,
+    "proposal_sha256": "a073b934aec776488150211d10ee0e852be47748a4d762d49d66507acd8f561f",
+    "protocol_sha256": "22a19c834bbab6d532e7aaf63c40e2d272223a8dee532519e4ea93fe506e3f28",
+    "question": "\u662f\u5426\u6279\u51c6\u8fd9\u4e00\u5b8c\u6574\u8bad\u7ec3\u6bd4\u8f83\u5305\uff1a5\u4e2a\u72ec\u7acb\u533a\u5757\uff0cGCN/\u53c2\u6570\u5339\u914dMLP\u540448\u4e2a\u8bad\u7ec3\u56de\u5408\uff0c\u521d\u59cb\u6570\u636e\u5171\u7528\uff1b\u666e\u901aMPC\u3001GCN\u4ef7\u503cMPC\u3001MLP\u4ef7\u503cMPC\u3001\u5747\u5206\u5171240\u4e2a\u51bb\u7ed3\u8bc4\u4f30\u56de\u5408\u3002\u5408\u8ba1600\u6761\u8f68\u8ff9\u300138,400\u73af\u5883\u6b65\u300115,360\u4ef7\u503c\u66f4\u65b0\u30010 actor\u66f4\u65b0\u3001\u6700\u591a9\u5c0f\u65f6\u548c8GiB\u672c\u5730\u5b58\u50a8\uff0c\u5355\u6b21\u5c1d\u8bd5\u3002\u4fdd\u6301\u5956\u52b1\u3001\u573a\u666f\u548c\u89c4\u5212\u9884\u7b97\u4e0d\u53d8\uff0c\u5931\u8d25\u4e0d\u81ea\u52a8\u91cd\u8dd1\u3002\u6279\u51c6\u540e\u6211\u5b8c\u6210\u5fc5\u8981\u96c6\u6210\u4e0e\u9501\u5b9a\u5c31\u76f4\u63a5\u8bad\u7ec3\u3001\u8bc4\u4f30\u3001\u51fa\u7ed3\u679c\uff0c\u4e0d\u518d\u53e6\u95ee\u542f\u52a8\uff1b\u76ee\u524d\u5148\u5b8c\u6210\u96f6\u66f4\u65b0\u5de5\u7a0b\u6d4b\u8bd5\u3002",
+    "recorded_at_utc": "2026-10-04T11:03:00Z",
+    "remote_actions_authorized": false,
+    "scope": "capacity-value-comparison-v1",
+    "scope_approved": true,
+    "scope_notes": [
+      "Five independent graph/flat blocks; parameter-matched not depth-matched",
+      "120 shared initial worlds plus240 continuation worlds plus240 frozen evaluations",
+      "38400 native steps;39600 native operations;15360 value optimizer;0 actor",
+      "33120 neural forwards;9953280 planner epochs;3840000 filter transitions",
+      "32400 seconds including IO;8589934592 total disk bytes;all phase/owner caps remain fixed",
+      "Original reward,physical scenarios,predictor,action support unchanged",
+      "Both real gains and negative/tradeoff outcomes must be reported"
+    ],
+    "user_literal": "\u6279\u51c6"
+  }
+}

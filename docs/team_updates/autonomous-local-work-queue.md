@@ -1,6 +1,31 @@
 # Autonomous local research queue
 
-## Live checkpoint: approved remaining-only recovery ready for committed launch
+## Live checkpoint: recovery crossed the failed boundary; real training resumed
+
+2026-10-04T17:50:09Z. Single detached supervisor81985/PPID1 andchild81996/81985
+match live commands andclaims; newworld/fit/eight-step boundaries verify running.
+Execution10f62ca6a1fff79253c0987114b1616ecef2aafc, implementation7ee58ee,
+packet e1d427952b15a9bf2a66d385072f596c6f314aaf9b93e06f69ffb65d65ebf2be.
+Runroot results/capacity_value_comparison_20261004_recovery1. Original failure
+and71complete worlds retained; savedepoch37 continued,27steps finished,32new
+flat updates andbothblock0finalmodels saved. Newafterfit128302bytes andhashes
+in specs/2026-10-04-value-mpc-comparison/recovery1/launch-readout.md.
+
+Currentsharedinitial27/120,continuation48/240,eval0/240;graph1632,flat1632value
+updates,total3264/15360 = old3040+new224/12320;actor0. Initial/finalseals2/10
+each. Newnative219/33819,cumulative4800/38400;block1initial,condition0,j1,
+seed63001001,plain_mpc,epoch0. No failuremarkers;stderr0. This is verified
+recovered training, not performance evidence. No evaluation opened early.
+
+Samegcn-rl confirmedACTIVE every30minutes with exactremaining monitor; quiet
+when unchanged. Next action already running: serial remaining training,all10
+finalseals,240frozenevaluations and originalfive-block rawcomparison/archive.
+No routine approval or preparation blocker. Provisional5-6hremaining from
+~35sec/world, not guaranteed;29855sectotalremainingpackage andallsubcapsfixed.
+No extraforward/simulation bymonitor,retry,rewardchange,remoteaction orDropbox.
+Onterminalsuccess/failure,writeaccuratereadout/manuscript andPAUSEsametask.
+
+## Previous checkpoint: approved remaining-only recovery ready for committed launch
 
 2026-10-04T17:44Z. Zhaowei replied `批准 继续跑` after the failure handoff.
 Additive recovery preserves71complete worlds/3040updates and the37-row partial

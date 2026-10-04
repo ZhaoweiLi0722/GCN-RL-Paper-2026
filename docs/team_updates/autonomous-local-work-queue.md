@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: all training complete and sealed; frozen evaluation running
+## Live checkpoint: first evaluation block complete; second approaching completion
+
+2026-10-04T21:21:28Z read-only heartbeat. Entry HEADb3fbe7e is clean on the
+expected branch. Supervisor81985/PPID1 and child81996/81985 match both claims
+and full recovery commands; no duplicate experiment.67new complete evaluation
+worlds since20:51 plus active eight-step boundaries establish actual progress.
+No scientific call, launch, tuning or additional training by this monitor.
+
+Initial120/120; continuation240/240 (graph120,flat120); evaluation89/240.
+Evaluation block0 complete48/48; block1 at41/48. Completed roles: plain23,
+graph22,flat22,fixed22. Graph/flat value updates each7680/7680,total15360/15360
+= old3040 plus new12320/12320, actor0. Initial/final seals both10/10 unchanged.
+Evaluation ledger and89complete summaries retain0optimizer updates; first-test
+sealing barrier verified at20:51 is reused. No partial performance interpretation.
+
+Current evaluationblock1,condition1,replicate3,seed63021103,graph_value_mpc,
+epoch7. Boundary newnative24163/33819,cumulative28744/38400; later ledger24168new.
+Final checkpoint remains continuation-b4-c2-j7-flat_value_fit,139563bytes,
+SHA256e9ea10d3597414d968c11c65492333f6fcc1c577f1d7c1f7b3ca6d251de063b3.
+No missing completed fit states; update receipts still15360 with latest mtime
+20:41:25.054Z. Reuse their20:51finite-metric check. All20model hashes and7input
+locks match. Reuse18:21source/runtime checks and14tests/compileall; only status
+docs changed. No historical audit or repeat archive.
+
+No failure/terminal/overrun marker; stderr/stdout/detachedlog0bytes. Progress
+8970798bytes at21:21:24.085Z; budget64382479bytes at21:21:28.046Z. All counters
+within phase/global caps. Recovery12804.049/29855seconds; evaluation2402.900/10800;
+current world8.943/120, no time violation. Recent20world-start median35.140seconds,
+151remaining worlds:1.47h before final analysis/IO, provisionally1.5-2h remaining.
+
+Next: SAME authorized serial evaluation to240, original five-block comparison,
+inventory/archive and saved-data readout. No new approval, fit or experiment.
+Samegcn-rl stays ACTIVE; after terminal outcome update manuscript truthfully and
+pause the same monitor. Performance gain remains undetermined until full readout.
+
+## Previous checkpoint: all training complete and sealed; frozen evaluation running
 
 2026-10-04T20:51:34Z read-only heartbeat. Entry HEAD58e884b is clean on the
 expected branch. Supervisor81985/PPID1 and child81996/81985 match claims and

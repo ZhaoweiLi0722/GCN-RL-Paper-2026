@@ -1,6 +1,37 @@
 # Autonomous local research queue
 
-## Live checkpoint: value-MPC first block fully trained and sealed; block1 running
+## Live checkpoint: value-MPC two blocks sealed; third block training
+
+2026-10-04T00:15Z. Same execution654ff0f5/packet50fab0f5, supervisor55669/PPID1
+and child55682/PPID55669 match live full commands. No duplicate related Python.
+New cohort/fit/8-step boundaries since the prior checkpoint verify progress.
+Snapshot at00:14:59Z: initial63/72, continuation48/72, total111/144 training
+worlds;3552/4608 real value updates, actor0; initial/final seals each2/3;
+evaluation0/144, native7112/18432. Current initial block2 condition0 replicate5,
+seed62902005, epoch7, role plain_mpc. Tests remain unopened. Both completed
+blocks have initial768/final1536 updates; all four sealed model hashes match.
+
+All3552 persisted loss/gradient receipts are finite. All111 completed fit
+boundaries have nonempty state/target/update/summary files; none missing.
+Global/phase counters remain within caps. Raw payload89432562bytes at check.
+Stderr0bytes; no terminal/failure/overrun markers. Packet, authorization and
+current locked inputs match. Reused the prior542-source-file verification:
+the intervening commit changes only Live/workflow, not scientific sources.
+No new scientific loads/forwards, environment calls, fits, tests or archival
+work were performed by this monitor.
+
+Shared-clock elapsed3711.46s at the first sample; recent10 complete-world mean
+34.09s. Remaining33 training plus108 planned evaluation worlds,36 fixed worlds
+and readout/archive suggest about80-100min more, not a guarantee. Training and
+sealing are verified; comparative performance is not yet established.
+
+Next: existing serial task completes third-block training, all model seals,
+144 frozen evaluations and saved-data readout/archive. Samegcn-rl remainsACTIVE.
+No duplicate launch, retry, parameter changes or early test-based adaptation.
+On terminal completion/failure, finish the authorized handoff and manuscript
+update from actual results, thenPAUSED. All other locks remain unchanged.
+
+## Previous checkpoint: value-MPC first block fully trained and sealed; block1 running
 
 2026-10-03T23:44Z. Same execution654ff0f5/packet50fab0f5, supervisor55669/PPID1
 andchild55682/PPID55669 match livefullcommands. No duplicate related Python.

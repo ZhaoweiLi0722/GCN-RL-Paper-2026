@@ -1,6 +1,43 @@
 # Autonomous local research queue
 
-## Live checkpoint: graph/flat value-MPC launched; real updates and saved states verified
+## Live checkpoint: first shared initialization sealed; graph/flat continuation running
+
+2026-10-04T11:40:58Z read-only snapshot. EntryHEADf0551c4 on the expected clean
+branch. Execution42f1ed5, frozenimplementation875af264, scientificc0cd2c3 and
+packet3fb325a35dee08a17e3d7955635b2233f34e840fc77c94aa344f72234d79e8e9
+remain unchanged. Supervisor67458/PPID1 andchild67481/PPID67458 match the
+claims and exact launch/child commands; only one related experiment is live.
+New complete-world/fit/eight-step boundaries establish progress since launch.
+
+Completed sharedinitial24/120; continuation36/240 (graph18/120,flat18/120);
+evaluation0/240. Persisted value updates1344/7680 per architecture,2688/15360
+combined,actor0. Initialseals2/10,finalseals0/10. Native3848/38400 at the saved
+boundary; currentcontinuationblock0,condition0,replicate6,seed63010006,
+graph_value_mpc,epoch7. Both block0 initial models are sealed and hash-valid;
+all2688 saved loss/gradient receipts are finite. This verifies real training,
+not a performance improvement. No test evaluation has opened.
+
+No terminal,child-failure,launch-failure,supervisor-overrun or preservation-error
+marker. Stderr/stdout/detachedlog all0bytes. Progress561013bytes,lastwrite
+11:40:55Z;budget11012290bytes,lastwrite11:40:58Z. All551 current scientific
+source locks,protocol/proposal/approval-intent,2runtime entry locks and2initial
+model hashes match. Existing24necessary tests/compileall remain reused; no
+scientific source changes or new tests. Historical evidence is not reaudited.
+
+The first60 complete worlds took about35.5minutes:roughly35seconds/world.
+At that blended rate, the remaining540 worlds suggest about5.3hours plus final
+IO, provisionally5-6hours remaining. Later phases may differ;9h global and all
+phase/owner caps remain fixed. No timing promise or budget extension.
+
+Next authorized action is already in flight: SAME serial process finishes all
+five blocks and10final seals,then240frozen evaluations and raw comparison/archive.
+No preparation blocker or new approval is pending inside this package. Do not
+infer graph/plain or graph/flat benefit before the full paired readout. On
+terminal success/failure, finish saved-data handoff and truthful manuscript
+update,thenPAUSED samegcn-rl. No new scientific calls,relaunch,retry,tuning,
+remote action orDropbox in this monitor; automation staysACTIVE unchanged.
+
+## Previous checkpoint: graph/flat value-MPC launched; real updates and saved states verified
 
 2026-10-04T11:07:33Z. Execution42f1ed5f12d44d147d2b25984d1217ef2aba8462,
 frozenimplementation875af2644a46130aaece6efa9f82ebb4c7d60139, scientificc0cd2c3,

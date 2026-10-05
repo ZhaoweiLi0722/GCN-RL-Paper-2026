@@ -1,6 +1,40 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail complete; primary performance screen failed; PAUSED
+## Live checkpoint: native-return comparison engineered; new full package pending
+
+2026-10-05T22:30Z. Zhaowei requested `继续下一步` after the closed policy-tail
+comparison. Additive native branch collector, two-branch TD/MC learner, numerical
+ledger, serial entry and independent raw reader now implemented. Protocol/config:
+specs/2026-10-05-native-return-value/protocol.md and
+experiments/configs/capacity_native_tail_20261005.json. No scientific model loads,
+forwards, patient environments or optimizer updates occurred. No related live
+scientific process at preparation entry; old outcomes/source remain unchanged.
+
+43 targeted artificial/mock tests passed; whole-worktree compileall passed. The
+actual new entry completed480main trajectories plus240native branches on fake
+backends, all call/phase counters reconciled,15final/5ancestor seals before360
+evaluations, independent raw cost/patient/labor checks passed. This is engineering
+evidence only. Candidate switching, full parent/RNG isolation, failure boundaries,
+native provenance, float64 target binding and nonrefundable budgets are covered.
+Two finite agents completed/closed; no extra reviewer or toy-fit gate.
+
+Question answered: the proposed native branch -> shared TD/MC data -> final-only
+six-role comparison can execute through the same guarded entry. Performance is
+unresolved. Native-observed and forecast-endpoint feature distributions differ;
+the new intervention is native-grounded training, not an isolated label-only
+effect or proof that model bias/reward is fixed. E1 calibration remains absent.
+
+One full numeric execution question sent:120reference+360evaluation trajectories,
+240dependent native branches,40440native steps/41400operations plus240clones,
+11520value/0actor,40045forwards,16303440predictor steps,6960000filter transitions,
+64800s includingIO,12GiB and oneattempt. Phase/owner caps are in the protocol.
+No exact reply yet. Draft remainsfalse, no freeze/launch. Same gcn-rl confirmed
+PAUSED in TOML; no repeated waiting or old-package restart. Only approval and
+committed source/runtime/input/seed locks remain before the single real run.
+On approval, perform those routine steps and the entire training/evaluation/
+readout/archive package continuously, without another launch question.
+
+## Previous checkpoint: policy-tail complete; primary performance screen failed; PAUSED
 
 2026-10-05 terminal handoff. One approved480-trajectory attempt completed without
 recovery:120reference,360frozen evaluation,11520value updates/0actor,15final models

@@ -3760,3 +3760,35 @@ no epochs,scope expansion,retry or automatic reward search. A later reward chang
 needs an accounting/terminal-liability defect or explicit objective amendment,
 not a negative result alone. StageE stays closed, E1 remains missing, and no
 Howard approval or remote/external action is implied.
+
+#### Native-return comparison engineered; new execution scope pending
+
+2026-10-05T22:30Z. Zhaowei requested `继续下一步` after the closed policy-tail
+result. Trigger: primary persistent comparisons remain unresolved, with no proof
+of a reward defect; public-model label changes alone did not establish increment.
+Old action: closed public-tail experiment. New action: additive native-return
+collector, two-branch TD/MC target/learner, serial comparison, complete budget and
+independent native raw-data reader, specified in
+specs/2026-10-05-native-return-value/protocol.md. No old source/results overwritten.
+
+Actual-entry480main+240branch fake integration,43zero-update tests and full
+compileall pass. No scientific model loading/forward, environment or optimizer.
+The clone preserves full native state/tape/RNG, avoids copying runner closures,
+honors switched candidate prefixes, separates forced prefix from suffix targets,
+and shares native data for TD/MC. New observed features and forecast endpoint
+features still differ in distribution; no label-only or exact correction claim.
+
+Original reward/scenario/architecture/support/metrics remain unchanged. New seeds,
+dependent branch sampling and resource caps are prospective new scope, not edits
+to old locks. Full draft:480main trajectories+240partial native branches,
+40440native steps/41400operations+240clones,11520value/0actor,40045forwards,
+16303440predictor steps/6960000filter transitions,18hours includingIO,12GiB,
+oneattempt with phase/owner caps. Five fixed historical ancestors,15final models
+sealed before360six-role evaluations. A single complete execution question was
+sent; no precise new reply received yet, no freeze/launch. The old budget is not
+reused. Both finite agents closed and the same automation stays visibly PAUSED.
+
+After exact approval, commit source and authorization/runtime/input/seed locks,
+then run the whole package continuously without routine startup questions. No
+automatic retries, expansion, new reward search, holdout, StageE, Howard approval,
+remote actions or guaranteed RL benefit. E1 remains uncalibrated/missing.

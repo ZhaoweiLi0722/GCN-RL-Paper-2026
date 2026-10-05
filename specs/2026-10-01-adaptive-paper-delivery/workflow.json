@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 127,
-  "updated_at_utc": "2026-10-05T06:25:00Z",
+  "revision": 128,
+  "updated_at_utc": "2026-10-05T11:13:13Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "cbe0b7de1acfac27bb98b91234b84dceab80c202",
@@ -10,8 +10,8 @@
   "execution_config": "specs/2026-10-04-planner-aligned-value/frozen.json",
   "execution_authorization": "specs/2026-10-04-planner-aligned-value/authorization.json",
   "scientific_execution_authorized": false,
-  "authorization_state": "Original attempt remains consumed. User continued local preparation; exact remaining-only 54-native/960-forward/zero-update/1800-second question asked once, no answer yet. No scientific execution authorized.",
-  "status": "planner_tail_recovery1_entry_ready_awaiting_exact_package_approval",
+  "authorization_state": "User explicitly confirmed the complete remaining-only recovery1 package. Authority is recorded; source/runtime/input/contract must be frozen and committed before one direct launch. No redundant startup approval.",
+  "status": "planner_tail_recovery1_approved_freezing_for_direct_launch",
   "planner_tail_recovery1": {
     "protocol": "specs/2026-10-04-planner-aligned-value/recovery1/protocol.md",
     "proposal": "specs/2026-10-04-planner-aligned-value/recovery1/proposal.json",
@@ -20,7 +20,9 @@
     "preparation_user_literal": "继续",
     "scientific_execution_authorized": false,
     "numerical_package_asked": true,
-    "numerical_package_approved": false,
+    "numerical_package_approved": true,
+    "approval_intent": "specs/2026-10-04-planner-aligned-value/recovery1/approval-intent.json",
+    "approval_user_literal": "确认啊，以后这种都不用问，直接就无限地推进，因为不要停，因为我们这个时间非常的赶。",
     "run_started": false,
     "automation_status": "PAUSED",
     "new_native_steps": 54,
@@ -39,7 +41,7 @@
     "scientific_state_loadability_verified": false,
     "actual_saved_json_contract_checked": true,
     "agent": "Goodall completed and closed: disjoint resource contract and zero-update tests integrated; efficiency guidance reused",
-    "next_action": "Wait for exact numerical-package answer; on approval record authority, freeze and commit source/runtime/input/contract, then execute once without a redundant launch question. No new fitting or outcome-based changes."
+    "next_action": "Immediately commit authority, freeze and commit source/runtime/input/contract, then execute once through analysis/archive without a redundant launch question. No new fitting or outcome-based changes."
   },
   "planner_tail_preparation": {
     "protocol": "specs/2026-10-04-planner-aligned-value/protocol.md",

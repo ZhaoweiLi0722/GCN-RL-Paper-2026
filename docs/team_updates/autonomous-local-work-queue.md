@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail evaluation324/360; final block underway
+## Live checkpoint: planner-tail terminal timeout; complete primary contrasts read
+
+2026-10-05T05:48:00Z terminal handoff. Entryb9f18ef clean, expected branch.
+Terminal exit1/child1 at05:31:13Z: evaluation phase14400.002917/14400s exhausted.
+Global19560.153425/32400s was not exhausted. No related supervisor/child remains;
+stderr/stdout/outerlog0bytes, but child-failure.json records the TimeoutError
+traceback. No automatic retry, phase transfer, extra scientific call or code edit.
+
+Reference120/120; methods120fits/3840value updates each,11520total,actor0.
+Ancestors5/5,new models15/15 sealed before tests. Eval359/360: fiveH8roles60each,
+H16=59; blocks0..3each72,block4=71. FinalH16 b4/c2/j3/seed64024203 has10saved
+native steps and54remaining. Totalnative30666/30720,operations31626/31680,
+forwards29040/30000,testoptimizer0. Original package failed, not complete.
+
+Read all479complete raw trajectories/30656rows; reconciled costs, reward,
+patient identities/outcomes, delayed labor, paired cohorts/tapes,20model hashes
+and test barrier. Saved-data analysis only. All three primary comparisons are
+complete despite the H16 omission. Persistent alignedTD/plainH8 saves0.947873M
+[0.432159,1.484289]M,meanpaired2.562%,all5blockspositive,12.55fewerlosses/world.
+But alignedTD/frozen increment0.246458M[-0.181340,0.679558]M fails; only4/5blocks
+positive. TD/MC interval also crosseszero. Required all-three primary conjunction
+FAILS, full-package signal unavailable. All45contrast cells documented; fiveH16/
+noise cells have19pairs/nointerval, no imputation. Report world/block harms.
+
+Artifacts: specs/2026-10-04-planner-aligned-value/{terminal-readout.md,
+terminal-saved-data.json}; manuscript main.tex now distinguishes these results
+from execution failure. Original2868files/618946681bytes preserved with tree and
+key hashes. No runner comparison/inventory/archive/completion receipt exists;
+archive verification, cloud sync and Howard access are NOT claimed.38tests/
+compileall reused, no scientific source/config changes. No TeX engine installed;
+source checks only, PDF uncompiled.
+
+Hegel's finite static recovery-interface assessment completed/closed; efficiency
+advice reused. No runner/budget remaining-only entry exists; a pending768forecast
+reservation (411dispatched) stays consumed. The54native remainder and960original
+diagnostic forwards need a separately approved, explicit recovery packet; no new
+training is needed. Current authority is exhausted. gcn-rl PAUSED, tool and saved
+config verified; no other automation or remote action changed. Next decision:
+whether to commission strictly remaining-only evaluation/diagnostic completion.
+
+## Previous checkpoint: planner-tail evaluation324/360; final block underway
 
 2026-10-05T05:08:12Z read-only heartbeat. Entry627234a clean, expected branch.
 Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands;

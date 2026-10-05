@@ -1,0 +1,3713 @@
+{
+  "format": "planner-tail-terminal-saved-data-readout-v1",
+  "observed_at_utc": "2026-10-05T05:42:55.919851+00:00",
+  "run_root": "results/capacity_planner_tail_20261004",
+  "packet_sha256": "a0cbcef8d523c69234c0b9568536ba7a0bd42bcd138e4d63111410beabafba74",
+  "complete": false,
+  "status": "terminal_failed_evaluation_phase_timeout",
+  "terminal": {
+    "automatic_retry": false,
+    "child_exit_code": 1,
+    "elapsed": 19560.15342499991,
+    "exit_code": 1,
+    "packet_sha256": "a0cbcef8d523c69234c0b9568536ba7a0bd42bcd138e4d63111410beabafba74",
+    "scientific_completion_verified": false,
+    "status": "failed"
+  },
+  "completed_reference": 120,
+  "completed_evaluation": 359,
+  "complete_raw_rows": 30656,
+  "partial_raw_rows": 10,
+  "missing": "evaluation-b4-c2-j3-plain_h16",
+  "raw_reader_validation": {
+    "completed_at_utc": "2026-10-05T05:41:22.183585+00:00",
+    "helper": "src.rl.capacity_planner_tail_analysis.read_saved_trajectory",
+    "trajectories_checked": 479,
+    "cost_patient_allocation_tape_model_and_barrier_checks_passed": true,
+    "full_model_deserialization": false,
+    "source_note": "First terminal read reconstructed all479completed trajectories. This compact report reuses that validation and recomputes contrasts from the reconciled summaries; its raw source hashes below bind the terminal snapshot."
+  },
+  "primary_criteria": {
+    "plain_h8": {
+      "all_persistent_blocks_cost_positive": true,
+      "persistent_descriptive_cost_interval_above_zero": true,
+      "no_mean_extra_losses_in_any_condition": true
+    },
+    "existing_frozen": {
+      "all_persistent_blocks_cost_positive": false,
+      "persistent_descriptive_cost_interval_above_zero": false,
+      "no_mean_extra_losses_in_any_condition": true
+    },
+    "observed_td": {
+      "all_persistent_blocks_cost_positive": true,
+      "persistent_descriptive_cost_interval_above_zero": true,
+      "no_mean_extra_losses_in_any_condition": true
+    }
+  },
+  "primary_screen_on_complete_comparisons": false,
+  "full_package_signal": null,
+  "contrasts": {
+    "planner_tail_td_vs_plain_h8": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 538824.2146982675,
+          "extra_lost": -7.8,
+          "extra_delivered": 7.8,
+          "percent_savings": 1.4010405328907622
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1040807.9847633773,
+            "extra_lost": -12.75,
+            "extra_delivered": 12.75,
+            "percent_savings": 2.9575550836019464
+          },
+          {
+            "block": 1,
+            "savings": 615814.1537538078,
+            "extra_lost": -19,
+            "extra_delivered": 19,
+            "percent_savings": 1.8676578648362598
+          },
+          {
+            "block": 2,
+            "savings": 901321.2154909438,
+            "extra_lost": -7.5,
+            "extra_delivered": 7.5,
+            "percent_savings": 2.152196397431403
+          },
+          {
+            "block": 3,
+            "savings": 182802.59009905066,
+            "extra_lost": -1.5,
+            "extra_delivered": 1.5,
+            "percent_savings": 0.09116617978835054
+          },
+          {
+            "block": 4,
+            "savings": -46624.87061584182,
+            "extra_lost": 1.75,
+            "extra_delivered": -1.75,
+            "percent_savings": -0.06337286120414709
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -267493.9166703745,
+            1485812.3199737528
+          ],
+          "extra_lost": [
+            -15.45125,
+            -0.4
+          ],
+          "extra_delivered": [
+            0.4,
+            15.451249999999993
+          ],
+          "percent_savings": [
+            -0.7505804133806375,
+            3.7399992080754987
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 8,
+          "loss_harm_worlds": 7
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 947872.9094558799,
+          "extra_lost": -12.55,
+          "extra_delivered": 12.55,
+          "percent_savings": 2.562041413581567
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 949185.2833593655,
+            "extra_lost": -10.5,
+            "extra_delivered": 10.5,
+            "percent_savings": 2.3887929912239194
+          },
+          {
+            "block": 1,
+            "savings": 473846.52035737317,
+            "extra_lost": -8,
+            "extra_delivered": 8,
+            "percent_savings": 1.2584833220499136
+          },
+          {
+            "block": 2,
+            "savings": 1625612.0806729887,
+            "extra_lost": -21.75,
+            "extra_delivered": 21.75,
+            "percent_savings": 4.4589474855236855
+          },
+          {
+            "block": 3,
+            "savings": 621857.7721848208,
+            "extra_lost": -8.75,
+            "extra_delivered": 8.75,
+            "percent_savings": 2.092551841311706
+          },
+          {
+            "block": 4,
+            "savings": 1068862.8907048516,
+            "extra_lost": -13.75,
+            "extra_delivered": 13.75,
+            "percent_savings": 2.6114314277986104
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            432159.22099940066,
+            1484289.1716083454
+          ],
+          "extra_lost": [
+            -18.8,
+            -7.548750000000006
+          ],
+          "extra_delivered": [
+            7.54875,
+            18.8
+          ],
+          "percent_savings": [
+            1.0658807988847223,
+            4.170065214724332
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 3,
+          "loss_harm_worlds": 0
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 546445.6763680304,
+          "extra_lost": -14.95,
+          "extra_delivered": 14.95,
+          "percent_savings": 1.4502867371656165
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 729766.1605278756,
+            "extra_lost": -10.75,
+            "extra_delivered": 10.75,
+            "percent_savings": 1.2859072481736582
+          },
+          {
+            "block": 1,
+            "savings": 1669593.28385502,
+            "extra_lost": -12.75,
+            "extra_delivered": 12.75,
+            "percent_savings": 4.536480726859086
+          },
+          {
+            "block": 2,
+            "savings": -36169.97597453091,
+            "extra_lost": -12.75,
+            "extra_delivered": 12.75,
+            "percent_savings": -0.44461318292325414
+          },
+          {
+            "block": 3,
+            "savings": -37852.05695817247,
+            "extra_lost": -16.75,
+            "extra_delivered": 16.75,
+            "percent_savings": 0.0817944013976733
+          },
+          {
+            "block": 4,
+            "savings": 406890.9703899594,
+            "extra_lost": -21.75,
+            "extra_delivered": 21.75,
+            "percent_savings": 1.7918644923209208
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -212741.4799836145,
+            1420028.5782114093
+          ],
+          "extra_lost": [
+            -21.201249999999998,
+            -9
+          ],
+          "extra_delivered": [
+            9,
+            21.20124999999999
+          ],
+          "percent_savings": [
+            -0.569850590601629,
+            3.8563818902337332
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 9,
+          "loss_harm_worlds": 2
+        }
+      }
+    },
+    "planner_tail_td_vs_existing_frozen": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -56336.49541455843,
+          "extra_lost": -2.35,
+          "extra_delivered": 2.35,
+          "percent_savings": -0.14204359836002084
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 163464.93998934515,
+            "extra_lost": -2.5,
+            "extra_delivered": 2.5,
+            "percent_savings": 0.511316304307249
+          },
+          {
+            "block": 1,
+            "savings": -923886.5087836804,
+            "extra_lost": -7,
+            "extra_delivered": 7,
+            "percent_savings": -2.0803492165718858
+          },
+          {
+            "block": 2,
+            "savings": 926010.3359355936,
+            "extra_lost": -4.25,
+            "extra_delivered": 4.25,
+            "percent_savings": 2.5212906010185314
+          },
+          {
+            "block": 3,
+            "savings": 360545.72381391004,
+            "extra_lost": -0.75,
+            "extra_delivered": 0.75,
+            "percent_savings": 0.46644836974756076
+          },
+          {
+            "block": 4,
+            "savings": -807816.9680279605,
+            "extra_lost": 2.75,
+            "extra_delivered": -2.75,
+            "percent_savings": -2.1289240503015594
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -776474.0085817964,
+            738126.905288419
+          ],
+          "extra_lost": [
+            -5.8,
+            1.1
+          ],
+          "extra_delivered": [
+            -1.1,
+            5.8
+          ],
+          "percent_savings": [
+            -2.144921816863789,
+            2.001402282728434
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 12,
+          "loss_harm_worlds": 5
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 246458.23415560983,
+          "extra_lost": -3.4,
+          "extra_delivered": 3.4,
+          "percent_savings": 0.678524100614107
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -79959.81060709246,
+            "extra_lost": -0.75,
+            "extra_delivered": 0.75,
+            "percent_savings": -0.33044776907016915
+          },
+          {
+            "block": 1,
+            "savings": 172180.25088950433,
+            "extra_lost": -2.75,
+            "extra_delivered": 2.75,
+            "percent_savings": 0.7728831221635449
+          },
+          {
+            "block": 2,
+            "savings": 118395.09675000049,
+            "extra_lost": -7.75,
+            "extra_delivered": 7.75,
+            "percent_savings": -0.16588306744428472
+          },
+          {
+            "block": 3,
+            "savings": 114935.48424840067,
+            "extra_lost": -0.75,
+            "extra_delivered": 0.75,
+            "percent_savings": 0.3376437544288893
+          },
+          {
+            "block": 4,
+            "savings": 906740.1494972361,
+            "extra_lost": -5,
+            "extra_delivered": 5,
+            "percent_savings": 2.778424462992554
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -181340.1558378218,
+            679558.1471560101
+          ],
+          "extra_lost": [
+            -6.45125,
+            -0.55
+          ],
+          "extra_delivered": [
+            0.55,
+            6.451249999999994
+          ],
+          "percent_savings": [
+            -0.581291285252902,
+            1.9622356281414823
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 9,
+          "loss_harm_worlds": 5
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 92727.00262939911,
+          "extra_lost": -1.5,
+          "extra_delivered": 1.5,
+          "percent_savings": 0.22374320256979904
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -588742.9355463944,
+            "extra_lost": 3.25,
+            "extra_delivered": -3.25,
+            "percent_savings": -1.6240964092927812
+          },
+          {
+            "block": 1,
+            "savings": 1238103.9478141516,
+            "extra_lost": -8.5,
+            "extra_delivered": 8.5,
+            "percent_savings": 3.1589978686273175
+          },
+          {
+            "block": 2,
+            "savings": 185953.65256113745,
+            "extra_lost": 0.5,
+            "extra_delivered": -0.5,
+            "percent_savings": 0.29923667417026867
+          },
+          {
+            "block": 3,
+            "savings": -238905.25125701725,
+            "extra_lost": 1.75,
+            "extra_delivered": -1.75,
+            "percent_savings": -0.46294238705130075
+          },
+          {
+            "block": 4,
+            "savings": -132774.40042488184,
+            "extra_lost": -4.5,
+            "extra_delivered": 4.5,
+            "percent_savings": -0.25247973360450904
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -547491.6339578781,
+            837999.9419162297
+          ],
+          "extra_lost": [
+            -6.65,
+            3.1
+          ],
+          "extra_delivered": [
+            -3.1,
+            6.65
+          ],
+          "percent_savings": [
+            -1.4159712695773041,
+            2.2647620717512478
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 11,
+          "loss_harm_worlds": 10
+        }
+      }
+    },
+    "planner_tail_td_vs_observed_td": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 949460.872271665,
+          "extra_lost": -11.05,
+          "extra_delivered": 11.05,
+          "percent_savings": 2.590554324316922
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1666533.2944987575,
+            "extra_lost": -17.5,
+            "extra_delivered": 17.5,
+            "percent_savings": 4.3999733869554
+          },
+          {
+            "block": 1,
+            "savings": -1001894.0534500694,
+            "extra_lost": -0.5,
+            "extra_delivered": 0.5,
+            "percent_savings": -2.8839411216171973
+          },
+          {
+            "block": 2,
+            "savings": -92003.04256126098,
+            "extra_lost": 0.25,
+            "extra_delivered": -0.25,
+            "percent_savings": -0.2564859097206883
+          },
+          {
+            "block": 3,
+            "savings": 4509598.902648394,
+            "extra_lost": -38.25,
+            "extra_delivered": 38.25,
+            "percent_savings": 12.294204224382579
+          },
+          {
+            "block": 4,
+            "savings": -334930.7397774961,
+            "extra_lost": 0.75,
+            "extra_delivered": -0.75,
+            "percent_savings": -0.6009789584154821
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -601079.4599506975,
+            2938762.2330416497
+          ],
+          "extra_lost": [
+            -26.805,
+            0.3512499999999932
+          ],
+          "extra_delivered": [
+            -0.3512499999999999,
+            26.804999999999975
+          ],
+          "percent_savings": [
+            -1.7655128462078047,
+            8.109405477452551
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 9,
+          "loss_harm_worlds": 5
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 1324002.7592841112,
+          "extra_lost": -13.8,
+          "extra_delivered": 13.8,
+          "percent_savings": 3.6710365637461613
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1209108.59763629,
+            "extra_lost": -14.75,
+            "extra_delivered": 14.75,
+            "percent_savings": 3.41754779042883
+          },
+          {
+            "block": 1,
+            "savings": 392124.9638139112,
+            "extra_lost": -6.25,
+            "extra_delivered": 6.25,
+            "percent_savings": 1.2951541292398314
+          },
+          {
+            "block": 2,
+            "savings": 343611.99758766964,
+            "extra_lost": -6.5,
+            "extra_delivered": 6.5,
+            "percent_savings": 0.391741689413695
+          },
+          {
+            "block": 3,
+            "savings": 3223626.9457360804,
+            "extra_lost": -36.75,
+            "extra_delivered": 36.75,
+            "percent_savings": 9.643776140029019
+          },
+          {
+            "block": 4,
+            "savings": 1451541.2916466054,
+            "extra_lost": -4.75,
+            "extra_delivered": 4.75,
+            "percent_savings": 3.606963069619433
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            364893.07569150196,
+            2430481.6762386165
+          ],
+          "extra_lost": [
+            -26.30125,
+            -5.15
+          ],
+          "extra_delivered": [
+            5.15,
+            26.301249999999992
+          ],
+          "percent_savings": [
+            0.9967603458213544,
+            7.178363290215735
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 5,
+          "loss_harm_worlds": 1
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 1542261.6881191428,
+          "extra_lost": -20.85,
+          "extra_delivered": 20.85,
+          "percent_savings": 3.3433301562538533
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 2452702.261601787,
+            "extra_lost": -31.5,
+            "extra_delivered": 31.5,
+            "percent_savings": 5.061759412321489
+          },
+          {
+            "block": 1,
+            "savings": 1383743.976723441,
+            "extra_lost": -4,
+            "extra_delivered": 4,
+            "percent_savings": 3.7391608612655114
+          },
+          {
+            "block": 2,
+            "savings": 412307.8668583119,
+            "extra_lost": -1.5,
+            "extra_delivered": 1.5,
+            "percent_savings": 0.9376949920470715
+          },
+          {
+            "block": 3,
+            "savings": 3246666.8977291994,
+            "extra_lost": -61,
+            "extra_delivered": 61,
+            "percent_savings": 6.469228546329356
+          },
+          {
+            "block": 4,
+            "savings": 215887.43768297415,
+            "extra_lost": -6.25,
+            "extra_delivered": 6.25,
+            "percent_savings": 0.5088069693058341
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            483989.8371023935,
+            2704605.4155813744
+          ],
+          "extra_lost": [
+            -42.305,
+            -3.398750000000007
+          ],
+          "extra_delivered": [
+            3.39875,
+            42.30499999999997
+          ],
+          "percent_savings": [
+            1.092726561575958,
+            5.644065247496215
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 3,
+          "loss_harm_worlds": 1
+        }
+      }
+    },
+    "planner_tail_td_vs_planner_tail_mc": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 15753.298758825102,
+          "extra_lost": -0.3,
+          "extra_delivered": 0.3,
+          "percent_savings": -0.09267612888309879
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 32006.71666666493,
+            "extra_lost": -0.25,
+            "extra_delivered": 0.25,
+            "percent_savings": 0.08263154738585403
+          },
+          {
+            "block": 1,
+            "savings": -21898.68336046301,
+            "extra_lost": -0.5,
+            "extra_delivered": 0.5,
+            "percent_savings": -0.0214299238138125
+          },
+          {
+            "block": 2,
+            "savings": 576086.5387001056,
+            "extra_lost": -1.75,
+            "extra_delivered": 1.75,
+            "percent_savings": 1.5078150821616585
+          },
+          {
+            "block": 3,
+            "savings": -717536.4322529752,
+            "extra_lost": 1.75,
+            "extra_delivered": -1.75,
+            "percent_savings": -2.6035399934590613
+          },
+          {
+            "block": 4,
+            "savings": 210108.35404079314,
+            "extra_lost": -0.75,
+            "extra_delivered": 0.75,
+            "percent_savings": 0.5711426433098672
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -443697.50848612096,
+            414501.8979758834
+          ],
+          "extra_lost": [
+            -1.55,
+            1.5
+          ],
+          "extra_delivered": [
+            -1.5,
+            1.55
+          ],
+          "percent_savings": [
+            -1.7085343386338614,
+            1.0824582801375509
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 5,
+          "loss_harm_worlds": 3
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -24627.445821134188,
+          "extra_lost": -1.15,
+          "extra_delivered": 1.15,
+          "percent_savings": -0.26092180642851126
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 26417.174422584474,
+            "extra_lost": 0,
+            "extra_delivered": 0,
+            "percent_savings": 0.07608256847001392
+          },
+          {
+            "block": 1,
+            "savings": 16490.58163035568,
+            "extra_lost": -0.75,
+            "extra_delivered": 0.75,
+            "percent_savings": 0.023707257411546293
+          },
+          {
+            "block": 2,
+            "savings": -117611.56183267757,
+            "extra_lost": -2,
+            "extra_delivered": 2,
+            "percent_savings": -0.5212706270373414
+          },
+          {
+            "block": 3,
+            "savings": 84591.99875359703,
+            "extra_lost": 0.75,
+            "extra_delivered": -0.75,
+            "percent_savings": 0.26529386849468434
+          },
+          {
+            "block": 4,
+            "savings": -133025.42207953054,
+            "extra_lost": -3.75,
+            "extra_delivered": 3.75,
+            "percent_savings": -1.1484220994814596
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -251761.17977317405,
+            169010.2128713789
+          ],
+          "extra_lost": [
+            -4.05,
+            0.85
+          ],
+          "extra_delivered": [
+            -0.85,
+            4.05
+          ],
+          "percent_savings": [
+            -1.1077640117004994,
+            0.33718752321770357
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 9,
+          "loss_harm_worlds": 7
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 223551.18809121606,
+          "extra_lost": 0.45,
+          "extra_delivered": -0.45,
+          "percent_savings": 0.5749376123029554
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 474643.64077834785,
+            "extra_lost": -0.25,
+            "extra_delivered": 0.25,
+            "percent_savings": 0.9582632746871095
+          },
+          {
+            "block": 1,
+            "savings": 930395.5969162472,
+            "extra_lost": -2.5,
+            "extra_delivered": 2.5,
+            "percent_savings": 2.5662468568769334
+          },
+          {
+            "block": 2,
+            "savings": -63693.175342164,
+            "extra_lost": 2.25,
+            "extra_delivered": -2.25,
+            "percent_savings": -0.17041100921197655
+          },
+          {
+            "block": 3,
+            "savings": -234677.7884125989,
+            "extra_lost": 2.5,
+            "extra_delivered": -2.5,
+            "percent_savings": -0.5006620788333103
+          },
+          {
+            "block": 4,
+            "savings": 11087.666516248137,
+            "extra_lost": 0.25,
+            "extra_delivered": -0.25,
+            "percent_savings": 0.02125101799602167
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -170508.21907391038,
+            800303.8364161704
+          ],
+          "extra_lost": [
+            -1.95,
+            2.95
+          ],
+          "extra_delivered": [
+            -2.95,
+            1.95
+          ],
+          "percent_savings": [
+            -0.35405908831535193,
+            2.0713874303070487
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 4,
+          "loss_harm_worlds": 6
+        }
+      }
+    },
+    "planner_tail_td_vs_plain_h16": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 145524.46137028784,
+          "extra_lost": -4.85,
+          "extra_delivered": 4.85,
+          "percent_savings": 0.3682524352180578
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 394311.25869543385,
+            "extra_lost": -5,
+            "extra_delivered": 5,
+            "percent_savings": 1.1271475363931265
+          },
+          {
+            "block": 1,
+            "savings": -383351.34918309003,
+            "extra_lost": -9.5,
+            "extra_delivered": 9.5,
+            "percent_savings": -0.1633083875681386
+          },
+          {
+            "block": 2,
+            "savings": 1016206.4745753286,
+            "extra_lost": -7.5,
+            "extra_delivered": 7.5,
+            "percent_savings": 2.4483726056272133
+          },
+          {
+            "block": 3,
+            "savings": 329544.3586811945,
+            "extra_lost": -4.75,
+            "extra_delivered": 4.75,
+            "percent_savings": 0.7737252263992483
+          },
+          {
+            "block": 4,
+            "savings": -629088.4359174278,
+            "extra_lost": 2.5,
+            "extra_delivered": -2.5,
+            "percent_savings": -2.344674804761161
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -629316.0751473893,
+            1122021.5972106731
+          ],
+          "extra_lost": [
+            -9.801250000000001,
+            -0.3
+          ],
+          "extra_delivered": [
+            0.3,
+            9.801249999999994
+          ],
+          "percent_savings": [
+            -1.7348802981047509,
+            2.849034594534692
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 10,
+          "loss_harm_worlds": 7
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 512786.85136308876,
+          "extra_lost": -6.15,
+          "extra_delivered": 6.15,
+          "percent_savings": 0.9239701375769822
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 957763.6217748933,
+            "extra_lost": -5,
+            "extra_delivered": 5,
+            "percent_savings": 2.2706585374638952
+          },
+          {
+            "block": 1,
+            "savings": 1037880.4871731875,
+            "extra_lost": -7.75,
+            "extra_delivered": 7.75,
+            "percent_savings": 2.604954297586607
+          },
+          {
+            "block": 2,
+            "savings": 517387.90919591207,
+            "extra_lost": -7.5,
+            "extra_delivered": 7.5,
+            "percent_savings": 0.4771132541481491
+          },
+          {
+            "block": 3,
+            "savings": -116858.9823284708,
+            "extra_lost": -5,
+            "extra_delivered": 5,
+            "percent_savings": -0.38394681648153817
+          },
+          {
+            "block": 4,
+            "savings": 167761.22099992167,
+            "extra_lost": -5.5,
+            "extra_delivered": 5.5,
+            "percent_savings": -0.34892858483220346
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -109671.91235014715,
+            1088918.6458109668
+          ],
+          "extra_lost": [
+            -9.7,
+            -3.0487500000000067
+          ],
+          "extra_delivered": [
+            3.04875,
+            9.7
+          ],
+          "percent_savings": [
+            -0.8682198806071709,
+            2.4279174811319963
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 6,
+          "loss_harm_worlds": 3
+        }
+      },
+      "2": {
+        "complete": false,
+        "n_worlds": 19,
+        "means": {
+          "savings": 1137106.319186476,
+          "percent_savings": 2.4427199400337,
+          "extra_lost": -11.631578947368421,
+          "extra_delivered": 11.631578947368421
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "n_worlds": 4,
+            "savings": 1737229.933009036,
+            "percent_savings": 3.3897673247828757,
+            "extra_lost": -20.5,
+            "extra_delivered": 20.5
+          },
+          {
+            "block": 1,
+            "n_worlds": 4,
+            "savings": 806698.8150778748,
+            "percent_savings": 1.1358832207054848,
+            "extra_lost": -7.5,
+            "extra_delivered": 7.5
+          },
+          {
+            "block": 2,
+            "n_worlds": 4,
+            "savings": 1088362.1067459583,
+            "percent_savings": 2.7515258369811786,
+            "extra_lost": -8.5,
+            "extra_delivered": 8.5
+          },
+          {
+            "block": 3,
+            "n_worlds": 4,
+            "savings": 1310633.9688127078,
+            "percent_savings": 2.645940700941407,
+            "extra_lost": -8.75,
+            "extra_delivered": 8.75
+          },
+          {
+            "block": 4,
+            "n_worlds": 3,
+            "savings": 611106.9233202463,
+            "percent_savings": 2.2397368423321757,
+            "extra_lost": -13.333333333333334,
+            "extra_delivered": 13.333333333333334
+          }
+        ],
+        "descriptive95": null,
+        "harm": {
+          "cost_harm_worlds": 3,
+          "loss_harm_worlds": 2
+        }
+      }
+    },
+    "plain_h8_vs_existing_frozen": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -595160.710112826,
+          "extra_lost": 5.45,
+          "extra_delivered": -5.45,
+          "percent_savings": -1.6594411769389432
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -877343.0447740322,
+            "extra_lost": 10.25,
+            "extra_delivered": -10.25,
+            "percent_savings": -2.702561863117186
+          },
+          {
+            "block": 1,
+            "savings": -1539700.6625374882,
+            "extra_lost": 12,
+            "extra_delivered": -12,
+            "percent_savings": -4.176329464756752
+          },
+          {
+            "block": 2,
+            "savings": 24689.12044464983,
+            "extra_lost": 3.25,
+            "extra_delivered": -3.25,
+            "percent_savings": 0.22718634249503222
+          },
+          {
+            "block": 3,
+            "savings": 177743.13371485937,
+            "extra_lost": 0.75,
+            "extra_delivered": -0.75,
+            "percent_savings": 0.4008748000793767
+          },
+          {
+            "block": 4,
+            "savings": -761192.0974121187,
+            "extra_lost": 1,
+            "extra_delivered": -1,
+            "percent_savings": -2.0463756993951856
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1354903.4598750698,
+            89146.15202973268
+          ],
+          "extra_lost": [
+            0.14875000000000008,
+            11.65
+          ],
+          "extra_delivered": [
+            -11.65,
+            -0.14875000000000682
+          ],
+          "percent_savings": [
+            -3.7528381629147245,
+            0.22970936097655087
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 12,
+          "loss_harm_worlds": 10
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -701414.6753002701,
+          "extra_lost": 9.15,
+          "extra_delivered": -9.15,
+          "percent_savings": -2.0411152461362088
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -1029145.093966458,
+            "extra_lost": 9.75,
+            "extra_delivered": -9.75,
+            "percent_savings": -2.8540082985330613
+          },
+          {
+            "block": 1,
+            "savings": -301666.26946786884,
+            "extra_lost": 5.25,
+            "extra_delivered": -5.25,
+            "percent_savings": -0.5437393304439241
+          },
+          {
+            "block": 2,
+            "savings": -1507216.9839229882,
+            "extra_lost": 14,
+            "extra_delivered": -14,
+            "percent_savings": -4.998459824192301
+          },
+          {
+            "block": 3,
+            "savings": -506922.2879364202,
+            "extra_lost": 8,
+            "extra_delivered": -8,
+            "percent_savings": -1.9095188858977608
+          },
+          {
+            "block": 4,
+            "savings": -162122.74120761547,
+            "extra_lost": 8.75,
+            "extra_delivered": -8.75,
+            "percent_savings": 0.10015010838600291
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1406207.2968945804,
+            -73782.34242610302
+          ],
+          "extra_lost": [
+            5.45,
+            13.45
+          ],
+          "extra_delivered": [
+            -13.45,
+            -5.45
+          ],
+          "percent_savings": [
+            -4.511569387020055,
+            0.013176807028729245
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 14,
+          "loss_harm_worlds": 16
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -453718.67373863125,
+          "extra_lost": 13.45,
+          "extra_delivered": -13.45,
+          "percent_savings": -1.3237822394813386
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -1318509.09607427,
+            "extra_lost": 14,
+            "extra_delivered": -14,
+            "percent_savings": -2.9452000547126485
+          },
+          {
+            "block": 1,
+            "savings": -431489.3360408684,
+            "extra_lost": 4.25,
+            "extra_delivered": -4.25,
+            "percent_savings": -1.513444801939454
+          },
+          {
+            "block": 2,
+            "savings": 222123.62853566837,
+            "extra_lost": 13.25,
+            "extra_delivered": -13.25,
+            "percent_savings": 0.7280214713601261
+          },
+          {
+            "block": 3,
+            "savings": -201053.19429884478,
+            "extra_lost": 18.5,
+            "extra_delivered": -18.5,
+            "percent_savings": -0.6021543802420386
+          },
+          {
+            "block": 4,
+            "savings": -539665.3708148412,
+            "extra_lost": 17.25,
+            "extra_delivered": -17.25,
+            "percent_savings": -2.2861334318726776
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1135905.8825758188,
+            214482.20770977135
+          ],
+          "extra_lost": [
+            7.2,
+            19.5
+          ],
+          "extra_delivered": [
+            -19.5,
+            -7.2
+          ],
+          "percent_savings": [
+            -3.073018133417894,
+            0.2837994142131254
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 12,
+          "loss_harm_worlds": 18
+        }
+      }
+    },
+    "plain_h8_vs_observed_td": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 410636.65757339745,
+          "extra_lost": -3.25,
+          "extra_delivered": 3.25,
+          "percent_savings": 1.0033727662427785
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 625725.3097353801,
+            "extra_lost": -4.75,
+            "extra_delivered": 4.75,
+            "percent_savings": 1.3709973279082186
+          },
+          {
+            "block": 1,
+            "savings": -1617708.2072038772,
+            "extra_lost": 18.5,
+            "extra_delivered": -18.5,
+            "percent_savings": -4.9992291713831625
+          },
+          {
+            "block": 2,
+            "savings": -993324.2580522047,
+            "extra_lost": 7.75,
+            "extra_delivered": -7.75,
+            "percent_savings": -2.6908746258184144
+          },
+          {
+            "block": 3,
+            "savings": 4326796.312549343,
+            "extra_lost": -36.75,
+            "extra_delivered": 36.75,
+            "percent_savings": 11.852067903742428
+          },
+          {
+            "block": 4,
+            "savings": -288305.86916165426,
+            "extra_lost": -1,
+            "extra_delivered": 1,
+            "percent_savings": -0.5160976032351787
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1327024.585782493,
+            2566027.1438356545
+          ],
+          "extra_lost": [
+            -21.55375,
+            12.15374999999998
+          ],
+          "extra_delivered": [
+            -12.15375,
+            21.55374999999998
+          ],
+          "percent_savings": [
+            -3.7398564995988512,
+            7.035933697515612
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 11,
+          "loss_harm_worlds": 9
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 376129.8498282313,
+          "extra_lost": -1.25,
+          "extra_delivered": 1.25,
+          "percent_savings": 1.0644515352735786
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 259923.31427692436,
+            "extra_lost": -4.25,
+            "extra_delivered": 4.25,
+            "percent_savings": 1.0441829537431797
+          },
+          {
+            "block": 1,
+            "savings": -81721.55654346198,
+            "extra_lost": 1.75,
+            "extra_delivered": -1.75,
+            "percent_savings": 0.031136261122998526
+          },
+          {
+            "block": 2,
+            "savings": -1282000.083085319,
+            "extra_lost": 15.25,
+            "extra_delivered": -15.25,
+            "percent_savings": -4.410042797978132
+          },
+          {
+            "block": 3,
+            "savings": 2601769.1735512596,
+            "extra_lost": -28,
+            "extra_delivered": 28,
+            "percent_savings": 7.654239774494641
+          },
+          {
+            "block": 4,
+            "savings": 382678.40094175376,
+            "extra_lost": 9,
+            "extra_delivered": -9,
+            "percent_savings": 1.0027414849852059
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -763648.677576659,
+            1637458.541249074
+          ],
+          "extra_lost": [
+            -15.45125,
+            10.9
+          ],
+          "extra_delivered": [
+            -10.9,
+            15.451249999999993
+          ],
+          "percent_savings": [
+            -2.6757584705519513,
+            4.821303148951047
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 7,
+          "loss_harm_worlds": 11
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 995816.0117511123,
+          "extra_lost": -5.9,
+          "extra_delivered": 5.9,
+          "percent_savings": 1.8050360336596587
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1722936.1010739114,
+            "extra_lost": -20.75,
+            "extra_delivered": 20.75,
+            "percent_savings": 3.7936521441534654
+          },
+          {
+            "block": 1,
+            "savings": -285849.30713157915,
+            "extra_lost": 8.75,
+            "extra_delivered": -8.75,
+            "percent_savings": -1.0165810505668578
+          },
+          {
+            "block": 2,
+            "savings": 448477.84283284284,
+            "extra_lost": 11.25,
+            "extra_delivered": -11.25,
+            "percent_savings": 1.3520118084333812
+          },
+          {
+            "block": 3,
+            "savings": 3284518.954687372,
+            "extra_lost": -44.25,
+            "extra_delivered": 44.25,
+            "percent_savings": 6.408867612392308
+          },
+          {
+            "block": 4,
+            "savings": -191003.53270698525,
+            "extra_lost": 15.5,
+            "extra_delivered": -15.5,
+            "percent_savings": -1.5127703461140047
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -234430.59346219784,
+            2418395.3055486768
+          ],
+          "extra_lost": [
+            -29.35,
+            13.152499999999987
+          ],
+          "extra_delivered": [
+            -13.1525,
+            29.35
+          ],
+          "percent_savings": [
+            -1.138865110230119,
+            4.868942981094035
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 5,
+          "loss_harm_worlds": 11
+        }
+      }
+    },
+    "plain_h8_vs_planner_tail_mc": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -523070.91593944246,
+          "extra_lost": 7.5,
+          "extra_delivered": -7.5,
+          "percent_savings": -1.6821689009283716
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -1008801.2680967124,
+            "extra_lost": 12.5,
+            "extra_delivered": -12.5,
+            "percent_savings": -3.198025481036604
+          },
+          {
+            "block": 1,
+            "savings": -637712.8371142708,
+            "extra_lost": 18.5,
+            "extra_delivered": -18.5,
+            "percent_savings": -2.098869835849998
+          },
+          {
+            "block": 2,
+            "savings": -325234.67679083813,
+            "extra_lost": 5.75,
+            "extra_delivered": -5.75,
+            "percent_savings": -0.903039883641489
+          },
+          {
+            "block": 3,
+            "savings": -900339.0223520258,
+            "extra_lost": 3.25,
+            "extra_delivered": -3.25,
+            "percent_savings": -2.828192836425623
+          },
+          {
+            "block": 4,
+            "savings": 256733.22465663496,
+            "extra_lost": -2.5,
+            "extra_delivered": 2.5,
+            "percent_savings": 0.6172835323118524
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1283710.5790268665,
+            200724.6392609168
+          ],
+          "extra_lost": [
+            0.65,
+            15.302499999999988
+          ],
+          "extra_delivered": [
+            -15.3025,
+            -0.65
+          ],
+          "percent_savings": [
+            -3.8383141526779703,
+            0.3092416923272865
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 12,
+          "loss_harm_worlds": 12
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -972500.3552770142,
+          "extra_lost": 11.4,
+          "extra_delivered": -11.4,
+          "percent_savings": -3.008498270174958
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -922768.1089367811,
+            "extra_lost": 10.5,
+            "extra_delivered": -10.5,
+            "percent_savings": -2.4020179497875693
+          },
+          {
+            "block": 1,
+            "savings": -457355.9387270175,
+            "extra_lost": 7.25,
+            "extra_delivered": -7.25,
+            "percent_savings": -1.3297384243502668
+          },
+          {
+            "block": 2,
+            "savings": -1743223.6425056662,
+            "extra_lost": 19.75,
+            "extra_delivered": -19.75,
+            "percent_savings": -5.35934656097022
+          },
+          {
+            "block": 3,
+            "savings": -537265.7734312238,
+            "extra_lost": 9.5,
+            "extra_delivered": -9.5,
+            "percent_savings": -2.031050639100193
+          },
+          {
+            "block": 4,
+            "savings": -1201888.3127843821,
+            "extra_lost": 10,
+            "extra_delivered": -10,
+            "percent_savings": -3.920337776666541
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1631348.885936278,
+            -378852.84858846996
+          ],
+          "extra_lost": [
+            7.74875,
+            16.25124999999999
+          ],
+          "extra_delivered": [
+            -16.25125,
+            -7.7487500000000065
+          ],
+          "percent_savings": [
+            -5.25044729465382,
+            -1.1387521290763323
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 17,
+          "loss_harm_worlds": 20
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -322894.4882768143,
+          "extra_lost": 15.4,
+          "extra_delivered": -15.4,
+          "percent_savings": -1.0065651516267384
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -255122.5197495278,
+            "extra_lost": 10.5,
+            "extra_delivered": -10.5,
+            "percent_savings": -0.3914316126888312
+          },
+          {
+            "block": 1,
+            "savings": -739197.6869387729,
+            "extra_lost": 10.25,
+            "extra_delivered": -10.25,
+            "percent_savings": -2.1927545460898905
+          },
+          {
+            "block": 2,
+            "savings": -27523.19936763309,
+            "extra_lost": 15,
+            "extra_delivered": -15,
+            "percent_savings": 0.21032566764579697
+          },
+          {
+            "block": 3,
+            "savings": -196825.73145442642,
+            "extra_lost": 19.25,
+            "extra_delivered": -19.25,
+            "percent_savings": -0.6333730632517323
+          },
+          {
+            "block": 4,
+            "savings": -395803.30387371127,
+            "extra_lost": 22,
+            "extra_delivered": -22,
+            "percent_savings": -2.0255922037490355
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -899665.4604565039,
+            263504.47640089085
+          ],
+          "extra_lost": [
+            9.45,
+            22.25
+          ],
+          "extra_delivered": [
+            -22.25,
+            -9.45
+          ],
+          "percent_savings": [
+            -2.723559464004234,
+            0.6149198427264825
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 10,
+          "loss_harm_worlds": 19
+        }
+      }
+    },
+    "plain_h8_vs_plain_h16": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -393299.7533279797,
+          "extra_lost": 2.95,
+          "extra_delivered": -2.95,
+          "percent_savings": -1.1796390195176443
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -646496.7260679435,
+            "extra_lost": 7.75,
+            "extra_delivered": -7.75,
+            "percent_savings": -2.0798852022721346
+          },
+          {
+            "block": 1,
+            "savings": -999165.5029368978,
+            "extra_lost": 9.5,
+            "extra_delivered": -9.5,
+            "percent_savings": -2.303855279902311
+          },
+          {
+            "block": 2,
+            "savings": 114885.25908438489,
+            "extra_lost": 0,
+            "extra_delivered": 0,
+            "percent_savings": 0.28722679476095425
+          },
+          {
+            "block": 3,
+            "savings": 146741.76858214382,
+            "extra_lost": -3.25,
+            "extra_delivered": 3.25,
+            "percent_savings": 0.5106936926777385
+          },
+          {
+            "block": 4,
+            "savings": -582463.565301586,
+            "extra_lost": 0.75,
+            "extra_delivered": -0.75,
+            "percent_savings": -2.3123751028524673
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1346228.7674665658,
+            353704.4697076355
+          ],
+          "extra_lost": [
+            -2.7,
+            10.701249999999993
+          ],
+          "extra_delivered": [
+            -10.70125,
+            2.7
+          ],
+          "percent_savings": [
+            -3.8090957576994784,
+            1.102508181391441
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 11,
+          "loss_harm_worlds": 9
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -435086.05809279124,
+          "extra_lost": 6.4,
+          "extra_delivered": -6.4,
+          "percent_savings": -1.7956165292208794
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 8578.338415527716,
+            "extra_lost": 5.5,
+            "extra_delivered": -5.5,
+            "percent_savings": -0.1446096995427465
+          },
+          {
+            "block": 1,
+            "savings": 564033.9668158144,
+            "extra_lost": 0.25,
+            "extra_delivered": -0.25,
+            "percent_savings": 1.2992905909647279
+          },
+          {
+            "block": 2,
+            "savings": -1108224.1714770766,
+            "extra_lost": 14.25,
+            "extra_delivered": -14.25,
+            "percent_savings": -4.387182059135382
+          },
+          {
+            "block": 3,
+            "savings": -738716.7545132916,
+            "extra_lost": 3.75,
+            "extra_delivered": -3.75,
+            "percent_savings": -2.703851140678141
+          },
+          {
+            "block": 4,
+            "savings": -901101.6697049299,
+            "extra_lost": 8.25,
+            "extra_delivered": -8.25,
+            "percent_savings": -3.0417303377128575
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -1261040.54064616,
+            334125.11875481874
+          ],
+          "extra_lost": [
+            1.95,
+            11.3
+          ],
+          "extra_delivered": [
+            -11.3,
+            -1.95
+          ],
+          "percent_savings": [
+            -4.686849797195065,
+            0.5454742403904996
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 12,
+          "loss_harm_worlds": 18
+        }
+      },
+      "2": {
+        "complete": false,
+        "n_worlds": 19,
+        "means": {
+          "savings": 673518.2775771056,
+          "percent_savings": 1.1209126923852053,
+          "extra_lost": 2.263157894736842,
+          "extra_delivered": -2.263157894736842
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "n_worlds": 4,
+            "savings": 1007463.7724811602,
+            "percent_savings": 2.136589338542451,
+            "extra_lost": -9.75,
+            "extra_delivered": 9.75
+          },
+          {
+            "block": 1,
+            "n_worlds": 4,
+            "savings": -862894.4687771453,
+            "percent_savings": -3.701924948428769,
+            "extra_lost": 5.25,
+            "extra_delivered": -5.25
+          },
+          {
+            "block": 2,
+            "n_worlds": 4,
+            "savings": 1124532.0827204892,
+            "percent_savings": 3.136329166556997,
+            "extra_lost": 4.25,
+            "extra_delivered": -4.25
+          },
+          {
+            "block": 3,
+            "n_worlds": 4,
+            "savings": 1348486.0257708803,
+            "percent_savings": 2.496118042111248,
+            "extra_lost": 8,
+            "extra_delivered": -8
+          },
+          {
+            "block": 4,
+            "n_worlds": 3,
+            "savings": 775499.2083944889,
+            "percent_savings": 1.6762982533970643,
+            "extra_lost": 4,
+            "extra_delivered": -4
+          }
+        ],
+        "descriptive95": null,
+        "harm": {
+          "cost_harm_worlds": 6,
+          "loss_harm_worlds": 11
+        }
+      }
+    },
+    "existing_frozen_vs_observed_td": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 1005797.3676862235,
+          "extra_lost": -8.7,
+          "extra_delivered": 8.7,
+          "percent_savings": 2.6510906934023497
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1503068.3545094123,
+            "extra_lost": -15,
+            "extra_delivered": 15,
+            "percent_savings": 3.928053363503354
+          },
+          {
+            "block": 1,
+            "savings": -78007.544666389,
+            "extra_lost": 6.5,
+            "extra_delivered": -6.5,
+            "percent_savings": -0.7770951180910625
+          },
+          {
+            "block": 2,
+            "savings": -1018013.3784968546,
+            "extra_lost": 4.5,
+            "extra_delivered": -4.5,
+            "percent_savings": -2.894424740733342
+          },
+          {
+            "block": 3,
+            "savings": 4149053.178834484,
+            "extra_lost": -37.5,
+            "extra_delivered": 37.5,
+            "percent_savings": 11.492237265479357
+          },
+          {
+            "block": 4,
+            "savings": 472886.2282504644,
+            "extra_lost": -2,
+            "extra_delivered": 2,
+            "percent_savings": 1.5066826968534424
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -428861.2516929535,
+            2920366.341325589
+          ],
+          "extra_lost": [
+            -25.451249999999998,
+            3.95374999999998
+          ],
+          "extra_delivered": [
+            -3.95375,
+            25.45124999999999
+          ],
+          "percent_savings": [
+            -1.4448287857549011,
+            7.924393465318759
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 6,
+          "loss_harm_worlds": 7
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 1077544.5251285015,
+          "extra_lost": -10.4,
+          "extra_delivered": 10.4,
+          "percent_savings": 2.9867106706561914
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1289068.4082433823,
+            "extra_lost": -14,
+            "extra_delivered": 14,
+            "percent_savings": 3.6912151806567906
+          },
+          {
+            "block": 1,
+            "savings": 219944.71292440686,
+            "extra_lost": -3.5,
+            "extra_delivered": 3.5,
+            "percent_savings": 0.5343339835631514
+          },
+          {
+            "block": 2,
+            "savings": 225216.90083766915,
+            "extra_lost": 1.25,
+            "extra_delivered": -1.25,
+            "percent_savings": 0.5514219651825641
+          },
+          {
+            "block": 3,
+            "savings": 3108691.4614876797,
+            "extra_lost": -36,
+            "extra_delivered": 36,
+            "percent_savings": 9.323872637107936
+          },
+          {
+            "block": 4,
+            "savings": 544801.1421493692,
+            "extra_lost": 0.25,
+            "extra_delivered": -0.25,
+            "percent_savings": 0.8327095867705199
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            173260.6975936518,
+            2138665.3886337336
+          ],
+          "extra_lost": [
+            -23.55125,
+            -0.19875000000000684
+          ],
+          "extra_delivered": [
+            0.1987500000000001,
+            23.551249999999992
+          ],
+          "percent_savings": [
+            0.30581843216221977,
+            6.349129702913708
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 6,
+          "loss_harm_worlds": 6
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 1449534.6854897435,
+          "extra_lost": -19.35,
+          "extra_delivered": 19.35,
+          "percent_savings": 3.046728329772651
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 3041445.1971481815,
+            "extra_lost": -34.75,
+            "extra_delivered": 34.75,
+            "percent_savings": 6.5247924664779555
+          },
+          {
+            "block": 1,
+            "savings": 145640.02890928928,
+            "extra_lost": 4.5,
+            "extra_delivered": -4.5,
+            "percent_savings": 0.4625739683752531
+          },
+          {
+            "block": 2,
+            "savings": 226354.21429717448,
+            "extra_lost": -2,
+            "extra_delivered": 2,
+            "percent_savings": 0.6330779218045753
+          },
+          {
+            "block": 3,
+            "savings": 3485572.1489862166,
+            "extra_lost": -62.75,
+            "extra_delivered": 62.75,
+            "percent_savings": 6.858572121273265
+          },
+          {
+            "block": 4,
+            "savings": 348661.838107856,
+            "extra_lost": -1.75,
+            "extra_delivered": 1.75,
+            "percent_savings": 0.7546251709322042
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            171269.4419238566,
+            2965661.8104366306
+          ],
+          "extra_lost": [
+            -43.551249999999996,
+            0.7024999999999864
+          ],
+          "extra_delivered": [
+            -0.7024999999999998,
+            43.55124999999999
+          ],
+          "percent_savings": [
+            0.4303934232216225,
+            6.039738872768892
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 5,
+          "loss_harm_worlds": 5
+        }
+      }
+    },
+    "existing_frozen_vs_planner_tail_mc": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 72089.79417338353,
+          "extra_lost": 2.05,
+          "extra_delivered": -2.05,
+          "percent_savings": -0.0564590522233116
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -131458.22332268022,
+            "extra_lost": 2.25,
+            "extra_delivered": -2.25,
+            "percent_savings": -0.4459088444808072
+          },
+          {
+            "block": 1,
+            "savings": 901987.8254232174,
+            "extra_lost": 6.5,
+            "extra_delivered": -6.5,
+            "percent_savings": 2.009805757711805
+          },
+          {
+            "block": 2,
+            "savings": -349923.79723548796,
+            "extra_lost": 2.5,
+            "extra_delivered": -2.5,
+            "percent_savings": -1.0949279139153105
+          },
+          {
+            "block": 3,
+            "savings": -1078082.1560668852,
+            "extra_lost": 2.5,
+            "extra_delivered": -2.5,
+            "percent_savings": -3.273384806081339
+          },
+          {
+            "block": 4,
+            "savings": 1017925.3220687537,
+            "extra_lost": -3.5,
+            "extra_delivered": 3.5,
+            "percent_savings": 2.5221205456490936
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -713299.7351288754,
+            856110.1678555625
+          ],
+          "extra_lost": [
+            -1.3,
+            5.101249999999993
+          ],
+          "extra_delivered": [
+            -5.101249999999999,
+            1.3
+          ],
+          "percent_savings": [
+            -2.2504713456457006,
+            2.056280673190491
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 7,
+          "loss_harm_worlds": 13
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -271085.679976744,
+          "extra_lost": 2.25,
+          "extra_delivered": -2.25,
+          "percent_savings": -1.0010643075666468
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 106376.98502967693,
+            "extra_lost": 0.75,
+            "extra_delivered": -0.75,
+            "percent_savings": 0.35220153903608376
+          },
+          {
+            "block": 1,
+            "savings": -155689.66925914865,
+            "extra_lost": 2,
+            "extra_delivered": -2,
+            "percent_savings": -0.7924043355722621
+          },
+          {
+            "block": 2,
+            "savings": -236006.65858267806,
+            "extra_lost": 5.75,
+            "extra_delivered": -5.75,
+            "percent_savings": -0.4049268544990148
+          },
+          {
+            "block": 3,
+            "savings": -30343.485494803637,
+            "extra_lost": 1.5,
+            "extra_delivered": -1.5,
+            "percent_savings": -0.09663740128487108
+          },
+          {
+            "block": 4,
+            "savings": -1039765.5715767667,
+            "extra_lost": 1.25,
+            "extra_delivered": -1.25,
+            "percent_savings": -4.06355448551317
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -803869.8345443152,
+            201823.93183698453
+          ],
+          "extra_lost": [
+            -0.5024999999999998,
+            4.801249999999993
+          ],
+          "extra_delivered": [
+            -4.80125,
+            0.5024999999999864
+          ],
+          "percent_savings": [
+            -2.896680544426811,
+            0.48807171955548556
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 11,
+          "loss_harm_worlds": 14
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 130824.18546181693,
+          "extra_lost": 1.95,
+          "extra_delivered": -1.95,
+          "percent_savings": 0.27557528933223685
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1063386.5763247423,
+            "extra_lost": -3.5,
+            "extra_delivered": 3.5,
+            "percent_savings": 2.456129520353951
+          },
+          {
+            "block": 1,
+            "savings": -307708.3508979045,
+            "extra_lost": 6,
+            "extra_delivered": -6,
+            "percent_savings": -0.76884008807162
+          },
+          {
+            "block": 2,
+            "savings": -249646.82790330146,
+            "extra_lost": 1.75,
+            "extra_delivered": -1.75,
+            "percent_savings": -0.5142880808996473
+          },
+          {
+            "block": 3,
+            "savings": 4227.462844418362,
+            "extra_lost": 0.75,
+            "extra_delivered": -0.75,
+            "percent_savings": -0.04859591010776187
+          },
+          {
+            "block": 4,
+            "savings": 143862.06694112998,
+            "extra_lost": 4.75,
+            "extra_delivered": -4.75,
+            "percent_savings": 0.2534710053862625
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -512066.88318987336,
+            827820.7751149338
+          ],
+          "extra_lost": [
+            -2.75,
+            6.051249999999993
+          ],
+          "extra_delivered": [
+            -6.05125,
+            2.75
+          ],
+          "percent_savings": [
+            -1.3362077360819364,
+            1.9008203309736635
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 8,
+          "loss_harm_worlds": 11
+        }
+      }
+    },
+    "existing_frozen_vs_plain_h16": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 201860.95678484626,
+          "extra_lost": -2.5,
+          "extra_delivered": 2.5,
+          "percent_savings": 0.4324642975791739
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 230846.3187060887,
+            "extra_lost": -2.5,
+            "extra_delivered": 2.5,
+            "percent_savings": 0.609238538385837
+          },
+          {
+            "block": 1,
+            "savings": 540535.1596005904,
+            "extra_lost": -2.5,
+            "extra_delivered": 2.5,
+            "percent_savings": 1.8412793281975448
+          },
+          {
+            "block": 2,
+            "savings": 90196.13863973506,
+            "extra_lost": -3.25,
+            "extra_delivered": 3.25,
+            "percent_savings": -0.0009646611379112713
+          },
+          {
+            "block": 3,
+            "savings": -31001.365132715553,
+            "extra_lost": -4,
+            "extra_delivered": 4,
+            "percent_savings": 0.09223432080227134
+          },
+          {
+            "block": 4,
+            "savings": 178728.53211053275,
+            "extra_lost": -0.25,
+            "extra_delivered": 0.25,
+            "percent_savings": -0.3794660383518724
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -404163.4163266832,
+            840765.1424847812
+          ],
+          "extra_lost": [
+            -4.9,
+            0.1
+          ],
+          "extra_delivered": [
+            -0.1,
+            4.9
+          ],
+          "percent_savings": [
+            -1.5650817849029353,
+            2.46753606917389
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 8,
+          "loss_harm_worlds": 6
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 266328.6172074789,
+          "extra_lost": -2.75,
+          "extra_delivered": 2.75,
+          "percent_savings": 0.197510544770722
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 1037723.4323819857,
+            "extra_lost": -4.25,
+            "extra_delivered": 4.25,
+            "percent_savings": 2.5612489823614313
+          },
+          {
+            "block": 1,
+            "savings": 865700.2362836832,
+            "extra_lost": -5,
+            "extra_delivered": 5,
+            "percent_savings": 1.8129592995779509
+          },
+          {
+            "block": 2,
+            "savings": 398992.8124459116,
+            "extra_lost": 0.25,
+            "extra_delivered": -0.25,
+            "percent_savings": 0.6342963755842674
+          },
+          {
+            "block": 3,
+            "savings": -231794.46657687146,
+            "extra_lost": -4.25,
+            "extra_delivered": 4.25,
+            "percent_savings": -0.7825884072094598
+          },
+          {
+            "block": 4,
+            "savings": -738978.9284973145,
+            "extra_lost": -0.5,
+            "extra_delivered": 0.5,
+            "percent_savings": -3.2383635264605797
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -512202.09740502946,
+            992483.4738105552
+          ],
+          "extra_lost": [
+            -5.80125,
+            1.0512499999999931
+          ],
+          "extra_delivered": [
+            -1.05125,
+            5.801249999999993
+          ],
+          "percent_savings": [
+            -2.2081790290043375,
+            2.3127490076441783
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 8,
+          "loss_harm_worlds": 6
+        }
+      },
+      "2": {
+        "complete": false,
+        "n_worlds": 19,
+        "means": {
+          "savings": 1005850.533081598,
+          "percent_savings": 2.059728477619021,
+          "extra_lost": -10.31578947368421,
+          "extra_delivered": 10.31578947368421
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "n_worlds": 4,
+            "savings": 2325972.8685554303,
+            "percent_savings": 4.923050868343655,
+            "extra_lost": -23.75,
+            "extra_delivered": 23.75
+          },
+          {
+            "block": 1,
+            "n_worlds": 4,
+            "savings": -431405.13273627684,
+            "percent_savings": -2.1424461548780154,
+            "extra_lost": 1,
+            "extra_delivered": -1
+          },
+          {
+            "block": 2,
+            "n_worlds": 4,
+            "savings": 902408.4541848209,
+            "percent_savings": 2.4330864074923433,
+            "extra_lost": -9,
+            "extra_delivered": 9
+          },
+          {
+            "block": 3,
+            "n_worlds": 4,
+            "savings": 1549539.220069725,
+            "percent_savings": 3.1024231743927535,
+            "extra_lost": -10.5,
+            "extra_delivered": 10.5
+          },
+          {
+            "block": 4,
+            "n_worlds": 3,
+            "savings": 575032.8294185214,
+            "percent_savings": 1.9567946311194848,
+            "extra_lost": -9,
+            "extra_delivered": 9
+          }
+        ],
+        "descriptive95": null,
+        "harm": {
+          "cost_harm_worlds": 4,
+          "loss_harm_worlds": 2
+        }
+      }
+    },
+    "observed_td_vs_planner_tail_mc": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -933707.5735128399,
+          "extra_lost": 10.75,
+          "extra_delivered": -10.75,
+          "percent_savings": -3.3127319623558025
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -1634526.5778320925,
+            "extra_lost": 17.25,
+            "extra_delivered": -17.25,
+            "percent_savings": -4.612818677750935
+          },
+          {
+            "block": 1,
+            "savings": 979995.3700896064,
+            "extra_lost": 0,
+            "extra_delivered": 0,
+            "percent_savings": 2.707065427055794
+          },
+          {
+            "block": 2,
+            "savings": 668089.5812613666,
+            "extra_lost": -2,
+            "extra_delivered": 2,
+            "percent_savings": 1.6868490762070132
+          },
+          {
+            "block": 3,
+            "savings": -5227135.334901369,
+            "extra_lost": 40,
+            "extra_delivered": -40,
+            "percent_savings": -17.363631003278883
+          },
+          {
+            "block": 4,
+            "savings": 545039.0938182892,
+            "extra_lost": -1.5,
+            "extra_delivered": 1.5,
+            "percent_savings": 1.0188753659880005
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -3227033.578238918,
+            773736.6703740794
+          ],
+          "extra_lost": [
+            -1.25125,
+            27.45
+          ],
+          "extra_delivered": [
+            -27.45,
+            1.251249999999993
+          ],
+          "percent_savings": [
+            -10.715381468221725,
+            2.0081913353100944
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 10,
+          "loss_harm_worlds": 11
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -1348630.2051052456,
+          "extra_lost": 12.65,
+          "extra_delivered": -12.65,
+          "percent_savings": -4.274058621409982
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -1182691.4232137054,
+            "extra_lost": 14.75,
+            "extra_delivered": -14.75,
+            "percent_savings": -3.620782721745912
+          },
+          {
+            "block": 1,
+            "savings": -375634.3821835555,
+            "extra_lost": 5.5,
+            "extra_delivered": -5.5,
+            "percent_savings": -1.3734221760592011
+          },
+          {
+            "block": 2,
+            "savings": -461223.5594203472,
+            "extra_lost": 4.5,
+            "extra_delivered": -4.5,
+            "percent_savings": -0.9602600742098257
+          },
+          {
+            "block": 3,
+            "savings": -3139034.9469824834,
+            "extra_lost": 37.5,
+            "extra_delivered": -37.5,
+            "percent_savings": -10.468686081627105
+          },
+          {
+            "block": 4,
+            "savings": -1584566.713726136,
+            "extra_lost": 1,
+            "extra_delivered": -1,
+            "percent_savings": -4.947142053407867
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -2387437.0634669675,
+            -437276.18608483835
+          ],
+          "extra_lost": [
+            2.9475000000000002,
+            25.954999999999973
+          ],
+          "extra_delivered": [
+            -25.955,
+            -2.947500000000014
+          ],
+          "percent_savings": [
+            -7.746583511928895,
+            -1.3381569530927915
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 14,
+          "loss_harm_worlds": 18
+        }
+      },
+      "2": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -1318710.5000279266,
+          "extra_lost": 21.3,
+          "extra_delivered": -21.3,
+          "percent_savings": -2.966320297678591
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -1978058.6208234392,
+            "extra_lost": 31.25,
+            "extra_delivered": -31.25,
+            "percent_savings": -4.3574831276622765
+          },
+          {
+            "block": 1,
+            "savings": -453348.37980719376,
+            "extra_lost": 1.5,
+            "extra_delivered": -1.5,
+            "percent_savings": -1.202848173938842
+          },
+          {
+            "block": 2,
+            "savings": -476001.04220047593,
+            "extra_lost": 3.75,
+            "extra_delivered": -3.75,
+            "percent_savings": -1.1957006624342774
+          },
+          {
+            "block": 3,
+            "savings": -3481344.6861417983,
+            "extra_lost": 63.5,
+            "extra_delivered": -63.5,
+            "percent_savings": -7.562278985236414
+          },
+          {
+            "block": 4,
+            "savings": -204799.77116672602,
+            "extra_lost": 6.5,
+            "extra_delivered": -6.5,
+            "percent_savings": -0.5132905391211473
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -2608227.1990575762,
+            -247158.7171884398
+          ],
+          "extra_lost": [
+            3.39875,
+            44.10124999999999
+          ],
+          "extra_delivered": [
+            -44.10125,
+            -3.398750000000007
+          ],
+          "percent_savings": [
+            -5.697802588649594,
+            -0.6178882410782081
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 15,
+          "loss_harm_worlds": 17
+        }
+      }
+    },
+    "observed_td_vs_plain_h16": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -803936.4109013772,
+          "extra_lost": 6.2,
+          "extra_delivered": -6.2,
+          "percent_savings": -2.7419902063822255
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -1272222.0358033236,
+            "extra_lost": 12.5,
+            "extra_delivered": -12.5,
+            "percent_savings": -3.5012147207680044
+          },
+          {
+            "block": 1,
+            "savings": 618542.7042669794,
+            "extra_lost": -9,
+            "extra_delivered": 9,
+            "percent_savings": 2.445622916994387
+          },
+          {
+            "block": 2,
+            "savings": 1108209.5171365896,
+            "extra_lost": -7.75,
+            "extra_delivered": 7.75,
+            "percent_savings": 2.6760050184176882
+          },
+          {
+            "block": 3,
+            "savings": -4180054.5439671995,
+            "extra_lost": 33.5,
+            "extra_delivered": -33.5,
+            "percent_savings": -13.3964854597347
+          },
+          {
+            "block": 4,
+            "savings": -294157.6961399317,
+            "extra_lost": 1.75,
+            "extra_delivered": -1.75,
+            "percent_savings": -1.933878786820498
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -2726078.7334475485,
+            819082.7753212001
+          ],
+          "extra_lost": [
+            -6.45,
+            21.65124999999999
+          ],
+          "extra_delivered": [
+            -21.651249999999997,
+            6.45
+          ],
+          "percent_savings": [
+            -8.943650213806187,
+            2.1818318430351358
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 14,
+          "loss_harm_worlds": 13
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": -811215.9079210225,
+          "extra_lost": 7.65,
+          "extra_delivered": -7.65,
+          "percent_savings": -3.049239070705329
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": -251344.97586139664,
+            "extra_lost": 9.75,
+            "extra_delivered": -9.75,
+            "percent_savings": -1.3239180898884926
+          },
+          {
+            "block": 1,
+            "savings": 645755.5233592764,
+            "extra_lost": -1.5,
+            "extra_delivered": 1.5,
+            "percent_savings": 1.257800321479602
+          },
+          {
+            "block": 2,
+            "savings": 173775.91160824243,
+            "extra_lost": -1,
+            "extra_delivered": 1,
+            "percent_savings": 0.08826939567887138
+          },
+          {
+            "block": 3,
+            "savings": -3340485.928064551,
+            "extra_lost": 31.75,
+            "extra_delivered": -31.75,
+            "percent_savings": -11.17919093078283
+          },
+          {
+            "block": 4,
+            "savings": -1283780.0706466837,
+            "extra_lost": -0.75,
+            "extra_delivered": 0.75,
+            "percent_savings": -4.089156050013797
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -2208981.060290707,
+            411137.9881437808
+          ],
+          "extra_lost": [
+            -2,
+            20.15124999999999
+          ],
+          "extra_delivered": [
+            -20.151249999999997,
+            2
+          ],
+          "percent_savings": [
+            -7.483610760340553,
+            0.6000412511035477
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 13,
+          "loss_harm_worlds": 13
+        }
+      },
+      "2": {
+        "complete": false,
+        "n_worlds": 19,
+        "means": {
+          "savings": -489080.63403449894,
+          "percent_savings": -1.2130952919543019,
+          "extra_lost": 9.842105263157896,
+          "extra_delivered": -9.842105263157896
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "n_worlds": 4,
+            "savings": -715472.3285927512,
+            "percent_savings": -1.7238493067749778,
+            "extra_lost": 11,
+            "extra_delivered": -11
+          },
+          {
+            "block": 1,
+            "n_worlds": 4,
+            "savings": -577045.1616455661,
+            "percent_savings": -2.666828281845768,
+            "extra_lost": -3.5,
+            "extra_delivered": 3.5
+          },
+          {
+            "block": 2,
+            "n_worlds": 4,
+            "savings": 676054.2398876464,
+            "percent_savings": 1.7724136944308875,
+            "extra_lost": -7,
+            "extra_delivered": 7
+          },
+          {
+            "block": 3,
+            "n_worlds": 4,
+            "savings": -1936032.9289164916,
+            "percent_savings": -4.237620499751781,
+            "extra_lost": 52.25,
+            "extra_delivered": -52.25
+          },
+          {
+            "block": 4,
+            "n_worlds": 3,
+            "savings": 305817.55680439,
+            "percent_savings": 1.4582423428782743,
+            "extra_lost": -8,
+            "extra_delivered": 8
+          }
+        ],
+        "descriptive95": null,
+        "harm": {
+          "cost_harm_worlds": 11,
+          "loss_harm_worlds": 10
+        }
+      }
+    },
+    "planner_tail_mc_vs_plain_h16": {
+      "0": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 129771.16261146273,
+          "extra_lost": -4.55,
+          "extra_delivered": 4.55,
+          "percent_savings": 0.45816471780108825
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 362304.5420287689,
+            "extra_lost": -4.75,
+            "extra_delivered": 4.75,
+            "percent_savings": 1.0461075520767416
+          },
+          {
+            "block": 1,
+            "savings": -361452.665822627,
+            "extra_lost": -9,
+            "extra_delivered": 9,
+            "percent_savings": -0.14141263606313914
+          },
+          {
+            "block": 2,
+            "savings": 440119.935875223,
+            "extra_lost": -5.75,
+            "extra_delivered": 5.75,
+            "percent_savings": 1.027801161882022
+          },
+          {
+            "block": 3,
+            "savings": 1047080.7909341697,
+            "extra_lost": -6.5,
+            "extra_delivered": 6.5,
+            "percent_savings": 3.2946670840097774
+          },
+          {
+            "block": 4,
+            "savings": -839196.7899582209,
+            "extra_lost": 3.25,
+            "extra_delivered": -3.25,
+            "percent_savings": -2.9363395728999606
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -620368.0977768006,
+            897353.0564695104
+          ],
+          "extra_lost": [
+            -9,
+            0.20124999999999318
+          ],
+          "extra_delivered": [
+            -0.20124999999999993,
+            9
+          ],
+          "percent_savings": [
+            -1.7898429916072278,
+            2.636834735491696
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 8,
+          "loss_harm_worlds": 6
+        }
+      },
+      "1": {
+        "n_worlds": 20,
+        "independent_blocks": 5,
+        "means": {
+          "savings": 537414.297184223,
+          "extra_lost": -5,
+          "extra_delivered": 5,
+          "percent_savings": 1.1837108507397072
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "savings": 931346.4473523088,
+            "extra_lost": -5,
+            "extra_delivered": 5,
+            "percent_savings": 2.196866496193002
+          },
+          {
+            "block": 1,
+            "savings": 1021389.9055428319,
+            "extra_lost": -7,
+            "extra_delivered": 7,
+            "percent_savings": 2.5808844700332894
+          },
+          {
+            "block": 2,
+            "savings": 634999.4710285896,
+            "extra_lost": -5.5,
+            "extra_delivered": 5.5,
+            "percent_savings": 1.0195820515440437
+          },
+          {
+            "block": 3,
+            "savings": -201450.98108206782,
+            "extra_lost": -5.75,
+            "extra_delivered": 5.75,
+            "percent_savings": -0.649594538351816
+          },
+          {
+            "block": 4,
+            "savings": 300786.6430794522,
+            "extra_lost": -1.75,
+            "extra_delivered": 1.75,
+            "percent_savings": 0.7708157742800159
+          }
+        ],
+        "descriptive95": {
+          "savings": [
+            -4752.774902070208,
+            1044993.8540416777
+          ],
+          "extra_lost": [
+            -7.35,
+            -2.498750000000007
+          ],
+          "extra_delivered": [
+            2.4987500000000002,
+            7.35
+          ],
+          "percent_savings": [
+            -0.29936472808875675,
+            2.491721947922055
+          ]
+        },
+        "complete": true,
+        "harm": {
+          "cost_harm_worlds": 6,
+          "loss_harm_worlds": 3
+        }
+      },
+      "2": {
+        "complete": false,
+        "n_worlds": 19,
+        "means": {
+          "savings": 901789.2790904592,
+          "percent_savings": 1.8137040709379295,
+          "extra_lost": -12.105263157894736,
+          "extra_delivered": 12.105263157894736
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "n_worlds": 4,
+            "savings": 1262586.292230688,
+            "percent_savings": 2.450673346332405,
+            "extra_lost": -20.25,
+            "extra_delivered": 20.25
+          },
+          {
+            "block": 1,
+            "n_worlds": 4,
+            "savings": -123696.78183837235,
+            "percent_savings": -1.5453119151054142,
+            "extra_lost": -5,
+            "extra_delivered": 5
+          },
+          {
+            "block": 2,
+            "n_worlds": 4,
+            "savings": 1152055.2820881223,
+            "percent_savings": 2.91686713333794,
+            "extra_lost": -10.75,
+            "extra_delivered": 10.75
+          },
+          {
+            "block": 3,
+            "n_worlds": 4,
+            "savings": 1545311.7572253067,
+            "percent_savings": 3.1350936778806324,
+            "extra_lost": -11.25,
+            "extra_delivered": 11.25
+          },
+          {
+            "block": 4,
+            "n_worlds": 3,
+            "savings": 596323.3679652488,
+            "percent_savings": 2.210362792679469,
+            "extra_lost": -13.666666666666666,
+            "extra_delivered": 13.666666666666666
+          }
+        ],
+        "descriptive95": null,
+        "harm": {
+          "cost_harm_worlds": 4,
+          "loss_harm_worlds": 3
+        }
+      }
+    }
+  },
+  "models": [
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block0-ancestor.pt",
+      "sha256": "921ea80a67e8b0f0189a3e4d7504e97f59f187a3917418abbc5af0e8dd762c87",
+      "updates": 1536
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block0-observed_td-final.pt",
+      "sha256": "8c1083d2102c2a441f6637a1012a49b5de7e44cf1d027993d0d2ecf161e85340",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block0-planner_tail_mc-final.pt",
+      "sha256": "5c4223632e799472b07f1548774d0e893f74ff1658a602eb549f33f9a14d0c7a",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block0-planner_tail_td-final.pt",
+      "sha256": "bf72e974147e651a03f4141a29b716640b52cbf2e4357caafd2dc5c1c96e9a65",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block1-ancestor.pt",
+      "sha256": "770e5374d7f333f6c9d4182cf36c54ac1fe0fe1dcd9536acca2d65073ec0c22b",
+      "updates": 1536
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block1-observed_td-final.pt",
+      "sha256": "315d341df7f490b5cc46d2eb82838bc4c796e52a6fe133047113f4e6ef0f6c83",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block1-planner_tail_mc-final.pt",
+      "sha256": "276d759a0c7905b5995d983c0140341698e3144f760ffc240c194ab80e67e64d",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block1-planner_tail_td-final.pt",
+      "sha256": "bbc2fb549201631c39aaf1db85127e75913edfee1121114c46f7e263c74b7a3b",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block2-ancestor.pt",
+      "sha256": "995c5fc0544e3a3157254fe0fdf959cea4279455daa76fc577e0090cb343d541",
+      "updates": 1536
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block2-observed_td-final.pt",
+      "sha256": "6ebf36aa1d983ad2598060b03ac712988ddf22a27fe3aef8a7976cf669c78a1f",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block2-planner_tail_mc-final.pt",
+      "sha256": "94052a006ff9b6a035ac30fb95fed9bd959be7c5e18a6d0a7f2f5bfa8998e153",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block2-planner_tail_td-final.pt",
+      "sha256": "5820a2dad6d33c202a5a8bcc6faa8ed748a1808c147859c0ca2748eabc19ca21",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block3-ancestor.pt",
+      "sha256": "9c2c319027b4ed0636ecc828eb2665494927f65b689b9981808b83d2bfc0677e",
+      "updates": 1536
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block3-observed_td-final.pt",
+      "sha256": "11d7bdde9adb1a74d98daa10ed62d1ef78171e4bc3122a8f4e0a934dbd3c8821",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block3-planner_tail_mc-final.pt",
+      "sha256": "038938e9d4f3a493dabd69a1d3b4032a7f8e92c5e44f94244962c9055fc0eba9",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block3-planner_tail_td-final.pt",
+      "sha256": "494c2fd0405d48c24c983773bd890abe88d7d3acf9e2030d7410808a1c50561c",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block4-ancestor.pt",
+      "sha256": "814d0e07e5c5bcaa0acccfd4ea42245fe6c0c05bfde3c7133047cc823b92fa0f",
+      "updates": 1536
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block4-observed_td-final.pt",
+      "sha256": "6d9a2f3fea67d3a7a4db8f7b8d9920956212820df677e0d5795afe598230baf1",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block4-planner_tail_mc-final.pt",
+      "sha256": "51f8b3138cec2608375748d619f860c46cd23216c6fa96f17d39c820eed73bb6",
+      "updates": 768
+    },
+    {
+      "path": "results/capacity_planner_tail_20261004/payload/models/block4-planner_tail_td-final.pt",
+      "sha256": "208ab89dffe1d4abe7ebde0167687012f5f4b9c430f7745d681515716152aaf9",
+      "updates": 768
+    }
+  ],
+  "key_source_hashes": {
+    "results/capacity_planner_tail_20261004/launcher/terminal.json": "d36c83d1163097a1251e550f99e0163bcb9b1a7022330b215ea691b39cbdbb32",
+    "results/capacity_planner_tail_20261004/launcher/child-failure.json": "2d8ea2d62a3913ecfe1320e3f223dd68a477f5254e37e0c0ea194c9a0331f24f",
+    "results/capacity_planner_tail_20261004/launcher/budget.jsonl": "669ecf36a2d0fe683b08b8466a16fb8ed8bf506c52b5af2c537cccbdac7c5dae",
+    "results/capacity_planner_tail_20261004/payload/progress.jsonl": "dff86e40624d74e67870e65f341c90671a5ec5085c1806d7404447a770f1420b",
+    "results/capacity_planner_tail_20261004/payload/failure-state.pkl.gz": "0c77f3ae3f42edf2aca549f083b9958c9d1e5217a167d11c1bdd9b655710db06",
+    "results/capacity_planner_tail_20261004/payload/raw/evaluation-b4-c2-j3-plain_h16.jsonl.gz": "4dde8fa89de79ce8dc8ba6afba1206c82e6847e41619e55b504d224ad3ca213b"
+  },
+  "budget": {
+    "counts": {
+      "construction_triggered_resets": 480,
+      "control_steps": 23002,
+      "estimator_hypothesis_transitions": 3066600,
+      "estimator_receipt_updates": 30666,
+      "final_seals": 15,
+      "forecast_clones": 11520,
+      "native_constructions": 480,
+      "native_steps": 30666,
+      "neural_forward_module_calls": 29040,
+      "optimizer_example_presentations": 737280,
+      "planner_candidate_rollouts": 1104144,
+      "planner_total_decisions": 23003,
+      "planner_total_model_epochs": 9924864,
+      "tail_steps": 7664,
+      "total_native_operations": 31626,
+      "total_optimizer_steps": 11520,
+      "training_tail_model_epochs": 374400,
+      "trajectories": 480,
+      "value_optimizer_steps": 11520
+    },
+    "elapsed": 19559.984044999816,
+    "times": {
+      "admission_lock_binding": 5.039817999815568,
+      "analysis_archive": 0,
+      "failure_flush_shutdown_reserve": 0,
+      "frozen_evaluation": 14400.00291699986,
+      "global": 0,
+      "reference_and_tails": 5083.981840000255,
+      "value_fitting": 70.95946999988519
+    },
+    "job_id": "evaluation-b4-c2-j3-plain_h16",
+    "job_seconds": 13.66981799993664,
+    "pending_chunks": {
+      "planner_total_model_epochs": {
+        "dispatched": 411,
+        "reserved": 768
+      }
+    },
+    "verified_completed_chunk_calls": {
+      "estimator_hypothesis_transitions": 3066600,
+      "planner_total_model_epochs": 9924096,
+      "training_tail_model_epochs": 374400
+    }
+  },
+  "missing_h16_condition2_pairs": 1,
+  "bootstrap": {
+    "blocks": 5,
+    "within_block_worlds": 4,
+    "resamples": 2000,
+    "seed": 64090001,
+    "interval_scope": "descriptive development only",
+    "incomplete_cells": "19available pairs, no bootstrap or imputation; nominal RNG positions consumed for frozen contrast order"
+  },
+  "scope": {
+    "model_forward_calls": 0,
+    "environment_calls": 0,
+    "optimizer_calls": 0,
+    "archived": false,
+    "full_comparison_completed": false
+  },
+  "agent": "Hegel read-only recovery-interface assessment completed and closed",
+  "saved_data_details": {
+    "latency": {
+      "planner_tail_td": {
+        "decisions": 2880,
+        "median": 0.6990245000924915,
+        "p95": 0.8573497500969096,
+        "max": 0.9734970000572503
+      },
+      "plain_h8": {
+        "decisions": 2880,
+        "median": 0.7009740000357851,
+        "p95": 0.8600528500275686,
+        "max": 0.9714209998492151
+      },
+      "existing_frozen": {
+        "decisions": 2880,
+        "median": 0.7005590000189841,
+        "p95": 0.860845849791076,
+        "max": 0.9774410000536591
+      },
+      "observed_td": {
+        "decisions": 2880,
+        "median": 0.7033144999295473,
+        "p95": 0.8644294500700198,
+        "max": 0.9731840000022203
+      },
+      "planner_tail_mc": {
+        "decisions": 2880,
+        "median": 0.7008750000968575,
+        "p95": 0.8589351500966586,
+        "max": 1.000270999968052
+      },
+      "plain_h16": {
+        "decisions": 2832,
+        "median": 1.414902500109747,
+        "p95": 1.6529839499504304,
+        "max": 1.7928760000504553
+      }
+    },
+    "candidate_actions_components": {
+      "plain_h8": {
+        "0": {
+          "n": 20,
+          "changed_boundaries": 675,
+          "mean_extra_applied_hours": 66.02967607887403,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 50.399999999999906,
+            "bioreactor_shortage_cost": 286559.5200000002,
+            "capacity_transfer_cost": -400,
+            "expiry_cost": 220000,
+            "patient_loss_cost": 390000,
+            "reagent_holding_cost": 4766.999046962731,
+            "reagent_purchase_cost": -417522.60301651934,
+            "reagent_shortage_cost": 25951.347293062183,
+            "reagent_transfer_cost": -40.000006556510925,
+            "specimen_transfer_cost": 0,
+            "support_flexible_labor_cost": -7483.094455523946,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 1191.6458368464523,
+            "urgency_cost": 35750
+          }
+        },
+        "1": {
+          "n": 20,
+          "changed_boundaries": 757,
+          "mean_extra_applied_hours": 53.6019980990924,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 70.55999999999995,
+            "bioreactor_shortage_cost": 105574.56059930832,
+            "capacity_transfer_cost": 450.00001192092896,
+            "expiry_cost": 450000,
+            "patient_loss_cost": 627500,
+            "reagent_holding_cost": 9607.775165914734,
+            "reagent_purchase_cost": -305761.4915160389,
+            "reagent_shortage_cost": 4325.199993061431,
+            "reagent_transfer_cost": 519.9998730421047,
+            "specimen_transfer_cost": 1200,
+            "support_flexible_labor_cost": -5992.201435185765,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 1128.5067638588264,
+            "urgency_cost": 59250
+          }
+        },
+        "2": {
+          "n": 20,
+          "changed_boundaries": 775,
+          "mean_extra_applied_hours": 75.3266707172019,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 72.72000000000017,
+            "bioreactor_shortage_cost": -80437.76000000036,
+            "capacity_transfer_cost": 350,
+            "expiry_cost": 512000,
+            "patient_loss_cost": 747500,
+            "reagent_holding_cost": 5720.398992165186,
+            "reagent_purchase_cost": -628392.6076041431,
+            "reagent_shortage_cost": -99480.15218439067,
+            "reagent_transfer_cost": -0.00008404255125071813,
+            "specimen_transfer_cost": 1020,
+            "support_flexible_labor_cost": -8457.367963076638,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 550.4452115196285,
+            "urgency_cost": 96000
+          }
+        }
+      },
+      "existing_frozen": {
+        "0": {
+          "n": 20,
+          "changed_boundaries": 503,
+          "mean_extra_applied_hours": 16.806793543051,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 86.39999999999986,
+            "bioreactor_shortage_cost": -67869.35999999987,
+            "capacity_transfer_cost": -400,
+            "expiry_cost": 60000,
+            "patient_loss_cost": 117500,
+            "reagent_holding_cost": 1123.6492066196981,
+            "reagent_purchase_cost": -149717.70414771442,
+            "reagent_shortage_cost": -38927.02487109881,
+            "reagent_transfer_cost": 319.999944567679,
+            "specimen_transfer_cost": 240,
+            "support_flexible_labor_cost": -1910.4391167482706,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 217.98356982156756,
+            "urgency_cost": 23000
+          }
+        },
+        "1": {
+          "n": 20,
+          "changed_boundaries": 625,
+          "mean_extra_applied_hours": 7.596003796646147,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 51.120000171661374,
+            "bioreactor_shortage_cost": -27650.4794006918,
+            "capacity_transfer_cost": 100,
+            "expiry_cost": 118000,
+            "patient_loss_cost": 170000,
+            "reagent_holding_cost": 2423.22552734165,
+            "reagent_purchase_cost": -40065.28787107831,
+            "reagent_shortage_cost": 12975.684152024658,
+            "reagent_transfer_cost": 359.99990999698406,
+            "specimen_transfer_cost": -120,
+            "support_flexible_labor_cost": -764.967954537171,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 648.9397923795983,
+            "urgency_cost": 10500
+          }
+        },
+        "2": {
+          "n": 20,
+          "changed_boundaries": 681,
+          "mean_extra_applied_hours": 16.43595943673239,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 10.8,
+            "bioreactor_shortage_cost": 158361.8399999998,
+            "capacity_transfer_cost": 1150,
+            "expiry_cost": 12000,
+            "patient_loss_cost": 75000,
+            "reagent_holding_cost": 2008.9507933803106,
+            "reagent_purchase_cost": -139174.17718757066,
+            "reagent_shortage_cost": -38927.014301155825,
+            "reagent_transfer_cost": -40.000024437905324,
+            "specimen_transfer_cost": 540,
+            "support_flexible_labor_cost": -1835.7854573471996,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 132.38880653083828,
+            "urgency_cost": 23500
+          }
+        }
+      },
+      "observed_td": {
+        "0": {
+          "n": 20,
+          "changed_boundaries": 656,
+          "mean_extra_applied_hours": 85.54410875883383,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 9.3599999999999,
+            "bioreactor_shortage_cost": 434866.64,
+            "capacity_transfer_cost": -900,
+            "expiry_cost": 392000,
+            "patient_loss_cost": 552500,
+            "reagent_holding_cost": 5323.148587441434,
+            "reagent_purchase_cost": -358479.0184133382,
+            "reagent_shortage_cost": -108130.60862947753,
+            "reagent_transfer_cost": -120.00007331371413,
+            "specimen_transfer_cost": 90,
+            "support_flexible_labor_cost": -9648.462794810039,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 449.81359516743277,
+            "urgency_cost": 41500
+          }
+        },
+        "1": {
+          "n": 20,
+          "changed_boundaries": 732,
+          "mean_extra_applied_hours": 71.69396271269011,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": -8.639999999999963,
+            "bioreactor_shortage_cost": 540441.200599308,
+            "capacity_transfer_cost": -499.99998807907104,
+            "expiry_cost": 480000,
+            "patient_loss_cost": 690000,
+            "reagent_holding_cost": 6804.324631131402,
+            "reagent_purchase_cost": -400652.99610366265,
+            "reagent_shortage_cost": -51902.718561850714,
+            "reagent_transfer_cost": 99.99990880489155,
+            "specimen_transfer_cost": -1110,
+            "support_flexible_labor_cost": -8039.192327897012,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 370.78112635936685,
+            "urgency_cost": 68500
+          }
+        },
+        "2": {
+          "n": 20,
+          "changed_boundaries": 743,
+          "mean_extra_applied_hours": 81.69417783220266,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 66.2400000000001,
+            "bioreactor_shortage_cost": 238799.59999999986,
+            "capacity_transfer_cost": 0,
+            "expiry_cost": 748000,
+            "patient_loss_cost": 1042500,
+            "reagent_holding_cost": 9868.824831379234,
+            "reagent_purchase_cost": -681110.0963550386,
+            "reagent_shortage_cost": 86504.51095664848,
+            "reagent_transfer_cost": 159.9999696016304,
+            "specimen_transfer_cost": 780,
+            "support_flexible_labor_cost": -9191.949108906509,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -115.44217454066765,
+            "urgency_cost": 106000
+          }
+        }
+      },
+      "planner_tail_mc": {
+        "0": {
+          "n": 20,
+          "changed_boundaries": 176,
+          "mean_extra_applied_hours": 1.7122210231827382,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": -3.6,
+            "bioreactor_shortage_cost": -70383.04000000004,
+            "capacity_transfer_cost": 150,
+            "expiry_cost": 20000,
+            "patient_loss_cost": 15000,
+            "reagent_holding_cost": 953.3998890519172,
+            "reagent_purchase_cost": 6326.102513766382,
+            "reagent_shortage_cost": 43252.262890175996,
+            "reagent_transfer_cost": 40.00010430812944,
+            "specimen_transfer_cost": 240,
+            "support_flexible_labor_cost": -213.02441865589608,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -108.80221982165658,
+            "urgency_cost": 500
+          }
+        },
+        "1": {
+          "n": 20,
+          "changed_boundaries": 344,
+          "mean_extra_applied_hours": 2.3999999999067425,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": -7.199999999999955,
+            "bioreactor_shortage_cost": -62842.00000000014,
+            "capacity_transfer_cost": -100,
+            "expiry_cost": 34000,
+            "patient_loss_cost": 57500,
+            "reagent_holding_cost": -68.09969590752954,
+            "reagent_purchase_cost": -14760.89773761034,
+            "reagent_shortage_cost": -38927.006695951786,
+            "reagent_transfer_cost": 19.999971389768945,
+            "specimen_transfer_cost": -270,
+            "support_flexible_labor_cost": -266.56478004600797,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 94.32311699248234,
+            "urgency_cost": 1000
+          }
+        },
+        "2": {
+          "n": 20,
+          "changed_boundaries": 292,
+          "mean_extra_applied_hours": 0.7899568285598633,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": -20.879999999999836,
+            "bioreactor_shortage_cost": 218690.15999999968,
+            "capacity_transfer_cost": 50,
+            "expiry_cost": -26000,
+            "patient_loss_cost": -22500,
+            "reagent_holding_cost": 1049.8751809671624,
+            "reagent_purchase_cost": 31630.50578166265,
+            "reagent_shortage_cost": 21626.143432949684,
+            "reagent_transfer_cost": 40.000024437904756,
+            "specimen_transfer_cost": 30,
+            "support_flexible_labor_cost": -72.39001934703302,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 27.773690544738223,
+            "urgency_cost": -1000
+          }
+        }
+      },
+      "plain_h16": {
+        "0": {
+          "n": 20,
+          "changed_boundaries": 543,
+          "mean_extra_applied_hours": 27.42472918628605,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 1.4399999999998272,
+            "bioreactor_shortage_cost": -178471.27999999997,
+            "capacity_transfer_cost": 100,
+            "expiry_cost": 172000,
+            "patient_loss_cost": 242500,
+            "reagent_holding_cost": 3563.900299864262,
+            "reagent_purchase_cost": -204543.89145319437,
+            "reagent_shortage_cost": 82179.2809294808,
+            "reagent_transfer_cost": 499.9999302625636,
+            "specimen_transfer_cost": 300,
+            "support_flexible_labor_cost": -3118.6967924434275,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 13.708456321052335,
+            "urgency_cost": 30500
+          }
+        },
+        "1": {
+          "n": 20,
+          "changed_boundaries": 627,
+          "mean_extra_applied_hours": 32.473814156856825,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": 25.919999999999845,
+            "bioreactor_shortage_cost": 163389.20059930813,
+            "capacity_transfer_cost": -799.999988079071,
+            "expiry_cost": 206000,
+            "patient_loss_cost": 307500,
+            "reagent_holding_cost": 4625.125696808104,
+            "reagent_purchase_cost": -145500.28761970095,
+            "reagent_shortage_cost": -51902.67963352306,
+            "reagent_transfer_cost": 299.9998873472197,
+            "specimen_transfer_cost": -210,
+            "support_flexible_labor_cost": -3725.3305817541127,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 84.90300268723831,
+            "urgency_cost": 33000
+          }
+        },
+        "2": {
+          "n": 19,
+          "changed_boundaries": 711,
+          "mean_extra_applied_hours": 41.30271716693979,
+          "mean_component_savings": {
+            "bioreactor_holding_cost": -25.768421052631357,
+            "bioreactor_shortage_cost": 526549.8105263149,
+            "capacity_transfer_cost": 263.1578947368421,
+            "expiry_cost": 408421.05263157893,
+            "patient_loss_cost": 581578.947368421,
+            "reagent_holding_cost": 2222.209453152959,
+            "reagent_purchase_cost": -359588.85030807974,
+            "reagent_shortage_cost": -81951.61190447042,
+            "reagent_transfer_cost": -231.57899066021596,
+            "specimen_transfer_cost": -347.36842105263156,
+            "support_flexible_labor_cost": -4660.146651834155,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 139.62390415752975,
+            "urgency_cost": 64736.84210526316
+          }
+        }
+      }
+    },
+    "terminal_tree": {
+      "files": 2868,
+      "bytes": 618946681,
+      "sha256": "460450435dae931fc7c1453115fa4bb83114b736f75847f1572e703e5420dc72",
+      "algorithm": "sha256 of compact sort_keys JSON list of {path,bytes,sha256}, files lexicographically sorted, paths relative to run root",
+      "archive_present": false
+    }
+  }
+}

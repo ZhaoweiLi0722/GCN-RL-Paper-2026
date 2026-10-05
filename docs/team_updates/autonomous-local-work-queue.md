@@ -1,6 +1,38 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return real updates; historical Dropbox local copy verified
+## Live checkpoint: native-return 11 references and1056 real updates; running
+
+2026-10-05T23:10:51Z read-only heartbeat. Entrydda8e365 clean on expected branch.
+Supervisor36670/PPID1 and child36695/36670 match claim/full commands, unique
+related scientific pair; child99.2%CPU/223104KiB RSS.10new references since last
+Live and new branch/fit/checkpoint boundaries establish progress. All3logs0bytes;
+no terminal/failure/overrun/preservation-error marker. No monitor science calls.
+
+Reference11/120,native branches22/240(each complete through64); eachmethod
+11/120fits and352/3840updates,total1056/11520,actor0.33after-fit states present;
+latest three states hashed with32receipts each ending atupdate352. Ancestor1/5,
+final0/15,evaluation0/360. Current b0/index11/c2/replicate3/seed65100203/plainH8,
+latest main epoch7 boundary. No test outputs inspected or performance conclusion.
+
+Ledger debits:main715+branch1052=1767/40440native steps;739+1052=1791/41400
+operations,23/240clones;3245/40045forwards. Predictor1028178/16303440 including
+main207360,forecast-parent616320,native-parent198528,prefix552,pairedtail5418.
+Filter502800/6960000. Elapsed1983.25/64800s;reference1973.46/34200s,fitting
+4.60/3600s,current reference82.01/900s. No observed global/phase/owner violation.
+Eleven full reference cycles average172.37s(last5:153.33s), remaining reference
+stage extrapolates5.22h at that mean; this excludes future evaluation/archive
+and is not a guarantee because root/condition workload varies. Progress226427
+bytes,budget10260419bytes. Snapshot:reports/capacity_native_tail_monitor_20261005T2310Z.json.
+
+Only nonlocked status docs differ from execution; reuse43tests/compileall and
+prior locks. Same gcn-rl ACTIVE30minutes, no duplicate/retry or additional gate.
+Dropbox prior18511-file local handoff unchanged; no recopy/rearchive. UI check
+still blocked by locked Mac; cloud/access remain unverified. Next existing
+process continues approved labels/fits -> seals ->360tests -> raw readout,
+manuscript/archive and final/failed Dropbox export. No new permission needed
+inside the current package; no benefits established before full comparison.
+
+## Previous checkpoint: native-return real updates; historical Dropbox local copy verified
 
 2026-10-05T22:44:08Z. Same once-launched supervisor36670/1 and child36695/36670
 remain live with matching claims/commands. First real training boundary has

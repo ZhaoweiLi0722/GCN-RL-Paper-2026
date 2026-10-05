@@ -1,0 +1,29 @@
+{
+  "attempts": 1,
+  "automatic_follow_on": false,
+  "automatic_resume": false,
+  "automatic_retry": false,
+  "format": "capacity-planner-tail-authorization-v1",
+  "implementation_commit": "881997cf3029d0d6b5369e429b01cec5493ddf19",
+  "packet_sha256": "a0cbcef8d523c69234c0b9568536ba7a0bd42bcd138e4d63111410beabafba74",
+  "remote_export": false,
+  "scientific_execution_authorized": true,
+  "user_approval": {
+    "approval_context": "Reply after the complete numerical approval question and implementation handoff: five reused graph models,120 shared training worlds,360 six-role evaluations,11520 new value updates,30720 native steps,10327680 predictor steps,30000 forwards,zero actor updates,9h including archive,8GiB,one attempt,no automatic retry. User asks to proceed directly with training inside approved packages, not to repeat routine launch questions.",
+    "attempts": 1,
+    "automatic_retry": false,
+    "format": "capacity-planner-tail-approval-intent-v1",
+    "howard_approval_claimed": false,
+    "proposal_sha256": "afb2633ba27a78c0efc5b2380ee99dc45e03c4954f31422f0d1c41ce2b55bb2f",
+    "protocol_sha256": "e00a23bfb3c8606bdaa8bb386e864a7463f83061a29a2b627f8b84159d8f8322",
+    "recorded_at_utc": "2026-10-05T00:01:52Z",
+    "remote_actions_authorized": false,
+    "reward_changed": false,
+    "routine_training_evaluation_readout_authorized": true,
+    "scenario_changed": false,
+    "scientific_implementation_commit": "cbe0b7de1acfac27bb98b91234b84dceab80c202",
+    "scope": "capacity-planner-tail-v1",
+    "scope_approved": true,
+    "user_literal": "\u6279\u51c6\u4e86 \u4ee5\u540e\u53ef\u4ee5\u76f4\u63a5\u6267\u884c\u8bad\u7ec3"
+  }
+}

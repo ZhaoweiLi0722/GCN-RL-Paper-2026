@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail block0 sealed; block1 training progressing
+## Live checkpoint: planner-tail three blocks sealed; fourth block training
+
+2026-10-05T01:11:03Z read-only heartbeat. Entrycea3944 clean on expected branch.
+Supervisor95697/PPID1 and child95709/95697 match claims and full launch/child
+commands. No duplicate related experiment. New45completed reference boundaries
+since the prior46world snapshot establish running; no new scientific call or
+process launched by this monitor. Failure/overrun/terminal markers absent;
+stdout/stderr remain0bytes. Required detached processes continue.
+
+Reference91/120 complete. Each method91/120fit cohorts and2912/3840real value
+updates; total8736/11520,actor0. Ancestor bindings4/5,new final seals9/15 (blocks
+0,1,2 complete),eval0/360. Currentreference block3/index19/condition1/replicate6/
+seed64003106/plain_h8/epoch23. Boundarynative5848/30720; later ledger5851.
+All15final seals remain required before any test world. No test outcomes read.
+
+The4320new completed update receipts have finite loss/gradient; their135after-fit
+states exist. Combined with the prior4416checked receipts, all8736completed
+updates are covered. Latest after-fit:
+payload/states/reference-b3-c0-j6-planner_tail_mc-after-fit.pkl.gz,233863bytes,
+SHA256 bade36454915b946e44275559c6eef4bb918b271f573a606d99feec666178083.
+All13current ancestor/final model bindings byte-hash match, without model loading.
+Reuse588source/input/protocol/config/intent hashes checked00:38:46Z; current git
+diff since execution contains only nonlocked status docs and protocol hash still
+matches. Runtime,1804seed-inventory and38tests/compileall checks reused.
+
+Ledger global/phase counters and elapsed/owner caps remain within limits:
+elapsed3949.61/32400seconds,reference3893.62/10800,fitting50.95/3600,current world
+22.69/240. Progress1033303bytes and budget28509366bytes, fresh01:11Z mtimes.
+Recent20reference-cycle mean43.85seconds gives about21minutes for remaining29
+training worlds. Evaluation speed is unmeasured; no precise full-run ETA yet.
+The9hour total cap includingIO remains unchanged.
+
+Next: existing serial training, remaining seals, then360six-role frozen
+evaluations and saved-data readout/archive/manuscript handoff. Training progress
+does not establish performance gain. Same monitor staysACTIVE; no new approval,
+agent gate, retry, reward/scenario change or remote action. Only status docs
+updated locally; scientific source and historical evidence remain untouched.
+
+## Previous checkpoint: planner-tail block0 sealed; block1 training progressing
 
 2026-10-05T00:38:46Z read-only heartbeat. Entry0bb0356 clean on expected branch.
 Supervisor95697/PPID1 and child95709/95697 match claims/full launch-child commands;

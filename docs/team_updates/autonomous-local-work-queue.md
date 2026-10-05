@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail training complete; all15models sealed; evaluation34/360
+## Live checkpoint: policy-tail frozen evaluation82/360; training complete
+
+2026-10-05T16:40:05Z read-only heartbeat. Entryf47d176 clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 match saved claims/full commands;
+child99.7%CPU,200688KiB RSS,no duplicate related run.48new complete evaluation
+trajectories since16:09Z establish progress. No terminal/failure/overrun marker;
+stdout/stderr/outerlog0bytes. No model/optimizer/environment calls by monitor.
+
+Reference120/120,eachmethod120/120fits and3840/3840value updates remain complete;
+total11520/11520,actor0. Reuse all11520previously checked update receipts,
+360after-fit states,5ancestor bindings,15final seals and their pre-test barrier.
+No training or seal audit repeated. Frozen evaluation optimizer debits remain0.
+Evaluation82/360: plainH8/existing/adaptiveTD/policyTD each14,policyMC/H16 each13.
+Block0's72tests complete; block1 has10complete. Latest started boundary is
+b1/index1/c1/replicate0/seed65021100/policy_tail_mc,epoch0.
+
+Native12928/30720 at boundary,12933in later ledger;forwards27315/36190;
+native planner3965184/9953280;native filter1293300/3072000. Nested labels remain
+complete and unchanged:12300decisions/4723200predictions,5760prefix/46800pairedtail,
+720roots/1440clones,2916000branch filter transitions. No observed global/phase
+counter or time/owner violation. Elapsed16548.58/50400s;reference13291.51/23400s,
+fitting52.26/3600s,evaluation3199.53/18000s,currenttest3.07/180s.
+Progress2626053bytes,budget89507419bytes at snapshot. These are progress/timing
+records only; test cost/patient outcomes remain uninspected until full readout.
+
+Measured trajectory wall means from13-14complete samples/role are34.04-34.19s
+forH8 roles and64.71s forH16. Remaining278tests extrapolate3.04h,about3hours
+before analysis/archive. Rates span block0 and early block1 and may change;
+not a finish guarantee or a per-decision latency statistic.
+
+Only nonlocked status/readout docs differ from execution205225c. Reuse unchanged
+20tests/compileall and input/source admission; no new gate or old archive audit.
+Same ACTIVE monitor observes the existing single job. Next finish remaining
+278frozen evaluations,then authorized full raw outcome analysis,one archive,
+truthful manuscript handoff and terminal pause. No additional permission within
+this package; no interim tuning,restart,retry or expanded scope. Performance gain
+is still unresolved,not inferred from training completion or action changes.
+
+## Previous checkpoint: policy-tail training complete; all15models sealed; evaluation34/360
 
 2026-10-05T16:09:06Z read-only heartbeat. Entrye9630af clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 live with matching claims/full commands;

@@ -1,6 +1,37 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail frozen evaluation55/360; timing cap remains tight
+## Live checkpoint: planner-tail first evaluation block complete;101/360
+
+2026-10-05T02:38:27Z read-only heartbeat. Entryb0b3d52 clean on expected branch.
+Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands; no
+duplicate related job. New46completed evaluation boundaries since55/360 and
+block0's72/72complete establish running. Failure/overrun/terminal markers absent;
+stdout/stderr/detached log0bytes. No new scientific call or launch by monitor.
+
+Reference120/120; each method120/120fits and3840/3840value updates; total11520/
+11520,actor0,ancestors5/5,new seals15/15 remain complete. Eval101/360: block0=72,
+block1=29; each H8role17 and plain_h16=16. Currentblock1/index4/condition1/
+replicate1/seed64021101/plain_h16/epoch0 at last saved boundary. Native14144/
+30720, laterledger14151. Evaluation optimizer charges remain0. No partial test
+cost/patient outcomes read or used for tuning; no performance conclusion yet.
+
+All ledger count/phase/time/current-owner caps remain within limits. Elapsed
+9194.23/32400seconds,evaluation4034.25/14400,currentH16owner9.88/240. Reference
+5083.98/10800 and fitting70.96/3600 closed. Progress2276122bytes,budget52023393bytes
+with fresh02:38Z mtimes.85H8cycles average34.8481seconds;16H16cycles66.3893seconds.
+Weighted full-evaluation estimate14437.79seconds is about38seconds above phase
+cap; estimatedremaining10403.54seconds (about2h53m). This is a rate extrapolation,
+not an actual violation; timing risk remains and no budget extension, transfer
+or retry is authorized. Archive time remains separate.
+
+Reuse prior completed training-receipt/model-barrier/hash checks,588frozen locks,
+runtime/1804seed audit and38tests/compileall; no re-audit or model loading.
+Protocol hash unchanged; git diff since execution contains only status docs.
+Next: existing remaining frozen evaluations, complete raw comparison/archive and
+truthful manuscript handoff. MonitorACTIVE; routine stages need no new approval.
+Only nonlocked status docs updated locally; no new agent gate or external action.
+
+## Previous checkpoint: planner-tail frozen evaluation55/360; timing cap remains tight
 
 2026-10-05T02:08:19Z read-only heartbeat. Entry5f89ead clean on expected branch.
 Supervisor95697/PPID1 and child95709/95697 match claims/full launch-child commands;

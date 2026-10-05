@@ -3618,3 +3618,28 @@ scoped stream collision check and committed input/runtime/source/effective locks
 remain before execution; then no redundant routine launch question. No old rerun,
 automation or external change. Reward stays unchanged for this package, not
 permanently forbidden from evidence-justified future amendments.
+
+#### Approved planner-aligned six-role end-to-end comparison
+
+2026-10-05T00:01:52Z. After the complete numerical question and ready
+implementation handoff, Zhaowei replied exactly `批准了 以后可以直接执行训练`.
+Record approval of the single package in
+specs/2026-10-04-planner-aligned-value/approval-intent.json, binding the unchanged
+protocol/config and scientific implementation cbe0b7d. Do not request another
+routine launch approval. Future approved packages likewise proceed directly
+through routine training, evaluation and readout; this is not unbounded authority
+for unproposed scientific budgets, reward/scenario changes or retries.
+
+Reuse five saved graph weights.120shared reference worlds train three forks per
+block;15new models seal before360six-role frozen evaluations.11520value/0actor,
+30720native/31680native operations,10327680prediction steps,30000forwards,
+32400seconds includingIO/archive,8GiB and all existing phase/owner subcaps remain
+fixed. Reward, scenario, architecture, seeds, targets and metrics are unchanged.
+Reuse38necessary zero-update tests/full compileall and complete actual-entry fake
+integration; no extra scientific smoke world or new readiness campaign.
+
+Check current processes once, bind input/source/runtime and scoped seed inventory,
+commit the effective authorization and launch once. The first counted reference
+world is the real preflight. No restart of old attempts or automatic retry.
+Complete readout/archive and honest manuscript interpretation, then pause the same
+visible monitor. No Howard approval, holdout, StageE reopening or remote action.

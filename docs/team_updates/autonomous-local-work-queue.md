@@ -1,6 +1,26 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-aligned end-to-end implementation ready; approval pending
+## Live checkpoint: planner-aligned full package approved; binding execution locks
+
+2026-10-05T00:01:52Z. Entry cbe0b7d, clean expected branch. User replied exactly
+`批准了 以后可以直接执行训练` after the full numerical package/handoff.
+Approval intent and locked-plan amendment record one execution with unchanged
+reward/scenario/budgets. Read specs/2026-10-04-planner-aligned-value/
+{protocol.md,approval-intent.json,integration-readout.md} and current workflow.
+No related experiment in the current verified PID/command listing. No new run
+has started yet. Reuse38zero-update tests, compileall and actual-entry full fake
+acceptance; both finite agents completed/closed, no additional review gate.
+
+Next authorized actions: scoped stream conflict check, bind11input artifacts and
+source/runtime, commit effective authorization and immediately launch once.
+120reference+360evaluation trajectories,11520value/0actor,30720native steps,
+10327680prediction steps,30000forwards,9h includingIO,8GiB and per-owner caps.
+All15new final seals before tests. No further launch question. Restore the same
+visible monitor for this attempt after live process evidence; no duplicate job.
+Failure consumes this attempt, no automatic repair/retry. Local-only, StageE
+closed, holdout untouched; no performance claim from engineering acceptance.
+
+## Previous checkpoint: planner-aligned end-to-end implementation ready; approval pending
 
 2026-10-04T23:58:01Z. Entry cdaab6e. New protocol/config:
 specs/2026-10-04-planner-aligned-value/protocol.md and

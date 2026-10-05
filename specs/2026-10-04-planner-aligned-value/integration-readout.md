@@ -72,3 +72,15 @@ package was received at this checkpoint. Approval covers necessary integration
 and its single run after committed locks, without another launch question.
 The draft remains unauthorized; the existing gcn-rl automation stays paused and
 was not modified. Preparation may continue, but scientific calls may not start.
+
+## Approved Execution Handoff
+
+2026-10-05T00:01:52Z. Zhaowei has now replied exactly
+`批准了 以后可以直接执行训练` to the complete package/handoff. The preceding
+pending-approval paragraph is historical. approval-intent.json binds this answer
+to the unchanged protocol/config and implementation cbe0b7d. No scientific source
+changed, so reuse38tests/compileall and the integrated fake acceptance. Current
+read-only process listing confirms no related experiment; the new result root
+has not been created. Next: committed input/source/runtime/seed locks, then the
+single real attempt without another launch question. Original draft stays false;
+effective authorization is a separate committed artifact. No Howard approval.

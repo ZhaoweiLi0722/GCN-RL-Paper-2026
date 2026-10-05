@@ -1,6 +1,48 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail nearing test transition; reference113/120;10848updates
+## Live checkpoint: policy-tail training complete; all15models sealed; evaluation34/360
+
+2026-10-05T16:09:06Z read-only heartbeat. Entrye9630af clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 live with matching claims/full commands;
+child100.0%CPU,200560KiB RSS,no duplicate related run. New final training,seal
+and evaluation boundaries establish running. No terminal/failure/overrun markers;
+stdout/stderr/outerlog0bytes. Monitor made no model/optimizer/environment calls.
+
+Reference120/120 complete; adaptive_tail_td/policy_tail_td/policy_tail_mc each
+120/120fits and3840/3840updates;11520/11520total value,actor0.360after-fit states
+present;final672receipts finite and corresponding states present,prior10848check
+reused. Latest b4/c2/j7 policy_tail_mc after-fit236631bytes,SHA256
+404d654d445ed6f7fd7ea45e16a24e8f75ff1908cd51eee63c4a46ad74c816de.
+Final block's three new model byte hashes match768-update seals;prior12checks
+reused. Ancestors5/5,final15/15. all-sealed.json SHA256
+ba6b9634630a64caaf5cfdd414a68d4866061fcc589762260935156cb2423a30.
+All20barrier bindings match metadata/input locks,and the single all_models_sealed
+event precedes the first test start. Test phase optimizer debits0.
+
+Evaluation34/360 complete: plainH8/existing/adaptiveTD/policyTD each6,policyMC/H16
+each5. Current b0/index5/c2/replicate1/seed65020201/policy_tail_mc,epoch31.
+Native9888/30720 at boundary,9889later ledger;forward25807/36190;native planner
+2943744/9953280. Label work fully consumed at its planned counts:12300nested
+decisions/4723200predictions,5760prefix/46800pairedtail,720roots/1440clones,
+2916000branch filter transitions;native filter988900/3072000. No observed global/
+phase/counter/owner violation. Elapsed14689.74/50400s;reference13291.51/23400s,
+fitting52.26/3600s,evaluation1340.69/18000s,currenttest23.36/180s.
+Progress2092498bytes,budget82665380bytes. Only progress/timing/receipts inspected,
+not test costs or patient outcomes; training completion is not performance gain.
+
+Early trajectory wall times (5-6complete samples/role) average34.0-34.4s forH8
+roles and65.20s forH16. Remaining60-per-role schedule extrapolates3.57h of tests,
+approximately3.5-4h before analysis/archive. Early block0 rates may vary; this is
+not a finish guarantee. All five reference blocks took2634-2689s each.
+
+Only nonlocked status/readout docs differ from execution205225c. Reuse unchanged
+admission/input checks,20tests/compileall and previous seals; no old audit/archive,
+scientific edit or new gate. Same ACTIVE monitor; next observe the existing
+remaining326evaluations,then complete the authorized raw outcome analysis,
+archive/manuscript handoff and terminal pause. No reapproval within this package,
+interim tuning, extra forward, restart or retry. Full performance result pending.
+
+## Previous checkpoint: policy-tail nearing test transition; reference113/120;10848updates
 
 2026-10-05T15:38:12Z read-only heartbeat. Entrydbc13df clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 remain live with matching claims/full

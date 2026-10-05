@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail real training underway; first96updates and three states saved
+## Live checkpoint: policy-tail reference16/120;1536real updates; no errors
+
+2026-10-05T12:37:44Z read-only heartbeat. Entry5844654 clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 match claim/full --launch/--child
+commands, both live; no duplicate related run.15new completed reference worlds
+and45new fits since the prior checkpoint establish running, not the scheduler.
+
+Reference16/120; adaptive_tail_td/policy_tail_td/policy_tail_mc each16/120fits,
+512/3840value updates,1536/11520total,actor0.48after-fit states present; all
+completed32-update cohorts have a matching state.1440new receipts finite,
+reuse first96finite check. Latest state reference-b0-c0-j5-policy_tail_mc-after-
+fit.pkl.gz238450bytes/SHA2569bc92a77a5a3b3a3543425c6ef9955e6fd2c34ee12aa2018d077c5dee796363e.
+Ancestors1/5,final0/15,eval0/360. No test data/performance inspected.
+
+Currentreference b0/index16/c1/replicate5/seed65000105/plainH8,epoch0 at start.
+Boundarynative1024/30720,later ledger1027;forwards3628/36190; nested1968/12300
+decisions,755712/4723200prediction steps;native planner296448/9953280;
+prefix768/5760,pairedtail7008/46800;branch filter427200/2916000,
+native filter102700/3072000. No global/phase/counter/current-owner violations.
+Elapsed2007.33/50400s, reference1996.83/23400s,fitting5.22/3600s;
+currentworld1.75/600s. No terminal/failure/overrun;stdout/stderr/outerlog0bytes.
+Progress221994bytes,budget11270743bytes, fresh12:37Z modification times.
+
+Sixteen completed reference cycles average124.692s (last5:101.220s). Flat mean
+extrapolation for104remaining is3.60h, training overhead small so far. Later roots
+have shorter tails and early roots recur per block; estimate is provisional.
+Current-run evaluation latency is not measured, so no full-run finish promise.
+
+14current input/protocol/authority byte hashes unchanged. Git diff from execution
+contains only nonlocked status/readout docs; reuse593source/runtime/1928seed
+admission checks and20tests/compileall, no historical audit or new scientific call.
+Same gcn-rlACTIVE; next observe existing training/seal boundaries, then the already
+authorized360frozen evaluations/readout/archive. No parameter change or retry.
+Saved training progress is not evidence of native performance benefit.
+
+## Previous checkpoint: policy-tail real training underway; first96updates and three states saved
 
 2026-10-05T12:07:40Z. Same committed single experiment205225c, supervisor12591/
 PPID1,child12612/12591 live with matching full commands. First reference world

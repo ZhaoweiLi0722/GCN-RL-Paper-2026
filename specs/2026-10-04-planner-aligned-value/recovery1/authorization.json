@@ -1,0 +1,27 @@
+{
+  "attempts": 1,
+  "automatic_follow_on": false,
+  "automatic_resume": false,
+  "automatic_retry": false,
+  "format": "capacity-planner-tail-recovery1-authorization-v1",
+  "implementation_commit": "d8f748a16ac25496e96f0c7ef2a37633837f4100",
+  "packet_sha256": "a31517a9a37aa15301832245f5c21031662c92dc9d6f6531bf6dd9a7f54bf6f3",
+  "remote_export": false,
+  "scientific_execution_authorized": true,
+  "user_approval": {
+    "approved_at_utc": "2026-10-05T11:13:13Z",
+    "attempts": 1,
+    "automatic_retry": false,
+    "howard_approval_claimed": false,
+    "interpretation": "Explicit confirmation of this complete numerical package and preference for continuous routine execution. Do not request a redundant launch approval. No unbounded compute, outcome-driven sample expansion or implicit alteration of frozen scientific parameters.",
+    "original_packet_sha256": "a0cbcef8d523c69234c0b9568536ba7a0bd42bcd138e4d63111410beabafba74",
+    "prepared_implementation_commit": "50ce803a85a41adb605fcc069ca95d934bb076ff",
+    "proposal_sha256": "7f4cc87f9ade3270ba125b441631e2189c6f4b225fbb2fce64e40d876839be70",
+    "protocol_sha256": "e6a90530071971759efd520388fd6ab2664b619078b1572da0380f460fc78799",
+    "question_context": "One remaining-only completion of the original comparison: reuse all training and359 evaluations, finish54 native steps and960 original diagnostic forwards, zero optimizer updates,1800seconds includingIO/archive, unchanged reward/model/seeds; retain the interrupted768-step prediction reservation and charge its replacement; no automatic retry.",
+    "remote_export": false,
+    "scope": "capacity-planner-tail-recovery1",
+    "scope_approved": true,
+    "user_literal": "\u786e\u8ba4\u554a\uff0c\u4ee5\u540e\u8fd9\u79cd\u90fd\u4e0d\u7528\u95ee\uff0c\u76f4\u63a5\u5c31\u65e0\u9650\u5730\u63a8\u8fdb\uff0c\u56e0\u4e3a\u4e0d\u8981\u505c\uff0c\u56e0\u4e3a\u6211\u4eec\u8fd9\u4e2a\u65f6\u95f4\u975e\u5e38\u7684\u8d76\u3002"
+  }
+}

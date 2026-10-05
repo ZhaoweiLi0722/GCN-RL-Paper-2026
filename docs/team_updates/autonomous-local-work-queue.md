@@ -1,6 +1,33 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail evaluation past halfway;190/360
+## Live checkpoint: planner-tail three evaluation blocks complete;234/360
+
+2026-10-05T04:08:05Z read-only heartbeat. Entryb28adb9 clean, expected branch.
+Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands.
+New44complete evaluation boundaries since190/360 and block2completion establish
+running. No duplicate related job or failure/overrun/terminal marker; stdout,
+stderr and detached log0bytes. Monitor launched no new scientific work.
+
+Reference120/120; each method120/120fits and3840/3840value updates,total11520/
+11520,actor0,ancestors5/5,new seals15/15 unchanged. Eval234/360: blocks0/1/2 each72,
+block3=18; each of six roles39. Currentblock3/index3/condition0/replicate1/
+seed64023001/plain_h8/epoch0. Boundarynative22656/30720,laterledger22658.
+Evaluation optimizer charges0; partial cost/patient results not inspected.
+
+No counter/phase/time/current-owner violations. Global elapsed14572.23/32400s,
+evaluation9412.25/14400,currentH8owner2.13/120. Reference5083.98/10800 and fitting
+70.96/3600 unchanged. Progress3477769bytes,budget71173644bytes,fresh04:08Z mtimes.
+195H8cycles average34.9338s;39H16cycles66.6149s. Full-phase estimate14477.03s is
+77.03s above cap; remaining5064.78s (about1h24m), before archive. Timing risk
+persists but no actual breach; caps unchanged, no transfer/extension/retry.
+
+Reuse prior training/model/barrier/588lock/runtime/1804seed checks and38tests/
+compileall; protocol hash unchanged and source diff only status docs. Next is
+the existing remaining126evaluations, full raw comparison/archive and truthful
+manuscript handoff. MonitorACTIVE; routine stages authorized. No performance
+conclusion, historical re-audit, model loading, agent gate or external action.
+
+## Previous checkpoint: planner-tail evaluation past halfway;190/360
 
 2026-10-05T03:38:29Z read-only heartbeat. Entry0d97a05 clean, expected branch.
 Matching supervisor95697/PPID1 and child95709/95697/full commands plus45new

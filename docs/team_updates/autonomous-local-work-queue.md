@@ -1,6 +1,39 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail training complete; six-role evaluation running
+## Live checkpoint: planner-tail frozen evaluation55/360; timing cap remains tight
+
+2026-10-05T02:08:19Z read-only heartbeat. Entry5f89ead clean on expected branch.
+Supervisor95697/PPID1 and child95709/95697 match claims/full launch-child commands;
+no duplicate related experiment. New44complete evaluation boundaries since11/360
+verify running. No failure/overrun/terminal markers; stdout/stderr/detached log
+remain0bytes. No new scientific call or launch by the monitor.
+
+Reference120/120 and allthree methods120/120fit cohorts remain complete; each
+3840/3840value updates,total11520/11520,actor0. Ancestors5/5,new final seals15/15;
+reuse01:39Z byte-hash and all-seals-before-test verification. Eval55/360 complete:
+plain_h8=10,other five roles=9each. Currentblock0/index9/condition0/replicate3/
+seed64020003/existing_frozen/epoch39. Boundarynative11240/30720; ledger11246.
+Evaluation optimizer charges remain0. No partial performance outcomes inspected.
+
+Ledger counter/phase/time/owner checks show no cap violation. Elapsed7386.31/
+32400seconds,evaluation2226.33/14400,currentH8owner34.23/120. Reference5083.98/
+10800 and fitting70.96/3600 remain closed. Progress1864935bytes and budget
+45480003bytes have fresh02:08Z mtimes.46H8cycles average34.6924seconds;9H16cycles
+66.2442seconds. Role-weighted full-evaluation estimate14382.36seconds leaves
+only17.64seconds versus the14400cap; remaining12156.03seconds (about3h23m).
+This estimate covers onlyblock0 and is uncertain: timing risk remains, despite
+the estimate moving just under the cap. No guarantee of finishing within it,
+no budget change/transfer/retry; archive time is separate.
+
+Source diff since execution contains only status docs; protocol SHA unchanged.
+Reuse588lock checks/runtime/1804seed admission and all11520finite update receipts,
+20model bindings,38tests/compileall already checked; no historical re-audit.
+Next: existing frozen evaluations, then full saved-data cost/patient comparison,
+archive and truthful manuscript handoff. Same monitorACTIVE; no new approval
+needed for these stages. No new performance conclusion, external action or agent
+gate. Overall experiment remains in progress, not complete.
+
+## Previous checkpoint: planner-tail training complete; six-role evaluation running
 
 2026-10-05T01:39:04Z read-only heartbeat. Entry145bd0f clean on expected branch.
 Matching live supervisor95697/PPID1 and child95709/95697 plus completed training,

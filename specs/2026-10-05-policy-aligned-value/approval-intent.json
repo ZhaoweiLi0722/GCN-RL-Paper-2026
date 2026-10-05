@@ -1,0 +1,19 @@
+{
+  "format": "capacity-policy-tail-approval-intent-v1",
+  "scope": "capacity-policy-tail-v1",
+  "scope_approved": true,
+  "recorded_at_utc": "2026-10-05T12:02:20Z",
+  "user_literal": "启动下一轮",
+  "approval_context": "Direct reply after the complete new numerical question and ready implementation handoff: five blocks,120 shared reference plus360 six-role evaluation trajectories,11520 value and zero actor updates,30720 native steps,14729040 predictor steps,36190 forwards,14hours including IO/archive,8GiB,one attempt. Only frozen-parent MPC continuation labels change; reward/scenario/architecture remain unchanged. This is approval to launch that package and continue routine training/evaluation/readout without a redundant startup question.",
+  "proposal_sha256": "85638a50af77a4b299facd2fafba636896b8b0a8c66d65b5dc1f05c3d2f475b0",
+  "protocol_sha256": "bf805fc0861ee664462160b84c2c4b827a02c221283f64d8871547c19f40ad8b",
+  "scientific_implementation_commit": "88aa35569953cd650bdf578093a5eff30d283e73",
+  "attempts": 1,
+  "routine_training_evaluation_readout_authorized": true,
+  "automatic_retry": false,
+  "reward_changed": false,
+  "scenario_changed": false,
+  "architecture_changed": false,
+  "howard_approval_claimed": false,
+  "remote_actions_authorized": false
+}

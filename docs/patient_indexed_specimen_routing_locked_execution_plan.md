@@ -3718,3 +3718,19 @@ forward, environment or optimizer executed. On approval record exact intent and
 commit current source/runtime/input/seed locks before the one run, then continue
 all routine stages directly without another launch question. Until then keep the
 same visible monitor paused. No Howard approval, holdout, StageE or external action.
+
+#### Approved frozen-parent MPC continuation comparison
+
+2026-10-05T12:02:20Z. After the complete480-world/14h numerical proposal and
+implementation handoff, Zhaowei replied exactly `启动下一轮`. Record approval in
+specs/2026-10-05-policy-aligned-value/approval-intent.json, binding the unchanged
+protocol/config and scientific implementation88aa355. This is the single new
+package, not permission to reopen old attempts or change parameters.
+
+Reuse20passing zero-update tests and fullcompileall; scientific source unchanged.
+Confirmed no related research process. Commit authority, bind/commit current
+source/runtime/input/stream locks, then immediately launch once and continue
+routine collection,11520value updates,15seals,360frozen evaluations, raw readout
+and archive without another startup question. All original numerical phase/owner,
+50400second,8GiB and one-attempt caps remain. No reward/scenario/architecture,
+holdout, external action, Howard approval or automatic retry is authorized.

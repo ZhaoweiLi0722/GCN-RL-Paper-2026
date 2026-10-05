@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 130,
-  "updated_at_utc": "2026-10-05T11:55:03Z",
+  "revision": 131,
+  "updated_at_utc": "2026-10-05T12:02:20Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "9fa7fb6742db1ea55bd90a6459a2ee73266589e4",
@@ -10,8 +10,8 @@
   "execution_config": null,
   "execution_authorization": null,
   "scientific_execution_authorized": false,
-  "authorization_state": "Next fixed-parent continuation implementation complete. One NEW 480-world/14h numerical package asked; exact reply pending. No scientific execution or effective locks. After approval, bind and commit locks then execute all routine stages without another startup question.",
-  "status": "policy_tail_implementation_complete_new_scope_pending",
+  "authorization_state": "User replied 启动下一轮 after complete numerical package. Exact intent recorded; authority commit and current execution locks precede one direct launch. No redundant startup question.",
+  "status": "policy_tail_package_approved_freezing_then_direct_launch",
   "policy_tail_preparation": {
     "protocol": "specs/2026-10-05-policy-aligned-value/protocol.md",
     "config": "experiments/configs/capacity_policy_tail_20261005.json",
@@ -20,7 +20,10 @@
     "preparation_user_literal": "进行下一步",
     "scientific_execution_authorized": false,
     "numerical_package_asked": true,
-    "numerical_package_approved": false,
+    "numerical_package_approved": true,
+    "approval_user_literal": "启动下一轮",
+    "approval_intent": "specs/2026-10-05-policy-aligned-value/approval-intent.json",
+    "scientific_implementation_commit": "88aa35569953cd650bdf578093a5eff30d283e73",
     "run_started": false,
     "run_root": "results/capacity_policy_tail_20261005",
     "tests_passed": 20,
@@ -50,7 +53,7 @@
     "automatic_retry": false,
     "agents": "Peirce learner deliverable completed and closed; Boole one read-only efficiency note completed and closed. No extra gates.",
     "automation_status": "PAUSED",
-    "next_action": "On exact new numerical approval record authority/change control, commit source/runtime/input/seed locks, then directly run one full training/evaluation/readout package. No separate launch question or preliminary diagnostics."
+    "next_action": "Commit approved intent/change control, bind and commit source/runtime/input/seed locks, directly launch once and confirm real training evidence, then monitor through complete evaluation/readout. No separate startup approval."
   },
   "planner_tail_recovery1": {
     "protocol": "specs/2026-10-04-planner-aligned-value/recovery1/protocol.md",

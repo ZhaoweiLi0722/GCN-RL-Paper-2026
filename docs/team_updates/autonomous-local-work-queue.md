@@ -1,6 +1,17 @@
 # Autonomous local research queue
 
-## Live checkpoint: fixed-parent policy-tail comparison implemented; new scope decision pending
+## Live checkpoint: policy-tail package approved; freezing and direct single launch
+
+2026-10-05T12:02:20Z. Entry88aa355 clean, expected branch; no related research
+process. User replied exactly `启动下一轮` after the complete480-world/14h scope
+question and handoff. Accurate context/protocol/config hashes now recorded in
+specs/2026-10-05-policy-aligned-value/approval-intent.json; change control appended.
+No source/parameter changes; reuse20passing tests/fullcompileall, both finite
+agents complete. Next directly: commit authority, freeze/commit current locks,
+launch once, confirm actual process and first real update/checkpoint, activate
+the same monitor. No repeat startup approval or extra preliminary experiment.
+
+## Previous checkpoint: fixed-parent policy-tail comparison implemented; new scope decision pending
 
 2026-10-05T11:55:03Z. Entry9fa7fb6 on expected branch; no related research process.
 Delivered additive public-model paired continuation collector, six-tail TD/MC

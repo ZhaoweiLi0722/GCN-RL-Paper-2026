@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail third block sealed; reference80/120;7680updates
+## Live checkpoint: policy-tail final block training; reference98/120;9408updates
+
+2026-10-05T15:07:32Z read-only heartbeat. Entry7effb31 clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 match claims/full commands and remain
+live;child98.7%CPU,237328KiB RSS,no duplicate related run.18new completed worlds
+and54new fits since14:37Z establish progress. No terminal/failure/overrun markers;
+stdout/stderr/outerlog0bytes. Monitor made no model/optimizer/environment calls.
+
+Reference98/120; adaptive_tail_td/policy_tail_td/policy_tail_mc each98/120fits,
+3136/3840updates;9408/11520total value,actor0.294after-fit states present;
+1728new finite receipts and all new completed-cohort states checked,prior7680
+checks reused. Latest reference-b4-c1-j0-policy_tail_mc-after-fit.pkl.gz299242
+bytes,SHA256192f1bd68a184c696c74313d8ae594cbe9a51e04dfac1ff21c2505f786271dfc.
+Fourth block's three final models each768new updates,bytes match seal hashes;
+prior nine seal checks reused. Ancestors5/5,final12/15,eval0/360. All-sealed
+barrier absent as expected; no test/performance data inspected or benefit claim.
+
+Current reference b4/index2/c2/replicate0/seed65004200/plainH8,epoch0 boundary.
+Native6272/30720 at boundary,6274later ledger;forward20292/36190; nested10185/
+12300decisions,3911040/4723200prediction steps;native planner1807488/9953280;
+prefix4712/5760,pairedtail38552/46800;branch filter2396800/2916000,native filter
+627400/3072000. No observed global/phase/counter/current-owner violation.
+Elapsed10995.84/50400s,reference10950.37/23400s,fitting40.18/3600s,currentworld
+12.33/600s. Progress1391671bytes,budget63815419bytes. Live PID plus new recorded
+boundaries, not the schedule, supports the running status.
+
+Four full reference blocks took2654.05/2688.22/2634.01/2652.64s;98cycles average
+111.612s.22remaining extrapolate0.68h,approximately40minutes training only,
+plus small observed fitting overhead. Current-run evaluation latency unmeasured;
+no full finish ETA. Next is the existing15final-seal barrier then360frozen tests.
+Protocol/authority/readouts unchanged; only nonlocked status/readout docs differ
+from execution205225c. Reuse admission/input checks,20tests/compileall and prior
+seal checks; no old audit/archive, extra gate or scientific edit. Same ACTIVE
+monitor and approved serial job continue without a new startup approval or retry.
+
+## Previous checkpoint: policy-tail third block sealed; reference80/120;7680updates
 
 2026-10-05T14:37:51Z read-only heartbeat. Entrybce93dd clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 match claims/full commands and remain

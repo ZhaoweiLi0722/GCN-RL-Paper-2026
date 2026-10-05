@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail frozen evaluation305/360; final block in progress
+## Live checkpoint: policy-tail complete; primary performance screen failed; PAUSED
+
+2026-10-05 terminal handoff. One approved480-trajectory attempt completed without
+recovery:120reference,360frozen evaluation,11520value updates/0actor,15final models
+and5ancestor bindings sealed before tests. Supervisor/child12591/12612 exited0;
+both absent from full-command process check. No failure markers; all logs0bytes.
+Elapsed27598.989/50400seconds. Actual30720native/31680operations,36190forwards,
+14729040prediction steps and5988000filter transitions equal frozen counters.
+Nested12300decisions/4723200steps included; test optimizer0. No monitor science.
+
+Independent saved-data reconciliation:480raw trajectories/30720rows,15contrasts x
+3conditions x5blocks,900paired-world arithmetic checks,960raw/summary hashes;
+cost/patient/component/action/applied-labor/latency records agree. Existing archive
+2865members and current payload hashes verified; no new archive. Full readout:
+specs/2026-10-05-policy-aligned-value/terminal-readout.md and terminal-saved-data.json.
+
+Answer: the fixed-parent label amendment did not establish incremental benefit.
+Persistent policyTD savings versus H8/existing/adaptiveTD are+0.1206%/-0.0083%/
++0.0283%; all cost intervals cross0 and only3/2/3of5block means improve. Existing
+frozen comparison also has+1.45lost patients/world,14/20worlds with extra losses.
+Fast-fluctuation/H8 is favorable:4.3494%savings,1.814623M[0.564575,3.292071],
+29.85fewer losses; still3/20cost-harm worlds. No condition-specific cost advantage
+over existing/adaptive/MC/H16 is established. This is a bounded negative primary
+result with a positive secondary contrast,not absence of all RL value.
+
+Main manuscript abstract/results/discussion updated honestly; PDF compilation
+unverified because no local TeX compiler. Reuse20zero-update tests/compileall and
+unchanged science locks. Ampere completed one independent result interpretation
+and closed; no new gate or historical audit. Same gcn-rl PAUSED, retained visibly.
+
+No remaining execution blocker. One next decision: whether to end public-model
+tail refinements and separately scope native-return-grounded value learning.
+No new experiment/code/budget approved here; no automatic epochs,retry,extra
+diagnostics or reward tuning. Reward stays unchanged; a later objective revision
+requires its own evidence and prospective scope. E1 and calibration remain missing.
+
+## Previous checkpoint: policy-tail frozen evaluation305/360; final block in progress
 
 2026-10-05T19:06:53Z read-only heartbeat. Entryfd656fe clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 match claims/full commands;

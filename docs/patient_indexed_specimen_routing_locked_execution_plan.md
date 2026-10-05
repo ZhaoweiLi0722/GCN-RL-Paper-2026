@@ -3734,3 +3734,29 @@ routine collection,11520value updates,15seals,360frozen evaluations, raw readout
 and archive without another startup question. All original numerical phase/owner,
 50400second,8GiB and one-attempt caps remain. No reward/scenario/architecture,
 holdout, external action, Howard approval or automatic retry is authorized.
+
+#### Fixed-parent policy-tail single attempt completed; primary criterion failed
+
+2026-10-05 UTC. Execution205225c completed all120reference and360frozen evaluation
+trajectories,11520value/0actor updates,15final+5ancestor seals before test, and the
+single verified archive. No recovery or retry; both execution processes exited0.
+Terminal elapsed27598.989s is within50400s. Independent raw arithmetic and existing
+archive verification are recorded in specs/2026-10-05-policy-aligned-value/
+terminal-readout.md and terminal-saved-data.json. No scientific source changed.
+
+Trigger evidence: persistent policyTD cost savings versus H8/existing/adaptiveTD
+are+0.1206%/-0.0083%/+0.0283%,with all intervals crossing0 and only3/2/3positive
+block means. Existing-frozen mean extra losses+1.45 fail the patient criterion.
+Fast-fluctuation/H8 improves4.3494% with fewer losses, but does not rescue the
+failed primary conjunction or isolate the continuation amendment. No TD-over-MC,
+GCN-only, deployment or clinical-safety claim follows.
+
+Old action: execute the single approved package. New action: close this consumed
+package, preserve all outcomes, update manuscript, and PAUSE the same monitor.
+One next decision is whether to stop public-model tail refinements and separately
+scope native-return-grounded value learning. That is not a new authorization.
+Reward/scenario/architecture/support/seeds/sample/metrics remain unchanged;
+no epochs,scope expansion,retry or automatic reward search. A later reward change
+needs an accounting/terminal-liability defect or explicit objective amendment,
+not a negative result alone. StageE stays closed, E1 remains missing, and no
+Howard approval or remote/external action is implied.

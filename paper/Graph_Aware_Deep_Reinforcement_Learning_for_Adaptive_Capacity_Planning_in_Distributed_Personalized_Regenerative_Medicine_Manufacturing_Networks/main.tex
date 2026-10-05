@@ -78,7 +78,9 @@ of a GCN terminal-value model reduced mean paired cost by 13.75\% relative to
 its frozen initialization under persistent capacity change. Its advantage over
 plain MPC was smaller (2.46\%) and its descriptive interval crossed zero.
 This supports continuation-training value in that design, not deployment-time
-adaptation or robust dominance over the planner. The graph--flat
+adaptation or robust dominance over the planner. Subsequent matched-control
+development comparisons did not establish a reliable additional benefit from
+replacing adaptive-rule forecast tails with frozen-parent MPC tails. The graph--flat
 contrast evaluates complete controller implementations; it does not isolate
 message passing from their differing feature transforms, action heads, and gates.
 \end{abstract}
@@ -1909,6 +1911,95 @@ prediction model, not native counterfactual patient outcomes or held-out
 generalization. Their improvement does not establish that the labels match
 the long-term costs of the deployed receding-horizon policy.
 
+\subsection{Fixed-parent MPC continuation with matched-tail controls}
+\label{sec:policy-tail-development}
+% Evidence: specs/2026-10-05-policy-aligned-value/terminal-readout.md;
+% results/capacity_policy_tail_20261005/payload/comparison.json.
+
+We then tested whether replacing adaptive-rule continuation labels with
+frozen-parent MPC continuation labels improves native simulated performance.
+Five historical GCN models supplied identical initial weights to matched
+adaptive-tail TD, fixed-parent policy-tail TD, and same-policy-tail direct-return
+regression (MC policy evaluation). Optimizers and new-update counters were reset.
+The methods used 120 shared H8-MPC reference worlds and 3,840 updates each.
+At two preset roots per world, one preset candidate and three response quantiles
+yielded 720 paired forecast endpoints. Each endpoint continued under both the
+adaptive rule and the unchanged parent MPC, producing 1,440 model-based tails.
+The parent replanned using hypothetical public receipts; it was not the changing
+student. These targets are therefore neither exact evaluation of the updated
+policy nor native patient counterfactual costs. Sparse collection differs from
+the preceding study, so the within-study adaptive-TD arm is the relevant label
+comparison. Rewards, physical scenarios, architecture, and candidate support
+remained unchanged.
+
+All 15 new models and five ancestor bindings were sealed before 360 frozen
+evaluations on 60 new paired worlds. The single attempt completed all 480 native
+trajectories and 11,520 value updates, with no actor or evaluation updates and no
+recovery. Independent reconstruction reconciled all 30,720 raw records and the
+existing archive. The prespecified primary screen required policy-tail TD to
+improve persistent-change cost in all five blocks, with a descriptive interval
+above zero, against H8-MPC, the existing frozen GCN, and matched adaptive-tail TD;
+it also required no condition-mean increase in patient losses.
+
+\begin{table}[H]
+\centering
+\caption{Fixed-parent policy-tail TD under persistent capacity change. Savings
+are comparator minus TD cost in millions of synthetic objective units; intervals
+are descriptive 95\% two-level bootstrap intervals across five blocks and four
+paired worlds per block. Percentages are mean paired-world savings. Extra losses
+are TD minus comparator, in simulated patients per world.}
+\label{tab:policy-tail-persistent}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Comparator & Savings M [95\%] & Savings (\%) & Extra losses \\
+\midrule
+Plain H8-MPC & $0.044\ [-0.484,0.540]$ & $0.12$ & $-3.80$ \\
+Existing frozen GCN & $-0.010\ [-0.657,0.601]$ & $-0.01$ & $1.45$ \\
+Matched adaptive-tail TD & $0.007\ [-0.482,0.338]$ & $0.03$ & $-0.10$ \\
+Same-tail MC & $-0.110\ [-0.711,0.411]$ & $-0.21$ & $0.20$ \\
+Plain H16-MPC & $-0.189\ [-0.674,0.311]$ & $-0.44$ & $0.05$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The primary screen failed. Only three, two, and three of five persistent-change
+block means favored policy-tail TD against H8, the existing frozen model, and
+adaptive-tail TD, respectively, and all three cost intervals included zero
+(Table~\ref{tab:policy-tail-persistent}). Against the existing frozen model,
+mean losses increased by 1.45 patients per world, with extra losses in 14 of 20
+worlds and four of five blocks. This violates the predefined sample-mean patient
+criterion, although the descriptive loss interval, $[-0.95,3.70]$, does not
+establish population-level worsening. No condition established cost superiority
+over the existing model, matched adaptive-tail TD, same-tail MC, or H16-MPC.
+
+The favorable condition-specific contrast was fast fluctuation against H8-MPC:
+mean absolute savings were 1.815 million units (descriptive 95\% interval,
+0.565--3.292 million), mean paired savings were 4.35\%, and losses decreased by
+29.85 patients per world. All five block cost means favored TD, but three of 20
+worlds cost more and one had extra patient loss. Under no change, TD saved
+0.424 million units against H8 (interval $[-0.583,1.499]$ million), with 15.55
+fewer losses. These results do not reverse the failed persistent-change screen
+or identify the label amendment as their cause.
+
+Under persistent change, TD/H8 actions differed at 724 of 960 control boundaries
+and TD used 27.99 additional applied flexible hours per world. Lower patient-loss
+and expiry costs were partly offset by higher reagent-purchase, resource-shortage,
+and flexible-labor costs. Evaluation median decision times were 0.689 seconds
+for policy-tail TD, 0.691 for H8, and 1.379 for H16. H16 used twice the native
+prediction queries. The complete run took 7.666 hours and charged 14,729,040
+prediction steps, including 4,723,200 nested-planning steps for label collection,
+as well as 36,190 neural forwards. This training cost is additional to decision
+latency; TD and MC share data and update counts, not total forward computation.
+
+On the 720 saved training-tail pairs, frozen-parent MPC had lower modeled cost
+than the adaptive rule in 547 pairs, higher cost in 50, and equal cost in 123.
+The mean modeled saving was 2.941 million units. That diagnostic did not translate
+into a reliable incremental native performance gain and does not support a
+16-candidate ranking claim. Historical-model reuse, block-zero mixed-predictor
+provenance, uncalibrated synthetic support labor, and descriptive multi-comparison
+inference remain limitations. The findings do not establish unique TD or GCN
+benefit, deployment-time adaptation, or clinical safety.
+
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
 This study develops a patient-condition and geography-aware simulation of a
@@ -2086,6 +2177,15 @@ original execution timeout and remaining-work recovery must remain distinct
 from the scientific result. Completing the H16 comparison does not change the
 failed primary criterion. Similar TD and MC results do not identify a
 unique advantage of temporal-difference targets.
+The fixed-parent follow-up (Section~\ref{sec:policy-tail-development}) also failed
+its primary criterion. Its fast-fluctuation advantage over plain H8-MPC did not
+establish an increment over the existing frozen model or the matched adaptive-tail
+control. Switching the public predictor's continuation to a fixed parent
+was therefore insufficient to demonstrate the intended native performance gain
+at the tested data and compute budget. This is not evidence that the reward
+weights are wrong or that all RL methods lack value; it closes this particular
+label amendment without supporting further training or reward tuning on these
+test worlds.
 
 Longer-term models should integrate production scheduling,
 product preparation and distribution, and treatment operations.

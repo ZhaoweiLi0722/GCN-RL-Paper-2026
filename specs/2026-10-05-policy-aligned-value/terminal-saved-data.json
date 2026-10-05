@@ -1,0 +1,4255 @@
+{
+  "schema": "policy-tail-terminal-saved-readout-v1",
+  "at_utc": "2026-10-05T19:47:12Z",
+  "entry_head": "2d90a3156d6230234a7d887623f990d2b14517c5",
+  "execution_commit": "205225c7fd111142edc45b9ed2ab120bb3e8ae96",
+  "packet_sha256": "583e63d8dc57fb01aa6a8c70f8d7f616dacd0123f1ff1d18480a0d724a396505",
+  "status": "completed_primary_screen_failed",
+  "terminal_elapsed_seconds": 27598.98901999998,
+  "processes_running": false,
+  "process_check": "ps -axo PID/PPID/state/full command: supervisor12591 and child12612 absent; no related runner",
+  "verification": {
+    "archive_bytes": 445804056,
+    "archive_members_checked": 2865,
+    "archive_sha256": "c710a6a6c777835ed39ea46231603dbc90d40c2d6eeb6d8e21256f3d20a19199",
+    "blocks": 5,
+    "budget_debits_equal_frozen_limits": true,
+    "comparison_sha256": "62136c0a0feac98830a8d2467a79b3452e8f432fba66ee983098a0fccb87aae2",
+    "conditions": 3,
+    "contrasts": 15,
+    "cost_patient_component_action_labor_latency_reconciliation": true,
+    "evaluation_optimizer_updates": 0,
+    "failure_markers": [],
+    "ledger_sha256": "d112a702c03bbcf331879d36a8709c93e82ae80aa966e8de5513fa513899b892",
+    "model_deserialization": false,
+    "new_archive_created": false,
+    "owner_times_checked": 855,
+    "pair_condition_world_checks": 900,
+    "payload_bytes": 500371184,
+    "raw_rows": 30720,
+    "raw_summary_hashes_checked": 960,
+    "raw_trajectories": 480,
+    "scientific_calls": 0,
+    "terminal_sha256": "9d592e4be2508654c8911d7d3e317e5e5a099473735690d654e2633746fe5622"
+  },
+  "budget": {
+    "counts": {
+      "branch_candidate_rollouts": 590400,
+      "branch_filter_transitions": 2916000,
+      "branch_planner_decisions": 12300,
+      "branch_planner_model_epochs": 4723200,
+      "construction_triggered_resets": 480,
+      "control_steps": 23040,
+      "estimator_hypothesis_transitions": 3072000,
+      "estimator_receipt_updates": 30720,
+      "final_seals": 15,
+      "forecast_root_constructions": 720,
+      "forecast_tail_clones": 1440,
+      "native_constructions": 480,
+      "native_steps": 30720,
+      "neural_forward_module_calls": 36190,
+      "optimizer_example_presentations": 737280,
+      "planner_candidate_rollouts": 1105920,
+      "planner_total_decisions": 23040,
+      "planner_total_model_epochs": 9953280,
+      "prefix_model_epochs": 5760,
+      "tail_steps": 7680,
+      "total_native_operations": 31680,
+      "total_optimizer_steps": 11520,
+      "training_tail_model_epochs": 46800,
+      "trajectories": 480,
+      "value_optimizer_steps": 11520
+    },
+    "elapsed": 27598.58306299988,
+    "events": 392443,
+    "failed": false,
+    "ledger_sha256": "cc2320df5377d142c271fe418b27f28b012c4dc1fa16d3fdb5e4aed372ca7572",
+    "pending_chunks": {},
+    "phases": {
+      "analysis_archive": {
+        "branch_candidate_rollouts": 0,
+        "branch_filter_transitions": 0,
+        "branch_planner_decisions": 0,
+        "branch_planner_model_epochs": 0,
+        "construction_triggered_resets": 0,
+        "control_steps": 0,
+        "estimator_hypothesis_transitions": 0,
+        "estimator_receipt_updates": 0,
+        "final_seals": 0,
+        "forecast_root_constructions": 0,
+        "forecast_tail_clones": 0,
+        "native_constructions": 0,
+        "native_steps": 0,
+        "neural_forward_module_calls": 0,
+        "optimizer_example_presentations": 0,
+        "planner_candidate_rollouts": 0,
+        "planner_total_decisions": 0,
+        "planner_total_model_epochs": 0,
+        "prefix_model_epochs": 0,
+        "tail_steps": 0,
+        "total_native_operations": 0,
+        "total_optimizer_steps": 0,
+        "training_tail_model_epochs": 0,
+        "trajectories": 0,
+        "value_optimizer_steps": 0
+      },
+      "frozen_evaluation": {
+        "branch_candidate_rollouts": 0,
+        "branch_filter_transitions": 0,
+        "branch_planner_decisions": 0,
+        "branch_planner_model_epochs": 0,
+        "construction_triggered_resets": 360,
+        "control_steps": 17280,
+        "estimator_hypothesis_transitions": 2304000,
+        "estimator_receipt_updates": 23040,
+        "final_seals": 0,
+        "forecast_root_constructions": 0,
+        "forecast_tail_clones": 0,
+        "native_constructions": 360,
+        "native_steps": 23040,
+        "neural_forward_module_calls": 11520,
+        "optimizer_example_presentations": 0,
+        "planner_candidate_rollouts": 829440,
+        "planner_total_decisions": 17280,
+        "planner_total_model_epochs": 7741440,
+        "prefix_model_epochs": 0,
+        "tail_steps": 5760,
+        "total_native_operations": 23760,
+        "total_optimizer_steps": 0,
+        "training_tail_model_epochs": 0,
+        "trajectories": 360,
+        "value_optimizer_steps": 0
+      },
+      "reference_and_tails": {
+        "branch_candidate_rollouts": 590400,
+        "branch_filter_transitions": 2916000,
+        "branch_planner_decisions": 12300,
+        "branch_planner_model_epochs": 4723200,
+        "construction_triggered_resets": 120,
+        "control_steps": 5760,
+        "estimator_hypothesis_transitions": 768000,
+        "estimator_receipt_updates": 7680,
+        "final_seals": 0,
+        "forecast_root_constructions": 720,
+        "forecast_tail_clones": 1440,
+        "native_constructions": 120,
+        "native_steps": 7680,
+        "neural_forward_module_calls": 12300,
+        "optimizer_example_presentations": 0,
+        "planner_candidate_rollouts": 276480,
+        "planner_total_decisions": 5760,
+        "planner_total_model_epochs": 2211840,
+        "prefix_model_epochs": 5760,
+        "tail_steps": 1920,
+        "total_native_operations": 7920,
+        "total_optimizer_steps": 0,
+        "training_tail_model_epochs": 46800,
+        "trajectories": 120,
+        "value_optimizer_steps": 0
+      },
+      "value_fitting": {
+        "branch_candidate_rollouts": 0,
+        "branch_filter_transitions": 0,
+        "branch_planner_decisions": 0,
+        "branch_planner_model_epochs": 0,
+        "construction_triggered_resets": 0,
+        "control_steps": 0,
+        "estimator_hypothesis_transitions": 0,
+        "estimator_receipt_updates": 0,
+        "final_seals": 15,
+        "forecast_root_constructions": 0,
+        "forecast_tail_clones": 0,
+        "native_constructions": 0,
+        "native_steps": 0,
+        "neural_forward_module_calls": 12370,
+        "optimizer_example_presentations": 737280,
+        "planner_candidate_rollouts": 0,
+        "planner_total_decisions": 0,
+        "planner_total_model_epochs": 0,
+        "prefix_model_epochs": 0,
+        "tail_steps": 0,
+        "total_native_operations": 0,
+        "total_optimizer_steps": 11520,
+        "training_tail_model_epochs": 0,
+        "trajectories": 0,
+        "value_optimizer_steps": 11520
+      }
+    },
+    "times": {
+      "admission_lock_binding": 5.287624999880791,
+      "analysis_archive": 78.5342309998814,
+      "failure_flush_shutdown_reserve": 0,
+      "frozen_evaluation": 14170.993116000202,
+      "global": 0,
+      "reference_and_tails": 13291.512767998967,
+      "value_fitting": 52.25532300095074
+    },
+    "verified_completed_chunk_calls": {
+      "branch_filter_transitions": 2916000,
+      "branch_planner_model_epochs": 4723200,
+      "estimator_hypothesis_transitions": 3072000,
+      "planner_total_model_epochs": 9953280
+    }
+  },
+  "archive": {
+    "archive": "payload.tar.gz",
+    "archive_sha256": "c710a6a6c777835ed39ea46231603dbc90d40c2d6eeb6d8e21256f3d20a19199",
+    "file_count": 2865,
+    "schema_version": 1,
+    "size_bytes": 445804056,
+    "verified_by_reading_every_archive_member": true
+  },
+  "primary_criteria": {
+    "adaptive_tail_td": {
+      "all_persistent_blocks_cost_positive": false,
+      "no_mean_extra_losses_in_any_condition": true,
+      "persistent_descriptive_cost_interval_above_zero": false
+    },
+    "existing_frozen": {
+      "all_persistent_blocks_cost_positive": false,
+      "no_mean_extra_losses_in_any_condition": false,
+      "persistent_descriptive_cost_interval_above_zero": false
+    },
+    "plain_h8": {
+      "all_persistent_blocks_cost_positive": false,
+      "no_mean_extra_losses_in_any_condition": true,
+      "persistent_descriptive_cost_interval_above_zero": false
+    }
+  },
+  "strong_baseline_development_signal": false,
+  "contrasts": {
+    "adaptive_tail_td_vs_plain_h16": {
+      "0": {
+        "means": {
+          "action_l1_hours": 159.4649955209483,
+          "applied_action_l1_hours": 159.46499552094832,
+          "changed_action_boundaries": 31.85,
+          "component_savings": {
+            "bioreactor_holding_cost": -24.479999999999883,
+            "bioreactor_shortage_cost": -314209.99999999977,
+            "capacity_transfer_cost": -200,
+            "expiry_cost": 146000,
+            "patient_loss_cost": 232500,
+            "reagent_holding_cost": 2445.924369997572,
+            "reagent_purchase_cost": -324739.81068350625,
+            "reagent_shortage_cost": -99480.16185202172,
+            "reagent_transfer_cost": -359.99986290931383,
+            "specimen_transfer_cost": 1080,
+            "support_flexible_labor_cost": -4571.914766923207,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 59.42227129324566,
+            "urgency_cost": 48500
+          },
+          "extra_applied_hours_including_tail": 39.838196364713056,
+          "extra_committed_control_hours": 39.838196364713056,
+          "extra_delivered": 4.65,
+          "extra_lost": -4.65,
+          "extra_requested_control_hours": 39.83819636471305,
+          "percent_savings": -0.8412623082025077,
+          "requested_action_l1_hours": 159.4649955209483,
+          "savings": -313001.02052407095
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            0.7,
+            9.801249999999994
+          ],
+          "extra_lost": [
+            -9.801250000000001,
+            -0.7
+          ],
+          "percent_savings": [
+            -3.3307365962004587,
+            1.2819066651915505
+          ],
+          "savings": [
+            -1241221.7155053217,
+            477487.96485805936
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 12,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 5
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -8.75,
+            "percent_savings": -0.4312994237335118,
+            "savings": -41160.49084862415
+          },
+          {
+            "block": 1,
+            "extra_lost": -0.25,
+            "percent_savings": -4.601577974137121,
+            "savings": -1684455.1183675425
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.5,
+            "percent_savings": 0.6059054752351939,
+            "savings": 159290.81959933788
+          },
+          {
+            "block": 3,
+            "extra_lost": -7.25,
+            "percent_savings": -0.8337845756766764,
+            "savings": -498006.047637566
+          },
+          {
+            "block": 4,
+            "extra_lost": -6.5,
+            "percent_savings": 1.0544449572995789,
+            "savings": 499325.7346340399
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 133.0602869469553,
+          "applied_action_l1_hours": 133.0602869469553,
+          "changed_action_boundaries": 29.95,
+          "component_savings": {
+            "bioreactor_holding_cost": -50.4,
+            "bioreactor_shortage_cost": -12568.399999999907,
+            "capacity_transfer_cost": 200,
+            "expiry_cost": -12000,
+            "patient_loss_cost": -7500,
+            "reagent_holding_cost": 680.9997786112551,
+            "reagent_purchase_cost": -86456.69930871362,
+            "reagent_shortage_cost": -82179.27383988534,
+            "reagent_transfer_cost": -239.99993145465865,
+            "specimen_transfer_cost": -1110,
+            "support_flexible_labor_cost": -1457.709277184687,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -150.13831829088514,
+            "urgency_cost": 7000
+          },
+          "extra_applied_hours_including_tail": 12.552175573712365,
+          "extra_committed_control_hours": 12.552175573712365,
+          "extra_delivered": -0.15,
+          "extra_lost": 0.15,
+          "extra_requested_control_hours": 12.552175573712361,
+          "percent_savings": -0.47993386225808166,
+          "requested_action_l1_hours": 133.0602869469553,
+          "savings": -195831.62089691721
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -3.35,
+            3.05
+          ],
+          "extra_lost": [
+            -3.05,
+            3.35
+          ],
+          "percent_savings": [
+            -1.9103223624974355,
+            0.9267340109607194
+          ],
+          "savings": [
+            -717923.5986161542,
+            277461.38988347014
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 13,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 10
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -2.5,
+            "percent_savings": 0.544855961288899,
+            "savings": 83654.6377298357
+          },
+          {
+            "block": 1,
+            "extra_lost": 5.5,
+            "percent_savings": -1.6498985338315015,
+            "savings": -744204.7605732661
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.25,
+            "percent_savings": -1.130384197066378,
+            "savings": -308809.74439689703
+          },
+          {
+            "block": 3,
+            "extra_lost": 0.75,
+            "percent_savings": -1.1787613187377335,
+            "savings": -346096.2729309229
+          },
+          {
+            "block": 4,
+            "extra_lost": -2.75,
+            "percent_savings": 1.014518777056305,
+            "savings": 336298.0356866643
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 196.72076639106504,
+          "applied_action_l1_hours": 196.72076639106504,
+          "changed_action_boundaries": 37.45,
+          "component_savings": {
+            "bioreactor_holding_cost": -34.56000000000004,
+            "bioreactor_shortage_cost": 2513.679999999935,
+            "capacity_transfer_cost": -100,
+            "expiry_cost": 278000,
+            "patient_loss_cost": 400000,
+            "reagent_holding_cost": 1645.7496181085676,
+            "reagent_purchase_cost": -345826.8125688316,
+            "reagent_shortage_cost": -116781.07048843827,
+            "reagent_transfer_cost": -479.99999880790585,
+            "specimen_transfer_cost": -1350,
+            "support_flexible_labor_cost": -4660.832378165594,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 280.22474702361217,
+            "urgency_cost": 52750
+          },
+          "extra_applied_hours_including_tail": 41.198811929459595,
+          "extra_committed_control_hours": 41.198811929459595,
+          "extra_delivered": 8,
+          "extra_lost": -8,
+          "extra_requested_control_hours": 41.19881192945959,
+          "percent_savings": 0.8054209718034604,
+          "requested_action_l1_hours": 196.72076639106504,
+          "savings": 265956.3789308885
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            2.6,
+            14.25
+          ],
+          "extra_lost": [
+            -14.25,
+            -2.6
+          ],
+          "percent_savings": [
+            -0.9827309408282306,
+            2.5436540805311316
+          ],
+          "savings": [
+            -509744.6786266601,
+            989198.0089164231
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 9,
+          "loss_harm_blocks": 1,
+          "loss_harm_worlds": 5
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -7.5,
+            "percent_savings": -0.67815323956784,
+            "savings": -486271.5227430761
+          },
+          {
+            "block": 1,
+            "extra_lost": -14.25,
+            "percent_savings": 0.027274798071926096,
+            "savings": -11376.618847712874
+          },
+          {
+            "block": 2,
+            "extra_lost": -7.5,
+            "percent_savings": 0.7902775050111162,
+            "savings": 435699.48455673084
+          },
+          {
+            "block": 3,
+            "extra_lost": -11,
+            "percent_savings": 2.8128722627511404,
+            "savings": 1155638.8055420043
+          },
+          {
+            "block": 4,
+            "extra_lost": 0.25,
+            "percent_savings": 1.0748335327509595,
+            "savings": 236091.74614649639
+          }
+        ]
+      }
+    },
+    "adaptive_tail_td_vs_policy_tail_mc": {
+      "0": {
+        "means": {
+          "action_l1_hours": 68.65513975497979,
+          "applied_action_l1_hours": 68.65513975497979,
+          "changed_action_boundaries": 15.65,
+          "component_savings": {
+            "bioreactor_holding_cost": -14.399999999999864,
+            "bioreactor_shortage_cost": -105574.55999999959,
+            "capacity_transfer_cost": -350,
+            "expiry_cost": 44000,
+            "patient_loss_cost": 57500,
+            "reagent_holding_cost": 1566.2995756574041,
+            "reagent_purchase_cost": -37956.60955231152,
+            "reagent_shortage_cost": 25951.362503470278,
+            "reagent_transfer_cost": -99.99997735023513,
+            "specimen_transfer_cost": 810,
+            "support_flexible_labor_cost": -1255.5683813098701,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 218.12699023777947,
+            "urgency_cost": 9000
+          },
+          "extra_applied_hours_including_tail": 11.0419189498808,
+          "extra_committed_control_hours": 11.0419189498808,
+          "extra_delivered": 1.15,
+          "extra_lost": -1.15,
+          "extra_requested_control_hours": 11.041918949880786,
+          "percent_savings": 0.03902851148479168,
+          "requested_action_l1_hours": 68.65513975497979,
+          "savings": -6205.348841606826
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.9,
+            5.45
+          ],
+          "extra_lost": [
+            -5.45,
+            1.9
+          ],
+          "percent_savings": [
+            -1.8543968379524962,
+            1.8357761671577482
+          ],
+          "savings": [
+            -678922.260465344,
+            610162.0322435466
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 9,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 6
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -8.5,
+            "percent_savings": 3.0104351048271436,
+            "savings": 954729.4446733613
+          },
+          {
+            "block": 1,
+            "extra_lost": 3,
+            "percent_savings": -2.933269813217583,
+            "savings": -1038484.321808151
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.5,
+            "percent_savings": 0.3666242437850682,
+            "savings": 143102.91898799408
+          },
+          {
+            "block": 3,
+            "extra_lost": 0.25,
+            "percent_savings": -0.3591911970970249,
+            "savings": -146357.89118442684
+          },
+          {
+            "block": 4,
+            "extra_lost": 0,
+            "percent_savings": 0.11054421912635508,
+            "savings": 55983.10512318835
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 78.68088763510869,
+          "applied_action_l1_hours": 78.68088763510869,
+          "changed_action_boundaries": 17.85,
+          "component_savings": {
+            "bioreactor_holding_cost": 18.71999999999998,
+            "bioreactor_shortage_cost": -55300.96000000001,
+            "capacity_transfer_cost": -350,
+            "expiry_cost": -4000,
+            "patient_loss_cost": -15000,
+            "reagent_holding_cost": -1152.024994926124,
+            "reagent_purchase_cost": -52717.49597797394,
+            "reagent_shortage_cost": 8650.443683813759,
+            "reagent_transfer_cost": -40.00001251697613,
+            "specimen_transfer_cost": -390,
+            "support_flexible_labor_cost": -390.32436573750493,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 180.42904200123954,
+            "urgency_cost": 3500
+          },
+          "extra_applied_hours_including_tail": 3.6055924987949424,
+          "extra_committed_control_hours": 3.6055924987949424,
+          "extra_delivered": -0.3,
+          "extra_lost": 0.3,
+          "extra_requested_control_hours": 3.6055924987949397,
+          "percent_savings": -0.25542463114910746,
+          "requested_action_l1_hours": 78.68088763510869,
+          "savings": -116991.2126253387
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -3.3012499999999996,
+            3.2012499999999933
+          ],
+          "extra_lost": [
+            -3.20125,
+            3.301249999999993
+          ],
+          "percent_savings": [
+            -2.05257911147136,
+            1.3556684281569338
+          ],
+          "savings": [
+            -750213.6143531584,
+            434917.5473958853
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 9,
+          "loss_harm_blocks": 3,
+          "loss_harm_worlds": 8
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 1.5,
+            "percent_savings": -1.428043295319358,
+            "savings": -481395.96476189233
+          },
+          {
+            "block": 1,
+            "extra_lost": 4.5,
+            "percent_savings": -1.8751859231517283,
+            "savings": -717888.0002475232
+          },
+          {
+            "block": 2,
+            "extra_lost": 0.5,
+            "percent_savings": 0.3449805369679033,
+            "savings": 120817.84119229391
+          },
+          {
+            "block": 3,
+            "extra_lost": -3.75,
+            "percent_savings": 0.597398372475818,
+            "savings": 135674.23414026387
+          },
+          {
+            "block": 4,
+            "extra_lost": -1.25,
+            "percent_savings": 1.0837271532818282,
+            "savings": 357835.82655016426
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 132.26796791284193,
+          "applied_action_l1_hours": 132.26796791284193,
+          "changed_action_boundaries": 25.85,
+          "component_savings": {
+            "bioreactor_holding_cost": 26.640000000000192,
+            "bioreactor_shortage_cost": -42732.55999999987,
+            "capacity_transfer_cost": 300,
+            "expiry_cost": 86000,
+            "patient_loss_cost": 110000,
+            "reagent_holding_cost": -454.0000947117427,
+            "reagent_purchase_cost": -97000.20169679177,
+            "reagent_shortage_cost": -12975.665461270673,
+            "reagent_transfer_cost": -199.99996900558557,
+            "specimen_transfer_cost": 480,
+            "support_flexible_labor_cost": -850.7221438838924,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 144.52833193873337,
+            "urgency_cost": 6750
+          },
+          "extra_applied_hours_including_tail": 7.993217243397309,
+          "extra_committed_control_hours": 7.993217243397309,
+          "extra_delivered": 2.2,
+          "extra_lost": -2.2,
+          "extra_requested_control_hours": 7.993217243397306,
+          "percent_savings": 0.3295767572006464,
+          "requested_action_l1_hours": 132.26796791284193,
+          "savings": 49488.01896627546
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.6,
+            6.7512499999999935
+          ],
+          "extra_lost": [
+            -6.75125,
+            1.6
+          ],
+          "percent_savings": [
+            -0.827502559309276,
+            1.6231720743719
+          ],
+          "savings": [
+            -470915.85307208425,
+            586830.2364692405
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 9,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 6
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -8,
+            "percent_savings": -0.7760823100524985,
+            "savings": -424726.5522670895
+          },
+          {
+            "block": 1,
+            "extra_lost": -3.5,
+            "percent_savings": 0.018884224187227017,
+            "savings": -62544.728190258145
+          },
+          {
+            "block": 2,
+            "extra_lost": 0.5,
+            "percent_savings": 0.4580098039164028,
+            "savings": 171007.99028753303
+          },
+          {
+            "block": 3,
+            "extra_lost": -0.5,
+            "percent_savings": 0.3912696677854669,
+            "savings": 125022.00489680842
+          },
+          {
+            "block": 4,
+            "extra_lost": 0.5,
+            "percent_savings": 1.5558024001666335,
+            "savings": 438681.38010438345
+          }
+        ]
+      }
+    },
+    "existing_frozen_vs_adaptive_tail_td": {
+      "0": {
+        "means": {
+          "action_l1_hours": 126.38929161628069,
+          "applied_action_l1_hours": 126.38929161628069,
+          "changed_action_boundaries": 25.8,
+          "component_savings": {
+            "bioreactor_holding_cost": -63.360000000000085,
+            "bioreactor_shortage_cost": 351915.1999999999,
+            "capacity_transfer_cost": -450,
+            "expiry_cost": -78000,
+            "patient_loss_cost": -152500,
+            "reagent_holding_cost": -3427.6994709670807,
+            "reagent_purchase_cost": 177130.81357433758,
+            "reagent_shortage_cost": 60553.15863641683,
+            "reagent_transfer_cost": 40.00003516674023,
+            "specimen_transfer_cost": -1470,
+            "support_flexible_labor_cost": 2673.221374470206,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -535.1126101723576,
+            "urgency_cost": -33500
+          },
+          "extra_applied_hours_including_tail": -23.592713335940235,
+          "extra_committed_control_hours": -23.592713335940235,
+          "extra_delivered": -3.05,
+          "extra_lost": 3.05,
+          "extra_requested_control_hours": -23.592713335940218,
+          "percent_savings": 0.8258652349716613,
+          "requested_action_l1_hours": 126.38929161628069,
+          "savings": 322366.22153925244
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -5.3,
+            -0.9
+          ],
+          "extra_lost": [
+            0.9,
+            5.3
+          ],
+          "percent_savings": [
+            -1.2279304657858832,
+            2.5023220175879217
+          ],
+          "savings": [
+            -384730.19674938155,
+            904669.1410553651
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 6,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 11
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 3,
+            "percent_savings": -1.8784552288657046,
+            "savings": -675666.2202264331
+          },
+          {
+            "block": 1,
+            "extra_lost": 2.5,
+            "percent_savings": 2.8321500434097375,
+            "savings": 1099167.2677019825
+          },
+          {
+            "block": 2,
+            "extra_lost": 1.75,
+            "percent_savings": -1.0062988603795615,
+            "savings": -235084.5779354861
+          },
+          {
+            "block": 3,
+            "extra_lost": 3.5,
+            "percent_savings": 1.9570408811467477,
+            "savings": 664776.1337118736
+          },
+          {
+            "block": 4,
+            "extra_lost": 4.5,
+            "percent_savings": 2.2248893395470875,
+            "savings": 758638.5044443253
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 127.97002757943787,
+          "applied_action_l1_hours": 127.97002757943787,
+          "changed_action_boundaries": 28.35,
+          "component_savings": {
+            "bioreactor_holding_cost": -9.360000000000037,
+            "bioreactor_shortage_cost": -80437.7600000001,
+            "capacity_transfer_cost": -700,
+            "expiry_cost": 42000,
+            "patient_loss_cost": 77500,
+            "reagent_holding_cost": 822.8745599284754,
+            "reagent_purchase_cost": 31630.48567153234,
+            "reagent_shortage_cost": -60553.14832427793,
+            "reagent_transfer_cost": -20.000014305115094,
+            "specimen_transfer_cost": 300,
+            "support_flexible_labor_cost": 505.7998573429908,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -550.2276399665606,
+            "urgency_cost": 5750
+          },
+          "extra_applied_hours_including_tail": -4.801596293898134,
+          "extra_committed_control_hours": -4.801596293898134,
+          "extra_delivered": 1.55,
+          "extra_lost": -1.55,
+          "extra_requested_control_hours": -4.801596293898132,
+          "percent_savings": -0.032289560813957105,
+          "requested_action_l1_hours": 127.97002757943787,
+          "savings": 16238.664110254123
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -2.75,
+            5.85
+          ],
+          "extra_lost": [
+            -5.85,
+            2.75
+          ],
+          "percent_savings": [
+            -2.2582811174033206,
+            2.166617175771319
+          ],
+          "savings": [
+            -780528.0372183886,
+            858311.2755839718
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 7
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -6,
+            "percent_savings": 0.9458867626404052,
+            "savings": 398645.15826477297
+          },
+          {
+            "block": 1,
+            "extra_lost": -5.75,
+            "percent_savings": 2.56758505754002,
+            "savings": 1066661.619218748
+          },
+          {
+            "block": 2,
+            "extra_lost": -2.25,
+            "percent_savings": 1.0879518551768759,
+            "savings": 299659.4151022071
+          },
+          {
+            "block": 3,
+            "extra_lost": 2.5,
+            "percent_savings": -1.10133912556801,
+            "savings": -461521.8235456189
+          },
+          {
+            "block": 4,
+            "extra_lost": 3.75,
+            "percent_savings": -3.6615323538590774,
+            "savings": -1222251.0484888386
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 172.43199894877088,
+          "applied_action_l1_hours": 172.43199894877088,
+          "changed_action_boundaries": 33.2,
+          "component_savings": {
+            "bioreactor_holding_cost": -18,
+            "bioreactor_shortage_cost": 170930.2399999997,
+            "capacity_transfer_cost": -550,
+            "expiry_cost": -150000,
+            "patient_loss_cost": -207500,
+            "reagent_holding_cost": -2434.5745042852786,
+            "reagent_purchase_cost": 168696.00779267616,
+            "reagent_shortage_cost": 8650.425766471017,
+            "reagent_transfer_cost": 160.00006437301488,
+            "specimen_transfer_cost": -660,
+            "support_flexible_labor_cost": 2838.484419411211,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -347.5006702626848,
+            "urgency_cost": -34250
+          },
+          "extra_applied_hours_including_tail": -25.19601458705851,
+          "extra_committed_control_hours": -25.19601458705851,
+          "extra_delivered": -4.15,
+          "extra_lost": 4.15,
+          "extra_requested_control_hours": -25.19601458705851,
+          "percent_savings": -0.3745317398324749,
+          "requested_action_l1_hours": 172.43199894877088,
+          "savings": -44484.91713161599
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -11.50125,
+            2.152499999999986
+          ],
+          "extra_lost": [
+            -2.1525,
+            11.501249999999994
+          ],
+          "percent_savings": [
+            -2.431293676808003,
+            1.9449000858788688
+          ],
+          "savings": [
+            -914515.0665784563,
+            929218.1843196644
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 10,
+          "loss_harm_blocks": 3,
+          "loss_harm_worlds": 11
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -0.5,
+            "percent_savings": 2.1692700004470464,
+            "savings": 992846.1875150707
+          },
+          {
+            "block": 1,
+            "extra_lost": 18,
+            "percent_savings": -2.0184505144830998,
+            "savings": -889368.1631672438
+          },
+          {
+            "block": 2,
+            "extra_lost": 0.5,
+            "percent_savings": -0.26500700304047475,
+            "savings": -8237.377829479054
+          },
+          {
+            "block": 3,
+            "extra_lost": 5.5,
+            "percent_savings": -2.2387324140889455,
+            "savings": -851982.6916043321
+          },
+          {
+            "block": 4,
+            "extra_lost": -2.75,
+            "percent_savings": 0.4802612320030992,
+            "savings": 534317.4594279043
+          }
+        ]
+      }
+    },
+    "existing_frozen_vs_plain_h16": {
+      "0": {
+        "means": {
+          "action_l1_hours": 163.83071804902835,
+          "applied_action_l1_hours": 163.83071804902835,
+          "changed_action_boundaries": 31.75,
+          "component_savings": {
+            "bioreactor_holding_cost": -87.83999999999996,
+            "bioreactor_shortage_cost": 37705.20000000011,
+            "capacity_transfer_cost": -650,
+            "expiry_cost": 68000,
+            "patient_loss_cost": 80000,
+            "reagent_holding_cost": -981.7751009695087,
+            "reagent_purchase_cost": -147608.99710916867,
+            "reagent_shortage_cost": -38927.00321560489,
+            "reagent_transfer_cost": -319.9998277425737,
+            "specimen_transfer_cost": -390,
+            "support_flexible_labor_cost": -1898.693392453001,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -475.6903388791119,
+            "urgency_cost": 15000
+          },
+          "extra_applied_hours_including_tail": 16.245483028772828,
+          "extra_committed_control_hours": 16.245483028772828,
+          "extra_delivered": 1.6,
+          "extra_lost": -1.6,
+          "extra_requested_control_hours": 16.245483028772835,
+          "percent_savings": 0.04133800982832919,
+          "requested_action_l1_hours": 163.83071804902835,
+          "savings": 9365.201015181467
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.7,
+            5.2
+          ],
+          "extra_lost": [
+            -5.2,
+            1.7
+          ],
+          "percent_savings": [
+            -2.04939469690288,
+            2.227285848340896
+          ],
+          "savings": [
+            -740871.3393959807,
+            805082.4995635438
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 12,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 7
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -5.75,
+            "percent_savings": -2.219109591536519,
+            "savings": -716826.7110750573
+          },
+          {
+            "block": 1,
+            "extra_lost": 2.25,
+            "percent_savings": -1.6004435848599456,
+            "savings": -585287.85066556
+          },
+          {
+            "block": 2,
+            "extra_lost": 1.25,
+            "percent_savings": -0.3677550634286146,
+            "savings": -75793.75833614822
+          },
+          {
+            "block": 3,
+            "extra_lost": -3.75,
+            "percent_savings": 1.1182906639490313,
+            "savings": 166770.08607430756
+          },
+          {
+            "block": 4,
+            "extra_lost": -2,
+            "percent_savings": 3.2757076250176937,
+            "savings": 1257964.2390783653
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 147.07734840971506,
+          "applied_action_l1_hours": 147.07734840971506,
+          "changed_action_boundaries": 32,
+          "component_savings": {
+            "bioreactor_holding_cost": -59.76000000000003,
+            "bioreactor_shortage_cost": -93006.16,
+            "capacity_transfer_cost": -500,
+            "expiry_cost": 30000,
+            "patient_loss_cost": 70000,
+            "reagent_holding_cost": 1503.8743385397306,
+            "reagent_purchase_cost": -54826.21363718128,
+            "reagent_shortage_cost": -142732.42216416323,
+            "reagent_transfer_cost": -259.99994575977377,
+            "specimen_transfer_cost": -810,
+            "support_flexible_labor_cost": -951.9094198416963,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -700.3659582574459,
+            "urgency_cost": 12750
+          },
+          "extra_applied_hours_including_tail": 7.75057927981423,
+          "extra_committed_control_hours": 7.75057927981423,
+          "extra_delivered": 1.4,
+          "extra_lost": -1.4,
+          "extra_requested_control_hours": 7.75057927981423,
+          "percent_savings": -0.469393863629195,
+          "requested_action_l1_hours": 147.07734840971506,
+          "savings": -179592.9567866631
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -2.25,
+            5.55
+          ],
+          "extra_lost": [
+            -5.55,
+            2.25
+          ],
+          "percent_savings": [
+            -2.199124643745498,
+            1.3934446614365656
+          ],
+          "savings": [
+            -782283.2780131901,
+            455967.11144794704
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 9
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -8.5,
+            "percent_savings": 1.5298147747164155,
+            "savings": 482299.79599460866
+          },
+          {
+            "block": 1,
+            "extra_lost": -0.25,
+            "percent_savings": 1.0044576436516737,
+            "savings": 322456.858645482
+          },
+          {
+            "block": 2,
+            "extra_lost": -2.5,
+            "percent_savings": -0.0051688935931596715,
+            "savings": -9150.329294689931
+          },
+          {
+            "block": 3,
+            "extra_lost": 3.25,
+            "percent_savings": -2.2688122215618085,
+            "savings": -807618.0964765418
+          },
+          {
+            "block": 4,
+            "extra_lost": 1,
+            "percent_savings": -2.607260621359096,
+            "savings": -885953.0128021743
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 206.27482102051135,
+          "applied_action_l1_hours": 206.27482102051135,
+          "changed_action_boundaries": 37.35,
+          "component_savings": {
+            "bioreactor_holding_cost": -52.56000000000004,
+            "bioreactor_shortage_cost": 173443.91999999963,
+            "capacity_transfer_cost": -650,
+            "expiry_cost": 128000,
+            "patient_loss_cost": 192500,
+            "reagent_holding_cost": -788.8248861767112,
+            "reagent_purchase_cost": -177130.80477615548,
+            "reagent_shortage_cost": -108130.64472196724,
+            "reagent_transfer_cost": -319.9999344348909,
+            "specimen_transfer_cost": -2010,
+            "support_flexible_labor_cost": -1822.347958754382,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -67.27592323907263,
+            "urgency_cost": 18500
+          },
+          "extra_applied_hours_including_tail": 16.002797342401088,
+          "extra_committed_control_hours": 16.002797342401088,
+          "extra_delivered": 3.85,
+          "extra_lost": -3.85,
+          "extra_requested_control_hours": 16.002797342401088,
+          "percent_savings": 0.520676360507119,
+          "requested_action_l1_hours": 206.27482102051135,
+          "savings": 221471.4617992725
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -2.3012499999999996,
+            9.204999999999972
+          ],
+          "extra_lost": [
+            -9.204999999999998,
+            2.301249999999993
+          ],
+          "percent_savings": [
+            -1.2645101513651165,
+            2.319972295729627
+          ],
+          "savings": [
+            -593417.8300716861,
+            963045.7733028933
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 1,
+          "cost_harm_worlds": 10,
+          "loss_harm_blocks": 1,
+          "loss_harm_worlds": 7
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -8,
+            "percent_savings": 1.5510928191939617,
+            "savings": 506574.6647719946
+          },
+          {
+            "block": 1,
+            "extra_lost": 3.75,
+            "percent_savings": -1.9731070156588728,
+            "savings": -900744.7820149567
+          },
+          {
+            "block": 2,
+            "extra_lost": -7,
+            "percent_savings": 0.5759121505583338,
+            "savings": 427462.1067272518
+          },
+          {
+            "block": 3,
+            "extra_lost": -5.5,
+            "percent_savings": 0.7094080907342644,
+            "savings": 303656.1139376722
+          },
+          {
+            "block": 4,
+            "extra_lost": -2.5,
+            "percent_savings": 1.740075757707908,
+            "savings": 770409.2055744007
+          }
+        ]
+      }
+    },
+    "existing_frozen_vs_policy_tail_mc": {
+      "0": {
+        "means": {
+          "action_l1_hours": 132.30067372940428,
+          "applied_action_l1_hours": 132.30067372940428,
+          "changed_action_boundaries": 26.15,
+          "component_savings": {
+            "bioreactor_holding_cost": -77.75999999999995,
+            "bioreactor_shortage_cost": 246340.6400000003,
+            "capacity_transfer_cost": -800,
+            "expiry_cost": -34000,
+            "patient_loss_cost": -95000,
+            "reagent_holding_cost": -1861.3998953096766,
+            "reagent_purchase_cost": 139174.20402202607,
+            "reagent_shortage_cost": 86504.52113988712,
+            "reagent_transfer_cost": -59.99994218349489,
+            "specimen_transfer_cost": -660,
+            "support_flexible_labor_cost": 1417.6529931603357,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -316.98561993457815,
+            "urgency_cost": -24500
+          },
+          "extra_applied_hours_including_tail": -12.550794386059433,
+          "extra_committed_control_hours": -12.550794386059433,
+          "extra_delivered": -1.9,
+          "extra_lost": 1.9,
+          "extra_requested_control_hours": -12.550794386059431,
+          "percent_savings": 0.9086727336176816,
+          "requested_action_l1_hours": 132.30067372940428,
+          "savings": 316160.8726976456
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -5.8,
+            2.7012499999999933
+          ],
+          "extra_lost": [
+            -2.70125,
+            5.8
+          ],
+          "percent_savings": [
+            -0.2758215037288446,
+            2.1982698204962112
+          ],
+          "savings": [
+            -63898.36877841455,
+            682910.4820228216
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 1,
+          "cost_harm_worlds": 7,
+          "loss_harm_blocks": 4,
+          "loss_harm_worlds": 10
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -5.5,
+            "percent_savings": 1.2267345681409967,
+            "savings": 279063.2244469281
+          },
+          {
+            "block": 1,
+            "extra_lost": 5.5,
+            "percent_savings": 0.01668276991951448,
+            "savings": 60682.94589383155
+          },
+          {
+            "block": 2,
+            "extra_lost": 1.25,
+            "percent_savings": -0.6341435836109279,
+            "savings": -91981.65894749202
+          },
+          {
+            "block": 3,
+            "extra_lost": 3.75,
+            "percent_savings": 1.5987421601125653,
+            "savings": 518418.2425274467
+          },
+          {
+            "block": 4,
+            "extra_lost": 4.5,
+            "percent_savings": 2.3353477535262606,
+            "savings": 814621.6095675137
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 131.0850524857575,
+          "applied_action_l1_hours": 131.0850524857575,
+          "changed_action_boundaries": 27.85,
+          "component_savings": {
+            "bioreactor_holding_cost": 9.359999999999946,
+            "bioreactor_shortage_cost": -135738.72000000012,
+            "capacity_transfer_cost": -1050,
+            "expiry_cost": 38000,
+            "patient_loss_cost": 62500,
+            "reagent_holding_cost": -329.1504349976487,
+            "reagent_purchase_cost": -21087.010306441596,
+            "reagent_shortage_cost": -51902.70464046416,
+            "reagent_transfer_cost": -60.00002682209119,
+            "specimen_transfer_cost": -90,
+            "support_flexible_labor_cost": 115.47549160548587,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -369.7985979653212,
+            "urgency_cost": 9250
+          },
+          "extra_applied_hours_including_tail": -1.196003795103192,
+          "extra_committed_control_hours": -1.196003795103192,
+          "extra_delivered": 1.25,
+          "extra_lost": -1.25,
+          "extra_requested_control_hours": -1.196003795103192,
+          "percent_savings": -0.23109060182862978,
+          "requested_action_l1_hours": 131.0850524857575,
+          "savings": -100752.54851508458
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.35,
+            4.25
+          ],
+          "extra_lost": [
+            -4.25,
+            1.35
+          ],
+          "percent_savings": [
+            -2.135876746942125,
+            1.4107877488449783
+          ],
+          "savings": [
+            -754271.1944091324,
+            440857.1129922579
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 1,
+          "loss_harm_worlds": 8
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -4.5,
+            "percent_savings": -0.31789541270657834,
+            "savings": -82750.80649711937
+          },
+          {
+            "block": 1,
+            "extra_lost": -1.25,
+            "percent_savings": 0.7985408945429263,
+            "savings": 348773.6189712249
+          },
+          {
+            "block": 2,
+            "extra_lost": -1.75,
+            "percent_savings": 1.4297747609729905,
+            "savings": 420477.256294501
+          },
+          {
+            "block": 3,
+            "extra_lost": -1.25,
+            "percent_savings": -0.5307603269337451,
+            "savings": -325847.58940535504
+          },
+          {
+            "block": 4,
+            "extra_lost": 2.5,
+            "percent_savings": -2.5351129250187427,
+            "savings": -864415.2219386743
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 180.3025798540511,
+          "applied_action_l1_hours": 180.3025798540511,
+          "changed_action_boundaries": 33.55,
+          "component_savings": {
+            "bioreactor_holding_cost": 8.64000000000019,
+            "bioreactor_shortage_cost": 128197.67999999985,
+            "capacity_transfer_cost": -250,
+            "expiry_cost": -64000,
+            "patient_loss_cost": -97500,
+            "reagent_holding_cost": -2888.5745989970214,
+            "reagent_purchase_cost": 71695.80609588437,
+            "reagent_shortage_cost": -4325.23969479966,
+            "reagent_transfer_cost": -39.999904632570704,
+            "specimen_transfer_cost": -180,
+            "support_flexible_labor_cost": 1987.7622755273187,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -202.97233832395142,
+            "urgency_cost": -27500
+          },
+          "extra_applied_hours_including_tail": -17.202797343661203,
+          "extra_committed_control_hours": -17.202797343661203,
+          "extra_delivered": -1.95,
+          "extra_lost": 1.95,
+          "extra_requested_control_hours": -17.202797343661206,
+          "percent_savings": 0.003994666956776171,
+          "requested_action_l1_hours": 180.3025798540511,
+          "savings": 5003.101834659465
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -9.45,
+            5.2
+          ],
+          "extra_lost": [
+            -5.2,
+            9.45
+          ],
+          "percent_savings": [
+            -2.1241676228446944,
+            1.9346959681708704
+          ],
+          "savings": [
+            -925866.2799689972,
+            831410.7630805473
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 8,
+          "loss_harm_blocks": 3,
+          "loss_harm_worlds": 10
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -8.5,
+            "percent_savings": 1.4173092083444607,
+            "savings": 568119.6352479812
+          },
+          {
+            "block": 1,
+            "extra_lost": 14.5,
+            "percent_savings": -2.0064136717636525,
+            "savings": -951912.891357502
+          },
+          {
+            "block": 2,
+            "extra_lost": 1,
+            "percent_savings": 0.23424265881519668,
+            "savings": 162770.61245805398
+          },
+          {
+            "block": 3,
+            "extra_lost": 5,
+            "percent_savings": -1.8020624875232265,
+            "savings": -726960.6867075237
+          },
+          {
+            "block": 4,
+            "extra_lost": -2.25,
+            "percent_savings": 2.176897626911103,
+            "savings": 972998.8395322878
+          }
+        ]
+      }
+    },
+    "plain_h8_vs_adaptive_tail_td": {
+      "0": {
+        "means": {
+          "action_l1_hours": 206.71277346198835,
+          "applied_action_l1_hours": 206.71277346198835,
+          "changed_action_boundaries": 35.25,
+          "component_savings": {
+            "bioreactor_holding_cost": -60.48000000000002,
+            "bioreactor_shortage_cost": 55300.9599999998,
+            "capacity_transfer_cost": 0,
+            "expiry_cost": -514000,
+            "patient_loss_cost": -775000,
+            "reagent_holding_cost": -6577.323961383871,
+            "reagent_purchase_cost": 719066.7194816883,
+            "reagent_shortage_cost": 164358.51622774065,
+            "reagent_transfer_cost": 419.9999672174439,
+            "specimen_transfer_cost": -810,
+            "support_flexible_labor_cost": 10940.503084040072,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -1112.1772535866178,
+            "urgency_cost": -102000
+          },
+          "extra_applied_hours_including_tail": -96.42291529836623,
+          "extra_committed_control_hours": -96.42291529836623,
+          "extra_delivered": -15.5,
+          "extra_lost": 15.5,
+          "extra_requested_control_hours": -96.42291529836622,
+          "percent_savings": -1.015656345030874,
+          "requested_action_l1_hours": 206.71277346198835,
+          "savings": -449473.282454283
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -24.8,
+            -7.55
+          ],
+          "extra_lost": [
+            7.55,
+            24.8
+          ],
+          "percent_savings": [
+            -4.124700806166428,
+            1.8559849934956811
+          ],
+          "savings": [
+            -1605053.6188788721,
+            649152.4485306775
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 8,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 15
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 19,
+            "percent_savings": -3.4476213142015464,
+            "savings": -1534956.428525731
+          },
+          {
+            "block": 1,
+            "extra_lost": 13.75,
+            "percent_savings": 1.4327177357909537,
+            "savings": 529846.5885711899
+          },
+          {
+            "block": 2,
+            "extra_lost": 15.25,
+            "percent_savings": -2.7631723760665077,
+            "savings": -1108167.7661625445
+          },
+          {
+            "block": 3,
+            "extra_lost": 6,
+            "percent_savings": 1.9264668534609883,
+            "savings": 733358.4884176143
+          },
+          {
+            "block": 4,
+            "extra_lost": 23.5,
+            "percent_savings": -2.2266726241382595,
+            "savings": -867447.2945719436
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 180.77916895158347,
+          "applied_action_l1_hours": 180.77916895158347,
+          "changed_action_boundaries": 36.4,
+          "component_savings": {
+            "bioreactor_holding_cost": -12.239999999999919,
+            "bioreactor_shortage_cost": -17595.7599999998,
+            "capacity_transfer_cost": -450,
+            "expiry_cost": -146000,
+            "patient_loss_cost": -185000,
+            "reagent_holding_cost": -130.5250622391788,
+            "reagent_purchase_cost": 215087.39120181807,
+            "reagent_shortage_cost": 108130.6313161862,
+            "reagent_transfer_cost": 59.99998092651401,
+            "specimen_transfer_cost": -90,
+            "support_flexible_labor_cost": 3385.737117585703,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -1069.9995306589465,
+            "urgency_cost": -14000
+          },
+          "extra_applied_hours_including_tail": -29.999439749839432,
+          "extra_committed_control_hours": -29.999439749839432,
+          "extra_delivered": -3.7,
+          "extra_lost": 3.7,
+          "extra_requested_control_hours": -29.99943974983943,
+          "percent_savings": -0.1665443918073702,
+          "requested_action_l1_hours": 180.77916895158347,
+          "savings": -37684.76497638207
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -8.8,
+            1.2
+          ],
+          "extra_lost": [
+            -1.2,
+            8.8
+          ],
+          "percent_savings": [
+            -2.1117061511702566,
+            1.765240166110899
+          ],
+          "savings": [
+            -709320.7014181303,
+            641985.4557130404
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 4,
+          "loss_harm_worlds": 13
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -3.25,
+            "percent_savings": 2.421919946162748,
+            "savings": 855746.8453904381
+          },
+          {
+            "block": 1,
+            "extra_lost": 3.25,
+            "percent_savings": -0.18144397423853786,
+            "savings": -29638.450309779495
+          },
+          {
+            "block": 2,
+            "extra_lost": 0.5,
+            "percent_savings": -0.14806160712529515,
+            "savings": -147099.1219588779
+          },
+          {
+            "block": 3,
+            "extra_lost": 9.75,
+            "percent_savings": -0.22708689521302275,
+            "savings": 10874.590475620702
+          },
+          {
+            "block": 4,
+            "extra_lost": 8.25,
+            "percent_savings": -2.6980494286227437,
+            "savings": -878307.6884793118
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 246.16581539483158,
+          "applied_action_l1_hours": 246.16581539483158,
+          "changed_action_boundaries": 40.7,
+          "component_savings": {
+            "bioreactor_holding_cost": -61.200000000000045,
+            "bioreactor_shortage_cost": -67869.36000000019,
+            "capacity_transfer_cost": -1150,
+            "expiry_cost": -1012000,
+            "patient_loss_cost": -1385000,
+            "reagent_holding_cost": -11384.048593699164,
+            "reagent_purchase_cost": 946806.3219326108,
+            "reagent_shortage_cost": 229236.90308670228,
+            "reagent_transfer_cost": 340.0001156330104,
+            "specimen_transfer_cost": -510,
+            "support_flexible_labor_cost": 12645.238434576466,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -401.8799465551271,
+            "urgency_cost": -149750
+          },
+          "extra_applied_hours_including_tail": -111.99517665488914,
+          "extra_committed_control_hours": -111.99517665488914,
+          "extra_delivered": -27.7,
+          "extra_lost": 27.7,
+          "extra_requested_control_hours": -111.9951766548891,
+          "percent_savings": -4.038259843244765,
+          "requested_action_l1_hours": 246.16581539483158,
+          "savings": -1439098.024970731
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -37.8,
+            -18.15
+          ],
+          "extra_lost": [
+            18.15,
+            37.8
+          ],
+          "percent_savings": [
+            -7.6370852895570716,
+            -0.9525486065391392
+          ],
+          "savings": [
+            -2902765.609940396,
+            -217001.40941279568
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 5,
+          "cost_harm_worlds": 14,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 19
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 26.25,
+            "percent_savings": -5.960114583264651,
+            "savings": -1777123.493169956
+          },
+          {
+            "block": 1,
+            "extra_lost": 32.5,
+            "percent_savings": -0.9806040650961868,
+            "savings": -431813.5023928806
+          },
+          {
+            "block": 2,
+            "extra_lost": 21.75,
+            "percent_savings": -0.7025961583181461,
+            "savings": -262336.66345075425
+          },
+          {
+            "block": 3,
+            "extra_lost": 43.75,
+            "percent_savings": -9.122389919189152,
+            "savings": -3715263.7879722537
+          },
+          {
+            "block": 4,
+            "extra_lost": 14.25,
+            "percent_savings": -3.4255944903556874,
+            "savings": -1008952.6778678102
+          }
+        ]
+      }
+    },
+    "plain_h8_vs_existing_frozen": {
+      "0": {
+        "means": {
+          "action_l1_hours": 188.76705308492456,
+          "applied_action_l1_hours": 188.76705308492456,
+          "changed_action_boundaries": 31.85,
+          "component_savings": {
+            "bioreactor_holding_cost": 2.880000000000064,
+            "bioreactor_shortage_cost": -296614.2400000001,
+            "capacity_transfer_cost": 450,
+            "expiry_cost": -436000,
+            "patient_loss_cost": -622500,
+            "reagent_holding_cost": -3149.6244904167906,
+            "reagent_purchase_cost": 541935.9059073508,
+            "reagent_shortage_cost": 103805.35759132382,
+            "reagent_transfer_cost": 379.99993205070365,
+            "specimen_transfer_cost": 660,
+            "support_flexible_labor_cost": 8267.281709569867,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -577.0646434142603,
+            "urgency_cost": -68500
+          },
+          "extra_applied_hours_including_tail": -72.830201962426,
+          "extra_committed_control_hours": -72.830201962426,
+          "extra_delivered": -12.45,
+          "extra_lost": 12.45,
+          "extra_requested_control_hours": -72.83020196242602,
+          "percent_savings": -1.866353068580971,
+          "requested_action_l1_hours": 188.76705308492456,
+          "savings": -771839.5039935354
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -20.50125,
+            -5.048750000000006
+          ],
+          "extra_lost": [
+            5.04875,
+            20.50124999999999
+          ],
+          "percent_savings": [
+            -4.341664852586612,
+            0.6626849532012964
+          ],
+          "savings": [
+            -1704762.6971669442,
+            130487.90792164207
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 12,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 16
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 16,
+            "percent_savings": -1.5372604421715508,
+            "savings": -859290.2082992978
+          },
+          {
+            "block": 1,
+            "extra_lost": 11.25,
+            "percent_savings": -1.4341886466279856,
+            "savings": -569320.6791307926
+          },
+          {
+            "block": 2,
+            "extra_lost": 13.5,
+            "percent_savings": -1.7638635414369883,
+            "savings": -873083.1882270584
+          },
+          {
+            "block": 3,
+            "extra_lost": 2.5,
+            "percent_savings": -0.016624168475977016,
+            "savings": 68582.3547057407
+          },
+          {
+            "block": 4,
+            "extra_lost": 19,
+            "percent_savings": -4.579828544192353,
+            "savings": -1626085.799016269
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 173.88052424708454,
+          "applied_action_l1_hours": 173.88052424708454,
+          "changed_action_boundaries": 33.9,
+          "component_savings": {
+            "bioreactor_holding_cost": -2.8799999999998818,
+            "bioreactor_shortage_cost": 62842.000000000306,
+            "capacity_transfer_cost": 250,
+            "expiry_cost": -188000,
+            "patient_loss_cost": -262500,
+            "reagent_holding_cost": -953.3996221676541,
+            "reagent_purchase_cost": 183456.90553028573,
+            "reagent_shortage_cost": 168683.77964046417,
+            "reagent_transfer_cost": 79.99999523162906,
+            "specimen_transfer_cost": -390,
+            "support_flexible_labor_cost": 2879.937260242712,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -519.7718906923857,
+            "urgency_cost": -19750
+          },
+          "extra_applied_hours_including_tail": -25.1978434559413,
+          "extra_committed_control_hours": -25.1978434559413,
+          "extra_delivered": -5.25,
+          "extra_lost": 5.25,
+          "extra_requested_control_hours": -25.197843455941292,
+          "percent_savings": -0.18330158565595323,
+          "requested_action_l1_hours": 173.88052424708454,
+          "savings": -53923.42908663619
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -9.051250000000001,
+            -1.9
+          ],
+          "extra_lost": [
+            1.9,
+            9.051249999999994
+          ],
+          "percent_savings": [
+            -2.1238758215582507,
+            1.6346065017790772
+          ],
+          "savings": [
+            -791429.7229549801,
+            670914.3171804417
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 9,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 13
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 2.75,
+            "percent_savings": 1.4423406171125681,
+            "savings": 457101.68712566514
+          },
+          {
+            "block": 1,
+            "extra_lost": 9,
+            "percent_savings": -2.8887080448063154,
+            "savings": -1096300.0695285276
+          },
+          {
+            "block": 2,
+            "extra_lost": 2.75,
+            "percent_savings": -1.219030782517473,
+            "savings": -446758.537061085
+          },
+          {
+            "block": 3,
+            "extra_lost": 7.25,
+            "percent_savings": 0.8051326743282746,
+            "savings": 472396.4140212396
+          },
+          {
+            "block": 4,
+            "extra_lost": 4.5,
+            "percent_savings": 0.9437576076031798,
+            "savings": 343943.36000952683
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 225.5674926764916,
+          "applied_action_l1_hours": 225.5674926764916,
+          "changed_action_boundaries": 37.55,
+          "component_savings": {
+            "bioreactor_holding_cost": -43.200000000000045,
+            "bioreactor_shortage_cost": -238799.59999999992,
+            "capacity_transfer_cost": -600,
+            "expiry_cost": -862000,
+            "patient_loss_cost": -1177500,
+            "reagent_holding_cost": -8949.474089413887,
+            "reagent_purchase_cost": 778110.314139935,
+            "reagent_shortage_cost": 220586.47732023132,
+            "reagent_transfer_cost": 180.00005125999547,
+            "specimen_transfer_cost": 150,
+            "support_flexible_labor_cost": 9806.754015165254,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -54.3792762924423,
+            "urgency_cost": -115500
+          },
+          "extra_applied_hours_including_tail": -86.79916206783062,
+          "extra_committed_control_hours": -86.79916206783062,
+          "extra_delivered": -23.55,
+          "extra_lost": 23.55,
+          "extra_requested_control_hours": -86.79916206783062,
+          "percent_savings": -3.7523123188995293,
+          "requested_action_l1_hours": 225.5674926764916,
+          "savings": -1394613.107839115
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -32.95125,
+            -15.598750000000006
+          ],
+          "extra_lost": [
+            15.598749999999999,
+            32.951249999999995
+          ],
+          "percent_savings": [
+            -7.612306314782382,
+            -0.3757137657726306
+          ],
+          "savings": [
+            -2852113.970314204,
+            -42102.127773761655
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 14,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 19
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 26.75,
+            "percent_savings": -8.321966136147394,
+            "savings": -2769969.6806850266
+          },
+          {
+            "block": 1,
+            "extra_lost": 14.5,
+            "percent_savings": 1.0007033601068347,
+            "savings": 457554.6607743632
+          },
+          {
+            "block": 2,
+            "extra_lost": 21.25,
+            "percent_savings": -0.5405285104444577,
+            "savings": -254099.2856212752
+          },
+          {
+            "block": 3,
+            "extra_lost": 38.25,
+            "percent_savings": -6.772687417540057,
+            "savings": -2863281.0963679217
+          },
+          {
+            "block": 4,
+            "extra_lost": 17,
+            "percent_savings": -4.127082890472571,
+            "savings": -1543270.1372957146
+          }
+        ]
+      }
+    },
+    "plain_h8_vs_plain_h16": {
+      "0": {
+        "means": {
+          "action_l1_hours": 202.58077183640953,
+          "applied_action_l1_hours": 202.58077183640958,
+          "changed_action_boundaries": 34.15,
+          "component_savings": {
+            "bioreactor_holding_cost": -84.9599999999999,
+            "bioreactor_shortage_cost": -258909.03999999998,
+            "capacity_transfer_cost": -200,
+            "expiry_cost": -368000,
+            "patient_loss_cost": -542500,
+            "reagent_holding_cost": -4131.399591386299,
+            "reagent_purchase_cost": 394326.9087981821,
+            "reagent_shortage_cost": 64878.35437571893,
+            "reagent_transfer_cost": 60.00010430812997,
+            "specimen_transfer_cost": 270,
+            "support_flexible_labor_cost": 6368.588317116864,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -1052.754982293372,
+            "urgency_cost": -53500
+          },
+          "extra_applied_hours_including_tail": -56.58471893365318,
+          "extra_committed_control_hours": -56.58471893365318,
+          "extra_delivered": -10.85,
+          "extra_lost": 10.85,
+          "extra_requested_control_hours": -56.58471893365318,
+          "percent_savings": -1.7643682491049588,
+          "requested_action_l1_hours": 202.58077183640953,
+          "savings": -762474.3029783539
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -19.9025,
+            -2.14625000000002
+          ],
+          "extra_lost": [
+            2.14625,
+            19.902499999999986
+          ],
+          "percent_savings": [
+            -4.335169848580762,
+            0.9220656255824246
+          ],
+          "savings": [
+            -1772090.566690285,
+            202406.11921878514
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 15,
+          "loss_harm_blocks": 4,
+          "loss_harm_worlds": 12
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 10.25,
+            "percent_savings": -3.7062008361627754,
+            "savings": -1576116.919374355
+          },
+          {
+            "block": 1,
+            "extra_lost": 13.5,
+            "percent_savings": -3.0301404001267063,
+            "savings": -1154608.5297963526
+          },
+          {
+            "block": 2,
+            "extra_lost": 14.75,
+            "percent_savings": -2.1390460159804094,
+            "savings": -948876.9465632066
+          },
+          {
+            "block": 3,
+            "extra_lost": -1.25,
+            "percent_savings": 1.1394108542175199,
+            "savings": 235352.44078004826
+          },
+          {
+            "block": 4,
+            "extra_lost": 17,
+            "percent_savings": -1.0858648474724228,
+            "savings": -368121.55993790366
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 172.65493476696696,
+          "applied_action_l1_hours": 172.65493476696696,
+          "changed_action_boundaries": 35.05,
+          "component_savings": {
+            "bioreactor_holding_cost": -62.639999999999915,
+            "bioreactor_shortage_cost": -30164.159999999705,
+            "capacity_transfer_cost": -250,
+            "expiry_cost": -158000,
+            "patient_loss_cost": -192500,
+            "reagent_holding_cost": 550.4747163720764,
+            "reagent_purchase_cost": 128630.69189310446,
+            "reagent_shortage_cost": 25951.35747630085,
+            "reagent_transfer_cost": -179.99995052814467,
+            "specimen_transfer_cost": -1200,
+            "support_flexible_labor_cost": 1928.0278404010157,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -1220.1378489498316,
+            "urgency_cost": -7000
+          },
+          "extra_applied_hours_including_tail": -17.44726417612707,
+          "extra_committed_control_hours": -17.44726417612707,
+          "extra_delivered": -3.85,
+          "extra_lost": 3.85,
+          "extra_requested_control_hours": -17.447264176127064,
+          "percent_savings": -0.6328741436260202,
+          "requested_action_l1_hours": 172.65493476696696,
+          "savings": -233516.38587329927
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -9.5,
+            2.2
+          ],
+          "extra_lost": [
+            -2.2,
+            9.5
+          ],
+          "percent_savings": [
+            -2.7337638453252366,
+            1.8744166724783171
+          ],
+          "savings": [
+            -981289.0289737133,
+            605483.8011582069
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 10,
+          "loss_harm_blocks": 4,
+          "loss_harm_worlds": 11
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -5.75,
+            "percent_savings": 2.9533490790860886,
+            "savings": 939401.4831202738
+          },
+          {
+            "block": 1,
+            "extra_lost": 8.75,
+            "percent_savings": -1.820348450148935,
+            "savings": -773843.2108830456
+          },
+          {
+            "block": 2,
+            "extra_lost": 0.25,
+            "percent_savings": -1.237156589911649,
+            "savings": -455908.8663557749
+          },
+          {
+            "block": 3,
+            "extra_lost": 10.5,
+            "percent_savings": -1.4187871649594108,
+            "savings": -335221.6824553022
+          },
+          {
+            "block": 4,
+            "extra_lost": 5.5,
+            "percent_savings": -1.6414275921961945,
+            "savings": -542009.6527926475
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 227.5075900735123,
+          "applied_action_l1_hours": 227.5075900735123,
+          "changed_action_boundaries": 37.4,
+          "component_savings": {
+            "bioreactor_holding_cost": -95.76000000000008,
+            "bioreactor_shortage_cost": -65355.68000000026,
+            "capacity_transfer_cost": -1250,
+            "expiry_cost": -734000,
+            "patient_loss_cost": -985000,
+            "reagent_holding_cost": -9738.298975590598,
+            "reagent_purchase_cost": 600979.5093637794,
+            "reagent_shortage_cost": 112455.83259826405,
+            "reagent_transfer_cost": -139.99988317489544,
+            "specimen_transfer_cost": -1860,
+            "support_flexible_labor_cost": 7984.406056410873,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -121.65519953151492,
+            "urgency_cost": -97000
+          },
+          "extra_applied_hours_including_tail": -70.79636472542951,
+          "extra_committed_control_hours": -70.79636472542951,
+          "extra_delivered": -19.7,
+          "extra_lost": 19.7,
+          "extra_requested_control_hours": -70.79636472542951,
+          "percent_savings": -3.0959447244681173,
+          "requested_action_l1_hours": 227.5075900735123,
+          "savings": -1173141.6460398424
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -28.701249999999998,
+            -11.55
+          ],
+          "extra_lost": [
+            11.55,
+            28.70124999999999
+          ],
+          "percent_savings": [
+            -6.060083167854174,
+            -0.4617840407724678
+          ],
+          "savings": [
+            -2357418.452526453,
+            -80749.1843500563
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 15,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 17
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 18.75,
+            "percent_savings": -6.415582212815194,
+            "savings": -2263395.015913032
+          },
+          {
+            "block": 1,
+            "extra_lost": 18.25,
+            "percent_savings": -0.9387831048878386,
+            "savings": -443190.1212405935
+          },
+          {
+            "block": 2,
+            "extra_lost": 14.25,
+            "percent_savings": 0.13113878628264553,
+            "savings": 173362.8211059766
+          },
+          {
+            "block": 3,
+            "extra_lost": 32.75,
+            "percent_savings": -6.019620875914219,
+            "savings": -2559624.9824302495
+          },
+          {
+            "block": 4,
+            "extra_lost": 14.5,
+            "percent_savings": -2.2368762150059847,
+            "savings": -772860.9317213139
+          }
+        ]
+      }
+    },
+    "plain_h8_vs_policy_tail_mc": {
+      "0": {
+        "means": {
+          "action_l1_hours": 210.59393453533758,
+          "applied_action_l1_hours": 210.59393453533758,
+          "changed_action_boundaries": 35.5,
+          "component_savings": {
+            "bioreactor_holding_cost": -74.87999999999988,
+            "bioreactor_shortage_cost": -50273.599999999766,
+            "capacity_transfer_cost": -350,
+            "expiry_cost": -470000,
+            "patient_loss_cost": -717500,
+            "reagent_holding_cost": -5011.024385726467,
+            "reagent_purchase_cost": 681110.1099293769,
+            "reagent_shortage_cost": 190309.87873121095,
+            "reagent_transfer_cost": 319.9999898672087,
+            "specimen_transfer_cost": 0,
+            "support_flexible_labor_cost": 9684.934702730201,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -894.0502633488384,
+            "urgency_cost": -93000
+          },
+          "extra_applied_hours_including_tail": -85.38099634848544,
+          "extra_committed_control_hours": -85.38099634848544,
+          "extra_delivered": -14.35,
+          "extra_lost": 14.35,
+          "extra_requested_control_hours": -85.38099634848544,
+          "percent_savings": -0.9548463395125527,
+          "requested_action_l1_hours": 210.59393453533758,
+          "savings": -455678.6312958898
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -23.4025,
+            -6.148750000000007
+          ],
+          "extra_lost": [
+            6.148750000000001,
+            23.402499999999986
+          ],
+          "percent_savings": [
+            -3.6639118994308744,
+            1.6376320292991011
+          ],
+          "savings": [
+            -1503415.0136087267,
+            469038.93368067045
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 15
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 10.5,
+            "percent_savings": -0.4030983797080565,
+            "savings": -580226.9838523697
+          },
+          {
+            "block": 1,
+            "extra_lost": 16.75,
+            "percent_savings": -1.4042363191896428,
+            "savings": -508637.73323696107
+          },
+          {
+            "block": 2,
+            "extra_lost": 14.75,
+            "percent_savings": -2.397767376576684,
+            "savings": -965064.8471745504
+          },
+          {
+            "block": 3,
+            "extra_lost": 6.25,
+            "percent_savings": 1.5576788277720308,
+            "savings": 587000.5972331874
+          },
+          {
+            "block": 4,
+            "extra_lost": 23.5,
+            "percent_savings": -2.1268084498604125,
+            "savings": -811464.1894487552
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 179.08147399109478,
+          "applied_action_l1_hours": 179.08147399109478,
+          "changed_action_boundaries": 36.15,
+          "component_savings": {
+            "bioreactor_holding_cost": 6.4800000000000635,
+            "bioreactor_shortage_cost": -72896.71999999981,
+            "capacity_transfer_cost": -800,
+            "expiry_cost": -150000,
+            "patient_loss_cost": -200000,
+            "reagent_holding_cost": -1282.5500571653029,
+            "reagent_purchase_cost": 162369.89522384416,
+            "reagent_shortage_cost": 116781.07499999995,
+            "reagent_transfer_cost": 19.99996840953786,
+            "specimen_transfer_cost": -480,
+            "support_flexible_labor_cost": 2995.412751848198,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -889.5704886577068,
+            "urgency_cost": -10500
+          },
+          "extra_applied_hours_including_tail": -26.39384725104449,
+          "extra_committed_control_hours": -26.39384725104449,
+          "extra_delivered": -4,
+          "extra_lost": 4,
+          "extra_requested_control_hours": -26.393847251044484,
+          "percent_savings": -0.39562728133570735,
+          "requested_action_l1_hours": 179.08147399109478,
+          "savings": -154675.97760172078
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -8.60125,
+            0.3
+          ],
+          "extra_lost": [
+            -0.3,
+            8.601249999999993
+          ],
+          "percent_savings": [
+            -2.4456005102898697,
+            1.5998561361548975
+          ],
+          "savings": [
+            -857481.7983262484,
+            541719.3461418424
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 10,
+          "loss_harm_blocks": 4,
+          "loss_harm_worlds": 13
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -1.75,
+            "percent_savings": 1.1236702408036874,
+            "savings": 374350.88062854577
+          },
+          {
+            "block": 1,
+            "extra_lost": 7.75,
+            "percent_savings": -2.062319792051719,
+            "savings": -747526.4505573027
+          },
+          {
+            "block": 2,
+            "extra_lost": 1,
+            "percent_savings": 0.19130378130345327,
+            "savings": -26281.28076658398
+          },
+          {
+            "block": 3,
+            "extra_lost": 6,
+            "percent_savings": 0.31273745268234476,
+            "savings": 146548.82461588457
+          },
+          {
+            "block": 4,
+            "extra_lost": 7,
+            "percent_savings": -1.5435280894163035,
+            "savings": -520471.8619291475
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 243.80330323450806,
+          "applied_action_l1_hours": 243.80330323450806,
+          "changed_action_boundaries": 39.65,
+          "component_savings": {
+            "bioreactor_holding_cost": -34.55999999999985,
+            "bioreactor_shortage_cost": -110601.92000000007,
+            "capacity_transfer_cost": -850,
+            "expiry_cost": -926000,
+            "patient_loss_cost": -1275000,
+            "reagent_holding_cost": -11838.048688410909,
+            "reagent_purchase_cost": 849806.1202358194,
+            "reagent_shortage_cost": 216261.23762543165,
+            "reagent_transfer_cost": 140.00014662742478,
+            "specimen_transfer_cost": -30,
+            "support_flexible_labor_cost": 11794.516290692573,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -257.3516146163937,
+            "urgency_cost": -143000
+          },
+          "extra_applied_hours_including_tail": -104.0019594114918,
+          "extra_committed_control_hours": -104.0019594114918,
+          "extra_delivered": -25.5,
+          "extra_lost": 25.5,
+          "extra_requested_control_hours": -104.0019594114918,
+          "percent_savings": -3.6726645709353933,
+          "requested_action_l1_hours": 243.80330323450806,
+          "savings": -1389610.0060044555
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -36.302499999999995,
+            -15.1
+          ],
+          "extra_lost": [
+            15.1,
+            36.30249999999998
+          ],
+          "percent_savings": [
+            -7.503917569072616,
+            -0.25084883780704875
+          ],
+          "savings": [
+            -2942113.4893272873,
+            -19799.657350425
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 5,
+          "cost_harm_worlds": 14,
+          "loss_harm_blocks": 5,
+          "loss_harm_worlds": 17
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 18.25,
+            "percent_savings": -6.7075568206459435,
+            "savings": -2201850.0454370454
+          },
+          {
+            "block": 1,
+            "extra_lost": 29,
+            "percent_savings": -0.9790260811021115,
+            "savings": -494358.23058313876
+          },
+          {
+            "block": 2,
+            "extra_lost": 22.25,
+            "percent_savings": -0.22169592813131134,
+            "savings": -91328.67316322122
+          },
+          {
+            "block": 3,
+            "extra_lost": 43.25,
+            "percent_savings": -8.676994904575983,
+            "savings": -3590241.7830754453
+          },
+          {
+            "block": 4,
+            "extra_lost": 14.75,
+            "percent_savings": -1.7780491202216175,
+            "savings": -570271.2977634268
+          }
+        ]
+      }
+    },
+    "policy_tail_mc_vs_plain_h16": {
+      "0": {
+        "means": {
+          "action_l1_hours": 165.88913591432643,
+          "applied_action_l1_hours": 165.88913591432643,
+          "changed_action_boundaries": 32.45,
+          "component_savings": {
+            "bioreactor_holding_cost": -10.080000000000018,
+            "bioreactor_shortage_cost": -208635.44000000018,
+            "capacity_transfer_cost": 150,
+            "expiry_cost": 102000,
+            "patient_loss_cost": 175000,
+            "reagent_holding_cost": 879.6247943401679,
+            "reagent_purchase_cost": -286783.2011311947,
+            "reagent_shortage_cost": -125431.524355492,
+            "reagent_transfer_cost": -259.99988555907873,
+            "specimen_transfer_cost": 270,
+            "support_flexible_labor_cost": -3316.346385613337,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -158.7047189445339,
+            "urgency_cost": 39500
+          },
+          "extra_applied_hours_including_tail": 28.796277414832264,
+          "extra_committed_control_hours": 28.796277414832264,
+          "extra_delivered": 3.5,
+          "extra_lost": -3.5,
+          "extra_requested_control_hours": 28.796277414832264,
+          "percent_savings": -0.8912874971556388,
+          "requested_action_l1_hours": 165.88913591432643,
+          "savings": -306795.67168246413
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.35125,
+            7.5
+          ],
+          "extra_lost": [
+            -7.5,
+            1.3512499999999932
+          ],
+          "percent_savings": [
+            -3.0101926648975463,
+            0.9877970222693411
+          ],
+          "savings": [
+            -1025186.4980522734,
+            350480.58157059876
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 7
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -0.25,
+            "percent_savings": -3.5533725946558024,
+            "savings": -995889.9355219854
+          },
+          {
+            "block": 1,
+            "extra_lost": -3.25,
+            "percent_savings": -1.6076232600667506,
+            "savings": -645970.7965593915
+          },
+          {
+            "block": 2,
+            "extra_lost": 0,
+            "percent_savings": 0.24384777748200218,
+            "savings": 16187.900611343794
+          },
+          {
+            "block": 3,
+            "extra_lost": -7.5,
+            "percent_savings": -0.4780363819354387,
+            "savings": -351648.15645313915
+          },
+          {
+            "block": 4,
+            "extra_lost": -6.5,
+            "percent_savings": 0.9387469733977962,
+            "savings": 443342.6295108516
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 140.1646865428898,
+          "applied_action_l1_hours": 140.1646865428898,
+          "changed_action_boundaries": 31.25,
+          "component_savings": {
+            "bioreactor_holding_cost": -69.11999999999998,
+            "bioreactor_shortage_cost": 42732.5600000001,
+            "capacity_transfer_cost": 550,
+            "expiry_cost": -8000,
+            "patient_loss_cost": 7500,
+            "reagent_holding_cost": 1833.0247735373791,
+            "reagent_purchase_cost": -33739.20333073968,
+            "reagent_shortage_cost": -90829.71752369912,
+            "reagent_transfer_cost": -199.99991893768254,
+            "specimen_transfer_cost": -720,
+            "support_flexible_labor_cost": -1067.384911447182,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -330.5673602921246,
+            "urgency_cost": 3500
+          },
+          "extra_applied_hours_including_tail": 8.946583074917422,
+          "extra_committed_control_hours": 8.946583074917422,
+          "extra_delivered": 0.15,
+          "extra_lost": -0.15,
+          "extra_requested_control_hours": 8.946583074917422,
+          "percent_savings": -0.298364021748173,
+          "requested_action_l1_hours": 140.1646865428898,
+          "savings": -78840.40827157852
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -3.1,
+            3.8
+          ],
+          "extra_lost": [
+            -3.8,
+            3.1
+          ],
+          "percent_savings": [
+            -2.0750344193417716,
+            1.5280288607875385
+          ],
+          "savings": [
+            -618685.0037184121,
+            471217.63433745364
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 9,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 9
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -4,
+            "percent_savings": 1.8360327117690483,
+            "savings": 565050.602491728
+          },
+          {
+            "block": 1,
+            "extra_lost": 1,
+            "percent_savings": 0.21564897508548153,
+            "savings": -26316.760325742885
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.75,
+            "percent_savings": -1.477274697437251,
+            "savings": -429627.58558919095
+          },
+          {
+            "block": 3,
+            "extra_lost": 4.5,
+            "percent_savings": -1.8797392848233088,
+            "savings": -481770.5070711868
+          },
+          {
+            "block": 4,
+            "extra_lost": -1.5,
+            "percent_savings": -0.18648781333483505,
+            "savings": -21537.790863499977
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 199.86237063207523,
+          "applied_action_l1_hours": 199.86237063207523,
+          "changed_action_boundaries": 37,
+          "component_savings": {
+            "bioreactor_holding_cost": -61.20000000000023,
+            "bioreactor_shortage_cost": 45246.2399999998,
+            "capacity_transfer_cost": -400,
+            "expiry_cost": 192000,
+            "patient_loss_cost": 290000,
+            "reagent_holding_cost": 2099.7497128203104,
+            "reagent_purchase_cost": -248826.61087203986,
+            "reagent_shortage_cost": -103805.4050271676,
+            "reagent_transfer_cost": -280.0000298023203,
+            "specimen_transfer_cost": -1830,
+            "support_flexible_labor_cost": -3810.1102342817017,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 135.6964150848788,
+            "urgency_cost": 46000
+          },
+          "extra_applied_hours_including_tail": 33.2055946860623,
+          "extra_committed_control_hours": 33.2055946860623,
+          "extra_delivered": 5.8,
+          "extra_lost": -5.8,
+          "extra_requested_control_hours": 33.2055946860623,
+          "percent_savings": 0.45843169514169757,
+          "requested_action_l1_hours": 199.86237063207523,
+          "savings": 216468.35996461305
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -0.15,
+            12.651249999999994
+          ],
+          "extra_lost": [
+            -12.651250000000001,
+            0.15
+          ],
+          "percent_savings": [
+            -1.1057203292683664,
+            1.9651975195306663
+          ],
+          "savings": [
+            -451007.4600809873,
+            860725.1635475095
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 8,
+          "loss_harm_blocks": 1,
+          "loss_harm_worlds": 8
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 0.5,
+            "percent_savings": 0.12590286837364495,
+            "savings": -61544.9704759866
+          },
+          {
+            "block": 1,
+            "extra_lost": -10.75,
+            "percent_savings": -0.09765165788201091,
+            "savings": 51168.10934254527
+          },
+          {
+            "block": 2,
+            "extra_lost": -8,
+            "percent_savings": 0.3356184088363807,
+            "savings": 264691.4942691978
+          },
+          {
+            "block": 3,
+            "extra_lost": -10.5,
+            "percent_savings": 2.420795372650365,
+            "savings": 1030616.8006451959
+          },
+          {
+            "block": 4,
+            "extra_lost": -0.25,
+            "percent_savings": -0.49250651626989217,
+            "savings": -202589.63395788707
+          }
+        ]
+      }
+    },
+    "policy_tail_td_vs_adaptive_tail_td": {
+      "0": {
+        "means": {
+          "action_l1_hours": 57.91539787284786,
+          "applied_action_l1_hours": 57.91539787284786,
+          "changed_action_boundaries": 14.1,
+          "component_savings": {
+            "bioreactor_holding_cost": 35.99999999999991,
+            "bioreactor_shortage_cost": 2513.679999999795,
+            "capacity_transfer_cost": 100,
+            "expiry_cost": 8000,
+            "patient_loss_cost": 2500,
+            "reagent_holding_cost": -993.1240809574622,
+            "reagent_purchase_cost": -29521.78246648009,
+            "reagent_shortage_cost": -8650.45128901804,
+            "reagent_transfer_cost": 140.0000077486034,
+            "specimen_transfer_cost": 240,
+            "support_flexible_labor_cost": -27.608252335807265,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 59.73222683453874,
+            "urgency_cost": 250
+          },
+          "extra_applied_hours_including_tail": 0.4065729475957454,
+          "extra_committed_control_hours": 0.4065729475957454,
+          "extra_delivered": 0.05,
+          "extra_lost": -0.05,
+          "extra_requested_control_hours": 0.4065729475957539,
+          "percent_savings": -0.08781579172988743,
+          "requested_action_l1_hours": 57.91539787284786,
+          "savings": -25353.553854207323
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.65,
+            1.901249999999993
+          ],
+          "extra_lost": [
+            -1.9012499999999999,
+            1.65
+          ],
+          "percent_savings": [
+            -1.0552982835668039,
+            1.2057337560101977
+          ],
+          "savings": [
+            -367127.7066593609,
+            436687.09488428326
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 3,
+          "loss_harm_worlds": 7
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -0.5,
+            "percent_savings": -0.6939765764069763,
+            "savings": -223416.4814304188
+          },
+          {
+            "block": 1,
+            "extra_lost": -2,
+            "percent_savings": 2.068031483416157,
+            "savings": 724154.0515024858
+          },
+          {
+            "block": 2,
+            "extra_lost": 0.25,
+            "percent_savings": -0.7981093864756419,
+            "savings": -304091.4158680001
+          },
+          {
+            "block": 3,
+            "extra_lost": 1.75,
+            "percent_savings": -1.022982333021247,
+            "savings": -323149.8124451712
+          },
+          {
+            "block": 4,
+            "extra_lost": 0.25,
+            "percent_savings": 0.00795785383827144,
+            "savings": -264.1110299322754
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 79.6428300601539,
+          "applied_action_l1_hours": 79.6428300601539,
+          "changed_action_boundaries": 18.25,
+          "component_savings": {
+            "bioreactor_holding_cost": 42.47999999999979,
+            "bioreactor_shortage_cost": -55300.96000000006,
+            "capacity_transfer_cost": 250,
+            "expiry_cost": 6000,
+            "patient_loss_cost": 5000,
+            "reagent_holding_cost": 2230.2747972153147,
+            "reagent_purchase_cost": 12652.19472109098,
+            "reagent_shortage_cost": 34601.80103121274,
+            "reagent_transfer_cost": -20.000069141387627,
+            "specimen_transfer_cost": 450,
+            "support_flexible_labor_cost": 215.2485000686949,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -287.5810916401482,
+            "urgency_cost": 750
+          },
+          "extra_applied_hours_including_tail": -2.0139851696078837,
+          "extra_committed_control_hours": -2.0139851696078837,
+          "extra_delivered": 0.1,
+          "extra_lost": -0.1,
+          "extra_requested_control_hours": -2.0139851696078805,
+          "percent_savings": 0.02829431484006273,
+          "requested_action_l1_hours": 79.6428300601539,
+          "savings": 6583.457888804935
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -2.5,
+            2.55
+          ],
+          "extra_lost": [
+            -2.55,
+            2.5
+          ],
+          "percent_savings": [
+            -1.4062625017846984,
+            1.044011752059192
+          ],
+          "savings": [
+            -482300.7943388167,
+            338405.8582717351
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 7,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 8
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -2,
+            "percent_savings": 0.7540563356375096,
+            "savings": 225074.42424075585
+          },
+          {
+            "block": 1,
+            "extra_lost": -2.5,
+            "percent_savings": 0.33232558468825024,
+            "savings": 188835.76302671805
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.75,
+            "percent_savings": 0.8786616341598811,
+            "savings": 249206.4128429247
+          },
+          {
+            "block": 3,
+            "extra_lost": 3,
+            "percent_savings": -0.3758872959958033,
+            "savings": -134825.0091602644
+          },
+          {
+            "block": 4,
+            "extra_lost": 1.75,
+            "percent_savings": -1.4476846842895241,
+            "savings": -495374.30150610954
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 126.57512812304348,
+          "applied_action_l1_hours": 126.57512812304348,
+          "changed_action_boundaries": 25.75,
+          "component_savings": {
+            "bioreactor_holding_cost": 35.99999999999996,
+            "bioreactor_shortage_cost": 75410.39999999963,
+            "capacity_transfer_cost": 150,
+            "expiry_cost": 90000,
+            "patient_loss_cost": 107500,
+            "reagent_holding_cost": 720.7249731085852,
+            "reagent_purchase_cost": 6326.096480726637,
+            "reagent_shortage_cost": 99480.150250864,
+            "reagent_transfer_cost": 319.9999743700022,
+            "specimen_transfer_cost": 0,
+            "support_flexible_labor_cost": -116.2034393189202,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -52.25869933122435,
+            "urgency_cost": -4250
+          },
+          "extra_applied_hours_including_tail": 0.7830087985582879,
+          "extra_committed_control_hours": 0.7830087985582879,
+          "extra_delivered": 2.15,
+          "extra_lost": -2.15,
+          "extra_requested_control_hours": 0.7830087985582879,
+          "percent_savings": 0.7450359089702907,
+          "requested_action_l1_hours": 126.57512812304348,
+          "savings": 375524.90954041947
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.3,
+            5.45
+          ],
+          "extra_lost": [
+            -5.45,
+            1.3
+          ],
+          "percent_savings": [
+            -0.429322212698199,
+            1.9403817731498547
+          ],
+          "savings": [
+            -116304.5256237579,
+            871031.2979433126
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 1,
+          "cost_harm_worlds": 6,
+          "loss_harm_blocks": 1,
+          "loss_harm_worlds": 7
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 2.25,
+            "percent_savings": 0.9666930776719036,
+            "savings": 436678.19160732627
+          },
+          {
+            "block": 1,
+            "extra_lost": -1.5,
+            "percent_savings": 1.062287631757583,
+            "savings": 707809.0149258841
+          },
+          {
+            "block": 2,
+            "extra_lost": -3,
+            "percent_savings": 1.3182752878948092,
+            "savings": 436969.416532062
+          },
+          {
+            "block": 3,
+            "extra_lost": -4.25,
+            "percent_savings": 0.5278796127510669,
+            "savings": 307467.7690993296
+          },
+          {
+            "block": 4,
+            "extra_lost": -4.25,
+            "percent_savings": -0.14995606522390958,
+            "savings": -11299.84446250461
+          }
+        ]
+      }
+    },
+    "policy_tail_td_vs_existing_frozen": {
+      "0": {
+        "means": {
+          "action_l1_hours": 127.1846131719968,
+          "applied_action_l1_hours": 127.18461317199679,
+          "changed_action_boundaries": 25.8,
+          "component_savings": {
+            "bioreactor_holding_cost": 99.35999999999999,
+            "bioreactor_shortage_cost": -349401.52000000014,
+            "capacity_transfer_cost": 550,
+            "expiry_cost": 86000,
+            "patient_loss_cost": 155000,
+            "reagent_holding_cost": 2434.5753900096183,
+            "reagent_purchase_cost": -206652.59604081768,
+            "reagent_shortage_cost": -69203.60992543488,
+            "reagent_transfer_cost": 99.99997258186315,
+            "specimen_transfer_cost": 1710,
+            "support_flexible_labor_cost": -2700.829626806013,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 594.8448370068963,
+            "urgency_cost": 33750
+          },
+          "extra_applied_hours_including_tail": 23.99928628353598,
+          "extra_committed_control_hours": 23.99928628353598,
+          "extra_delivered": 3.1,
+          "extra_lost": -3.1,
+          "extra_requested_control_hours": 23.999286283535973,
+          "percent_savings": -0.9794870514740175,
+          "requested_action_l1_hours": 127.1846131719968,
+          "savings": -347719.7753934598
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            0.5487500000000001,
+            5.7
+          ],
+          "extra_lost": [
+            -5.7,
+            -0.5487500000000068
+          ],
+          "percent_savings": [
+            -2.531670379850164,
+            0.6430218799044588
+          ],
+          "savings": [
+            -845602.6730368547,
+            217028.58507858013
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 15,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 8
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -3.5,
+            "percent_savings": 1.0785925761474373,
+            "savings": 452249.73879601434
+          },
+          {
+            "block": 1,
+            "extra_lost": -4.5,
+            "percent_savings": -0.8043118248271205,
+            "savings": -375013.21619949676
+          },
+          {
+            "block": 2,
+            "extra_lost": -1.5,
+            "percent_savings": 0.17760563270165186,
+            "savings": -69006.83793251403
+          },
+          {
+            "block": 3,
+            "extra_lost": -1.75,
+            "percent_savings": -3.0494602841727727,
+            "savings": -987925.9461570447
+          },
+          {
+            "block": 4,
+            "extra_lost": -4.25,
+            "percent_savings": -2.299861357219284,
+            "savings": -758902.6154742576
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 132.32588392244276,
+          "applied_action_l1_hours": 132.32588392244276,
+          "changed_action_boundaries": 28.5,
+          "component_savings": {
+            "bioreactor_holding_cost": 51.839999999999826,
+            "bioreactor_shortage_cost": 25136.800000000047,
+            "capacity_transfer_cost": 950,
+            "expiry_cost": -36000,
+            "patient_loss_cost": -72500,
+            "reagent_holding_cost": 1407.4002372868395,
+            "reagent_purchase_cost": -18978.290950441362,
+            "reagent_shortage_cost": 95154.94935549065,
+            "reagent_transfer_cost": -0.00005483627251123835,
+            "specimen_transfer_cost": 150,
+            "support_flexible_labor_cost": -290.55135727429587,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 262.6465483264124,
+            "urgency_cost": -5000
+          },
+          "extra_applied_hours_including_tail": 2.787611124290251,
+          "extra_committed_control_hours": 2.787611124290251,
+          "extra_delivered": -1.45,
+          "extra_lost": 1.45,
+          "extra_requested_control_hours": 2.787611124290251,
+          "percent_savings": -0.0083367596425044,
+          "requested_action_l1_hours": 132.32588392244276,
+          "savings": -9655.206221449189
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -3.7,
+            0.95
+          ],
+          "extra_lost": [
+            -0.95,
+            3.7
+          ],
+          "percent_savings": [
+            -1.7309729352046495,
+            1.6551709214485661
+          ],
+          "savings": [
+            -656986.5435196278,
+            600613.1409260662
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 4,
+          "loss_harm_worlds": 14
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 4,
+            "percent_savings": -0.31310081825782143,
+            "savings": -173570.73402401712
+          },
+          {
+            "block": 1,
+            "extra_lost": 3.25,
+            "percent_savings": -2.339477866460549,
+            "savings": -877825.85619203
+          },
+          {
+            "block": 2,
+            "extra_lost": 1.5,
+            "percent_savings": -0.22211992547788376,
+            "savings": -50453.002259282395
+          },
+          {
+            "block": 3,
+            "extra_lost": 0.5,
+            "percent_savings": 0.6758336030598833,
+            "savings": 326696.8143853545
+          },
+          {
+            "block": 4,
+            "extra_lost": -2,
+            "percent_savings": 2.1571812089238485,
+            "savings": 726876.7469827291
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 171.5617313425004,
+          "applied_action_l1_hours": 171.5617313425004,
+          "changed_action_boundaries": 32.65,
+          "component_savings": {
+            "bioreactor_holding_cost": 53.99999999999996,
+            "bioreactor_shortage_cost": -95519.84000000008,
+            "capacity_transfer_cost": 700,
+            "expiry_cost": 240000,
+            "patient_loss_cost": 315000,
+            "reagent_holding_cost": 3155.299477393864,
+            "reagent_purchase_cost": -162369.91131194952,
+            "reagent_shortage_cost": 90829.724484393,
+            "reagent_transfer_cost": 159.9999099969873,
+            "specimen_transfer_cost": 660,
+            "support_flexible_labor_cost": -2954.6878587301317,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 295.2419709314605,
+            "urgency_cost": 30000
+          },
+          "extra_applied_hours_including_tail": 25.979023385616802,
+          "extra_committed_control_hours": 25.979023385616802,
+          "extra_delivered": 6.3,
+          "extra_lost": -6.3,
+          "extra_requested_control_hours": 25.979023385616802,
+          "percent_savings": 0.9843314757907489,
+          "requested_action_l1_hours": 171.5617313425004,
+          "savings": 420009.82667203544
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -0.5,
+            14.4
+          ],
+          "extra_lost": [
+            -14.4,
+            0.5
+          ],
+          "percent_savings": [
+            -1.2348565943101684,
+            3.044497236153828
+          ],
+          "savings": [
+            -550352.109593433,
+            1392735.3709801189
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 7,
+          "loss_harm_blocks": 1,
+          "loss_harm_worlds": 5
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 2.75,
+            "percent_savings": -1.3101631832979266,
+            "savings": -556167.9959077444
+          },
+          {
+            "block": 1,
+            "extra_lost": -19.5,
+            "percent_savings": 3.002222694311327,
+            "savings": 1597177.178093128
+          },
+          {
+            "block": 2,
+            "extra_lost": -3.5,
+            "percent_savings": 1.4613706799979664,
+            "savings": 445206.79436154105
+          },
+          {
+            "block": 3,
+            "extra_lost": -9.75,
+            "percent_savings": 2.6662732877111215,
+            "savings": 1159450.4607036617
+          },
+          {
+            "block": 4,
+            "extra_lost": -1.5,
+            "percent_savings": -0.8980460997687424,
+            "savings": -545617.303890409
+          }
+        ]
+      }
+    },
+    "policy_tail_td_vs_plain_h16": {
+      "0": {
+        "means": {
+          "action_l1_hours": 161.39971400076115,
+          "applied_action_l1_hours": 161.39971400076115,
+          "changed_action_boundaries": 31.75,
+          "component_savings": {
+            "bioreactor_holding_cost": 11.520000000000028,
+            "bioreactor_shortage_cost": -311696.31999999995,
+            "capacity_transfer_cost": -100,
+            "expiry_cost": 154000,
+            "patient_loss_cost": 235000,
+            "reagent_holding_cost": 1452.8002890401099,
+            "reagent_purchase_cost": -354261.59314998635,
+            "reagent_shortage_cost": -108130.61314103976,
+            "reagent_transfer_cost": -219.99985516071047,
+            "specimen_transfer_cost": 1320,
+            "support_flexible_labor_cost": -4599.523019259013,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 119.15449812778438,
+            "urgency_cost": 48750
+          },
+          "extra_applied_hours_including_tail": 40.244769312308804,
+          "extra_committed_control_hours": 40.244769312308804,
+          "extra_delivered": 4.7,
+          "extra_lost": -4.7,
+          "extra_requested_control_hours": 40.244769312308804,
+          "percent_savings": -0.8871257984550323,
+          "requested_action_l1_hours": 161.39971400076115,
+          "savings": -338354.5743782783
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            0.99875,
+            9.551249999999994
+          ],
+          "extra_lost": [
+            -9.551250000000001,
+            -0.9987500000000068
+          ],
+          "percent_savings": [
+            -2.64010576118651,
+            0.7729972971960511
+          ],
+          "savings": [
+            -1023092.5269128224,
+            348066.3535326417
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 13,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 6
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -9.25,
+            "percent_savings": -1.1128948431288905,
+            "savings": -264576.97227904294
+          },
+          {
+            "block": 1,
+            "extra_lost": -2.25,
+            "percent_savings": -2.38123390819055,
+            "savings": -960301.0668650568
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.25,
+            "percent_savings": -0.18087798684406547,
+            "savings": -144800.59626866225
+          },
+          {
+            "block": 3,
+            "extra_lost": -5.5,
+            "percent_savings": -1.8191686752957592,
+            "savings": -821155.8600827372
+          },
+          {
+            "block": 4,
+            "extra_lost": -6.25,
+            "percent_savings": 1.0585464211841042,
+            "savings": 499061.62360410765
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 137.82317660121777,
+          "applied_action_l1_hours": 137.82317660121777,
+          "changed_action_boundaries": 30.35,
+          "component_savings": {
+            "bioreactor_holding_cost": -7.9200000000002095,
+            "bioreactor_shortage_cost": -67869.35999999996,
+            "capacity_transfer_cost": 450,
+            "expiry_cost": -6000,
+            "patient_loss_cost": -2500,
+            "reagent_holding_cost": 2911.27457582657,
+            "reagent_purchase_cost": -73804.50458762264,
+            "reagent_shortage_cost": -47577.47280867261,
+            "reagent_transfer_cost": -260.0000005960463,
+            "specimen_transfer_cost": -660,
+            "support_flexible_labor_cost": -1242.4607771159922,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -437.71940993103334,
+            "urgency_cost": 7750
+          },
+          "extra_applied_hours_including_tail": 10.53819040410448,
+          "extra_committed_control_hours": 10.53819040410448,
+          "extra_delivered": -0.05,
+          "extra_lost": 0.05,
+          "extra_requested_control_hours": 10.53819040410448,
+          "percent_savings": -0.4369480420043706,
+          "requested_action_l1_hours": 137.82317660121777,
+          "savings": -189248.1630081123
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -3.25,
+            3.1
+          ],
+          "extra_lost": [
+            -3.1,
+            3.25
+          ],
+          "percent_savings": [
+            -1.8625311286744908,
+            1.1849364505600386
+          ],
+          "savings": [
+            -674345.2199368116,
+            311361.97591053194
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 4,
+          "cost_harm_worlds": 11,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 9
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -4.5,
+            "percent_savings": 1.2879398669644884,
+            "savings": 308729.06197059155
+          },
+          {
+            "block": 1,
+            "extra_lost": 3,
+            "percent_savings": -1.2941868063279407,
+            "savings": -555368.997546548
+          },
+          {
+            "block": 2,
+            "extra_lost": -1,
+            "percent_savings": -0.2328855138854604,
+            "savings": -59603.331553972326
+          },
+          {
+            "block": 3,
+            "extra_lost": 3.75,
+            "percent_savings": -1.5525974464178023,
+            "savings": -480921.2820911873
+          },
+          {
+            "block": 4,
+            "extra_lost": -1,
+            "percent_savings": -0.3930103103551379,
+            "savings": -159076.26581944525
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 197.5540912736917,
+          "applied_action_l1_hours": 197.5540912736917,
+          "changed_action_boundaries": 37.25,
+          "component_savings": {
+            "bioreactor_holding_cost": 1.4399999999999182,
+            "bioreactor_shortage_cost": 77924.07999999957,
+            "capacity_transfer_cost": 50,
+            "expiry_cost": 368000,
+            "patient_loss_cost": 507500,
+            "reagent_holding_cost": 2366.474591217153,
+            "reagent_purchase_cost": -339500.716088105,
+            "reagent_shortage_cost": -17300.920237574268,
+            "reagent_transfer_cost": -160.00002443790368,
+            "specimen_transfer_cost": -1350,
+            "support_flexible_labor_cost": -4777.035817484514,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 227.96604769238783,
+            "urgency_cost": 48500
+          },
+          "extra_applied_hours_including_tail": 41.981820728017894,
+          "extra_committed_control_hours": 41.981820728017894,
+          "extra_delivered": 10.15,
+          "extra_lost": -10.15,
+          "extra_requested_control_hours": 41.981820728017894,
+          "percent_savings": 1.5672093340309747,
+          "requested_action_l1_hours": 197.5540912736917,
+          "savings": 641481.288471308
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            4.04875,
+            16.90124999999999
+          ],
+          "extra_lost": [
+            -16.901249999999997,
+            -4.048750000000006
+          ],
+          "percent_savings": [
+            -0.39406190883671177,
+            3.3278300394654683
+          ],
+          "savings": [
+            -181591.1582267291,
+            1382893.103765027
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 1,
+          "cost_harm_worlds": 5,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 5
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -5.25,
+            "percent_savings": 0.20840720593899742,
+            "savings": -49593.33113574982
+          },
+          {
+            "block": 1,
+            "extra_lost": -15.75,
+            "percent_savings": 1.1025951659641255,
+            "savings": 696432.3960781712
+          },
+          {
+            "block": 2,
+            "extra_lost": -10.5,
+            "percent_savings": 2.1632160074708175,
+            "savings": 872668.9010887928
+          },
+          {
+            "block": 3,
+            "extra_lost": -15.25,
+            "percent_savings": 3.39527948123631,
+            "savings": 1463106.574641334
+          },
+          {
+            "block": 4,
+            "extra_lost": -4,
+            "percent_savings": 0.9665488095446235,
+            "savings": 224791.90168399177
+          }
+        ]
+      }
+    },
+    "policy_tail_td_vs_plain_h8": {
+      "0": {
+        "means": {
+          "action_l1_hours": 208.20867502895226,
+          "applied_action_l1_hours": 208.20867502895226,
+          "changed_action_boundaries": 35.4,
+          "component_savings": {
+            "bioreactor_holding_cost": 96.47999999999993,
+            "bioreactor_shortage_cost": -52787.280000000006,
+            "capacity_transfer_cost": 100,
+            "expiry_cost": 522000,
+            "patient_loss_cost": 777500,
+            "reagent_holding_cost": 5584.199880426409,
+            "reagent_purchase_cost": -748588.5019481684,
+            "reagent_shortage_cost": -173008.9675167587,
+            "reagent_transfer_cost": -279.9999594688405,
+            "specimen_transfer_cost": 1050,
+            "support_flexible_labor_cost": -10968.111336375878,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 1171.9094804211568,
+            "urgency_cost": 102250
+          },
+          "extra_applied_hours_including_tail": 96.82948824596198,
+          "extra_committed_control_hours": 96.82948824596198,
+          "extra_delivered": 15.55,
+          "extra_lost": -15.55,
+          "extra_requested_control_hours": 96.82948824596198,
+          "percent_savings": 0.6598569233867104,
+          "requested_action_l1_hours": 208.20867502895226,
+          "savings": 424119.72860007564
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            7.7,
+            24.5
+          ],
+          "extra_lost": [
+            -24.5,
+            -7.7
+          ],
+          "percent_savings": [
+            -2.009599064905193,
+            3.267582573088021
+          ],
+          "savings": [
+            -583349.2304926813,
+            1499259.1656481791
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 1,
+          "cost_harm_worlds": 10,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 4
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -19.5,
+            "percent_savings": 2.1227422916004617,
+            "savings": 1311539.9470953122
+          },
+          {
+            "block": 1,
+            "extra_lost": -15.75,
+            "percent_savings": 0.6080530752293994,
+            "savings": 194307.46293129586
+          },
+          {
+            "block": 2,
+            "extra_lost": -15,
+            "percent_savings": 1.7451668774333566,
+            "savings": 804076.3502945444
+          },
+          {
+            "block": 3,
+            "extra_lost": -4.25,
+            "percent_savings": -3.2362050934850375,
+            "savings": -1056508.3008627854
+          },
+          {
+            "block": 4,
+            "extra_lost": -23.25,
+            "percent_savings": 2.059527466155372,
+            "savings": 867183.1835420113
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 184.07634980157314,
+          "applied_action_l1_hours": 184.07634980157314,
+          "changed_action_boundaries": 36.2,
+          "component_savings": {
+            "bioreactor_holding_cost": 54.71999999999971,
+            "bioreactor_shortage_cost": -37705.20000000026,
+            "capacity_transfer_cost": 700,
+            "expiry_cost": 152000,
+            "patient_loss_cost": 190000,
+            "reagent_holding_cost": 2360.799859454494,
+            "reagent_purchase_cost": -202435.1964807271,
+            "reagent_shortage_cost": -73528.83028497346,
+            "reagent_transfer_cost": -80.00005006790158,
+            "specimen_transfer_cost": 540,
+            "support_flexible_labor_cost": -3170.4886175170077,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 782.4184390187982,
+            "urgency_cost": 14750
+          },
+          "extra_applied_hours_including_tail": 27.98545458023155,
+          "extra_committed_control_hours": 27.98545458023155,
+          "extra_delivered": 3.8,
+          "extra_lost": -3.8,
+          "extra_requested_control_hours": 27.985454580231544,
+          "percent_savings": 0.1205700437704671,
+          "requested_action_l1_hours": 184.07634980157314,
+          "savings": 44268.222865187
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            0.4487500000000001,
+            7.4
+          ],
+          "extra_lost": [
+            -7.4,
+            -0.4487500000000068
+          ],
+          "percent_savings": [
+            -1.2965448577135785,
+            1.4538770019235263
+          ],
+          "savings": [
+            -484021.4477986469,
+            540357.4013316073
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 2,
+          "cost_harm_worlds": 9,
+          "loss_harm_blocks": 1,
+          "loss_harm_worlds": 7
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": 1.25,
+            "percent_savings": -1.7712531365494317,
+            "savings": -630672.4211496823
+          },
+          {
+            "block": 1,
+            "extra_lost": -5.75,
+            "percent_savings": 0.489539642686873,
+            "savings": 218474.21333649755
+          },
+          {
+            "block": 2,
+            "extra_lost": -1.25,
+            "percent_savings": 0.9102456797621715,
+            "savings": 396305.5348018026
+          },
+          {
+            "block": 3,
+            "extra_lost": -6.75,
+            "percent_savings": -0.2582714617491923,
+            "savings": -145699.5996358851
+          },
+          {
+            "block": 4,
+            "extra_lost": -6.5,
+            "percent_savings": 1.232589494701915,
+            "savings": 382933.3869732022
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 245.53340802307252,
+          "applied_action_l1_hours": 245.53340802307247,
+          "changed_action_boundaries": 40.45,
+          "component_savings": {
+            "bioreactor_holding_cost": 97.2,
+            "bioreactor_shortage_cost": 143279.75999999983,
+            "capacity_transfer_cost": 1300,
+            "expiry_cost": 1102000,
+            "patient_loss_cost": 1492500,
+            "reagent_holding_cost": 12104.773566807751,
+            "reagent_purchase_cost": -940480.2254518844,
+            "reagent_shortage_cost": -129756.75283583828,
+            "reagent_transfer_cost": -20.00014126300821,
+            "specimen_transfer_cost": 510,
+            "support_flexible_labor_cost": -12761.441873895386,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 349.62124722390274,
+            "urgency_cost": 145500
+          },
+          "extra_applied_hours_including_tail": 112.77818545344739,
+          "extra_committed_control_hours": 112.77818545344739,
+          "extra_delivered": 29.85,
+          "extra_lost": -29.85,
+          "extra_requested_control_hours": 112.77818545344739,
+          "percent_savings": 4.349394383736242,
+          "requested_action_l1_hours": 245.53340802307252,
+          "savings": 1814622.9345111505
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            20.75,
+            41.25
+          ],
+          "extra_lost": [
+            -41.25,
+            -20.75
+          ],
+          "percent_savings": [
+            1.6209726651797622,
+            7.481440236484478
+          ],
+          "savings": [
+            564575.4150027876,
+            3292070.989151992
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 0,
+          "cost_harm_worlds": 3,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 1
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -24,
+            "percent_savings": 5.904497023249767,
+            "savings": 2213801.684777282
+          },
+          {
+            "block": 1,
+            "extra_lost": -34,
+            "percent_savings": 2.016407313360703,
+            "savings": 1139622.5173187647
+          },
+          {
+            "block": 2,
+            "extra_lost": -24.75,
+            "percent_savings": 2.012658745672494,
+            "savings": 699306.0799828162
+          },
+          {
+            "block": 3,
+            "extra_lost": -48,
+            "percent_savings": 8.829926940503793,
+            "savings": 4022731.5570715833
+          },
+          {
+            "block": 4,
+            "extra_lost": -18.5,
+            "percent_savings": 2.9834818958944544,
+            "savings": 997652.8334053056
+          }
+        ]
+      }
+    },
+    "policy_tail_td_vs_policy_tail_mc": {
+      "0": {
+        "means": {
+          "action_l1_hours": 58.804855319443675,
+          "applied_action_l1_hours": 58.804855319443675,
+          "changed_action_boundaries": 12.85,
+          "component_savings": {
+            "bioreactor_holding_cost": 21.600000000000044,
+            "bioreactor_shortage_cost": -103060.8799999998,
+            "capacity_transfer_cost": -250,
+            "expiry_cost": 52000,
+            "patient_loss_cost": 60000,
+            "reagent_holding_cost": 573.175494699942,
+            "reagent_purchase_cost": -67478.39201879161,
+            "reagent_shortage_cost": 17300.911214452237,
+            "reagent_transfer_cost": 40.00003039836825,
+            "specimen_transfer_cost": 1050,
+            "support_flexible_labor_cost": -1283.1766336456774,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 277.8592170723182,
+            "urgency_cost": 9250
+          },
+          "extra_applied_hours_including_tail": 11.448491897476547,
+          "extra_committed_control_hours": 11.448491897476547,
+          "extra_delivered": 1.2,
+          "extra_lost": -1.2,
+          "extra_requested_control_hours": 11.44849189747654,
+          "percent_savings": -0.02432809393959387,
+          "requested_action_l1_hours": 58.804855319443675,
+          "savings": -31558.902695814148
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -1.55125,
+            5.752499999999986
+          ],
+          "extra_lost": [
+            -5.7524999999999995,
+            1.5512499999999931
+          ],
+          "percent_savings": [
+            -1.1638425375979706,
+            1.4252952334235596
+          ],
+          "savings": [
+            -430287.95888455794,
+            457678.55249296565
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 6,
+          "loss_harm_blocks": 3,
+          "loss_harm_worlds": 6
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -9,
+            "percent_savings": 2.336074140400578,
+            "savings": 731312.9632429425
+          },
+          {
+            "block": 1,
+            "extra_lost": 1,
+            "percent_savings": -0.7597227574011121,
+            "savings": -314330.2703056652
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.25,
+            "percent_savings": -0.4293201198336244,
+            "savings": -160988.49688000605
+          },
+          {
+            "block": 3,
+            "extra_lost": 2,
+            "percent_savings": -1.3886080394808311,
+            "savings": -469507.703629598
+          },
+          {
+            "block": 4,
+            "extra_lost": 0.25,
+            "percent_savings": 0.1199363066170204,
+            "savings": 55718.99409325607
+          }
+        ]
+      },
+      "1": {
+        "means": {
+          "action_l1_hours": 81.19125595343262,
+          "applied_action_l1_hours": 81.19125595343262,
+          "changed_action_boundaries": 17.4,
+          "component_savings": {
+            "bioreactor_holding_cost": 61.199999999999775,
+            "bioreactor_shortage_cost": -110601.92000000007,
+            "capacity_transfer_cost": -100,
+            "expiry_cost": 2000,
+            "patient_loss_cost": -10000,
+            "reagent_holding_cost": 1078.249802289191,
+            "reagent_purchase_cost": -40065.30125688296,
+            "reagent_shortage_cost": 43252.24471502651,
+            "reagent_transfer_cost": -60.000081658363705,
+            "specimen_transfer_cost": 60,
+            "support_flexible_labor_cost": -175.07586566881,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": -107.15204963890874,
+            "urgency_cost": 4250
+          },
+          "extra_applied_hours_including_tail": 1.591607329187059,
+          "extra_committed_control_hours": 1.591607329187059,
+          "extra_delivered": -0.2,
+          "extra_lost": 0.2,
+          "extra_requested_control_hours": 1.591607329187059,
+          "percent_savings": -0.2063939119030566,
+          "requested_action_l1_hours": 81.19125595343262,
+          "savings": -110407.75473653377
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            -2.2,
+            1.9
+          ],
+          "extra_lost": [
+            -1.9,
+            2.2
+          ],
+          "percent_savings": [
+            -1.9455432211588102,
+            1.3435892669289224
+          ],
+          "savings": [
+            -711381.1622679135,
+            411014.206673833
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 3,
+          "cost_harm_worlds": 7,
+          "loss_harm_blocks": 2,
+          "loss_harm_worlds": 8
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -0.5,
+            "percent_savings": -0.6085620734298474,
+            "savings": -256321.54052113649
+          },
+          {
+            "block": 1,
+            "extra_lost": 2,
+            "percent_savings": -1.53163274552192,
+            "savings": -529052.2372208051
+          },
+          {
+            "block": 2,
+            "extra_lost": -0.25,
+            "percent_savings": 1.2198637565266501,
+            "savings": 370024.2540352186
+          },
+          {
+            "block": 3,
+            "extra_lost": -0.75,
+            "percent_savings": 0.21259800980107846,
+            "savings": 849.2249799994752
+          },
+          {
+            "block": 4,
+            "extra_lost": 0.5,
+            "percent_savings": -0.32423650689124406,
+            "savings": -137538.47495594528
+          }
+        ]
+      },
+      "2": {
+        "means": {
+          "action_l1_hours": 113.86378948520033,
+          "applied_action_l1_hours": 113.86378948520033,
+          "changed_action_boundaries": 22.1,
+          "component_savings": {
+            "bioreactor_holding_cost": 62.64000000000014,
+            "bioreactor_shortage_cost": 32677.839999999756,
+            "capacity_transfer_cost": 450,
+            "expiry_cost": 176000,
+            "patient_loss_cost": 217500,
+            "reagent_holding_cost": 266.72487839684254,
+            "reagent_purchase_cost": -90674.10521606515,
+            "reagent_shortage_cost": 86504.48478959332,
+            "reagent_transfer_cost": 120.0000053644166,
+            "specimen_transfer_cost": 480,
+            "support_flexible_labor_cost": -966.9255832028126,
+            "support_ordinary_staff_cost": 0,
+            "support_switching_cost": 92.26963260750901,
+            "urgency_cost": 2500
+          },
+          "extra_applied_hours_including_tail": 8.776226041955598,
+          "extra_committed_control_hours": 8.776226041955598,
+          "extra_delivered": 4.35,
+          "extra_lost": -4.35,
+          "extra_requested_control_hours": 8.776226041955594,
+          "percent_savings": 1.1033166807303454,
+          "requested_action_l1_hours": 113.86378948520033,
+          "savings": 425012.9285066949
+        },
+        "descriptive95": {
+          "extra_delivered": [
+            1.29875,
+            7.701249999999994
+          ],
+          "extra_lost": [
+            -7.70125,
+            -1.298750000000007
+          ],
+          "percent_savings": [
+            -0.016593071930131802,
+            2.3244411307274033
+          ],
+          "savings": [
+            -18338.630373099557,
+            931606.2369712793
+          ]
+        },
+        "harm": {
+          "cost_harm_blocks": 0,
+          "cost_harm_worlds": 6,
+          "loss_harm_blocks": 0,
+          "loss_harm_worlds": 3
+        },
+        "blocks": [
+          {
+            "block": 0,
+            "extra_lost": -5.75,
+            "percent_savings": 0.19198912901980036,
+            "savings": 11951.639340236783
+          },
+          {
+            "block": 1,
+            "extra_lost": -5,
+            "percent_savings": 1.0752785552970971,
+            "savings": 645264.2867356259
+          },
+          {
+            "block": 2,
+            "extra_lost": -2.5,
+            "percent_savings": 1.7864647983915276,
+            "savings": 607977.406819595
+          },
+          {
+            "block": 3,
+            "extra_lost": -4.75,
+            "percent_savings": 1.0062609320769837,
+            "savings": 432489.773996138
+          },
+          {
+            "block": 4,
+            "extra_lost": -3.75,
+            "percent_savings": 1.4565899888663179,
+            "savings": 427381.53564187884
+          }
+        ]
+      }
+    }
+  },
+  "decision_latency": {
+    "evaluation": {
+      "adaptive_tail_td": {
+        "complete": true,
+        "expected_decisions": 2880,
+        "max_seconds": 0.9135399998631328,
+        "median_seconds": 0.6888729999773204,
+        "observed_decisions": 2880,
+        "p95_seconds": 0.8430130999768153
+      },
+      "existing_frozen": {
+        "complete": true,
+        "expected_decisions": 2880,
+        "max_seconds": 0.938441000180319,
+        "median_seconds": 0.689215499907732,
+        "observed_decisions": 2880,
+        "p95_seconds": 0.8444303500233218
+      },
+      "plain_h16": {
+        "complete": true,
+        "expected_decisions": 2880,
+        "max_seconds": 1.7551649999804795,
+        "median_seconds": 1.37879449990578,
+        "observed_decisions": 2880,
+        "p95_seconds": 1.6135173501097597
+      },
+      "plain_h8": {
+        "complete": true,
+        "expected_decisions": 2880,
+        "max_seconds": 0.9395310000982136,
+        "median_seconds": 0.69078800000716,
+        "observed_decisions": 2880,
+        "p95_seconds": 0.8482943499460814
+      },
+      "policy_tail_mc": {
+        "complete": true,
+        "expected_decisions": 2880,
+        "max_seconds": 0.9335890000220388,
+        "median_seconds": 0.6897820000303909,
+        "observed_decisions": 2880,
+        "p95_seconds": 0.8401349998777732
+      },
+      "policy_tail_td": {
+        "complete": true,
+        "expected_decisions": 2880,
+        "max_seconds": 1.4839549998287112,
+        "median_seconds": 0.6890694999601692,
+        "observed_decisions": 2880,
+        "p95_seconds": 0.8382939500850625
+      }
+    },
+    "reference": {
+      "plain_h8": {
+        "complete": true,
+        "expected_decisions": 5760,
+        "max_seconds": 88.32326800003648,
+        "median_seconds": 0.69998799986206,
+        "observed_decisions": 5760,
+        "p95_seconds": 0.8863438499975019
+      }
+    }
+  },
+  "saved_tail_diagnostics": {
+    "pair_count": 720,
+    "mean_adaptive_minus_parent_cost": 2941445.498833768,
+    "parent_lower_cost": 547,
+    "parent_higher_cost": 50,
+    "same_cost": 123,
+    "block_mean_difference": [
+      2510226.9330909117,
+      3565219.906823219,
+      2941930.169565717,
+      2545800.6861167583,
+      3144049.798572234
+    ]
+  },
+  "bootstrap": "Existing prespecified 2000 two-level resamples across FIVE blocks and four worlds/block; descriptive, not multiplicity-adjusted confirmation. Intervals reused; means/pairs/blocks independently reconstructed from raw.",
+  "interpretation": {
+    "reward_changed": false,
+    "new_scientific_calls_by_monitor": 0,
+    "automatic_follow_on": false,
+    "clinical_safety_established": false,
+    "deployment_online_adaptation": false,
+    "isolated_graph_effect": false,
+    "public_tail_native_counterfactual": false,
+    "new_independent_training_replication": false
+  },
+  "automation_status": "PAUSED"
+}

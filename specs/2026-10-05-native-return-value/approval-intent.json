@@ -1,0 +1,21 @@
+{
+  "format": "capacity-native-tail-approval-intent-v1",
+  "scope": "capacity-native-tail-v1",
+  "scope_approved": true,
+  "recorded_at_utc": "2026-10-05T22:33:20.045710+00:00",
+  "user_literal": "批准此完整单次包",
+  "approval_context": "Exact asynchronous answer to the complete single native-return value comparison: 5 blocks,120 shared references plus240 same-state native branches,15 new final models before360 six-role evaluations,40440 native steps/41400 native operations plus240 clones,11520 value/0actor updates,40045 forwards,16303440 prediction steps,6960000 filter transitions,64800 seconds including IO and12GiB. Phase and owner limits are fixed by protocol. Reward/scenario/architecture unchanged. One attempt, no automatic retry. All routine training,evaluation,readout and archive steps may proceed without another startup question.",
+  "question_item_id": "[\"request_user_input_async\",\"call_NKxafaZ4mBecSx7lXUfiap9U\",0]",
+  "proposal_sha256": "74d50fc5c4897ced2554d5744aab16f45d812888c721cfce46c3a15bf757828f",
+  "protocol_sha256": "35929ae3b849caa06b1ad51bb6d8012c9efc90ed85e55341f68564ff41479dae",
+  "scientific_implementation_commit": "7afafe821fb24fbdfb683a10dda5e199ada16b5c",
+  "attempts": 1,
+  "routine_training_evaluation_readout_authorized": true,
+  "automatic_retry": false,
+  "reward_changed": false,
+  "scenario_changed": false,
+  "architecture_changed": false,
+  "howard_approval_claimed": false,
+  "remote_actions_authorized": false,
+  "subsequent_dropbox_request": "Separate later user export instruction is recorded in dropbox-handoff.md; it does not change this scientific package."
+}

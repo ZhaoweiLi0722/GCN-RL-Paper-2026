@@ -1,6 +1,26 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return comparison engineered; new full package pending
+## Live checkpoint: native-return full package approved; bind locks and launch once
+
+2026-10-05T22:33:20Z. Exact answer to the complete18h numeric question:
+`批准此完整单次包`. Authority is recorded in
+specs/2026-10-05-native-return-value/approval-intent.json, binding implementation
+7afafe821fb24fbdfb683a10dda5e199ada16b5c and unchanged config/protocol hashes.
+Routine collection,training,sealing,evaluation,raw readout/archive are approved
+as one attempt; no additional startup question. Reuse43passing zero-update tests
+and fullcompileall; latest3entry/reader/budget tests including corrupt raw-cost/
+patient checks passed. No science launched yet. Next commit authority, freeze
+and commit source/runtime/input/seed locks, then launch once into the new root.
+
+Separate subsequent user instruction authorizes updating these experimental
+artifacts in the existing Dropbox project. Destination found in prior approved
+configs and exists locally:Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper2026/Research
+Artifacts (actual path retains spaces). Export is an additive handoff, not a
+scientific budget/parameter amendment. Preserve failure and negative artifacts;
+verify destination bytes and distinguish local copy from cloud synchronization.
+No sharing-permission change or external message is implied. See dropbox-handoff.md.
+
+## Previous checkpoint: native-return comparison engineered; new full package pending
 
 2026-10-05T22:30Z. Zhaowei requested `继续下一步` after the closed policy-tail
 comparison. Additive native branch collector, two-branch TD/MC learner, numerical

@@ -3792,3 +3792,18 @@ After exact approval, commit source and authorization/runtime/input/seed locks,
 then run the whole package continuously without routine startup questions. No
 automatic retries, expansion, new reward search, holdout, StageE, Howard approval,
 remote actions or guaranteed RL benefit. E1 remains uncalibrated/missing.
+
+#### Native-return package approved; separate Dropbox handoff authorized
+
+2026-10-05T22:33:20Z. Zhaowei answered the complete numerical question exactly
+`批准此完整单次包`. Bind this explicit approval to the unchanged480main+240branch,
+18h/12GiB single package and scientific implementation7afafe8 in the new
+approval-intent.json. No additional launch approval is needed. Commit all
+source/runtime/input/seed locks before executing the whole bounded run.
+
+The user then explicitly requested updating these experimental artifacts in
+Dropbox. This is a separate additive export authorization, superseding only the
+earlier export prohibition; no scientific caps or frozen parameters change.
+Use the existing Research Artifacts destination, retain failures/negative results,
+verify copied bytes, and distinguish local Dropbox copies from cloud completion.
+No change to sharing permissions, external messaging or Howard approval claim.

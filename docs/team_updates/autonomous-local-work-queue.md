@@ -1,6 +1,35 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail three evaluation blocks complete;234/360
+## Live checkpoint: planner-tail evaluation279/360; phase deadline approaching
+
+2026-10-05T04:38:07Z read-only heartbeat. Entry51534ec clean, expected branch.
+Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands;
+45newcomplete evaluation boundaries since234/360 verify running. No duplicate
+related job, failure/overrun/terminal marker; stdout/stderr/detached log0bytes.
+Monitor launched no scientific work and read no partial performance outcomes.
+
+Reference120/120; each method120/120fits and3840/3840value updates,total11520/
+11520,actor0,ancestors5/5,new seals15/15 unchanged. Eval279/360: blocks0/1/2 each72,
+block3=63; plain_h8/existing_frozen/observed_td each47,otherthree roles46.
+Currentblock3/index10/condition1/replicate3/seed64023103/planner_tail_td/epoch7.
+Boundarynative25544/30720,later ledger25548. Evaluation optimizer charges0.
+
+All counter/phase/time/current-owner checks within limits. Global elapsed
+16373.87/32400s,evaluation11213.89/14400,currentH8owner8.25/120. Closed reference
+5083.98/10800 and fitting70.96/3600 unchanged. Progress3885118bytes,budget
+77687180bytes,fresh04:38Z mtimes.233H8cycles average34.9398s;46H16cycles66.6222s.
+Full-phase estimate14479.27s is79.27s above cap; remaining3265.38s (about54m),
+but only3186.11s of evaluation time remains. This is a projected completion
+shortfall, not an actual violation yet. Keep all caps; no extension, transfer,
+retry or outcome-based adjustment. Archive time remains separate.
+
+Reuse completed training/model/barrier/588lock/runtime/1804seed checks and38tests/
+compileall. Protocol hash unchanged; source diff only status docs. Next: observe
+the existing remaining81evaluations; on success or terminal failure complete
+saved-data handoff and pause the same monitor. Routine work is authorized, not
+new scientific scope. No performance claim, extra agent gate or external action.
+
+## Previous checkpoint: planner-tail three evaluation blocks complete;234/360
 
 2026-10-05T04:08:05Z read-only heartbeat. Entryb28adb9 clean, expected branch.
 Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands.

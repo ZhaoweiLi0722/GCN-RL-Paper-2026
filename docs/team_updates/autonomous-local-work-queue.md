@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: final-world recovery completed; full comparison and manuscript delivered
+## Live checkpoint: fixed-parent policy-tail comparison implemented; new scope decision pending
+
+2026-10-05T11:55:03Z. Entry9fa7fb6 on expected branch; no related research process.
+Delivered additive public-model paired continuation collector, six-tail TD/MC
+adapter, separate nested budgets, serial actual entry and raw readout. Concrete
+question: does frozen-parent-MPC continuation supervision improve native outcomes
+beyond existing_frozen and matched adaptive-tail TD? It is not exact evaluation
+of the changing student. Reward/scenario/architecture remain unchanged.
+
+20focused artificial zero-update tests and fullcompileall pass. Actual entry
+completed480FAKE worlds and independent raw/cost/patient/seal/barrier analysis;
+no native scientific world, neural research forward or optimizer ran. Empty
+artificial public-record interface exposed/fixed NumPy scalar serialization only
+in the new adapter.11input hashes and1091allocations against1928historical seed
+manifest files passed,0collisions. Execution locks are not yet frozen/committed.
+
+Complete new package:5blocks,120shared reference+360six-arm evaluation worlds,
+11520value/0actor,30720native/31680operations,14729040prediction steps,
+36190forwards,5988000filter transitions,720matched endpoints/1440tails,
+15newfinal seals+5ancestors;14h includingIO,8GiB,oneattempt. Per-phase/owner caps
+are in config/protocol; no transfer, retry or outcome-based expansion. All final
+models seal before tests; saved paired-tail diagnostics add no scientific calls.
+
+Evidence: specs/2026-10-05-policy-aligned-value/{protocol.md,integration-readout.md};
+experiments/configs/capacity_policy_tail_20261005.json and additive modules/tests.
+Peirce learner deliverable and Boole efficiency advice completed/closed. No extra
+audit gate, historical rerun, archive, manuscript benefit claim or remote action.
+
+One consolidated new480-world/14h execution question asked, reply not received
+at this checkpoint. No approval-intent/frozen execution packet or new run root;
+scientific_execution_authorized=false. Next on approval: exact authority/change
+control, committed source/runtime/input/seed locks, then one direct continuous
+training/evaluation/readout without another launch question. Keep gcn-rlPAUSED
+and update its stale prompt to this finite handoff; do not spin on waiting.
+
+The preceding completed comparison's primary screen FAILED and remains reported.
+Preparation removes the continuation-policy implementation obstacle, not proof
+of RL improvement. No further engineering campaign is required before the single
+entry freeze; preparation has reached its exit to the scope decision.
+
+## Previous checkpoint: final-world recovery completed; full comparison and manuscript delivered
 
 2026-10-05T11:22:01Z. Execution f9f7a40407e926bb3063322ab78b149b8307b20c,
 expected branch. Explicit confirmation led directly through committed authority,

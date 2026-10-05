@@ -3689,3 +3689,32 @@ and local archive passed; see recovery1/terminal-readout.md and companion JSON.
 The all-three primary criterion still fails because TD/frozen increment is not
 established. No further scientific scope is authorized by this completion.
 Routine closure and manuscript updates completed without another startup ask.
+
+#### Frozen-parent continuation comparison prepared; new numerical scope pending
+
+2026-10-05. Zhaowei requested the next substantive step. The completed planner-tail
+readout motivates one prospective policy-evaluation amendment: public forecasts
+continue frozen-parent MPC instead of only an adaptive rule. New protocol/config
+are specs/2026-10-05-policy-aligned-value/protocol.md and
+experiments/configs/capacity_policy_tail_20261005.json. They do not reopen any old
+attempt or modify its source/results. This preparation is not a performance claim.
+
+Additive collector/learner/resources/serial entry/raw readout implemented,20zero-
+update artificial tests/fullcompileall pass. Fixed-parent labels are explicitly
+not exact changing-student policy evaluation or native groundtruth. Match sparse
+adaptive/parent continuations at720endpoints; same parent data feed TD/MC. Reuse
+five historical weights;15final models seal before360six-role evaluations.
+Original reward/scenario/architecture/support and E1-missing status remain fixed.
+
+New proposal:120reference+360evaluation worlds,11520value/0actor updates,
+30720native/31680operations,14729040prediction steps,36190forwards,
+5988000filter transitions,50400seconds includingIO/8GiB/oneattempt and explicit
+phase/owner subcaps. Nested label-generation cost is included, not hidden inside
+a nominal720-root count. No new16-action ranking gate. No auto retry or expansion.
+
+One consolidated execution question was sent; no exact reply to this NEW numeric
+scope received at this checkpoint. Draft remainsfalse; no scientific loading,
+forward, environment or optimizer executed. On approval record exact intent and
+commit current source/runtime/input/seed locks before the one run, then continue
+all routine stages directly without another launch question. Until then keep the
+same visible monitor paused. No Howard approval, holdout, StageE or external action.

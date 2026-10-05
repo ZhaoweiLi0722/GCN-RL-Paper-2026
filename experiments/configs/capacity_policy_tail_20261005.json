@@ -1,0 +1,247 @@
+{
+  "schema": "capacity-policy-tail-study-v1",
+  "scientific_execution_authorized": false,
+  "result_root": "results/capacity_policy_tail_20261005",
+  "inherit": {
+    "proposal": "specs/2026-10-03-dynamic-capacity-adaptation/pilot-proposal.json",
+    "sha256": "f46f6d5ae417a67c5974516b1c9e2b5b05ba9e2de56681aaedbfe276e9f355a9"
+  },
+  "initial_models": {
+    "root": "results/capacity_value_comparison_20261004_recovery1/payload/models",
+    "names": [
+      "block0-graph-final.pt",
+      "block1-graph-final.pt",
+      "block2-graph-final.pt",
+      "block3-graph-final.pt",
+      "block4-graph-final.pt"
+    ],
+    "sha256": [
+      "921ea80a67e8b0f0189a3e4d7504e97f59f187a3917418abbc5af0e8dd762c87",
+      "770e5374d7f333f6c9d4182cf36c54ac1fe0fe1dcd9536acca2d65073ec0c22b",
+      "995c5fc0544e3a3157254fe0fdf959cea4279455daa76fc577e0090cb343d541",
+      "9c2c319027b4ed0636ecc828eb2665494927f65b689b9981808b83d2bfc0677e",
+      "814d0e07e5c5bcaa0acccfd4ea42245fe6c0c05bfde3c7133047cc823b92fa0f"
+    ],
+    "historical_updates_per_model": 1536,
+    "fork": "identical_weights_fresh_Adam_and_sampling_state_new_update_count_zero"
+  },
+  "design": {
+    "blocks": 5,
+    "conditions": 3,
+    "reference_worlds_per_block": 24,
+    "evaluation_worlds_per_condition_block": 4,
+    "train_roles": [
+      "adaptive_tail_td",
+      "policy_tail_td",
+      "policy_tail_mc"
+    ],
+    "eval_roles": [
+      "plain_h8",
+      "existing_frozen",
+      "adaptive_tail_td",
+      "policy_tail_td",
+      "policy_tail_mc",
+      "plain_h16"
+    ],
+    "reference_behavior": "plain_h8",
+    "all_final_seals_before_tests": true,
+    "selection": "final_only",
+    "new_training_worlds": 120,
+    "evaluation_trajectories": 360,
+    "total_native_trajectories": 480
+  },
+  "planning": {
+    "candidate_sequences": 16,
+    "response_quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "summary_weights": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "horizon": 8,
+    "long_reference_horizon": 16
+  },
+  "tails": {
+    "capture_epochs": "world_index_and_world_index_plus_24",
+    "per_policy_per_world": 6,
+    "candidate_selection": "(world_index + 8 * root_slot) % 16",
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "final_epoch": 64,
+    "continuations": [
+      "adaptive",
+      "frozen_mpc"
+    ],
+    "policy_parent": "same_historical_ancestor_frozen_throughout_generation",
+    "policy_belief": "cloned_at_root_updated_by_public_prefix_and_tail_receipts_only",
+    "generation": "one_pair_per_endpoint_policy_data_shared_TD_MC",
+    "ground_truth": false
+  },
+  "value": {
+    "width": 32,
+    "lr": 0.0003,
+    "batch_size": 64,
+    "updates_per_world": 32,
+    "gradient_norm_cap": 5,
+    "cost_scale": 1000000,
+    "td_horizon": 8,
+    "gamma": 1,
+    "targets": "frozen_before_each_world_fit",
+    "sampling": "uniform_over_all_rows_with_identical_TD_MC_indices",
+    "evaluation_updates": 0
+  },
+  "streams": {
+    "namespace": "capacity-policy-tail-20261005-v1",
+    "reference_base": 65000000,
+    "evaluation_base": 65020000,
+    "sampler_seeds": [
+      550270510,
+      550270530,
+      550270550,
+      550270570,
+      550270590
+    ],
+    "bootstrap_seed": 65090001,
+    "purposes": [
+      "demand",
+      "patient_identity_attributes",
+      "response_change",
+      "exploration",
+      "replay"
+    ]
+  },
+  "budget": {
+    "native_trajectories": 480,
+    "native_steps": 30720,
+    "native_operations": 31680,
+    "value_optimizer_steps": 11520,
+    "actor_optimizer_steps": 0,
+    "optimizer_examples": 737280,
+    "forward_calls": 36190,
+    "training_bootstrap_forwards": 850,
+    "continuation_value_forwards": 12300,
+    "native_planning_decisions": 23040,
+    "native_planning_epochs": 9953280,
+    "continuation_planning_decisions": 12300,
+    "continuation_planning_epochs": 4723200,
+    "prefix_epochs": 5760,
+    "paired_tail_epochs": 46800,
+    "total_predictor_epochs": 14729040,
+    "forecast_root_constructions": 720,
+    "paired_tail_clones": 1440,
+    "native_filter_transitions": 3072000,
+    "branch_filter_transitions": 2916000,
+    "total_filter_transitions": 5988000,
+    "new_final_seals": 15,
+    "paired_endpoint_starts": 720,
+    "tail_rows_per_policy": 23400,
+    "tail_rows_per_world_index": [
+      264,
+      258,
+      252,
+      246,
+      240,
+      234,
+      228,
+      222,
+      216,
+      210,
+      204,
+      198,
+      192,
+      186,
+      180,
+      174,
+      168,
+      162,
+      156,
+      150,
+      144,
+      138,
+      132,
+      126
+    ],
+    "seconds": {
+      "admission": 600,
+      "reference_and_tails": 23400,
+      "value_fitting": 3600,
+      "frozen_evaluation": 18000,
+      "analysis_archive": 1800,
+      "failure_preservation": 3000,
+      "global": 50400
+    },
+    "owner_seconds": {
+      "reference_world_with_tails": 600,
+      "evaluation_h8_world": 180,
+      "evaluation_h16_world": 300,
+      "fit": 60,
+      "seal": 60
+    },
+    "rss_bytes": 4294967296,
+    "raw_bytes": 4294967296,
+    "archive_bytes": 4294967296,
+    "combined_disk_bytes": 8589934592,
+    "file_cap": 6000,
+    "compute_threads": 4,
+    "workers": 1,
+    "attempts": 1,
+    "automatic_retry": false,
+    "includes_io": true
+  },
+  "readout": {
+    "primary_condition": 1,
+    "primary_comparators": [
+      "plain_h8",
+      "existing_frozen",
+      "adaptive_tail_td"
+    ],
+    "candidate": "policy_tail_td",
+    "target_comparator": "policy_tail_mc",
+    "compute_reference": "plain_h16",
+    "bootstrap_resamples": 2000,
+    "screen": "positive_absolute_cost_savings_in_all_five_persistent_blocks_and_descriptive95_lower_above_zero_for_each_primary_comparator_and_no_condition_mean_extra_patient_losses_for_those_pairs",
+    "report_all_15_pairs": true,
+    "diagnostics": "saved_paired_tail_cost_differences_only_no_new_forward_or_best_candidate_ranking",
+    "test_optimizer_steps": 0
+  },
+  "limitations": [
+    "synthetic_uncalibrated_E1_missing",
+    "model_based_policy_evaluation_not_deployment_online_adaptation",
+    "public_forecast_tail_returns_not_native_ground_truth",
+    "model_bias_is_not_repaired_by_TD",
+    "reused_five_training_blocks_not_new_independent_training_replication",
+    "historical_mixed_predictor_provenance_retained",
+    "matched_TD_MC_data_and_updates_not_equal_forward_cost",
+    "long_horizon_MPC_has_higher_query_budget",
+    "not_isolated_GCN_attribution",
+    "no_clinical_safety_claim",
+    "fixed_parent_policy_evaluation_not_exact_updated_policy_evaluation",
+    "one_prespecified_candidate_per_root_not_all_action_ranking",
+    "extra_label_generation_compute_is_treatment_and_reported",
+    "sparse_collection_not_identical_to_previous_96_tail_recipe"
+  ],
+  "forbidden": [
+    "unapproved_scientific_calls",
+    "historical_attempt_resume",
+    "reward_weight_search",
+    "scenario_search",
+    "architecture_search",
+    "extra_epochs",
+    "test_based_selection",
+    "automatic_retry",
+    "holdout",
+    "StageE_reopen",
+    "remote_push",
+    "PR",
+    "Dropbox",
+    "external_messages",
+    "Howard_approval_claim"
+  ]
+}

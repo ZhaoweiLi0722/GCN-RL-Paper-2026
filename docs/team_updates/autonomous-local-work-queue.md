@@ -1,6 +1,35 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail two evaluation blocks complete;145/360
+## Live checkpoint: planner-tail evaluation past halfway;190/360
+
+2026-10-05T03:38:29Z read-only heartbeat. Entry0d97a05 clean, expected branch.
+Matching supervisor95697/PPID1 and child95709/95697/full commands plus45new
+completed evaluation boundaries since145/360 establish running. No duplicate
+related job, failure/overrun/terminal marker; stdout/stderr/detached log0bytes.
+No new scientific call, launch or outcome-based adjustment by the monitor.
+
+Reference120/120; each method120/120fits and3840/3840value updates; total11520/
+11520,actor0,ancestors5/5,new seals15/15 unchanged. Eval190/360: blocks0/1 each72,
+block2=46; plain_h8/existing_frozen/observed_td/planner_tail_td each32,
+planner_tail_mc/plain_h16 each31. Currentblock2/index7/condition1/replicate2/
+seed64022102/planner_tail_mc/epoch15. Boundarynative19856/30720,later ledger19858.
+Evaluation optimizer charges0; partial performance results not inspected.
+
+No ledger counter/phase/time/current-owner cap violations. Global12796.00/32400s,
+evaluation7636.01/14400,currentH8owner13.02/120; reference5083.98/10800 and
+fitting70.96/3600 unchanged. Progress3081829bytes,budget64880199bytes, fresh
+03:38Z mtimes.159H8cycles average34.9491s;31H16cycles66.6464s. Full-evaluation
+rate estimate14483.52s is83.52s above cap; remaining6847.50s (about1h54m), before
+archive. Timing risk persists, not an actual cap breach. No extension, transfer
+or retry; later observed rates may change the estimate.
+
+Reuse completed training/model/barrier checks,588locks/runtime/1804seed audit,
+38tests/compileall. Protocol hash unchanged; source diff only status docs.
+Next: existing remaining170frozen evaluations, complete raw comparison/archive
+and honest manuscript handoff. MonitorACTIVE and routine stages authorized;
+no performance claim, historical re-audit, new agent gate or external action.
+
+## Previous checkpoint: planner-tail two evaluation blocks complete;145/360
 
 2026-10-05T03:08:28Z read-only heartbeat. Entry16a7534 clean, expected branch.
 Supervisor95697/PPID1 and child95709/95697 match claims/full launch-child commands;

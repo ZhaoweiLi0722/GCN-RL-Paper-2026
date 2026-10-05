@@ -1,6 +1,35 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail evaluation279/360; phase deadline approaching
+## Live checkpoint: planner-tail evaluation324/360; final block underway
+
+2026-10-05T05:08:12Z read-only heartbeat. Entry627234a clean, expected branch.
+Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands;
+45newcomplete evaluation boundaries since279/360 verify running. No duplicate
+related job, terminal/failure/overrun marker; stdout/stderr/detached log0bytes.
+Monitor launched no scientific work and read no partial performance outcomes.
+
+Reference120/120; each method120/120fits and3840/3840value updates,total11520/
+11520,actor0,ancestors5/5,new seals15/15 unchanged. Eval324/360: blocks0/1/2/3
+each72,block4=36; all six roles54each. Currentblock4/index6/condition0/
+replicate2/seed64024002/plain_h8/epoch0. Boundarynative28416/30720,later ledger
+28421. Evaluation optimizer charges0; completed training is not evidence of gain.
+
+No counter/phase/time/current-owner cap violations. Global elapsed18178.94/
+32400s,evaluation13018.96/14400,currentH8owner4.33/120. Closed reference5083.98/
+10800 and fitting70.96/3600 unchanged. Progress4291075bytes,budget84155134bytes,
+fresh05:08Z mtimes.270H8cycles average34.89545s;54H16cycles66.53355s.
+Full-phase estimate14460.65s is60.65s above cap; remaining1441.69s (about24m),
+versus1381.04s (about23m) allowed. Projected shortfall is not an actual breach.
+Keep all caps; no extension, transfer, retry or outcome-based adjustment.
+Archive time remains separate.
+
+Reuse completed training/model/barrier/588lock/runtime/1804seed checks and38tests/
+compileall. Protocol hash unchanged; source diff only status docs. Next: observe
+the existing remaining36evaluations; success or terminal failure then saved-data
+handoff and pause the same monitor. MonitorACTIVE; routine work remains authorized.
+No new scientific scope, performance claim, extra agent gate or external action.
+
+## Previous checkpoint: planner-tail evaluation279/360; phase deadline approaching
 
 2026-10-05T04:38:07Z read-only heartbeat. Entry51534ec clean, expected branch.
 Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands;

@@ -1,6 +1,38 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail frozen evaluation82/360; training complete
+## Live checkpoint: policy-tail frozen evaluation122/360; no errors
+
+2026-10-05T17:07:14Z read-only heartbeat. Entry3309465 clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 match saved claims/full commands;
+child100.0%CPU,200880KiB RSS,no duplicate related run.40new complete evaluations
+since16:40Z establish progress. No terminal/failure/overrun marker; all3logs0bytes.
+Monitor made no scientific model/optimizer/environment calls.
+
+Reference120/120; eachmethod120/120fits and3840/3840value updates;total11520/11520,
+actor0. Reuse checked training receipts,360after-fit states,5ancestors,15finals
+and all-sealed-before-test barrier. Evaluation optimizer debits0. Evaluation
+122/360 complete: plainH8/existing each21,adaptiveTD/policyTD/policyMC/H16 each20;
+block0 has72complete,block1 has50. Current b1/index8/c2/replicate2/seed65021202/
+adaptive_tail_td,epoch31. No interim test costs or patient outcomes inspected.
+
+Native15520/30720 at boundary,15522later ledger;forward28592/36190;native planner
+4842624/9953280;native filter1552200/3072000. Nested work unchanged and complete:
+12300decisions/4723200prediction steps,5760prefix/46800pairedtail,720roots/
+1440clones,2916000branch filter transitions. No observed global/phase counter,
+phase time or current-owner violation. Elapsed18177.41/50400s;reference13291.51/
+23400s,fitting52.26/3600s,evaluation4828.36/18000s,currenttest24.28/180s.
+Progress3078698bytes,budget95338892bytes. Measured20-21trajectory wall samples/
+role average34.31-34.38s forH8 and65.05s forH16. Remaining238tests extrapolate
+2.61h before analysis/archive; workload variation remains,not a guarantee.
+
+Only nonlocked status/readout docs differ from execution205225c. Reuse20tests,
+compileall,source/input admission and sealed-model checks; no new audit or gate.
+Same ACTIVE monitor observes the existing job. Next finish238frozen evaluations,
+then authorized complete raw cost/patient readout,one archive,truthful manuscript
+handoff and terminal pause. No additional approval inside this package. Training
+completion is not a performance claim; no tuning,extra calls,restart or retry.
+
+## Previous checkpoint: policy-tail frozen evaluation82/360; training complete
 
 2026-10-05T16:40:05Z read-only heartbeat. Entryf47d176 clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 match saved claims/full commands;

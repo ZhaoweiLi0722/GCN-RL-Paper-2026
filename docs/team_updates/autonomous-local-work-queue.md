@@ -1,6 +1,39 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail two blocks sealed; reference49/120;4704real updates
+## Live checkpoint: policy-tail training over halfway; reference64/120;6144updates
+
+2026-10-05T14:07:45Z read-only heartbeat. Entryc2e6f1c clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 live with matching claims/full commands;
+one related experiment,child99.1%CPU,236576KiB RSS.15new completed worlds/45new
+fits since13:37Z establish progress. No terminal/failure/overrun markers;stdout,
+stderr and outer launcher log0bytes. No scientific call or source change here.
+
+Reference64/120; adaptive_tail_td/policy_tail_td/policy_tail_mc each64/120fits,
+2048/3840updates;6144/11520total value,actor0.192after-fit states present;
+1440new finite receipts and all new completed-cohort states present, reusing
+the prior4704check. Latest reference-b2-c0-j5-policy_tail_mc-after-fit.pkl.gz
+235117bytes,SHA25630de5c9ac70b441e508cb35f8b0da95ebe734a7c213f19a5b72c5b2761d33329.
+Ancestor3/5,final6/15,eval0/360; prior six seal byte checks reused. All-sealed
+barrier absent as expected; no test/performance inspection or benefit claim.
+
+Current reference b2/index16/c1/replicate5/seed65002105/plainH8,epoch15 boundary:
+native4112/30720; later ledger still4112,forward13544/36190; nested6936/12300
+decisions,2663424/4723200prediction steps; native planner1186176/9953280;
+prefix3096/5760,pairedtail25897/46800; branch filter1604000/2916000 and native
+filter411200/3072000. No global/phase/counter/owner violation. Elapsed7408.53/
+50400s,reference7379.21/23400s,fitting24.02/3600s,currentworld49.16/600s.
+Progress906265bytes,budget42553373bytes. Readouts/authority/frozen packet match
+the approved single run; only nonlocked status/readout docs differ from execution.
+
+64completed reference cycles average114.532s;56remaining extrapolate1.78h plus
+small observed fitting overhead. This is training-only, not a full finish ETA;
+evaluation speed in this run is unmeasured. Reuse unchanged admission hashes,
+20tests/compileall and prior archive history; no repeated historical audit.
+Next: existing serial job finishes training/15seals,then automatically runs its
+360frozen evaluations and cost/patient readout. Same ACTIVE monitor, no new
+approval needed inside the package; no relaunch, new gate, parameter edit or retry.
+
+## Previous checkpoint: policy-tail two blocks sealed; reference49/120;4704real updates
 
 2026-10-05T13:37:38Z read-only heartbeat. Entry21940e0 clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 remain live with matching claims and

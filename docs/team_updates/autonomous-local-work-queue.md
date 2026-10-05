@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail first block sealed; reference33/120;3168real updates
+## Live checkpoint: policy-tail two blocks sealed; reference49/120;4704real updates
+
+2026-10-05T13:37:38Z read-only heartbeat. Entry21940e0 clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 remain live with matching claims and
+full launch/child commands; child99.3%CPU,236544KiB RSS at process check. No
+duplicate related experiment.16new completed worlds and48new fits establish
+progress since13:10Z. Monitoring made no model/optimizer/environment calls.
+
+Reference49/120; each adaptive_tail_td/policy_tail_td/policy_tail_mc49/120fits,
+1568/3840updates;4704/11520total value,actor0.147after-fit states now present;
+1536new receipts finite and new completed cohorts have saved states, reusing
+the previous3168receipt checks. Latest b2/c0/j0 policy_tail_mc after-fit state
+286854bytes,SHA256b239820b966203155ca2af470ed824cb65b84d85763b4fb9cb63bd7eec721d64.
+Second block's three new final seals each record768updates and match model byte
+hashes; first block verification reused. Ancestors3/5,final6/15,eval0/360.
+All-sealed barrier still absent as expected; no test/performance data inspected.
+
+Current reference b2/index1/c1/replicate0/seed65002100/plainH8,epoch0 boundary.
+Native3136/30720 at boundary,3137later ledger;forward10251/36190; nested5198/12300
+decisions,1996032/4723200prediction steps; native planner903936/9953280;
+prefix2376/5760,pairedtail19554/46800; branch filter1214100/2916000 and native
+filter313700/3072000. No global/phase/counter/owner overrun. Elapsed5601.99/50400s,
+reference5579.11/23400s,fitting17.59/3600s,currentworld80.54/600s.
+No terminal/failure/overrun markers;stdout/stderr/outerlog0bytes. Progress692617
+bytes,budget32197483bytes. Matched live process plus new saved boundaries supports
+running; scheduling alone does not.
+
+First two complete reference blocks took2654.05s and2688.22s.49completed cycles
+average112.215s;71remaining extrapolate2.21h plus small observed fitting overhead.
+This estimates training only. Current-run evaluation latency remains unmeasured,
+so no full completion promise. Native performance still requires360frozen tests.
+
+Protocol/authority/readouts reread; only nonlocked status/readout docs differ
+from execution205225c. Reuse unchanged593source/11input/runtime/seed admission,
+20tests/compileall and earlier input hashes. No old audit/archive, new gate,
+scientific edits or restart. Same approved serial job and ACTIVE monitor continue.
+Next authorized action: finish remaining training and15final seals, then complete
+360frozen evaluations and raw cost/patient readout. No new approval is needed
+within this package; this checkpoint is training progress, not a benefit claim.
+
+## Previous checkpoint: policy-tail first block sealed; reference33/120;3168real updates
 
 2026-10-05T13:10:17Z read-only heartbeat. Entry3cf59de clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 match claims/full launch/child commands;

@@ -1,6 +1,36 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail first evaluation block complete;101/360
+## Live checkpoint: planner-tail two evaluation blocks complete;145/360
+
+2026-10-05T03:08:28Z read-only heartbeat. Entry16a7534 clean, expected branch.
+Supervisor95697/PPID1 and child95709/95697 match claims/full launch-child commands;
+no duplicate. New44complete evaluation boundaries since101/360, including block1
+completion, establish running. Failure/overrun/terminal markers absent; stdout,
+stderr and detached launcher log0bytes. No new scientific call or launch.
+
+Reference120/120; each method120/120fits and3840/3840updates,total11520/11520value,
+actor0,ancestors5/5,new seals15/15 remain complete. Eval145/360: block0=72,
+block1=72,block2=1; plain_h8=25,each other role24. Currentblock2/index0/condition0/
+replicate0/seed64022000/existing_frozen/epoch23. Boundarynative16984/30720,
+later ledger16989. Evaluation optimizer charges0. No test outcomes interpreted.
+
+All counter/phase/time/current-owner limits remain within caps. Global elapsed
+10994.89/32400seconds,evaluation5834.91/14400,currentH8owner20.46/120; completed
+reference5083.98/10800 and fitting70.96/3600 unchanged. Progress2676004bytes,
+budget58407418bytes, fresh03:08Z mtimes.121H8cycles mean34.8519seconds;24H16cycles
+66.5554seconds. Full-phase rate estimate14448.88seconds is about49seconds above
+the14400cap; remaining8613.97seconds (about2h24m), excluding archive. This is a
+timing-risk projection, not an actual violation. Caps unchanged; no extension,
+time transfer or automatic retry. Later block runtimes can change the estimate.
+
+Reuse completed11520receipt/20model/barrier checks,588locks/runtime/1804seed
+admission,38tests/compileall; no historical audit or model loading. Protocol hash
+unchanged and source diff since execution only status docs. Next: existing
+remaining frozen evaluations, full raw comparison/archive and truthful manuscript
+handoff. MonitorACTIVE; routine stages already authorized. Performance remains
+undetermined pending the full comparison; no agent gate or external action.
+
+## Previous checkpoint: planner-tail first evaluation block complete;101/360
 
 2026-10-05T02:38:27Z read-only heartbeat. Entryb0b3d52 clean on expected branch.
 Supervisor95697/PPID1 and child95709/95697 match saved claims/full commands; no

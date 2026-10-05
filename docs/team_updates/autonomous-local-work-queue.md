@@ -1,6 +1,50 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail three blocks sealed; fourth block training
+## Live checkpoint: planner-tail training complete; six-role evaluation running
+
+2026-10-05T01:39:04Z read-only heartbeat. Entry145bd0f clean on expected branch.
+Matching live supervisor95697/PPID1 and child95709/95697 plus completed training,
+all-model barrier and new evaluation boundaries establish running. Full launch/
+child commands match claims; no duplicate related job. Failure/overrun/terminal
+markers absent, stdout/stderr/detached launcher log0bytes. No scientific calls
+or new process launched by this monitor; evaluation outcomes remain unread.
+
+Reference120/120 complete. observed_td/planner_tail_td/planner_tail_mc each
+120/120fit cohorts and3840/3840real updates; total11520/11520value,actor0.
+Five ancestor bindings and all15new final models sealed before the first test
+world. Evaluations11/360 complete at snapshot; currentblock0/index1/condition1/
+replicate0/seed64020100/plain_h16/epoch31. Native8416/30720 at saved boundary,
+8421 at later ledger. Evaluation ledger has zero optimizer charges.
+
+The remaining2784new receipts are finite, and all87new completed-fit states
+exist. Together with earlier8736receipts, all11520updates are covered. All20
+ancestor/final model bindings match byte hashes; each new final model has768
+updates. all-sealed metadata and event order confirm the test barrier. Latest
+after-fit: payload/states/reference-b4-c2-j7-planner_tail_mc-after-fit.pkl.gz,
+277407bytes, SHA256
+acc79a6c4b5b3dd6bfd4a1ff5426121ef0dfeafe1fb71fb3e9a22ff20d03bc90.
+Read-only monitor metadata parsing excluded all-sealed.json from model sidecars
+after a parser exception; no experiment failure, model call or scientific retry.
+
+Counter/phase budgets are within limits. Elapsed5631.57/32400seconds;
+reference5083.98/10800,fitting70.96/3600,evaluation471.59/14400;
+currentH16owner56.15/240. At01:39:32Z progress1476720bytes and budget39228583bytes
+have fresh mtimes. Ten completed H8 cycles average34.82seconds and two H16
+cycles66.77seconds. Weighted early extrapolation is14450.80seconds for the
+whole evaluation phase, approximately51seconds above its14400second cap;
+remaining estimate13951.96seconds (about3h53m). This small-sample timing risk
+is not an actual cap breach. Do not extend caps, transfer time or retry.
+Re-estimate from later observed boundaries; archive needs separate time.
+
+Reuse588frozen source/input/protocol/config/intent checks from00:38:46Z;
+git diff since execution is only nonlocked status docs. Runtime,1804seed check,
+38tests/compileall remain reusable; no model loading or historical re-audit.
+Next: existing360six-role frozen evaluations, then complete saved-data
+comparison/archive/manuscript handoff. Training completion is not performance
+gain and the overall experiment is not complete. Same monitor staysACTIVE;
+no routine approval needed, no new agent gate or external action.
+
+## Previous checkpoint: planner-tail three blocks sealed; fourth block training
 
 2026-10-05T01:11:03Z read-only heartbeat. Entrycea3944 clean on expected branch.
 Supervisor95697/PPID1 and child95709/95697 match claims and full launch/child

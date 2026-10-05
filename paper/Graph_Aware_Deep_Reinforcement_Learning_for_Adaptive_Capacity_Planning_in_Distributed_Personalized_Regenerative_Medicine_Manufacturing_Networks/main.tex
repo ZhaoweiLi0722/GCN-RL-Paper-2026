@@ -1828,7 +1828,7 @@ Synthetic-model calibration, limited independent blocks, unequal model depth,
 policy-dependent continuation data, and mixed predictor training provenance
 remain limitations. No reward change or automatic follow-on experiment follows.
 
-\subsection{Planner-aligned value learning: completed contrasts within an interrupted study}
+\subsection{Planner-aligned value learning with matched-data controls}
 \label{sec:planner-tail-development}
 
 We next tested whether training on the planner's predicted terminal states
@@ -1841,21 +1841,20 @@ rule, not native patient counterfactual outcomes. Rewards, physical scenarios,
 architecture, and action support were unchanged. All 15 new models were sealed
 before evaluation; evaluation performed no optimizer updates.
 
-The attempt terminated at its prespecified four-hour evaluation-phase limit,
-after 359 of 360 evaluation trajectories. All five H8 controllers completed
-their 60 paired worlds; plain H16-MPC completed 59. Its last fast-fluctuation
-world stopped after 10 of 64 steps. This was a wall-time execution failure,
-not a training failure, and we do not report the overall package as completed.
-The three primary comparisons and the TD--MC comparison are complete; their
-saved raw costs, patient outcomes, model bindings, and cohort pairing were
-reconciled independently. The partial H16 trajectory is excluded, without
-imputation. Its fast-fluctuation comparisons have 19 pairs and no full-block
-confidence interval; planned training-root ranking diagnostics are unavailable.
+The original attempt reached its four-hour evaluation-phase limit after 359
+of 360 trajectories. A separately authorized remaining-work recovery restored
+the last H16 world after step 10 and completed its remaining 54 steps, without
+retraining or replaying completed environment steps. The original failure and
+consumed prediction-query reservation remain recorded. The resulting comparison
+contains all 120 reference and 360 evaluation trajectories, including 20 paired
+worlds per condition for every contrast. We independently reconciled all 30,720
+raw cost and patient-outcome records. This continuation completes the original
+sample; it is not an independent replication.
 
 \begin{table}[H]
 \centering
-\caption{Forecast-tail TD under persistent capacity change: complete contrasts
-from an interrupted development study. Savings are comparator minus TD cost,
+\caption{Forecast-tail TD under persistent capacity change in the completed
+development comparison. Savings are comparator minus TD cost,
 in millions of synthetic objective units. Intervals are descriptive 95\%
 two-level bootstrap intervals over five blocks and four worlds per block.
 Loss differences are TD minus comparator; percentages are mean paired-world
@@ -1882,7 +1881,11 @@ beat all three primary comparators therefore failed on complete primary data.
 This supports a favorable controller-level development comparison against
 plain H8-MPC, but does not establish an incremental benefit of this update
 over the already-trained GCN or unique superiority of TD over direct-return
-policy evaluation. The complete persistent H16 comparison also includes zero.
+policy evaluation. The persistent H16 comparison also includes zero. The
+completed fast-fluctuation comparison against H16 favors TD by 1.089 million
+objective units (descriptive 95\% interval: 0.398--1.759 million), with 11.50
+fewer patient losses per world on average. This secondary result does not
+reverse the failed primary criterion.
 
 Forecast-tail TD's no-change and fast-fluctuation cost intervals against plain
 H8-MPC included zero. Under persistent change, three of 20 TD/H8 pairs had
@@ -1891,11 +1894,20 @@ patient losses. TD used 53.60 additional applied flexible hours per world
 relative to H8, and actions differed at 757 of 960 control boundaries. It
 reduced patient-loss and expiry costs while increasing reagent-purchase and
 labor costs. Median decision times were 0.699 seconds for TD, 0.701 for plain
-H8, and 1.415 for H16; H16 spends twice the prediction queries. Extra training
+H8, and 1.414 for H16; H16 spends twice the prediction queries. Extra training
 data and computation remain part of the treatment. Synthetic-model calibration,
-reused historical models, mixed predictor provenance, and terminal incompleteness
+reused historical models, mixed predictor provenance, and remaining-work recovery
 limit interpretation; these findings are not deployment-time adaptation or
 clinical-safety evidence.
+
+On 240 saved training roots, forecast-tail TD selected a minimum-cost candidate
+under the public-model labels at 42.08\% of roots, versus 34.58\% for the
+existing frozen model. Its mean in-model regret decreased in all five blocks.
+However, TD and MC selected the same candidate at 230 of 240 roots. These
+diagnostics describe approximation of an adaptive continuation in the public
+prediction model, not native counterfactual patient outcomes or held-out
+generalization. Their improvement does not establish that the labels match
+the long-term costs of the deployed receding-horizon policy.
 
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
@@ -2070,8 +2082,9 @@ limits remain, and neither study reopens the historical formal tests.
 The planner-aligned follow-up (Section~\ref{sec:planner-tail-development})
 provides a favorable persistent-change contrast against plain H8-MPC, but its
 required increment over the existing frozen GCN remains unestablished. Its
-execution timeout and missing H16 trajectory must remain distinct from the
-complete primary comparisons. Similar TD and MC results do not identify a
+original execution timeout and remaining-work recovery must remain distinct
+from the scientific result. Completing the H16 comparison does not change the
+failed primary criterion. Similar TD and MC results do not identify a
 unique advantage of temporal-difference targets.
 
 Longer-term models should integrate production scheduling,

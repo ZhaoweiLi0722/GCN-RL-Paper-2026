@@ -3678,3 +3678,14 @@ training/evidence. The full numerical limits, single-attempt rule and original
 scientific objective remain unchanged. Continuous routine progress does not
 mean unbounded compute, outcome-driven expansion or a guarantee of RL benefit.
 No Howard approval, remote action, new reward/scenario, or StageE reopening.
+
+#### Final-world recovery1 completed
+
+2026-10-05. Committed authority d8f748a and execution locks f9f7a40 preceded one
+successful remaining-only run (140.53s, exit0). All480original trajectories and
+360evaluations are complete;54new native steps/960diagnostic forwards/0updates.
+The old failure/query reservation remains consumed. Full raw-data reconciliation
+and local archive passed; see recovery1/terminal-readout.md and companion JSON.
+The all-three primary criterion still fails because TD/frozen increment is not
+established. No further scientific scope is authorized by this completion.
+Routine closure and manuscript updates completed without another startup ask.

@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: final-world recovery approved; freezing then direct execution
+## Live checkpoint: final-world recovery completed; full comparison and manuscript delivered
+
+2026-10-05T11:22:01Z. Execution f9f7a40407e926bb3063322ab78b149b8307b20c,
+expected branch. Explicit confirmation led directly through committed authority,
+freeze, one execution, complete comparison and archive; no repeat launch question.
+Recovery terminal completed/exit0/child0 in140.531241s. Supervisor8547 and child8561
+are absent, no related Python remains; stdout/stderr0bytes, no failure markers.
+The prior failed attempt remains immutable and separately labeled.
+
+New54native steps/960forwards/0optimizer/0new worlds completed. Cumulative480
+trajectories/30720raw rows/360evaluations,11520value updates inherited,15new seals
+and5ancestor bindings. All45condition-contrast cells now have20paired worlds.
+Independent raw reconciliation found no errors; original ten-row prefix retained
+byte-for-byte. Archive2987members/471059815bytes verified by runner; archive and
+comparison SHA256 rechecked. No duplicate archive or historical audit performed.
+
+Persistent-change TD/H8 savings2.562% (0.947873M,descriptive95%[0.432159,1.484289]M),
+12.55fewer losses/world. TD/frozen0.6785% but interval[-0.181340,0.679558]M crosses
+zero and only4/5blocks improve; TD/MC not distinguished. Primary all-three screen
+FAILED. Full H16 fast-noise contrast is favorable, but secondary and not a rescue
+of the primary. Patient/cost harms retained. No claim of isolated GCN, deployed
+online adaptation, clinical safety or publication readiness.
+
+Godel delivered diagnostic-decision.md and closed: better public-model training
+rankings, but TD/MC choose identically230/240roots. These are predictive labels,
+not native counterfactuals. Next scientific question: align terminal labels with
+the deployed receding-horizon continuation and test incremental native performance
+over existing_frozen. It is a hypothesis, not a launched experiment; reward stays
+unchanged and no automatic epoch/sample/reward search is authorized.
+
+Evidence: specs/2026-10-04-planner-aligned-value/recovery1/{terminal-readout.md,
+terminal-saved-data.json,diagnostic-decision.md}; results/capacity_planner_tail_
+20261004_recovery1/{launcher/terminal.json,archive-receipt.json,payload/comparison.json}.
+Manuscript corrected to complete recovered comparison and limitations. Reuse29
+necessary tests/fullcompileall, unchanged scientific source. No TeX engine: source
+validation only; PDF not compiled. gcn-rl remainsPAUSED, finite package consumed;
+no background training, external export or messages. Routine authorized work will
+continue without stepwise confirmation; new scientific scope is not silently
+invented from the request for continuous progress.
+
+## Previous checkpoint: final-world recovery approved; freezing then direct execution
 
 2026-10-05T11:13:13Z. Entry50ce803 clean on expected branch; no matching related
 scientific process. User explicitly confirmed the complete54native/960forward/

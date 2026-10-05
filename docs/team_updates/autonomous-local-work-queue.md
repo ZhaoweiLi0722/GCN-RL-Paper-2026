@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-aligned comparison running; first real training verified
+## Live checkpoint: planner-tail block0 sealed; block1 training progressing
+
+2026-10-05T00:38:46Z read-only heartbeat. Entry0bb0356 clean on expected branch.
+Supervisor95697/PPID1 and child95709/95697 match claims/full launch-child commands;
+no duplicate. New41completed reference boundaries since the last user-facing
+5world update and a new sealed block establish running. No new scientific call
+or process launched by this monitor. Failure/overrun/terminal markers absent;
+stdout/stderr/detached launcher log remain0bytes.
+
+Reference46/120 complete. Each method46/120fit cohorts and1472/3840real value
+updates; total4416/11520,actor0. Ancestor bindings2/5,new final seals3/15 (block0
+complete for allthree methods),eval0/360. Block1 currentreference index22,
+condition1/replicate7/seed64001107/plain_h8/epoch31. Boundarynative2976/30720;
+later ledger2982. All15final seals still required before any test world.
+
+All4416completed update receipts have finite loss/gradient; every completed-fit
+state exists. Latest after-fit:
+payload/states/reference-b1-c0-j7-planner_tail_mc-after-fit.pkl.gz,208606bytes,
+SHA256 ac60a81f071436f0190f28a836765fbbb0249517f325024f4b88460b1f75d1c7.
+Five current model bindings hash-match; block0 final models each768new updates.
+Current574source+11input+3protocol/config/intent hashes match; reuse runtime and
+1804seed-inventory admission checks, no old-campaign audit or model loading.
+
+Ledger/phase/owner caps remain within limits: elapsed2013.36/32400seconds,
+reference1984.65/10800,fitting23.67/3600,current world31.39/240. Progress520721bytes
+and budget14484958bytes with fresh00:38Z mtimes. Recent20reference-cycle mean
+43.18seconds (median42.74): roughly53minutes to finish remaining74training worlds
+at that rate; evaluation runtime is not yet measured, so no new precise full-run
+ETA. Initial6-8hour total estimate remains provisional;9hour cap unchanged.
+
+Next is the existing serial training, remaining model seals, then360six-role
+frozen evaluations and saved-data readout/archive. This is verified training
+progress, not a performance-gain claim. Reuse38tests/compileall; only nonlocked
+status docs changed. Same monitor staysACTIVE; no new agent/review gate or
+approval request. Local-only, no reward/scenario change, retry or remote action.
+
+## Previous checkpoint: planner-aligned comparison running; first real training verified
 
 2026-10-05T00:07:40Z. Execution46eba5b,sciencecbe0b7d,frozen881997c;packet
 a0cbcef8d523c69234c0b9568536ba7a0bd42bcd138e4d63111410beabafba74.

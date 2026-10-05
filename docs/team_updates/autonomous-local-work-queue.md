@@ -1,6 +1,40 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return 11 references and1056 real updates; running
+## Live checkpoint: native-return block0 models sealed; block1 training in progress
+
+2026-10-05T23:40:59Z read-only heartbeat. Entry16135554 clean on expected branch.
+Supervisor36670/1 and child36695/36670 match saved claims and full commands;
+only related scientific pair,child99.3%CPU/203184KiB RSS.15new complete references
+since prior checkpoint, plus new branch/fit/final-seal boundaries. All3logs0bytes,
+no terminal/failure/overrun/preservation-error. No monitor scientific call.
+
+Reference26/120,native branches52/240,eachmethod26/120fits and832/3840updates;
+total2496/11520value,actor0.78after-fit states present. Block0 completed24worlds
+and768updates per method; all3final model hashes match metadata,each49024bytes.
+Final3/15,ancestor2/5,evaluation0/360. Block1 eachmethod64new updates; cumulative
+832 includes768fromblock0,not832updates to a single model. Current b1/index2/c2/
+replicate0/seed65101200/plainH8,latest main epoch0 boundary. No test data examined.
+This establishes completed block training and preservation,not performance gain.
+
+Ledger charged main1666+branch2150=3816/40440native steps;1720+2150=3870/41400
+operations and52/240clones.6454/40045forwards;1960773/16303440prediction steps
+(480384main,1111296forecast-parent,357120native-parent,1272prefix,10701pairedtail);
+1042500/6960000filter transitions. Elapsed3790.95/64800s,reference3775.08/34200s,
+fit10.68/3600s,current reference78.52/900s. No observed global/phase/owner breach.
+26reference cycles average142.59s(last5:135.53s); mean-rate remaining reference
+estimate3.72h,excluding evaluation/archive. Variable roots/conditions make this
+an extrapolation,not a promise. Progress539546bytes,budget20878137bytes.
+Snapshot:reports/capacity_native_tail_monitor_20261005T2340Z.json includes seals.
+
+Frozen protocol/authority/source remain unchanged;43tests/compileall and prior
+input/runtime checks reused. Same existing run continues; no relaunch,extra gate,
+model scoring or retry. Next complete remaining94references/fits and12final
+models,then all360authorized frozen evaluations and full raw/manuscript handoff.
+Dropbox prior local handoff remains verified; cloud/access unverified at last
+locked-UI check. No repeat copy/archive. Current run final/failed artifact export
+remains authorized after termination; ACTIVE monitor continues in the meantime.
+
+## Previous checkpoint: native-return 11 references and1056 real updates; running
 
 2026-10-05T23:10:51Z read-only heartbeat. Entrydda8e365 clean on expected branch.
 Supervisor36670/PPID1 and child36695/36670 match claim/full commands, unique

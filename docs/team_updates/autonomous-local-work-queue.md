@@ -1,6 +1,38 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail frozen evaluation167/360; first two blocks complete
+## Live checkpoint: policy-tail frozen evaluation213/360; no errors
+
+2026-10-05T18:07:07Z read-only heartbeat. Entrye13ab39 clean on expected branch.
+Supervisor12591/PPID1 and child12612/12591 match claims/full commands;
+child98.4%CPU,200704KiB RSS,no duplicate related run.46new complete evaluations
+since17:37Z establish progress. No terminal/failure/overrun marker; all3logs0bytes.
+No scientific model/optimizer/environment calls by monitor.
+
+Reference120/120; eachmethod120/120fits and3840/3840value updates;total11520/11520,
+actor0. Training receipts,360after-fit states,5ancestors,15finals and pre-test seal
+barrier checks reused. Test optimizer debits0. Evaluation213/360: plainH8/existing/
+adaptiveTD each36;policyTD/policyMC/H16 each35. Blocks0/1 each72complete;block2 69.
+Current b2/index11/c2/replicate3/seed65022203/policy_tail_td,epoch31.
+
+Native21344/30720 at boundary,21345later ledger;forwards31519/36190;native planner
+6796032/9953280;native filter2134500/3072000. Nested work remains complete:
+12300decisions/4723200predictions,5760prefix/46800pairedtail,720roots/1440clones,
+2916000branch filter transitions. No observed global/phase counter,phase time or
+current-owner violation. Elapsed21770.64/50400s;reference13291.51/23400s,fitting
+52.26/3600s,evaluation8421.59/18000s,currenttest22.86/180s. Progress4099875bytes,
+budget108457948bytes.35-36complete trajectory wall samples/role average34.34-34.43s
+forH8 and65.13s forH16. Remaining147tests extrapolate1.62h before analysis/archive;
+rates may vary,not a finish guarantee or per-decision latency statistic.
+
+Only progress/counter/timing records inspected,not interim cost/patient outcomes.
+Only nonlocked status/readout docs differ from execution205225c. Reuse20tests,
+compileall and source/input/seal checks; no new gate,history audit or archive.
+Same ACTIVE monitor observes this job. Next finish147frozen evaluations,then
+authorized full native cost/patient analysis,one archive,truthful manuscript
+handoff and terminal pause. No extra approval within this package; no tuning,
+scientific calls,restart,retry or scope change. Performance remains unresolved.
+
+## Previous checkpoint: policy-tail frozen evaluation167/360; first two blocks complete
 
 2026-10-05T17:37:18Z read-only heartbeat. Entryf95d2f8 clean on expected branch.
 Supervisor12591/PPID1 and child12612/12591 match saved claims/full commands;

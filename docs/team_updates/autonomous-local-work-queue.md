@@ -1,6 +1,55 @@
 # Autonomous local research queue
 
-## Live checkpoint: policy-tail package approved; freezing and direct single launch
+## Live checkpoint: policy-tail real training underway; first96updates and three states saved
+
+2026-10-05T12:07:40Z. Same committed single experiment205225c, supervisor12591/
+PPID1,child12612/12591 live with matching full commands. First reference world
+completed64native and12continuation tails. adaptive_tail_td/policy_tail_td/
+policy_tail_mc each32real value updates with finite receipts and after-fit saved
+model/optimizer/RNG states; three file hashes recorded in launch-readout.md.
+Total96/11520new updates,actor0. No extra diagnostic/model call by monitoring.
+
+Reference1/120, eachmethod1/120fits and32/3840updates; ancestor1/5,final0/15,
+eval0/360. Now secondreference b0/index1/c1/seed65000100. Its start boundary
+64native,274forwards,168nested decisions/64512nested prediction steps,
+48prefix/528pairedtail steps. No failure/overrun/terminal marker;stderr/outerlog0.
+No performance result yet. Read specs/2026-10-05-policy-aligned-value/launch-readout.md.
+
+Same gcn-rlACTIVE every30minutes; authorization covers remaining training,
+all15final seals,360frozen evaluations, comparison/archive/manuscript handoff.
+No repeated startup approval, duplicate process, scientific edits or auto retry.
+14h cap remains; one complete reference insufficient for reliable full ETA.
+Next is monitoring actual trajectory/fit/seal boundaries, not more preparation.
+
+## Previous checkpoint: approved policy-tail experiment launched; real reference collection underway
+
+2026-10-05T12:05:53Z. Scientific source88aa355, frozen implementationa9d6c8e,
+execution205225c7fd111142edc45b9ed2ab120bb3e8ae96; packet
+583e63d8dc57fb01aa6a8c70f8d7f616dacd0123f1ff1d18480a0d724a396505.
+Committed explicit `启动下一轮` authority/locks preceded one launch. No new
+source or parameter changes, duplicate job, repeated approval or test campaign.
+
+Supervisor12591/PPID1 and child12612/12591 live, saved claims/full commands match.
+First block0/c0/index0/seed65000000/plainH8 reference is underway; saved epoch7
+boundary8native/120nested planning/46080nested predictions/120value forwards.
+Ledger grew72119->437762bytes over79s and new8step boundary; later15native.
+No complete reference or optimizer yet:0/120reference, three methods0/120fits,
+0/11520new updates,actor0,ancestor1/5,final0/15,eval0/360. No failure/overrun,
+stdout/stderr/outerlog0bytes. These are collection facts, not performance benefit.
+
+Read specs/2026-10-05-policy-aligned-value/launch-readout.md and live root
+results/capacity_policy_tail_20261005/{launcher,payload/progress.jsonl}.
+593source/11input/runtime locks and1928seedfiles verified on admission;
+20necessary tests/fullcompileall reused. Same gcn-rlACTIVE every30minutes,
+quiet when unchanged. No related historical experiments restarted.
+
+Next: observe first completed reference/real update/after-fit state, then automatic
+serial training and sealed evaluation under the unchanged approved bounds. No
+additional routine confirmation needed.14h is cap, reliable ETA unavailable from
+one partial world. No scientific-source modification during execution. Final
+raw comparison/archive/manuscript or failure handoff thenPAUSED; no auto retry.
+
+## Previous checkpoint: policy-tail package approved; freezing and direct single launch
 
 2026-10-05T12:02:20Z. Entry88aa355 clean, expected branch; no related research
 process. User replied exactly `启动下一轮` after the complete480-world/14h scope

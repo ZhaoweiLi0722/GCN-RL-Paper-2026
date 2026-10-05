@@ -1,0 +1,55 @@
+{
+  "at_utc": "2026-10-05T22:45:36.842005+00:00",
+  "files": [
+    {
+      "source": "specs/2026-10-05-native-return-value/launch-readout.md",
+      "bytes": 3565,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/delivery_20261005/handoff/launch_update_20261005/specs/2026-10-05-native-return-value/launch-readout.md",
+      "sha256": "42c7f31e0c06a8ab59676a7d42bd07263a49d448f073caede731f45b5cea8d60",
+      "local_copy_verified": true,
+      "cloud_sync_verified": false
+    },
+    {
+      "source": "specs/2026-10-05-native-return-value/dropbox-handoff.md",
+      "bytes": 3500,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/delivery_20261005/handoff/launch_update_20261005/specs/2026-10-05-native-return-value/dropbox-handoff.md",
+      "sha256": "71dbdefcb6a1a982ef3e4cfcfc6daf135903c382e8c4a1e58a902871046cec9d",
+      "local_copy_verified": true,
+      "cloud_sync_verified": false
+    },
+    {
+      "source": "specs/2026-10-01-adaptive-paper-delivery/workflow.json",
+      "bytes": 146001,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/delivery_20261005/handoff/launch_update_20261005/specs/2026-10-01-adaptive-paper-delivery/workflow.json",
+      "sha256": "a9fe0b3a55898a909759646f9f9b614fe8bf847e715d6dc795f547bd65986f56",
+      "local_copy_verified": true,
+      "cloud_sync_verified": false
+    },
+    {
+      "source": "docs/team_updates/autonomous-local-work-queue.md",
+      "bytes": 425477,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/delivery_20261005/handoff/launch_update_20261005/docs/team_updates/autonomous-local-work-queue.md",
+      "sha256": "c308e076ab7e0e54a452bd9588f1f0f00f344dbaf6ed695853923065292b73a0",
+      "local_copy_verified": true,
+      "cloud_sync_verified": false
+    },
+    {
+      "source": "reports/capacity_native_tail_launch_training_snapshot_20261005.json",
+      "bytes": 4943,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/delivery_20261005/handoff/launch_update_20261005/reports/capacity_native_tail_launch_training_snapshot_20261005.json",
+      "sha256": "76eeaf86f565ec3cc6a40de344aa1b6e1a71f0dfb7ecaf6a8832c87bbd0096dd",
+      "local_copy_verified": true,
+      "cloud_sync_verified": false
+    },
+    {
+      "source": "reports/dropbox_delivery_20261005_completion.json",
+      "bytes": 533,
+      "path": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/delivery_20261005/handoff/launch_update_20261005/reports/dropbox_delivery_20261005_completion.json",
+      "sha256": "5e17b7094c8529f3d5aad8feb66811937982299fc44f852f5a602fdc5059a541",
+      "local_copy_verified": true,
+      "cloud_sync_verified": false
+    }
+  ],
+  "cloud_sync_verified": false,
+  "cloud_verification_blocker": "Mac locked; native Dropbox UI unavailable"
+}

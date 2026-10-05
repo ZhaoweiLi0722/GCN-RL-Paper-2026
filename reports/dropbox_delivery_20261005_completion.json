@@ -1,0 +1,13 @@
+{
+  "schema": "dropbox-artifact-handoff-completion-v1",
+  "completed_at": "2026-10-05T22:43:31.689309+00:00",
+  "files": 18511,
+  "new_copies": 18507,
+  "already_present_verified": 4,
+  "total_verified_bytes": 48028098688,
+  "local_copy_verified": true,
+  "cloud_sync_verified": false,
+  "collaborator_access_verified": false,
+  "active_run_excluded": "results/capacity_native_tail_20261005",
+  "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/delivery_20261005"
+}

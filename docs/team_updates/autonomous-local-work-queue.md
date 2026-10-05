@@ -1,6 +1,55 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return full package approved; bind locks and launch once
+## Live checkpoint: native-return real updates; historical Dropbox local copy verified
+
+2026-10-05T22:44:08Z. Same once-launched supervisor36670/1 and child36695/36670
+remain live with matching claims/commands. First real training boundary has
+32updates for each of forecastTD/nativeTD/nativeMC:96/11520total,actor0.
+All96receipts finite/sequential and three after-fit model states saved/hashed;
+reports/capacity_native_tail_launch_training_snapshot_20261005.json. This proves
+training, not benefit. Latest reference1/120,branches4/240,eachfit1/120,
+ancestor1/5,final0/15,eval0/360;main96+branch206native steps. Current b0/i1/c1
+epoch31. No error/failure markers. No source change, extra scientific call or retry.
+
+Dropbox delivery completed locally22:43:31Z:18511files/25archives and preserved
+failed attempts,48028098688bytes SHA256/length verified;40865583897new bytes.
+Destination is existing Research Artifacts/delivery_20261005 plus4existing
+files at established sibling paths. Plan/receipts/completion are
+reports/dropbox_delivery_20261005_*. No re-archive/history audit or permissions
+change. Cloud sync/access UNVERIFIED because Mac lock blocked Dropbox UI.
+See specs/2026-10-05-native-return-value/dropbox-handoff.md. Copy current launch
+handoff additively; ongoing run is not mislabeled final or included in old export.
+
+Next: same ACTIVE30minute monitor observes authorized serial reference/branches,
+11520updates,15seals,360tests,then raw result/manuscript/archive and Dropbox final
+or failed boundary.18h cap, no reliable whole-run ETA from one full reference.
+No new approval or preparation gate. Cloud status can be verified when UI is
+available; do not repeat old copies or science to manufacture progress.
+
+## Previous checkpoint: native-return single run launched; artifacts export authorized
+
+2026-10-05T22:39:57Z. Execution02e69207578265c34239abc6b0886c951c3de1bd,
+packet202a93608a136859b30f9a54b026b766d00f591249d1d054dc10e7885bdb90fa.
+606source/11input locks committed before the single launch; all prior43tests and
+compileall reused. Supervisor36670/1 and child36695/36670 match claims/full
+commands. First native branch complete through64 with saved state boundaries;
+main reference b0/index0/c0 at21steps. Reference0/120, branches1/240,
+each fit0/120/value0/3840,total0/11520,actor0,ancestor1/5,final0/15,eval0/360.
+No stderr or failure marker. This is actual collection, not a performance claim.
+
+No missing approval or preparation gate. Authorized serial work now continues:
+reference/native labels -> three learners -> all seals ->360frozen evaluations
+-> independent raw comparison/archive. No duplicate launch, science changes or
+retry. Same gcn-rl ACTIVE at30minutes, quiet unchanged;18h is cap, not ETA.
+See specs/2026-10-05-native-return-value/launch-readout.md.
+
+User separately requested all these experimental artifacts in existing Dropbox.
+Current handoff copies completed archives/metadata and preserved failed runs
+additively, without recreating old archives or changing permissions. The active
+run's final/failed artifacts follow after termination. Hash-verified local copy
+does not prove cloud sync or collaborator access. Export receipt to follow.
+
+## Previous checkpoint: native-return full package approved; bind locks and launch once
 
 2026-10-05T22:33:20Z. Exact answer to the complete18h numeric question:
 `批准此完整单次包`. Authority is recorded in

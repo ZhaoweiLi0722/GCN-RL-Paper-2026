@@ -1,6 +1,39 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-tail terminal timeout; complete primary contrasts read
+## Live checkpoint: final-world recovery entry ready; exact approval pending
+
+2026-10-05T06:25Z. Entryedc2027, expected branch, no related scientific process.
+User `继续` moved preparation forward. Delivered additive planner-tail recovery1
+runner/resources/execution/CLI and one complete protocol/proposal. No historical
+source/result edits, model loading, scientific forward, optimizer or native call.
+
+Exact proposed remainder:54native/operations (38control+16settlement),960original
+saved-root forwards,0updates,29184predictor epochs,5400filter transitions,0fresh
+worlds. Keep old768interrupted-query reservation and charge its replacement;
+restore epoch10 and preserve the raw ten-row prefix. Reuse all training/models
+and359complete evaluations. New time1800s includesIO/archive,phase/owner limits
+fixed; old+new storage8GiB/6000files. No scientific changes or new samples.
+
+29focused zero-update/artificial/mock tests pass; full compileall passes with
+the documented alternate cache after a default-cache permission error. Actual
+failure/terminal JSON matches the pure remainder contract. Fake actual-entry
+runner proves54steps/960forwards/no replay; scientific saved-state loadability
+is not yet verified and is not inferred from these fixtures.
+
+Evidence: specs/2026-10-04-planner-aligned-value/recovery1/{protocol.md,
+proposal.json,integration-readout.md}; new modules/tests all use recovery1 suffix.
+One exact execution approval question asked; no reply yet. gcn-rl remainsPAUSED
+and no result root created. No remote action. Independent resource deliverable
+integrated, Goodall completed and closed; existing efficiency advice reused,
+no new audit gate.
+
+Performance verdict unchanged: primary all-three criterion failed; H16completion
+cannot reverse the existing TD/frozen null increment. This step completes the
+original comparator/diagnostics, not another positive-result search. Next action
+after explicit approval: record authority/change control, bind/commit source,
+runtime,input/remainder and launch once without redundant launch approval.
+
+## Previous checkpoint: planner-tail terminal timeout; complete primary contrasts read
 
 2026-10-05T05:48:00Z terminal handoff. Entryb9f18ef clean, expected branch.
 Terminal exit1/child1 at05:31:13Z: evaluation phase14400.002917/14400s exhausted.

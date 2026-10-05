@@ -3643,3 +3643,23 @@ commit the effective authorization and launch once. The first counted reference
 world is the real preflight. No restart of old attempts or automatic retry.
 Complete readout/archive and honest manuscript interpretation, then pause the same
 visible monitor. No Howard approval, holdout, StageE reopening or remote action.
+
+#### Planner-tail final-world recovery proposed, not execution-authorized
+
+2026-10-05. The original planner-tail attempt terminated on its evaluation-phase
+wall cap after359/360evaluations; all training and primary contrasts are complete.
+Zhaowei's `继续` authorizes local recovery preparation. Additive remaining-only
+entry and29zero-update/mock tests plus fullcompileall now pass. See
+specs/2026-10-04-planner-aligned-value/recovery1/{protocol.md,proposal.json,
+integration-readout.md}. Historical science and results remain unchanged.
+
+One new numerical question has been asked: restore the final H16 world at epoch10,
+54native steps,960original diagnostic forwards,0updates,29184predictor epochs,
+5400filter transitions,1800newseconds includingIO; old+new8GiB/6000files.
+The old768prediction reservation remains consumed and its replacement is charged.
+No reply yet: no new scientific loading/forward/simulation, freeze or launch.
+If approved, record exact authority and committed locks before one continuous
+completion/readout/archive attempt; no extra routine startup question.
+The completed primary all-three criterion failed and cannot be rescued by this
+last H16 fast-noise world. This is evidence completion, not a new performance
+search. No reward/scenario change, retry, StageE reopening or remote action.

@@ -1,6 +1,33 @@
 # Autonomous local research queue
 
-## Live checkpoint: planner-aligned full package approved and frozen; launching next
+## Live checkpoint: planner-aligned comparison running; first real training verified
+
+2026-10-05T00:07:40Z. Execution46eba5b,sciencecbe0b7d,frozen881997c;packet
+a0cbcef8d523c69234c0b9568536ba7a0bd42bcd138e4d63111410beabafba74.
+User approval `批准了 以后可以直接执行训练` binds this complete package. Read
+specs/2026-10-04-planner-aligned-value/{protocol.md,approval-intent.json,
+frozen.json,authorization.json,launch-readout.md}. Root
+results/capacity_planner_tail_20261004. One attempt already launched; no relaunch.
+
+Matching live supervisor95697/PPID1 and child95709/95697 plus new8step/fit/world
+boundaries verify running. Reference3/120 complete; each method3/120fits and
+96/3840updates,total288/11520real value updates,actor0. Ancestors1/5,new seals0/15,
+eval0/360,native200/30720 at saved boundary. Currentreference block0/index3,
+condition0/replicate1/seed64000001/plain_h8/epoch7. First96optimizer receipts
+have finite loss/gradients; allthree after-fit states exist and byte hashes are
+recorded in launch-readout. This proves training, not benefit. No failure markers;
+stderr/stdout/detachedlog empty. Required process continues, phase not complete.
+
+Same gcn-rl heartbeat confirmedACTIVE every30minutes; quiet for unchanged state.
+It monitors this one trainer and will complete saved-data/manuscript handoff.
+No further routine approval. Next: existing serial reference/three-arm training,
+all15final seals,then360six-role tests,raw comparison and local archive. Do not
+add a diagnostic run, restart or alter science. Full6-8h estimate provisional,
+9h cap includingIO. Reuse38tests/compileall and current frozen locks; old evidence
+untouched. Both finite agents closed; no new review gate. Local-only, StageE
+closed,holdout untouched. Successful or failed terminal outcome pauses monitor.
+
+## Previous checkpoint: planner-aligned full package approved and frozen
 
 2026-10-05T00:01:52Z. Entry cbe0b7d, clean expected branch. User replied exactly
 `批准了 以后可以直接执行训练` after the full numerical package/handoff.

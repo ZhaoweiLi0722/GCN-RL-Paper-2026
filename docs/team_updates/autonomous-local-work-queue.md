@@ -1,6 +1,48 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return four evaluation blocks complete;308/360
+## Live checkpoint: native-return complete; primary screen failed; monitor PAUSED
+
+2026-10-06T07:34:37Z terminal handoff checkpoint. Entrya5996d7 on expected branch.
+The single approved attempt exited0 in31159.209742s (8.6553h), archive included.
+At07:19:24.904706Z supervisor36670 and child36695 were absent, with no related
+scientific process. Failure/overrun/preservation markers absent; all3logs0bytes.
+Reference120/120,branches240/240,eachmethod120fits/3840updates,total11520value,
+actor0. Ancestor5/5,final15/15,all sealed before test; evaluation360/360,test0updates.
+
+Counters: native30720main+9720branch=40440; operations41400 plus240clones;
+40045forwards;16303440predictions;6960000filter transitions. Forecast/native
+parent decisions12300/4100. All frozen total/phase/855owner caps reconcile;
+pendingchunks0,violations0. Root4915files/1477438804bytes. Existing archive reused:
+631668661bytes,4905members,SHA256b31fff4305ede5f7f310c564ba41d0e4868c6d87bf0bb3775bba101dec90eeaa.
+No archive rebuilt,model loaded,extra scientific call,new bootstrap or repeated test.
+Unchanged43zero-update tests/compileall and prior seal/after-fit evidence reused.
+
+Independent raw read reconciles all480main trajectories and240branches,40440raw
+rows/7800native suffix rows,15pairs x3conditions x5blocks,900world contrasts,
+45condition and225block rows. Cost/reward,patient identities/settlement,actions,
+actual labor lag/hours,compute and latency checked. Five-block saved intervals
+retained. See specs/2026-10-05-native-return-value/terminal-{readout.md,saved-data.json}.
+
+Primary screen FAILED: persistent nativeTD/H8,existing,forecastTD cost CIs all
+include0; positiveblocks4/5,4/5,3/5. NativeTD meanlosses vsforecastTD+2.75/+2.40/+1.90
+across conditions,violating sample-mean criterion (loss CIs include0). Positive
+secondary nativeTD/nativeMC persistent: savings0.955M[0.171,1.738],meanpaired1.88%,
+11.95fewerlosses,4/5positivecostblocks but6cost-harm/4loss-harm worlds. Fast/H8 and
+fast/existing cost CIs positive; not an overallRL advantage. PersistentTD/H8 uses
+69.28moreappliedhours; TD/MC76.14morehours. Reward/scenario/architecture unchanged.
+Historical ancestor/mixedblock0,E1missing,dependentbranch/distribution and
+unequalforward caveats retained. No follow-on training or test-world tuning.
+
+Manuscript source updated; PDF recompilation unverified (no local TeX compiler).
+Dropbox core handoff verified25files/801081755bytes at07:31:15Z,including complete
+archive,comparison/locks/analysis/manuscript. Cloud sync/access unverified; current
+DropboxUI timedout. Four closure documents633763bytes verified07:33:59Z. Same
+visiblegcn-rl PAUSED,tool/config readbackconfirmed07:34:37Z; monitor-closure.json.
+Final paused-state snapshots preserved additively inhandoff/monitor_closed with
+their ownreceipt. Historical delivery untouched,no permissions/messages/push.
+Attempt consumed; no remaining science or implicit next-run authority.
+
+## Previous checkpoint: native-return four evaluation blocks complete;308/360
 
 2026-10-06T06:40:45Z snapshot; process check06:40:01Z. Entry4bbdb2c clean on
 expected branch. Supervisor36670/1 and child36695/36670 match claims/full commands,

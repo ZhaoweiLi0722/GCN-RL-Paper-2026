@@ -2000,6 +2000,99 @@ provenance, uncalibrated synthetic support labor, and descriptive multi-comparis
 inference remain limitations. The findings do not establish unique TD or GCN
 benefit, deployment-time adaptation, or clinical safety.
 
+\subsection{Native-return-grounded value learning: a bounded development comparison}
+\label{sec:native-tail-development}
+A further prospective comparison replaced public-model continuation targets
+with returns from cloned native simulator states. Five historical GCN models
+supplied identical starting weights within each block to forecast-tail TD,
+native-tail TD, and same-native-data direct-return regression (MC policy
+evaluation). Optimizers and new-update counters were reset. From 120 shared
+H8-MPC reference worlds, two preset roots and candidates per world generated
+240 dependent native branches. Each branch executed the candidate for eight
+steps, followed the unchanged historical parent H8-MPC until control epoch 48,
+and settled through epoch 64. Native TD8 and MC shared 7,800 suffix records.
+Each method received 3,840 updates, or 768 per model. Reward, scenarios,
+architecture, and candidate support remained unchanged. Native and forecast
+state distributions differ; this is not a label-only causal comparison or
+exact evaluation of the changing student policy.
+
+All 15 new models and five ancestor bindings were sealed before 360 frozen
+evaluations on 60 new paired worlds. The attempt completed 480 full trajectories
+and 240 dependent partial branches without retry, with 11,520 value updates,
+zero actor updates, and zero evaluation updates. Independent saved-data
+reconstruction reconciled all 40,440 native records, including 9,720 branch
+records, and all 15 controller pairs across three conditions and five blocks.
+The primary screen required native TD to improve persistent-change cost in
+every block with a descriptive interval above zero against H8, the existing
+frozen GCN, and matched forecast TD, without a condition-mean loss increase.
+
+\begin{table}[H]
+\centering
+\caption{Native-return TD under persistent capacity change. Savings are
+comparator minus TD cost in millions of synthetic objective units. Intervals
+are descriptive 95\% two-level bootstrap intervals across five blocks and four
+paired worlds per block; percentages are mean paired-world savings. Extra
+losses are TD minus comparator, in simulated patients per world.}
+\label{tab:native-tail-persistent}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Comparator & Savings M [95\%] & Savings (\%) & Extra losses \\
+\midrule
+Plain H8-MPC & $0.894\ [-0.017,1.845]$ & $1.81$ & $-8.70$ \\
+Existing frozen GCN & $0.274\ [-0.174,0.764]$ & $0.57$ & $-0.95$ \\
+Matched forecast-tail TD & $0.244\ [-0.431,0.939]$ & $0.46$ & $2.40$ \\
+Same-native-data MC & $0.955\ [0.171,1.738]$ & $1.88$ & $-11.95$ \\
+Plain H16-MPC & $0.403\ [-0.322,1.106]$ & $0.77$ & $-1.55$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The primary screen failed (Table~\ref{tab:native-tail-persistent}). Only four,
+four, and three persistent-change block means favored native TD against H8,
+the existing frozen model, and forecast TD, respectively, and all three cost
+intervals included zero. Relative to forecast TD, mean extra losses were 2.75,
+2.40, and 1.90 patients under no change, persistent change, and fast fluctuation.
+Their descriptive intervals included zero, so population-level worsening is
+not established, but the prespecified sample-mean patient criterion failed.
+Under persistent change, native TD cost more in eight of 20 worlds and lost
+more patients in 15 of 20 worlds than forecast TD. Native grounding therefore
+did not establish the intended increment over the matched forecast treatment.
+
+A favorable secondary result was native TD versus same-native-data MC under
+persistent change: savings were 0.955 million units, mean paired savings were
+1.88\%, and losses decreased by 11.95 patients per world (extra-loss interval,
+$[-25.751,-0.049]$). Four of five block cost means favored TD, while six of 20
+worlds cost more and four had extra losses. This supports a limited TD-target
+advantage over this direct-return-regression control at the tested budget,
+not a general RL or isolated GCN effect. Under no change and fast fluctuation,
+TD/MC cost intervals included zero despite mean savings of 2.30\% and 2.25\%.
+TD and MC share data and update counts, not total forward computation.
+
+Under fast fluctuation, native TD saved 1.073 million units against H8
+(interval, 0.031--2.096 million; mean paired savings, 2.47\%) and 0.608 million
+against the existing model (0.097--1.113 million; 1.52\%). All five cost block
+means favored TD. Mean loss reductions were 17.95 and 2.50 patients, respectively;
+the existing-model loss interval included zero. Four worlds cost more than H8,
+and five cost more and five lost more patients than the existing model.
+These condition-specific findings do not reverse the failed primary screen.
+No H16 cost interval excluded zero; this does not establish equivalence.
+
+Under persistent change, native TD/H8 actions differed at 701 of 960 control
+boundaries and TD applied 69.28 additional flexible hours per world. Lower
+bioreactor-shortage, patient-loss, and expiry costs were partly offset by higher
+reagent-purchase, reagent-shortage, and flexible-labor costs. Native TD applied
+13.80 fewer hours than forecast TD while losing 2.40 more patients, but 76.14
+more hours than native MC while delivering 11.95 more patients. Evaluation
+median decision times were 0.694 seconds for native TD and H8, and 1.391 seconds
+for H16, which used twice the native planning queries. The complete attempt
+took 8.655 hours and charged 40,045 neural forwards, 16,303,440 prediction steps,
+and 6,960,000 filter transitions, including 12,300 forecast-parent and 4,100
+native-parent replanning decisions. Label and training computation is additional
+to evaluation latency. All results retain the historical-ancestor and block-zero
+mixed-predictor limitations; dependent branches and shared future tapes are not
+new independent worlds or event-level common random numbers. E1 calibration
+remains absent, and no clinical-safety or deployment-adaptation claim follows.
+
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
 This study develops a patient-condition and geography-aware simulation of a
@@ -2186,6 +2279,16 @@ at the tested data and compute budget. This is not evidence that the reward
 weights are wrong or that all RL methods lack value; it closes this particular
 label amendment without supporting further training or reward tuning on these
 test worlds.
+
+The native-return follow-up (Section~\ref{sec:native-tail-development}) also
+failed the joint primary screen. Grounding value targets in native branches
+did not establish a persistent-change increment over the existing model or
+matched forecast TD, and patient trade-offs remain. A favorable secondary
+native TD/MC contrast at fixed data and update budgets provides a narrower
+positive finding about the tested TD target, alongside fast-fluctuation cost
+advantages over H8 and the existing model. These findings should be reported
+together, not converted into an overall RL-superiority claim or used to tune
+reward weights on the completed test worlds.
 
 Longer-term models should integrate production scheduling,
 product preparation and distribution, and treatment operations.

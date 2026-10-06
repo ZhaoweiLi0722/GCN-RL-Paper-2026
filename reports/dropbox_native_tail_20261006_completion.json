@@ -1,0 +1,17 @@
+{
+  "completed_at_utc": "2026-10-06T07:31:15.661007+00:00",
+  "files_verified": 25,
+  "bytes_verified": 801081755,
+  "destination_root": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_native_tail_20261005",
+  "local_copy_verified": true,
+  "cloud_sync_verified": false,
+  "collaborator_access_verified": false,
+  "cloud_verification": "Read-only Dropbox native UI request timed out; no cloud receipt.",
+  "archives_reused": 1,
+  "archive_sha256": "b31fff4305ede5f7f310c564ba41d0e4868c6d87bf0bb3775bba101dec90eeaa",
+  "different_file_overwrites": 0,
+  "scientific_calls": 0,
+  "plan": "reports/dropbox_native_tail_20261006_plan.json",
+  "receipts": "reports/dropbox_native_tail_20261006_receipts.jsonl",
+  "closure_documents_pending": true
+}

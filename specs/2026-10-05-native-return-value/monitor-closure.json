@@ -1,0 +1,16 @@
+{
+  "at_utc": "2026-10-06T07:34:37.079211+00:00",
+  "automation_id": "gcn-rl",
+  "status": "PAUSED",
+  "kind": "heartbeat",
+  "name": "GCN-RL \u539f\u59cb\u56de\u62a5\u4ef7\u503c\u6bd4\u8f83\u4e0e\u5f52\u6863\u540c\u6b65",
+  "target_thread_id": "019f2ea2-0217-7b71-90cf-791dc05cc921",
+  "tool_update_confirmed": true,
+  "toml_readback_verified": true,
+  "toml_sha256": "6b03eda8e67fcca46bf5d14678cd4d79c705ebb2af834833bce93aa0f383ca26",
+  "prompt_sha256": "23891412dfab7df6bd1beae42a8f332079f70b133b5dfdcb7185153392f69b9a",
+  "deleted": false,
+  "other_automations_modified": false,
+  "science_restarted": false,
+  "reason": "Single approved native-return comparison completed; full local artifact core and terminal closure exported, primary screen failed. No automatic follow-on."
+}

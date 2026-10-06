@@ -1,0 +1,18 @@
+{
+  "completed_at_utc": "2026-10-06T07:36:17.780357+00:00",
+  "files_verified": 5,
+  "bytes_verified": 636114,
+  "local_copy_verified": true,
+  "cloud_sync_verified": false,
+  "collaborator_access_verified": false,
+  "receipts": "reports/dropbox_native_tail_20261006_monitor_closed_receipts.jsonl",
+  "archive_recreated": false,
+  "monitor_status": "PAUSED",
+  "monitor_tool_and_toml_verified": true,
+  "core_completion": "reports/dropbox_native_tail_20261006_completion.json",
+  "closure_completion": "reports/dropbox_native_tail_20261006_closure_completion.json",
+  "only_unverified_external_states": [
+    "cloud_sync",
+    "collaborator_access"
+  ]
+}

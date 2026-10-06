@@ -1,0 +1,11 @@
+{
+  "completed_at_utc": "2026-10-06T07:33:59.420119+00:00",
+  "files_verified": 4,
+  "bytes_verified": 633763,
+  "local_copy_verified": true,
+  "cloud_sync_verified": false,
+  "collaborator_access_verified": false,
+  "receipts": "reports/dropbox_native_tail_20261006_closure_receipts.jsonl",
+  "archive_recreated": false,
+  "monitor_pause_still_pending": true
+}

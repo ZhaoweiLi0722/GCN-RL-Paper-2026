@@ -1,6 +1,38 @@
 # Autonomous local research queue
 
-## Live checkpoint: complete five-family package approved; freezing for single launch
+## Live checkpoint: five-family package launched once; real training verified
+
+2026-10-06T20:35:31Z. The approved package is running under supervisor92809/1
+and child92821/92809, verified against claims and complete commands. Frozen
+implementation104ddff436571dab44440644168317b315c8db0b; execution
+f5772e824632248be458d42e487f757477100575; packet
+40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9.
+626source/11input locks,2178seed files,5777unique allocations; no collisions.
+Reuse23tests/fullcompileall and closed finite delegates. No second launch/freeze.
+
+218training worlds/fits complete;219started. Block0 DDPG both learning-rate
+jobs96/96 complete;TD3-lr0 has26complete and is at condition2/replicate8/epoch39.
+14368actual optimizer dispatches =6560actor+7808critic+0value; first actual
+32actor/32critic Adam updates and saved model/RNG/optimizer state verified.
+This proves training execution, not cost/patient gains or a winning family.
+Development/confirmation evaluation0; five seal events include initial states.
+
+Native13992/431616,operations14430/445104,clones0;forwards46216/2013312,
+prediction steps0/50429952,filter1399200/43161600. Elapsed353.743/172800s,
+admission5.803s,development owner347.940s. No terminal/failure markers;
+all3logs0bytes, child RSS328640KiB at the process check. Early DDPG/TD3 rate
+about0.627completed worlds/s is not a full-package ETA. Historical estimate
+about31h remains provisional;48h hard cap includes IO/archive.
+
+Launch readout:specs/2026-10-06-family-selection/launch-readout.md.
+Evidence:reports/capacity_family_selection_launch_snapshot_20261006.json.
+Same gcn-rl heartbeat updated and confirmed ACTIVE,every30minutes. Next is
+continuous authorized training/selection/fresh retraining/frozen evaluation.
+No intermediate test tuning, forced winner, source changes, auto-retry or extra
+science. Terminal raw readout/manuscript/local commit/additive Dropbox handoff
+remain due, then PAUSE the same visible monitor. No external Git or messages.
+
+## Previous checkpoint: complete five-family package approved; freezing for single launch
 
 2026-10-06T20:29Z. Zhaowei replied exactly `批准完整单次包` to the complete
 five-family comparison, fixed H8/H16, development selection and fresh finalist

@@ -13,7 +13,8 @@ and byte length; save an export manifest. Reuse older exports, without rebuildin
 their archives. Include failures, eliminations, negative results and all controls.
 New closure supplements use separate versioned paths, not overwritten snapshots.
 
-Current state: not exported; run not yet launched at this preparation checkpoint.
+Current state at2026-10-06T20:35:31Z: run launched once and real training verified;
+not exported. Export remains due only after complete or failed terminal closure.
 Local-copy verification, cloud synchronization and collaborator access are three
 different states. Never infer the latter two from a local sync-folder copy.
 Do not change permissions, create public links or send external messages.

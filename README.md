@@ -6,6 +6,32 @@ constrained graph MDP in which the product is perishable, identity-bound to a
 single patient, and demanded only while that patient remains clinically eligible.
 The manuscript lives under `paper/`.
 
+## Current Evidence (2026-10-06)
+
+The formal routing-primary method is **AFR-GCN-DDPG**, a graph-aware residual
+controller around the two-period MDL-2 look-ahead anchor. Its five-seed comparison
+supports the complete controller package over MDL-2 and parameter-matched flat
+DDPG, not an isolated message-passing effect or an additional online-update gain.
+
+The separate **GCN value-MPC development studies** learn a terminal-cost residual
+used to score MPC candidates. Their latest candidate is native-return TD value
+learning, with no actor updates and frozen evaluation. The completed native-return
+comparison failed its joint primary strong-baseline criterion. Positive
+condition-specific and TD/MC secondary findings do not establish general RL
+superiority. Reward, physical scenarios, and architecture were unchanged.
+
+Start with these current records rather than the older pilot summaries below:
+
+- [Formal routing-primary evidence](experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/README.md).
+- [Latest native-return results, all comparators, harms and compute](specs/2026-10-05-native-return-value/terminal-readout.md).
+- [Current manuscript](paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/main.tex).
+- [Writing revision and publication review](docs/team_updates/2026-10-06-manuscript-github-update.md).
+
+The single native-return attempt is complete and consumed. These instructions
+and historical runner examples are not authorization to restart it. Full raw
+archives and checkpoints remain outside Git; committed manifests/readouts link
+the evidence, and the existing Dropbox receipts verify local copies only.
+
 ## Where things are
 
 Everything implemented is under `src/`, `evaluation/`, and `experiments/configs/`.
@@ -41,8 +67,8 @@ geography, and demand-prior-drift scenario is
 | File | What it is |
 |------|-----------|
 | `src/models/gcn.py`, `graph_features.py` | Shared GCN state encoder, size-invariant `facility_action` readout, graph-feature reconstruction (patient- and forecast-aware). |
-| `src/models/gcn_ddpg.py`, `gcn_td3.py`, `gcn_sac.py`, `gcn_ppo.py` | Graph-aware actor–critic backbones (GCN encoder then backbone). GCN-DDPG is the ablation; TD3/SAC/PPO are the family. |
-| `src/baselines/flat_ddpg.py`, `td3.py`, `sac.py`, `ppo.py` | Flat-state (non-graph) RL, to isolate the value of the graph encoder. |
+| `src/models/gcn_ddpg.py`, `gcn_td3.py`, `gcn_sac.py`, `gcn_ppo.py` | Implemented graph-aware actor-critic backbones. AFR-GCN-DDPG is the formal routing-primary method; matched TD3 is a development ablation. SAC/PPO implementations do not imply matched formal evaluation. |
+| `src/baselines/flat_ddpg.py`, `td3.py`, `sac.py`, `ppo.py` | Flat-state RL comparators. The executed graph/flat contrast compares full packages and does not isolate message passing from features, heads, and gates. |
 | `src/rl/agents.py` | Agent registry. `get_agent_class(name)` returns any of the above by key (`gcn_ddpg`, `flat_ddpg`, `td3`, ...). |
 | `src/rl/experiment.py` | `build_env`, `build_agent_config`, `train_off_policy_agent`, shared training plumbing. |
 

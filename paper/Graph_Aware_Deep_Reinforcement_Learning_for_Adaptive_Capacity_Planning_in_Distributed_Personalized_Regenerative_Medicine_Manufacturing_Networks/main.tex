@@ -48,41 +48,32 @@
 
 \begin{abstract}
 
-Autologous cell therapy and other personalized regenerative medicine (PRM)
-products are manufactured on demand across distributed clinics. Each product
-is perishable, identity-bound and non-fungible, and useful only while its
-patient remains clinically eligible, coupling capacity, inventory,
-patient-indexed logistics, and patient outcomes. We formulate this planning
-problem as a constrained graph Markov decision process and develop an
-\emph{advantage-filtered residual graph convolutional network--deep deterministic
-policy gradient} controller (AFR-GCN--DDPG). It learns bounded corrections to a
-transparent two-period look-ahead policy while preserving identity and
-feasibility. In the routing-primary formal study, five training seeds were
-evaluated on four scenarios with 100 paired holdout replications per seed and
-scenario. AFR-GCN--DDPG reduced the total weighted objective by 0.658\% relative
-to routing MDL-2 (95\% interval $[-0.721,-0.585]\%$) and by 0.321\% relative to
-parameter-matched flat DDPG (95\% interval $[-0.413,-0.240]\%$), while improving
-completion service, manufacturing eligibility, and patient loss. Savings were
-driven primarily by lower patient-loss, expiry, and shortage costs, partly
-offset by higher specimen-transfer cost. A matched three-seed TD3 development
-ablation also favored the graph controller over MDL-2 and flat TD3. However,
-DDPG and TD3 final-versus-frozen comparisons did not establish an incremental
-online improvement, and a prospective paired-advantage DDPG experiment failed its
-online-gain gate. Frozen action-geometry screens found that useful local
-headroom concentrated in projected integer-lot specimen routing rather than
-continuous reagent and capacity channels. The evidence supports an
-offline-pretrained, graph-aware residual actor--critic policy, but not an
-independent endpoint benefit from those online actor--critic updates. In a
-separate synthetic capacity-allocation development study, continued TD training
-of a GCN terminal-value model reduced mean paired cost by 13.75\% relative to
-its frozen initialization under persistent capacity change. Its advantage over
-plain MPC was smaller (2.46\%) and its descriptive interval crossed zero.
-This supports continuation-training value in that design, not deployment-time
-adaptation or robust dominance over the planner. Subsequent matched-control
-development comparisons did not establish a reliable additional benefit from
-replacing adaptive-rule forecast tails with frozen-parent MPC tails. The graph--flat
-contrast evaluates complete controller implementations; it does not isolate
-message passing from their differing feature transforms, action heads, and gates.
+Distributed personalized regenerative medicine manufacturing couples scarce
+capacity with perishable, patient-specific products and deteriorating treatment
+eligibility. We formulate this problem as a constrained graph Markov decision
+process and develop an advantage-filtered residual controller that combines
+graph convolutional encoding with deep deterministic policy gradients. The
+controller learns bounded corrections to a two-period mean-demand look-ahead
+heuristic while preserving patient identity and action feasibility. In the
+routing-primary formal study, five training seeds were evaluated on four
+scenarios with 100 paired holdout replications per seed and scenario. The
+controller reduced the weighted objective by 0.658\% relative to the heuristic
+(95\% savings interval $[0.585,0.721]\%$) and by 0.321\% relative to a
+parameter-matched flat controller ($[0.240,0.413]\%$), with favorable simulated
+service and patient-loss outcomes. These contrasts support the complete
+graph-aware controller, not an isolated message-passing effect. Final-versus-
+frozen comparisons did not establish additional benefit from online
+actor--critic updates. A separate synthetic development study instead learns
+a residual terminal cost for model predictive control. Its latest native-return
+comparison used five historical model blocks, 120 reference worlds, 240
+dependent simulator branches, and 360 frozen controller evaluations. Mean
+paired savings over eight-step planning were 1.81\% under persistent capacity
+change and 2.47\% under fast fluctuation. However, the joint primary
+strong-baseline criterion failed, and mean patient losses increased relative
+to forecast-tail learning. The evidence distinguishes controller performance
+from learning attribution: neither general reinforcement-learning superiority
+nor deployment-time adaptation is established. Clinical and economic
+calibration remain necessary before operational use.
 \end{abstract}
 
 \begin{keyword}
@@ -104,7 +95,17 @@ Reinforcement learning (RL) is a natural fit because the problem is sequential. 
 
 What that literature does not model is the PRM problem itself. Prior graph-and-RL studies for networked operations concentrate on demand forecasting, inventory-only ordering, or generic enterprise resource allocation, and they represent demand as fungible, abstract requests~\cite{Kotecha2025GNNMARL, Ahn2024GSP, Mousa2023DecInvMARL, Bermudez2023DCPO, Eisenach2024NeuralCoordination}; none model a product that expires, production that must return to the same patient, or demand generated by patient deterioration while waiting. Reinforcement learning has been applied within cell-therapy manufacturing, but at the level of a single bioprocess rather than a network of clinics~\cite{Zheng2022HybridMBRL}, and recent evidence cautions that learned policies do not uniformly dominate well-tuned operational heuristics, particularly under perishability and non-stationarity~\cite{Stranieri2025PharmaDRL}. The gap we address is thus a problem gap rather than a method gap, namely perishable, identity-bound, patient-condition-driven capacity planning across a clinic network, together with a decision framework and simulation testbed built specifically for it. To the best of our knowledge no public benchmark exists for this setting, so the environment is itself a contribution.
 
-We organize the study around five research questions. \textbf{(RQ1)} With patient-indexed specimen routing held admissible across policies, does a graph representation of the clinic network improve coordinated specimen, capacity, reagent, and replenishment decisions over flat-state control, and under which supply-disruption and forecast-error conditions is any improvement largest? \textbf{(RQ2)} Does the routing-primary graph advantage persist under a matched TD3 backbone ablation, and can any gain be attributed separately to online actor--critic updates rather than frozen advantage-filtered pretraining? \textbf{(RQ3)} Does explicitly modeling patient condition and product expiry change the optimal policy and expose failures of condition-blind planners? \textbf{(RQ4)} Does a condition- and expiry-aware temporal encoder, which retains memory of deterioration trajectories, improve on a static graph encoder? \textbf{(RQ5)} Do learned policies outperform strong look-ahead heuristics, not only weak myopic rules, under supply disruption, demand forecast error, and patient-condition stress?
+The completed evidence addresses three questions. First, does the graph-aware
+controller package improve on a strong look-ahead anchor and a parameter-matched
+flat package when patient-indexed routing is available to all three? Second,
+does that advantage persist under a matched TD3 backbone, and do online
+actor--critic updates add value beyond frozen advantage-filtered pretraining?
+Third, in a separate capacity-allocation development setting, can learned
+terminal values improve strong model predictive control (MPC) baselines without
+increasing simulated patient losses? Patient-condition and expiry modeling
+define the application, but the completed formal comparison does not isolate
+their individual effects. A temporal-versus-static encoder comparison also
+remains future work rather than a reported result.
 
 To study these questions we develop, first, a simulation of a multi-site autologous cell-therapy network in which patient health conditions, patient-indexed specimen routing, and product and material expiry are first-class drivers of demand and feasibility, and second, an advantage-filtered residual GCN--DDPG (AFR-GCN--DDPG) controller that coordinates specimen routing, capacity, reagent, and replenishment decisions across the network. AFR is our shorthand for the complete controller design: a transparent MDL-2 anchor, a graph-aware bounded residual actor, evidence-filtered teacher targets, and independently calibrated deployment safeguards. It does not replace or rename DDPG. The graph component encodes each facility's operational and patient-condition state together with information from connected facilities into network-aware embeddings. A deterministic policy-gradient actor then learns a bounded, state-dependent correction to the anchor policy, and a feasibility projection converts the corrected action into implementable controls. Advantage-filtered distillation retains a nonzero correction target only when common-random-number look-ahead predicts an improvement over the anchor; it is a teacher-data construction and regularization step, not a second algorithm or deployed policy. Checkpoint and residual-scale calibration provide a deployment safeguard. DDPG is the canonical proposed instantiation and provides continuity with prior PRM capacity-planning work; a parameter-matched graph-aware TD3 study serves as a development-only backbone ablation, while SAC and PPO remain future common-budget routing-primary comparisons. We adopt a statistically disciplined evaluation protocol (multiple random seeds, paired Monte Carlo outcomes, and two-level confidence intervals), because single-seed, mean-only reporting can make deep reinforcement learning results appear stronger and more stable than they are~\cite{Henderson2018DRLMatters, Agarwal2021RLiable}. Consistent with the clinical stakes of the problem, we report patient-service outcomes such as eligibility and waiting alongside operating cost, since a lower average cost can mask clinically unacceptable delay.
 
@@ -115,7 +116,7 @@ The main contributions of this study are as follows.
     \item We propose AFR-GCN--DDPG, a two-stage advantage-filtered residual graph controller that learns bounded corrections to a transparent look-ahead anchor, retains the filtered teacher signal during DDPG optimization, and applies independently calibrated deployment safeguards.
     \item We establish a paired multi-seed evaluation protocol that separates policy-versus-anchor value, graph-versus-flat controller-package value, DDPG-versus-TD3 backbone robustness, and final-versus-frozen online attribution. The evidence includes a five-seed formal DDPG confirmation and a matched three-seed TD3 development ablation with two-level bootstrap confidence intervals. The package comparison does not isolate message passing from feature, head, and gate differences.
     \item We report prospective negative attribution tests rather than folding all learned-policy performance into an online-RL claim. Frozen-policy comparisons and paired critic, legal-action, and corrected action-geometry diagnostics support the value of the offline-pretrained graph-aware controller package, while bounding the unsupported incremental online-update claim. They do not separately attribute its gain to each graph, feature, or gate component.
-    \item In a separate synthetic development study, we test TD-learned GCN terminal values within MPC. Continued training improves the frozen initial value model, but the initial model underperforms plain MPC and final advantages over strong comparators remain condition-dependent. This result concerns simulation training, not deployment-time updates or isolated graph attribution.
+    \item In separate synthetic development comparisons, we test TD-learned GCN terminal values against plain MPC, existing frozen values, matched-data learning controls, and longer-horizon planning. Native-return learning produces condition-specific gains but fails the joint primary strong-baseline criterion. Reporting cost, patient losses, block stability, and label-generation computation prevents a training gain from being mistaken for general planner superiority.
     \item We draw design implications for intelligent decision support in distributed, patient-specific healthcare manufacturing and related time-critical, make-to-order engineering systems.
 \end{itemize}
 
@@ -212,7 +213,7 @@ The goal of capacity planning is to minimize total production cost by dynamicall
 
 which is useful for finding the optimal action $\mathbf{A}_{t}$ for each state $\mathbf{X}_{t}$ at each epoch $t \in \Gamma$, where $c\left(\mathbf{A}_{t} ; \mathbf{X}_{t}\right)$ is the immediate cost at time $t$, and $\gamma \in[0,1]$ is a discount factor for balancing the impact of future costs in deciding actions. The choice of $\gamma$ depends on the user's goal; if $\gamma$ is closer to 1 (to 0 ), then it means the user cares more about long (short) term cost; if $\gamma=0$, then only the cost for current epoch is considered. Equation (3) generalizes the optimality equation for the capacity planning problem in $\mathrm{Li}(2021)$ \cite{Li2023} in that cost functions \textit{$\mathbf{c}$} and $\mathbf{V}$ and the cumulative distribution function for the expectation operator can be unknown.
 
-Equations~(1)--(3) describe the base operational MDP shared with generic networked replenishment problems. The remainder of this section extends it along the three dimensions that distinguish PRM capacity planning, namely the deteriorating clinical condition of the patients awaiting treatment, the hard expiry of biological source material and finished product, and the autologous identity constraint that forbids pooling of patient-specific specimens. Section~\ref{sec:method} then develops a graph-aware DRL approach that learns the cost function $\mathbf{c}$, the value function $\mathbf{V}$, and the expectation operator directly from simulated experience.
+Equations~(1)--(3) describe the base operational MDP shared with generic networked replenishment problems. The remainder of this section extends it along the three dimensions that distinguish PRM capacity planning, namely the deteriorating clinical condition of the patients awaiting treatment, the hard expiry of biological source material and finished product, and the autologous identity constraint that forbids pooling of patient-specific specimens. Section~\ref{sec:method} develops a graph-aware controller that learns policy corrections and value estimates from simulated experience. The simulator dynamics and objective weights remain specified inputs; the method does not learn the cost definition or the physical transition law.
 
 \subsection{Patient condition and treatment eligibility}
 \label{sec:problem-patient}
@@ -717,7 +718,7 @@ Each stability-oriented backbone reuses this encoder and projection layer unchan
 
 The proposed method is therefore an advantage-filtered residual GCN--DDPG controller: graph encoders provide neighborhood-aware state representations; shared edge heads produce bounded corrections to a transparent look-ahead anchor; and the executor enforces inventory, capacity, supplier, patient identity, route history, and connectivity constraints. The critic and gate have fixed-order readouts, while the actor has shared network-residual heads. The routing-primary comparison holds specimen-routing availability, the anchor, residual action space, teacher cache, executor, training budget, and evaluation seeds fixed between complete graph and parameter-matched flat controllers. Their internal feature transforms, heads, and gate inputs differ as detailed above. The earlier backbone comparison instead holds the graph architecture fixed while replacing DDPG with TD3. Residual SAC and PPO remain secondary family extensions requiring additional matched empirical evaluation, not evidence of backbone robustness in the routing-primary results.
 \subsection*{Development extension: GCN value-augmented MPC}
-\textbf{Status: prespecified development comparison completed; not formal confirmation.}
+\textbf{Status: separate development comparisons, not formal confirmation.}
 This extension is separate from the historical AFR-GCN--DDPG method above.
 We use a GCN to estimate long-term cost through temporal-difference
 (TD) learning from simulated transitions. Its value estimate augments
@@ -730,13 +731,15 @@ excluding latent simulator states and future realizations.
 The conceptual inspiration is TD-MPC of Hansen, Su, and Wang~\cite{Hansen2022TDMPC},
 which combines a learned task-oriented latent dynamics model with a learned
 terminal value. Here the extension retains the existing
-public-input predictor and add a TD-learned graph value component. We do not
+public-input predictor and adds a TD-learned graph value component. We do not
 claim to implement full TD-MPC or to reproduce its jointly learned latent
 dynamics architecture. The frozen protocol fixes an eight-step planning horizon
 and represents remaining cost as $V_\theta(b)=H(b)+s f_\theta(b)$, where $H$ is
-the existing terminal patient-risk heuristic, $s=10^6$, and the residual head is
-initialized to zero. Thus, before training, the planner retains its original
-terminal score. For a settled 64-step trajectory and $u=\min(t+8,64)$, the
+the existing terminal patient-risk heuristic and $s=10^6$. The first study
+initializes the residual head to zero, retaining the planner's original
+terminal score before training. Later studies fork the same trained historical
+weights within each block rather than repeating this zero initialization.
+For a settled 64-step trajectory and $u=\min(t+8,64)$, the
 residual target is
 \[
  y_t = \frac{\sum_{k=t}^{u-1}c_k-H(b_t)}{s}
@@ -767,11 +770,73 @@ separate frozen-versus-updating comparison. Results appear in
 Section~\ref{sec:value-mpc-development}; the support-labor extension remains
 uncalibrated and synthetic.
 
+\paragraph{Action selection and learning attribution.}
+At each control epoch, the value-guided planner evaluates the same 16 candidate
+action sequences under three public response quantiles. For candidate $a$,
+planning horizon $h$, and fixed quantile weights $w_q$, it minimizes
+\begin{equation}
+ S_\theta(a)=\sum_{q=1}^{3}w_q\left[
+   \sum_{k=0}^{h-1}\widehat c_{t+k}(a,q)
+   +V_\theta(\widehat b_{t+h}^{\,a,q})\right].
+\label{eq:value-mpc-score}
+\end{equation}
+It executes only the first action and replans after the next observation.
+Here $\widehat c$ and $\widehat b$ come from the fixed public predictor, and
+the terminal value is zero at the fully settled boundary. Plain MPC sets
+$f_\theta=0$ but retains the heuristic $H$; it is not a planner without a
+terminal estimate. Learned controllers use $h=8$, and plain $h=16$ is a
+separately charged computation reference. The GCN changes candidate scores,
+not the admissible actions, physical dynamics, or reward weights.
+
+This is value-based reinforcement learning combined with planning: simulated
+costs and bootstrapped future values train the terminal estimate, while MPC
+selects actions. There is no actor optimization in these comparisons, and
+evaluation uses frozen weights. Direct-return regression is a Monte Carlo
+(MC) policy-evaluation control, not automatically a non-RL baseline. The
+native-return comparison in Section~\ref{sec:native-tail-development} uses
+the six controllers in Table~\ref{tab:native-tail-controllers}; it does not
+replace AFR-GCN--DDPG as the method in the formal routing-primary study.
+
+\begin{table}[tbp]
+\centering
+\caption{Controllers in the native-return development comparison. GCN: graph
+convolutional network; TD: temporal-difference learning; MC: Monte Carlo
+policy evaluation; MPC: model predictive control. All controllers are frozen
+during testing. Each new value model receives 768 updates per historical block.}
+\label{tab:native-tail-controllers}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.26\textwidth}X}
+\toprule
+Controller & Role and distinction \\
+\midrule
+Native-tail TD & Development candidate: GCN terminal residual trained on
+eight-step bootstrapped native-simulator returns. \\
+Plain H8-MPC & Primary planning baseline: eight-step predictor plus the
+unchanged terminal heuristic, with no learned residual. \\
+Existing frozen GCN & Primary historical baseline: the same starting value
+model without the new training. \\
+Forecast-tail TD & Primary learning control: the same starting weights and
+update budget, with public-model continuation data. \\
+Native-tail MC & Secondary target control: the same native suffix records
+and update count, with full-return targets and different forward cost. \\
+Plain H16-MPC & Secondary computation reference: twice the planning horizon
+and native prediction-query budget, without a learned residual. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \section{Computational Experiments}
 \label{sec:experiments}
 \label{sec:casestudies}
 
-This section reports three empirical stages designed to separate anchor improvement, graph representation, and online reinforcement-learning attribution. The first stage calibrates patient-condition dynamics and evaluates replenishment residuals under demand-prior drift. The second expands the action space to geographically structured reagent and idle-capacity transfers and compares the graph policy with a parameter-matched flat policy. The third holds the pretrained graph controller fixed while testing whether conservative online TD3 updates add value beyond frozen pretraining. The experiments compare the learned graph-aware correction policy with its heuristic anchor, other heuristic and look-ahead policies, flat-state residual policies, and graph-aware backbone variants under the same simulation environment.
+We separate the formal routing-primary comparison from development evidence.
+Earlier studies examine replenishment, network transfers, and backbone
+variants; the five-seed routing-primary comparison supplies the main
+AFR-GCN--DDPG result. Frozen-policy and action-geometry studies then test the
+limits of attributing that result to online learning. Finally, separate
+synthetic capacity-allocation comparisons test value-guided MPC under fixed
+training and evaluation budgets. Their outcomes are not pooled with the formal
+holdout results, and their controllers address a different decision extension.
 \subsection{Objective}
 The objective of this study is to compare the proposed residual GCN--DDPG framework with traditional heuristic methods, its MDL-2 anchor, flat-state residual DDPG, and stability-oriented graph-aware actor--critic variants in distributed manufacturing.
 
@@ -788,8 +853,9 @@ tests whether the result is specific to DDPG by repeating the residual
 comparison with TD3. Online rollout shields and the supervised GCN shield
 selector are reported separately because the former uses additional simulation
 at decision time and the latter is not an RL policy. Pure end-to-end RL and the
-stochastic SAC/PPO family are reported as secondary comparators rather than
-being allowed to substitute for these mandatory tests.
+stochastic SAC/PPO family are discussed separately; they have not been evaluated
+under the same locked routing-primary budget and do not substitute for these
+matched tests.
 
 The heuristic baselines are:
 \begin{itemize}
@@ -2026,28 +2092,49 @@ The primary screen required native TD to improve persistent-change cost in
 every block with a descriptive interval above zero against H8, the existing
 frozen GCN, and matched forecast TD, without a condition-mean loss increase.
 
-\begin{table}[H]
+\begin{table}[tbp]
 \centering
-\caption{Native-return TD under persistent capacity change. Savings are
-comparator minus TD cost in millions of synthetic objective units. Intervals
-are descriptive 95\% two-level bootstrap intervals across five blocks and four
-paired worlds per block; percentages are mean paired-world savings. Extra
-losses are TD minus comparator, in simulated patients per world.}
-\label{tab:native-tail-persistent}
+\caption{Native-return temporal-difference (TD) value learning across all three
+conditions. Savings are comparator minus TD cost in millions of synthetic
+objective units. Intervals are descriptive 95\% two-level bootstrap intervals
+across five blocks and four paired worlds per block, without multiplicity
+adjustment; percentages are mean paired-world savings. Extra losses are TD
+minus comparator, in simulated patients per world. GCN: graph convolutional
+network; MC: Monte Carlo policy evaluation; H8/H16-MPC: eight-/16-step model
+predictive control. The first three comparators are primary and the last two
+secondary within each condition.}
+\label{tab:native-tail-comparison}
+\small
+\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\textwidth}{Xrrr}
 \toprule
 Comparator & Savings M [95\%] & Savings (\%) & Extra losses \\
 \midrule
+\multicolumn{4}{l}{\emph{No capacity change}} \\
+Plain H8-MPC & $0.049\ [-0.568,0.895]$ & $0.35$ & $-11.05$ \\
+Existing frozen GCN & $0.366\ [-0.323,1.154]$ & $0.82$ & $-2.20$ \\
+Matched forecast-tail TD & $-0.118\ [-0.755,0.600]$ & $-0.41$ & $2.75$ \\
+Same-native-data MC & $0.944\ [-0.036,2.384]$ & $2.30$ & $-13.75$ \\
+Plain H16-MPC & $-0.176\ [-0.832,0.616]$ & $-0.43$ & $-0.40$ \\
+\addlinespace
+\multicolumn{4}{l}{\emph{Persistent capacity change}} \\
 Plain H8-MPC & $0.894\ [-0.017,1.845]$ & $1.81$ & $-8.70$ \\
 Existing frozen GCN & $0.274\ [-0.174,0.764]$ & $0.57$ & $-0.95$ \\
 Matched forecast-tail TD & $0.244\ [-0.431,0.939]$ & $0.46$ & $2.40$ \\
 Same-native-data MC & $0.955\ [0.171,1.738]$ & $1.88$ & $-11.95$ \\
 Plain H16-MPC & $0.403\ [-0.322,1.106]$ & $0.77$ & $-1.55$ \\
+\addlinespace
+\multicolumn{4}{l}{\emph{Fast capacity fluctuation}} \\
+Plain H8-MPC & $1.073\ [0.031,2.096]$ & $2.47$ & $-17.95$ \\
+Existing frozen GCN & $0.608\ [0.097,1.113]$ & $1.52$ & $-2.50$ \\
+Matched forecast-tail TD & $0.287\ [-0.244,0.841]$ & $0.68$ & $1.90$ \\
+Same-native-data MC & $0.895\ [-0.322,2.373]$ & $2.25$ & $-18.50$ \\
+Plain H16-MPC & $0.622\ [-0.056,1.375]$ & $1.38$ & $-7.15$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-The primary screen failed (Table~\ref{tab:native-tail-persistent}). Only four,
+The primary screen failed (Table~\ref{tab:native-tail-comparison}). Only four,
 four, and three persistent-change block means favored native TD against H8,
 the existing frozen model, and forecast TD, respectively, and all three cost
 intervals included zero. Relative to forecast TD, mean extra losses were 2.75,
@@ -2095,6 +2182,15 @@ remains absent, and no clinical-safety or deployment-adaptation claim follows.
 
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
+The results distinguish three claims. The formal routing-primary comparison
+supports AFR-GCN--DDPG as a complete controller package. Frozen-policy
+comparisons do not establish an additional endpoint benefit from its online
+actor--critic updates. The separate value-guided planning studies provide
+condition-specific development findings, but the latest native-return method
+does not pass the joint primary strong-baseline criterion. These are different
+questions, not interchangeable demonstrations that reinforcement learning
+improves a strong operational baseline.
+
 This study develops a patient-condition and geography-aware simulation of a
 20-clinic PRM network, including identity-preserving pre-manufacturing specimen
 routing, and a residual GCN--DDPG controller that learns around a
@@ -2217,7 +2313,7 @@ reversing under immediate specimen availability, so general timing robustness
 is not claimed. Development-only TD3 and DDPG mechanism screens remain labeled
 and archived separately from formal holdout evidence.
 
-\textbf{Future Work}
+\paragraph{Limitations and future work.}
 This study motivates several extensions. Patient condition can be represented
 with longitudinal clinical covariates rather than the current eligibility and
 survival-risk summary. Raw-material quality, product quality, process failures,
@@ -2290,12 +2386,19 @@ advantages over H8 and the existing model. These findings should be reported
 together, not converted into an overall RL-superiority claim or used to tune
 reward weights on the completed test worlds.
 
-Longer-term models should integrate production scheduling,
-product preparation and distribution, and treatment operations.
+The practical implication is to evaluate the learned value together with its
+planner, training-data source, patient trade-offs, and total computation. Lower
+average cost alone is insufficient when the matched learning control loses
+fewer simulated patients. Any subsequent study should use a new prospective
+question and sealed test worlds; changing reward weights to obtain a favorable
+result on these completed worlds would not resolve the attribution problem.
+Longer-term models should integrate production scheduling, product preparation
+and distribution, and treatment operations with externally calibrated inputs.
 
 \section*{Data Availability}
 All study data are generated by the simulation model. The accompanying
-repository contains the source code, locked experiment configurations, curated
+public repository (\texttt{github.com/ZhaoweiLi0722/GCN-RL-Paper-2026}) contains
+the source code, locked experiment configurations, curated
 summary outputs, training diagnostics, artifact hashes, and a claim-to-evidence
 map. A cost-only projection of the formal final/pretraining rows and its
 crossed-inference verification are included in the local audit package, with

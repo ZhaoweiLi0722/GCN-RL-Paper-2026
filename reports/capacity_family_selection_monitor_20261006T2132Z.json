@@ -1,0 +1,209 @@
+{
+  "at_utc": "2026-10-06T21:32:59.068971+00:00",
+  "claim": {
+    "authorization_sha256": "daedf7d811b47cebe14140b43b8fdae50dbbabc9ae00684275e2d9c6badeabe2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "f5772e824632248be458d42e487f757477100575",
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92809,
+    "ppid": 1,
+    "started": 1319628.211923
+  },
+  "child_claim": {
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92821,
+    "ppid": 92809
+  },
+  "events": {
+    "model_sealed": 17,
+    "trajectory_started": 834,
+    "epoch_boundary": 6667,
+    "trajectory_completed": 833,
+    "fit_completed": 833
+  },
+  "stages": {
+    "development_training": 833
+  },
+  "jobs": {
+    "development_training/b0/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 125.95472300122492
+    },
+    "development_training/b0/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 132.48579800105654
+    },
+    "development_training/b0/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 137.3499780013226
+    },
+    "development_training/b0/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 140.9261399996467
+    },
+    "development_training/b0/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 144.8089630000759
+    },
+    "development_training/b0/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 149.68515699915588
+    },
+    "development_training/b0/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 152.36678700102493
+    },
+    "development_training/b0/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 156.79809499997646
+    },
+    "development_training/b0/value_td-lr0-graph": {
+      "worlds": 65,
+      "fits": 65,
+      "fit_batches": 2080,
+      "rollout_seconds": 2376.1835940009914
+    }
+  },
+  "last_progress": {
+    "event": "epoch_boundary",
+    "active": {
+      "phase": "development_training",
+      "block": 0,
+      "condition": 2,
+      "replicate": 21,
+      "seed": 67100065,
+      "role": "value_td-lr0-graph"
+    },
+    "epoch": 23,
+    "counts": {
+      "trajectories": 834,
+      "native_steps": 53336,
+      "native_constructions": 834,
+      "construction_triggered_resets": 834,
+      "total_native_operations": 55004,
+      "control_steps": 40008,
+      "tail_steps": 13328,
+      "estimator_receipt_updates": 53336,
+      "estimator_hypothesis_transitions": 5333600,
+      "planner_total_decisions": 3144,
+      "planner_candidate_rollouts": 150912,
+      "planner_total_model_epochs": 1207296,
+      "neural_forward_module_calls": 180393,
+      "actor_optimizer_steps": 21504,
+      "critic_optimizer_steps": 30720,
+      "value_optimizer_steps": 8224,
+      "total_optimizer_steps": 60448,
+      "optimizer_example_presentations": 3868672,
+      "fit_batches": 26656
+    }
+  },
+  "elapsed_seconds": 3801.391508999979,
+  "current_job": {
+    "cap": 180,
+    "clock": 1323413.044228,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "development_training-b0-c2-j21-value_td-lr0-graph",
+    "kind": "h8_world",
+    "previous": "ce2cfc5d603f9da6d7a054e4ec3167234d80844bc5b5f6ab64dbd1887e03cee8",
+    "sequence": 468442,
+    "sha256": "f3df25abe737f71e0d82a64c2cb30e4219151d8d55e307e4390fe2edb0121a6a"
+  },
+  "current_job_elapsed_seconds": 16.55920399981551,
+  "last_ledger": {
+    "charges": {
+      "planner_total_model_epochs": 384
+    },
+    "clock": 1323429.603432,
+    "event": "debit",
+    "owner": "development_training",
+    "phase": "development_training",
+    "previous": "1db3712cf77e4dfe4f4d3e059925c111e5cb0defecbaee293f9a3cbfdbc74ef0",
+    "sequence": 468647,
+    "sha256": "efe933eb22c2ac42a144cd811167f94a5cfb176bc448ceab9497484fb1ad6e66"
+  },
+  "budget_bytes": 161049691,
+  "logs": {
+    "stderr": 0,
+    "stdout": 0,
+    "detached": 0
+  },
+  "failure_or_terminal_files": [],
+  "schema": "capacity-family-selection-monitor-v1",
+  "process_observation": {
+    "at_utc_approx": "2026-10-06T21:32:58Z",
+    "ps": "92809     1 01:03:22  46864 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --launch\n92821 92809 01:03:19 218400 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --child\n",
+    "claims_and_complete_commands_matched": true
+  },
+  "previous_snapshot": "reports/capacity_family_selection_monitor_20261006T2102Z.json",
+  "completed_world_growth": 47,
+  "stage_progress": {
+    "development_training": {
+      "complete": 833,
+      "target": 2880
+    },
+    "development_evaluation": {
+      "complete": 0,
+      "target": 864
+    },
+    "confirmation_training": {
+      "complete": 0,
+      "target": 1920
+    },
+    "confirmation_evaluation": {
+      "complete": 0,
+      "target": 1080
+    }
+  },
+  "development_not_started": "block0/value_td-lr1 and all10 configurations in blocks1 and2; all other block0 actor configurations have96worlds and3072fit batches each.",
+  "value_optimizer_breakdown": {
+    "ppo": 6144,
+    "value_td": 2080
+  },
+  "owner_elapsed_seconds": 3795.588262999896,
+  "owner": "development_training",
+  "owner_cap_seconds": 43200,
+  "global_cap_seconds": 172800,
+  "compute_caps": {
+    "native_steps": 431616,
+    "total_native_operations": 445104,
+    "total_optimizer_steps": 460800,
+    "neural_forward_module_calls": 2013312,
+    "planner_total_model_epochs": 50429952,
+    "estimator_hypothesis_transitions": 43161600,
+    "fit_batches": 153600,
+    "optimizer_example_presentations": 29491200
+  },
+  "observed_counter_cap_violations": [],
+  "timing": {
+    "value_td_rollout_worlds": 65,
+    "value_td_mean_rollout_seconds": 36.55667067693833,
+    "recent_value_td_worlds": 47,
+    "recent_value_td_mean_rollout_seconds": 37.169090617041874,
+    "development_remaining_hours_estimate": 6.078327215732329,
+    "caveat": "Recent value rollout rate plus prior measured fit and actor rates; includes current partial world as whole, excludes future seals. Not a full-run ETA; later stages and I/O can differ. Historical31h estimate is not measured full-package timing."
+  },
+  "training_evidence_reused": "Launch real optimizer receipts and model after-fit state; no model reload, extra forward, environment or optimizer.",
+  "scientific_calls_by_monitor": 0,
+  "finalists": null,
+  "performance_result": null,
+  "automation_changed": false,
+  "notification": "No new stage milestone, selection, failure, completion or decision; routine unchanged-stage monitoring.",
+  "snapshot_caveat": "Non-atomic sequential observations. Scientific counters are last progress boundary, not inferred from scheduler; ledger may be ahead. Last debit is prepaid and not asserted fully executed."
+}

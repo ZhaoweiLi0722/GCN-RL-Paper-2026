@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 188,
-  "updated_at_utc": "2026-10-06T19:18:25.022457+00:00",
+  "revision": 189,
+  "updated_at_utc": "2026-10-06T19:59:35+00:00",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "539955536c330c1a7b17d911c81d86fade8b8b8c",
@@ -11,7 +11,21 @@
   "execution_authorization": "specs/2026-10-06-conditional-value-confirmation/authorization.json",
   "scientific_execution_authorized": false,
   "authorization_state": "One approved package completed and consumed; all scientific processes exited. Failed fast-condition joint development screen retained. No automatic retry or follow-on.",
-  "status": "conditional_value_confirmation_completed_primary_failed_handoff_verified_paused",
+  "status": "results_led_algorithm_selection_design_no_new_numerical_authority",
+  "next_algorithm_selection": {
+    "record": "docs/team_updates/2026-10-06-results-led-algorithm-selection.md",
+    "user_direction": "Outcome-driven selection beyond TD3; fixed comparators; no algorithm preference based on historical effort or unmatched results.",
+    "candidate_families": ["gcn_ddpg", "gcn_td3", "gcn_sac", "gcn_ppo", "gcn_td_value_mpc"],
+    "recommended_task": "existing synthetic support-hour control; unchanged physical task and objective",
+    "recommended_comparators": ["plain_h8_primary", "plain_h16_secondary_compute_reference"],
+    "design_status": "proposed_not_frozen_not_launch_ready",
+    "shared_actor_support_interface_ready": false,
+    "numerical_budget_defined": false,
+    "scientific_execution_authorized": false,
+    "new_scientific_calls": 0,
+    "next_deliverable": "Shared interface/runner and one complete bounded multi-family package; reuse existing checks; no new audit chain.",
+    "automation_changed": false
+  },
   "conditional_value_confirmation_preparation": {
     "user_literal": "全面的推进",
     "protocol": "specs/2026-10-06-conditional-value-confirmation/protocol.md",

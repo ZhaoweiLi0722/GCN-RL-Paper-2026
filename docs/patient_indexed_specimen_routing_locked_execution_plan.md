@@ -3859,3 +3859,20 @@ locks, commit the execution packet, then launch once immediately. Routine
 training,sealing,evaluation,readout and authorized artifact handoff proceed
 without another permission question. No auto-retry, reward/scene search, extra
 epochs, Howard approval, push/merge or external messages. Old results unchanged.
+
+#### Results-led algorithm selection requested; preparation only
+
+2026-10-06T19:59Z. After the completed fresh conditional comparison, Zhaowei
+requested a results-led search across additional GCN+RL algorithms, not a return
+to DDPG based on historical effort or a preference for TD-value-MPC based on an
+exploratory signal. Preserve fixed comparators and distinguish self-only from
+dev-only. Old positive/negative results and their authority remain unchanged.
+
+Direction record: docs/team_updates/2026-10-06-results-led-algorithm-selection.md.
+Proposed families are DDPG,TD3,SAC,PPO and TD-value-MPC, all graph-aware;
+no winner is selected. A common support-hour task with H8/H16 references is a
+prospective recommendation, not a frozen contract or a cross-task ranking.
+Prepare a matched interface and complete finite numerical scope before requesting
+one package approval. No scientific execution, changed reward/physics, old holdout,
+Stage E reopening, automatic follow-on, remote action or Howard approval follows.
+This entry records user-directed preparation, not a new numerical permit.

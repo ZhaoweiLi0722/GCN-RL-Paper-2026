@@ -1,6 +1,26 @@
 # Autonomous local research queue
 
-## Live checkpoint: comparison closed; primary screen failed; local Dropbox verified
+## Live checkpoint: results-led algorithm selection requested; no new numerical authority
+
+2026-10-06T19:59Z. Zhaowei requested an outcome-driven search beyond TD3, fixed
+comparators and no recommendation based on historical implementation effort or
+unmatched percentages. Self-only was clarified, not dev-only. Do not preselect
+DDPG or TD-value-MPC as the winner.
+
+Saved evidence/design: docs/team_updates/2026-10-06-results-led-algorithm-selection.md.
+Five proposed families: GCN-DDPG,GCN-TD3,GCN-SAC,GCN-PPO,GCN TD-value-MPC.
+Recommendation: common support-hour task with fixed H8 primary/H16 secondary;
+original routing results remain separate. This is not a frozen contract.
+Generic SAC/PPO code exists, but is not a matched support-hour integration.
+
+Next deliverable: shared interface/runner and ONE complete finite numerical
+package, with fair data/tuning/resource rules, patient/cost criteria and finalist
+attribution controls. No new scientific calls, model loading, tests or archives
+this turn; no guessed runtime or launch-readiness claim. Existing authority is
+consumed; gcn-rl is unchanged at its recorded PAUSED state. No old holdout, Stage E
+reopening, push/merge, Dropbox export or external message follows this direction.
+
+## Previous checkpoint: comparison closed; primary screen failed; local Dropbox verified
 
 2026-10-06T19:18Z. The single approved attempt completed normally in32884.989s
 (9.135h), including program analysis/archive. Both original scientific processes

@@ -1,6 +1,43 @@
 # Autonomous local research queue
 
-## Live checkpoint: first evaluation block complete; second block active
+## Live checkpoint: two evaluation blocks complete; third block active
+
+2026-10-06T16:35:56Z snapshot. Entry4ec058f clean on the integration branch.
+Supervisor65458/1 and child65470/65458 match claims/full commands;90new completed
+evaluations since the saved15:36Z milestone. The quiet16:06Z read-only check
+observed144complete;44more completed since then. Blocks0and1 each84/84,block2
+20/84. Total188/420complete,189started. All3logs0bytes; no terminal/failure/
+overrun/preservation marker. Scientific source/config/protocol/authority unchanged.
+
+Training remains complete: warmup240/240, warm graph/self_only each7680/7680
+updates;reference120/120,branches240/240. Graph_td,self_only_td,graph_mc each
+120/120fits and3840/3840tail updates;total26880/26880value,actor0. Warm/final/
+legacy seals10/10,15/15,5/5 and840after-fit states. Reuse verified model/optimizer
+evidence without model loading or repeated hashes. All-model barrier4705
+precedes first test4706; no later fit,0test updates. Currentevaluation block2/
+condition2/replicate0/index2/plain_h16,epoch31. No interim cost/patient outcomes
+inspected; completed blocks are execution progress, not performance evidence.
+
+Ledger35106main+9720branch=44826/59640native;36204mainoperations+9720branch=
+45924operations plus240clones.38300/46220forwards;10606848main+1574400parent=
+12181248predictions;3510600main+972000branch=4482600filter transitions;
+4100native-parent decisions complete. Pending H16main forecast768 remains charged.
+Elapsed23605.19/86400s;evaluation7441.58/24000s,currentH16job54.56/300s.
+Warmup8382.81,reference7554.78,fit220.55s unchanged. No observed global/phase/
+current-job budget violation.6774files/915814941bytes and200832KiB child RSS
+below caps. No refunds or additional scientific calls by the monitor.
+
+Measured H8 mean35.015s over162jobs and H16 mean65.936s over26jobs; remaining232
+evaluations project about2.55h, excluding analysis/archive/IO and current partial
+job work. Role/block/condition variability remains; not a full-run guarantee.
+Evidence: reports/capacity_confirmation_monitor_20261006T1635Z.json.
+
+Same ACTIVE monitor unchanged. Reuse26tests/fullcompileall and frozen locks;
+no retry,new gate,tuning,manuscript outcome change or unfinished-run export.
+Full readout and authorized additive Dropbox handoff remain due at terminal
+closure; cloud sync/collaborator access unverified. No remote Git or messages.
+
+## Previous checkpoint: first evaluation block complete; second block active
 
 2026-10-06T15:36:07Z snapshot. Entryca807ab clean on the integration branch.
 Supervisor65458/1 and child65470/65458 match claims/full commands;46new completed

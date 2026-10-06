@@ -1,17 +1,17 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 184,
-  "updated_at_utc": "2026-10-06T15:36:07.818574+00:00",
+  "revision": 185,
+  "updated_at_utc": "2026-10-06T16:35:56.854832+00:00",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
-  "entry_head": "ca807abf97d0978ee664683601666906247766c9",
+  "entry_head": "4ec058f92f226c477b6803ee01f4b6ff03eb57c1",
   "plan": "specs/2026-10-06-conditional-value-confirmation/protocol.md",
   "preparation_config": "experiments/configs/capacity_confirmation_20261006.json",
   "execution_config": "specs/2026-10-06-conditional-value-confirmation/frozen.json",
   "execution_authorization": "specs/2026-10-06-conditional-value-confirmation/authorization.json",
   "scientific_execution_authorized": true,
   "authorization_state": "Exact direct reply 批准 approved this complete new package; locks committed and one actual scientific process verified. No retry or new scope. Prior attempts remain consumed.",
-  "status": "conditional_value_confirmation_first_evaluation_block_complete_second_active",
+  "status": "conditional_value_confirmation_two_evaluation_blocks_complete_third_active",
   "conditional_value_confirmation_preparation": {
     "user_literal": "全面的推进",
     "protocol": "specs/2026-10-06-conditional-value-confirmation/protocol.md",
@@ -43,7 +43,7 @@
     "first_real_update_receipts_finite": 64,
     "first_after_fit_states_hashed": 2,
     "monitor_scientific_calls": 0,
-    "latest_monitor_snapshot": "reports/capacity_confirmation_monitor_20261006T1536Z.json",
+    "latest_monitor_snapshot": "reports/capacity_confirmation_monitor_20261006T1635Z.json",
     "warm_model_hashes_verified": 10,
     "latest_native_update_receipts_verified": 96,
     "after_fit_state_files": 840,
@@ -62,18 +62,18 @@
     "remaining_reference_hours_early_estimate": 0,
     "eta_caveat": "Measured evaluation H8/H16 job times from the completed sample; role/block/condition timing varies. Remaining-evaluation projection excludes analysis/archive/IO and any current partial-job work; not a guaranteed full-run ETA.",
     "latest_snapshot": {
-      "at_utc": "2026-10-06T15:36:07.818574+00:00",
+      "at_utc": "2026-10-06T16:35:56.854832+00:00",
       "phase": "frozen_evaluation",
       "active": {
         "phase": "evaluation",
-        "block": 1,
+        "block": 2,
         "condition": 2,
         "replicate": 0,
         "index": 2,
-        "seed": 66141200,
-        "role": "plain_h8"
+        "seed": 66142200,
+        "role": "plain_h16"
       },
-      "epoch": 0,
+      "epoch": 31,
       "warmup_completed": 240,
       "reference_completed": 120,
       "native_branches_completed": 240,
@@ -91,25 +91,25 @@
       "warm_seals": 10,
       "final_seals": 15,
       "legacy_bindings": 5,
-      "evaluation_completed": 98,
+      "evaluation_completed": 188,
       "evaluation_updates": 0,
       "last_progress_counts": {
-        "trajectories": 459,
-        "native_steps": 29312,
-        "native_constructions": 459,
-        "construction_triggered_resets": 459,
-        "total_native_operations": 30230,
-        "control_steps": 21984,
-        "tail_steps": 7328,
+        "trajectories": 549,
+        "native_steps": 35104,
+        "native_constructions": 549,
+        "construction_triggered_resets": 549,
+        "total_native_operations": 36202,
+        "control_steps": 26336,
+        "tail_steps": 8768,
         "value_optimizer_steps": 26880,
         "total_optimizer_steps": 26880,
         "optimizer_example_presentations": 1720320,
-        "neural_forward_module_calls": 35180,
-        "planner_total_decisions": 21984,
-        "planner_candidate_rollouts": 1055232,
-        "planner_total_model_epochs": 8699904,
-        "estimator_receipt_updates": 29312,
-        "estimator_hypothesis_transitions": 2931200,
+        "neural_forward_module_calls": 38300,
+        "planner_total_decisions": 26336,
+        "planner_candidate_rollouts": 1264128,
+        "planner_total_model_epochs": 10604544,
+        "estimator_receipt_updates": 35104,
+        "estimator_hypothesis_transitions": 3510400,
         "native_branch_clones": 240,
         "native_branch_steps": 9720,
         "native_branch_control_steps": 5880,
@@ -122,19 +122,19 @@
         "final_seals": 15
       },
       "ledger_counts": {
-        "trajectories": 459,
-        "native_constructions": 459,
-        "total_native_operations": 30230,
-        "construction_triggered_resets": 459,
-        "planner_candidate_rollouts": 1055280,
-        "planner_total_decisions": 21985,
-        "planner_total_model_epochs": 8700288,
-        "control_steps": 21984,
-        "native_steps": 29312,
-        "estimator_receipt_updates": 29312,
-        "estimator_hypothesis_transitions": 2931200,
-        "tail_steps": 7328,
-        "neural_forward_module_calls": 35180,
+        "trajectories": 549,
+        "native_constructions": 549,
+        "total_native_operations": 36204,
+        "construction_triggered_resets": 549,
+        "planner_candidate_rollouts": 1264272,
+        "planner_total_decisions": 26339,
+        "planner_total_model_epochs": 10606848,
+        "control_steps": 26338,
+        "native_steps": 35106,
+        "estimator_receipt_updates": 35106,
+        "estimator_hypothesis_transitions": 3510600,
+        "tail_steps": 8768,
+        "neural_forward_module_calls": 38300,
         "optimizer_example_presentations": 1720320,
         "total_optimizer_steps": 26880,
         "value_optimizer_steps": 26880,
@@ -149,9 +149,9 @@
         "native_branch_settlement_steps": 3840,
         "final_seals": 15
       },
-      "global_elapsed_seconds": 20016.184332999866,
-      "current_phase_elapsed_seconds": 3852.574400999816,
-      "current_job_elapsed_seconds": 1.117270999820903,
+      "global_elapsed_seconds": 23605.185995999957,
+      "current_phase_elapsed_seconds": 7441.576063999906,
+      "current_job_elapsed_seconds": 54.56480699987151,
       "stderr_bytes": 0,
       "failure_markers": [],
       "training_proven_performance_not_established": true
@@ -290,7 +290,7 @@
         "last_five_mean_seconds": 51.70789179997519
       }
     },
-    "remaining_evaluation_hours_early_estimate": 3.5150623187699654,
+    "remaining_evaluation_hours_early_estimate": 2.5485790932194243,
     "all_training_complete": true,
     "all_models_sealed_before_evaluation": true,
     "evaluation_updates_observed": 0,
@@ -338,10 +338,11 @@
         "last_five_mean_seconds": 66.50354620004073
       }
     },
-    "completed_evaluation_blocks": 1,
+    "completed_evaluation_blocks": 2,
     "evaluation_completed_by_block": {
       "0": 84,
-      "1": 14
+      "1": 84,
+      "2": 20
     },
     "timing_sample_1536Z": {
       "warmup_world": {
@@ -363,6 +364,28 @@
         "completed_cycles": 14,
         "mean_seconds": 65.83608392857215,
         "last_five_mean_seconds": 65.8987778000068
+      }
+    },
+    "timing_sample_1635Z": {
+      "warmup_world": {
+        "completed_cycles": 240,
+        "mean_seconds": 34.84875792916088,
+        "last_five_mean_seconds": 35.41360280001536
+      },
+      "reference_world_with_tails": {
+        "completed_cycles": 120,
+        "mean_seconds": 62.85902179166442,
+        "last_five_mean_seconds": 53.43970160004683
+      },
+      "evaluation_h8_world": {
+        "completed_cycles": 162,
+        "mean_seconds": 35.01541668518855,
+        "last_five_mean_seconds": 36.56963780000806
+      },
+      "evaluation_h16_world": {
+        "completed_cycles": 26,
+        "mean_seconds": 65.93624211537043,
+        "last_five_mean_seconds": 65.93004959998652
       }
     }
   },

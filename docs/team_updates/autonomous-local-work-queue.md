@@ -1,6 +1,41 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return fourth block sealed; fifth block training
+## Live checkpoint: native-return117 references; training97.5% complete
+
+2026-10-06T03:10:46Z snapshot; process check03:10:00Z. Entryc7754a7 clean on
+expected branch. Supervisor36670/1 and child36695/36670 match claims/full commands,
+sole related pair; child99.3%CPU/171456KiB RSS.13new references,26branches and
+1248value updates since prior checkpoint. All3logs0bytes; no terminal/failure/
+overrun/preservation-error. No monitor scientific call or test-outcome inspection.
+
+Reference117/120,native branches234/240,eachmethod117/120fits and3744/3840updates;
+total11232/11520value,actor0.351after-fit states. Latest three each32finite receipts
+throughblock4 update672,with state bytes hashed; cumulative3744/method includes
+768in each ofblocks0-3 plus672inblock4. Ancestor5/5,final12/15,evaluation0/360.
+All twelve existing final-seal checks reused. Current b4/index21/c0/replicate7/
+seed65104007/plainH8,latest main epoch15. Prescribed training97.5%complete;
+this is not a performance result and does not change the all-seals-before-test rule.
+
+Ledger main7509+branch9540=17049/40440native steps;7745+9540=17285/41400operations;
+234/240clones,28033/40045forwards. Prediction8440613/16303440 includes2164992main,
+4670208forecast-parent,1553664native-parent,5632prefix,46117paired-tail. Parent
+decisions12162forecast/4046native; filter4572400/6960000. Partial calls/reservations
+remain charged. Elapsed16378.23/64800s,reference16298.53/34200s,fit74.51/3600s,
+current owner33.49/900s; no observed counter,phase or current-owner breach.
+117cycles mean139.65s,last5mean108.52s; remaining reference stage extrapolates
+0.116h/about7minutes,excluding evaluation/archive and subject to root/condition
+variation. Progress2457806bytes,budget91334134bytes. Evidence:
+reports/capacity_native_tail_monitor_20261006T0312Z.json.
+
+Frozen science/authority/readouts unchanged; reuse43tests/compileall and prior
+locks/seal receipts. Next same authorized process completes3references,6branches,
+remaining3final models,then360frozen evaluations and raw/manuscript/archive
+handoff. No new launch,gate,approval,retry or scientific call. Prior Dropbox
+local delivery verified; cloud/access unverified at last locked-UI check. No
+historical recopy/rearchive; export current final/failed boundary after termination.
+Same gcn-rl ACTIVE; no other task or scientific scope changed.
+
+## Previous checkpoint: native-return fourth block sealed; fifth block training
 
 2026-10-06T02:43:25Z snapshot; process check02:39:50Z. Entryde32372 clean on
 expected branch. Supervisor36670/1 and child36695/36670 match claims/full commands,

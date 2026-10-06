@@ -1,6 +1,43 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return frozen evaluation263/360
+## Live checkpoint: native-return four evaluation blocks complete;308/360
+
+2026-10-06T06:40:45Z snapshot; process check06:40:01Z. Entry4bbdb2c clean on
+expected branch. Supervisor36670/1 and child36695/36670 match claims/full commands,
+sole related pair; child100%CPU/172064KiB RSS.45new frozen evaluations since the
+prior checkpoint. All3logs0bytes; no terminal/failure/overrun/preservation-error.
+No monitor scientific call or test-cost/patient-outcome inspection.
+
+Reference120/120,native branches240/240,eachmethod120/120fits and3840/3840updates;
+total11520/11520value,actor0.360after-fit states,ancestor5/5,final15/15. Completed
+training receipts and all fifteen seal checks reused; all-sealed hash unchanged.
+All seals preceded first test and evaluation optimizer debits remain0. No new
+training or performance conclusion is implied.
+
+Evaluation308/360:blocks0-3 each72/72,block4 complete20/72. PlainH8/existing each52,
+other four roles each51. Current b4/index3/c0/replicate1/seed65124001/forecastTD,
+latest main epoch31. Ledger main27427+branch9720=37147/40440native steps;
+28285+9720=38005/41400operations,240/240clones,38400/40045forwards.
+Prediction15192912/16303440 includes8842752main,4723200forecast-parent,
+1574400native-parent,5760prefix,46800paired-tail. Parent decisions unchanged
+12300forecast/4100native; filter6630700/6960000. Partial reservations stay charged.
+Elapsed28976.58/64800s,reference16542.28/34200s,fit77.56/3600s,evaluation
+12351.55/18000s,currentH8owner25.99/180s; no observed counter,phase or current-owner
+breach.257completed H8cycles mean34.88s and51H16cycles mean65.92s give a weighted
+remaining evaluation estimate0.58h (about35min),excluding archive/IO closure.
+Timing covers blocks0-3 and partialblock4; subsequent conditions may vary.
+Progress6918580bytes,budget137413605bytes. Evidence:
+reports/capacity_native_tail_monitor_20261006T0642Z.json.
+
+Frozen science/authority/readouts unchanged; reuse43tests/compileall and existing
+locks. Next same authorized process completes52remaining frozen evaluations,
+then full raw comparison/manuscript/archive handoff. No new launch,gate,approval,
+retry or scientific call. Prior Dropbox local delivery verified; cloud/access
+unverified at last locked-UI check. No historical recopy/rearchive; export current
+final/failed boundary after termination. Same gcn-rl ACTIVE; no other task or
+scientific scope changed.
+
+## Previous checkpoint: native-return frozen evaluation263/360
 
 2026-10-06T06:10:51Z snapshot; process check06:09:58Z. Entrybb7ef7b clean on
 expected branch. Supervisor36670/1 and child36695/36670 match claims/full commands,

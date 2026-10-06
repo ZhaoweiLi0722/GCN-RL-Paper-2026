@@ -1,0 +1,813 @@
+{
+  "at_utc": "2026-10-06T23:05:10.117510+00:00",
+  "claim": {
+    "authorization_sha256": "daedf7d811b47cebe14140b43b8fdae50dbbabc9ae00684275e2d9c6badeabe2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "f5772e824632248be458d42e487f757477100575",
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92809,
+    "ppid": 1,
+    "started": 1319628.211923
+  },
+  "child_claim": {
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92821,
+    "ppid": 92809
+  },
+  "event_counts": {
+    "model_sealed": 29,
+    "trajectory_started": 1381,
+    "epoch_boundary": 11048,
+    "trajectory_completed": 1381,
+    "fit_completed": 1380
+  },
+  "completed_by_phase": {
+    "development_training": 1381
+  },
+  "jobs": {
+    "development_training/b0/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 125.95472300122492
+    },
+    "development_training/b0/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 132.48579800105654
+    },
+    "development_training/b0/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 137.3499780013226
+    },
+    "development_training/b0/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 140.9261399996467
+    },
+    "development_training/b0/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 144.8089630000759
+    },
+    "development_training/b0/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 149.68515699915588
+    },
+    "development_training/b0/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 152.36678700102493
+    },
+    "development_training/b0/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 156.79809499997646
+    },
+    "development_training/b0/value_td-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3459.2607510017697
+    },
+    "development_training/b0/value_td-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3366.5909019995015
+    },
+    "development_training/b1/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 173.7262469995767
+    },
+    "development_training/b1/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 178.565808999585
+    },
+    "development_training/b1/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 182.80564799928106
+    },
+    "development_training/b1/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 188.45583599992096
+    },
+    "development_training/b1/sac-lr0-graph": {
+      "worlds": 37,
+      "fits": 36,
+      "fit_batches": 1152,
+      "rollout_seconds": 72.20782899926417
+    }
+  },
+  "last_progress": {
+    "event": "trajectory_completed",
+    "active": {
+      "phase": "development_training",
+      "block": 1,
+      "condition": 0,
+      "replicate": 12,
+      "seed": 67101036,
+      "role": "sac-lr0-graph"
+    },
+    "epoch": 64,
+    "counts": {
+      "trajectories": 1381,
+      "native_steps": 88384,
+      "native_constructions": 1381,
+      "construction_triggered_resets": 1381,
+      "total_native_operations": 91146,
+      "control_steps": 66288,
+      "tail_steps": 22096,
+      "estimator_receipt_updates": 88384,
+      "estimator_hypothesis_transitions": 8838400,
+      "planner_total_decisions": 9216,
+      "planner_candidate_rollouts": 442368,
+      "planner_total_model_epochs": 3538944,
+      "neural_forward_module_calls": 287664,
+      "actor_optimizer_steps": 31872,
+      "critic_optimizer_steps": 51456,
+      "value_optimizer_steps": 12288,
+      "total_optimizer_steps": 95616,
+      "optimizer_example_presentations": 6119424,
+      "fit_batches": 44160
+    }
+  },
+  "elapsed_seconds": 9333.095822000178,
+  "current_job": {
+    "cap": 60,
+    "clock": 1328961.256862,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "development_training-b1-c0-j12-sac-lr0-graph-fit",
+    "kind": "fit",
+    "previous": "4c08d3acdc1903ef2ed8b723be86f72202050b75f656aef4c431219c08af91cd",
+    "sequence": 772779,
+    "sha256": "cc449beda6e297d5bb28b73c273694bd9ea132d9918e9996bc926e69b5e13514"
+  },
+  "current_job_elapsed_seconds": 0.05088300001807511,
+  "last_ledger": {
+    "charges": {
+      "neural_forward_module_calls": 1
+    },
+    "clock": 1328961.307745,
+    "event": "debit",
+    "owner": "development_training",
+    "phase": "development_training",
+    "previous": "0c7b8af2d055e21535c379ed5e3a7c08fe5bc1dc8c993756a7c1a48dbc7ed5b9",
+    "sequence": 772893,
+    "sha256": "e32641fe3e3f7b1d9256688761278789d315b300eac69afbb9b789893f6c3dc3"
+  },
+  "budget_bytes": 265459216,
+  "logs": {
+    "stderr": 0,
+    "stdout": 0,
+    "detached": 0
+  },
+  "failure_or_terminal_files": [],
+  "run_files": 5970,
+  "run_bytes": 1504379906,
+  "schema": "capacity-family-selection-monitor-v1",
+  "process_observation": {
+    "at_utc_approx": "2026-10-06T23:05:28Z",
+    "ps": "92809     1 02:35:52  46912 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --launch\n92821 92809 02:35:49 272976 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --child",
+    "claims_and_complete_commands_matched": true
+  },
+  "previous_persisted_snapshot": "reports/capacity_family_selection_monitor_20261006T2132Z.json",
+  "previous_interactive_observation": {
+    "at_utc": "2026-10-06T22:45:02.217264+00:00",
+    "completed_worlds": 955,
+    "completed_fits": 955
+  },
+  "completed_world_growth": 426,
+  "all_development_jobs": [
+    {
+      "block": 0,
+      "family": "ddpg",
+      "learning_rate": 0.0001,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 125.95472300122492,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "ddpg",
+      "learning_rate": 0.0003,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 132.48579800105654,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "td3",
+      "learning_rate": 0.0001,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 137.3499780013226,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "td3",
+      "learning_rate": 0.0003,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 140.9261399996467,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "sac",
+      "learning_rate": 0.0001,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 144.8089630000759,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "sac",
+      "learning_rate": 0.0003,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 149.68515699915588,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "ppo",
+      "learning_rate": 0.0001,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 152.36678700102493,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "ppo",
+      "learning_rate": 0.0003,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 156.79809499997646,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "value_td",
+      "learning_rate": 0.0001,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3459.2607510017697,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 0,
+      "family": "value_td",
+      "learning_rate": 0.0003,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3366.5909019995015,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "ddpg",
+      "learning_rate": 0.0001,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 173.7262469995767,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "ddpg",
+      "learning_rate": 0.0003,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 178.565808999585,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "td3",
+      "learning_rate": 0.0001,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 182.80564799928106,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "td3",
+      "learning_rate": 0.0003,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 188.45583599992096,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "sac",
+      "learning_rate": 0.0001,
+      "worlds": 37,
+      "fits": 36,
+      "fit_batches": 1152,
+      "rollout_seconds": 72.20782899926417,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "sac",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "ppo",
+      "learning_rate": 0.0001,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "ppo",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "value_td",
+      "learning_rate": 0.0001,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 1,
+      "family": "value_td",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "ddpg",
+      "learning_rate": 0.0001,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "ddpg",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "td3",
+      "learning_rate": 0.0001,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "td3",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "sac",
+      "learning_rate": 0.0001,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "sac",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "ppo",
+      "learning_rate": 0.0001,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "ppo",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "value_td",
+      "learning_rate": 0.0001,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    },
+    {
+      "block": 2,
+      "family": "value_td",
+      "learning_rate": 0.0003,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0,
+      "target_worlds": 96,
+      "target_fit_batches": 3072
+    }
+  ],
+  "model_seal_counts": {
+    "initial": 15,
+    "final": 14
+  },
+  "sealed_models": [
+    {
+      "name": "development_training-b0-ddpg-lr0-graph-initial",
+      "sha256": "12a0da5636c4dac85196185e171b20cef577814a22355c01c735b9f9597e8e20",
+      "bytes": 71345,
+      "path": "models/development_training-b0-ddpg-lr0-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-ddpg-lr0-graph-final",
+      "sha256": "00485ce92c9bdedadf9f89ebb69440b06bb3397c3bd248b944630acf425924a3",
+      "bytes": 9938145,
+      "path": "models/development_training-b0-ddpg-lr0-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-ddpg-lr1-graph-initial",
+      "sha256": "522e6f7f6cfad12714dddaa49c4f476dd24c1e573823ddc21606cc6b9dc0b2ef",
+      "bytes": 71345,
+      "path": "models/development_training-b0-ddpg-lr1-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-ddpg-lr1-graph-final",
+      "sha256": "fa8fe1c40c975e37e461e8e1f82d969c046068a2e7c7156990889ad3dc74910e",
+      "bytes": 9930657,
+      "path": "models/development_training-b0-ddpg-lr1-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-td3-lr0-graph-initial",
+      "sha256": "3e11bd3570ee51e8e95f159d674f7fd1e5ad4206d9aeea77c41d987ee025c2ad",
+      "bytes": 103291,
+      "path": "models/development_training-b0-td3-lr0-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-td3-lr0-graph-final",
+      "sha256": "195dec58ebef4d045506d76528960ea111324a7ae4f59106e70fdfbbf9c887a4",
+      "bytes": 10090879,
+      "path": "models/development_training-b0-td3-lr0-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-td3-lr1-graph-initial",
+      "sha256": "1a6244b31a66bb20425ff204985419c743353633f5c0b7b05196167684a1fc13",
+      "bytes": 103291,
+      "path": "models/development_training-b0-td3-lr1-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-td3-lr1-graph-final",
+      "sha256": "ad27732de820bb58bb68f2c1dab501ba340b58c4e5bdd8a84c224b7219455724",
+      "bytes": 10073663,
+      "path": "models/development_training-b0-td3-lr1-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-sac-lr0-graph-initial",
+      "sha256": "af0382e804676b33ca4a72eb88b8f2bd983f282327c39f19f35ed62ba6a1c659",
+      "bytes": 87891,
+      "path": "models/development_training-b0-sac-lr0-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-sac-lr0-graph-final",
+      "sha256": "c2c987e0689bbdfcef8b60d7ebc3e3c7f4a4ce1ae4dff48d4beac7ea16421d0d",
+      "bytes": 10922441,
+      "path": "models/development_training-b0-sac-lr0-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-sac-lr1-graph-initial",
+      "sha256": "53c1a5aaf540b6943d92e0835cfdbfe093afde7d9ef272caeb6e1e8c63ea4b06",
+      "bytes": 87891,
+      "path": "models/development_training-b0-sac-lr1-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-sac-lr1-graph-final",
+      "sha256": "777bd9c19885209d5250422f85b9a444a795b2fae4fc891ed475f7c95f48156c",
+      "bytes": 10945673,
+      "path": "models/development_training-b0-sac-lr1-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-ppo-lr0-graph-initial",
+      "sha256": "5917bdf68a016d1a6fdcf98fd4b0855b526c53dc2cd344e84b2562391faa71f2",
+      "bytes": 39908,
+      "path": "models/development_training-b0-ppo-lr0-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-ppo-lr0-graph-final",
+      "sha256": "34fee794273f06c81979230951735dcf0a10245f4abbef7f747c59380049cc8b",
+      "bytes": 104203,
+      "path": "models/development_training-b0-ppo-lr0-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-ppo-lr1-graph-initial",
+      "sha256": "058693abc6b77b104464b0da1c0d5eb47d63f03461bf428453b1f983f804a6d6",
+      "bytes": 39908,
+      "path": "models/development_training-b0-ppo-lr1-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-ppo-lr1-graph-final",
+      "sha256": "726024d4db288b9fd9707430e01cbf8b1a5cf3b963dbe4477ddcc028a60bd709",
+      "bytes": 104203,
+      "path": "models/development_training-b0-ppo-lr1-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-value_td-lr0-graph-initial",
+      "sha256": "b7ff5c609094293d79601e0a8fededecc8d3a8a720f5eef726be9c7256dfd89c",
+      "bytes": 17161,
+      "path": "models/development_training-b0-value_td-lr0-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-value_td-lr0-graph-final",
+      "sha256": "5e60cad3a42e691c0789344a4ebf561c12a1e2f82b68e1d42eb21f2d4e9f9f9a",
+      "bytes": 48576,
+      "path": "models/development_training-b0-value_td-lr0-graph-final.pt"
+    },
+    {
+      "name": "development_training-b0-value_td-lr1-graph-initial",
+      "sha256": "42cf70749014d86b61484f612a0376b4216f9a3b04754da7574cf722e833a546",
+      "bytes": 17161,
+      "path": "models/development_training-b0-value_td-lr1-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b0-value_td-lr1-graph-final",
+      "sha256": "a6e7c96ebfcc50a778edb7335403ed81081954391d53e98cbf9f97104eceeffd",
+      "bytes": 48576,
+      "path": "models/development_training-b0-value_td-lr1-graph-final.pt"
+    },
+    {
+      "name": "development_training-b1-ddpg-lr0-graph-initial",
+      "sha256": "9a274c25554dccc38032f38d522fae381395a9296e6537187b63a4caecb51afd",
+      "bytes": 71345,
+      "path": "models/development_training-b1-ddpg-lr0-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b1-ddpg-lr0-graph-final",
+      "sha256": "1f6573afb7f3e1695761b4acc927ff4d30fe73c86f82abcd77fecceaa76ab342",
+      "bytes": 9948001,
+      "path": "models/development_training-b1-ddpg-lr0-graph-final.pt"
+    },
+    {
+      "name": "development_training-b1-ddpg-lr1-graph-initial",
+      "sha256": "c0dfe3c3ce1769bd2b06ad83f57366e502fd57dd79e0706ab53b5578707a946f",
+      "bytes": 71345,
+      "path": "models/development_training-b1-ddpg-lr1-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b1-ddpg-lr1-graph-final",
+      "sha256": "fd78405c1a06e6f3bd21e17adb2eea6b1716dc21c0f3e3931cfd7ee657b7a039",
+      "bytes": 9948705,
+      "path": "models/development_training-b1-ddpg-lr1-graph-final.pt"
+    },
+    {
+      "name": "development_training-b1-td3-lr0-graph-initial",
+      "sha256": "05fb579e4c9c1ba2344140e3b1c0dbb5245d100626c5103eaa1186d94336a754",
+      "bytes": 103291,
+      "path": "models/development_training-b1-td3-lr0-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b1-td3-lr0-graph-final",
+      "sha256": "942696342efa48722400881cfca6e949bf56f6f1e9acb6794826e59c8466567f",
+      "bytes": 10093567,
+      "path": "models/development_training-b1-td3-lr0-graph-final.pt"
+    },
+    {
+      "name": "development_training-b1-td3-lr1-graph-initial",
+      "sha256": "25736d0f499a2f01951680622c481c9d816e1a9c017711475db3bd2895fb86fe",
+      "bytes": 103291,
+      "path": "models/development_training-b1-td3-lr1-graph-initial.pt"
+    },
+    {
+      "name": "development_training-b1-td3-lr1-graph-final",
+      "sha256": "b49e5aa57e4314a54c1d794e51aeab5bc52821a0c823975cc11a2a5ae78c0dcc",
+      "bytes": 10070719,
+      "path": "models/development_training-b1-td3-lr1-graph-final.pt"
+    },
+    {
+      "name": "development_training-b1-sac-lr0-graph-initial",
+      "sha256": "7fdf4b68d467bef4159d06976e6ba0ab24fee737669cfd378bc223569b4d5c31",
+      "bytes": 87891,
+      "path": "models/development_training-b1-sac-lr0-graph-initial.pt"
+    }
+  ],
+  "stage_progress": {
+    "development_training": {
+      "complete_rollouts": 1381,
+      "complete_fits": 1380,
+      "target": 2880
+    },
+    "development_evaluation": {
+      "complete": 0,
+      "target": 864
+    },
+    "confirmation_training": {
+      "complete": 0,
+      "target": 1920
+    },
+    "confirmation_evaluation": {
+      "complete": 0,
+      "target": 1080
+    }
+  },
+  "value_optimizer_breakdown": {
+    "ppo": 6144,
+    "value_td": 6144
+  },
+  "owner": "development_training",
+  "owner_elapsed_seconds": 9327.292576000094,
+  "owner_cap_seconds": 43200,
+  "global_cap_seconds": 172800,
+  "compute_caps": {
+    "native_steps": 431616,
+    "total_native_operations": 445104,
+    "total_optimizer_steps": 460800,
+    "neural_forward_module_calls": 2013312,
+    "planner_total_model_epochs": 50429952,
+    "estimator_hypothesis_transitions": 43161600,
+    "fit_batches": 153600,
+    "optimizer_example_presentations": 29491200
+  },
+  "timing": {
+    "by_family": {
+      "ddpg": {
+        "rate_block": 1,
+        "observed_rollout_worlds": 192,
+        "mean_rollout_seconds": 1.834854458328967,
+        "prior_block0_mean_fit_seconds": 0.2214421510398097,
+        "remaining_rollout_worlds": 192,
+        "remaining_fits": 192,
+        "estimated_remaining_seconds": 394.80894899880514
+      },
+      "td3": {
+        "rate_block": 1,
+        "observed_rollout_worlds": 192,
+        "mean_rollout_seconds": 1.933653562495844,
+        "prior_block0_mean_fit_seconds": 0.2713475885357184,
+        "remaining_rollout_worlds": 192,
+        "remaining_fits": 192,
+        "estimated_remaining_seconds": 423.36022099805996
+      },
+      "sac": {
+        "rate_block": 1,
+        "observed_rollout_worlds": 37,
+        "mean_rollout_seconds": 1.9515629459260586,
+        "prior_block0_mean_fit_seconds": 0.351735093749691,
+        "remaining_rollout_worlds": 347,
+        "remaining_fits": 348,
+        "estimated_remaining_seconds": 799.5961548612348
+      },
+      "ppo": {
+        "rate_block": 0,
+        "observed_rollout_worlds": 192,
+        "mean_rollout_seconds": 1.6102337604218822,
+        "prior_block0_mean_fit_seconds": 0.20469956250114288,
+        "remaining_rollout_worlds": 384,
+        "remaining_fits": 384,
+        "estimated_remaining_seconds": 696.9343960024416
+      },
+      "value_td": {
+        "rate_block": 0,
+        "observed_rollout_worlds": 192,
+        "mean_rollout_seconds": 35.55131069271496,
+        "prior_block0_mean_fit_seconds": 0.27745533332280403,
+        "remaining_rollout_worlds": 384,
+        "remaining_fits": 384,
+        "estimated_remaining_seconds": 13758.2461539985
+      }
+    },
+    "development_remaining_hours_estimate": 4.464707187460845,
+    "caveat": "Latest completed block per-family rollout times with reused block0 fit means; excludes future seals and growing I/O. This estimates only remaining development training, not development evaluation or final stages. Historical31h is not a measured full-package ETA."
+  },
+  "training_evidence_reused": "Launch actual Adam optimizer receipts plus model after-fit state; no new model load/forward, environment, optimizer or tests.",
+  "scientific_calls_by_monitor": 0,
+  "finalists": null,
+  "performance_result": null,
+  "milestone": "Block0 all five families and both learning rates completed96 worlds plus3072fit batches per configuration, ten final models sealed. Block1 DDPG andTD3 both learning rates complete; SAC-lr0 active.",
+  "automation_changed": false,
+  "dropbox": {
+    "local_copy_verified": false,
+    "cloud_sync_verified": false,
+    "collaborator_access_verified": false,
+    "reason": "Current run not terminal; new run handoff remains due after sealing/archive."
+  },
+  "snapshot_caveat": "Non-atomic sequential observations. Counts are last saved progress boundary, not inferred from scheduler or last prepaid debit. One completed trajectory was still fitting at this snapshot.",
+  "observed_counter_cap_violations": []
+}

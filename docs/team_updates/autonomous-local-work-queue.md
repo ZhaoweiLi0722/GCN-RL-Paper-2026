@@ -1,6 +1,48 @@
 # Autonomous local research queue
 
-## Live checkpoint: block0 actor-family training complete; value-MPC training active
+## Live checkpoint: all block0 configurations trained; block1 active
+
+2026-10-06T23:05:10Z progress snapshot. Correct integration branch was clean
+on entry. Supervisor92809/1 and child92821/92809 match claims/full commands;
+426new completed worlds since the22:45:02Z interactive observation establish
+real progress. No terminal/failure/overrun/preservation markers; all3logs0bytes.
+
+Development rollouts1381/2880 and completed fits1380/2880; one finished world
+was fitting at the snapshot. Development evaluation0/864, fresh-finalist
+training0/1920, final evaluation0/1080. Block0 all five families at both learning
+rates each completed96worlds and3072fit batches, with ten trained final models
+sealed. In block1, DDPG andTD3 both rates each completed96worlds/3072fit batches;
+SAC-lr0 has37worlds/36fits/1152fit batches. Remaining block1 jobs and block2
+have not started. Total seals15initial+14final; none is a selection or benefit.
+
+Actual optimizer counts31872actor+51456critic+12288value=95616/460800.
+Value includes6144PPO critic updates and6144value_td updates. Fit batches44160,
+optimizer examples6119424. Reuse launch real Adam/after-fit proof; no extra
+model loading, scientific calls or repeated tests. Evaluations have0updates.
+
+Last progress boundary:88384/431616native steps,91146/445104operations,
+0clones,287664/2013312forwards,3538944/50429952prediction steps,
+8838400/43161600filter transitions,9216planner decisions. Ledger/progress/file
+observations are non-atomic; the last prepaid debit is not proof of execution.
+Elapsed9333.096/172800s; development owner9327.293/43200s; current fit0.051/60s
+at ledger sample.5970files/1504379906bytes; child RSS272976KiB at process check.
+No observed total counter-cap violation; frozen per-job/phase enforcement stays
+active. No new audit of every completed job was performed by this monitor.
+
+Latest-block mean rollout seconds: DDPG1.835,TD3 1.934,SAC1.952;
+block0 PPO1.610 and value_td35.551 (192value worlds). With reused measured
+block0 fit times, remaining development training projects about4.46h,
+excluding future seals and growing IO. This is not remaining full-package time:
+development evaluation, fresh finalist training and final evaluation still follow.
+Historical31h is not a measured full-package ETA;48h hard cap is unchanged.
+
+Evidence:reports/capacity_family_selection_monitor_20261006T2302Z.json.
+H8 primary/H16 secondary, scientific source/config/authority and the single
+ACTIVE attempt are unchanged. No finalist, winner or cost/patient gain declared.
+Terminal readout, manuscript results and additive Dropbox handoff remain due;
+current-run local copy/cloud sync/collaborator access are not yet verified.
+
+## Previous checkpoint: block0 actor-family training complete; value-MPC training active
 
 2026-10-06T21:03:39Z snapshot. Entry e45b361 clean on the integration branch.
 Supervisor92809/1 and child92821/92809 match current claims/full commands;

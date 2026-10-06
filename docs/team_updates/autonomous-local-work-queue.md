@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: frozen evaluation progressing; no new outcome conclusion
+## Live checkpoint: first evaluation block complete; second block active
+
+2026-10-06T15:36:07Z snapshot. Entryca807ab clean on the integration branch.
+Supervisor65458/1 and child65470/65458 match claims/full commands;46new completed
+evaluations since15:06Z. Block0 has84/84evaluations complete, block1 has14/84.
+Total98/420complete,99started. All3logs0bytes; no terminal/failure/overrun/
+preservation marker. Scientific source/config/protocol/authority unchanged.
+
+Training remains complete: warmup240/240, warm graph/self_only each7680/7680
+updates;reference120/120,branches240/240. Three tail methods each120/120fits
+and3840/3840updates;total26880/26880value,actor0. Warm/final/legacy seals
+10/10,15/15,5/5 and840after-fit states. Reuse verified model/optimizer hashes
+from prior readouts without repeated model loading, hashing or extra checks.
+All-model barrier4705 precedes first test4706; no later fit,0test updates.
+Currentevaluation block1/condition2/replicate0/index2/plain_h8,epoch0. Progress
+is not performance evidence; no interim cost/patient outcomes inspected.
+
+Ledger29312main+9720branch=39032/59640native;30230mainoperations+9720branch=
+39950operations plus240clones.35180/46220forwards;8700288main+1574400parent=
+10274688predictions;2931200main+972000branch=3903200filter transitions;
+4100native-parent decisions complete. Pending main forecast384 remains charged.
+Elapsed20016.18/86400s;evaluation3852.57/24000s,currentH8job1.12/180s.
+Warmup8382.81,reference7554.78,fit220.55s unchanged. No observed global/phase/
+current-job budget violation.6492files/833016231bytes and211152KiB child RSS
+below caps. No refunds or additional scientific calls by the monitor.
+
+Measured H8 mean34.876s over84jobs and H16 mean65.836s over14jobs; remaining322
+evaluations project about3.52h, excluding analysis/archive/IO and the current
+partial job. Role/block/condition variability remains; not a full-run guarantee.
+Evidence: reports/capacity_confirmation_monitor_20261006T1536Z.json.
+
+Same ACTIVE monitor unchanged. Reuse26tests/fullcompileall and frozen locks;
+no retry,new gate,tuning,manuscript outcome change or unfinished-run export.
+Full readout and authorized additive Dropbox handoff remain due at terminal
+closure; cloud sync/collaborator access unverified. No remote Git or messages.
+
+## Previous checkpoint: frozen evaluation progressing; no new outcome conclusion
 
 2026-10-06T15:06:23Z snapshot. Entry5635726 clean on the integration branch.
 Supervisor65458/1 and child65470/65458 match claims/full commands.44new completed

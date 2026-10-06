@@ -1,0 +1,27 @@
+{
+  "schema": "capacity-family-selection-approval-intent-v1",
+  "scope": "capacity-family-selection-v1",
+  "scope_approved": true,
+  "user_literal": "批准完整单次包",
+  "approved_on": "2026-10-06",
+  "proposal_sha256": "32d6a9808c064aaa1d621715162c546e78ade9c570665bb18f85919d127e2223",
+  "protocol_sha256": "efd9e3767caf07fead28497ef9004a6babe8b5363327e4ea41ddd016a88d140b",
+  "scientific_implementation_commit": "46b078f0fa13809dacbe307bbfaac6d3c82b1282",
+  "complete_package": {
+    "main_trajectories": 6744,
+    "native_steps": 431616,
+    "native_operations": 445104,
+    "clones": 0,
+    "optimizer_dispatch_cap": 460800,
+    "forward_call_cap": 2013312,
+    "prediction_step_cap": 50429952,
+    "filter_transition_cap": 43161600,
+    "wall_seconds": 172800,
+    "combined_disk_bytes": 34359738368,
+    "attempts": 1,
+    "automatic_retry": false,
+    "automatic_resume": false,
+    "automatic_follow_on": false
+  },
+  "scope_note": "One continuous train/select/fresh-retrain/seal/evaluate/readout package, plus existing separate additive Dropbox authority; no repeated phase approval, changed reward/scenario, old holdout, Stage E, remote Git or messages."
+}

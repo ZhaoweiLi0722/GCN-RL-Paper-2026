@@ -1,6 +1,44 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return 39 references and3744 value updates; running
+## Live checkpoint: native-return second block sealed; third block training
+
+2026-10-06T00:40:56Z saved-data snapshot; process check00:39:45Z. Entry136bd25
+clean on expected branch. Supervisor36670/1 and child36695/36670 match claims
+and full commands,sole related research pair; child100%CPU/201952KiB RSS.
+Since last checkpoint12new complete references,25branches,1152value updates
+and3new final seals. All3logs0bytes; no terminal/failure/overrun/preservation
+error. No monitor scientific call or interim test-outcome inspection.
+
+Reference51/120,complete native branches103/240,eachmethod51/120fits and
+1632/3840updates; total4896/11520value,actor0.153after-fit states. Latest three
+receipt sets each have32finite updates throughblock2 update96; state bytes
+hashed without model loading. Blocks0and1 each completed24references and768
+updates/method; cumulative1632/method includes both blocks plus96inblock2.
+Ancestor3/5,final6/15,evaluation0/360. Three newblock1 final files each49024bytes,
+SHA256 match metadata; reuseblock0 verification. Current b2/index3/c0/replicate1/
+seed65102001/plainH8,latest main epoch23. This is training,not performance gain.
+
+Charged main3291+branch4264=7555/40440native steps;3395+4264=7659/41400operations;
+104/240clone admissions,including one not yet complete.12554/40045forwards;
+3814488/16303440prediction steps:950784main,2133504forecast-parent,706944native-
+parent,2496prefix,20760paired-tail. Forecast/native parent decisions5556/1841;
+filter2043100/6960000. Reservations/partial calls remain charged. Elapsed7387.81/
+64800s,reference7358.82/34200s,fit23.80/3600s,current owner160.40/900s; no observed
+counter,phase or current-owner breach.51reference cycles mean141.61s(last5:
+156.34s); remaining reference stage extrapolates2.71h,excluding evaluation/archive
+and with variable root/condition workload. Progress1069472bytes,budget40816168.
+Evidence:reports/capacity_native_tail_monitor_20261006T0041Z.json.
+
+Frozen science/authority unchanged; only earlier launch/Dropbox status readouts
+differ from execution. Reuse43tests/compileall and existing locks. Next same
+authorized serial process finishes remaining69references,137branches and9final
+models,then360frozen evaluations and raw/manuscript/archive handoff. No relaunch,
+new gate,extra scientific calls or retry. Dropbox prior local copy verified;
+cloud/access remain unverified at last locked-UI check. No historical recopy or
+rearchive; current final/failed export stays authorized after termination.
+Same gcn-rl ACTIVE; no new permission or automation change needed.
+
+## Previous checkpoint: native-return 39 references and3744 value updates; running
 
 2026-10-06T00:13:33Z saved-data snapshot; process check00:13:51Z. Entry7742f3a
 clean on expected branch. Supervisor36670/1 and child36695/36670 match claims

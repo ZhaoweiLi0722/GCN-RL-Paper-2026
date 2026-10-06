@@ -1,6 +1,45 @@
 # Autonomous local research queue
 
-## Live checkpoint: block1 warm models sealed; native-tail training active
+## Live checkpoint: block1 final models sealed; block2 warmup active
+
+2026-10-06T12:06:45Z snapshot. Entry6120221 clean on the integration branch.
+Supervisor65458/1 and child65470/65458 match claims/full commands, with new
+world,fit,branch and final-seal boundaries since11:36Z. All3logs0bytes and no
+terminal/failure/overrun/preservation marker. Scientific source and locked
+config/protocol/authority unchanged from execution6d429bb. No extra science.
+
+Warmup127/240, graph/self_only each4064/7680warm updates. Reference48/120,
+branches96/240; graph_td,self_only_td,graph_mc each48/120fits and1536/3840tail
+updates. Total12736/26880value =8128warm+4608tail, actor0. Warm seals4/10,
+final6/15,legacy3/5,eval0/420. Block1's three final model files match their seal
+hashes, each768new updates. Self-only's own ancestry remains separate from the
+common graph parent. Reuse prior warm/block0 seals. Latest five32update cohorts
+are finite and sequential with hashed after-fit states;398after-fit files total.
+Two complete training blocks are sealed, not two successful performance results.
+All-model barrier remains pending; no interim test outcomes inspected.
+
+Currentwarmup block2/index31/condition1/plainH8, latest progress epoch31.
+Ledger11238main+3888branch=15126/59640native;11590mainoperations+3888branch=15478,
+96clones;14774/46220forwards;3240576main+629760parent=3870336predictions;
+1123800main+388800branch=1512600filter transitions;1640native-parent decisions.
+Pending main forecast reservation384, retained as charged. Elapsed7453.86s
+/86400s. Warmup4408.40/18000s,reference2976.09/25200s,fit63.89/7200s;
+currentwarmup28.96/180s. No observed global/phase/current-job counter or time
+violation. Observed2789files/335950166bytes and child202240KiB RSS below caps.
+
+Measured127warm cycles mean34.446s;48reference-with-tail cycles61.960s.
+Remaining warmup about1.08h and reference about1.24h at these rates, excluding
+remaining fits,evaluation,archive andI/O. Root/block/condition timing varies;
+no measured full-run ETA. Evidence:
+reports/capacity_confirmation_monitor_20261006T1206Z.json.
+
+Reuse26tests/fullcompileall,616source/11input locks and completed finite agents.
+The same ACTIVE monitor remains unchanged. Continue the single authorized run;
+no retry,extra science,parameter change or new gate. Terminal manuscript/archive
+and additive Dropbox handoff remain pending; cloud sync/collaborator access
+unverified. No remote Git action,external message or other task modification.
+
+## Previous checkpoint: block1 warm models sealed; native-tail training active
 
 2026-10-06T11:36:41Z snapshot. Entry2e74888 clean on the integration branch.
 Supervisor65458/1 and child65470/65458 match claims/full commands, with new

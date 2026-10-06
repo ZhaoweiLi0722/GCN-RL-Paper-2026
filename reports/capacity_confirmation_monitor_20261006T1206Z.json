@@ -1,0 +1,398 @@
+{
+  "observed_at_utc": "2026-10-06T12:06:45.331519+00:00",
+  "entry_head": "6120221c2fe55b0818b9a788da6967d9bb6f543c",
+  "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+  "claim": {
+    "authorization_sha256": "73d550bdb2a0dfa37b331836fcc1659d24055aee4b46fac256f78f153522a5e2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "6d429bbecef79be2b256904a49ad4f194499f89a",
+    "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+    "pid": 65458,
+    "ppid": 1,
+    "started": 1282002.596414
+  },
+  "child_claim": {
+    "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+    "pid": 65470,
+    "ppid": 65458
+  },
+  "failures": {},
+  "completed_trajectories": {
+    "warmup": 127,
+    "reference": 48
+  },
+  "fits_by_phase_role": {
+    "warmup:graph": 127,
+    "warmup:self_only": 127,
+    "reference:graph_td": 48,
+    "reference:self_only_td": 48,
+    "reference:graph_mc": 48
+  },
+  "updates_by_phase_role": {
+    "warmup:graph": 4064,
+    "warmup:self_only": 4064,
+    "reference:graph_td": 1536,
+    "reference:self_only_td": 1536,
+    "reference:graph_mc": 1536
+  },
+  "branches_completed": 96,
+  "actor_updates": 0,
+  "warm_seals": 4,
+  "final_seals": 6,
+  "legacy_bindings": 3,
+  "previous_model_evidence_reused_from": "reports/capacity_confirmation_monitor_20261006T1136Z.json",
+  "new_model_evidence": [
+    {
+      "path": "results/capacity_confirmation_20261006/payload/models/block1-graph_mc-final.pt",
+      "role": "graph_mc",
+      "block": 1,
+      "updates": 768,
+      "bytes": 64384,
+      "sha256": "12bdb34bdec884983d96eae93c07261b95f7ae8ec10639fdb1c3a601f2b55ecc",
+      "matches_seal": true,
+      "own_ancestor_sha256": "f2d0c496d28673306187a1f1bbacb0628cecede8854f36602dc1c7cf4d085eb1",
+      "continuation_sha256": "f2d0c496d28673306187a1f1bbacb0628cecede8854f36602dc1c7cf4d085eb1"
+    },
+    {
+      "path": "results/capacity_confirmation_20261006/payload/models/block1-graph_td-final.pt",
+      "role": "graph_td",
+      "block": 1,
+      "updates": 768,
+      "bytes": 64384,
+      "sha256": "21958fa9dce9d79b3810f8b858e23a3b5929ccf7f171bd9884b98c52ad5a222d",
+      "matches_seal": true,
+      "own_ancestor_sha256": "f2d0c496d28673306187a1f1bbacb0628cecede8854f36602dc1c7cf4d085eb1",
+      "continuation_sha256": "f2d0c496d28673306187a1f1bbacb0628cecede8854f36602dc1c7cf4d085eb1"
+    },
+    {
+      "path": "results/capacity_confirmation_20261006/payload/models/block1-self_only_td-final.pt",
+      "role": "self_only_td",
+      "block": 1,
+      "updates": 768,
+      "bytes": 64512,
+      "sha256": "fd8a7fe0acb841615e97c832a43329e23d176ba19a934052059328553734b75c",
+      "matches_seal": true,
+      "own_ancestor_sha256": "2b817badd41aead8b4540f07ccc33e4138dfa15a4e1729935fb3f044c7f0ac52",
+      "continuation_sha256": "f2d0c496d28673306187a1f1bbacb0628cecede8854f36602dc1c7cf4d085eb1"
+    }
+  ],
+  "latest_fit_evidence": [
+    {
+      "phase_role": "warmup:graph",
+      "active": {
+        "phase": "warmup",
+        "block": 2,
+        "condition": 0,
+        "replicate": 10,
+        "index": 30,
+        "seed": 66102010,
+        "role": "graph"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/warmup-b2-c0-j10-graph.jsonl",
+      "receipts": 32,
+      "first_update": 961,
+      "last_update": 992,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/warmup-b2-c0-j10-graph-after-fit.pkl.gz",
+      "after_fit_bytes": 182154,
+      "after_fit_sha256": "46edcacf1d95bb05f050f45286975260c1a8b7ebe56a1ea041b17da76696518c"
+    },
+    {
+      "phase_role": "warmup:self_only",
+      "active": {
+        "phase": "warmup",
+        "block": 2,
+        "condition": 0,
+        "replicate": 10,
+        "index": 30,
+        "seed": 66102010,
+        "role": "self_only"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/warmup-b2-c0-j10-self_only.jsonl",
+      "receipts": 32,
+      "first_update": 961,
+      "last_update": 992,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/warmup-b2-c0-j10-self_only-after-fit.pkl.gz",
+      "after_fit_bytes": 182452,
+      "after_fit_sha256": "26f70b9d230708bd001733c496cd7902df61d744f10ea3a30f1eedaa900f93ba"
+    },
+    {
+      "phase_role": "reference:graph_td",
+      "active": {
+        "phase": "reference",
+        "block": 1,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66121207,
+        "role": "graph_td"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b1-c2-j7-graph_td.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b1-c2-j7-graph_td-after-fit.pkl.gz",
+      "after_fit_bytes": 229744,
+      "after_fit_sha256": "fe7ff050deb4adff56d6736397822b151fcae38313d5a3513e162fd5b91bfea9"
+    },
+    {
+      "phase_role": "reference:self_only_td",
+      "active": {
+        "phase": "reference",
+        "block": 1,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66121207,
+        "role": "self_only_td"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b1-c2-j7-self_only_td.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b1-c2-j7-self_only_td-after-fit.pkl.gz",
+      "after_fit_bytes": 230909,
+      "after_fit_sha256": "7c7c6320ce8f5b6b016c91dec64e4ba4eb6d49bbef107cd8fce4209622d27bb7"
+    },
+    {
+      "phase_role": "reference:graph_mc",
+      "active": {
+        "phase": "reference",
+        "block": 1,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66121207,
+        "role": "graph_mc"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b1-c2-j7-graph_mc.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b1-c2-j7-graph_mc-after-fit.pkl.gz",
+      "after_fit_bytes": 229963,
+      "after_fit_sha256": "1e2c8a41dbd60477b86472a0cd7ec8fcb5b2502d1303c9651e2dc8ba94b9b6cc"
+    }
+  ],
+  "last_progress": {
+    "event": "epoch_boundary",
+    "active": {
+      "phase": "warmup",
+      "block": 2,
+      "condition": 1,
+      "replicate": 10,
+      "index": 31,
+      "seed": 66102110,
+      "role": "plain_h8"
+    },
+    "epoch": 31,
+    "counts": {
+      "trajectories": 176,
+      "native_steps": 11232,
+      "native_constructions": 176,
+      "construction_triggered_resets": 176,
+      "total_native_operations": 11584,
+      "control_steps": 8432,
+      "tail_steps": 2800,
+      "value_optimizer_steps": 12736,
+      "total_optimizer_steps": 12736,
+      "optimizer_example_presentations": 815104,
+      "neural_forward_module_calls": 14774,
+      "planner_total_decisions": 8432,
+      "planner_candidate_rollouts": 404736,
+      "planner_total_model_epochs": 3237888,
+      "estimator_receipt_updates": 11232,
+      "estimator_hypothesis_transitions": 1123200,
+      "native_branch_clones": 96,
+      "native_branch_steps": 3888,
+      "native_branch_control_steps": 2352,
+      "native_branch_settlement_steps": 1536,
+      "native_branch_planning_decisions": 1640,
+      "native_branch_candidate_rollouts": 78720,
+      "native_branch_model_epochs": 629760,
+      "native_branch_filter_transitions": 388800,
+      "warm_seals": 4,
+      "final_seals": 6
+    }
+  },
+  "counts": {
+    "trajectories": 176,
+    "native_constructions": 176,
+    "total_native_operations": 11590,
+    "construction_triggered_resets": 176,
+    "planner_candidate_rollouts": 405072,
+    "planner_total_decisions": 8439,
+    "planner_total_model_epochs": 3240576,
+    "control_steps": 8438,
+    "native_steps": 11238,
+    "estimator_receipt_updates": 11238,
+    "estimator_hypothesis_transitions": 1123800,
+    "tail_steps": 2800,
+    "neural_forward_module_calls": 14774,
+    "optimizer_example_presentations": 815104,
+    "total_optimizer_steps": 12736,
+    "value_optimizer_steps": 12736,
+    "warm_seals": 4,
+    "native_branch_clones": 96,
+    "native_branch_control_steps": 2352,
+    "native_branch_steps": 3888,
+    "native_branch_filter_transitions": 388800,
+    "native_branch_candidate_rollouts": 78720,
+    "native_branch_planning_decisions": 1640,
+    "native_branch_model_epochs": 629760,
+    "native_branch_settlement_steps": 1536,
+    "final_seals": 6
+  },
+  "phase_counts": {
+    "warmup_reference": {
+      "trajectories": 128,
+      "native_constructions": 128,
+      "total_native_operations": 8422,
+      "construction_triggered_resets": 128,
+      "planner_candidate_rollouts": 294480,
+      "planner_total_decisions": 6135,
+      "planner_total_model_epochs": 2355840,
+      "control_steps": 6134,
+      "native_steps": 8166,
+      "estimator_receipt_updates": 8166,
+      "estimator_hypothesis_transitions": 816600,
+      "tail_steps": 2032
+    },
+    "value_fitting": {
+      "neural_forward_module_calls": 13134,
+      "optimizer_example_presentations": 815104,
+      "total_optimizer_steps": 12736,
+      "value_optimizer_steps": 12736,
+      "warm_seals": 4,
+      "final_seals": 6
+    },
+    "reference_and_tails": {
+      "trajectories": 48,
+      "native_constructions": 48,
+      "total_native_operations": 3168,
+      "construction_triggered_resets": 48,
+      "planner_candidate_rollouts": 110592,
+      "planner_total_decisions": 2304,
+      "planner_total_model_epochs": 884736,
+      "native_branch_clones": 96,
+      "native_branch_control_steps": 2352,
+      "native_branch_steps": 3888,
+      "native_branch_filter_transitions": 388800,
+      "native_branch_candidate_rollouts": 78720,
+      "native_branch_planning_decisions": 1640,
+      "native_branch_model_epochs": 629760,
+      "neural_forward_module_calls": 1640,
+      "native_branch_settlement_steps": 1536,
+      "control_steps": 2304,
+      "native_steps": 3072,
+      "estimator_receipt_updates": 3072,
+      "estimator_hypothesis_transitions": 307200,
+      "tail_steps": 768
+    }
+  },
+  "pending_query_debits": {
+    "planner_total_model_epochs": 384,
+    "estimator_hypothesis_transitions": 0,
+    "native_branch_filter_transitions": 0,
+    "native_branch_model_epochs": 0
+  },
+  "observed_budget_violations": [],
+  "elapsed_seconds": 7453.855713000055,
+  "phase_elapsed_seconds": {
+    "admission_lock_binding": 5.470942999934778,
+    "analysis_archive": 0,
+    "failure_flush_shutdown_reserve": 0,
+    "frozen_evaluation": 0,
+    "global": 0,
+    "reference_and_tails": 2976.0910649995785,
+    "value_fitting": 63.89361900091171,
+    "warmup_reference": 4408.40008599963
+  },
+  "current_phase": "warmup_reference",
+  "current_owner": "warmup_reference",
+  "current_job": {
+    "cap": 180,
+    "clock": 1289427.492791,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "warmup-b2-c1-j10-plain_h8",
+    "kind": "warmup_world",
+    "previous": "eb700a8277aa3bd3088f7cd72e2143b1da091d2558a2ad400b7c22ff5831fd3b",
+    "sequence": 115883,
+    "sha256": "72432d8d169bfeb57bdc07ca6a6d2c2763fe3876092a057280dde66d14f89f74"
+  },
+  "current_job_elapsed_seconds": 28.959336000028998,
+  "timing_sample": {
+    "warmup_world": {
+      "completed_cycles": 127,
+      "mean_seconds": 34.44569326771101,
+      "last_five_mean_seconds": 35.65376200005412
+    },
+    "reference_world_with_tails": {
+      "completed_cycles": 48,
+      "mean_seconds": 61.96000639582053,
+      "last_five_mean_seconds": 49.89279379998334
+    }
+  },
+  "remaining_warmup_hours": 1.0812120386809287,
+  "remaining_reference_hours": 1.2392001279164107,
+  "full_run_eta": null,
+  "eta_caveat": "Measured warmup/reference samples only; block/condition/root timing varies. Excludes remaining fits,evaluation,archive and IO; no measured full-run ETA.",
+  "log_bytes": {
+    "results/capacity_confirmation_20261006/launcher/stderr.log": 0,
+    "results/capacity_confirmation_20261006/launcher/stdout.log": 0,
+    "reports/capacity_confirmation_20261006_detached_launcher.log": 0
+  },
+  "log_tail": {},
+  "progress_bytes": 2518183,
+  "budget_bytes": 39000971,
+  "artifact_file_count": 2789,
+  "artifact_bytes": 335950166,
+  "after_fit_state_files": 398,
+  "monitor_scientific_calls": 0,
+  "model_deserialization_by_monitor": false,
+  "test_outcomes_inspected": false,
+  "first_real_training_evidence_reused": "reports/capacity_confirmation_launch_training_snapshot_20261006.json",
+  "prior_tests_and_source_input_locks_reused": true,
+  "progress_since_previous": {
+    "warmup_completed": 31,
+    "reference_completed": 13,
+    "new_warm_seals": 0,
+    "new_final_seals": 3,
+    "value_optimizer_steps": 3232
+  },
+  "processes": [
+    {
+      "pid": 65458,
+      "ppid": 1,
+      "state": "Ss",
+      "elapsed": "02:04:42",
+      "cpu_percent": 0,
+      "rss_kib": 48240,
+      "command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_confirmation --launch"
+    },
+    {
+      "pid": 65470,
+      "ppid": 65458,
+      "state": "Rs",
+      "elapsed": "02:04:39",
+      "cpu_percent": 98.8,
+      "rss_kib": 202240,
+      "command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_confirmation --child"
+    }
+  ],
+  "process_identity_verified": true,
+  "process_observation_note": "Process check immediately after 12:06:45Z snapshot; claims and full commands match. New final seals and world/fit/branch boundaries since 11:36Z establish activity.",
+  "rss_cap_observed_within": true,
+  "artifact_disk_and_file_caps_observed_within": true,
+  "scientific_source_and_locked_authority_unchanged_from_execution": true
+}

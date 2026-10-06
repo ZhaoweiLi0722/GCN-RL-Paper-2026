@@ -1,0 +1,465 @@
+{
+  "observed_at_utc": "2026-10-06T15:06:23.759514+00:00",
+  "entry_head": "563572668cdc23b5203400840dd36738d81f7f27",
+  "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+  "claim": {
+    "authorization_sha256": "73d550bdb2a0dfa37b331836fcc1659d24055aee4b46fac256f78f153522a5e2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "6d429bbecef79be2b256904a49ad4f194499f89a",
+    "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+    "pid": 65458,
+    "ppid": 1,
+    "started": 1282002.596414
+  },
+  "child_claim": {
+    "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+    "pid": 65470,
+    "ppid": 65458
+  },
+  "failures": {},
+  "completed_trajectories": {
+    "warmup": 240,
+    "reference": 120,
+    "evaluation": 52
+  },
+  "fits_by_phase_role": {
+    "warmup:graph": 240,
+    "warmup:self_only": 240,
+    "reference:graph_td": 120,
+    "reference:self_only_td": 120,
+    "reference:graph_mc": 120
+  },
+  "updates_by_phase_role": {
+    "warmup:graph": 7680,
+    "warmup:self_only": 7680,
+    "reference:graph_td": 3840,
+    "reference:self_only_td": 3840,
+    "reference:graph_mc": 3840
+  },
+  "branches_completed": 240,
+  "actor_updates": 0,
+  "warm_seals": 10,
+  "final_seals": 15,
+  "legacy_bindings": 5,
+  "previous_model_evidence_reused_from": "reports/capacity_confirmation_monitor_20261006T1437Z.json",
+  "new_model_evidence": [],
+  "latest_fit_evidence": [
+    {
+      "phase_role": "warmup:graph",
+      "active": {
+        "phase": "warmup",
+        "block": 4,
+        "condition": 2,
+        "replicate": 15,
+        "index": 47,
+        "seed": 66104215,
+        "role": "graph"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/warmup-b4-c2-j15-graph.jsonl",
+      "receipts": 32,
+      "first_update": 1505,
+      "last_update": 1536,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/warmup-b4-c2-j15-graph-after-fit.pkl.gz",
+      "after_fit_bytes": 186329,
+      "after_fit_sha256": "fd0b99a0a6880fb53174150248e25396ce698c39ef356838db6ceb26bdae3bd0"
+    },
+    {
+      "phase_role": "warmup:self_only",
+      "active": {
+        "phase": "warmup",
+        "block": 4,
+        "condition": 2,
+        "replicate": 15,
+        "index": 47,
+        "seed": 66104215,
+        "role": "self_only"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/warmup-b4-c2-j15-self_only.jsonl",
+      "receipts": 32,
+      "first_update": 1505,
+      "last_update": 1536,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/warmup-b4-c2-j15-self_only-after-fit.pkl.gz",
+      "after_fit_bytes": 186446,
+      "after_fit_sha256": "b0bd10973aa74319a7dd48257675ef48abfbb46f199c15d46e972895ef1becdc"
+    },
+    {
+      "phase_role": "reference:graph_td",
+      "active": {
+        "phase": "reference",
+        "block": 4,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66124207,
+        "role": "graph_td"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b4-c2-j7-graph_td.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b4-c2-j7-graph_td-after-fit.pkl.gz",
+      "after_fit_bytes": 223453,
+      "after_fit_sha256": "82515cef11676f9d425419d3d4bbbec2201be762679642d6a1f15e0a3cbaef12"
+    },
+    {
+      "phase_role": "reference:self_only_td",
+      "active": {
+        "phase": "reference",
+        "block": 4,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66124207,
+        "role": "self_only_td"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b4-c2-j7-self_only_td.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b4-c2-j7-self_only_td-after-fit.pkl.gz",
+      "after_fit_bytes": 223124,
+      "after_fit_sha256": "c34b82d647d13c3045fb9102acd91c6fbd47a04aadc2dc963e8d127792f995ff"
+    },
+    {
+      "phase_role": "reference:graph_mc",
+      "active": {
+        "phase": "reference",
+        "block": 4,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66124207,
+        "role": "graph_mc"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b4-c2-j7-graph_mc.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b4-c2-j7-graph_mc-after-fit.pkl.gz",
+      "after_fit_bytes": 223783,
+      "after_fit_sha256": "9172625c1c8044663a173a4a8031faa176af1b0c586ae52d175493c3bc88183e"
+    }
+  ],
+  "last_progress": {
+    "event": "epoch_boundary",
+    "active": {
+      "phase": "evaluation",
+      "block": 0,
+      "condition": 1,
+      "replicate": 2,
+      "index": 7,
+      "seed": 66140102,
+      "role": "graph_td"
+    },
+    "epoch": 31,
+    "counts": {
+      "trajectories": 413,
+      "native_steps": 26400,
+      "native_constructions": 413,
+      "construction_triggered_resets": 413,
+      "total_native_operations": 27226,
+      "control_steps": 19808,
+      "tail_steps": 6592,
+      "value_optimizer_steps": 26880,
+      "total_optimizer_steps": 26880,
+      "optimizer_example_presentations": 1720320,
+      "neural_forward_module_calls": 33628,
+      "planner_total_decisions": 19808,
+      "planner_candidate_rollouts": 950784,
+      "planner_total_model_epochs": 7735296,
+      "estimator_receipt_updates": 26400,
+      "estimator_hypothesis_transitions": 2640000,
+      "native_branch_clones": 240,
+      "native_branch_steps": 9720,
+      "native_branch_control_steps": 5880,
+      "native_branch_settlement_steps": 3840,
+      "native_branch_planning_decisions": 4100,
+      "native_branch_candidate_rollouts": 196800,
+      "native_branch_model_epochs": 1574400,
+      "native_branch_filter_transitions": 972000,
+      "warm_seals": 10,
+      "final_seals": 15
+    }
+  },
+  "counts": {
+    "trajectories": 413,
+    "native_constructions": 413,
+    "total_native_operations": 27232,
+    "construction_triggered_resets": 413,
+    "planner_candidate_rollouts": 951120,
+    "planner_total_decisions": 19815,
+    "planner_total_model_epochs": 7737984,
+    "control_steps": 19814,
+    "native_steps": 26406,
+    "estimator_receipt_updates": 26406,
+    "estimator_hypothesis_transitions": 2640600,
+    "tail_steps": 6592,
+    "neural_forward_module_calls": 33634,
+    "optimizer_example_presentations": 1720320,
+    "total_optimizer_steps": 26880,
+    "value_optimizer_steps": 26880,
+    "warm_seals": 10,
+    "native_branch_clones": 240,
+    "native_branch_control_steps": 5880,
+    "native_branch_steps": 9720,
+    "native_branch_filter_transitions": 972000,
+    "native_branch_candidate_rollouts": 196800,
+    "native_branch_planning_decisions": 4100,
+    "native_branch_model_epochs": 1574400,
+    "native_branch_settlement_steps": 3840,
+    "final_seals": 15
+  },
+  "phase_counts": {
+    "warmup_reference": {
+      "trajectories": 240,
+      "native_constructions": 240,
+      "total_native_operations": 15840,
+      "construction_triggered_resets": 240,
+      "planner_candidate_rollouts": 552960,
+      "planner_total_decisions": 11520,
+      "planner_total_model_epochs": 4423680,
+      "control_steps": 11520,
+      "native_steps": 15360,
+      "estimator_receipt_updates": 15360,
+      "estimator_hypothesis_transitions": 1536000,
+      "tail_steps": 3840
+    },
+    "value_fitting": {
+      "neural_forward_module_calls": 27720,
+      "optimizer_example_presentations": 1720320,
+      "total_optimizer_steps": 26880,
+      "value_optimizer_steps": 26880,
+      "warm_seals": 10,
+      "final_seals": 15
+    },
+    "reference_and_tails": {
+      "trajectories": 120,
+      "native_constructions": 120,
+      "total_native_operations": 7920,
+      "construction_triggered_resets": 120,
+      "planner_candidate_rollouts": 276480,
+      "planner_total_decisions": 5760,
+      "planner_total_model_epochs": 2211840,
+      "native_branch_clones": 240,
+      "native_branch_control_steps": 5880,
+      "native_branch_steps": 9720,
+      "native_branch_filter_transitions": 972000,
+      "native_branch_candidate_rollouts": 196800,
+      "native_branch_planning_decisions": 4100,
+      "native_branch_model_epochs": 1574400,
+      "neural_forward_module_calls": 4100,
+      "native_branch_settlement_steps": 3840,
+      "control_steps": 5760,
+      "native_steps": 7680,
+      "estimator_receipt_updates": 7680,
+      "estimator_hypothesis_transitions": 768000,
+      "tail_steps": 1920
+    },
+    "frozen_evaluation": {
+      "trajectories": 53,
+      "native_constructions": 53,
+      "total_native_operations": 3472,
+      "construction_triggered_resets": 53,
+      "planner_candidate_rollouts": 121680,
+      "planner_total_decisions": 2535,
+      "planner_total_model_epochs": 1102464,
+      "control_steps": 2534,
+      "native_steps": 3366,
+      "estimator_receipt_updates": 3366,
+      "estimator_hypothesis_transitions": 336600,
+      "tail_steps": 832,
+      "neural_forward_module_calls": 1814
+    }
+  },
+  "pending_query_debits": {
+    "planner_total_model_epochs": 384,
+    "estimator_hypothesis_transitions": 0,
+    "native_branch_filter_transitions": 0,
+    "native_branch_model_epochs": 0
+  },
+  "observed_budget_violations": [],
+  "elapsed_seconds": 18232.14545900002,
+  "phase_elapsed_seconds": {
+    "admission_lock_binding": 5.470942999934778,
+    "analysis_archive": 0,
+    "failure_flush_shutdown_reserve": 0,
+    "frozen_evaluation": 2068.535526999971,
+    "global": 0,
+    "reference_and_tails": 7554.779712999705,
+    "value_fitting": 220.5527590001002,
+    "warmup_reference": 8382.80651700031
+  },
+  "current_phase": "frozen_evaluation",
+  "current_owner": "frozen_evaluation",
+  "current_job": {
+    "cap": 180,
+    "clock": 1300206.110005,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "evaluation-b0-c1-j2-graph_td",
+    "kind": "evaluation_h8_world",
+    "previous": "e77e5e8ba958b1f984a87861c61798f41c67925a2f0a122c07ea528f554723fe",
+    "sequence": 270716,
+    "sha256": "f58314544cc92188c6793f2bd9a5f07b93981fef06ebc4f50f989d749fc95400"
+  },
+  "current_job_elapsed_seconds": 28.631868000142276,
+  "timing_sample": {
+    "warmup_world": {
+      "completed_cycles": 240,
+      "mean_seconds": 34.84875792916088,
+      "last_five_mean_seconds": 35.41360280001536
+    },
+    "reference_world_with_tails": {
+      "completed_cycles": 120,
+      "mean_seconds": 62.85902179166442,
+      "last_five_mean_seconds": 53.43970160004683
+    },
+    "evaluation_h8_world": {
+      "completed_cycles": 45,
+      "mean_seconds": 35.032948511109375,
+      "last_five_mean_seconds": 35.53675379999913
+    },
+    "evaluation_h16_world": {
+      "completed_cycles": 7,
+      "mean_seconds": 66.17850242857821,
+      "last_five_mean_seconds": 66.50354620004073
+    }
+  },
+  "remaining_warmup_hours": 0,
+  "remaining_reference_hours": 0,
+  "full_run_eta": null,
+  "eta_caveat": "Early measured H8/H16 evaluation samples only, especially H16 small n; role/block/condition timing varies. Projection excludes analysis/archive/IO and ongoing partial-world work; no guaranteed full-run ETA.",
+  "log_bytes": {
+    "results/capacity_confirmation_20261006/launcher/stderr.log": 0,
+    "results/capacity_confirmation_20261006/launcher/stdout.log": 0,
+    "reports/capacity_confirmation_20261006_detached_launcher.log": 0
+  },
+  "log_tail": {},
+  "progress_bytes": 5915057,
+  "budget_bytes": 91071908,
+  "artifact_file_count": 6347,
+  "artifact_bytes": 792038608,
+  "after_fit_state_files": 840,
+  "monitor_scientific_calls": 0,
+  "model_deserialization_by_monitor": false,
+  "test_outcomes_inspected": false,
+  "first_real_training_evidence_reused": "reports/capacity_confirmation_launch_training_snapshot_20261006.json",
+  "prior_tests_and_source_input_locks_reused": true,
+  "progress_since_previous": {
+    "warmup_completed": 0,
+    "reference_completed": 0,
+    "new_warm_seals": 0,
+    "new_final_seals": 0,
+    "value_optimizer_steps": 0,
+    "evaluation_completed": 44
+  },
+  "seal_barrier_evidence": {
+    "barriers": [
+      [
+        4705,
+        {
+          "event": "all_models_sealed",
+          "active": {
+            "phase": "reference",
+            "block": 4,
+            "condition": 2,
+            "replicate": 7,
+            "index": 23,
+            "seed": 66124207,
+            "role": "graph_mc"
+          },
+          "epoch": 64,
+          "counts": {
+            "trajectories": 360,
+            "native_steps": 23040,
+            "native_constructions": 360,
+            "construction_triggered_resets": 360,
+            "total_native_operations": 23760,
+            "control_steps": 17280,
+            "tail_steps": 5760,
+            "value_optimizer_steps": 26880,
+            "total_optimizer_steps": 26880,
+            "optimizer_example_presentations": 1720320,
+            "neural_forward_module_calls": 31820,
+            "planner_total_decisions": 17280,
+            "planner_candidate_rollouts": 829440,
+            "planner_total_model_epochs": 6635520,
+            "estimator_receipt_updates": 23040,
+            "estimator_hypothesis_transitions": 2304000,
+            "native_branch_clones": 240,
+            "native_branch_steps": 9720,
+            "native_branch_control_steps": 5880,
+            "native_branch_settlement_steps": 3840,
+            "native_branch_planning_decisions": 4100,
+            "native_branch_candidate_rollouts": 196800,
+            "native_branch_model_epochs": 1574400,
+            "native_branch_filter_transitions": 972000,
+            "warm_seals": 10,
+            "final_seals": 15
+          }
+        }
+      ]
+    ],
+    "first_evaluation_progress_index": 4706,
+    "pre_evaluation_event_counts": {
+      "trajectory_started": 360,
+      "epoch_boundary": 2880,
+      "trajectory_completed": 360,
+      "value_fit_completed": 840,
+      "warm_sealed": 10,
+      "native_branch_completed": 240,
+      "final_sealed": 15,
+      "all_models_sealed": 1
+    },
+    "last_seal_progress_index": 4704,
+    "fits_after_evaluation_start": 0
+  },
+  "completed_evaluation_by_role": {
+    "plain_h8": 8,
+    "fresh_frozen": 8,
+    "existing_frozen": 8,
+    "graph_td": 7,
+    "self_only_td": 7,
+    "graph_mc": 7,
+    "plain_h16": 7
+  },
+  "evaluation_updates": 0,
+  "remaining_evaluation_hours": 4.039677613809472,
+  "process_check": {
+    "verified": true,
+    "supervisor": {
+      "pid": 65458,
+      "ppid": 1,
+      "status": "Ss",
+      "elapsed": "05:03:56",
+      "cpu_percent": 0,
+      "rss_kib": 46656,
+      "command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_confirmation --launch"
+    },
+    "child": {
+      "pid": 65470,
+      "ppid": 65458,
+      "status": "Rs",
+      "elapsed": "05:03:53",
+      "cpu_percent": 98.9,
+      "rss_kib": 211280,
+      "command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_confirmation --child"
+    }
+  },
+  "scientific_source_and_authority_unchanged_from_execution": true,
+  "execution_diff_checked": "src tests experiments/configs experiments/scripts and current protocol/approval-intent/frozen/authorization",
+  "legacy_bindings_present_before_evaluation": 5,
+  "legacy_binding_evidence_reused_from": "reports/capacity_confirmation_monitor_20261006T1406Z.json",
+  "phase_changed_since_previous": false,
+  "performance_conclusion": null
+}

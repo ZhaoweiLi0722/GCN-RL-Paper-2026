@@ -1,5 +1,10 @@
 # Conditional Value-MPC Integration Readout
 
+Update2026-10-06: direct reply `批准` subsequently approved the complete package.
+Committed authority and current locks now precede one actual launch; see
+approval-intent.json and launch-readout.md for process and first-training
+evidence. The preparation checkpoint below is historical, not a pending ask.
+
 Checkpoint: 2026-10-06T09:51:39Z. Entry HEAD
 9496f82c7da745378d4b2fb91f1b4def50d03f52 on
 codex/september-research-integration. Zhaowei requested `全面的推进`.

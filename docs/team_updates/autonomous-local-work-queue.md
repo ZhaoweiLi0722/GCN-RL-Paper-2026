@@ -1,6 +1,34 @@
 # Autonomous local research queue
 
-## Live checkpoint: fresh conditional package approved; binding execution locks
+## Live checkpoint: fresh conditional run active; first real updates verified
+
+2026-10-06T10:06:30Z snapshot. Exact full-package approval `批准`.
+Science60828ea,frozen implementationc6ddfe5,execution6d429bb;
+packet6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b.
+Rootresults/capacity_confirmation_20261006. One live supervisor65458/1 and
+child65470/65458 match claims/full commands with new8step,world andfit boundaries.
+616source/11input locks,2054seed files/2541allocations,zero collisions.
+
+Warmup7/240 complete; graph/self_only each224/7680warm updates,total448/26880.
+First cohorts each32sequential finite real update receipts and hashed after-fit
+states103719/119444bytes. Evidence:
+reports/capacity_confirmation_launch_training_snapshot_20261006.json.
+Reference0/120,branches0/240,three tail methods0/120fits and0/3840updates;
+actor0,warm seals0/10,final0/15,legacy bindings1/5,evaluation0/420.
+Currentb0/index7/c1/plainH8 warmup atstart; last progress448main+0branch native,
+462forwards,129024predictor epochs,44800filter transitions. Eight started worlds
+are not eight complete worlds. Elapsed239.611743s; logs0bytes,no failure markers.
+Training proven, performance not yet known. No test outcome inspection.
+
+Same gcn-rl ACTIVE at30minute cadence, app MCP update/config readback confirmed.
+Reuse26tests/fullcompileall and both closed finite agents, no new gate. Source,
+reward,old results and24h/12GiB phase/owner caps unchanged; no launch/retry again.
+Follow launch-readout.md and dropbox-handoff.md. All models seal before420tests;
+finish raw21pairs/3conditions/5blocks readout,truthful manuscript and additive
+Dropbox terminal handoff,thenPAUSED same monitor. Current run export pending;
+no current cloud-sync/collaborator-access claim. No other task or remote action.
+
+## Previous checkpoint: fresh conditional package approved; binding execution locks
 
 2026-10-06T10:00:24Z. Exact direct user reply `批准` approves the complete
 24h/12GiB package following the numerical question and60828ea implementation

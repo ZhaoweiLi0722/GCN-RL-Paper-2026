@@ -3876,3 +3876,28 @@ Prepare a matched interface and complete finite numerical scope before requestin
 one package approval. No scientific execution, changed reward/physics, old holdout,
 Stage E reopening, automatic follow-on, remote action or Howard approval follows.
 This entry records user-directed preparation, not a new numerical permit.
+
+#### Fixed-benchmark family selection approved as one complete package
+
+2026-10-06T20:29Z. Zhaowei explicitly requested rapid end-to-end advancement,
+then answered the full numerical scope question exactly `批准完整单次包`.
+Bind this approval to specs/2026-10-06-family-selection/protocol.md and
+experiments/configs/capacity_family_selection_20261006.json:five families,
+two learning rates,three development blocks,then two distinct finalists with
+five fresh blocks and graph/self-only/initial controls. H8 remains primary,H16
+secondary; include fixed prior conditional graph-TD references. Task/reward/
+three conditions unchanged; no cross-task leaderboard or family preselection.
+
+Maximum6744main trajectories,431616native steps,445104native operations,0clones,
+460800optimizer dispatches,2013312forwards,50429952prediction steps,
+43161600filter transitions,48h/32GiB with fixed phase and per-job limits.
+One attempt,no automatic repair/retry/resume or scientific follow-on. Approval
+covers preparation through training/selection/retraining/evaluation/readout and
+authorized preservation; no redundant phase approvals. Existing Dropbox request
+continues additively at this run's terminal boundary. No push/merge,sharing change,
+external messages,old holdout,StageE or Howard approval inference.
+
+Reuse23necessary tests/fullcompileall and completed finite delegates. Commit
+literal authority and immutable source/config/protocol/input/runtime/seed locks
+before launching. A failed screen, tradeoff or inconclusive winner must remain
+visible. Best means within this task/configuration/budget,not universal optimality.

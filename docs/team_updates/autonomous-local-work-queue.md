@@ -1,6 +1,28 @@
 # Autonomous local research queue
 
-## Live checkpoint: results-led algorithm selection requested; no new numerical authority
+## Live checkpoint: complete five-family package approved; freezing for single launch
+
+2026-10-06T20:29Z. Zhaowei replied exactly `批准完整单次包` to the complete
+five-family comparison, fixed H8/H16, development selection and fresh finalist
+retraining/attribution controls. Protocol:specs/2026-10-06-family-selection/protocol.md.
+Maximum6744main trajectories/431616native steps/445104operations,0clones;
+460800optimizer dispatches,2013312forwards,50429952prediction steps,
+43161600filter transitions;48h includingIO/archive,32GiB,one attempt.
+Unused allocations cannot fund extra trials/worlds/updates; failures are preserved
+without automatic repair/retry. No predefined winning family or benefit claim.
+
+The shared support-hour integration and single two-stage runner are implemented.
+23necessary tests and fullcompileall passed; no study model/environment/training
+execution yet. Both finite delegates completed/closed. Next:commit source and
+literal approval, freeze source/input/runtime/seed packet, commit authority and
+launch once immediately. No repeated launch/phase permission question.
+After launch update the same paused gcn-rl monitor, not a new automation. Read
+current claims/processes/progress before calling the experiment running.
+Complete raw readout, truthful manuscript changes and existing additive Dropbox
+handoff at terminal closure, then pause the same visible monitor. No push/merge,
+old holdout, StageE, altered reward/scenario or automatic follow-on.
+
+## Previous checkpoint: results-led algorithm selection requested; no new numerical authority
 
 2026-10-06T19:59Z. Zhaowei requested an outcome-driven search beyond TD3, fixed
 comparators and no recommendation based on historical implementation effort or

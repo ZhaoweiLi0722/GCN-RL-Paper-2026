@@ -1,0 +1,69 @@
+{
+  "schema": "capacity-family-selection-v1",
+  "scientific_execution_authorized": false,
+  "result_root": "results/capacity_family_selection_20261006",
+  "inherit": {
+    "proposal": "specs/2026-10-03-dynamic-capacity-adaptation/pilot-proposal.json",
+    "sha256": "f46f6d5ae417a67c5974516b1c9e2b5b05ba9e2de56681aaedbfe276e9f355a9"
+  },
+  "methods": ["ddpg", "td3", "sac", "ppo", "value_td"],
+  "learning_rates": [0.0001, 0.0003],
+  "development_blocks": 3,
+  "confirmation_blocks": 5,
+  "max_finalists": 2,
+  "train_worlds": 96,
+  "eval_worlds": 24,
+  "updates_per_world": 32,
+  "batch_size": 64,
+  "value": {
+    "width": 32, "batch_size": 64, "updates_per_world": 32,
+    "gradient_norm_cap": 5, "cost_scale": 1000000, "td_horizon": 8, "gamma": 1
+  },
+  "streams": {
+    "namespace": "capacity-family-selection-20261006-v1",
+    "world_base": 67100000,
+    "model_base": 571280610,
+    "sampler_base": 571380610,
+    "bootstrap_seed": 67190001,
+    "purposes": ["demand", "patient_identity_attributes", "response_change", "exploration", "replay"]
+  },
+  "legacy": {
+    "root": "results/capacity_confirmation_20261006/payload/models",
+    "names": ["block0-graph_td-final.pt", "block1-graph_td-final.pt", "block2-graph_td-final.pt", "block3-graph_td-final.pt", "block4-graph_td-final.pt"],
+    "sha256": [
+      "75c0b89e08c1064aaa6e4110787e232b2f66bd612787ea35fb6340abb809bc81",
+      "21958fa9dce9d79b3810f8b858e23a3b5929ccf7f171bd9884b98c52ad5a222d",
+      "0de03da5c0e03b5ade56694b3f19bfce698014aa6c4b513598ced1994f753ac0",
+      "13265b5989c0cec1a60fdb7879dabad5ee2807433e951753b2b5f8d4c552f687",
+      "4b5573ffd7a236b349c25c45d2065f1db3814c1d5b74736ecaa4301f2c9c1cbb"
+    ]
+  },
+  "readout": {
+    "primary_reference": "plain_h8", "compute_reference": "plain_h16",
+    "bootstrap_resamples": 2000,
+    "minimum_cost_saving_fraction": 0.005,
+    "allowed_mean_extra_patient_loss": 0,
+    "condition_weights": [0.3333333333333333, 0.3333333333333333, 0.3333333333333333],
+    "multiplicity_adjusted": false,
+    "formal_confirmatory_claim": false
+  },
+  "budget": {
+    "seconds": {
+      "admission_lock_binding": 600,
+      "development_training": 43200,
+      "development_evaluation": 21600,
+      "confirmation_training": 57600,
+      "confirmation_evaluation": 36000,
+      "analysis_archive_verification": 7200,
+      "failure_flush_shutdown_reserve": 6600,
+      "global": 172800
+    },
+    "owner_seconds": {"h8_world": 180, "h16_world": 300, "actor_world": 120, "fit": 60, "seal": 60},
+    "rss_bytes": 4294967296,
+    "raw_bytes": 17179869184,
+    "archive_bytes": 17179869184,
+    "file_cap": 100000,
+    "workers": 1, "threads": 4, "attempts": 1,
+    "automatic_retry": false, "automatic_resume": false
+  }
+}

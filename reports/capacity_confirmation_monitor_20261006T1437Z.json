@@ -1,0 +1,484 @@
+{
+  "observed_at_utc": "2026-10-06T14:37:25.717628+00:00",
+  "entry_head": "8f4d155e99579ed9d138b46d24434e680e4e2b9e",
+  "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+  "claim": {
+    "authorization_sha256": "73d550bdb2a0dfa37b331836fcc1659d24055aee4b46fac256f78f153522a5e2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "6d429bbecef79be2b256904a49ad4f194499f89a",
+    "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+    "pid": 65458,
+    "ppid": 1,
+    "started": 1282002.596414
+  },
+  "child_claim": {
+    "packet_sha256": "6fcc8c6ec5725c3880f7c5791cd84eab8b04277d65b64654c832002c3b62c96b",
+    "pid": 65470,
+    "ppid": 65458
+  },
+  "failures": {},
+  "completed_trajectories": {
+    "warmup": 240,
+    "reference": 120,
+    "evaluation": 8
+  },
+  "fits_by_phase_role": {
+    "warmup:graph": 240,
+    "warmup:self_only": 240,
+    "reference:graph_td": 120,
+    "reference:self_only_td": 120,
+    "reference:graph_mc": 120
+  },
+  "updates_by_phase_role": {
+    "warmup:graph": 7680,
+    "warmup:self_only": 7680,
+    "reference:graph_td": 3840,
+    "reference:self_only_td": 3840,
+    "reference:graph_mc": 3840
+  },
+  "branches_completed": 240,
+  "actor_updates": 0,
+  "warm_seals": 10,
+  "final_seals": 15,
+  "legacy_bindings": 5,
+  "previous_model_evidence_reused_from": "reports/capacity_confirmation_monitor_20261006T1406Z.json",
+  "new_model_evidence": [
+    {
+      "path": "results/capacity_confirmation_20261006/payload/models/block4-graph_mc-final.pt",
+      "role": "graph_mc",
+      "block": 4,
+      "updates": 768,
+      "bytes": 64384,
+      "sha256": "b7668eb1879ebd1e037002231fee77bff019002532eb3581e1abe901bc5a645b",
+      "matches_seal": true,
+      "own_ancestor_sha256": "91b25edb578eab3a45f5b2e6e9b0d06966fb5a5870dd47c1965bc997d911a6cd",
+      "continuation_sha256": "91b25edb578eab3a45f5b2e6e9b0d06966fb5a5870dd47c1965bc997d911a6cd"
+    },
+    {
+      "path": "results/capacity_confirmation_20261006/payload/models/block4-graph_td-final.pt",
+      "role": "graph_td",
+      "block": 4,
+      "updates": 768,
+      "bytes": 64384,
+      "sha256": "4b5573ffd7a236b349c25c45d2065f1db3814c1d5b74736ecaa4301f2c9c1cbb",
+      "matches_seal": true,
+      "own_ancestor_sha256": "91b25edb578eab3a45f5b2e6e9b0d06966fb5a5870dd47c1965bc997d911a6cd",
+      "continuation_sha256": "91b25edb578eab3a45f5b2e6e9b0d06966fb5a5870dd47c1965bc997d911a6cd"
+    },
+    {
+      "path": "results/capacity_confirmation_20261006/payload/models/block4-self_only_td-final.pt",
+      "role": "self_only_td",
+      "block": 4,
+      "updates": 768,
+      "bytes": 64512,
+      "sha256": "21c888ff4b38bd8fa3d83e470c792d77f52d7e65fd504395684db186b3a891b0",
+      "matches_seal": true,
+      "own_ancestor_sha256": "2f5bf3431921c6379b212772c1f17abd26bd80c2799017fc5e449e82e5476939",
+      "continuation_sha256": "91b25edb578eab3a45f5b2e6e9b0d06966fb5a5870dd47c1965bc997d911a6cd"
+    }
+  ],
+  "latest_fit_evidence": [
+    {
+      "phase_role": "warmup:graph",
+      "active": {
+        "phase": "warmup",
+        "block": 4,
+        "condition": 2,
+        "replicate": 15,
+        "index": 47,
+        "seed": 66104215,
+        "role": "graph"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/warmup-b4-c2-j15-graph.jsonl",
+      "receipts": 32,
+      "first_update": 1505,
+      "last_update": 1536,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/warmup-b4-c2-j15-graph-after-fit.pkl.gz",
+      "after_fit_bytes": 186329,
+      "after_fit_sha256": "fd0b99a0a6880fb53174150248e25396ce698c39ef356838db6ceb26bdae3bd0"
+    },
+    {
+      "phase_role": "warmup:self_only",
+      "active": {
+        "phase": "warmup",
+        "block": 4,
+        "condition": 2,
+        "replicate": 15,
+        "index": 47,
+        "seed": 66104215,
+        "role": "self_only"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/warmup-b4-c2-j15-self_only.jsonl",
+      "receipts": 32,
+      "first_update": 1505,
+      "last_update": 1536,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/warmup-b4-c2-j15-self_only-after-fit.pkl.gz",
+      "after_fit_bytes": 186446,
+      "after_fit_sha256": "b0bd10973aa74319a7dd48257675ef48abfbb46f199c15d46e972895ef1becdc"
+    },
+    {
+      "phase_role": "reference:graph_td",
+      "active": {
+        "phase": "reference",
+        "block": 4,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66124207,
+        "role": "graph_td"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b4-c2-j7-graph_td.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b4-c2-j7-graph_td-after-fit.pkl.gz",
+      "after_fit_bytes": 223453,
+      "after_fit_sha256": "82515cef11676f9d425419d3d4bbbec2201be762679642d6a1f15e0a3cbaef12"
+    },
+    {
+      "phase_role": "reference:self_only_td",
+      "active": {
+        "phase": "reference",
+        "block": 4,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66124207,
+        "role": "self_only_td"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b4-c2-j7-self_only_td.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b4-c2-j7-self_only_td-after-fit.pkl.gz",
+      "after_fit_bytes": 223124,
+      "after_fit_sha256": "c34b82d647d13c3045fb9102acd91c6fbd47a04aadc2dc963e8d127792f995ff"
+    },
+    {
+      "phase_role": "reference:graph_mc",
+      "active": {
+        "phase": "reference",
+        "block": 4,
+        "condition": 2,
+        "replicate": 7,
+        "index": 23,
+        "seed": 66124207,
+        "role": "graph_mc"
+      },
+      "path": "results/capacity_confirmation_20261006/payload/updates/reference-b4-c2-j7-graph_mc.jsonl",
+      "receipts": 32,
+      "first_update": 737,
+      "last_update": 768,
+      "sequential": true,
+      "finite_loss_gradient": true,
+      "after_fit_path": "results/capacity_confirmation_20261006/payload/states/reference-b4-c2-j7-graph_mc-after-fit.pkl.gz",
+      "after_fit_bytes": 223783,
+      "after_fit_sha256": "9172625c1c8044663a173a4a8031faa176af1b0c586ae52d175493c3bc88183e"
+    }
+  ],
+  "last_progress": {
+    "event": "epoch_boundary",
+    "active": {
+      "phase": "evaluation",
+      "block": 0,
+      "condition": 1,
+      "replicate": 0,
+      "index": 1,
+      "seed": 66140100,
+      "role": "fresh_frozen"
+    },
+    "epoch": 23,
+    "counts": {
+      "trajectories": 369,
+      "native_steps": 23576,
+      "native_constructions": 369,
+      "construction_triggered_resets": 369,
+      "total_native_operations": 24314,
+      "control_steps": 17688,
+      "tail_steps": 5888,
+      "value_optimizer_steps": 26880,
+      "total_optimizer_steps": 26880,
+      "optimizer_example_presentations": 1720320,
+      "neural_forward_module_calls": 32084,
+      "planner_total_decisions": 17688,
+      "planner_candidate_rollouts": 849024,
+      "planner_total_model_epochs": 6810624,
+      "estimator_receipt_updates": 23576,
+      "estimator_hypothesis_transitions": 2357600,
+      "native_branch_clones": 240,
+      "native_branch_steps": 9720,
+      "native_branch_control_steps": 5880,
+      "native_branch_settlement_steps": 3840,
+      "native_branch_planning_decisions": 4100,
+      "native_branch_candidate_rollouts": 196800,
+      "native_branch_model_epochs": 1574400,
+      "native_branch_filter_transitions": 972000,
+      "warm_seals": 10,
+      "final_seals": 15
+    }
+  },
+  "counts": {
+    "trajectories": 369,
+    "native_constructions": 369,
+    "total_native_operations": 24321,
+    "construction_triggered_resets": 369,
+    "planner_candidate_rollouts": 849408,
+    "planner_total_decisions": 17696,
+    "planner_total_model_epochs": 6813696,
+    "control_steps": 17695,
+    "native_steps": 23583,
+    "estimator_receipt_updates": 23583,
+    "estimator_hypothesis_transitions": 2358300,
+    "tail_steps": 5888,
+    "neural_forward_module_calls": 32091,
+    "optimizer_example_presentations": 1720320,
+    "total_optimizer_steps": 26880,
+    "value_optimizer_steps": 26880,
+    "warm_seals": 10,
+    "native_branch_clones": 240,
+    "native_branch_control_steps": 5880,
+    "native_branch_steps": 9720,
+    "native_branch_filter_transitions": 972000,
+    "native_branch_candidate_rollouts": 196800,
+    "native_branch_planning_decisions": 4100,
+    "native_branch_model_epochs": 1574400,
+    "native_branch_settlement_steps": 3840,
+    "final_seals": 15
+  },
+  "phase_counts": {
+    "warmup_reference": {
+      "trajectories": 240,
+      "native_constructions": 240,
+      "total_native_operations": 15840,
+      "construction_triggered_resets": 240,
+      "planner_candidate_rollouts": 552960,
+      "planner_total_decisions": 11520,
+      "planner_total_model_epochs": 4423680,
+      "control_steps": 11520,
+      "native_steps": 15360,
+      "estimator_receipt_updates": 15360,
+      "estimator_hypothesis_transitions": 1536000,
+      "tail_steps": 3840
+    },
+    "value_fitting": {
+      "neural_forward_module_calls": 27720,
+      "optimizer_example_presentations": 1720320,
+      "total_optimizer_steps": 26880,
+      "value_optimizer_steps": 26880,
+      "warm_seals": 10,
+      "final_seals": 15
+    },
+    "reference_and_tails": {
+      "trajectories": 120,
+      "native_constructions": 120,
+      "total_native_operations": 7920,
+      "construction_triggered_resets": 120,
+      "planner_candidate_rollouts": 276480,
+      "planner_total_decisions": 5760,
+      "planner_total_model_epochs": 2211840,
+      "native_branch_clones": 240,
+      "native_branch_control_steps": 5880,
+      "native_branch_steps": 9720,
+      "native_branch_filter_transitions": 972000,
+      "native_branch_candidate_rollouts": 196800,
+      "native_branch_planning_decisions": 4100,
+      "native_branch_model_epochs": 1574400,
+      "neural_forward_module_calls": 4100,
+      "native_branch_settlement_steps": 3840,
+      "control_steps": 5760,
+      "native_steps": 7680,
+      "estimator_receipt_updates": 7680,
+      "estimator_hypothesis_transitions": 768000,
+      "tail_steps": 1920
+    },
+    "frozen_evaluation": {
+      "trajectories": 9,
+      "native_constructions": 9,
+      "total_native_operations": 561,
+      "construction_triggered_resets": 9,
+      "planner_candidate_rollouts": 19968,
+      "planner_total_decisions": 416,
+      "planner_total_model_epochs": 178176,
+      "control_steps": 415,
+      "native_steps": 543,
+      "estimator_receipt_updates": 543,
+      "estimator_hypothesis_transitions": 54300,
+      "tail_steps": 128,
+      "neural_forward_module_calls": 271
+    }
+  },
+  "pending_query_debits": {
+    "planner_total_model_epochs": 384,
+    "estimator_hypothesis_transitions": 0,
+    "native_branch_filter_transitions": 0,
+    "native_branch_model_epochs": 0
+  },
+  "observed_budget_violations": [],
+  "elapsed_seconds": 16494.11994799995,
+  "phase_elapsed_seconds": {
+    "admission_lock_binding": 5.470942999934778,
+    "analysis_archive": 0,
+    "failure_flush_shutdown_reserve": 0,
+    "frozen_evaluation": 330.5100159998983,
+    "global": 0,
+    "reference_and_tails": 7554.779712999705,
+    "value_fitting": 220.5527590001002,
+    "warmup_reference": 8382.80651700031
+  },
+  "current_phase": "frozen_evaluation",
+  "current_owner": "frozen_evaluation",
+  "current_job": {
+    "cap": 180,
+    "clock": 1298474.70222,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "evaluation-b0-c1-j0-fresh_frozen",
+    "kind": "evaluation_h8_world",
+    "previous": "2931752a180446d928847c03bef08579102e14874b4a1ff6ac55ff6524dd6384",
+    "sequence": 251404,
+    "sha256": "9c7f5229c91812e878e4e8ab8309b14093400f4fc812a510ad6eb2566c443c3a"
+  },
+  "current_job_elapsed_seconds": 22.014141999883577,
+  "timing_sample": {
+    "warmup_world": {
+      "completed_cycles": 240,
+      "mean_seconds": 34.84875792916088,
+      "last_five_mean_seconds": 35.41360280001536
+    },
+    "reference_world_with_tails": {
+      "completed_cycles": 120,
+      "mean_seconds": 62.85902179166442,
+      "last_five_mean_seconds": 53.43970160004683
+    },
+    "evaluation_h8_world": {
+      "completed_cycles": 7,
+      "mean_seconds": 34.633344571472016,
+      "last_five_mean_seconds": 34.65889340005815
+    },
+    "evaluation_h16_world": {
+      "completed_cycles": 1,
+      "mean_seconds": 65.89100299985148,
+      "last_five_mean_seconds": 65.89100299985148
+    }
+  },
+  "remaining_warmup_hours": 0,
+  "remaining_reference_hours": 0,
+  "full_run_eta": null,
+  "eta_caveat": "Early measured H8/H16 evaluation samples only, especially H16 small n; role/block/condition timing varies. Projection excludes analysis/archive/IO and ongoing partial-world work; no guaranteed full-run ETA.",
+  "log_bytes": {
+    "results/capacity_confirmation_20261006/launcher/stderr.log": 0,
+    "results/capacity_confirmation_20261006/launcher/stdout.log": 0,
+    "reports/capacity_confirmation_20261006_detached_launcher.log": 0
+  },
+  "log_tail": {},
+  "progress_bytes": 5403324,
+  "budget_bytes": 84666647,
+  "artifact_file_count": 6209,
+  "artifact_bytes": 751842846,
+  "after_fit_state_files": 840,
+  "monitor_scientific_calls": 0,
+  "model_deserialization_by_monitor": false,
+  "test_outcomes_inspected": false,
+  "first_real_training_evidence_reused": "reports/capacity_confirmation_launch_training_snapshot_20261006.json",
+  "prior_tests_and_source_input_locks_reused": true,
+  "progress_since_previous": {
+    "warmup_completed": 0,
+    "reference_completed": 24,
+    "new_warm_seals": 0,
+    "new_final_seals": 3,
+    "value_optimizer_steps": 2304,
+    "evaluation_completed": 8
+  },
+  "seal_barrier_evidence": {
+    "barriers": [
+      [
+        4705,
+        {
+          "event": "all_models_sealed",
+          "active": {
+            "phase": "reference",
+            "block": 4,
+            "condition": 2,
+            "replicate": 7,
+            "index": 23,
+            "seed": 66124207,
+            "role": "graph_mc"
+          },
+          "epoch": 64,
+          "counts": {
+            "trajectories": 360,
+            "native_steps": 23040,
+            "native_constructions": 360,
+            "construction_triggered_resets": 360,
+            "total_native_operations": 23760,
+            "control_steps": 17280,
+            "tail_steps": 5760,
+            "value_optimizer_steps": 26880,
+            "total_optimizer_steps": 26880,
+            "optimizer_example_presentations": 1720320,
+            "neural_forward_module_calls": 31820,
+            "planner_total_decisions": 17280,
+            "planner_candidate_rollouts": 829440,
+            "planner_total_model_epochs": 6635520,
+            "estimator_receipt_updates": 23040,
+            "estimator_hypothesis_transitions": 2304000,
+            "native_branch_clones": 240,
+            "native_branch_steps": 9720,
+            "native_branch_control_steps": 5880,
+            "native_branch_settlement_steps": 3840,
+            "native_branch_planning_decisions": 4100,
+            "native_branch_candidate_rollouts": 196800,
+            "native_branch_model_epochs": 1574400,
+            "native_branch_filter_transitions": 972000,
+            "warm_seals": 10,
+            "final_seals": 15
+          }
+        }
+      ]
+    ],
+    "first_evaluation_progress_index": 4706,
+    "pre_evaluation_event_counts": {
+      "trajectory_started": 360,
+      "epoch_boundary": 2880,
+      "trajectory_completed": 360,
+      "value_fit_completed": 840,
+      "warm_sealed": 10,
+      "native_branch_completed": 240,
+      "final_sealed": 15,
+      "all_models_sealed": 1
+    },
+    "last_seal_progress_index": 4704,
+    "fits_after_evaluation_start": 0
+  },
+  "completed_evaluation_by_role": {
+    "plain_h8": 2,
+    "fresh_frozen": 1,
+    "existing_frozen": 1,
+    "graph_td": 1,
+    "self_only_td": 1,
+    "graph_mc": 1,
+    "plain_h16": 1
+  },
+  "evaluation_updates": 0,
+  "remaining_evaluation_hours": 4.475872169644683,
+  "process_check": {
+    "verified": true,
+    "output": "65458     1 Ss   04:35:17   0.0  46640 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_confirmation --launch\n65470 65458 Rs   04:35:14  99.5 210768 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_confirmation --child\n",
+    "supervisor_pid": 65458,
+    "supervisor_ppid": 1,
+    "child_pid": 65470,
+    "child_ppid": 65458
+  },
+  "scientific_source_and_authority_unchanged_from_execution": true,
+  "execution_diff_checked": "src tests experiments/configs experiments/scripts and current protocol/approval-intent/frozen/authorization",
+  "legacy_bindings_present_before_evaluation": 5,
+  "legacy_binding_evidence_reused_from": "reports/capacity_confirmation_monitor_20261006T1406Z.json"
+}

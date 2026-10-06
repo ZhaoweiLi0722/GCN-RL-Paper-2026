@@ -1,6 +1,51 @@
 # Autonomous local research queue
 
-## Live checkpoint: all warm models sealed; final block native-tail training active
+## Live checkpoint: all training and models sealed; frozen evaluation active
+
+2026-10-06T14:37:25Z snapshot. Entry8f4d155 clean on the integration branch.
+Supervisor65458/1 and child65470/65458 match claims/full commands, with new
+reference,fit,branch,final-seal and evaluation boundaries since14:06Z. All3logs
+0bytes; no terminal/failure/overrun/preservation marker. Scientific source and
+locked config/protocol/authority unchanged from execution6d429bb. No extra science.
+
+All training complete: warmup240/240, graph/self_only each7680/7680warm updates;
+reference120/120,branches240/240. Graph_td,self_only_td,graph_mc each120/120fits
+and3840/3840tail updates. Total26880/26880value =15360warm+11520tail,actor0.
+Warm seals10/10,final15/15,legacy5/5. Block4's three final model byte lengths
+andSHA256 match their seals,each768new updates; self-only own ancestry differs
+from the common graph parent. Latest five32update cohorts finite/sequential
+with hashed after-fit states;840after-fit files total. Earlier evidence reused.
+
+All-model barrier is observed at progress index4705, after10warm and15final
+seals and before the first evaluation start at4706. Five legacy bindings were
+already present in the prior pre-evaluation snapshot. Frozen evaluation8/420
+complete,9started;0evaluation value updates and no fit event after test start.
+Training is not performance evidence; no interim cost/patient outcomes inspected.
+Currentevaluation block0/index1/condition1/replicate0/fresh_frozen,epoch23.
+
+More recent ledger23583main+9720branch=33303/59640native;
+24321mainoperations+9720branch=34041,240clones.32091/46220forwards;
+6813696main+1574400parent=8388096predictions;2358300main+972000branch=3330300
+filter transitions;4100native-parent decisions complete. Pending main prediction
+reservation384 remains charged. Elapsed16494.12/86400s;warmup8382.81/18000s,
+reference7554.78/25200s,fit220.55/7200s,eval330.51/24000s;currentH8job22.01/180s.
+No observed global/phase/current-job counter/time violation. Observed6209files/
+751842846bytes and child210768KiB RSS below caps; no reservation refunds.
+
+Early evaluation timing: H8 mean34.633s across7completed jobs, H16 65.891s from
+only1job. Remaining412evaluations project about4.48h at these early rates,
+excluding analysis/archive/IO and ongoing partial-world work. Timing varies by
+role/block/condition, especially with one H16 sample; this is not a guaranteed
+full-run ETA. Evidence: reports/capacity_confirmation_monitor_20261006T1437Z.json.
+
+Reuse26tests/fullcompileall,616source/11input locks and completed finite agents.
+The same ACTIVE monitor remains unchanged. Continue the single authorized frozen
+evaluation; no tuning,retry,extra science,new permission question or gate. Complete
+all outcomes before interpretation/manuscript/archive and additive Dropbox
+terminal handoff. Cloud sync/collaborator access remain unverified; no remote Git
+action,external message,unfinished-run export or other task change.
+
+## Previous checkpoint: all warm models sealed; final block native-tail training active
 
 2026-10-06T14:06:09Z snapshot. Entryf336ec5 clean on the integration branch.
 Supervisor65458/1 and child65470/65458 match claims/full commands, with new

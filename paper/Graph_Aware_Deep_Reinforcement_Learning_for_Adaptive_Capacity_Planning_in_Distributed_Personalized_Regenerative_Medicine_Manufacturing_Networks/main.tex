@@ -2313,6 +2313,37 @@ reversing under immediate specimen availability, so general timing robustness
 is not claimed. Development-only TD3 and DDPG mechanism screens remain labeled
 and archived separately from formal holdout evidence.
 
+\paragraph{Literature benchmarks and synthetic-study scope.}
+We treat the completed experiments as methods research in synthetic scenarios,
+not as a site-calibrated manufacturing study or a patient-level clinical
+validation. External evidence can inform prospective sensitivity analysis,
+but does not retrospectively calibrate the archived experiments. For example,
+Ran et al. describe a German academic CAR-T process with a 12--14-day production
+cycle and separate fixed and per-production costs in 2018
+euros~\cite{Ran2020DecentralizedCART}. These quantities cannot directly identify
+marginal overtime cost or a staffing-to-throughput response. Fitzgerald et al.
+separate manufacturing, quality-control and release labor in an automated
+adipose-derived stromal-cell process~\cite{Fitzgerald2022AutomatedASC}; its
+labor savings are not transferable CAR-T productivity coefficients.
+
+Published sensitivity assumptions must also be distinguished from observations.
+Lopes et al. use low/base/high batch-failure probabilities of 1/3/5\% for
+fully automated processing~\cite{Lopes2020VeinToVein}; these are modeled
+scenarios, not a confidence interval for our setting. A future panel could
+test process-specific duration and failure ranges together with explicitly
+synthetic staffing-notice and observation-delay conditions. The panel has not
+been executed here, and the primary reward and completed results remain
+unchanged. Unsupported ranges must not be described as expert consensus.
+
+Real-patient aggregate studies supply context rather than individual training
+records. Nastoupil et al. report 275 infusions among 298 patients undergoing
+leukapheresis, with a median of 21 days from leukapheresis to conditioning
+chemotherapy~\cite{Nastoupil2020StandardOfCare}. That endpoint is not infusion
+time, and neither statistic identifies the causal effect of waiting or a
+daily patient-deterioration law. No patient-level dataset was acquired for
+the present study. Simulated patient losses therefore remain modeled service
+outcomes, not demonstrated clinical benefits.
+
 \paragraph{Limitations and future work.}
 This study motivates several extensions. Patient condition can be represented
 with longitudinal clinical covariates rather than the current eligibility and

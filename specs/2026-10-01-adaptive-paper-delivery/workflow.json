@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 169,
-  "updated_at_utc": "2026-10-06T07:34:37Z",
+  "revision": 170,
+  "updated_at_utc": "2026-10-06T09:19:34Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "5e8cfba77792a092d30a1a1644df85326f66b52b",
@@ -12,6 +12,19 @@
   "scientific_execution_authorized": true,
   "authorization_state": "Approved single attempt completed and consumed; separately authorized local Dropbox artifact handoff verified. No further scientific execution.",
   "status": "native_return_completed_primary_screen_failed_monitor_paused",
+  "literature_evidence_update": {
+    "date": "2026-10-06",
+    "readout": "docs/team_updates/2026-10-06-literature-engineering-evidence.md",
+    "scope": "Four original literature sources, manuscript scope clarification and prospective synthetic sensitivity design; no new science",
+    "site_calibration_complete": false,
+    "patient_level_data_obtained": false,
+    "expert_elicitation_performed": false,
+    "sensitivity_panel_executed": false,
+    "new_scientific_execution_authorized": false,
+    "human_source_review": "pending",
+    "reward_and_completed_results_unchanged": true,
+    "direction_recommendation": "Do not promote current terminal-value TD or automatically continue target refinements; MPC remains engineering reference. Candidate-relative TD is untested, and general TD3 superiority is unsupported."
+  },
   "dropbox_artifact_handoff": {
     "authorized_by_user": true,
     "readout": "specs/2026-10-05-native-return-value/dropbox-handoff.md",

@@ -26,6 +26,7 @@ Start with these current records rather than the older pilot summaries below:
 - [Latest native-return results, all comparators, harms and compute](specs/2026-10-05-native-return-value/terminal-readout.md).
 - [Current manuscript](paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/main.tex).
 - [Writing revision and publication review](docs/team_updates/2026-10-06-manuscript-github-update.md).
+- [Literature benchmarks, prospective synthetic sensitivity ranges, and TD/TD3 distinction](docs/team_updates/2026-10-06-literature-engineering-evidence.md).
 
 The single native-return attempt is complete and consumed. These instructions
 and historical runner examples are not authorization to restart it. Full raw

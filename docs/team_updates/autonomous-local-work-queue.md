@@ -1,6 +1,29 @@
 # Autonomous local research queue
 
-## Live checkpoint: native-return complete; primary screen failed; monitor PAUSED
+## Live checkpoint: literature benchmarks added; no new scientific run
+
+2026-10-06. Zhaowei confirmed no site-level engineering data are available and
+requested industry/clinical literature and sensitivity ranges, explicitly framed
+as synthetic methods research. Added four primary-source records, provenance
+limits and a prospective (not executed) sensitivity panel in
+docs/team_updates/2026-10-06-literature-engineering-evidence.md; Discussion and
+bibliography updated without changing scientific parameters or results.
+Patient cohort summaries are not patient-level records or causal waiting-risk
+estimates; E1 remains uncalibrated. No expert consultation is claimed.
+TD value-MPC is not TD3; saved matched historical residual evidence does not
+support TD3 superiority over DDPG. No extra scientific calls, retraining, reward
+change, monitor modification, remote push or archive regeneration.
+User follow-up asks whether TD merits continued investment. Recommendation:
+do not promote current terminal-value TD as superior or automatically continue
+target refinements; keep MPC as engineering reference and TD as mixed exploratory
+evidence. Candidate-relative TD is untested. Literature cannot establish an RL
+increment, and old matched residual evidence does not favor TD3 over DDPG.
+Next: use these source boundaries to define a decision-relevant performance or
+compute question before any new complete comparison; the prospective panel has
+no frozen execution budget yet. Prior attempt stays
+consumed and the same monitor's last verified state remains PAUSED.
+
+## Previous checkpoint: native-return complete; primary screen failed; monitor PAUSED
 
 2026-10-06T07:34:37Z terminal handoff checkpoint. Entrya5996d7 on expected branch.
 The single approved attempt exited0 in31159.209742s (8.6553h), archive included.

@@ -3842,3 +3842,20 @@ complete training/test/readout/handoff without repeated routine permission asks.
 No automatic retry, sample expansion, reward search, StageE or Howard approval.
 Existing Dropbox authorization applies additively at terminal boundaries; no new
 push/merge, public link, permission change or external message is implied.
+
+#### Fresh conditional comparison approved for one complete execution
+
+2026-10-06T10:00:24Z. Zhaowei replied exactly `批准` to the full numerical
+package and implementation handoff. Record literal authority in
+specs/2026-10-06-conditional-value-confirmation/approval-intent.json, binding the
+unchanged protocol/config and scientific implementation60828ea. Approval covers
+780main trajectories,240dependent branches,26880value/0actor updates and the
+fixed24h/12GiB total with all phase/owner caps. It does not promise positive
+results, authorize new scope, or reopen old attempts.
+
+Reuse26passing necessary zero-update tests/fullcompileall and completed finite
+agent deliverables. Commit authority, freeze current source/input/runtime/seed
+locks, commit the execution packet, then launch once immediately. Routine
+training,sealing,evaluation,readout and authorized artifact handoff proceed
+without another permission question. No auto-retry, reward/scene search, extra
+epochs, Howard approval, push/merge or external messages. Old results unchanged.

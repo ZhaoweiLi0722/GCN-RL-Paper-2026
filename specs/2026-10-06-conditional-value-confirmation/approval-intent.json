@@ -1,0 +1,23 @@
+{
+  "format": "capacity-confirmation-approval-intent-v1",
+  "scope": "capacity-conditional-confirmation-v1",
+  "scope_approved": true,
+  "recorded_at_utc": "2026-10-06T10:00:24Z",
+  "user_literal": "批准",
+  "approval_context": "Direct reply following the complete numerical package question and ready implementation handoff for the fresh conditional GCN value-MPC study: five fresh blocks,240 shared warmup worlds,120 shared native-label reference worlds,240 dependent native clones,10 warm and15 final seals before420 seven-role frozen evaluations. Total780 main trajectories,59640 native steps,61200 native operations plus240 clones,26880 value/0actor updates,46220 forwards,17057280 prediction steps,5964000 filter transitions,86400 seconds including IO and12GiB. Exact phase/owner limits and descriptive development criteria remain those of protocol.md. New shared-MPC initialization is not exact historical replication. Reward,physics and candidate support remain unchanged. One attempt, no automatic retry. All routine training,evaluation,readout and artifact handoff proceed without further startup questions.",
+  "approval_channel": "direct human message in this thread",
+  "proposal_sha256": "21129af74f720cf561d05c07ab422ce3e7d8079ed9fce5100871ff1fa9db0ee6",
+  "protocol_sha256": "07facc20cc6da29fb62efc4332d6ea26984780f38518e024ba962660b79dc8b4",
+  "scientific_implementation_commit": "60828eac47f43688c17f4386f6258333060e990a",
+  "attempts": 1,
+  "routine_training_evaluation_readout_authorized": true,
+  "automatic_retry": false,
+  "automatic_follow_on": false,
+  "reward_changed": false,
+  "physical_scenario_changed": false,
+  "graph_self_only_ablation_explicit_in_package": true,
+  "shared_initialization_recipe_change_disclosed": true,
+  "howard_approval_claimed": false,
+  "remote_push_merge_messages_authorized": false,
+  "dropbox_handoff": "Existing separate user authorization continues for additive terminal artifact preservation; local byte verification does not establish cloud sync or collaborator access."
+}

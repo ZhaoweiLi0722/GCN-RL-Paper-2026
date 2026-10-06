@@ -1,6 +1,20 @@
 # Autonomous local research queue
 
-## Live checkpoint: fresh conditional comparison ready; numerical approval pending
+## Live checkpoint: fresh conditional package approved; binding execution locks
+
+2026-10-06T10:00:24Z. Exact direct user reply `批准` approves the complete
+24h/12GiB package following the numerical question and60828ea implementation
+handoff. Literal approval now binds unchanged protocol/config in
+specs/2026-10-06-conditional-value-confirmation/approval-intent.json.
+Reuse26zero-update tests/fullcompileall; no scientific source change or new gate.
+Next commit authority/current source,input,runtime and seed locks and launch
+exactly once. No additional startup question. At this prelaunch checkpoint,
+no scientific run is claimed; success requires actual process/claim/growth.
+All780main/240branch,26880value/0actor,24h/12GiB phase/owner caps remain fixed.
+Both finite agents completed/closed. Prior attempts remain consumed; reward and
+old results unchanged. Same monitor will be updated only for this launched run.
+
+## Previous checkpoint: fresh conditional comparison ready; numerical approval pending
 
 2026-10-06T09:51:39Z. Entry9496f82 on the expected integration branch. Zhaowei
 requested `全面的推进`. Implemented one integrated fresh-seed GCN TD value-MPC

@@ -1,6 +1,47 @@
 # Autonomous local research queue
 
-## Live checkpoint: four evaluation blocks complete; final block active
+## Live checkpoint: comparison closed; primary screen failed; local Dropbox verified
+
+2026-10-06T19:18Z. The single approved attempt completed normally in32884.989s
+(9.135h), including program analysis/archive. Both original scientific processes
+and all matching run processes were absent at19:11:34Z; exit0/child0, no failure
+markers, stderr/stdout/detached logs0bytes. No retry or additional science.
+
+All240warmup,120reference,240dependent branches and420frozen evaluations complete.
+Warm graph/self-only updates7680each; graphTD/self-onlyTD/graphMC120fits and3840
+new updates each. Total26880value/0actor; test0;840after-fit states;warm10/final15/
+legacy5sealed before testing. Reuse18:35optimizer/model evidence and prior26tests/
+fullcompileall. Native49920main+9720branch=59640;operations61200plus240clones;
+forwards46220,predictions17057280,filter5964000,native-parent decisions4100.
+Exact frozen counter caps, all1645job/phase caps pass, no pending chunks/refunds.
+
+Prespecified fast joint screen FAILED against BOTH H8 and fresh-frozen.
+GraphTD/H8 mean paired savings-1.445%,1/5positive blocks; graphTD/fresh-frozen
+absolute savings+0.190M but mean ratios-0.0099%,2/5positive blocks. Both cost
+intervals include0. Mean extra losses-5.05/-4.95 pass only the sample-mean
+patient part. GCN-message and TD/MC advantages are not established; all18
+candidate cost intervals cross0, and no positive volatility interaction is
+established. Do not turn prior exploratory fast results into confirmation.
+New shared warmup recipe is not exact historical replication; E1/synthetic
+limitations and legacy block0 mixed provenance remain.
+
+Independent stdlib reconstruction read780main/240branch raw files,59640rows,
+all21pairs x3conditions x5blocks,1260paired contrasts and all labor/action/
+component/world/block harms; matched saved comparison without scientific calls,
+model deserialization or new bootstrap draws. Reused the existing single
+897719554byte archive,7500members, and reconciled inventory/manifest.
+Terminal readout and full numeric evidence:
+specs/2026-10-06-conditional-value-confirmation/terminal-readout.md
+specs/2026-10-06-conditional-value-confirmation/terminal-saved-data.json
+
+Manuscript abstract/new result section/discussion updated truthfully. No local
+TeX engine; PDF not rebuilt or visually verified. Authorized additive Dropbox
+primary delivery36files/1069168994bytes verified at19:17:30Z; closure supplement
+versioned separately. Local copy verified,cloud sync/access unverified.
+Same visible gcn-rl PAUSED after delivery. No push/PR/merge/messages/new scope.
+Next action requires a new explicit decision, not another automatic experiment.
+
+## Previous checkpoint: four evaluation blocks complete; final block active
 
 2026-10-06T18:35:57Z snapshot. Entry46a74f6 clean on the integration branch.
 Supervisor65458/1 and child65470/65458 match claims/full commands;91new completed

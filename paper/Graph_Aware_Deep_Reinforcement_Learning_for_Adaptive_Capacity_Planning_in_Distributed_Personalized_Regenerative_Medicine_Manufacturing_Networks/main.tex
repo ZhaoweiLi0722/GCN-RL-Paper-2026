@@ -64,16 +64,16 @@ service and patient-loss outcomes. These contrasts support the complete
 graph-aware controller, not an isolated message-passing effect. Final-versus-
 frozen comparisons did not establish additional benefit from online
 actor--critic updates. A separate synthetic development study instead learns
-a residual terminal cost for model predictive control. Its latest native-return
-comparison used five historical model blocks, 120 reference worlds, 240
-dependent simulator branches, and 360 frozen controller evaluations. Mean
-paired savings over eight-step planning were 1.81\% under persistent capacity
-change and 2.47\% under fast fluctuation. However, the joint primary
-strong-baseline criterion failed, and mean patient losses increased relative
-to forecast-tail learning. The evidence distinguishes controller performance
-from learning attribution: neither general reinforcement-learning superiority
-nor deployment-time adaptation is established. Clinical and economic
-calibration remain necessary before operational use.
+a residual terminal cost for model predictive control. A subsequent prospective
+comparison used five fresh training blocks and 420 frozen evaluations on 60
+paired worlds. It failed the prespecified fast-fluctuation screen against
+eight-step planning and its fresh frozen initializer. Mean paired cost was
+1.44\% higher than eight-step planning in that condition, with a descriptive
+interval that included zero. Matched self-only and same-data Monte Carlo
+controls did not establish separate message-passing or TD-estimator advantages.
+Neither general reinforcement-learning superiority nor deployment-time
+adaptation is established. Clinical and economic calibration remain necessary
+before operational use.
 \end{abstract}
 
 \begin{keyword}
@@ -116,7 +116,7 @@ The main contributions of this study are as follows.
     \item We propose AFR-GCN--DDPG, a two-stage advantage-filtered residual graph controller that learns bounded corrections to a transparent look-ahead anchor, retains the filtered teacher signal during DDPG optimization, and applies independently calibrated deployment safeguards.
     \item We establish a paired multi-seed evaluation protocol that separates policy-versus-anchor value, graph-versus-flat controller-package value, DDPG-versus-TD3 backbone robustness, and final-versus-frozen online attribution. The evidence includes a five-seed formal DDPG confirmation and a matched three-seed TD3 development ablation with two-level bootstrap confidence intervals. The package comparison does not isolate message passing from feature, head, and gate differences.
     \item We report prospective negative attribution tests rather than folding all learned-policy performance into an online-RL claim. Frozen-policy comparisons and paired critic, legal-action, and corrected action-geometry diagnostics support the value of the offline-pretrained graph-aware controller package, while bounding the unsupported incremental online-update claim. They do not separately attribute its gain to each graph, feature, or gate component.
-    \item In separate synthetic development comparisons, we test TD-learned GCN terminal values against plain MPC, existing frozen values, matched-data learning controls, and longer-horizon planning. Native-return learning produces condition-specific gains but fails the joint primary strong-baseline criterion. Reporting cost, patient losses, block stability, and label-generation computation prevents a training gain from being mistaken for general planner superiority.
+    \item In separate synthetic development comparisons, we test TD-learned GCN terminal values against plain MPC, existing frozen values, matched-data learning controls, and longer-horizon planning. Historical native-return learning produces exploratory condition-specific gains, but a subsequent fresh-block prospective test fails its fast-condition screen and does not establish separate graph or TD gains. Reporting cost, patient losses, block stability, and label-generation computation prevents a training gain from being mistaken for general planner superiority.
     \item We draw design implications for intelligent decision support in distributed, patient-specific healthcare manufacturing and related time-critical, make-to-order engineering systems.
 \end{itemize}
 
@@ -2180,14 +2180,139 @@ mixed-predictor limitations; dependent branches and shared future tapes are not
 new independent worlds or event-level common random numbers. E1 calibration
 remains absent, and no clinical-safety or deployment-adaptation claim follows.
 
+\subsection{Fresh-block conditional comparison: the prospective fast-condition screen fails}
+\label{sec:fresh-conditional-development}
+The secondary fast-fluctuation signal above motivated a new prospective
+development comparison, not a retrospective change to the preceding primary
+criterion. Five fresh training blocks used disjoint warmup, reference, and
+test streams. Within each block, graph and self-only value models shared
+initial trainable tensors, two layers, width 32, and 3,169 parameters; only
+the normalized adjacency differed. Both received 1,536 TD8 updates from 48
+shared plain-H8 worlds. This standardized warmup changes the historical
+24-plain/24-endogenous-continuation recipe and is not an exact replication.
+
+Each frozen graph warm model supplied the common native-branch continuation
+policy. Graph TD and graph MC inherited their own graph warm weights;
+self-only TD inherited its self-only warm weights and retained identity
+adjacency. Optimizers, sampling states, and new-update counters were reset.
+Across 120 shared reference worlds, 240 dependent complete-state branches
+provided 7,800 shared suffix rows. Each final method received 3,840 new value
+updates, or 768 per model. All ten warm and fifteen final models were sealed,
+with five legacy models bound for evaluation only, before 60 new paired
+worlds were evaluated under seven frozen controllers. The complete study
+contained 780 main trajectories and 240 partial branches, 26,880 value updates,
+zero actor updates, and zero test updates. Independent raw reconstruction
+reconciled all 59,640 native records and all 21 controller pairs across three
+conditions and five blocks.
+
+The joint primary development screen required graph TD to improve fast-condition
+cost against both plain H8 and its fresh frozen initializer: all five block
+means had to favor TD, the descriptive 95\% cost-savings lower bound had to
+exceed zero, and mean extra patient losses had to be nonpositive. Neither
+comparator met either cost requirement. The mean-loss requirement passed,
+but this alone did not pass the joint screen (Table~\ref{tab:fresh-conditional}).
+
+\begin{table}[tbp]
+\centering
+\caption{Fresh-block GCN temporal-difference (TD) value-MPC comparison.
+Savings are comparator minus graph-TD cost in millions of synthetic objective
+units; extra losses are graph TD minus comparator, per simulated world.
+Percentages average paired-world ratios. Descriptive 95\% intervals reuse
+2,000 two-level bootstrap draws over five training blocks and four worlds per
+condition and block; they are not multiplicity-adjusted confirmation.
+The fast-condition H8 and fresh-frozen rows are primary; all other rows are
+secondary. MC denotes Monte Carlo policy evaluation, not a non-RL control.}
+\label{tab:fresh-conditional}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Comparator & Savings M [95\%] & Savings (\%) & Extra losses \\
+\midrule
+\multicolumn{4}{l}{\emph{No capacity change}} \\
+Plain H8-MPC & $0.098\ [-0.996,1.150]$ & $0.04$ & $-4.40$ \\
+Fresh frozen GCN & $0.513\ [-0.796,2.492]$ & $1.16$ & $-5.20$ \\
+Historical frozen GCN & $-0.180\ [-0.920,0.460]$ & $-0.34$ & $2.55$ \\
+Matched self-only TD & $-0.193\ [-0.740,0.294]$ & $-0.47$ & $1.45$ \\
+Same-data graph MC & $0.306\ [-0.624,1.420]$ & $1.09$ & $-3.55$ \\
+Plain H16-MPC & $-0.242\ [-0.941,0.482]$ & $-0.59$ & $0.95$ \\
+\addlinespace
+\multicolumn{4}{l}{\emph{Persistent capacity change}} \\
+Plain H8-MPC & $-0.295\ [-1.019,0.375]$ & $-0.81$ & $-0.25$ \\
+Fresh frozen GCN & $0.169\ [-1.213,2.164]$ & $0.12$ & $-2.40$ \\
+Historical frozen GCN & $-0.541\ [-1.373,0.265]$ & $-1.53$ & $5.60$ \\
+Matched self-only TD & $-0.049\ [-0.563,0.365]$ & $-0.28$ & $1.40$ \\
+Same-data graph MC & $-0.022\ [-0.828,0.936]$ & $-0.18$ & $-0.60$ \\
+Plain H16-MPC & $-0.707\ [-1.677,0.228]$ & $-2.27$ & $4.10$ \\
+\addlinespace
+\multicolumn{4}{l}{\emph{Fast capacity fluctuation}} \\
+Plain H8-MPC & $-0.506\ [-1.636,0.739]$ & $-1.44$ & $-5.05$ \\
+Fresh frozen GCN & $0.190\ [-1.783,2.515]$ & $-0.01$ & $-4.95$ \\
+Historical frozen GCN & $-0.753\ [-1.889,0.308]$ & $-2.27$ & $6.55$ \\
+Matched self-only TD & $-0.391\ [-1.636,0.444]$ & $-1.26$ & $4.30$ \\
+Same-data graph MC & $-0.408\ [-1.572,0.643]$ & $-1.18$ & $-1.35$ \\
+Plain H16-MPC & $-0.338\ [-1.554,0.709]$ & $-0.79$ & $-0.40$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Under fast fluctuation, graph TD cost 0.506 million units more than H8 on
+average; mean paired savings were $-1.445\%$. Only one of five block means
+favored TD, and 13 of 20 worlds cost more. Against its fresh frozen initializer,
+mean absolute savings were 0.190 million units, but mean paired percentage
+savings were $-0.010\%$; averaging differences and averaging ratios need not
+give the same sign. Only two block means favored TD and 11 worlds cost more.
+Mean loss differences were $-5.05$ and $-4.95$ patients against H8 and fresh
+frozen, respectively, but both descriptive loss intervals included zero.
+Seven and eleven worlds, respectively, had additional losses. The positive
+sample mean patient trade-off cannot establish a reliable cost or safety gain.
+
+Every candidate-versus-comparator cost interval in the table included zero.
+Graph TD had higher mean cost and more mean losses than matched self-only TD
+in all three conditions; under fast fluctuation, mean savings were $-1.262\%$
+and extra losses were 4.30 patients. These uncertain estimates do not establish
+a message-passing benefit within this common-graph-parent training pipeline.
+Nor did TD establish an advantage over same-data MC policy evaluation: fast
+mean savings were $-1.183\%$. Neither comparison tests all possible GCN or RL
+methods, and a nonsignificant contrast is not evidence of equivalence.
+
+We also tested conditionality directly. For H8, the difference in mean savings
+between fast and stable conditions was $-0.604$ million units (descriptive
+95\%, $[-1.673,0.471]$); fast minus persistent was $-0.211$ million
+($[-1.220,1.046]$). For fresh frozen, the corresponding differences were
+$-0.322$ million ($[-1.511,0.929]$) and $0.021$ million
+($[-1.000,0.958]$). Blocks were resampled jointly, but distinct condition
+worlds were resampled separately, without cross-condition patient pairing.
+These intervals do not support a positive volatility interaction.
+
+Fast-condition graph-TD/H8 actions differed at 732 of 960 control boundaries,
+with 37.17 additional applied flexible hours per world. Lower patient-loss
+and expiry costs were outweighed by higher resource-shortage, reagent-purchase,
+and labor costs. Median decision times were 0.693 seconds for graph TD,
+0.688 for H8, and 1.388 for H16. The complete scientific process, including
+its analysis and archive, took 9.135 hours and charged 46,220 neural forwards,
+17,057,280 prediction steps, and 5,964,000 filter transitions, including
+4,100 native-parent planning decisions. TD and MC share data and update
+counts, not forward cost; H16 has twice the main planning-query budget.
+
+This prospective fresh-block comparison therefore does not substantiate the
+earlier exploratory fast-condition advantage under the new warmup recipe.
+It supports retaining the failed screen, block instability, and patient/cost
+trade-offs rather than claiming that RL is effective specifically under rapid
+change. Historical legacy comparisons retain their mixed-recipe provenance,
+including block zero. All outcomes remain synthetic and uncalibrated for E1;
+there is no real-patient, deployment-online, clinical-safety, or TD3/DDPG
+superiority claim.
+
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
 The results distinguish three claims. The formal routing-primary comparison
 supports AFR-GCN--DDPG as a complete controller package. Frozen-policy
 comparisons do not establish an additional endpoint benefit from its online
 actor--critic updates. The separate value-guided planning studies provide
-condition-specific development findings, but the latest native-return method
-does not pass the joint primary strong-baseline criterion. These are different
+condition-specific exploratory findings, but the prospective fresh-block study
+does not pass its fast-condition joint primary criterion and does not establish
+a positive volatility interaction or separate graph/TD contribution. These are different
 questions, not interchangeable demonstrations that reinforcement learning
 improves a strong operational baseline.
 

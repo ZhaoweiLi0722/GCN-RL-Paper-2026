@@ -1,0 +1,47 @@
+{
+  "at_utc": "2026-10-06T19:20:19.192815+00:00",
+  "files": [
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/terminal-readout.md",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/closure/terminal-readout.md",
+      "bytes": 11503,
+      "sha256": "cdafb2af83296b2e6af351b992494b05cb6c78dbea554da0bb5c7d2a0075c8f2",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/dropbox-handoff.md",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/closure/dropbox-handoff.md",
+      "bytes": 2324,
+      "sha256": "4ec92a66d6f0e01d5f0cb97e0be5b352d69199e0e525e02d8d827e92175a21fc",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/dropbox-export-manifest.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/closure/dropbox-export-manifest.json",
+      "bytes": 26032,
+      "sha256": "066609d4d2b7d1e5de2dc1e7d8f891b872563ef308e9684d28f16506d047bf38",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-01-adaptive-paper-delivery/workflow.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/closure/workflow.json",
+      "bytes": 169056,
+      "sha256": "885904b2997a614de1baa6f2e0ed7d159cb28fb200ddae4a8de44140271baf72",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/docs/team_updates/autonomous-local-work-queue.md",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/closure/Live.md",
+      "bytes": 510737,
+      "sha256": "5bb6430abb678dfc2c45c794098acff8b3db9932d093f16bb0d5b812a98a9fba",
+      "verified": true
+    }
+  ],
+  "file_count": 5,
+  "total_bytes": 719652,
+  "local_copy_verified": true,
+  "cloud_sync_verified": false,
+  "collaborator_access_verified": false,
+  "same_path_overwrites": 0,
+  "automation_status": "PAUSED"
+}

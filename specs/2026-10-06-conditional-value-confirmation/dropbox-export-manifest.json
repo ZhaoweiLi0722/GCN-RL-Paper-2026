@@ -1,0 +1,341 @@
+{
+  "at_utc": "2026-10-06T19:17:30.008685+00:00",
+  "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006",
+  "file_count": 36,
+  "total_bytes": 1069168994,
+  "local_copy_verified": true,
+  "cloud_sync_verified": false,
+  "collaborator_access_verified": false,
+  "permissions_changed": false,
+  "messages_sent": false,
+  "archive_reused": true,
+  "old_experiments_rearchived": false,
+  "pdf_rebuilt": false,
+  "files": [
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/archives/payload.tar.gz",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/archives/payload.tar.gz",
+      "relative_destination": "archives/payload.tar.gz",
+      "bytes": 897719554,
+      "sha256": "7bfb02ee6bf416882fc21c17d591a51812c08619918b61227b5c76b81d674882",
+      "destination_sha256": "7bfb02ee6bf416882fc21c17d591a51812c08619918b61227b5c76b81d674882",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/archives/payload.tar.gz.manifest.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/archives/payload.tar.gz.manifest.json",
+      "relative_destination": "archives/payload.tar.gz.manifest.json",
+      "bytes": 949387,
+      "sha256": "224b51a0ea28e9930ecf71ce48408b4a7439bbdc5b1e0d817230811762d92a28",
+      "destination_sha256": "224b51a0ea28e9930ecf71ce48408b4a7439bbdc5b1e0d817230811762d92a28",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/archive-receipt.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/archive-receipt.json",
+      "relative_destination": "archive-receipt.json",
+      "bytes": 964552,
+      "sha256": "69a0baef64a850cf6faed24aaf91a0e93b8fca55dfc36861c20e4a1d290fb2d8",
+      "destination_sha256": "69a0baef64a850cf6faed24aaf91a0e93b8fca55dfc36861c20e4a1d290fb2d8",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/payload/artifact-inventory.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/payload/artifact-inventory.json",
+      "relative_destination": "payload/artifact-inventory.json",
+      "bytes": 934030,
+      "sha256": "2317980fb92a41c54ef3e8b3cd732072b5e92cc2dcb0f59b9a9743ef10af217f",
+      "destination_sha256": "2317980fb92a41c54ef3e8b3cd732072b5e92cc2dcb0f59b9a9743ef10af217f",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/payload/completion.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/payload/completion.json",
+      "relative_destination": "payload/completion.json",
+      "bytes": 101843,
+      "sha256": "9fae5776d0d1532e7ef82414f7e07084775a12bf94f2f4c3627937c754eb657e",
+      "destination_sha256": "9fae5776d0d1532e7ef82414f7e07084775a12bf94f2f4c3627937c754eb657e",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/payload/comparison.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/payload/comparison.json",
+      "relative_destination": "payload/comparison.json",
+      "bytes": 19092471,
+      "sha256": "da25a36f52bd598aef2d827ffb42eb1fdda52a3ab5380fd309e28ecde31970ff",
+      "destination_sha256": "da25a36f52bd598aef2d827ffb42eb1fdda52a3ab5380fd309e28ecde31970ff",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/launcher/budget.jsonl",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/launcher/budget.jsonl",
+      "relative_destination": "launcher/budget.jsonl",
+      "bytes": 144285206,
+      "sha256": "7475bc759ef5217d260433c29c34cb5dcdb8b8277d512f7aea73232a691d69a7",
+      "destination_sha256": "7475bc759ef5217d260433c29c34cb5dcdb8b8277d512f7aea73232a691d69a7",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/launcher/child-claim.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/launcher/child-claim.json",
+      "relative_destination": "launcher/child-claim.json",
+      "bytes": 123,
+      "sha256": "939c93c833bd4ac85e9f4fe4e8bec5e56e6e6a3c9b84458d40b9559082cf83ca",
+      "destination_sha256": "939c93c833bd4ac85e9f4fe4e8bec5e56e6e6a3c9b84458d40b9559082cf83ca",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/launcher/child-completed.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/launcher/child-completed.json",
+      "relative_destination": "launcher/child-completed.json",
+      "bytes": 100448,
+      "sha256": "9d2fb5200e2827ad31fe16ca49a97c4178e548ce34f7769dcd30e9e02fd533cd",
+      "destination_sha256": "9d2fb5200e2827ad31fe16ca49a97c4178e548ce34f7769dcd30e9e02fd533cd",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/launcher/claim.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/launcher/claim.json",
+      "relative_destination": "launcher/claim.json",
+      "bytes": 338,
+      "sha256": "b09189e31ad647aabc8e969214c614d16b8543e6986d3e8d11364c70d643bd64",
+      "destination_sha256": "b09189e31ad647aabc8e969214c614d16b8543e6986d3e8d11364c70d643bd64",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/launcher/stderr.log",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/launcher/stderr.log",
+      "relative_destination": "launcher/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/launcher/stdout.log",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/launcher/stdout.log",
+      "relative_destination": "launcher/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/results/capacity_confirmation_20261006/launcher/terminal.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/launcher/terminal.json",
+      "relative_destination": "launcher/terminal.json",
+      "bytes": 259,
+      "sha256": "e393ca46eba4b400972ae1de77f768e42a64abce21189d5fd41433c5bc179f79",
+      "destination_sha256": "e393ca46eba4b400972ae1de77f768e42a64abce21189d5fd41433c5bc179f79",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/protocol.md",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/protocol.md",
+      "relative_destination": "authority-readout/protocol.md",
+      "bytes": 8989,
+      "sha256": "07facc20cc6da29fb62efc4332d6ea26984780f38518e024ba962660b79dc8b4",
+      "destination_sha256": "07facc20cc6da29fb62efc4332d6ea26984780f38518e024ba962660b79dc8b4",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/approval-intent.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/approval-intent.json",
+      "relative_destination": "authority-readout/approval-intent.json",
+      "bytes": 2037,
+      "sha256": "a03e07b6561c55d69a6b5ae51a271a06c2158a0275f0820e11cbd6865ac1e9e3",
+      "destination_sha256": "a03e07b6561c55d69a6b5ae51a271a06c2158a0275f0820e11cbd6865ac1e9e3",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/frozen.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/frozen.json",
+      "relative_destination": "authority-readout/frozen.json",
+      "bytes": 1076401,
+      "sha256": "eb020a6aca081de387ac3e933b85e6b5238f920d11f73b0aaee3830288a215e8",
+      "destination_sha256": "eb020a6aca081de387ac3e933b85e6b5238f920d11f73b0aaee3830288a215e8",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/authorization.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/authorization.json",
+      "relative_destination": "authority-readout/authorization.json",
+      "bytes": 2497,
+      "sha256": "1002d73fd6de3085bd1cde2426139cf51835fa0416a8e40e5ac7a2ec6b67bafa",
+      "destination_sha256": "1002d73fd6de3085bd1cde2426139cf51835fa0416a8e40e5ac7a2ec6b67bafa",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/integration-readout.md",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/integration-readout.md",
+      "relative_destination": "authority-readout/integration-readout.md",
+      "bytes": 6835,
+      "sha256": "7e6a215b0c2e211bdf04d7e349d5325a870aff91ba3fdcf7eba4368df96c12a8",
+      "destination_sha256": "7e6a215b0c2e211bdf04d7e349d5325a870aff91ba3fdcf7eba4368df96c12a8",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/launch-readout.md",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/launch-readout.md",
+      "relative_destination": "authority-readout/launch-readout.md",
+      "bytes": 4162,
+      "sha256": "2456c64882bf02e2d56011ac3eb427992baf3cc3702171c96ccea97fe142d2e2",
+      "destination_sha256": "2456c64882bf02e2d56011ac3eb427992baf3cc3702171c96ccea97fe142d2e2",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/terminal-readout.md",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/terminal-readout.md",
+      "relative_destination": "authority-readout/terminal-readout.md",
+      "bytes": 10713,
+      "sha256": "c06f25ba5b6c5301bf2dc163905506847edc5da6a1d72f217889cf4af84b130f",
+      "destination_sha256": "c06f25ba5b6c5301bf2dc163905506847edc5da6a1d72f217889cf4af84b130f",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-conditional-value-confirmation/terminal-saved-data.json",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/authority-readout/terminal-saved-data.json",
+      "relative_destination": "authority-readout/terminal-saved-data.json",
+      "bytes": 210001,
+      "sha256": "8df7d711313839b83b5354ec1ccec85b4ef0622f5da8aa7ffaf8fc0e8026eab9",
+      "destination_sha256": "8df7d711313839b83b5354ec1ccec85b4ef0622f5da8aa7ffaf8fc0e8026eab9",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/main.tex",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/main.tex",
+      "relative_destination": "manuscript-source/main.tex",
+      "bytes": 201041,
+      "sha256": "a0ad721bda08f4695c7ead4dd1b5e870a50990c7ca6523d31295db3c0d4b5d25",
+      "destination_sha256": "a0ad721bda08f4695c7ead4dd1b5e870a50990c7ca6523d31295db3c0d4b5d25",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/references.bib",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/references.bib",
+      "relative_destination": "manuscript-source/references.bib",
+      "bytes": 30256,
+      "sha256": "0db8574a3e7dbab3010530076cf09e7729f84d0dd285a06150e7e9d12da8c3a5",
+      "destination_sha256": "0db8574a3e7dbab3010530076cf09e7729f84d0dd285a06150e7e9d12da8c3a5",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/elsarticle.cls",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/elsarticle.cls",
+      "relative_destination": "manuscript-source/elsarticle.cls",
+      "bytes": 45216,
+      "sha256": "ba7a1f25626a79fb39b53888dd826c4ae14d20db5429e236abdaaaf2fdf897ab",
+      "destination_sha256": "ba7a1f25626a79fb39b53888dd826c4ae14d20db5429e236abdaaaf2fdf897ab",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/2023_09_06_c43532efe11ae6d726f0g-06.jpg",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/2023_09_06_c43532efe11ae6d726f0g-06.jpg",
+      "relative_destination": "manuscript-source/figures/2023_09_06_c43532efe11ae6d726f0g-06.jpg",
+      "bytes": 58308,
+      "sha256": "1414b8f67f8b4919bfc27c94930ef36f84aa6ac31bc2e3307825cacf42047278",
+      "destination_sha256": "1414b8f67f8b4919bfc27c94930ef36f84aa6ac31bc2e3307825cacf42047278",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/Figure 1.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/Figure 1.png",
+      "relative_destination": "manuscript-source/figures/Figure 1.png",
+      "bytes": 417204,
+      "sha256": "72a9579ed9c42aa958f06ba20c34adc3b774ac5cafcb07fd1e1e1683bf1db752",
+      "destination_sha256": "72a9579ed9c42aa958f06ba20c34adc3b774ac5cafcb07fd1e1e1683bf1db752",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/Figure 1.pptx",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/Figure 1.pptx",
+      "relative_destination": "manuscript-source/figures/Figure 1.pptx",
+      "bytes": 29781,
+      "sha256": "befbac79e5738a2a66584461d8e1a4726108a7b674f28dc52f661e4dd21b14cc",
+      "destination_sha256": "befbac79e5738a2a66584461d8e1a4726108a7b674f28dc52f661e4dd21b14cc",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/Figure 1_original_backup.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/Figure 1_original_backup.png",
+      "relative_destination": "manuscript-source/figures/Figure 1_original_backup.png",
+      "bytes": 983487,
+      "sha256": "e073bebe76e6e671e70959b16891126b2d6a7e666aafc51b99abf7a9e5e33801",
+      "destination_sha256": "e073bebe76e6e671e70959b16891126b2d6a7e666aafc51b99abf7a9e5e33801",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/Figure 2.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/Figure 2.png",
+      "relative_destination": "manuscript-source/figures/Figure 2.png",
+      "bytes": 1160436,
+      "sha256": "cfe492e29bdd99e05fa384544466c5fd8e24b33cb1d3fdcdad3e310593c61fd2",
+      "destination_sha256": "cfe492e29bdd99e05fa384544466c5fd8e24b33cb1d3fdcdad3e310593c61fd2",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/Result-2.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/Result-2.png",
+      "relative_destination": "manuscript-source/figures/Result-2.png",
+      "bytes": 33295,
+      "sha256": "5745749865b948679cd3bbb659c6da90100cd55c57e2015a42f8c50635fa3fe4",
+      "destination_sha256": "5745749865b948679cd3bbb659c6da90100cd55c57e2015a42f8c50635fa3fe4",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/Result_1.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/Result_1.png",
+      "relative_destination": "manuscript-source/figures/Result_1.png",
+      "bytes": 31897,
+      "sha256": "3180894edf2464b3bf4547b49d7cad26fce2d5455535a3e16cb26b41f3c11887",
+      "destination_sha256": "3180894edf2464b3bf4547b49d7cad26fce2d5455535a3e16cb26b41f3c11887",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/image.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/image.png",
+      "relative_destination": "manuscript-source/figures/image.png",
+      "bytes": 219086,
+      "sha256": "59e1a7c0c09fb68bad644cd6cfc1b05d10df38e035ce60d7fde40a3ddbee25f6",
+      "destination_sha256": "59e1a7c0c09fb68bad644cd6cfc1b05d10df38e035ce60d7fde40a3ddbee25f6",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/routing_primary_cost_components.pdf",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/routing_primary_cost_components.pdf",
+      "relative_destination": "manuscript-source/figures/routing_primary_cost_components.pdf",
+      "bytes": 30486,
+      "sha256": "128212fecae889b6259b9d42874120f06cc59b9d0eddcd3e9750a75bd0c8a113",
+      "destination_sha256": "128212fecae889b6259b9d42874120f06cc59b9d0eddcd3e9750a75bd0c8a113",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/routing_primary_cost_components.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/routing_primary_cost_components.png",
+      "relative_destination": "manuscript-source/figures/routing_primary_cost_components.png",
+      "bytes": 227197,
+      "sha256": "62d943656776186ce43bbd81aaadb0826557c4941cfae58f6811596dcb2c38dc",
+      "destination_sha256": "62d943656776186ce43bbd81aaadb0826557c4941cfae58f6811596dcb2c38dc",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/routing_primary_cost_effects.pdf",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/routing_primary_cost_effects.pdf",
+      "relative_destination": "manuscript-source/figures/routing_primary_cost_effects.pdf",
+      "bytes": 31248,
+      "sha256": "76458141bd9d8b5dda30fc9522065ec0b3443064a623bfac28ac658cc6b3349a",
+      "destination_sha256": "76458141bd9d8b5dda30fc9522065ec0b3443064a623bfac28ac658cc6b3349a",
+      "verified": true
+    },
+    {
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/figures/routing_primary_cost_effects.png",
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_confirmation_20261006/manuscript-source/figures/routing_primary_cost_effects.png",
+      "relative_destination": "manuscript-source/figures/routing_primary_cost_effects.png",
+      "bytes": 200210,
+      "sha256": "3f3513082ded90e93b4623a92734256368d51cb80ce11d8494272867ff722c0b",
+      "destination_sha256": "3f3513082ded90e93b4623a92734256368d51cb80ce11d8494272867ff722c0b",
+      "verified": true
+    }
+  ],
+  "excluded_stale_pdf": true
+}

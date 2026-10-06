@@ -1,0 +1,1381 @@
+{
+  "at_utc": "2026-10-06T21:03:39.531045+00:00",
+  "claim": {
+    "authorization_sha256": "daedf7d811b47cebe14140b43b8fdae50dbbabc9ae00684275e2d9c6badeabe2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "f5772e824632248be458d42e487f757477100575",
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92809,
+    "ppid": 1,
+    "started": 1319628.211923
+  },
+  "child_claim": {
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92821,
+    "ppid": 92809
+  },
+  "event_counts": {
+    "model_sealed": 17,
+    "trajectory_started": 787,
+    "epoch_boundary": 6292,
+    "trajectory_completed": 786,
+    "fit_completed": 786
+  },
+  "completed_by_phase": {
+    "development_training": 786
+  },
+  "jobs": {
+    "development_training/b0/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 125.95472300122492
+    },
+    "development_training/b0/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 132.48579800105654
+    },
+    "development_training/b0/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 137.3499780013226
+    },
+    "development_training/b0/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 140.9261399996467
+    },
+    "development_training/b0/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 144.8089630000759
+    },
+    "development_training/b0/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 149.68515699915588
+    },
+    "development_training/b0/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 152.36678700102493
+    },
+    "development_training/b0/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 156.79809499997646
+    },
+    "development_training/b0/value_td-lr0-graph": {
+      "worlds": 18,
+      "fits": 18,
+      "fit_batches": 576,
+      "rollout_seconds": 629.2363350000232
+    }
+  },
+  "last_progress": {
+    "event": "epoch_boundary",
+    "active": {
+      "phase": "development_training",
+      "block": 0,
+      "condition": 0,
+      "replicate": 6,
+      "seed": 67100018,
+      "role": "value_td-lr0-graph"
+    },
+    "epoch": 31,
+    "counts": {
+      "trajectories": 787,
+      "native_steps": 50336,
+      "native_constructions": 787,
+      "construction_triggered_resets": 787,
+      "total_native_operations": 51910,
+      "control_steps": 37760,
+      "tail_steps": 12576,
+      "estimator_receipt_updates": 50336,
+      "estimator_hypothesis_transitions": 5033600,
+      "planner_total_decisions": 896,
+      "planner_candidate_rollouts": 43008,
+      "planner_total_model_epochs": 344064,
+      "neural_forward_module_calls": 176594,
+      "actor_optimizer_steps": 21504,
+      "critic_optimizer_steps": 30720,
+      "value_optimizer_steps": 6720,
+      "total_optimizer_steps": 58944,
+      "optimizer_example_presentations": 3772416,
+      "fit_batches": 25152
+    }
+  },
+  "seals": [
+    {
+      "name": "development_training-b0-ddpg-lr0-graph-initial",
+      "method": "ddpg",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "12a0da5636c4dac85196185e171b20cef577814a22355c01c735b9f9597e8e20",
+      "bytes": 71345,
+      "path": "models/development_training-b0-ddpg-lr0-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-ddpg-lr0-graph-final",
+      "method": "ddpg",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "00485ce92c9bdedadf9f89ebb69440b06bb3397c3bd248b944630acf425924a3",
+      "bytes": 9938145,
+      "path": "models/development_training-b0-ddpg-lr0-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 10752,
+          "critic": 9216,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 397824,
+          "critic": 589824,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 3072,
+          "critic": 3072,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 3072,
+          "critic": 3072,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 196608,
+          "critic": 196608,
+          "value": 0
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-ddpg-lr1-graph-initial",
+      "method": "ddpg",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "522e6f7f6cfad12714dddaa49c4f476dd24c1e573823ddc21606cc6b9dc0b2ef",
+      "bytes": 71345,
+      "path": "models/development_training-b0-ddpg-lr1-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-ddpg-lr1-graph-final",
+      "method": "ddpg",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "fa8fe1c40c975e37e461e8e1f82d969c046068a2e7c7156990889ad3dc74910e",
+      "bytes": 9930657,
+      "path": "models/development_training-b0-ddpg-lr1-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 10752,
+          "critic": 9216,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 397824,
+          "critic": 589824,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 3072,
+          "critic": 3072,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 3072,
+          "critic": 3072,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 196608,
+          "critic": 196608,
+          "value": 0
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-td3-lr0-graph-initial",
+      "method": "td3",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "3e11bd3570ee51e8e95f159d674f7fd1e5ad4206d9aeea77c41d987ee025c2ad",
+      "bytes": 103291,
+      "path": "models/development_training-b0-td3-lr0-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-td3-lr0-graph-final",
+      "method": "td3",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "195dec58ebef4d045506d76528960ea111324a7ae4f59106e70fdfbbf9c887a4",
+      "bytes": 10090879,
+      "path": "models/development_training-b0-td3-lr0-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 9216,
+          "critic": 13824,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 299520,
+          "critic": 884736,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 1536,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 1536,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 98304,
+          "critic": 393216,
+          "value": 0
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-td3-lr1-graph-initial",
+      "method": "td3",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "1a6244b31a66bb20425ff204985419c743353633f5c0b7b05196167684a1fc13",
+      "bytes": 103291,
+      "path": "models/development_training-b0-td3-lr1-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-td3-lr1-graph-final",
+      "method": "td3",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "ad27732de820bb58bb68f2c1dab501ba340b58c4e5bdd8a84c224b7219455724",
+      "bytes": 10073663,
+      "path": "models/development_training-b0-td3-lr1-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 9216,
+          "critic": 13824,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 299520,
+          "critic": 884736,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 1536,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 1536,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 98304,
+          "critic": 393216,
+          "value": 0
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-sac-lr0-graph-initial",
+      "method": "sac",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "af0382e804676b33ca4a72eb88b8f2bd983f282327c39f19f35ed62ba6a1c659",
+      "bytes": 87891,
+      "path": "models/development_training-b0-sac-lr0-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-sac-lr0-graph-final",
+      "method": "sac",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "c2c987e0689bbdfcef8b60d7ebc3e3c7f4a4ce1ae4dff48d4beac7ea16421d0d",
+      "bytes": 10922441,
+      "path": "models/development_training-b0-sac-lr0-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 10752,
+          "critic": 18432,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 397824,
+          "critic": 1179648,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 3072,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 3072,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 196608,
+          "critic": 393216,
+          "value": 0
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-sac-lr1-graph-initial",
+      "method": "sac",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "53c1a5aaf540b6943d92e0835cfdbfe093afde7d9ef272caeb6e1e8c63ea4b06",
+      "bytes": 87891,
+      "path": "models/development_training-b0-sac-lr1-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-sac-lr1-graph-final",
+      "method": "sac",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "777bd9c19885209d5250422f85b9a444a795b2fae4fc891ed475f7c95f48156c",
+      "bytes": 10945673,
+      "path": "models/development_training-b0-sac-lr1-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 10752,
+          "critic": 18432,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 397824,
+          "critic": 1179648,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 3072,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 3072,
+          "critic": 6144,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 196608,
+          "critic": 393216,
+          "value": 0
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-ppo-lr0-graph-initial",
+      "method": "ppo",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "5917bdf68a016d1a6fdcf98fd4b0855b526c53dc2cd344e84b2562391faa71f2",
+      "bytes": 39908,
+      "path": "models/development_training-b0-ppo-lr0-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-ppo-lr0-graph-final",
+      "method": "ppo",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "34fee794273f06c81979230951735dcf0a10245f4abbef7f747c59380049cc8b",
+      "bytes": 104203,
+      "path": "models/development_training-b0-ppo-lr0-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 7680,
+          "critic": 0,
+          "value": 7680
+        },
+        "forward_examples": {
+          "actor": 201216,
+          "critic": 0,
+          "value": 201216
+        },
+        "optimizer_attempts": {
+          "actor": 3072,
+          "critic": 0,
+          "value": 3072
+        },
+        "optimizer_steps": {
+          "actor": 3072,
+          "critic": 0,
+          "value": 3072
+        },
+        "optimizer_examples": {
+          "actor": 196608,
+          "critic": 0,
+          "value": 196608
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-ppo-lr1-graph-initial",
+      "method": "ppo",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "058693abc6b77b104464b0da1c0d5eb47d63f03461bf428453b1f983f804a6d6",
+      "bytes": 39908,
+      "path": "models/development_training-b0-ppo-lr1-graph-initial.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "forward_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_attempts": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_steps": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "optimizer_examples": {
+          "actor": 0,
+          "critic": 0,
+          "value": 0
+        },
+        "updates": 0,
+        "episodes": 0,
+        "act_calls": 0
+      }
+    },
+    {
+      "name": "development_training-b0-ppo-lr1-graph-final",
+      "method": "ppo",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0003,
+      "sha256": "726024d4db288b9fd9707430e01cbf8b1a5cf3b963dbe4477ddcc028a60bd709",
+      "bytes": 104203,
+      "path": "models/development_training-b0-ppo-lr1-graph-final.pt",
+      "counts": {
+        "forward_calls": {
+          "actor": 7680,
+          "critic": 0,
+          "value": 7680
+        },
+        "forward_examples": {
+          "actor": 201216,
+          "critic": 0,
+          "value": 201216
+        },
+        "optimizer_attempts": {
+          "actor": 3072,
+          "critic": 0,
+          "value": 3072
+        },
+        "optimizer_steps": {
+          "actor": 3072,
+          "critic": 0,
+          "value": 3072
+        },
+        "optimizer_examples": {
+          "actor": 196608,
+          "critic": 0,
+          "value": 196608
+        },
+        "updates": 3072,
+        "episodes": 96,
+        "act_calls": 4608
+      }
+    },
+    {
+      "name": "development_training-b0-value_td-lr0-graph-initial",
+      "method": "value_td",
+      "architecture": "graph",
+      "phase": "development_training",
+      "block": 0,
+      "lr": 0.0001,
+      "sha256": "b7ff5c609094293d79601e0a8fededecc8d3a8a720f5eef726be9c7256dfd89c",
+      "bytes": 17161,
+      "path": "models/development_training-b0-value_td-lr0-graph-initial.pt",
+      "counts": {
+        "forwards": 0,
+        "optimizer_steps": 0
+      }
+    }
+  ],
+  "ledger_counts": {
+    "trajectories": 787,
+    "native_constructions": 787,
+    "total_native_operations": 51912,
+    "construction_triggered_resets": 787,
+    "neural_forward_module_calls": 176596,
+    "control_steps": 37762,
+    "native_steps": 50338,
+    "estimator_receipt_updates": 50337,
+    "estimator_hypothesis_transitions": 5033700,
+    "tail_steps": 12576,
+    "fit_batches": 25152,
+    "critic_optimizer_steps": 30720,
+    "optimizer_example_presentations": 3772416,
+    "total_optimizer_steps": 58944,
+    "actor_optimizer_steps": 21504,
+    "value_optimizer_steps": 6720,
+    "planner_candidate_rollouts": 43104,
+    "planner_total_decisions": 898,
+    "planner_total_model_epochs": 344832
+  },
+  "ledger_phase_counts": {
+    "development_training": {
+      "trajectories": 787,
+      "native_constructions": 787,
+      "total_native_operations": 51912,
+      "construction_triggered_resets": 787,
+      "neural_forward_module_calls": 176596,
+      "control_steps": 37762,
+      "native_steps": 50338,
+      "estimator_receipt_updates": 50337,
+      "estimator_hypothesis_transitions": 5033700,
+      "tail_steps": 12576,
+      "fit_batches": 25152,
+      "critic_optimizer_steps": 30720,
+      "optimizer_example_presentations": 3772416,
+      "total_optimizer_steps": 58944,
+      "actor_optimizer_steps": 21504,
+      "value_optimizer_steps": 6720,
+      "planner_candidate_rollouts": 43104,
+      "planner_total_decisions": 898,
+      "planner_total_model_epochs": 344832
+    }
+  },
+  "pending_prepaid_chunks": {
+    "estimator_hypothesis_transitions": 0,
+    "planner_total_model_epochs": 0
+  },
+  "elapsed_seconds": 2042.5348839999642,
+  "owner": {
+    "clock": 1319634.015169,
+    "event": "enter",
+    "owner": "development_training",
+    "owner_times": {
+      "admission_lock_binding": 5.803246000083163,
+      "analysis_archive_verification": 0,
+      "confirmation_evaluation": 0,
+      "confirmation_training": 0,
+      "development_evaluation": 0,
+      "development_training": 0,
+      "failure_flush_shutdown_reserve": 0,
+      "global": 0
+    },
+    "phase": "development_training",
+    "previous": "1aa6d9441208b14e273bf9f6bb838e93497c5c899e6a3fe7ad35e7dc7ba0930b",
+    "sequence": 1,
+    "sha256": "4f5c7d86e50a706b68ec2003f4b768b8fe16a1254a22f82313e1279b3bb6e859"
+  },
+  "owner_elapsed_seconds": 2036.731637999881,
+  "current_job": {
+    "cap": 180,
+    "clock": 1321646.61259,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "development_training-b0-c0-j6-value_td-lr0-graph",
+    "kind": "h8_world",
+    "previous": "8d3f57eb872559cde3a1460f902b2f5937afff4c3d57965993a4665142ec8eda",
+    "sequence": 444049,
+    "sha256": "ddab6856297e8f245402814f1d877e79e54def8a1e740e4267da5bfba3ac03f8"
+  },
+  "current_job_elapsed_seconds": 24.13421699986793,
+  "job_timing": {
+    "ddpg/seal": {
+      "n": 4,
+      "total_seconds": 0.7620149999856949,
+      "max_seconds": 0.3769959998317063,
+      "mean_seconds": 0.19050374999642372
+    },
+    "ddpg/actor_world": {
+      "n": 192,
+      "total_seconds": 260.7223800003994,
+      "max_seconds": 1.5720229998696595,
+      "mean_seconds": 1.3579290625020803
+    },
+    "ddpg/fit": {
+      "n": 192,
+      "total_seconds": 42.51689299964346,
+      "max_seconds": 0.3289669998921454,
+      "mean_seconds": 0.2214421510398097
+    },
+    "td3/seal": {
+      "n": 4,
+      "total_seconds": 0.8679210001137108,
+      "max_seconds": 0.4207460000179708,
+      "mean_seconds": 0.2169802500284277
+    },
+    "td3/actor_world": {
+      "n": 192,
+      "total_seconds": 284.20038300100714,
+      "max_seconds": 1.6760150000918657,
+      "mean_seconds": 1.4802103281302454
+    },
+    "td3/fit": {
+      "n": 192,
+      "total_seconds": 52.09873699885793,
+      "max_seconds": 0.38211799995042384,
+      "mean_seconds": 0.2713475885357184
+    },
+    "sac/seal": {
+      "n": 4,
+      "total_seconds": 1.054827000014484,
+      "max_seconds": 0.4823900000192225,
+      "mean_seconds": 0.263706750003621
+    },
+    "sac/actor_world": {
+      "n": 192,
+      "total_seconds": 304.1713930000551,
+      "max_seconds": 1.8009309999179095,
+      "mean_seconds": 1.5842260052086203
+    },
+    "sac/fit": {
+      "n": 192,
+      "total_seconds": 67.53313799994066,
+      "max_seconds": 0.47274600015953183,
+      "mean_seconds": 0.351735093749691
+    },
+    "ppo/seal": {
+      "n": 4,
+      "total_seconds": 0.29081999976187944,
+      "max_seconds": 0.08298099995590746,
+      "mean_seconds": 0.07270499994046986
+    },
+    "ppo/actor_world": {
+      "n": 192,
+      "total_seconds": 322.8512579998933,
+      "max_seconds": 1.8835129998624325,
+      "mean_seconds": 1.6815169687494442
+    },
+    "ppo/fit": {
+      "n": 192,
+      "total_seconds": 39.302316000219434,
+      "max_seconds": 0.24396200012415648,
+      "mean_seconds": 0.20469956250114288
+    },
+    "value_td/seal": {
+      "n": 1,
+      "total_seconds": 0.08097000000998378,
+      "max_seconds": 0.08097000000998378,
+      "mean_seconds": 0.08097000000998378
+    },
+    "value_td/h8_world": {
+      "n": 18,
+      "total_seconds": 630.7543750002515,
+      "max_seconds": 35.853632000042126,
+      "mean_seconds": 35.04190972223619
+    },
+    "value_td/fit": {
+      "n": 18,
+      "total_seconds": 4.994195999810472,
+      "max_seconds": 0.30965199996717274,
+      "mean_seconds": 0.27745533332280403
+    }
+  },
+  "job_cap_violations": [],
+  "last_ledger_event": {
+    "charges": {
+      "control_steps": 1,
+      "native_steps": 1,
+      "total_native_operations": 1
+    },
+    "clock": 1321670.746807,
+    "event": "debit",
+    "owner": "development_training",
+    "phase": "development_training",
+    "previous": "118b663a139b29f1b8dd28564c577f6de924953bbe1376138f9950a8b76b170c",
+    "sequence": 444321,
+    "sha256": "1784a1f738b8d9042cc0e651f7fd793722d3e1dc3691410aa5a2dd09f30b49b0"
+  },
+  "raw_file_count": 3299,
+  "raw_bytes": 866845518,
+  "stderr_bytes": 0,
+  "stdout_bytes": 0,
+  "detached_log_bytes": 0,
+  "failure_or_terminal_files": [],
+  "schema": "capacity-family-selection-monitor-v1",
+  "all_development_jobs": [
+    {
+      "block": 0,
+      "method": "ddpg",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 125.95472300122492
+    },
+    {
+      "block": 0,
+      "method": "ddpg",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 132.48579800105654
+    },
+    {
+      "block": 0,
+      "method": "td3",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 137.3499780013226
+    },
+    {
+      "block": 0,
+      "method": "td3",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 140.9261399996467
+    },
+    {
+      "block": 0,
+      "method": "sac",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 144.8089630000759
+    },
+    {
+      "block": 0,
+      "method": "sac",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 149.68515699915588
+    },
+    {
+      "block": 0,
+      "method": "ppo",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 152.36678700102493
+    },
+    {
+      "block": 0,
+      "method": "ppo",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 156.79809499997646
+    },
+    {
+      "block": 0,
+      "method": "value_td",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 18,
+      "fits": 18,
+      "fit_batches": 576,
+      "rollout_seconds": 629.2363350000232
+    },
+    {
+      "block": 0,
+      "method": "value_td",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "ddpg",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "ddpg",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "td3",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "td3",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "sac",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "sac",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "ppo",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "ppo",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "value_td",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 1,
+      "method": "value_td",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "ddpg",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "ddpg",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "td3",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "td3",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "sac",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "sac",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "ppo",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "ppo",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "value_td",
+      "learning_rate": 0.0001,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    {
+      "block": 2,
+      "method": "value_td",
+      "learning_rate": 0.0003,
+      "world_target": 96,
+      "fit_batch_target": 3072,
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    }
+  ],
+  "stage_progress": {
+    "development_training": {
+      "complete": 786,
+      "target": 2880
+    },
+    "development_evaluation": {
+      "complete": 0,
+      "target": 864
+    },
+    "confirmation_training": {
+      "complete": 0,
+      "target": 1920
+    },
+    "confirmation_evaluation": {
+      "complete": 0,
+      "target": 1080
+    }
+  },
+  "timing_projection": {
+    "remaining_development_training_seconds": 22454.998697001953,
+    "remaining_development_training_hours": 6.237499638056098,
+    "based_on": "Block0 method-specific completed bounded world and fit durations; excludes future seal overhead and treats current partial world as whole.",
+    "full_package_eta": "Not measured; about31h is the existing historical estimate, not recomputed as a guarantee.",
+    "limitations": "Early block0 timing, small value_td sample and growing I/O; later blocks/stages may differ."
+  },
+  "process_observation": {
+    "during_utc_minute": "2026-10-06T21:02Z",
+    "supervisor": {
+      "pid": 92809,
+      "ppid": 1,
+      "elapsed": "33:05",
+      "rss_kib": 209072
+    },
+    "child": {
+      "pid": 92821,
+      "ppid": 92809,
+      "elapsed": "33:02",
+      "rss_kib": 336496
+    },
+    "executable": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python",
+    "supervisor_arguments": "-m experiments.scripts.run_capacity_family_selection --launch",
+    "child_arguments": "-m experiments.scripts.run_capacity_family_selection --child",
+    "claims_and_full_commands_matched": true
+  },
+  "growth_since_launch_snapshot": {
+    "previous_worlds": 218,
+    "current_worlds": 786,
+    "delta_completed_worlds": 568,
+    "previous_optimizer_dispatches": 14368,
+    "current_optimizer_dispatches": 58944
+  },
+  "training_evidence_reused": "reports/capacity_family_selection_launch_snapshot_20261006.json: real Adam receipts and after-fit model state; no reload or extra forward.",
+  "value_optimizer_breakdown": {
+    "ppo_value_updates": 6144,
+    "value_td_updates": 576
+  },
+  "model_seal_counts": {
+    "initial": 9,
+    "final": 8,
+    "confirmation": 0
+  },
+  "monitor_scientific_calls": 0,
+  "performance_claim": null,
+  "finalists": null,
+  "snapshot_caveat": "Progress, ledger, process and file-stat observations are sequential, not atomic. Ledger is charged work including prepaid chunks; last progress may lag."
+}

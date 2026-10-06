@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: five-family package launched once; real training verified
+## Live checkpoint: block0 actor-family training complete; value-MPC training active
+
+2026-10-06T21:03:39Z snapshot. Entry e45b361 clean on the integration branch.
+Supervisor92809/1 and child92821/92809 match current claims/full commands;
+568new completed worlds since launch snapshot establish real progress.
+No terminal/failure/overrun/preservation marker; stderr/stdout/detached logs0bytes.
+Scientific source/config/protocol/authority unchanged. No relaunch or retry.
+
+Development training786/2880; development evaluation0/864; fresh-finalist
+training0/1920; final evaluation0/1080. In block0, DDPG/TD3/SAC/PPO each have
+both learning rates at96/96worlds and3072/3072fit batches per configuration.
+Value_td lr0 has18/96worlds and576fit batches; lr1 and blocks1/2 remain0.
+Current value_td-lr0/block0/condition0/replicate6 at epoch31. Seals9initial+
+8final, not17final models. No selection or performance conclusion yet.
+
+Actual optimizer counts21504actor+30720critic+6720value=58944/460800;
+value includes6144PPO critic updates and576value_td updates. Fit batches25152,
+optimizer examples3772416. Reuse launch real Adam/after-fit proof without extra
+model loading/forward or repeated tests. All evaluation updates remain0.
+
+Ledger50338/431616native steps,51912/445104operations,0clones;
+176596/2013312forwards,344832/50429952prediction steps,5033700/43161600filter
+transitions,898planner decisions. Progress and ledger reads are non-atomic;
+ledger may be a few operations ahead. No pending prepaid chunk at ledger sample.
+Elapsed2042.535/172800s; admission5.803s; development owner2036.732/43200s;
+current H8 world24.134/180s. Completed job intervals remain within caps.
+3299files/866845518bytes; child RSS336496KiB below cap at process observation.
+
+Measured world+fit seconds: DDPG1.358+0.221,TD3 1.480+0.271,
+SAC1.584+0.352,PPO1.682+0.205 (192worlds each); value_td35.042+0.277
+(18worlds). Remaining development training projects about6.24h at these early
+method-specific rates, excluding future seals and counting current partial world
+as whole. Not a full-package ETA; later blocks and growing IO can differ.
+Historical31h estimate remains provisional,48h hard cap unchanged.
+
+Evidence:reports/capacity_family_selection_monitor_20261006T2102Z.json.
+Same ACTIVE monitor unchanged. Continue only the authorized attempt; no interim
+test tuning, extra science, source changes, archive/export while unfinished,
+or manuscript performance claim. Terminal readout and additive handoff remain due.
+
+## Previous checkpoint: five-family package launched once; real training verified
 
 2026-10-06T20:35:31Z. The approved package is running under supervisor92809/1
 and child92821/92809, verified against claims and complete commands. Frozen

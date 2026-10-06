@@ -1,6 +1,43 @@
 # Autonomous local research queue
 
-## Live checkpoint: fresh conditional run active; first real updates verified
+## Live checkpoint: block0 warm models sealed; native-tail training active
+
+2026-10-06T10:38:06Z snapshot. Entryfa3d0a6 clean on the expected integration
+branch. Supervisor65458/1 and child65470/65458 match saved claims/full commands;
+new8step/world/fit/seal/branch boundaries since launch. All3logs0bytes, no
+terminal/failure/overrun/preservation marker. Scientific source and locked
+protocol/config/authority unchanged from execution6d429bb. No extra science.
+
+Shared warmup48/240: block0's graph andself_only each1536/7680warm updates,
+both warm models sealed,2/10total. Both58112byte files match seal SHA256 metadata.
+Reference6/120, native branches13/240; three methods each6/120fits and192/3840
+tail updates. Latest three32update cohorts have finite sequential receipts and
+hashed after-fit states;114after-fit files total. Value3648/26880 =3072warm+
+576native-tail; actor0. Final seals0/15,legacy bindings1/5,evaluation0/420.
+All-model barrier not reached; no test outcome inspection or performance claim.
+
+Currentreference block0/index6/condition0/plainH8, latest progress epoch23.
+Ledger3481main+652branch=4133/59640native;3591mainoperations+652branch=4243,
+13clones;4108/46220forwards;1005312main+130560parent=1135872predictions;
+348100main+65200branch=413300filter transitions,340native-parent decisions.
+Charged reservations may lead completed progress; no refunds. Elapsed2135.47s
+/86400s. Warmup1627.24/18000s,reference491.72/25200s,fit11.04/7200s;
+currentreference42.72/900s. No observed counter,phase or current-job violation.
+
+Measured48warm cycles average33.891s;6early native-reference cycles74.812s.
+At those rates, remaining warmup about1.81h andreference about2.37h,excluding
+fits,evaluation,archive andI/O closure. Native sample is early block0 and roots
+vary; no measured whole-run ETA is claimed. Evidence:
+reports/capacity_confirmation_monitor_20261006T1038Z.json.
+
+Reuse26tests/fullcompileall,616source/11input locks and closed finite agents.
+Same already-active monitor unchanged; no new launch,retry,gate or parameter
+edit. Continue the authorized single run to all seals and420frozen evaluations.
+Only terminal completion/failure triggers manuscript/result handoff and additive
+Dropbox delivery; current-run export pending,cloud/access unverified. No old
+archive rebuilt,external message,remote Git action or other task modification.
+
+## Previous checkpoint: fresh conditional run active; first real updates verified
 
 2026-10-06T10:06:30Z snapshot. Exact full-package approval `批准`.
 Science60828ea,frozen implementationc6ddfe5,execution6d429bb;

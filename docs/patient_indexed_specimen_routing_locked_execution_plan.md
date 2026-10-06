@@ -3807,3 +3807,38 @@ earlier export prohibition; no scientific caps or frozen parameters change.
 Use the existing Research Artifacts destination, retain failures/negative results,
 verify copied bytes, and distinguish local Dropbox copies from cloud completion.
 No change to sharing permissions, external messaging or Howard approval claim.
+
+#### Fresh conditional value-MPC comparison prepared; numerical authority pending
+
+2026-10-06T09:51:39Z. Zhaowei requested `全面的推进` after discussion of whether
+GCN and RL have separate, conditional contributions. Prior native-return work
+completed with a failed persistent primary screen and secondary fast-condition
+signals. These exploratory signals motivate, but do not establish, a prospective
+fast-condition effect. Old experiments and their consumed authority stay closed.
+
+New action: one fresh five-block standardized training and seven-role comparison,
+specified in specs/2026-10-06-conditional-value-confirmation/protocol.md. Fullgraph
+and self-only use identical initial trainable tensors/layers/parameter counts and
+shared plain-MPC warmup data. This changes historical endogenous initialization
+to a shared-data recipe and is not an exact replication of the old method.
+Native TD/MC share branches from the same newly frozen fullgraph parent; own
+initialization and common continuation ancestry are distinguished explicitly.
+Historical models are evaluation references only. Reward/physics/support fixed.
+
+Budget proposal:780main trajectories and240dependent branches,59640native steps,
+61200operations plus240clones,26880value/0actor updates,46220forwards,
+17057280prediction steps,5964000filter transitions,24h includingIO,12GiB,
+oneattempt with phase/owner limits. All10warm/15final seals precede420evaluations.
+All21pairs/3conditions/5blocks and explicit condition interactions retained.
+Prespecified criteria remain descriptive development evidence, not guaranteed
+RL/GCN benefit, clinical validation, algorithm superiority or publication.
+
+Additive implementation,26coordinator zero-update tests and fullcompileall are
+complete. Two finite agents completed/closed. A single complete numerical
+approval question has been sent; there is no exact new reply at this checkpoint.
+No scientific launch or frozen authority exists. After approval, commit literal
+authority and current source/input/runtime/stream locks, launch exactly once and
+complete training/test/readout/handoff without repeated routine permission asks.
+No automatic retry, sample expansion, reward search, StageE or Howard approval.
+Existing Dropbox authorization applies additively at terminal boundaries; no new
+push/merge, public link, permission change or external message is implied.

@@ -1,0 +1,214 @@
+{
+  "schema": "capacity-conditional-confirmation-v1",
+  "scientific_execution_authorized": false,
+  "result_root": "results/capacity_confirmation_20261006",
+  "inherit": {
+    "proposal": "specs/2026-10-03-dynamic-capacity-adaptation/pilot-proposal.json",
+    "sha256": "f46f6d5ae417a67c5974516b1c9e2b5b05ba9e2de56681aaedbfe276e9f355a9"
+  },
+  "initial_models": {
+    "root": "results/capacity_value_comparison_20261004_recovery1/payload/models",
+    "names": [
+      "block0-graph-final.pt",
+      "block1-graph-final.pt",
+      "block2-graph-final.pt",
+      "block3-graph-final.pt",
+      "block4-graph-final.pt"
+    ],
+    "sha256": [
+      "921ea80a67e8b0f0189a3e4d7504e97f59f187a3917418abbc5af0e8dd762c87",
+      "770e5374d7f333f6c9d4182cf36c54ac1fe0fe1dcd9536acca2d65073ec0c22b",
+      "995c5fc0544e3a3157254fe0fdf959cea4279455daa76fc577e0090cb343d541",
+      "9c2c319027b4ed0636ecc828eb2665494927f65b689b9981808b83d2bfc0677e",
+      "814d0e07e5c5bcaa0acccfd4ea42245fe6c0c05bfde3c7133047cc823b92fa0f"
+    ],
+    "historical_updates_per_model": 1536,
+    "fork": "identical_weights_fresh_Adam_and_sampling_state_new_update_count_zero",
+    "role": "historical_reference_only_never_initialize_fresh_models"
+  },
+  "design": {
+    "blocks": 5,
+    "conditions": 3,
+    "warmup_worlds_per_block": 48,
+    "reference_worlds_per_block": 24,
+    "evaluation_worlds_per_condition_block": 4,
+    "warm_roles": [
+      "graph",
+      "self_only"
+    ],
+    "train_roles": [
+      "graph_td",
+      "self_only_td",
+      "graph_mc"
+    ],
+    "eval_roles": [
+      "plain_h8",
+      "fresh_frozen",
+      "existing_frozen",
+      "graph_td",
+      "self_only_td",
+      "graph_mc",
+      "plain_h16"
+    ],
+    "reference_behavior": "plain_h8",
+    "all_final_seals_before_tests": true,
+    "selection": "final_only"
+  },
+  "planning": {
+    "candidate_sequences": 16,
+    "response_quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "summary_weights": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "horizon": 8,
+    "long_reference_horizon": 16
+  },
+  "value": {
+    "width": 32,
+    "lr": 0.0003,
+    "batch_size": 64,
+    "updates_per_world": 32,
+    "gradient_norm_cap": 5,
+    "cost_scale": 1000000,
+    "td_horizon": 8,
+    "gamma": 1,
+    "targets": "frozen_before_each_world_fit",
+    "sampling": "uniform_over_all_rows_with_identical_TD_MC_indices",
+    "evaluation_updates": 0
+  },
+  "streams": {
+    "namespace": "capacity-confirmation-20261006-v1",
+    "warmup_base": 66100000,
+    "reference_base": 66120000,
+    "evaluation_base": 66140000,
+    "model_seeds": [
+      551280610,
+      551280630,
+      551280650,
+      551280670,
+      551280690
+    ],
+    "sampler_seeds": [
+      551281610,
+      551281630,
+      551281650,
+      551281670,
+      551281690
+    ],
+    "bootstrap_seed": 66190001,
+    "purposes": [
+      "demand",
+      "patient_identity_attributes",
+      "response_change",
+      "exploration",
+      "replay"
+    ]
+  },
+  "budget": {
+    "counts": {
+      "main_trajectories": 780,
+      "warmup_worlds": 240,
+      "reference_worlds": 120,
+      "evaluation_trajectories": 420,
+      "native_branch_clones": 240,
+      "main_native_steps": 49920,
+      "native_branch_steps": 9720,
+      "total_native_steps": 59640,
+      "total_native_operations": 61200,
+      "value_optimizer_steps": 26880,
+      "actor_optimizer_steps": 0,
+      "optimizer_examples": 1720320,
+      "training_bootstrap_forwards": 840,
+      "forward_calls": 46220,
+      "main_planning_epochs": 15482880,
+      "native_branch_planning_decisions": 4100,
+      "native_branch_planning_epochs": 1574400,
+      "total_predictor_epochs": 17057280,
+      "total_filter_transitions": 5964000,
+      "warm_seals": 10,
+      "final_seals": 15,
+      "legacy_bindings": 5,
+      "native_suffix_rows": 7800
+    },
+    "seconds": {
+      "admission": 600,
+      "warmup_reference": 18000,
+      "reference_and_tails": 25200,
+      "value_fitting": 7200,
+      "frozen_evaluation": 24000,
+      "analysis_archive": 4800,
+      "failure_preservation": 6600,
+      "global": 86400
+    },
+    "owner_seconds": {
+      "warmup_world": 180,
+      "reference_world_with_tails": 900,
+      "evaluation_h8_world": 180,
+      "evaluation_h16_world": 300,
+      "fit": 60,
+      "seal": 60
+    },
+    "rss_bytes": 4294967296,
+    "raw_bytes": 6442450944,
+    "archive_bytes": 6442450944,
+    "combined_disk_bytes": 12884901888,
+    "file_cap": 12000,
+    "compute_threads": 4,
+    "workers": 1,
+    "attempts": 1,
+    "automatic_retry": false,
+    "includes_io": true
+  },
+  "readout": {
+    "candidate": "graph_td",
+    "primary_condition": 2,
+    "primary_comparators": [
+      "plain_h8",
+      "fresh_frozen"
+    ],
+    "target_comparator": "graph_mc",
+    "graph_comparator": "self_only_td",
+    "compute_reference": "plain_h16",
+    "historical_reference": "existing_frozen",
+    "bootstrap_resamples": 2000,
+    "screen": "joint_positive_fast_cost_lower_descriptive95_and_all_five_cost_blocks_for_both_primary_comparators_with_no_fast_mean_extra_patient_losses",
+    "interaction": "paired_training_block_fast_minus_no_change_and_fast_minus_persistent_savings; descriptive_not_significance_by_subgroup",
+    "report_all_21_pairs": true,
+    "test_optimizer_steps": 0,
+    "formal_multiplicity_adjusted_confirmation": false
+  },
+  "limitations": [
+    "fast_condition_selected_from_prior_exploratory_results_prospectively_registered_for_new_data",
+    "five_fresh_training_blocks_not_420_independent_training_runs",
+    "standardized_plain_H8_warmup_not_exact_historical_recipe_replication",
+    "self_only_has_same_depth_parameters_features_pooling_but_no_neighbor_messages",
+    "common_graph_parent_native_data_conditions_the_graph_ablation",
+    "legacy_models_reused_not_new_replications",
+    "MC_is_also_policy_evaluation_not_non_RL",
+    "same_TD_MC_data_updates_not_equal_forwards",
+    "native_branches_dependent_not_independent_worlds",
+    "E1_missing_synthetic_methods_not_clinical_safety",
+    "frozen_evaluation_not_deployment_online_adaptation",
+    "forecast_endpoint_distribution_gap_remains",
+    "no_DDPG_TD3_superiority_claim"
+  ],
+  "forbidden": [
+    "historical_attempt_resume",
+    "reward_search",
+    "scenario_search",
+    "architecture_search",
+    "extra_epochs",
+    "test_based_selection",
+    "automatic_retry",
+    "StageE_reopen",
+    "unapproved_remote_push",
+    "external_messages",
+    "Howard_approval_claim"
+  ]
+}

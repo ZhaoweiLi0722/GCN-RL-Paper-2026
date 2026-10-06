@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: literature benchmarks added; no new scientific run
+## Live checkpoint: fresh conditional comparison ready; numerical approval pending
+
+2026-10-06T09:51:39Z. Entry9496f82 on the expected integration branch. Zhaowei
+requested `全面的推进`. Implemented one integrated fresh-seed GCN TD value-MPC
+comparison in specs/2026-10-06-conditional-value-confirmation/protocol.md;
+integration-readout.md records implementation, necessary tests and boundaries.
+No historical scientific source, checkpoint, result or reward was changed.
+
+Main question: fast-fluctuation increment versus plainH8 AND the fresh frozen
+initializer, with all stable/persistent harms retained. Matched self-only TD
+tests message passing; graphMC tests the estimator under shared native data;
+H16 remains the stronger-compute reference. Historical reference is eval-only.
+Five new training seeds and identical graph/self-only starting tensors; shared
+48-world plain-MPC initialization is a new recipe, not exact historical replay.
+GCN contribution and patient benefit remain unproven until the comparison.
+
+Prepared complete scope:240warm+120reference+420seven-role evaluations,
+240dependent native branches,59640native steps,61200operations plus240clones,
+26880value/0actor,46220forwards,17057280prediction steps,5964000filter transitions;
+24h includingIO/12GiB with phase and owner caps,oneattempt,noauto-retry.
+10warm+15final seals before any test. TD/MC same data is not equal compute.
+
+26coordinator zero-update tests and fullcompileall passed. Full actual-entry
+780main/240branch schedule and saved reader exercised with artificial backends.
+Popper and Avicenna completed and closed; reuse their work, no extra audit gate.
+One full numerical question sent; reply not yet received. No freeze, run root,
+scientific model inference, real environment or optimizer execution in this
+preparation. Unit-test tensors are not scientific progress or benefit.
+
+Only remaining execution boundary is the new package decision and its required
+committed locks. On approval, finish these and launch once directly, without
+another stage/startup question. Old attempt remains consumed. Same monitor's
+last verified statePAUSED, not changed this turn. New artifacts go to the already
+authorized additive Dropbox handoff at terminal boundary; no new remote push.
+E1 remains uncalibrated; all results remain synthetic methods evidence.
+
+## Previous checkpoint: literature benchmarks added; no new scientific run
 
 2026-10-06. Zhaowei confirmed no site-level engineering data are available and
 requested industry/clinical literature and sensitivity ranges, explicitly framed

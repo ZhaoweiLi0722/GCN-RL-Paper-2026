@@ -1,6 +1,43 @@
 # Autonomous local research queue
 
-## Live checkpoint: all fresh models sealed; independent evaluation active
+## Live checkpoint: first independent evaluation block complete
+
+2026-10-07T22:02:43Z snapshot. Supervisor92809/1 and child92821/92809 match
+claims/full commands;62new completed worlds and491epoch boundaries since
+21:32:28Z confirm progress. No new fits or model seals. Correct branch clean
+on entry; no terminal/failure/overrun/preservation markers, all three logs0bytes.
+
+Development training2880/2880, development evaluation864/864 and fresh training
+1920/1920 remain complete. Independent evaluation270/1080 (25%): block0 has
+all nine roles24/24worlds, block1 has each role6/24. Active plain H8 block1,
+condition0/replicate2. All evaluation fits/updates0. The20fresh final models
+remain sealed; reuse the prior verified ordering before the first test world.
+Only progress/counts/timing read; no interim test performance or winner viewed.
+
+Training counters unchanged:95232actor+153600critic+67584value=316416optimizer
+dispatches;153600fit batches,20250624examples. Every fresh training job remains
+96worlds/3072batches. Value optimizer split18432PPO+49152value_td. Last progress
+boundary379776native/391646operations,0clones,986208forwards,38817792prediction
+steps,37977600filter transitions; no observed total counter-cap violations.
+The newly started world is charged but not counted as completed. Full-package
+1016448forwards is still a projection. Reuse23tests/fullcompileall and first
+DDPG Adam/after-fit evidence; no added science, test gate or source changes.
+
+Elapsed91986.823/172800s; evaluation owner8163.926/36000s; active H8world
+2.871/180s at ledger sample. Child RSS290512KiB at process check. Thirty
+completed timing receipts per role give H8 36.831s,H16 67.796s,legacy36.948s,
+value roles36.757-36.902s,SAC roles4.021-4.044s. Stratified remaining rollout
+proxy6.603h, excluding extra I/O, raw readout/archive/handoff; not a guaranteed
+full-package ETA. Sequential reads are not an atomic snapshot. Caps unchanged.
+
+Evidence:reports/capacity_family_selection_monitor_20261007T2202Z.json.
+Question answered: the first complete independent block is recorded with zero
+learning updates. Remaining: finish810independent trajectories, raw readout,
+truthful manuscript and additive terminal Dropbox handoff. No performance,
+graph/RL benefit or unique-winner claim. Same authority/attempt and ACTIVE
+monitor; local-copy/cloud-sync/collaborator-access unverified for this run.
+
+## Previous checkpoint: all fresh models sealed; independent evaluation active
 
 2026-10-07T20:02:29Z snapshot. Supervisor92809/1 and child92821/92809 match
 claims/full commands;168new completed worlds,139fits and1346epoch boundaries

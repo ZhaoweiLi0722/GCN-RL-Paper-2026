@@ -1,6 +1,47 @@
 # Autonomous local research queue
 
-## Live checkpoint: two development blocks complete; third block active
+## Live checkpoint: all development training complete; evaluation active
+
+2026-10-07T04:03:20Z progress snapshot. Correct integration branch clean on
+entry; supervisor92809/1 and child92821/92809 match claims/full commands.
+Since03:32:32Z,42more training worlds/fits and13evaluation worlds completed.
+No terminal/failure/overrun/preservation markers; all three logs remain0bytes.
+
+Development training2880/2880 and2880fits complete. Every family/lr/block job
+has96worlds and3072fit batches: all30trained final models and30initial models
+sealed before the first development evaluation. Evaluation13/864; fresh-finalist
+training0/1920 and final evaluation0/1080. Active plain_h16,block0/condition1/
+replicate0,epoch31. No finalists or winner yet; no interim performance tuning.
+
+Completed training used64512actor+92160critic+36864value=193536optimizer
+dispatches; value splits18432PPO critic+18432value_td. Fit batches92160,
+examples12386304. Evaluation has added zero optimizer updates. Reuse launch
+Adam/after-fit evidence and23necessary tests/fullcompileall; no extra science.
+
+Training boundary:184320native steps,190080operations,571968forwards,
+10616832prediction steps,18432000filter transitions. Current progress boundary:
+185184/431616native,190972/445104operations,0clones,572448/2013312forwards,
+10752000/50429952prediction steps,18518400/43161600filter transitions.
+No observed total counter-cap violations. Frozen phase/job limits unchanged.
+
+Development-training owner closed at26918.613/43200s. Current elapsed
+27223.473/172800s; evaluation owner299.056/21600s; active H16world56.824/300s.
+Child RSS280096KiB. Later disk sample at04:03:45Z:12547files/3148782422bytes.
+Sequential observations are not atomic; prepaid ledger debit is not executed work.
+
+Very early evaluation rollout means: H8 36.106s,H16 67.296s,actor roles
+2.730-2.793s,value roles35.950-35.973s,only1-2worlds per role. Role-weighted
+remaining development-evaluation extrapolation3.88h excludes growing I/O and
+selection; not a full-package ETA or guarantee. Fresh finalist training and
+independent evaluation still follow. No patient/cost superiority claimed.
+
+Evidence:reports/capacity_family_selection_monitor_20261007T0402Z.json.
+Same ACTIVE single attempt; H8/H16/reward/source/locks unchanged. Continue
+authorized selection/retraining/evaluation without a repeat launch or approval.
+Terminal raw readout, truthful manuscript and additive Dropbox handoff remain
+due; local-copy/cloud-sync/collaborator-access not verified for this running run.
+
+## Previous checkpoint: two development blocks complete; third block active
 
 2026-10-07T01:32:25Z progress snapshot. Correct integration branch clean on
 entry; supervisor92809/1 and child92821/92809 match claims/full commands.

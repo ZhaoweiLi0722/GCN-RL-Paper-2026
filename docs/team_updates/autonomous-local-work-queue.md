@@ -1,6 +1,45 @@
 # Autonomous local research queue
 
-## Live checkpoint: all block0 configurations trained; block1 active
+## Live checkpoint: two development blocks complete; third block active
+
+2026-10-07T01:32:25Z progress snapshot. Correct integration branch clean on
+entry; supervisor92809/1 and child92821/92809 match claims/full commands.
+319new completed worlds since01:02:28Z establish actual progress. No terminal,
+failure, overrun or preservation markers; stderr/stdout/detached logs0bytes.
+
+Development training2215/2880worlds and2215fits; evaluation0/864, fresh-finalist
+training0/1920, final evaluation0/1080. Blocks0and1 each completed all five
+families at both learning rates:96worlds and3072fit batches per configuration,
+ten trained final seals per block. Block2 DDPG both rates andTD3-lr0 complete;
+TD3-lr1 has7worlds/224fit batches. Other block2 jobs have not started. Snapshot
+active role TD3-lr1/block2/condition1/replicate2,epoch23. Seals24initial+23final.
+No development selection or performance conclusion yet.
+
+Actual optimizer counts50800actor+74176critic+24576value=149552/460800;
+value is12288PPO critic+12288value_td. Fit batches70880; examples9571328.
+Reuse actual launch Adam/after-fit evidence; no extra science or repeated tests.
+Last progress boundary:141784/431616native,146216/445104operations,0clones;
+445992/2013312forwards,7077888/50429952prediction steps,
+14178400/43161600filter transitions,18432planner decisions. No observed total
+counter-cap violations. Frozen per-job/phase limits remain in force.
+
+Elapsed18168.497/172800s; development owner18162.694/43200s; current actor
+world0.808/120s at ledger sample. Child RSS290224KiB at process observation;
+later file sample9669files/2420893562bytes. Sequential observations are not
+atomic; last prepaid debit is not asserted executed and later files may be ahead.
+
+Latest-block rollout means: DDPG2.301,TD3 2.347,SAC1.993,PPO2.095,
+value_td35.345seconds. Reusing early measured fit times gives about2.21h for
+remaining DEVELOPMENT TRAINING ONLY, excluding future seals and growing IO.
+No measured full-package ETA: development evaluation, finalist selection,
+fresh training and final evaluation still follow.48h hard cap unchanged.
+
+Evidence:reports/capacity_family_selection_monitor_20261007T0132Z.json.
+Same ACTIVE single attempt; H8/H16/reward/scientific source and locks unchanged.
+No relaunch/retry or interim test tuning. Terminal raw readout, manuscript result
+update and additive Dropbox handoff remain due; no unfinished-run export.
+
+## Previous checkpoint: all block0 configurations trained; block1 active
 
 2026-10-06T23:05:10Z progress snapshot. Correct integration branch was clean
 on entry. Supervisor92809/1 and child92821/92809 match claims/full commands;

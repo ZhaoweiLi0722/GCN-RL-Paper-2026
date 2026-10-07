@@ -1,0 +1,374 @@
+{
+  "at_utc": "2026-10-07T01:32:25.477336+00:00",
+  "claim": {
+    "authorization_sha256": "daedf7d811b47cebe14140b43b8fdae50dbbabc9ae00684275e2d9c6badeabe2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "f5772e824632248be458d42e487f757477100575",
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92809,
+    "ppid": 1,
+    "started": 1319628.211923
+  },
+  "child_claim": {
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92821,
+    "ppid": 92809
+  },
+  "events": {
+    "model_sealed": 47,
+    "trajectory_started": 2216,
+    "epoch_boundary": 17723,
+    "trajectory_completed": 2215,
+    "fit_completed": 2215
+  },
+  "stages": {
+    "development_training": 2215,
+    "development_evaluation": 0,
+    "confirmation_training": 0,
+    "confirmation_evaluation": 0
+  },
+  "jobs": {
+    "development_training/b0/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 125.95472300122492
+    },
+    "development_training/b0/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 132.48579800105654
+    },
+    "development_training/b0/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 137.3499780013226
+    },
+    "development_training/b0/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 140.9261399996467
+    },
+    "development_training/b0/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 144.8089630000759
+    },
+    "development_training/b0/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 149.68515699915588
+    },
+    "development_training/b0/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 152.36678700102493
+    },
+    "development_training/b0/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 156.79809499997646
+    },
+    "development_training/b0/value_td-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3459.2607510017697
+    },
+    "development_training/b0/value_td-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3366.5909019995015
+    },
+    "development_training/b1/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 173.7262469995767
+    },
+    "development_training/b1/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 178.565808999585
+    },
+    "development_training/b1/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 182.80564799928106
+    },
+    "development_training/b1/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 188.45583599992096
+    },
+    "development_training/b1/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 189.9559469986707
+    },
+    "development_training/b1/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 192.6438879999332
+    },
+    "development_training/b1/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 198.84821400116198
+    },
+    "development_training/b1/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 203.42118399892934
+    },
+    "development_training/b1/value_td-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3386.2716169997584
+    },
+    "development_training/b1/value_td-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3400.007108999882
+    },
+    "development_training/b2/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 219.161055999808
+    },
+    "development_training/b2/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 222.6897990014404
+    },
+    "development_training/b2/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 224.79092500102706
+    },
+    "development_training/b2/td3-lr1-graph": {
+      "worlds": 7,
+      "fits": 7,
+      "fit_batches": 224,
+      "rollout_seconds": 16.954930000007153
+    },
+    "development_training/b2/sac-lr0-graph": {
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    "development_training/b2/sac-lr1-graph": {
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    "development_training/b2/ppo-lr0-graph": {
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    "development_training/b2/ppo-lr1-graph": {
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    "development_training/b2/value_td-lr0-graph": {
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    },
+    "development_training/b2/value_td-lr1-graph": {
+      "worlds": 0,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 0
+    }
+  },
+  "last_progress": {
+    "event": "epoch_boundary",
+    "active": {
+      "phase": "development_training",
+      "block": 2,
+      "condition": 1,
+      "replicate": 2,
+      "seed": 67102007,
+      "role": "td3-lr1-graph"
+    },
+    "epoch": 23,
+    "counts": {
+      "trajectories": 2216,
+      "native_steps": 141784,
+      "native_constructions": 2216,
+      "construction_triggered_resets": 2216,
+      "total_native_operations": 146216,
+      "control_steps": 106344,
+      "tail_steps": 35440,
+      "estimator_receipt_updates": 141784,
+      "estimator_hypothesis_transitions": 14178400,
+      "planner_total_decisions": 18432,
+      "planner_candidate_rollouts": 884736,
+      "planner_total_model_epochs": 7077888,
+      "neural_forward_module_calls": 445992,
+      "actor_optimizer_steps": 50800,
+      "critic_optimizer_steps": 74176,
+      "value_optimizer_steps": 24576,
+      "total_optimizer_steps": 149552,
+      "optimizer_example_presentations": 9571328,
+      "fit_batches": 70880
+    }
+  },
+  "initial_seals": 24,
+  "final_seals": 23,
+  "elapsed_seconds": 18168.496948000044,
+  "owner_elapsed_seconds": 18162.69370199996,
+  "current_job": {
+    "cap": 120,
+    "clock": 1337795.900436,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "development_training-b2-c1-j2-td3-lr1-graph",
+    "kind": "actor_world",
+    "previous": "95772b0f49a2f8f34b6fecad3c267a6b37dee135c2c51be5380ba38a676f4e33",
+    "sequence": 1231195,
+    "sha256": "109230800edf1fa73fb8050ccd98dfa57594e84e85410f63eaa34a9ed879adf3"
+  },
+  "current_job_elapsed_seconds": 0.8084350000135601,
+  "last_ledger": {
+    "charges": {
+      "control_steps": 1,
+      "native_steps": 1,
+      "total_native_operations": 1
+    },
+    "clock": 1337796.708871,
+    "event": "debit",
+    "owner": "development_training",
+    "phase": "development_training",
+    "previous": "199576d44c418d5156f3dda9b0556b29a4c4aee7ec23196cc92dcfc38314cf9e",
+    "sequence": 1231355,
+    "sha256": "31695220d6e1a874c0e46ead98682e005225887923597f4c20f81eabf69ed106"
+  },
+  "budget_bytes": 422960243,
+  "logs": {
+    "stderr": 0,
+    "stdout": 0,
+    "detached": 0
+  },
+  "failure_or_terminal_files": [],
+  "rates": {
+    "ddpg": {
+      "block": 2,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 2.3013065364648355,
+      "earlier_fit_mean_seconds": 0.2214421510398097,
+      "remaining_worlds": 0
+    },
+    "td3": {
+      "block": 2,
+      "completed_worlds": 103,
+      "mean_rollout_seconds": 2.347047135932371,
+      "earlier_fit_mean_seconds": 0.2713475885357184,
+      "remaining_worlds": 89
+    },
+    "sac": {
+      "block": 1,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 1.992707473951062,
+      "earlier_fit_mean_seconds": 0.351735093749691,
+      "remaining_worlds": 192
+    },
+    "ppo": {
+      "block": 1,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 2.095153114583809,
+      "earlier_fit_mean_seconds": 0.20469956250114288,
+      "remaining_worlds": 192
+    },
+    "value_td": {
+      "block": 1,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 35.345201697914796,
+      "earlier_fit_mean_seconds": 0.27745533332280403,
+      "remaining_worlds": 192
+    }
+  },
+  "remaining_development_training_hours": 2.2123033242983707,
+  "value_optimizer_breakdown": {
+    "ppo": 12288,
+    "value_td": 12288
+  },
+  "observed_counter_cap_violations": [],
+  "previous_at_utc": "2026-10-07T01:02:28.954650+00:00",
+  "completed_world_growth": 319,
+  "run_files": 9669,
+  "run_bytes": 2420893562,
+  "seals_by_block": {
+    "development_training/b0/initial": 10,
+    "development_training/b0/final": 10,
+    "development_training/b1/initial": 10,
+    "development_training/b1/final": 10,
+    "development_training/b2/initial": 4,
+    "development_training/b2/final": 3
+  },
+  "schema": "capacity-family-selection-monitor-v1",
+  "process_observation": {
+    "at_utc_approx": "2026-10-07T01:32:28Z",
+    "ps": "92809     1 05:02:51  46944 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --launch\n92821 92809 05:02:48 290224 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --child\n",
+    "claims_and_complete_commands_matched": true
+  },
+  "previous_persisted_snapshot": "reports/capacity_family_selection_monitor_20261006T2302Z.json",
+  "stage_targets": {
+    "development_training": 2880,
+    "development_evaluation": 864,
+    "confirmation_training": 1920,
+    "confirmation_evaluation": 1080
+  },
+  "completed_development_blocks": [
+    0,
+    1
+  ],
+  "milestone": "Blocks0and1 each completed all10 configurations,96worlds and3072fit batches each,10trained final seals each. Block2 DDPG both learning rates andTD3-lr0 complete;TD3-lr1 active.",
+  "compute_caps": {
+    "native_steps": 431616,
+    "total_native_operations": 445104,
+    "total_optimizer_steps": 460800,
+    "neural_forward_module_calls": 2013312,
+    "planner_total_model_epochs": 50429952,
+    "estimator_hypothesis_transitions": 43161600,
+    "fit_batches": 153600,
+    "optimizer_example_presentations": 29491200
+  },
+  "owner_cap_seconds": 43200,
+  "global_cap_seconds": 172800,
+  "timing_caveat": "Latest completed block per-family rollout times plus reused early block0 fit times; excludes future seals and growing I/O. Development-training-only ETA; no measured full-package ETA.",
+  "training_evidence_reused": "Launch actual optimizer receipts and after-fit model/Adam state; no repeated model loading, scientific forward/environment/optimizer or tests.",
+  "scientific_calls_by_monitor": 0,
+  "automation_changed": false,
+  "finalists": null,
+  "performance_result": null,
+  "snapshot_caveat": "Non-atomic sequential progress, ledger, process and size reads. Scientific counters are last saved progress boundary; last prepaid debit is not asserted executed. Later seal/size observations may be ahead."
+}

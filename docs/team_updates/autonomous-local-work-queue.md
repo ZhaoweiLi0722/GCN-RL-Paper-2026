@@ -1,6 +1,53 @@
 # Autonomous local research queue
 
-## Live checkpoint: finalists selected; fresh training active
+## Live checkpoint: first fresh block sealed; second block active
+
+2026-10-07T10:32:44Z snapshot. Supervisor92809/1 and child92821/92809 match
+claims/full commands;217new worlds/fits since10:02:41Z confirm real progress.
+Correct branch clean on entry. No terminal/failure/overrun/preservation markers;
+stderr/stdout/detached logs0bytes. Same single attempt; no scientific changes.
+
+Development training2880/2880 and evaluation864/864 complete. Fresh training
+403/1920worlds and fits; independent evaluation0/1080. Fresh block0 completed
+all four jobs: value_td-lr0 and sac-lr1, each graph/self_only,96worlds and3072fit
+batches/job. Four fresh final models sealed (4/20); total seals35initial+34final.
+Block1 value_td graph has19worlds/608fit batches; active next world condition1,
+replicate6,epoch0. All other fresh blocks remain unfinished. No test tuning.
+
+Actual optimizer counts70656actor+104448critic+43616value=218720/460800;
+value splits18432PPO critic+25184value_td. New fresh training accounts for
+6144actor+12288critic+6752value=25184dispatches. Total fit batches105056;
+optimizer examples13998080. Evaluation updates0. Four saved seal records include
+model SHA/bytes and recorded update counts; launch real Adam/after-fit proof and
+23tests/fullcompileall are reused. No extra science or checkpoint loading.
+
+Last progress boundary:265408/431616native,273704/445104operations,0clones,
+681987/2013312forwards,21141504/50429952prediction steps,
+26540800/43161600filter transitions,51600planner decisions. No observed total
+counter-cap violations. Expected full-package316416optimizer dispatches and
+1016448forwards remain projections, not completed work or extra allowances.
+
+Elapsed50587.026/172800s; fresh-training owner8850.797/57600s. Active H8world
+0.007/180s at ledger sample. Closed development-training/evaluation owners
+26918.613/14810.410s, selection analysis1.403s. Child RSS285536KiB at process
+check; later10:33:20Z disk sample16270files/4248161500bytes. Sequential samples
+are not atomic; prepaid ledger charges are not assertions of completed work.
+
+Fresh rollout means: value_td36.052s over211worlds; SAC3.108s over192worlds.
+Reusing earlier fit receipts gives8.297h remaining training rollout/fit. Existing
+development-based independent-evaluation proxy8.502h is unchanged. Both exclude
+growing I/O, seals, raw readout/archive/handoff; no full-package ETA guarantee.
+Frozen per-job/phase/global caps and H8/H16/reward/source/locks remain fixed.
+
+Evidence:reports/capacity_family_selection_monitor_20261007T1032Z.json.
+Question answered: both finalists completed the first fresh graph/self_only
+training block. This is training/sealing evidence, not graph or RL superiority.
+Remaining patient comparison: finish the other four blocks, seal all finals,
+then1080zero-update independent evaluations and complete raw readout/manuscript.
+Continue under existing authority. Same automation ACTIVE; terminal additive
+Dropbox handoff remains due, with local-copy/cloud-sync/access unverified.
+
+## Previous checkpoint: finalists selected; fresh training active
 
 2026-10-07T08:32:31Z progress snapshot. Correct integration branch clean on
 entry; supervisor92809/1 and child92821/92809 match claims/full commands.

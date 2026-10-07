@@ -1,6 +1,57 @@
 # Autonomous local research queue
 
-## Live checkpoint: fourth fresh block sealed; fifth block active
+## Live checkpoint: all fresh models sealed; independent evaluation active
+
+2026-10-07T20:02:29Z snapshot. Supervisor92809/1 and child92821/92809 match
+claims/full commands;168new completed worlds,139fits and1346epoch boundaries
+since19:32:57Z confirm progress and the phase transition. Correct branch clean
+on entry. No terminal/failure/overrun/preservation markers; stderr/stdout/detached
+logs0bytes. Same single attempt, unchanged frozen science and H8/H16 baselines.
+
+Development training2880/2880, development evaluation864/864 and fresh training
+1920/1920worlds/fits complete. All five blocks completed both finalists' graph/
+self_only jobs, each96worlds/3072fit batches:20final models sealed (20/20).
+Total seals50initial+50final. Last fresh final seal is progress line61541;
+first independent evaluation starts at61542. No fit events follow that boundary.
+Independent evaluation29/1080, block0 active; current role legacy, condition0/
+replicate1, epoch23. Only progress/counts/timing read, not interim test outcomes.
+
+Actual completed training95232actor+153600critic+67584value=316416dispatches;
+value splits18432PPO critic+49152value_td. These match the frozen
+expected_learning_counts formula for value_td and SAC finalists. Fresh training
+contributes30720actor+61440critic+30720value=122880dispatches. Total fit batches
+153600; optimizer examples20250624. All learning counters unchanged since the
+first independent evaluation boundary; evaluation updates0. Complete learning
+is now observed, not a projection. Reuse launch Adam/after-fit proof and23tests/
+fullcompileall. No model loading, new gate, extra scientific calls or retuning.
+
+Last progress boundary:364376/431616native,375764/445104operations,0clones,
+977160/2013312forwards,35398656/50429952prediction steps,
+36437600/43161600filter transitions,88536planner decisions. No observed total
+counter-cap violations. Full-package1016448forwards remains a projection until
+evaluation ends. All20final seal order and block4 SHA/bytes/counts are saved.
+
+Elapsed84771.820/172800s; independent-evaluation owner948.923/36000s. Active
+H8world20.080/180s at ledger sample. Closed fresh-training owner42086.668/57600s;
+closed development owners26918.613/14810.410s; selection analysis1.403s. Child
+RSS283424KiB at process check. Later20:03:02Z disk23577files/6013072143bytes.
+Sequential reads are not atomic; prepaid charges are not completed-work claims.
+
+Early independent rollout means from3-4worlds per role: H8 36.809s,H16 68.048s,
+legacy37.478s,value_td roles37.128-37.275s,SAC roles4.038-4.046s. Stratified
+remaining rollout proxy8.616h; training remaining0. Partial active world ignored.
+This small early timing sample excludes growing I/O, raw readout/archive/handoff;
+not a full-package ETA or guarantee. All phase/job/global caps remain fixed.
+
+Evidence:reports/capacity_family_selection_monitor_20261007T2002Z.json.
+Question answered: complete fresh retraining/sealing precedes the independent
+zero-update comparison. No winner, cost/patient benefit, graph benefit or RL
+benefit is established yet. Remaining: finish1080independent trajectories,
+complete raw readout, truthful manuscript and additive terminal Dropbox handoff.
+Existing authority continues; same automation ACTIVE. Local-copy/cloud-sync/
+collaborator-access remain unverified for this run. No follow-on or retry.
+
+## Previous checkpoint: fourth fresh block sealed; fifth block active
 
 2026-10-07T17:37:05Z snapshot for the17:32Z heartbeat. Supervisor92809/1 and
 child92821/92809 match claims/full commands;217new worlds/fits and1737epoch

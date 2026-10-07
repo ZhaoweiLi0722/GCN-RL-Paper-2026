@@ -1,0 +1,935 @@
+{
+  "at_utc": "2026-10-07T08:32:31.545665+00:00",
+  "claim": {
+    "authorization_sha256": "daedf7d811b47cebe14140b43b8fdae50dbbabc9ae00684275e2d9c6badeabe2",
+    "clock_id": "posix-clock-monotonic-v1",
+    "head": "f5772e824632248be458d42e487f757477100575",
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92809,
+    "ppid": 1,
+    "started": 1319628.211923
+  },
+  "child_claim": {
+    "packet_sha256": "40fd80177913db5b6009bcccf4a87703a17bcdc3fd5caf2fc184f3739b009cc9",
+    "pid": 92821,
+    "ppid": 92809
+  },
+  "events": {
+    "model_sealed": 61,
+    "trajectory_started": 3788,
+    "epoch_boundary": 30297,
+    "trajectory_completed": 3787,
+    "fit_completed": 2923,
+    "finalists_selected": 1
+  },
+  "stages": {
+    "development_training": 2880,
+    "development_evaluation": 864,
+    "confirmation_training": 43,
+    "confirmation_evaluation": 0
+  },
+  "jobs": {
+    "development_training/b0/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 125.95472300122492
+    },
+    "development_training/b0/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 132.48579800105654
+    },
+    "development_training/b0/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 137.3499780013226
+    },
+    "development_training/b0/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 140.9261399996467
+    },
+    "development_training/b0/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 144.8089630000759
+    },
+    "development_training/b0/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 149.68515699915588
+    },
+    "development_training/b0/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 152.36678700102493
+    },
+    "development_training/b0/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 156.79809499997646
+    },
+    "development_training/b0/value_td-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3459.2607510017697
+    },
+    "development_training/b0/value_td-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3366.5909019995015
+    },
+    "development_training/b1/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 173.7262469995767
+    },
+    "development_training/b1/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 178.565808999585
+    },
+    "development_training/b1/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 182.80564799928106
+    },
+    "development_training/b1/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 188.45583599992096
+    },
+    "development_training/b1/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 189.9559469986707
+    },
+    "development_training/b1/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 192.6438879999332
+    },
+    "development_training/b1/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 198.84821400116198
+    },
+    "development_training/b1/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 203.42118399892934
+    },
+    "development_training/b1/value_td-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3386.2716169997584
+    },
+    "development_training/b1/value_td-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3400.007108999882
+    },
+    "development_training/b2/ddpg-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 219.161055999808
+    },
+    "development_training/b2/ddpg-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 222.6897990014404
+    },
+    "development_training/b2/td3-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 224.79092500102706
+    },
+    "development_training/b2/td3-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 234.43832499999553
+    },
+    "development_training/b2/sac-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 237.44303200091235
+    },
+    "development_training/b2/sac-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 241.5878479979001
+    },
+    "development_training/b2/ppo-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 245.63293099962175
+    },
+    "development_training/b2/ppo-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 250.08419099985622
+    },
+    "development_training/b2/value_td-lr0-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3436.29623700073
+    },
+    "development_training/b2/value_td-lr1-graph": {
+      "worlds": 96,
+      "fits": 96,
+      "fit_batches": 3072,
+      "rollout_seconds": 3438.450100000249
+    },
+    "development_evaluation/b0/plain_h8": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 860.9009360014461
+    },
+    "development_evaluation/b0/plain_h16": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 1609.1410420001484
+    },
+    "development_evaluation/b0/ddpg-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.30895299976692
+    },
+    "development_evaluation/b0/ddpg-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.72058500000276
+    },
+    "development_evaluation/b0/td3-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.5859199995175
+    },
+    "development_evaluation/b0/td3-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.60388799966313
+    },
+    "development_evaluation/b0/sac-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.68766599940136
+    },
+    "development_evaluation/b0/sac-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.57809900003485
+    },
+    "development_evaluation/b0/ppo-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.16271899966523
+    },
+    "development_evaluation/b0/ppo-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 66.06731699965894
+    },
+    "development_evaluation/b0/value_td-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 858.8447300002445
+    },
+    "development_evaluation/b0/value_td-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 859.2590129997116
+    },
+    "development_evaluation/b1/plain_h8": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 859.4563789996319
+    },
+    "development_evaluation/b1/plain_h16": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 1609.5417179998476
+    },
+    "development_evaluation/b1/ddpg-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 68.43067499925382
+    },
+    "development_evaluation/b1/ddpg-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 68.21461399970576
+    },
+    "development_evaluation/b1/td3-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 68.46628000005148
+    },
+    "development_evaluation/b1/td3-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 68.71341400058009
+    },
+    "development_evaluation/b1/sac-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 68.4610249993857
+    },
+    "development_evaluation/b1/sac-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 68.08122300123796
+    },
+    "development_evaluation/b1/ppo-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 67.79785499931313
+    },
+    "development_evaluation/b1/ppo-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 67.84943599929102
+    },
+    "development_evaluation/b1/value_td-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 858.1059120001737
+    },
+    "development_evaluation/b1/value_td-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 857.4246670005377
+    },
+    "development_evaluation/b2/plain_h8": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 867.6314939993899
+    },
+    "development_evaluation/b2/plain_h16": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 1615.9948940004688
+    },
+    "development_evaluation/b2/ddpg-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 70.40546700009145
+    },
+    "development_evaluation/b2/ddpg-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 70.2081860001199
+    },
+    "development_evaluation/b2/td3-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 70.42981500015594
+    },
+    "development_evaluation/b2/td3-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 70.49329500016756
+    },
+    "development_evaluation/b2/sac-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 70.25320799974725
+    },
+    "development_evaluation/b2/sac-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 70.2659519999288
+    },
+    "development_evaluation/b2/ppo-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 69.83136500022374
+    },
+    "development_evaluation/b2/ppo-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 69.83366300025955
+    },
+    "development_evaluation/b2/value_td-lr0-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 864.9065479994752
+    },
+    "development_evaluation/b2/value_td-lr1-graph": {
+      "worlds": 24,
+      "fits": 0,
+      "fit_batches": 0,
+      "rollout_seconds": 866.0437040000688
+    },
+    "confirmation_training/b0/value_td-lr0-graph": {
+      "worlds": 43,
+      "fits": 43,
+      "fit_batches": 1376,
+      "rollout_seconds": 1547.3688869993202
+    }
+  },
+  "last_progress": {
+    "event": "epoch_boundary",
+    "active": {
+      "phase": "confirmation_training",
+      "block": 0,
+      "condition": 1,
+      "replicate": 14,
+      "seed": 67300043,
+      "role": "value_td-lr0-graph"
+    },
+    "epoch": 7,
+    "counts": {
+      "trajectories": 3788,
+      "native_steps": 242376,
+      "native_constructions": 3788,
+      "construction_triggered_resets": 3788,
+      "total_native_operations": 249952,
+      "control_steps": 181784,
+      "tail_steps": 60592,
+      "estimator_receipt_updates": 242376,
+      "estimator_hypothesis_transitions": 24237600,
+      "planner_total_decisions": 43544,
+      "planner_candidate_rollouts": 2090112,
+      "planner_total_model_epochs": 18048000,
+      "neural_forward_module_calls": 610019,
+      "actor_optimizer_steps": 64512,
+      "critic_optimizer_steps": 92160,
+      "value_optimizer_steps": 38240,
+      "total_optimizer_steps": 194912,
+      "optimizer_example_presentations": 12474368,
+      "fit_batches": 93536
+    }
+  },
+  "initial_seals": 31,
+  "final_seals": 30,
+  "elapsed_seconds": 43374.46805600007,
+  "owner_elapsed_seconds": 1638.2392959999852,
+  "owner": "confirmation_training",
+  "phase_entries": [
+    {
+      "clock": 1319634.015169,
+      "event": "enter",
+      "owner": "development_training",
+      "owner_times": {
+        "admission_lock_binding": 5.803246000083163,
+        "analysis_archive_verification": 0,
+        "confirmation_evaluation": 0,
+        "confirmation_training": 0,
+        "development_evaluation": 0,
+        "development_training": 0,
+        "failure_flush_shutdown_reserve": 0,
+        "global": 0
+      },
+      "phase": "development_training",
+      "previous": "1aa6d9441208b14e273bf9f6bb838e93497c5c899e6a3fe7ad35e7dc7ba0930b",
+      "sequence": 1,
+      "sha256": "4f5c7d86e50a706b68ec2003f4b768b8fe16a1254a22f82313e1279b3bb6e859"
+    },
+    {
+      "clock": 1346552.628416,
+      "event": "enter",
+      "owner": "development_evaluation",
+      "owner_times": {
+        "admission_lock_binding": 5.803246000083163,
+        "analysis_archive_verification": 0,
+        "confirmation_evaluation": 0,
+        "confirmation_training": 0,
+        "development_evaluation": 0,
+        "development_training": 26918.613246999914,
+        "failure_flush_shutdown_reserve": 0,
+        "global": 0
+      },
+      "phase": "development_evaluation",
+      "previous": "34d44b9fe262d741d4b17fe0c25bbb60dc8ffe9177ffa18098346b8be26b4705",
+      "sequence": 1603070,
+      "sha256": "9cc00fdb24ace7b1efec269415809555dd20ef613c070bac354f0f33f0dac7fe"
+    },
+    {
+      "clock": 1361363.038017,
+      "event": "enter",
+      "owner": "analysis_archive_verification",
+      "owner_times": {
+        "admission_lock_binding": 5.803246000083163,
+        "analysis_archive_verification": 0,
+        "confirmation_evaluation": 0,
+        "confirmation_training": 0,
+        "development_evaluation": 14810.409601000138,
+        "development_training": 26918.613246999914,
+        "failure_flush_shutdown_reserve": 0,
+        "global": 0
+      },
+      "phase": null,
+      "previous": "6eb98b4788dc18f7d1573cfbe27992c60c9be3bedca6bd3d1fd297bf3481b87e",
+      "sequence": 1903743,
+      "sha256": "e6a881d0d1f4c8f500cefde49d38b456762a5ca363e9b17238dfe9416d155193"
+    },
+    {
+      "clock": 1361364.440683,
+      "event": "enter",
+      "owner": "confirmation_training",
+      "owner_times": {
+        "admission_lock_binding": 5.803246000083163,
+        "analysis_archive_verification": 1.402665999950841,
+        "confirmation_evaluation": 0,
+        "confirmation_training": 0,
+        "development_evaluation": 14810.409601000138,
+        "development_training": 26918.613246999914,
+        "failure_flush_shutdown_reserve": 0,
+        "global": 0
+      },
+      "phase": "confirmation_training",
+      "previous": "e6a881d0d1f4c8f500cefde49d38b456762a5ca363e9b17238dfe9416d155193",
+      "sequence": 1903744,
+      "sha256": "abc8ab7d1c44d8b2cc979af00bd895f6178c23fb6530c6d1414d0d405da4552f"
+    }
+  ],
+  "current_job": {
+    "cap": 180,
+    "clock": 1362993.813029,
+    "consumed": 0,
+    "event": "job_enter",
+    "job": "confirmation_training-b0-c1-j14-value_td-lr0-graph",
+    "kind": "h8_world",
+    "previous": "7a24e04c72b338be8f0d354787d967ded0b1deb15f73601f08026197ed3dfc20",
+    "sequence": 1926063,
+    "sha256": "b9e93d75ce72930dbff99ac739fe0025d26a206074d872dd6d82d91e18d635ce"
+  },
+  "current_job_elapsed_seconds": 8.866949999937788,
+  "last_ledger": {
+    "charges": {
+      "planner_total_model_epochs": 384
+    },
+    "clock": 1363002.679979,
+    "event": "debit",
+    "owner": "confirmation_training",
+    "phase": "confirmation_training",
+    "previous": "56c3561eaffff10af95a4dcd5d1966c696e4e99a756f396ac30452be9054aaa9",
+    "sequence": 1926180,
+    "sha256": "f89bdbce9a9aa062e538564502e5022b42905040831adaf03b337ea56dc3c5d0"
+  },
+  "budget_bytes": 661094732,
+  "logs": {
+    "stderr": 0,
+    "stdout": 0,
+    "detached": 0
+  },
+  "failure_or_terminal_files": [],
+  "rates": {
+    "ddpg": {
+      "block": 2,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 2.3013065364648355,
+      "earlier_fit_mean_seconds": 0.2214421510398097,
+      "remaining_worlds": 0
+    },
+    "td3": {
+      "block": 2,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 2.3918190104219925,
+      "earlier_fit_mean_seconds": 0.2713475885357184,
+      "remaining_worlds": 0
+    },
+    "sac": {
+      "block": 2,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 2.494952499993815,
+      "earlier_fit_mean_seconds": 0.351735093749691,
+      "remaining_worlds": 0
+    },
+    "ppo": {
+      "block": 2,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 2.5818600104139477,
+      "earlier_fit_mean_seconds": 0.20469956250114288,
+      "remaining_worlds": 0
+    },
+    "value_td": {
+      "block": 2,
+      "completed_worlds": 192,
+      "mean_rollout_seconds": 35.80597050521343,
+      "earlier_fit_mean_seconds": 0.27745533332280403,
+      "remaining_worlds": 0
+    }
+  },
+  "remaining_development_training_hours": 0,
+  "value_optimizer_breakdown": {
+    "ppo": 18432,
+    "value_td": 19808
+  },
+  "observed_counter_cap_violations": [],
+  "milestone": "All development training and evaluation complete; value_td-lr0 and sac-lr1 selected by frozen development-only rule; fresh finalist training active.",
+  "process_verification": {
+    "verified": true,
+    "observation_after_progress_snapshot": true,
+    "supervisor": {
+      "pid": 92809,
+      "ppid": 1,
+      "elapsed": "12:05:17",
+      "rss_kib": 46640,
+      "command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --launch"
+    },
+    "child": {
+      "pid": 92821,
+      "ppid": 92809,
+      "elapsed": "12:05:14",
+      "rss_kib": 281776,
+      "command": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m experiments.scripts.run_capacity_family_selection --child"
+    },
+    "progress_since_0802": {
+      "development_evaluation_worlds": 11,
+      "confirmation_training_worlds": 43,
+      "confirmation_training_fits": 43,
+      "new_selection_events": 1
+    },
+    "caveat": "Sequential process, progress, budget and disk observations are not atomic; prepaid debits are not proof of completed execution."
+  },
+  "selection_readout": {
+    "at_utc": "2026-10-07T08:36:16.347156+00:00",
+    "selection": {
+      "basis": "development_only_not_a_winner",
+      "family_ranking": [
+        {
+          "cost": 38928128.5371314,
+          "extra_losses": -12.23611111111111,
+          "lr": 0.0001,
+          "lr_index": 0,
+          "method": "value_td",
+          "rank_key": [
+            0,
+            38928128.5371314,
+            0,
+            4,
+            0
+          ],
+          "role": "value_td-lr0-graph"
+        },
+        {
+          "cost": 40121951.821794145,
+          "extra_losses": -5.375,
+          "lr": 0.0003,
+          "lr_index": 1,
+          "method": "sac",
+          "rank_key": [
+            0,
+            40121951.821794145,
+            0,
+            2,
+            1
+          ],
+          "role": "sac-lr1-graph"
+        },
+        {
+          "cost": 40886369.496137254,
+          "extra_losses": 1.8611111111111112,
+          "lr": 0.0001,
+          "lr_index": 0,
+          "method": "ppo",
+          "rank_key": [
+            1,
+            1.8611111111111112,
+            40886369.496137254,
+            3,
+            0
+          ],
+          "role": "ppo-lr0-graph"
+        },
+        {
+          "cost": 43086695.40183703,
+          "extra_losses": 41.333333333333336,
+          "lr": 0.0003,
+          "lr_index": 1,
+          "method": "ddpg",
+          "rank_key": [
+            1,
+            41.333333333333336,
+            43086695.40183703,
+            0,
+            1
+          ],
+          "role": "ddpg-lr1-graph"
+        },
+        {
+          "cost": 44632431.278173,
+          "extra_losses": 64.13888888888889,
+          "lr": 0.0003,
+          "lr_index": 1,
+          "method": "td3",
+          "rank_key": [
+            1,
+            64.13888888888889,
+            44632431.278173,
+            1,
+            1
+          ],
+          "role": "td3-lr1-graph"
+        }
+      ],
+      "finalists": [
+        {
+          "cost": 38928128.5371314,
+          "extra_losses": -12.23611111111111,
+          "lr": 0.0001,
+          "lr_index": 0,
+          "method": "value_td",
+          "rank_key": [
+            0,
+            38928128.5371314,
+            0,
+            4,
+            0
+          ],
+          "role": "value_td-lr0-graph"
+        },
+        {
+          "cost": 40121951.821794145,
+          "extra_losses": -5.375,
+          "lr": 0.0003,
+          "lr_index": 1,
+          "method": "sac",
+          "rank_key": [
+            0,
+            40121951.821794145,
+            0,
+            2,
+            1
+          ],
+          "role": "sac-lr1-graph"
+        }
+      ],
+      "test_results_consulted": false
+    },
+    "selection_sha256": "6eb31db1cb9d2046f09b8b4624d0399419a6b45af1b8917a847757d71cd549db",
+    "development_only_summary": [
+      {
+        "role": "ddpg-lr0-graph",
+        "worlds": 72,
+        "mean_cost": 44632433.65800503,
+        "mean_lost": 230.55555555555554,
+        "mean_extra_losses_vs_h8": 64.13888888888889,
+        "cost_saving_fraction_vs_h8": -0.12787922573949995,
+        "mean_rollout_seconds": 2.8492374305432246,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "ddpg-lr1-graph",
+        "worlds": 72,
+        "mean_cost": 43086695.40183703,
+        "mean_lost": 207.75,
+        "mean_extra_losses_vs_h8": 41.33333333333334,
+        "cost_saving_fraction_vs_h8": -0.08881780952990005,
+        "mean_rollout_seconds": 2.8492136805531723,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "plain_h16",
+        "worlds": 72,
+        "mean_cost": 39206649.88078709,
+        "mean_lost": 161.5,
+        "mean_extra_losses_vs_h8": -4.916666666666657,
+        "cost_saving_fraction_vs_h8": 0.009232473178153094,
+        "mean_rollout_seconds": 67.14830075000646,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "plain_h8",
+        "worlds": 72,
+        "mean_cost": 39571997.284320526,
+        "mean_lost": 166.41666666666666,
+        "mean_extra_losses_vs_h8": 0,
+        "cost_saving_fraction_vs_h8": 0,
+        "mean_rollout_seconds": 35.944289013895386,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "ppo-lr0-graph",
+        "worlds": 72,
+        "mean_cost": 40886369.496137254,
+        "mean_lost": 168.27777777777777,
+        "mean_extra_losses_vs_h8": 1.8611111111111143,
+        "cost_saving_fraction_vs_h8": -0.03321470489278329,
+        "mean_rollout_seconds": 2.8304435972111404,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "ppo-lr1-graph",
+        "worlds": 72,
+        "mean_cost": 41076870.746159144,
+        "mean_lost": 170.13888888888889,
+        "mean_extra_losses_vs_h8": 3.7222222222222285,
+        "cost_saving_fraction_vs_h8": -0.03802874671769192,
+        "mean_rollout_seconds": 2.82986688887791,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "sac-lr0-graph",
+        "worlds": 72,
+        "mean_cost": 41890332.746924125,
+        "mean_lost": 182.44444444444446,
+        "mean_extra_losses_vs_h8": 16.0277777777778,
+        "cost_saving_fraction_vs_h8": -0.05858525274695156,
+        "mean_rollout_seconds": 2.852804152757421,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "sac-lr1-graph",
+        "worlds": 72,
+        "mean_cost": 40121951.821794145,
+        "mean_lost": 161.04166666666666,
+        "mean_extra_losses_vs_h8": -5.375,
+        "cost_saving_fraction_vs_h8": -0.013897568361845752,
+        "mean_rollout_seconds": 2.8461843611278,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "td3-lr0-graph",
+        "worlds": 72,
+        "mean_cost": 44632501.01121271,
+        "mean_lost": 230.55555555555554,
+        "mean_extra_losses_vs_h8": 64.13888888888889,
+        "cost_saving_fraction_vs_h8": -0.12788092778165852,
+        "mean_rollout_seconds": 2.8539168749961794,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "td3-lr1-graph",
+        "worlds": 72,
+        "mean_cost": 44632431.27817301,
+        "mean_lost": 230.55555555555554,
+        "mean_extra_losses_vs_h8": 64.13888888888889,
+        "cost_saving_fraction_vs_h8": -0.12787916560020485,
+        "mean_rollout_seconds": 2.858480513894594,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "value_td-lr0-graph",
+        "worlds": 72,
+        "mean_cost": 38928128.53713139,
+        "mean_lost": 154.18055555555554,
+        "mean_extra_losses_vs_h8": -12.236111111111114,
+        "cost_saving_fraction_vs_h8": 0.01627081753197866,
+        "mean_rollout_seconds": 35.85912763888741,
+        "evaluation_updates": 0
+      },
+      {
+        "role": "value_td-lr1-graph",
+        "worlds": 72,
+        "mean_cost": 39006258.64664946,
+        "mean_lost": 158.29166666666666,
+        "mean_extra_losses_vs_h8": -8.125,
+        "cost_saving_fraction_vs_h8": 0.014296438807632006,
+        "mean_rollout_seconds": 35.87121366667108,
+        "evaluation_updates": 0
+      }
+    ],
+    "files": 14609,
+    "bytes": 3844900008
+  },
+  "timing": {
+    "value_rollout_seconds": 35.98532295347256,
+    "value_fit_seconds_from_early_receipt": 0.27745533332280403,
+    "sac_rollout_seconds_from_last_development_block": 2.494952499993815,
+    "sac_fit_seconds_from_early_receipt": 0.351735093749691,
+    "remaining_training_rollout_fit_hours": 9.9960521608292,
+    "independent_evaluation_rollout_hours_proxy": 8.502255113427829,
+    "expected_if_completed": {
+      "actor_optimizer_steps": 95232,
+      "critic_optimizer_steps": 153600,
+      "value_optimizer_steps": 67584,
+      "neural_forward_module_calls": 1016448,
+      "fit_batches": 153600,
+      "total_optimizer_steps": 316416,
+      "optimizer_example_presentations": 20250624
+    },
+    "caveat": "Remaining training uses 43 observed fresh value_td graph rollouts plus early fit receipts, and last-development-block SAC timing. Final evaluation is a role-weighted proxy from completed development timings, with legacy approximated by value_td. Excludes growing I/O, future seals, raw reconciliation, archive and handoff. Not a measured full-package ETA or guarantee; frozen phase/job/global caps unchanged."
+  },
+  "expected_counts_caveat": "Expected complete-package counts computed from the frozen expected_learning_counts formula for value_td and sac; not yet performed and not a budget extension.",
+  "evidence_reuse": {
+    "tests_passed": 23,
+    "full_compileall_passed": true,
+    "launch_adam_steps_and_afterfit_state_proof_reused": true,
+    "monitor_scientific_calls": 0
+  },
+  "inference_boundary": {
+    "selection_uses_development_only": true,
+    "independent_test_started": false,
+    "final_winner": null,
+    "graph_contribution_established": false,
+    "learning_contribution_independently_established": false,
+    "synthetic_only": true,
+    "caveat": "Descriptive development means are not final five-block superiority, clinical benefit, global optimality or evidence of deployment adaptation. H8 remains primary; H16 remains secondary. SAC improves development mean patient loss but raises mean cost."
+  },
+  "delivery": {
+    "terminal_readout_pending": true,
+    "manuscript_conclusion_pending": true,
+    "dropbox_local_copy_verified": false,
+    "cloud_sync_verified": false,
+    "collaborator_access_verified": false,
+    "automation_id": "gcn-rl",
+    "automation_status": "ACTIVE"
+  }
+}

@@ -1,6 +1,69 @@
 # Autonomous local research queue
 
-## Live checkpoint: all development training complete; evaluation active
+## Live checkpoint: finalists selected; fresh training active
+
+2026-10-07T08:32:31Z progress snapshot. Correct integration branch clean on
+entry; supervisor92809/1 and child92821/92809 match claims/full commands.
+Since08:02:39Z,11more development evaluations and43fresh training worlds/fits
+completed, with one finalists_selected event. No terminal/failure/overrun/
+preservation markers; stderr/stdout/detached logs remain0bytes.
+
+Development training2880/2880 and evaluation864/864 complete. All30development
+jobs have96worlds/3072fit batches; all36block/role evaluation jobs have24worlds
+and zero updates. Frozen patient-first/cost selection chose value_td-lr0
+(0.0001), then sac-lr1(0.0003). Fresh training43/1920worlds and43fits;
+independent evaluation0/1080. Active value_td-lr0-graph/block0/condition1/
+replicate14,epoch7. Initial seals31,total trained final seals30; independent
+trained final seals0/20. This is the existing attempt, not a new launch.
+
+Completed DEVELOPMENT summaries only,72worlds per role: H8 mean cost
+39571997.284 and mean simulated lost patients166.417. Selected value_td saves
+1.6271% mean cost with12.236 fewer lost patients/world; selected SAC costs
+1.3898% more with5.375 fewer lost patients/world. Other selected-per-family
+configurations: PPO costs3.3215% more/losses+1.861; DDPG costs8.8818% more/
+losses+41.333; TD3 costs12.7879% more/losses+64.139. H16 saves0.9232%/
+losses-4.917. All ten configurations, including the other learning rates,
+are retained in the snapshot. These are descriptive development means, not
+five-block independent screens or universal algorithm rankings. SAC is a
+cost/service tradeoff, not a cost win. Graph and learning increments remain
+unestablished until their independent ablations; no independent test used.
+
+Actual optimizer counts64512actor+92160critic+38240value=194912/460800;
+value splits18432PPO critic+19808value_td. Fit batches93536; examples12474368.
+New finalist fitting accounts for1376value updates. Evaluation updates0.
+Reuse actual launch Adam/after-fit proof and23tests/fullcompileall; no extra
+science or model loading. Expected complete-package optimizer counts for these
+two finalists are95232actor+153600critic+67584value=316416,not yet performed.
+
+Last progress boundary:242376/431616native,249952/445104operations,0clones,
+610019/2013312forwards,18048000/50429952prediction steps,
+24237600/43161600filter transitions,43544planner decisions. No observed
+counter-cap violations. Expected complete forward count1016448; unused caps
+cannot buy more samples or updates. H8/H16/reward/source/locks unchanged.
+
+Elapsed43374.468/172800s. Development owners closed at26918.613/43200s for
+training and14810.410/21600s for evaluation; selection analysis1.403s.
+Fresh-training owner1638.239/57600s; current H8world8.867/180s. Child RSS
+281776KiB at process check. Later08:36:16Z disk sample14609files/3844900008bytes.
+These sequential samples are not atomic; prepaid debit is not executed work.
+
+Fresh value_td graph rollout mean35.985s over43worlds. Reusing early fit and
+last-development-block SAC timings gives9.996h remaining training rollout/fit;
+role-weighted independent evaluation proxy8.502h uses development timings
+(legacy approximated by value_td). Both exclude growing I/O, future seals,
+analysis/archive/handoff and are not a measured full-package ETA or promise.
+All fixed phase/job/global limits remain unchanged.
+
+Evidence:reports/capacity_family_selection_monitor_20261007T0832Z.json and
+results/capacity_family_selection_20261006/payload/selection.json. Question
+answered: which two bounded candidates advance under the frozen rule.
+Remaining: finish five fresh graph/self_only blocks, seal all finals,1080zero-
+update independent evaluations, full raw readout and truthful manuscript.
+Continue directly under existing approval; no new gate, repair or retry.
+Same automation ACTIVE. Terminal additive Dropbox handoff remains due;
+local-copy/cloud-sync/collaborator-access are not verified for this running run.
+
+## Previous checkpoint: all development training complete; evaluation active
 
 2026-10-07T04:03:20Z progress snapshot. Correct integration branch clean on
 entry; supervisor92809/1 and child92821/92809 match claims/full commands.

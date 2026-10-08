@@ -1,0 +1,14 @@
+{
+  "automation_id": "gcn-rl",
+  "mode": "update",
+  "kind": "heartbeat",
+  "status": "PAUSED",
+  "app_update_verified": true,
+  "tool_receipt": "Updated automation in the app. {\"automationId\":\"gcn-rl\",\"mode\":\"update\",\"status\":\"PAUSED\"}",
+  "preserved": ["id", "name", "prompt", "rrule", "targetThreadId"],
+  "deleted": false,
+  "archived_thread": false,
+  "scientific_processes_exited_before_pause": true,
+  "artifact_destination_verified_before_pause": true,
+  "closure_status_and_local_commit_supplement": "preserved separately after pause; no scientific work"
+}

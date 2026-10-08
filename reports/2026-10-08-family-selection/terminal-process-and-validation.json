@@ -1,0 +1,23 @@
+{
+  "at_utc": "2026-10-08T05:14:00Z",
+  "process_check": {
+    "command": "ps -ww -p 92809,92821 -o pid,ppid,etime,command",
+    "host_read_only_escalation": true,
+    "exit_code": 1,
+    "output": "PID PPID ELAPSED COMMAND; no process rows",
+    "claimed_supervisor_and_child_exited": true,
+    "initial_sandbox_check": "operation not permitted; not used as process evidence"
+  },
+  "scientific_terminal": "results/capacity_family_selection_20261006/launcher/terminal.json",
+  "terminal_exit_code": 0,
+  "raw_saved_data_reader_exit_code": 0,
+  "raw_trajectories_reconciled": 6744,
+  "full_compileall_exit_code": 0,
+  "previous_necessary_scientific_tests_reused": 23,
+  "new_scientific_calls": 0,
+  "git_diff_check_exit_code": 0,
+  "tex_engines": {"pdflatex": "not found", "latexmk": "not found", "tectonic": "not found"},
+  "manuscript_source_updated": true,
+  "updated_pdf_generated": false,
+  "rendered_manuscript_layout_verified": false
+}

@@ -3901,3 +3901,27 @@ Reuse23necessary tests/fullcompileall and completed finite delegates. Commit
 literal authority and immutable source/config/protocol/input/runtime/seed locks
 before launching. A failed screen, tradeoff or inconclusive winner must remain
 visible. Best means within this task/configuration/budget,not universal optimality.
+
+#### Single five-family package completed; neither finalist passes
+
+2026-10-08T05:18Z. The sole approved attempt completed6744trajectories with
+zero clones and zero test updates; both claimed processes exited and terminal
+status is completed/exit0. Development2880train+864eval selected value_td(.0001)
+and SAC(.0003); fresh1920train and1080independent evaluations all completed.
+Value-TD mean H8 savings0.8509% with-11.875extra losses/world fail the positive
+cost-lower-bound and five-positive-block requirements. SAC mean savings-3.4991%
+and3.2583extra losses fail the screen. No winner. Neither graph/self-only nor
+final/initial cost intervals exclude zero; no separate graph/RL-cost benefit.
+
+Saved-data reading reconciled6744raw trajectories/431616native records and
+all66development/36final pairs. Actual316416optimizer dispatches,1016448
+forwards,50429952prediction steps and43161600filter transitions;32.520h
+scientific runtime including original single archive. Source/input locks remain
+intact; no new scientific calls or repeated training/tests were introduced.
+The paper's actual source now reports this result; PDF compilation is unverified.
+Terminal readout:specs/2026-10-06-family-selection/terminal-readout.md.
+Existing archive/authority/readout/manuscript copied additively to the approved
+Dropbox run directory:664files/6067856995bytes,destinationSHA256verified.
+Cloud sync and collaborator access are not inferred. Same gcn-rl monitor PAUSED;
+local closure/status/commit supplement preserved. No new scientific authority,
+Howard approval, external message, sharing change, remote Git or StageE action.

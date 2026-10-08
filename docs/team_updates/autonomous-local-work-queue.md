@@ -1,6 +1,46 @@
 # Autonomous local research queue
 
-## Live checkpoint: fourth independent evaluation block complete
+## Live checkpoint: family comparison completed, no qualifying winner
+
+2026-10-08T05:18Z. Single approved run terminated successfully after117071.166s
+(32.520h). Terminal child/supervisor exit0 and scientific completion verified;
+host PS found neither claimed PID92809nor92821. No failure markers and all
+three logs0bytes. Development training2880/2880,development evaluation864/864,
+fresh training1920/1920,independent evaluation1080/1080. Test optimizer updates0.
+
+Finalists were value_td(.0001) and SAC(.0003), selected on development only.
+Neither passes the frozen H8 joint screen: value-TD saves0.8509% on average,
+but its descriptive cost interval crosses zero and only4/5blocks favor it;
+mean extra losses-11.875. SAC costs3.4991% more and has3.2583extra losses/world.
+No winner. Graph/self-only and final/initial cost intervals also cross zero;
+no separate message-passing or learning-cost benefit established. H8 remains
+primary, H16 secondary; no old routing leaderboard or clinical claim.
+
+Actual counts:6744trajectories,431616native,445104operations,0clones;
+95232actor+153600critic+67584value=316416optimizer dispatches;
+153600fit iterations,20250624examples,1016448forwards,50429952prediction
+steps,43161600filter transitions. All50training jobs96worlds/3072iterations.
+Independent saved-data readout reconciled all6744raw trajectories,100model
+seals and4800fit/state files; retained66development and36final pairs with
+world/block/condition harm, hours, actions, elapsed time and compute.
+626source/11input locks still match. Reused23tests and all saved Adam/archive
+checks; fullcompileall also passed after adding the non-scientific reader.
+
+Terminal readout:specs/2026-10-06-family-selection/terminal-readout.md.
+Machine evidence:results/capacity_family_selection_20261006/terminal-readout/.
+The actual manuscript abstract/results/discussion now report these outcomes;
+updated PDF/rendered layout remain unverified because no local TeX engine.
+Existing single archive reused. Dropbox local destination verified for664
+artifact files/6067856995bytes; receipt:reports/2026-10-08-family-selection/
+delivery-artifacts.json. Cloud sync and collaborator access are separately
+unverified. Closure status/commit receipts are an additive supplement.
+
+Same visible gcn-rl monitor PAUSED by the app. Authorized scientific chain is
+complete; no new launch, retry, resume, reward search, old holdout, StageE,
+external message, permission change, push/PR/merge or Howard approval.
+No further scientific action is authorized. E1 remains absent/synthetic-only.
+
+## Previous checkpoint: fourth independent evaluation block complete
 
 2026-10-08T03:32:30Z snapshot. Supervisor92809/1 and child92821/92809 match
 claims/full commands;61new completed worlds and483epoch boundaries since

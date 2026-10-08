@@ -71,6 +71,11 @@ eight-step planning and its fresh frozen initializer. Mean paired cost was
 1.44\% higher than eight-step planning in that condition, with a descriptive
 interval that included zero. Matched self-only and same-data Monte Carlo
 controls did not establish separate message-passing or TD-estimator advantages.
+An additional fixed-benchmark comparison trained five algorithm families from
+scratch and independently evaluated two development-selected finalists across
+five fresh blocks. Neither passed the prespecified cost-and-service screen:
+value-TD saved 0.85\% on average but had an interval crossing zero and one
+adverse block; SAC cost 3.50\% more than eight-step planning.
 Neither general reinforcement-learning superiority nor deployment-time
 adaptation is established. Clinical and economic calibration remain necessary
 before operational use.
@@ -2304,6 +2309,132 @@ including block zero. All outcomes remain synthetic and uncalibrated for E1;
 there is no real-patient, deployment-online, clinical-safety, or TD3/DDPG
 superiority claim.
 
+\subsection{Five-family fixed-benchmark comparison: neither finalist passes}
+\label{sec:family-selection-development}
+The next prospective study compared DDPG, TD3, SAC, PPO, and observed-TD8
+value-MPC from scratch on the same synthetic support-hour task. All families
+used the same 31 public features, unchanged reward and physical dynamics,
+three capacity conditions, and MDL-2 base operations. Plain H8-MPC remained
+the primary operational reference; H16-MPC was the secondary compute reference.
+This restricted task is not pooled with the routing-primary results.
+In particular, the value-TD arm learned a zero-initialized residual from its
+own complete observed trajectories; it did not reproduce the earlier
+native-branch or forecast-tail recipes.
+
+Each family used learning rates $10^{-4}$ and $3\times10^{-4}$ in three
+development blocks, with 96 training worlds per configuration and block.
+The 2,880 training trajectories were followed by 864 frozen development
+evaluations on 24 shared worlds per block under 12 roles. A frozen
+patient-first, then cost selection rule chose one learning rate per family
+and two distinct families: value-TD at $10^{-4}$ and SAC at
+$3\times10^{-4}$. These were development selections, not winner declarations.
+Their development mean cost savings against H8 were 1.63\% and $-1.39\%$,
+with 12.24 and 5.38 fewer modeled patient losses per world, respectively.
+
+Five new blocks then trained both finalists with graph and self-only
+adjacency, yielding another 1,920 trajectories. Matched graph/self-only
+models shared initial trainable tensors and training seeds; only adjacency
+differed, while subsequent endogenous trajectories could differ. All 20
+final models and the graph initial controls were sealed before independent
+evaluation. Each new block supplied 24 test worlds for nine frozen roles:
+the two finalists' graph-final, self-only-final, and graph-initial models,
+H8, H16, and the predeclared historical conditional graph-TD reference.
+The historical models were evaluation-only. All 1,080 independent evaluations
+completed with zero optimizer updates. The package contained 6,744 main
+trajectories and no clones or old-holdout reuse.
+
+Every world included 48 decisions and 16 settlement transitions. Training
+used 32 minibatch iterations of size 64 after each world. Actor--critic
+targets used $\gamma=1$, reward equal to negative full cost divided by
+$10^6$, and all settlement costs in the final control transition. Off-policy
+replay was capped at 8,192 transitions; PPO used the current episode and
+latent-action log probabilities, while SAC entropy concerned the proposal
+before projection. Extra critics, planning, and sample reuse were charged,
+so the family comparison concerns complete controllers rather than an
+isolated backbone intervention.
+
+The prespecified screen required at least 0.5\% overall mean cost savings
+against H8, positive savings in every training block, a positive descriptive
+95\% lower cost bound, and nonpositive mean extra patient losses.
+Neither finalist passed (Table~\ref{tab:family-selection}). Value-TD passed
+the mean savings and mean patient-loss conditions, but its cost interval
+crossed zero and its fifth block cost more. Its five block savings were
+0.363, 0.655, 0.401, 0.339, and $-0.072$ million synthetic units.
+SAC had higher mean cost in every block and 3.26 additional losses per world.
+Thus the frozen rule returned no winner. Value-TD's favorable descriptive
+head-to-head contrast with SAC does not override its failed H8 screen.
+
+\begin{table}[tbp]
+\centering
+\caption{Independent five-block results after development-only family
+selection. Savings are reference minus candidate cost, in millions of
+synthetic objective units per world; percentages divide the overall mean
+saving by the reference mean, not an average of world-level ratios.
+Extra losses are candidate minus reference. Intervals are descriptive
+95\% intervals, not multiplicity-adjusted inference. The first two rows
+are the prespecified H8 screens; the remaining rows separate graph and
+training increments. Each row contains 120 paired worlds.}
+\label{tab:family-selection}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Candidate / reference & Savings M [95\%] & Savings (\%) & Extra losses \\
+\midrule
+Value-TD graph / H8 & $0.337\ [-0.026,0.678]$ & $0.851$ & $-11.875$ \\
+SAC graph / H8 & $-1.386\ [-2.135,-0.807]$ & $-3.499$ & $3.258$ \\
+Value-TD graph / self-only & $0.013\ [-0.115,0.161]$ & $0.033$ & $0.150$ \\
+SAC graph / self-only & $-0.261\ [-1.274,0.546]$ & $-0.641$ & $0.525$ \\
+Value-TD final / initial & $0.337\ [-0.024,0.676]$ & $0.851$ & $-11.875$ \\
+SAC final / initial & $0.005\ [-0.882,0.717]$ & $0.013$ & $3.383$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+All three conditions received equal weight. The 2,000 bootstrap resamples
+used common training-block draws across conditions and independent world
+draws within each condition; matching replicate labels across conditions
+were not treated as paired patients. H8 screen intervals and attribution
+intervals retain their frozen contrast-specific random streams. The full
+readout retains all 66 development pairs and 36 final pairs, including
+condition, block, and world-level harm rather than only aggregate means.
+Against H8, value-TD cost more in 51 of 120 worlds and lost more patients
+in 21; the corresponding SAC counts were 91 and 75. Value-TD savings
+were 0.79\%, 0.25\%, and 1.46\% under stable, persistent, and fast conditions,
+but each condition-specific cost interval crossed zero.
+
+Neither graph/self-only comparison established a cost advantage; mean extra
+losses were positive for both graph models. Neither final/initial cost
+interval excluded zero. The zero-residual value initializer reproduced H8's
+cost and loss outcomes, whereas a random SAC initializer is not a strong
+operational baseline. These controls do not establish separate message-passing
+and training contributions. As secondary references, H16 saved 0.77\%
+against H8 with 6.20 fewer mean losses, and the fixed historical controller
+saved 0.08\% with 4.79 fewer mean losses; both overall cost intervals crossed
+zero. Historical recipe differences remain, and the reference roles were
+not newly selected winners.
+
+Mean applied flexible hours per world were 304.13 for H8, 338.73 for H16,
+376.86 for value-TD graph, and 328.48 for SAC graph. Mean complete-trajectory
+elapsed times were 37.02, 67.98, 36.99, and 4.15 seconds, respectively,
+including recorded rollout I/O; these are not separately measured decision
+latencies. The complete scientific run, including its automatic analysis and
+single archive, took 32.520 hours. Actual consumption was 431,616 native
+steps, 445,104 native operations, 1,016,448 neural module forwards,
+50,429,952 prediction steps, and 43,161,600 filter transitions.
+There were 153,600 minibatch iterations and 316,416 optimizer dispatches:
+95,232 actor, 153,600 critic, and 67,584 value steps, presenting
+20,250,624 examples. These are actual receipts, not sums of separate budget
+ceilings. Saved raw trajectories, summaries, models, and update receipts
+support the readout; executing learning is not evidence that learning helped.
+
+The completed experiment therefore establishes neither a qualifying family
+winner nor general RL superiority at the declared budget. It does not prove
+equivalence or rule out other configurations. No multiplicity-adjusted formal
+significance, power, global optimality, real-patient calibration, clinical
+safety, deployment-online adaptation, or publication readiness is claimed.
+E1 remains missing and all outcomes are synthetic.
+
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
 The results distinguish three claims. The formal routing-primary comparison
@@ -2312,7 +2443,11 @@ comparisons do not establish an additional endpoint benefit from its online
 actor--critic updates. The separate value-guided planning studies provide
 condition-specific exploratory findings, but the prospective fresh-block study
 does not pass its fast-condition joint primary criterion and does not establish
-a positive volatility interaction or separate graph/TD contribution. These are different
+a positive volatility interaction or separate graph/TD contribution. The subsequent
+five-family fixed-benchmark study also yields no qualifying winner: value-TD's
+positive mean saving is not stable across all five blocks, and SAC underperforms
+H8 on overall mean cost and patient losses. Its graph/self-only and final/initial
+controls do not establish separate cost benefits. These are different
 questions, not interchangeable demonstrations that reinforcement learning
 improves a strong operational baseline.
 

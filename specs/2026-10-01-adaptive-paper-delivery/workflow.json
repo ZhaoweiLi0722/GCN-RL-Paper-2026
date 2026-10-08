@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 205,
-  "updated_at_utc": "2026-10-08T03:32:30.843251+00:00",
+  "revision": 206,
+  "updated_at_utc": "2026-10-08T05:18:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "539955536c330c1a7b17d911c81d86fade8b8b8c",
@@ -9,29 +9,38 @@
   "preparation_config": "experiments/configs/capacity_family_selection_20261006.json",
   "execution_config": "specs/2026-10-06-family-selection/frozen.json",
   "execution_authorization": "specs/2026-10-06-family-selection/authorization.json",
-  "scientific_execution_authorized": true,
-  "authorization_state": "Approved complete family-selection package frozen, committed and launched once; authorization is active only for this running attempt. No relaunch, retry or follow-on. Prior attempts remain consumed.",
-  "status": "family_selection_running_confirmation_evaluation",
+  "scientific_execution_authorized": false,
+  "authorization_state": "Approved single family-selection attempt completed successfully and is consumed. Neither finalist passed. Saved-data readout and additive local Dropbox delivery complete; same monitor PAUSED. No relaunch, retry or follow-on.",
+  "status": "family_selection_completed_no_winner_local_delivery_verified",
   "next_algorithm_selection": {
     "record": "docs/team_updates/2026-10-06-results-led-algorithm-selection.md",
     "user_direction": "Outcome-driven selection beyond TD3; fixed comparators; no algorithm preference based on historical effort or unmatched results.",
-    "candidate_families": ["gcn_ddpg", "gcn_td3", "gcn_sac", "gcn_ppo", "gcn_td_value_mpc"],
+    "candidate_families": [
+      "gcn_ddpg",
+      "gcn_td3",
+      "gcn_sac",
+      "gcn_ppo",
+      "gcn_td_value_mpc"
+    ],
     "recommended_task": "existing synthetic support-hour control; unchanged physical task and objective",
-    "recommended_comparators": ["plain_h8_primary", "plain_h16_secondary_compute_reference"],
-    "design_status": "approved_frozen_launched_once_actual_training_verified",
+    "recommended_comparators": [
+      "plain_h8_primary",
+      "plain_h16_secondary_compute_reference"
+    ],
+    "design_status": "completed_no_finalist_passed_frozen_screen",
     "shared_actor_support_interface_ready": true,
     "numerical_budget_defined": true,
-    "scientific_execution_authorized": true,
+    "scientific_execution_authorized": false,
     "monitor_scientific_calls": 0,
     "approval_user_literal": "批准完整单次包",
     "protocol": "specs/2026-10-06-family-selection/protocol.md",
     "result_root": "results/capacity_family_selection_20261006",
     "tests_passed": 23,
     "full_compileall_passed": true,
-    "next_deliverable": "All fresh five-block graph/self_only training and twenty final seals complete. Finish1080 zero-update independent evaluations, raw readout, truthful manuscript and additive artifact handoff; no repeat approval, launch or follow-on.",
+    "next_deliverable": "None within the consumed scientific attempt. Complete terminal status/local-commit supplement; no new science or follow-on.",
     "automation_changed": true,
     "automation_id": "gcn-rl",
-    "automation_status": "ACTIVE",
+    "automation_status": "PAUSED",
     "scientific_implementation_commit": "46b078f0fa13809dacbe307bbfaac6d3c82b1282",
     "frozen_implementation_commit": "104ddff436571dab44440644168317b315c8db0b",
     "execution_commit": "f5772e824632248be458d42e487f757477100575",
@@ -43,37 +52,50 @@
     "seed_collisions": [],
     "launch_readout": "specs/2026-10-06-family-selection/launch-readout.md",
     "dropbox_handoff": "specs/2026-10-06-family-selection/dropbox-handoff.md",
-    "latest_snapshot": "reports/capacity_family_selection_monitor_20261008T0332Z.json",
+    "latest_snapshot": "results/capacity_family_selection_20261006/terminal-readout/verification.json",
     "supervisor_pid": 92809,
     "child_pid": 92821,
-    "process_claim_command_and_progress_verified": true,
+    "process_claim_command_and_progress_verified": false,
     "training_worlds_completed": 4800,
     "fits_completed": 4800,
     "stage_progress": {
-      "development_training": {"complete": 2880, "complete_fits": 2880, "target": 2880},
-      "development_evaluation": {"complete": 864, "target": 864},
-      "confirmation_training": {"complete": 1920, "complete_fits": 1920, "target": 1920},
-      "confirmation_evaluation": {"complete": 919, "target": 1080}
+      "development_training": {
+        "complete": 2880,
+        "complete_fits": 2880,
+        "target": 2880
+      },
+      "development_evaluation": {
+        "complete": 864,
+        "target": 864
+      },
+      "confirmation_training": {
+        "complete": 1920,
+        "complete_fits": 1920,
+        "target": 1920
+      },
+      "confirmation_evaluation": {
+        "complete": 1080,
+        "target": 1080
+      }
     },
-    "evaluation_completed": 1783,
+    "evaluation_completed": 1944,
     "evaluation_optimizer_updates": 0,
-    "native_steps": 421312,
-    "native_operations": 434480,
+    "native_steps": 431616,
+    "native_operations": 445104,
     "clones": 0,
     "actor_updates": 95232,
     "critic_updates": 153600,
     "value_updates": 67584,
     "total_optimizer_dispatches": 316416,
-    "forward_calls": 1010400,
-    "prediction_steps": 48125952,
-    "filter_transitions": 42131200,
-    "elapsed_seconds": 111772.81247700006,
-    "owner": "confirmation_evaluation",
-    "owner_elapsed_seconds": 27949.915238999994,
+    "forward_calls": 1016448,
+    "prediction_steps": 50429952,
+    "filter_transitions": 43161600,
+    "elapsed_seconds": 117071.165607,
+    "owner": "terminal_completed",
+    "owner_elapsed_seconds": 0,
     "confirmation_training_owner_seconds": 42086.66847799998,
     "development_training_owner_seconds": 26918.613246999914,
     "development_evaluation_owner_seconds": 14810.409601000138,
-    "selection_analysis_owner_seconds": 1.402665999950841,
     "fit_batches": 153600,
     "optimizer_examples": 20250624,
     "initial_model_seals": 50,
@@ -82,24 +104,56 @@
     "all_twenty_finals_sealed_before_first_eval": true,
     "training_counts_match_expected_learning_counts": true,
     "zero_learning_since_independent_eval_started": true,
-    "current_method": "plain_h16",
+    "current_method": null,
     "current_development_block": null,
-    "current_confirmation_block": 4,
-    "completed_confirmation_blocks": [0, 1, 2, 3, 4],
-    "completed_confirmation_evaluation_blocks": [0, 1, 2, 3],
-    "completed_development_blocks": [0, 1, 2],
-    "latest_milestone": "Fourth independent block complete: all nine roles24/24worlds in blocks0,1,2and3; block4 has55completed worlds, H8 seven and all other roles six. Independent evaluation919/1080 with zero learning updates and unchanged complete training counters. All20fresh finals were sealed before independent evaluation. No interim test performance or winner inspected.",
+    "current_confirmation_block": null,
+    "completed_confirmation_blocks": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "completed_confirmation_evaluation_blocks": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "completed_development_blocks": [
+      0,
+      1,
+      2
+    ],
+    "latest_milestone": "All6744trajectories and1080independent evaluations complete,zero test updates,exit0,both claimed processes absent. Independent reader reconciled431616raw records,100model seals and4800fit/state files; all66development and36final pairs retained. Neither finalist passes; winner=null. Existing archive and664artifact files copied additively to sole Dropbox destination with bytes/SHA256 verified. Same monitor PAUSED.",
     "selection_artifact": "results/capacity_family_selection_20261006/payload/selection.json",
     "selection_sha256": "6eb31db1cb9d2046f09b8b4624d0399419a6b45af1b8917a847757d71cd549db",
     "finalists": [
-      {"method": "value_td", "lr_index": 0, "lr": 0.0001},
-      {"method": "sac", "lr_index": 1, "lr": 0.0003}
+      {
+        "method": "value_td",
+        "lr_index": 0,
+        "lr": 0.0001
+      },
+      {
+        "method": "sac",
+        "lr_index": 1,
+        "lr": 0.0003
+      }
     ],
     "selection_basis": "development_only_not_a_winner",
     "test_results_consulted": false,
     "development_mean_results_vs_h8": [
-      {"role": "value_td-lr0-graph", "cost_saving_fraction": 0.01627081753197866, "extra_lost_patients_per_world": -12.23611111111111},
-      {"role": "sac-lr1-graph", "cost_saving_fraction": -0.013897568361845752, "extra_lost_patients_per_world": -5.375}
+      {
+        "role": "value_td-lr0-graph",
+        "cost_saving_fraction": 0.01627081753197866,
+        "extra_lost_patients_per_world": -12.23611111111111
+      },
+      {
+        "role": "sac-lr1-graph",
+        "cost_saving_fraction": -0.013897568361845752,
+        "extra_lost_patients_per_world": -5.375
+      }
     ],
     "expected_complete_package_optimizer_dispatches": 316416,
     "expected_complete_package_forward_calls": 1016448,
@@ -107,15 +161,56 @@
     "early_remaining_development_evaluation_hours": 0,
     "remaining_confirmation_training_rollout_fit_hours_proxy": 0,
     "confirmation_evaluation_rollout_hours_proxy": 8.502255113427829,
-    "remaining_confirmation_evaluation_rollout_hours_proxy": 1.3175345828677267,
-    "timing_caveat": "Training complete. Remaining independent evaluation proxy uses102-103completed test-world timing receipts per role; partial active world ignored. The older8.502h full-evaluation proxy came from development timings. Excludes growing I/O, raw readout/archive/handoff; not a measured full-package ETA or guarantee. No test performance inspected; frozen phase/job/global caps unchanged.",
+    "remaining_confirmation_evaluation_rollout_hours_proxy": 0,
+    "timing_caveat": "Terminal success after117071.166s (32.520h),including automatic archive. No scientific runtime remains. Saved-data readout and handoff use only non-scientific local I/O.",
     "failure_markers": [],
     "stderr_bytes": 0,
     "training_proven_performance_not_established": true,
     "winner": null,
-    "dropbox_local_copy_verified": false,
+    "dropbox_local_copy_verified": true,
     "cloud_sync_verified": false,
-    "collaborator_access_verified": false
+    "collaborator_access_verified": false,
+    "terminal_readout": "specs/2026-10-06-family-selection/terminal-readout.md",
+    "terminal_process_exit_verified": true,
+    "terminal_process_evidence": "reports/2026-10-08-family-selection/terminal-process-and-validation.json",
+    "confirmation_evaluation_owner_seconds": 32830.63013800001,
+    "analysis_archive_owner_seconds": 418.3892569998279,
+    "terminal_test_results_read": true,
+    "final_decision": "no_candidate_met_prespecified_cost_service_screen",
+    "final_screens": [
+      {
+        "role": "value_td-graph-final",
+        "passed": false,
+        "cost_saving_fraction": 0.008509313067198892,
+        "cost_ci95": [
+          -26348.35237439562,
+          677834.2821418636
+        ],
+        "extra_patient_losses": -11.875,
+        "positive_blocks": 4
+      },
+      {
+        "role": "sac-graph-final",
+        "passed": false,
+        "cost_saving_fraction": -0.034991077894902314,
+        "cost_ci95": [
+          -2135339.8579005776,
+          -807385.1856125819
+        ],
+        "extra_patient_losses": 3.2583333333333333,
+        "positive_blocks": 0
+      }
+    ],
+    "manuscript_source_updated": true,
+    "manuscript_pdf_rebuilt": false,
+    "manuscript_pdf_limitation": "No local TeX engine; updated PDF and rendered layout unverified.",
+    "dropbox_artifact_files": 664,
+    "dropbox_artifact_bytes": 6067856995,
+    "dropbox_delivery_receipt": "reports/2026-10-08-family-selection/delivery-artifacts.json",
+    "frozen_source_and_input_hashes_reverified": true,
+    "independent_raw_readout_scientific_calls": 0,
+    "automatic_retry": false,
+    "follow_on_authorized": false
   },
   "conditional_value_confirmation_preparation": {
     "user_literal": "全面的推进",

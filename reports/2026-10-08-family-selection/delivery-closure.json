@@ -1,0 +1,72 @@
+{
+  "at_utc": "2026-10-08T05:22:17.607483+00:00",
+  "bytes": 1337221,
+  "cloud_sync_verified": false,
+  "collaborator_access_verified": false,
+  "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006",
+  "entries": [
+    {
+      "action": "copied_additively",
+      "bytes": 9409,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/terminal-readout.md",
+      "sha256": "52d128d7f3e991514076a60a62aed3b0e8042fac20366babe56ea33d0386466b",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-family-selection/terminal-readout.md"
+    },
+    {
+      "action": "copied_additively",
+      "bytes": 2523,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/dropbox-handoff.md",
+      "sha256": "056d311a1765b4e50ca49c6ffc5d7d869aa420a3f76b25bf3a0a0e6ce93876a4",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-06-family-selection/dropbox-handoff.md"
+    },
+    {
+      "action": "copied_additively",
+      "bytes": 557105,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/autonomous-local-work-queue.md",
+      "sha256": "d11408f9b2ee7f483c3449cabfe99d92771f1340178627170b8278ef001cec2f",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/docs/team_updates/autonomous-local-work-queue.md"
+    },
+    {
+      "action": "copied_additively",
+      "bytes": 249608,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/patient_indexed_specimen_routing_locked_execution_plan.md",
+      "sha256": "e944ca103491623b818099860f45183ab482c8693d0ca16a60aa02e766300ac3",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/docs/patient_indexed_specimen_routing_locked_execution_plan.md"
+    },
+    {
+      "action": "copied_additively",
+      "bytes": 176911,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/workflow.json",
+      "sha256": "06aebe92abcb27bcfd1a3ac2837b6a00113e96aeef2acbccbd4489ae19c97acf",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/specs/2026-10-01-adaptive-paper-delivery/workflow.json"
+    },
+    {
+      "action": "copied_additively",
+      "bytes": 340524,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/delivery-artifacts.json",
+      "sha256": "d6eae8fb7d98478d1ef5f3c4545500f371e86918a4f90e38fa594c0faddc53a4",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/reports/2026-10-08-family-selection/delivery-artifacts.json"
+    },
+    {
+      "action": "copied_additively",
+      "bytes": 578,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/automation-paused.json",
+      "sha256": "072e1b4cc7547f56080f15369fbaee50b3cbc4819930eb8d6f445a61ce8a35d7",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/reports/2026-10-08-family-selection/automation-paused.json"
+    },
+    {
+      "action": "copied_additively",
+      "bytes": 563,
+      "destination": "/Users/lizhaowei/Library/CloudStorage/Dropbox-GaTech/Zhaowei Li/GCN-DRL Paper 2026/Research Artifacts/capacity_family_selection_20261006/closure/local-commit.json",
+      "sha256": "b9aa9f1e7663582dcb9393ee11a9a8b88a822fb9c301553d3f22b2d3a6efa070",
+      "source": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration/reports/2026-10-08-family-selection/local-commit.json"
+    }
+  ],
+  "existing_single_archive_reused": true,
+  "external_messages_sent": false,
+  "files": 8,
+  "local_copy_verified": true,
+  "mode": "closure",
+  "overwrote_different_files": false,
+  "permission_changes": false
+}

@@ -1,0 +1,10 @@
+{
+  "branch": "codex/september-research-integration",
+  "scientific_readout_manuscript_and_handoff_commit": "fd12a2791438478f64a2e29870d7b86dede1864d",
+  "commit_verified": true,
+  "remote_push": false,
+  "pull_request": false,
+  "merge": false,
+  "scope": "Actual manuscript source, terminal readout, Live/workflow, frozen-plan terminal record, saved-data reader, verified artifact-delivery and PAUSED-monitor evidence.",
+  "note": "This receipt and the destination-verified closure supplement are committed separately after copying; no scientific execution."
+}

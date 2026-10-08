@@ -1,6 +1,32 @@
 # Autonomous local research queue
 
-## Live checkpoint: MDL-2 fixed-support supplement approved
+## Live checkpoint: MDL-2 fixed-support supplement completed
+
+2026-10-08T07:47Z. The approved single attempt completed120/120new fixed2
+trajectories, with360saved H8/Value-TD/SAC results reused. Exit0;112.676843s
+including analysis/archive;7680native steps,7920operations,0updates/forwards/
+planner/filter/clones. Independent reader reconciled7680new rows and retained
+all480world records/six pairs.12tests/fullcompileall passed; original sources,
+inputs and results remain unchanged. No extra smoke, retry or retraining.
+
+Against MDL-2+[2,2,2,2]fixed support, Value-TD saves2.1565% mean cost with
+-5.675extra losses/world; all5cost block means favor it, descriptive cost
+interval[549502.26,1180690.95]. SAC costs2.1362% more with+9.4583extra losses.
+H8 saves1.3168% but has+6.2extra losses: fixed MDL-2 is not uniformly weaker.
+Value-TD still has34cost-harmed/26patient-harmed worlds out of120; fast-change
+cost/loss intervals cross zero. Posthoc supplement, not independent confirmation
+or separate graph/RL attribution. Original H8 screen/no-winner result unchanged.
+
+Artifact:specs/2026-10-08-mdl2-fixed-reference/terminal-readout.md and
+results/capacity_fixed_reference_20261008/payload/comparison.json. Question
+answered: Value-TD shows favorable mean cost/service against fixed support,
+but the original H8 and graph/RL evidence gaps remain.998member/56875091byte
+single archive verified. Authorized additive Dropbox handoff pending; no cloud
+sync or collaborator-access claim. Same gcn-rl monitor remains PAUSED.
+Next scientific step requires a separately scoped decision; no performance
+tuning or new episodes are authorized by this completed supplement.
+
+## Previous checkpoint: MDL-2 fixed-support supplement approved
 
 2026-10-08. User confirmed the fixed2rule (`是的`):MDL-2 operations plus
 [2,2,2,2]extra booked support hours per control epoch, ordinary staffing and

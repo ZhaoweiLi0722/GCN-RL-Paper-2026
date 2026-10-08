@@ -3951,3 +3951,25 @@ comparison. No causal graph/RL benefit is inferred from the whole package.
 One local supplement archive and truthful readout/status follow. No automatic
 performance-improvement campaign, changed reward/physics, fresh training,
 formal holdout, StageE, Howard approval, remote Git or external message.
+
+#### MDL-2 fixed-support supplement completed
+
+2026-10-08T07:47Z. The single attempt completed120new matched trajectories,
+7680native steps/7920operations in112.676843s including analysis/archive,
+exit0;0updates,forwards,planner/filter calls or clones.360existing results
+were reused, all480world records and6paired comparisons retained. Original
+626sources plus8new locks and484input files were verified unchanged.12focused
+tests/fullcompileall passed; no additional scientific smoke or retraining.
+
+Value-TD vs fixed MDL-2 saves2.1565% mean cost and5.675losses/world; descriptive
+cost-saving interval[549502.26,1180690.95],all5cost block means positive.
+SAC costs2.1362% more and loses9.4583more patients/world. H8 saves1.3168% but
+loses6.2more; the fixed comparator is not uniformly weaker. Individual-world
+harms remain, and Value-TD fast-fluctuation cost/loss intervals cross zero.
+This is posthoc on consumed worlds, not independent confirmation, a replacement
+of the old H8 primary/screen, or separate graph/RL attribution. No new winner.
+
+Terminal readout:specs/2026-10-08-mdl2-fixed-reference/terminal-readout.md.
+Single archive998members/56875091bytes verified; additive Dropbox preservation
+is the remaining authorized action, without old rearchiving or external messages.
+Old gcn-rl stays PAUSED; no follow-on science/performance tuning is authorized.

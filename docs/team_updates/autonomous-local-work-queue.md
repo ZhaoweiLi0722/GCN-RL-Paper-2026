@@ -1,6 +1,42 @@
 # Autonomous local research queue
 
-## Live checkpoint: third independent evaluation block complete
+## Live checkpoint: fourth independent evaluation block complete
+
+2026-10-08T03:32:30Z snapshot. Supervisor92809/1 and child92821/92809 match
+claims/full commands;61new completed worlds and483epoch boundaries since
+03:02:42Z confirm progress. No new fits or seals; branch clean on entry.
+No terminal/failure/overrun/preservation markers; all three logs0bytes.
+
+Development training2880/2880, development evaluation864/864 and fresh training
+1920/1920 remain complete. Independent evaluation919/1080: blocks0,1,2and3 each
+have all nine roles24/24worlds. Block4 has55completed worlds: H8 seven, all other
+roles six; active H16 condition0/replicate2 just started. Evaluation fits/updates0.
+The20fresh finals remain sealed; reuse their verified ordering before the first
+test world. Only progress/counts/timing read, no interim test outcomes or winner.
+
+Training counters unchanged:95232actor+153600critic+67584value=316416optimizer
+dispatches,153600fit batches,20250624examples. All20fresh jobs96worlds/3072fit
+batches; value split18432PPO+49152value_td. Last progress boundary421312native,
+434480operations,0clones,1010400forwards,48125952prediction steps and42131200
+filter transitions; no observed total counter-cap violations. A started world
+is charged but not completed. Full-package1016448forwards remains a projection.
+Reuse23tests/fullcompileall and launch Adam/after-fit proof; no added science.
+
+Elapsed111772.812/172800s; evaluation owner27949.915/36000s, active H16world
+0.006/300s at ledger sample. Child RSS279856KiB at process check. Completed
+timing receipts102-103per role: H8 37.050s,H16 68.019s,legacy37.058s,value roles
+36.967-37.091s,SAC roles4.111-4.135s. Remaining stratified rollout proxy1.318h;
+excludes extra I/O, raw readout/archive/handoff and is not a full-package ETA
+or guarantee. Sequential observations are not atomic. All caps unchanged.
+
+Evidence:reports/capacity_family_selection_monitor_20261008T0332Z.json.
+Question answered: four complete independent blocks recorded with zero updates.
+Remaining161independent trajectories, raw readout, truthful manuscript and
+additive terminal Dropbox handoff; same approved attempt and ACTIVE monitor.
+No performance/graph/RL benefit or unique-winner claim. Local-copy/cloud-sync/
+collaborator-access remain unverified for this run. No retries or follow-on.
+
+## Previous checkpoint: third independent evaluation block complete
 
 2026-10-08T01:32:32Z snapshot. Supervisor92809/1 and child92821/92809 match
 claims/full commands;61new completed worlds and489epoch boundaries since

@@ -3970,6 +3970,10 @@ This is posthoc on consumed worlds, not independent confirmation, a replacement
 of the old H8 primary/screen, or separate graph/RL attribution. No new winner.
 
 Terminal readout:specs/2026-10-08-mdl2-fixed-reference/terminal-readout.md.
-Single archive998members/56875091bytes verified; additive Dropbox preservation
-is the remaining authorized action, without old rearchiving or external messages.
+Single archive998members/56875091bytes verified. At07:51:51Z,14artifact files/
+60546321bytes were copied to the sole authorized Dropbox supplement directory
+and destination SHA256/bytes verified; closure gets a separate status/commit
+snapshot. Cloud sync and collaborator access remain unverified. No old
+rearchiving or external messages. Receipt:reports/2026-10-08-mdl2-fixed-reference/
+delivery-artifacts.json; details:specs/2026-10-08-mdl2-fixed-reference/dropbox-handoff.md.
 Old gcn-rl stays PAUSED; no follow-on science/performance tuning is authorized.

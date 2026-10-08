@@ -21,8 +21,11 @@ Artifact:specs/2026-10-08-mdl2-fixed-reference/terminal-readout.md and
 results/capacity_fixed_reference_20261008/payload/comparison.json. Question
 answered: Value-TD shows favorable mean cost/service against fixed support,
 but the original H8 and graph/RL evidence gaps remain.998member/56875091byte
-single archive verified. Authorized additive Dropbox handoff pending; no cloud
-sync or collaborator-access claim. Same gcn-rl monitor remains PAUSED.
+single archive verified. At07:51:51Z,14artifact files/60546321bytes were copied
+additively to the authorized Dropbox supplement directory, with every target
+SHA256/byte count verified. Receipt:reports/2026-10-08-mdl2-fixed-reference/
+delivery-artifacts.json; closure status/commit gets a separate additive snapshot.
+Cloud sync and collaborator access remain unverified. Same gcn-rl stays PAUSED.
 Next scientific step requires a separately scoped decision; no performance
 tuning or new episodes are authorized by this completed supplement.
 

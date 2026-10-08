@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 208,
-  "updated_at_utc": "2026-10-08T07:47:00Z",
+  "revision": 209,
+  "updated_at_utc": "2026-10-08T07:52:00Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "539955536c330c1a7b17d911c81d86fade8b8b8c",
@@ -10,8 +10,8 @@
   "execution_config": "specs/2026-10-08-mdl2-fixed-reference/frozen.json",
   "execution_authorization": "specs/2026-10-08-mdl2-fixed-reference/approval-intent.json",
   "scientific_execution_authorized": false,
-  "authorization_state": "Original family-selection and separate120world MDL-2 fixed2 supplement both completed and consumed. No further science authorized. Additive handoff only; same monitor remains PAUSED.",
-  "status": "mdl2_fixed_supplement_completed_handoff_pending",
+  "authorization_state": "Original family-selection and separate120world MDL-2 fixed2 supplement both completed and consumed. Local Dropbox artifact copy verified; no further science authorized. Same monitor remains PAUSED.",
+  "status": "mdl2_fixed_supplement_completed_local_copy_verified",
   "mdl2_fixed_supplement": {
     "protocol": "specs/2026-10-08-mdl2-fixed-reference/protocol.md",
     "approval_intent": "specs/2026-10-08-mdl2-fixed-reference/approval-intent.json",
@@ -44,12 +44,16 @@
     "archive_sha256": "02ae5667583b42182f2e8dec9a621e247e4de354619035ba3c6dd0b1908e8fa7",
     "archive_bytes": 56875091,
     "archive_members": 998,
-    "local_copy_verified": false,
+    "local_copy_verified": true,
+    "delivery_artifact_files": 14,
+    "delivery_artifact_bytes": 60546321,
+    "delivery_receipt": "reports/2026-10-08-mdl2-fixed-reference/delivery-artifacts.json",
+    "dropbox_handoff": "specs/2026-10-08-mdl2-fixed-reference/dropbox-handoff.md",
     "cloud_sync_verified": false,
     "collaborator_access_verified": false,
     "result_root": "results/capacity_fixed_reference_20261008",
     "interpretation": "posthoc supplement on consumed worlds, not independent confirmation; original H8 findings unchanged",
-    "next_action": "Complete additive handoff and local closure commit. Any later performance study requires separate prospective scope; no automatic follow-on."
+    "next_action": "No further scientific work within this consumed scope. Preserve additive closure snapshot; any later performance study requires separate prospective scope and untouched test worlds."
   },
   "next_algorithm_selection": {
     "record": "docs/team_updates/2026-10-06-results-led-algorithm-selection.md",
@@ -2107,7 +2111,7 @@
   "cohort_failed_archive": {"local_verified": true, "file_count": 5297, "archive_bytes": 2574714967, "archive_sha256": "d8b01bb8527532fbeb6a9770f7c291e3513bd7d745c430222679f0990d646705", "original_tree_unchanged": true, "path": "reports/2026-10-02-cohort-objective-closure/archives/failed-run.tar.gz", "dropbox_exported": false, "cloud_sync_verified": false, "howard_access_verified": false},
   "current_result_root": "results/capacity_fixed_reference_20261008",
   "implementation_commit": "c6f95a1092696b7aa42a4aecf0e932ecefce7f31",
-  "current_task": "MDL2_FIXED_SUPPLEMENT_SCIENCE_COMPLETED",
+  "current_task": "MDL2_FIXED_SUPPLEMENT_CLOSED",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -2121,7 +2125,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Complete authorized additive Dropbox supplement and local closure commit; no further scientific execution or training. Same gcn-rl remains PAUSED. Cloud synchronization and collaborator access remain unverified.",
+  "next_concrete_action": "Completed scientific comparison and verified local artifact copy; preserve closure snapshot, then no automatic follow-on. Separate prospective scope is needed for later performance work. Same gcn-rl remains PAUSED; cloud sync and collaborator access are unverified.",
   "cohort_objective_preparation": {
     "proposal": "specs/2026-10-02-terminal-obligation/proposal.json",
     "protocol": "specs/2026-10-02-terminal-obligation/protocol.md",

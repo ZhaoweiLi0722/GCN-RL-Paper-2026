@@ -3925,3 +3925,29 @@ Dropbox run directory:664files/6067856995bytes,destinationSHA256verified.
 Cloud sync and collaborator access are not inferred. Same gcn-rl monitor PAUSED;
 local closure/status/commit supplement preserved. No new scientific authority,
 Howard approval, external message, sharing change, remote Git or StageE action.
+
+#### MDL-2 fixed-support posthoc supplement approved
+
+2026-10-08. Zhaowei requested an additional same-condition comparison of
+MDL-2 with the sealed Value-TD/SAC finalists and H8, chose fixed support,
+and replied exactly `是的` to the explicit rule:2booked flexible hours/site,
+8network-wide per control epoch, unchanged ordinary staff and2epoch lag,
+48control+16settlement,120matched worlds only, no retraining. Authority and
+complete definition:specs/2026-10-08-mdl2-fixed-reference/protocol.md and
+approval-intent.json. The prior completed-stage readout was reviewed first.
+
+New role only:120trajectories,7680native steps,7920native operations,0clones,
+0neural forwards,0updates,0planner/filter steps. Reuse360saved trajectories
+for H8 and the two graph-final families; models and original roots stay sealed.
+Safety ceilings1h/1GiB,4GiBRSS,4threads,1worker,1attempt,60s/world; unused
+capacity cannot purchase extra worlds, fitting, search or retry. Commit source
+and this amendment, then bind source/input/runtime and commit before execution.
+No extra pilot or redundant routine launch approval. Definition is fixed before
+the new MDL-2 outcomes are seen, but comparator choice and reused test worlds
+are posthoc. MDL-2 fixed2 is primary for this supplement only; original H8
+screens/no-winner findings remain unchanged, and H8 is retained as strong
+comparison. No causal graph/RL benefit is inferred from the whole package.
+
+One local supplement archive and truthful readout/status follow. No automatic
+performance-improvement campaign, changed reward/physics, fresh training,
+formal holdout, StageE, Howard approval, remote Git or external message.

@@ -1,6 +1,24 @@
 # Autonomous local research queue
 
-## Live checkpoint: family comparison completed, no qualifying winner
+## Live checkpoint: MDL-2 fixed-support supplement approved
+
+2026-10-08. User confirmed the fixed2rule (`是的`):MDL-2 operations plus
+[2,2,2,2]extra booked support hours per control epoch, ordinary staffing and
+2epoch lead unchanged,48control+16settlement. Only120new matched trajectories
+are authorized,7680native steps/7920operations,0updates/forwards/clones.
+Reuse the saved360H8/Value-TD-graph-final/SAC-graph-final trajectories; no
+model reload or retraining. New source/authority preparation is in progress;
+no supplement science has started. Protocol:
+specs/2026-10-08-mdl2-fixed-reference/protocol.md.
+
+The completed family study remains immutable with neither finalist passing
+the original H8 screen. MDL-2 fixed2is primary only in the posthoc supplement,
+with H8 retained as a strong comparator. The reused120worlds are not a new
+independent validation. After necessary structural checks and a committed
+packet, execute once without a repeated launch question. No performance tuning
+or follow-on is authorized. The old gcn-rl heartbeat remains PAUSED.
+
+## Previous checkpoint: family comparison completed, no qualifying winner
 
 2026-10-08T05:18Z. Single approved run terminated successfully after117071.166s
 (32.520h). Terminal child/supervisor exit0 and scientific completion verified;

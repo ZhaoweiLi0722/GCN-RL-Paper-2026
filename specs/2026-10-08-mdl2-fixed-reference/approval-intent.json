@@ -1,0 +1,13 @@
+{
+  "scope": "capacity-fixed-reference-v1",
+  "scope_approved": true,
+  "approved_on": "2026-10-08",
+  "user_literal": "是的",
+  "preceding_question": "固定为每站2小时、全网8小时，就用这一版吗？",
+  "context": "MDL-2 plus fixed equal support, ordinary staffing and two-epoch lag unchanged, 48 control plus16settlement; only120matched worlds newly evaluated; reuse sealed Value-TD/SAC/H8 results without retraining; posthoc supplement, old H8 findings unchanged.",
+  "scientific_limits": {"trajectories": 120, "native_steps": 7680, "native_operations": 7920, "updates": 0, "forwards": 0, "clones": 0},
+  "attempts": 1,
+  "automatic_retry": false,
+  "automatic_resume": false,
+  "automatic_follow_on": false
+}

@@ -1,0 +1,28 @@
+{
+  "format": "research-branch-publication-v1",
+  "verified_at_utc": "2026-10-08T08:17:06Z",
+  "remote": "https://github.com/ZhaoweiLi0722/GCN-RL-Paper-2026.git",
+  "branch": "codex/september-research-integration",
+  "published_content_commit": "77133917089ca63dce61564500e0bf65a0c99e74",
+  "observed_remote_content_commit": "77133917089ca63dce61564500e0bf65a0c99e74",
+  "remote_content_verified": true,
+  "main_before_and_after": "eeed57b7aba2a5ca835664795c067e557671e24c",
+  "main_changed_by_this_delivery": false,
+  "force_push": false,
+  "pull_request_created": false,
+  "outgoing_scan": {
+    "blobs": 206,
+    "bytes": 36086308,
+    "largest_bytes": 1433480,
+    "findings": [],
+    "passed": true,
+    "scope": "Git blobs newly published at content commit; common credential patterns and oversized files only, not proof of absence of all secrets"
+  },
+  "validation": "reports/2026-10-08-manuscript-publication/validation.json",
+  "whole_worktree_compileall_exit_code": 0,
+  "scientific_calls_added": 0,
+  "scientific_sources_changed": false,
+  "new_pdf_built": false,
+  "pdf_limitation": "Built-in standalone compiler cannot read external project figures; old main.pdf is not the revised source output",
+  "receipt_scope": "This receipt records the verified content push. A later documentation-only closure commit may contain this receipt."
+}

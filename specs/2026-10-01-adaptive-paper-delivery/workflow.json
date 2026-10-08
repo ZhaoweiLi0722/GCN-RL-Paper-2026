@@ -1,7 +1,7 @@
 {
   "schema": "adaptive-paper-delivery-v1",
-  "revision": 210,
-  "updated_at_utc": "2026-10-08T08:12:00Z",
+  "revision": 211,
+  "updated_at_utc": "2026-10-08T08:17:06Z",
   "worktree": "/Users/lizhaowei/GCN-RL Paper 2026/worktrees/september-research-integration",
   "branch": "codex/september-research-integration",
   "entry_head": "539955536c330c1a7b17d911c81d86fade8b8b8c",
@@ -11,14 +11,17 @@
   "execution_authorization": "specs/2026-10-08-mdl2-fixed-reference/approval-intent.json",
   "scientific_execution_authorized": false,
   "authorization_state": "Original family-selection and separate120world MDL-2 fixed2 supplement both completed and consumed. Local Dropbox artifact copy verified; no further science authorized. Same monitor remains PAUSED.",
-  "status": "manuscript_revision_and_development_diagnostic_ready_for_push",
+  "status": "manuscript_revision_and_development_diagnostic_published",
   "manuscript_publication_20261008": {
     "user_authorized_push": true,
     "remote": "origin",
     "branch": "codex/september-research-integration",
     "main_change_authorized_by_this_step": false,
     "force_push": false,
-    "remote_verified": false,
+    "remote_verified": true,
+    "published_content_commit": "77133917089ca63dce61564500e0bf65a0c99e74",
+    "main_unchanged_at": "eeed57b7aba2a5ca835664795c067e557671e24c",
+    "publication_receipt": "reports/2026-10-08-manuscript-publication/publication-receipt.json",
     "record": "docs/team_updates/2026-10-08-manuscript-github-update.md",
     "curated_evidence": "reports/2026-10-08-manuscript-publication/evidence.json",
     "validation": "reports/2026-10-08-manuscript-publication/validation.json",
@@ -2131,7 +2134,7 @@
   "cohort_failed_archive": {"local_verified": true, "file_count": 5297, "archive_bytes": 2574714967, "archive_sha256": "d8b01bb8527532fbeb6a9770f7c291e3513bd7d745c430222679f0990d646705", "original_tree_unchanged": true, "path": "reports/2026-10-02-cohort-objective-closure/archives/failed-run.tar.gz", "dropbox_exported": false, "cloud_sync_verified": false, "howard_access_verified": false},
   "current_result_root": "results/capacity_fixed_reference_20261008",
   "implementation_commit": "c6f95a1092696b7aa42a4aecf0e932ecefce7f31",
-  "current_task": "MANUSCRIPT_AND_DEVELOPMENT_DIAGNOSTIC_PUBLICATION",
+  "current_task": "MANUSCRIPT_AND_DEVELOPMENT_DIAGNOSTIC_PUBLISHED",
   "scientific_intent": {
     "final_question": "Constrained cross-facility coordination with downstream network and patient consequences",
     "current_pilot": "Bounded mechanism test, not a permanent ceiling on the final method",
@@ -2145,7 +2148,7 @@
     "historical_package_gain_is_isolated_gcn_gain": false,
     "new_scientific_execution_authorized_by_direction": false
   },
-  "next_concrete_action": "Push the user-authorized stage to the current research branch and verify remote SHA, with no main/merge/force action. Any new numerical study requires a prospectively fixed scope. Same gcn-rl remains PAUSED.",
+  "next_concrete_action": "GitHub content publication verified on the research branch; main unchanged. Deliver the manuscript source and saved-development diagnostic. A new numerical study requires a prospectively fixed scope; no automatic follow-on. Same gcn-rl remains PAUSED.",
   "cohort_objective_preparation": {
     "proposal": "specs/2026-10-02-terminal-obligation/proposal.json",
     "protocol": "specs/2026-10-02-terminal-obligation/protocol.md",

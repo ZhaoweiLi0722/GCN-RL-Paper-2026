@@ -1,6 +1,6 @@
 # Autonomous local research queue
 
-## Live checkpoint: manuscript and development-only next step ready for GitHub
+## Live checkpoint: manuscript and development-only next step published
 
 2026-10-08. Zhaowei requested continuation, GitHub publication of this stage,
 and manuscript revision. The finite next step is a saved-development-data
@@ -23,9 +23,12 @@ or visual layout verification is claimed. The existing PDF is historical.
 
 One advancement and one read-only efficiency assignment completed and closed.
 Whole-worktree compileall and diff checks pass; reuse prior scientific tests.
-Next authorized action:publish this stage to origin's research branch
-codex/september-research-integration, without force, merge or changing main,
-then verify the remote SHA. gcn-rl remains PAUSED. Report:
+At2026-10-08T08:17:06Z, origin's research branch
+codex/september-research-integration was verified at content commit
+77133917089ca63dce61564500e0bf65a0c99e74. Main remains at eeed57b7aba2a5ca835664795c067e557671e24c;
+no force, merge or PR. A documentation-only closure records this receipt.
+Publication is complete; the next numerical study still needs a prospective
+scope. gcn-rl remains PAUSED. Report:
 docs/team_updates/2026-10-08-manuscript-github-update.md.
 
 ## Previous checkpoint: MDL-2 fixed-support supplement completed

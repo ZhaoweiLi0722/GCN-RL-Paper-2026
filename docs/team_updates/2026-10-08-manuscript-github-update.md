@@ -88,5 +88,23 @@ A separate read-only efficiency evaluator advised reusing existing readouts,
 keeping the new manuscript subsection focused, and ending the diagnostic at
 one decision-changing hypothesis. Both finite assignments completed and closed;
 there is no background scientific job or new scheduler. The old gcn-rl remains
-PAUSED. Git publication verification is recorded after the push; local Dropbox
+PAUSED. Git publication verification is recorded below; local Dropbox
 handoff receipts remain distinct from cloud sync/collaborator access.
+
+## Verified GitHub publication
+
+At 2026-10-08T08:17:06Z, `git ls-remote` returned the published content commit
+`77133917089ca63dce61564500e0bf65a0c99e74` for
+`refs/heads/codex/september-research-integration`, matching local HEAD.
+`main` remained at `eeed57b7aba2a5ca835664795c067e557671e24c`.
+The push created only the research branch; no force push, PR or merge occurred.
+The accumulated stage includes negative family-study findings as well as the
+fixed-support supplement, manuscript revision and development diagnostic.
+
+The bounded outgoing check covered 206 new Git blobs, 36,086,308 bytes total,
+with a largest blob of 1,433,480 bytes. It found no oversized file or matched
+credential pattern; this is not proof that all sensitive material is absent.
+The structured receipt is
+`reports/2026-10-08-manuscript-publication/publication-receipt.json`.
+A subsequent documentation-only closure commit contains that content receipt;
+the terminal remote check also verifies the closure push before delivery.

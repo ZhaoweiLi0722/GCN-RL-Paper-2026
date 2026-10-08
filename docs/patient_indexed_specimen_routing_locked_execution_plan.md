@@ -3997,3 +3997,9 @@ all unfavorable outcomes and separate graph/RL attribution limits. No model,
 reward, physical setting, seed or frozen source is changed. Publication note:
 docs/team_updates/2026-10-08-manuscript-github-update.md. Same monitor stays
 PAUSED; the two finite delegated assignments completed and closed.
+
+Publication verified at2026-10-08T08:17:06Z: research-branch content commit
+77133917089ca63dce61564500e0bf65a0c99e74 matches GitHub. Main is unchanged at
+eeed57b7aba2a5ca835664795c067e557671e24c; no PR, merge or force push. The
+publication receipt is in reports/2026-10-08-manuscript-publication/.
+Only documentation closure follows; no additional numerical work is authorized.

@@ -1,6 +1,6 @@
 %% EAAI first draft converted to Elsevier elsarticle format.
 %% Target journal: Engineering Applications of Artificial Intelligence.
-\documentclass[preprint,review,12pt,nonatbib]{elsarticle}
+\documentclass[preprint,review,12pt]{elsarticle}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -26,8 +26,7 @@
 \newunicodechar{×}{\times}
 \graphicspath{{figures/}}
 
-\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
-\addbibresource{references.bib}
+\bibliographystyle{elsarticle-num}
 
 \journal{Engineering Applications of Artificial Intelligence}
 
@@ -51,9 +50,8 @@
 Distributed personalized regenerative medicine manufacturing couples scarce
 capacity with perishable, patient-specific products and deteriorating treatment
 eligibility. We formulate this problem as a constrained graph Markov decision
-process and develop an advantage-filtered residual controller that combines
-graph convolutional encoding with deep deterministic policy gradients. The
-controller learns bounded corrections to a two-period mean-demand look-ahead
+process and develop a graph-convolutional residual controller with deep
+deterministic policy gradients. It learns bounded corrections to a two-period mean-demand look-ahead
 heuristic while preserving patient identity and action feasibility. In the
 routing-primary formal study, five training seeds were evaluated on four
 scenarios with 100 paired holdout replications per seed and scenario. The
@@ -63,22 +61,20 @@ parameter-matched flat controller ($[0.240,0.413]\%$), with favorable simulated
 service and patient-loss outcomes. These contrasts support the complete
 graph-aware controller, not an isolated message-passing effect. Final-versus-
 frozen comparisons did not establish additional benefit from online
-actor--critic updates. A separate synthetic development study instead learns
-a residual terminal cost for model predictive control. A subsequent prospective
-comparison used five fresh training blocks and 420 frozen evaluations on 60
-paired worlds. It failed the prespecified fast-fluctuation screen against
-eight-step planning and its fresh frozen initializer. Mean paired cost was
-1.44\% higher than eight-step planning in that condition, with a descriptive
-interval that included zero. Matched self-only and same-data Monte Carlo
-controls did not establish separate message-passing or TD-estimator advantages.
-An additional fixed-benchmark comparison trained five algorithm families from
-scratch and independently evaluated two development-selected finalists across
-five fresh blocks. Neither passed the prespecified cost-and-service screen:
-value-TD saved 0.85\% on average but had an interval crossing zero and one
-adverse block; SAC cost 3.50\% more than eight-step planning.
-Neither general reinforcement-learning superiority nor deployment-time
-adaptation is established. Clinical and economic calibration remain necessary
-before operational use.
+actor--critic updates. A separate synthetic support-hour study trained five
+algorithm families from scratch. Neither development-selected finalist passed
+the prespecified screen against eight-step model predictive control: value-TD
+saved 0.85\% on average with an interval crossing zero, whereas soft
+actor--critic cost 3.50\% more. A post hoc supplement added a fixed-support
+heuristic on the same 120 evaluated worlds. Value-TD reduced mean cost by
+2.16\% and simulated patient losses by 5.675 per world relative to that
+comparator, with positive mean cost savings in all five blocks.
+Fast-fluctuation uncertainty and individual-world harms remained. Reusing
+evaluated worlds does not provide independent confirmation, and matched
+controls do not establish separate graph or learning contributions. The
+findings distinguish gains over fixed allocation from uncertain gains over
+strong planning. Clinical and economic calibration remain necessary before
+operational use.
 \end{abstract}
 
 \begin{keyword}
@@ -105,9 +101,11 @@ controller package improve on a strong look-ahead anchor and a parameter-matched
 flat package when patient-indexed routing is available to all three? Second,
 does that advantage persist under a matched TD3 backbone, and do online
 actor--critic updates add value beyond frozen advantage-filtered pretraining?
-Third, in a separate capacity-allocation development setting, can learned
-terminal values improve strong model predictive control (MPC) baselines without
-increasing simulated patient losses? Patient-condition and expiry modeling
+Third, in a separate capacity-allocation setting, can learned controllers
+improve fixed support allocation and strong model predictive control (MPC)
+without increasing simulated patient losses? The fixed-support comparison is
+a post hoc supplement, whereas the five-family H8 comparison used a frozen
+prospective screen. Patient-condition and expiry modeling
 define the application, but the completed formal comparison does not isolate
 their individual effects. A temporal-versus-static encoder comparison also
 remains future work rather than a reported result.
@@ -122,6 +120,7 @@ The main contributions of this study are as follows.
     \item We establish a paired multi-seed evaluation protocol that separates policy-versus-anchor value, graph-versus-flat controller-package value, DDPG-versus-TD3 backbone robustness, and final-versus-frozen online attribution. The evidence includes a five-seed formal DDPG confirmation and a matched three-seed TD3 development ablation with two-level bootstrap confidence intervals. The package comparison does not isolate message passing from feature, head, and gate differences.
     \item We report prospective negative attribution tests rather than folding all learned-policy performance into an online-RL claim. Frozen-policy comparisons and paired critic, legal-action, and corrected action-geometry diagnostics support the value of the offline-pretrained graph-aware controller package, while bounding the unsupported incremental online-update claim. They do not separately attribute its gain to each graph, feature, or gate component.
     \item In separate synthetic development comparisons, we test TD-learned GCN terminal values against plain MPC, existing frozen values, matched-data learning controls, and longer-horizon planning. Historical native-return learning produces exploratory condition-specific gains, but a subsequent fresh-block prospective test fails its fast-condition screen and does not establish separate graph or TD gains. Reporting cost, patient losses, block stability, and label-generation computation prevents a training gain from being mistaken for general planner superiority.
+    \item We compare five from-scratch algorithm families on a common support-hour task and retain the failed strong-baseline screen. A separately labeled post hoc fixed-support comparison shows favorable mean cost and patient outcomes for value-TD, while preserving subgroup uncertainty, individual-world harms, and unresolved graph/learning attribution.
     \item We draw design implications for intelligent decision support in distributed, patient-specific healthcare manufacturing and related time-critical, make-to-order engineering systems.
 \end{itemize}
 
@@ -2435,6 +2434,118 @@ significance, power, global optimality, real-patient calibration, clinical
 safety, deployment-online adaptation, or publication readiness is claimed.
 E1 remains missing and all outcomes are synthetic.
 
+\subsection{Post hoc fixed-support MDL-2 comparison}
+\label{sec:mdl2-fixed-supplement}
+% Evidence: specs/2026-10-08-mdl2-fixed-reference/{protocol,terminal-readout}.md
+% Curated numeric binding: reports/2026-10-08-manuscript-publication/evidence.json
+The strong-planner comparison leaves a different operational question:
+does the learned controller improve on a fixed staffing schedule combined
+with the same base operations? After inspecting the family-study outcomes,
+we added an MDL-2 fixed-support comparator. Its rule was fixed before its
+own outcomes were observed, but the comparator choice was post hoc. This
+supplement does not replace the original H8 primary endpoint or its failed
+screen, and it must not be confused with the earlier routing-primary MDL-2
+comparison.
+
+The fixed rule retains MDL-2 routing and purchasing, ordinary staffing of
+four hours per site and epoch, and the original two-epoch delivery lag.
+It books two additional support hours at each of four sites during each of
+the 48 control epochs, irrespective of the observed queues. No new support
+is booked during the 16 settlement epochs. Each world therefore books and
+receives 384 flexible hours; idle booked hours, switching, and outstanding
+obligations retain their original charges. Feasible resource limits,
+physical dynamics, reward, and all three conditions are unchanged. Actual
+support consumption is not equalized across policies.
+
+We executed only this new role on the 120 original test tapes
+(five blocks, three conditions, eight worlds per condition and block).
+The sealed value-TD graph-final, SAC graph-final, and H8 outcomes contribute
+360 reused trajectories, with no model loading, neural inference, optimizer
+update, or retraining. Full world identities and tape hashes establish
+pairing. The new raw records were reconciled with their summaries, while
+the previous independently reconciled readout supplies the reused outcomes.
+All six pairwise comparisons and their world, block, and condition harms
+are retained. The descriptive bootstrap uses 2,000 draws with common
+training-block resamples across conditions and independent world resamples
+within each condition. Original contrast-specific streams preserve the
+previous H8 intervals exactly.
+
+\begin{table}[tbp]
+\centering
+\caption{Post hoc comparison on 120 reused evaluation worlds. Each entry is
+a per-world mean. Cost is in millions of synthetic objective units, not
+calibrated expenditure. Savings divide the difference in overall mean costs
+by the fixed-support MDL-2 mean. Losses are simulated patient counts;
+support is applied additional labor in hours. H8 remains the original
+study's primary reference.}
+\label{tab:mdl2-fixed-overall}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{Xrrrr}
+\toprule
+Controller & Cost M & Savings (\%) & Losses & Support h \\
+\midrule
+MDL-2 fixed support & 40.140 & --- & 157.125 & 384.000 \\
+H8-MPC & 39.611 & 1.317 & 163.325 & 304.128 \\
+Value-TD graph-final & 39.274 & 2.157 & 151.450 & 376.859 \\
+SAC graph-final & 40.998 & $-2.136$ & 166.583 & 328.479 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Value-TD saved 0.866 million units per world relative to fixed support
+(descriptive 95\% interval $[0.550,1.181]$ million) and lost 5.675 fewer
+patients ($[-7.350,-4.000]$ extra losses). All five block-mean cost savings
+were positive, but 34 of 120 worlds cost more and 26 lost more patients.
+SAC cost 0.857 million more ($[-1.645,-0.278]$ million savings) and lost
+9.458 more patients ($[3.075,18.117]$ extra losses); its cost was higher
+in every block, with 88 cost-harmed and 104 patient-harmed worlds.
+H8 saved 0.529 million ($[0.202,0.892]$ million) but lost 6.200 more
+patients ($[3.791,8.642]$ extra losses), with 43 cost-harmed and 70
+patient-harmed worlds. Fixed MDL-2 is therefore not uniformly inferior to
+H8: its larger labor allocation accompanies a different cost--service
+trade-off. The comparison estimates whole-controller differences, not the
+causal effect of labor quantity alone.
+
+\begin{table}[tbp]
+\centering
+\caption{Value-TD graph-final relative to fixed-support MDL-2 by condition,
+40 paired worlds per row. Positive savings and negative extra losses favor
+value-TD. Intervals are descriptive 95\% bootstrap intervals.}
+\label{tab:mdl2-fixed-conditions}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Condition & Savings (\%) & Savings M [95\%] & Extra losses [95\%] \\
+\midrule
+No change & 3.794 & $1.561\ [0.954,2.167]$ & $-8.875\ [-12.775,-5.350]$ \\
+Persistent change & 2.175 & $0.834\ [0.065,1.536]$ & $-6.800\ [-10.275,-3.199]$ \\
+Fast fluctuation & 0.494 & $0.202\ [-0.443,0.865]$ & $-1.350\ [-5.150,2.475]$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The favorable overall means do not establish robustness to fast independent
+fluctuations: both its cost and patient-loss intervals span zero
+(Table~\ref{tab:mdl2-fixed-conditions}). MDL-2 fixed support required no
+planner, response filter, or neural call. Its mean complete-world time was
+0.85 seconds, compared with 37.02 for H8, 36.99 for value-TD, and 4.15 for
+SAC in their saved runs. These are rollout-plus-I/O measurements, not
+synchronized hardware benchmarks or decision-only latency. The supplement
+used 7,680 native steps and 7,920 native operations and completed in
+112.68 seconds including analysis and archival work. It adds no learning
+computation; it does not remove the original models' training cost.
+
+These results support a limited descriptive cost--service advantage of the
+tested value-guided controller over fixed allocation in the sampled worlds.
+They neither create independent validation from reused tests nor establish
+an isolated GCN or RL contribution. The original value-TD/H8 interval still
+crosses zero, and the graph/self-only and final/initial cost contrasts remain
+inconclusive. Any method revision motivated by these outcomes requires new
+development decisions and untouched evaluation worlds, not continued tuning
+on this supplement.
+
 \section{Discussion and Conclusions}
 \label{sec:conclusion}
 The results distinguish three claims. The formal routing-primary comparison
@@ -2450,6 +2561,18 @@ H8 on overall mean cost and patient losses. Its graph/self-only and final/initia
 controls do not establish separate cost benefits. These are different
 questions, not interchangeable demonstrations that reinforcement learning
 improves a strong operational baseline.
+
+The fixed-support supplement adds a narrower positive finding without
+reversing those conclusions. Value-TD saves 2.16\% mean cost and 5.675
+simulated patient losses per world relative to MDL-2 with fixed additional
+staffing. H8 is cheaper than that fixed policy but loses more patients,
+illustrating why comparator strength cannot be reduced to cost alone.
+Because this comparator was added after inspection of the family results,
+its favorable overall intervals remain descriptive post hoc evidence.
+Fast-fluctuation uncertainty and individual-world harms qualify the mean
+gain. The appropriate conclusion is an advantage over this fixed allocation,
+not proven superiority over strong MPC, isolated message-passing value,
+or successful deployment-time learning.
 
 This study develops a patient-condition and geography-aware simulation of a
 20-clinic PRM network, including identity-preserving pre-manufacturing specimen
@@ -2701,6 +2824,6 @@ author upon reasonable request.
 \section*{Declaration of Competing Interest}
 The author declares that there is no known competing financial interest or personal relationship that could have appeared to influence the work reported in this paper.
 
-\printbibliography
+\bibliography{references}
 
 \end{document}

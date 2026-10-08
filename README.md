@@ -6,32 +6,49 @@ constrained graph MDP in which the product is perishable, identity-bound to a
 single patient, and demanded only while that patient remains clinically eligible.
 The manuscript lives under `paper/`.
 
-## Current Evidence (2026-10-06)
+## Current Evidence (2026-10-08)
 
 The formal routing-primary method is **AFR-GCN-DDPG**, a graph-aware residual
 controller around the two-period MDL-2 look-ahead anchor. Its five-seed comparison
 supports the complete controller package over MDL-2 and parameter-matched flat
 DDPG, not an isolated message-passing effect or an additional online-update gain.
 
-The separate **GCN value-MPC development studies** learn a terminal-cost residual
-used to score MPC candidates. Their latest candidate is native-return TD value
-learning, with no actor updates and frozen evaluation. The completed native-return
-comparison failed its joint primary strong-baseline criterion. Positive
-condition-specific and TD/MC secondary findings do not establish general RL
-superiority. Reward, physical scenarios, and architecture were unchanged.
+The separate **support-hour studies** compare complete controllers, not a
+cross-task ranking with routing. The completed five-family study selected
+Value-TD and SAC on development data, then retrained and independently evaluated
+them. Neither passed the prespecified H8 cost-and-service screen. Value-TD's
+mean cost saving was 0.851%, with an interval crossing zero; SAC cost 3.499% more.
+Graph/self-only and final/initial controls did not establish separate cost gains.
+
+A **post hoc fixed-support MDL-2 supplement** adds only 120 matched fixed-policy
+worlds and reuses 360 saved H8/finalist outcomes, without retraining. Value-TD
+cost 2.157% less than MDL-2 with two extra hours per site and control epoch,
+with 5.675 fewer simulated losses/world. SAC cost 2.136% more with 9.458 extra
+losses. H8 saved 1.317% but had 6.200 extra losses, so it is not uniformly stronger
+than fixed support. Fast-fluctuation uncertainty and individual-world harms
+remain. This supplement is not independent confirmation or isolated graph/RL
+attribution, and it does not replace the original H8 primary endpoint.
 
 Start with these current records rather than the older pilot summaries below:
 
 - [Formal routing-primary evidence](experiments/evidence/patient_indexed_specimen_routing_primary_ddpg/README.md).
-- [Latest native-return results, all comparators, harms and compute](specs/2026-10-05-native-return-value/terminal-readout.md).
+- [Five-family results, original H8 screen, attribution and compute](specs/2026-10-06-family-selection/terminal-readout.md).
+- [Fixed-support MDL-2 supplement, all four roles and limitations](specs/2026-10-08-mdl2-fixed-reference/terminal-readout.md).
+- [Supplement protocol and exact fixed-support rule](specs/2026-10-08-mdl2-fixed-reference/protocol.md).
+- [Earlier native-return results](specs/2026-10-05-native-return-value/terminal-readout.md).
 - [Current manuscript](paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/main.tex).
-- [Writing revision and publication review](docs/team_updates/2026-10-06-manuscript-github-update.md).
+- [Development-only next-step diagnostic](reports/2026-10-08-value-td-next-step/report.md).
+- [Portable supplement numbers and paired evidence](reports/2026-10-08-manuscript-publication/evidence.json).
+- [Latest manuscript revision and publication review](docs/team_updates/2026-10-08-manuscript-github-update.md).
 - [Literature benchmarks, prospective synthetic sensitivity ranges, and TD/TD3 distinction](docs/team_updates/2026-10-06-literature-engineering-evidence.md).
 
-The single native-return attempt is complete and consumed. These instructions
-and historical runner examples are not authorization to restart it. Full raw
+These single attempts are complete and consumed. Instructions and historical
+runner examples are not authorization to restart them. Full raw
 archives and checkpoints remain outside Git; committed manifests/readouts link
 the evidence, and the existing Dropbox receipts verify local copies only.
+The manuscript source is current; the checked-in `main.pdf` predates this
+revision and is not a rebuilt output. The standalone editor cannot resolve
+the manuscript's external figures, so full PDF/layout verification is pending.
 
 ## Where things are
 

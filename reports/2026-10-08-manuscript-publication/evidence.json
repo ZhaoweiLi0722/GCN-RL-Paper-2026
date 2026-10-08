@@ -1,0 +1,5813 @@
+{
+  "bootstrap_resamples": 2000,
+  "bootstrap_seed": 67190001,
+  "clinical_safety": false,
+  "compute_definition": "saved evaluation counts only; excludes prior training",
+  "delay_definition": "mean of epoch-reported metrics, not patient-level mean waiting/turnaround",
+  "elapsed_definition": "whole trajectory including I/O, not per-decision latency",
+  "format": "capacity-fixed-reference-readout-v1",
+  "frozen_packet": {
+    "bytes": 439739,
+    "path": "specs/2026-10-08-mdl2-fixed-reference/frozen.json",
+    "sha256": "902d9be3604466c52b19b2c603c9141ae0594c2a62ec6894759ab27b0bd474f9"
+  },
+  "graph_attribution": false,
+  "human_author_review": "not recorded by this script",
+  "new_independent_validation": false,
+  "new_raw_rows": 7680,
+  "new_trajectories": 120,
+  "pair_harm": [
+    {
+      "block_conditions": [
+        {
+          "block": 0,
+          "condition": 0,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 922037.397577791,
+          "extra_patient_losses": 5.875,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 0,
+          "condition": 1,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 274005.83273108304,
+          "extra_patient_losses": 0.0,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 0,
+          "condition": 2,
+          "cost_harmed_worlds": 4,
+          "cost_saving": -367108.2531071389,
+          "extra_patient_losses": 12.5,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 1,
+          "condition": 0,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 1448638.5878533567,
+          "extra_patient_losses": -1.625,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 1,
+          "condition": 1,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 1211644.6756222108,
+          "extra_patient_losses": 0.875,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 1,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -994978.0578366183,
+          "extra_patient_losses": 19.0,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 2,
+          "condition": 0,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 1555356.0430820407,
+          "extra_patient_losses": 4.125,
+          "patient_harmed_worlds": 4
+        },
+        {
+          "block": 2,
+          "condition": 1,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 407687.71352330735,
+          "extra_patient_losses": 0.875,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 2,
+          "condition": 2,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -733533.5437147561,
+          "extra_patient_losses": 17.875,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 3,
+          "condition": 0,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 967710.7633904382,
+          "extra_patient_losses": 3.0,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 3,
+          "condition": 1,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 648041.0840411596,
+          "extra_patient_losses": -3.5,
+          "patient_harmed_worlds": 4
+        },
+        {
+          "block": 3,
+          "condition": 2,
+          "cost_harmed_worlds": 3,
+          "cost_saving": -253618.39202925423,
+          "extra_patient_losses": 23.5,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 4,
+          "condition": 0,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 1334582.2705535153,
+          "extra_patient_losses": 4.375,
+          "patient_harmed_worlds": 4
+        },
+        {
+          "block": 4,
+          "condition": 1,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 1157860.0936512356,
+          "extra_patient_losses": -2.625,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 4,
+          "condition": 2,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 350075.0123241986,
+          "extra_patient_losses": 8.75,
+          "patient_harmed_worlds": 5
+        }
+      ],
+      "blocks": [
+        {
+          "block": 0,
+          "cost_harmed_worlds": 8,
+          "cost_saving": 276311.659067245,
+          "extra_patient_losses": 6.125,
+          "patient_harmed_worlds": 16
+        },
+        {
+          "block": 1,
+          "cost_harmed_worlds": 9,
+          "cost_saving": 555101.7352129831,
+          "extra_patient_losses": 6.083333333333333,
+          "patient_harmed_worlds": 15
+        },
+        {
+          "block": 2,
+          "cost_harmed_worlds": 12,
+          "cost_saving": 409836.7376301973,
+          "extra_patient_losses": 7.625,
+          "patient_harmed_worlds": 14
+        },
+        {
+          "block": 3,
+          "cost_harmed_worlds": 7,
+          "cost_saving": 454044.4851341145,
+          "extra_patient_losses": 7.666666666666667,
+          "patient_harmed_worlds": 14
+        },
+        {
+          "block": 4,
+          "cost_harmed_worlds": 7,
+          "cost_saving": 947505.7921763165,
+          "extra_patient_losses": 3.5,
+          "patient_harmed_worlds": 11
+        }
+      ],
+      "candidate": "plain_h8",
+      "cost_harmed_worlds": 43,
+      "patient_harmed_worlds": 70,
+      "reference": "mdl2-fixed2"
+    },
+    {
+      "block_conditions": [
+        {
+          "block": 0,
+          "condition": 0,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 2174738.327379426,
+          "extra_patient_losses": -11.5,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 0,
+          "condition": 1,
+          "cost_harmed_worlds": 4,
+          "cost_saving": -240957.59122953797,
+          "extra_patient_losses": -3.125,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 0,
+          "condition": 2,
+          "cost_harmed_worlds": 3,
+          "cost_saving": -16691.51078749681,
+          "extra_patient_losses": -2.125,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 1,
+          "condition": 0,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 980015.2568805385,
+          "extra_patient_losses": -8.875,
+          "patient_harmed_worlds": 1
+        },
+        {
+          "block": 1,
+          "condition": 1,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 1591157.2007695106,
+          "extra_patient_losses": -9.125,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 1,
+          "condition": 2,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 1058487.618273993,
+          "extra_patient_losses": -6.125,
+          "patient_harmed_worlds": 1
+        },
+        {
+          "block": 2,
+          "condition": 0,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 1392542.3666840787,
+          "extra_patient_losses": -5.0,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 2,
+          "condition": 1,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 788636.2494720914,
+          "extra_patient_losses": -9.125,
+          "patient_harmed_worlds": 1
+        },
+        {
+          "block": 2,
+          "condition": 2,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 251319.68469899334,
+          "extra_patient_losses": 0.125,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 3,
+          "condition": 0,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 1916185.169800715,
+          "extra_patient_losses": -13.625,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 3,
+          "condition": 1,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 1040026.1151235811,
+          "extra_patient_losses": -5.0,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 3,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -577526.0903591528,
+          "extra_patient_losses": 4.5,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 4,
+          "condition": 0,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 1342094.7687056921,
+          "extra_patient_losses": -5.375,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 4,
+          "condition": 1,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 989402.8323716898,
+          "extra_patient_losses": -7.625,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 4,
+          "condition": 2,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 294969.03184668114,
+          "extra_patient_losses": -3.125,
+          "patient_harmed_worlds": 5
+        }
+      ],
+      "blocks": [
+        {
+          "block": 0,
+          "cost_harmed_worlds": 7,
+          "cost_saving": 639029.7417874638,
+          "extra_patient_losses": -5.583333333333333,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 1,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 1209886.6919746806,
+          "extra_patient_losses": -8.041666666666666,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 2,
+          "cost_harmed_worlds": 8,
+          "cost_saving": 810832.7669517212,
+          "extra_patient_losses": -4.666666666666667,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 3,
+          "cost_harmed_worlds": 9,
+          "cost_saving": 792895.0648550479,
+          "extra_patient_losses": -4.708333333333333,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 4,
+          "cost_harmed_worlds": 7,
+          "cost_saving": 875488.8776413543,
+          "extra_patient_losses": -5.375,
+          "patient_harmed_worlds": 5
+        }
+      ],
+      "candidate": "value_td-graph-final",
+      "cost_harmed_worlds": 34,
+      "patient_harmed_worlds": 26,
+      "reference": "mdl2-fixed2"
+    },
+    {
+      "block_conditions": [
+        {
+          "block": 0,
+          "condition": 0,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -534780.7140304707,
+          "extra_patient_losses": 10.125,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 0,
+          "condition": 1,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -1758969.844924043,
+          "extra_patient_losses": 10.375,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 0,
+          "condition": 2,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -634467.0562900379,
+          "extra_patient_losses": 12.75,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 1,
+          "condition": 0,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -906071.01718834,
+          "extra_patient_losses": 5.625,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 1,
+          "condition": 1,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -793333.6657344191,
+          "extra_patient_losses": 3.75,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 1,
+          "condition": 2,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -433082.05968056154,
+          "extra_patient_losses": 2.75,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 2,
+          "condition": 0,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -1264187.5010217912,
+          "extra_patient_losses": 22.875,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 2,
+          "condition": 1,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -3025059.039160444,
+          "extra_patient_losses": 23.875,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 2,
+          "condition": 2,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -2371553.760983886,
+          "extra_patient_losses": 31.375,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 3,
+          "condition": 0,
+          "cost_harmed_worlds": 5,
+          "cost_saving": 49752.37238107994,
+          "extra_patient_losses": 0.0,
+          "patient_harmed_worlds": 4
+        },
+        {
+          "block": 3,
+          "condition": 1,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -829939.4422362684,
+          "extra_patient_losses": 3.5,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 3,
+          "condition": 2,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 150868.52430534316,
+          "extra_patient_losses": 0.75,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 4,
+          "condition": 0,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 261637.65550098522,
+          "extra_patient_losses": 2.25,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 4,
+          "condition": 1,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -405070.03506619716,
+          "extra_patient_losses": 5.25,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 4,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -368072.7717179442,
+          "extra_patient_losses": 6.625,
+          "patient_harmed_worlds": 8
+        }
+      ],
+      "blocks": [
+        {
+          "block": 0,
+          "cost_harmed_worlds": 21,
+          "cost_saving": -976072.5384148505,
+          "extra_patient_losses": 11.083333333333334,
+          "patient_harmed_worlds": 23
+        },
+        {
+          "block": 1,
+          "cost_harmed_worlds": 20,
+          "cost_saving": -710828.9142011069,
+          "extra_patient_losses": 4.041666666666667,
+          "patient_harmed_worlds": 20
+        },
+        {
+          "block": 2,
+          "cost_harmed_worlds": 19,
+          "cost_saving": -2220266.7670553736,
+          "extra_patient_losses": 26.041666666666668,
+          "patient_harmed_worlds": 24
+        },
+        {
+          "block": 3,
+          "cost_harmed_worlds": 15,
+          "cost_saving": -209772.8485166151,
+          "extra_patient_losses": 1.4166666666666667,
+          "patient_harmed_worlds": 16
+        },
+        {
+          "block": 4,
+          "cost_harmed_worlds": 13,
+          "cost_saving": -170501.71709438539,
+          "extra_patient_losses": 4.708333333333333,
+          "patient_harmed_worlds": 21
+        }
+      ],
+      "candidate": "sac-graph-final",
+      "cost_harmed_worlds": 88,
+      "patient_harmed_worlds": 104,
+      "reference": "mdl2-fixed2"
+    },
+    {
+      "block_conditions": [
+        {
+          "block": 0,
+          "condition": 0,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 1252700.929801635,
+          "extra_patient_losses": -17.375,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 0,
+          "condition": 1,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -514963.423960621,
+          "extra_patient_losses": -3.125,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 0,
+          "condition": 2,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 350416.7423196421,
+          "extra_patient_losses": -14.625,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 1,
+          "condition": 0,
+          "cost_harmed_worlds": 4,
+          "cost_saving": -468623.3309728182,
+          "extra_patient_losses": -7.25,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 1,
+          "condition": 1,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 379512.52514729975,
+          "extra_patient_losses": -10.0,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 1,
+          "condition": 2,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 2053465.6761106113,
+          "extra_patient_losses": -25.125,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 2,
+          "condition": 0,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -162813.67639796203,
+          "extra_patient_losses": -9.125,
+          "patient_harmed_worlds": 1
+        },
+        {
+          "block": 2,
+          "condition": 1,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 380948.5359487841,
+          "extra_patient_losses": -10.0,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 2,
+          "condition": 2,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 984853.2284137495,
+          "extra_patient_losses": -17.75,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 3,
+          "condition": 0,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 948474.4064102769,
+          "extra_patient_losses": -16.625,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 3,
+          "condition": 1,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 391985.03108242154,
+          "extra_patient_losses": -1.5,
+          "patient_harmed_worlds": 4
+        },
+        {
+          "block": 3,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -323907.6983298985,
+          "extra_patient_losses": -19.0,
+          "patient_harmed_worlds": 1
+        },
+        {
+          "block": 4,
+          "condition": 0,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 7512.4981521768495,
+          "extra_patient_losses": -9.75,
+          "patient_harmed_worlds": 1
+        },
+        {
+          "block": 4,
+          "condition": 1,
+          "cost_harmed_worlds": 4,
+          "cost_saving": -168457.26127954572,
+          "extra_patient_losses": -5.0,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 4,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -55105.98047751747,
+          "extra_patient_losses": -11.875,
+          "patient_harmed_worlds": 2
+        }
+      ],
+      "blocks": [
+        {
+          "block": 0,
+          "cost_harmed_worlds": 9,
+          "cost_saving": 362718.0827202187,
+          "extra_patient_losses": -11.708333333333334,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 1,
+          "cost_harmed_worlds": 8,
+          "cost_saving": 654784.9567616977,
+          "extra_patient_losses": -14.125,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 2,
+          "cost_harmed_worlds": 11,
+          "cost_saving": 400996.02932152385,
+          "extra_patient_losses": -12.291666666666666,
+          "patient_harmed_worlds": 1
+        },
+        {
+          "block": 3,
+          "cost_harmed_worlds": 11,
+          "cost_saving": 338850.5797209333,
+          "extra_patient_losses": -12.375,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 4,
+          "cost_harmed_worlds": 12,
+          "cost_saving": -72016.91453496211,
+          "extra_patient_losses": -8.875,
+          "patient_harmed_worlds": 5
+        }
+      ],
+      "candidate": "value_td-graph-final",
+      "cost_harmed_worlds": 51,
+      "patient_harmed_worlds": 21,
+      "reference": "plain_h8"
+    },
+    {
+      "block_conditions": [
+        {
+          "block": 0,
+          "condition": 0,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -1456818.1116082617,
+          "extra_patient_losses": 4.25,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 0,
+          "condition": 1,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -2032975.677655126,
+          "extra_patient_losses": 10.375,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 0,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -267358.803182899,
+          "extra_patient_losses": 0.25,
+          "patient_harmed_worlds": 4
+        },
+        {
+          "block": 1,
+          "condition": 0,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -2354709.6050416967,
+          "extra_patient_losses": 7.25,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 1,
+          "condition": 1,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -2004978.34135663,
+          "extra_patient_losses": 2.875,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 1,
+          "condition": 2,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 561895.9981560567,
+          "extra_patient_losses": -16.25,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 2,
+          "condition": 0,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -2819543.544103832,
+          "extra_patient_losses": 18.75,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 2,
+          "condition": 1,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -3432746.7526837513,
+          "extra_patient_losses": 23.0,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 2,
+          "condition": 2,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -1638020.21726913,
+          "extra_patient_losses": 13.5,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 3,
+          "condition": 0,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -917958.3910093582,
+          "extra_patient_losses": -3.0,
+          "patient_harmed_worlds": 4
+        },
+        {
+          "block": 3,
+          "condition": 1,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -1477980.526277428,
+          "extra_patient_losses": 7.0,
+          "patient_harmed_worlds": 5
+        },
+        {
+          "block": 3,
+          "condition": 2,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 404486.9163345974,
+          "extra_patient_losses": -22.75,
+          "patient_harmed_worlds": 0
+        },
+        {
+          "block": 4,
+          "condition": 0,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -1072944.61505253,
+          "extra_patient_losses": -2.125,
+          "patient_harmed_worlds": 3
+        },
+        {
+          "block": 4,
+          "condition": 1,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -1562930.1287174327,
+          "extra_patient_losses": 7.875,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 4,
+          "condition": 2,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -718147.7840421428,
+          "extra_patient_losses": -2.125,
+          "patient_harmed_worlds": 5
+        }
+      ],
+      "blocks": [
+        {
+          "block": 0,
+          "cost_harmed_worlds": 17,
+          "cost_saving": -1252384.1974820956,
+          "extra_patient_losses": 4.958333333333333,
+          "patient_harmed_worlds": 16
+        },
+        {
+          "block": 1,
+          "cost_harmed_worlds": 17,
+          "cost_saving": -1265930.64941409,
+          "extra_patient_losses": -2.0416666666666665,
+          "patient_harmed_worlds": 13
+        },
+        {
+          "block": 2,
+          "cost_harmed_worlds": 21,
+          "cost_saving": -2630103.5046855714,
+          "extra_patient_losses": 18.416666666666668,
+          "patient_harmed_worlds": 23
+        },
+        {
+          "block": 3,
+          "cost_harmed_worlds": 16,
+          "cost_saving": -663817.3336507296,
+          "extra_patient_losses": -6.25,
+          "patient_harmed_worlds": 9
+        },
+        {
+          "block": 4,
+          "cost_harmed_worlds": 20,
+          "cost_saving": -1118007.5092707018,
+          "extra_patient_losses": 1.2083333333333333,
+          "patient_harmed_worlds": 14
+        }
+      ],
+      "candidate": "sac-graph-final",
+      "cost_harmed_worlds": 91,
+      "patient_harmed_worlds": 75,
+      "reference": "plain_h8"
+    },
+    {
+      "block_conditions": [
+        {
+          "block": 0,
+          "condition": 0,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -2709519.0414098967,
+          "extra_patient_losses": 21.625,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 0,
+          "condition": 1,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -1518012.253694505,
+          "extra_patient_losses": 13.5,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 0,
+          "condition": 2,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -617775.5455025411,
+          "extra_patient_losses": 14.875,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 1,
+          "condition": 0,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -1886086.2740688785,
+          "extra_patient_losses": 14.5,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 1,
+          "condition": 1,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -2384490.8665039297,
+          "extra_patient_losses": 12.875,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 1,
+          "condition": 2,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -1491569.6779545546,
+          "extra_patient_losses": 8.875,
+          "patient_harmed_worlds": 7
+        },
+        {
+          "block": 2,
+          "condition": 0,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -2656729.86770587,
+          "extra_patient_losses": 27.875,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 2,
+          "condition": 1,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -3813695.2886325354,
+          "extra_patient_losses": 33.0,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 2,
+          "condition": 2,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -2622873.4456828795,
+          "extra_patient_losses": 31.25,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 3,
+          "condition": 0,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -1866432.797419635,
+          "extra_patient_losses": 13.625,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 3,
+          "condition": 1,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -1869965.5573598496,
+          "extra_patient_losses": 8.5,
+          "patient_harmed_worlds": 6
+        },
+        {
+          "block": 3,
+          "condition": 2,
+          "cost_harmed_worlds": 2,
+          "cost_saving": 728394.6146644959,
+          "extra_patient_losses": -3.75,
+          "patient_harmed_worlds": 2
+        },
+        {
+          "block": 4,
+          "condition": 0,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -1080457.113204707,
+          "extra_patient_losses": 7.625,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 4,
+          "condition": 1,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -1394472.867437887,
+          "extra_patient_losses": 12.875,
+          "patient_harmed_worlds": 8
+        },
+        {
+          "block": 4,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -663041.8035646253,
+          "extra_patient_losses": 9.75,
+          "patient_harmed_worlds": 7
+        }
+      ],
+      "blocks": [
+        {
+          "block": 0,
+          "cost_harmed_worlds": 20,
+          "cost_saving": -1615102.2802023143,
+          "extra_patient_losses": 16.666666666666668,
+          "patient_harmed_worlds": 23
+        },
+        {
+          "block": 1,
+          "cost_harmed_worlds": 22,
+          "cost_saving": -1920715.6061757877,
+          "extra_patient_losses": 12.083333333333334,
+          "patient_harmed_worlds": 23
+        },
+        {
+          "block": 2,
+          "cost_harmed_worlds": 23,
+          "cost_saving": -3031099.534007095,
+          "extra_patient_losses": 30.708333333333332,
+          "patient_harmed_worlds": 24
+        },
+        {
+          "block": 3,
+          "cost_harmed_worlds": 16,
+          "cost_saving": -1002667.913371663,
+          "extra_patient_losses": 6.125,
+          "patient_harmed_worlds": 16
+        },
+        {
+          "block": 4,
+          "cost_harmed_worlds": 19,
+          "cost_saving": -1045990.5947357398,
+          "extra_patient_losses": 10.083333333333334,
+          "patient_harmed_worlds": 23
+        }
+      ],
+      "candidate": "sac-graph-final",
+      "cost_harmed_worlds": 100,
+      "patient_harmed_worlds": 109,
+      "reference": "value_td-graph-final"
+    }
+  ],
+  "paired_worlds": 120,
+  "pairs": [
+    {
+      "block_savings": [
+        276311.659067245,
+        555101.7352129831,
+        409836.7376301973,
+        454044.4851341145,
+        947505.7921763165
+      ],
+      "candidate": "plain_h8",
+      "conditions": [
+        {
+          "block_savings": [
+            922037.397577791,
+            1448638.5878533567,
+            1555356.0430820407,
+            967710.7633904382,
+            1334582.2705535153
+          ],
+          "condition": 0,
+          "cost_ci95": [
+            636968.4603383659,
+            1845471.8688401547
+          ],
+          "cost_harmed_worlds": 11,
+          "cost_saving": 1245665.0124914285,
+          "extra_patient_losses": 3.15,
+          "patient_ci95": [
+            -1.225,
+            7.175624999999997
+          ],
+          "patient_harmed_worlds": 19,
+          "saving_fraction": 0.030274018755877943
+        },
+        {
+          "block_savings": [
+            274005.83273108304,
+            1211644.6756222108,
+            407687.71352330735,
+            648041.0840411596,
+            1157860.0936512356
+          ],
+          "condition": 1,
+          "cost_ci95": [
+            198217.12590585343,
+            1292789.024117869
+          ],
+          "cost_harmed_worlds": 11,
+          "cost_saving": 739847.8799137992,
+          "extra_patient_losses": -0.875,
+          "patient_ci95": [
+            -4.2,
+            2.125
+          ],
+          "patient_harmed_worlds": 17,
+          "saving_fraction": 0.01929996790610859
+        },
+        {
+          "block_savings": [
+            -367108.2531071389,
+            -994978.0578366183,
+            -733533.5437147561,
+            -253618.39202925423,
+            350075.0123241986
+          ],
+          "condition": 2,
+          "cost_ci95": [
+            -1057171.2360407992,
+            243293.65060266148
+          ],
+          "cost_harmed_worlds": 21,
+          "cost_saving": -399832.6468727138,
+          "extra_patient_losses": 16.325,
+          "patient_ci95": [
+            10.17375,
+            22.351249999999993
+          ],
+          "patient_harmed_worlds": 34,
+          "saving_fraction": -0.009766390635184044
+        }
+      ],
+      "cost_ci95": [
+        202162.52659358637,
+        892393.5548910088
+      ],
+      "cost_saving": 528560.0818441713,
+      "extra_patient_losses": 6.2,
+      "fast_minus_persistent_saving": -1139680.5267865132,
+      "fast_minus_stable_saving": -1645497.6593641422,
+      "metrics": {
+        "applied_hours": {
+          "candidate_mean": 304.12775008644314,
+          "reference_mean": 384.0
+        },
+        "committed_hours": {
+          "candidate_mean": 304.12775008644314,
+          "reference_mean": 384.0
+        },
+        "cost": {
+          "candidate_mean": 39611487.33582067,
+          "reference_mean": 40140047.41766483
+        },
+        "elapsed": {
+          "candidate_mean": 37.02254521667685,
+          "reference_mean": 0.8505394478833329
+        },
+        "lost": {
+          "candidate_mean": 163.325,
+          "reference_mean": 157.125
+        },
+        "requested_hours": {
+          "candidate_mean": 304.12775008644314,
+          "reference_mean": 384.0
+        }
+      },
+      "patient_ci95": [
+        3.7914583333333334,
+        8.642083333333332
+      ],
+      "reference": "mdl2-fixed2",
+      "saving_fraction": 0.01316789879056203,
+      "world_extra_losses": [
+        [
+          [
+            5,
+            5,
+            2,
+            11,
+            19,
+            -2,
+            11,
+            -4
+          ],
+          [
+            4,
+            0,
+            -8,
+            -2,
+            -3,
+            2,
+            7,
+            0
+          ],
+          [
+            24,
+            7,
+            11,
+            26,
+            -8,
+            3,
+            13,
+            24
+          ]
+        ],
+        [
+          [
+            -5,
+            8,
+            -9,
+            -8,
+            0,
+            -8,
+            -3,
+            12
+          ],
+          [
+            -7,
+            -5,
+            1,
+            9,
+            1,
+            15,
+            3,
+            -10
+          ],
+          [
+            10,
+            31,
+            6,
+            29,
+            41,
+            28,
+            4,
+            3
+          ]
+        ],
+        [
+          [
+            -3,
+            16,
+            13,
+            5,
+            -2,
+            14,
+            -1,
+            -9
+          ],
+          [
+            -7,
+            6,
+            -1,
+            11,
+            0,
+            14,
+            -6,
+            -10
+          ],
+          [
+            26,
+            40,
+            17,
+            20,
+            25,
+            -5,
+            11,
+            9
+          ]
+        ],
+        [
+          [
+            30,
+            -9,
+            22,
+            26,
+            -1,
+            -22,
+            -22,
+            0
+          ],
+          [
+            -25,
+            18,
+            -11,
+            7,
+            2,
+            1,
+            -7,
+            -13
+          ],
+          [
+            0,
+            23,
+            28,
+            43,
+            9,
+            18,
+            36,
+            31
+          ]
+        ],
+        [
+          [
+            28,
+            -2,
+            5,
+            11,
+            -2,
+            -5,
+            -1,
+            1
+          ],
+          [
+            -2,
+            16,
+            -13,
+            4,
+            -1,
+            -11,
+            -8,
+            -6
+          ],
+          [
+            0,
+            20,
+            2,
+            5,
+            4,
+            -2,
+            -3,
+            44
+          ]
+        ]
+      ],
+      "world_savings": [
+        [
+          [
+            3099953.546487175,
+            111380.15117632225,
+            1002786.4890520796,
+            -2413569.304200776,
+            1267274.3795782626,
+            393153.13739743084,
+            486891.84834079444,
+            3428428.9327910393
+          ],
+          [
+            -839255.4513360783,
+            1639322.7190521583,
+            1906537.8143382296,
+            231417.9255193323,
+            898956.4566983655,
+            -462074.12456867844,
+            -1380553.509511996,
+            197694.83165733144
+          ],
+          [
+            -2158327.6289297044,
+            -1472340.7455691025,
+            1576389.1702066287,
+            249023.124764435,
+            1443679.330245167,
+            -1339627.1146586835,
+            -1360291.6801921278,
+            124629.51927627623
+          ]
+        ],
+        [
+          [
+            1743920.4136172682,
+            2755296.117256567,
+            914803.9904125109,
+            5329289.688690908,
+            574543.4276218936,
+            1247207.3610664196,
+            -625608.4302151948,
+            -350343.8656235188
+          ],
+          [
+            2413133.730360076,
+            1910449.1659341827,
+            332664.9140792787,
+            -471450.7317333594,
+            290730.16240145266,
+            -197739.82295309752,
+            2548196.156881258,
+            2867173.830007896
+          ],
+          [
+            -2545195.7572508976,
+            -1540464.955658473,
+            109848.63298795372,
+            -2734481.5543617085,
+            -4065537.504150994,
+            1194640.2394812778,
+            1993278.9908051416,
+            -371912.55454524606
+          ]
+        ],
+        [
+          [
+            2877447.6453636065,
+            -496251.8005851209,
+            4034276.7896447927,
+            -665986.419572629,
+            -46087.70126274973,
+            574380.3891051412,
+            2667708.348868564,
+            3497361.0930947214
+          ],
+          [
+            2167394.090271935,
+            -2078768.075438358,
+            921945.991356723,
+            -897864.3099286854,
+            318958.1337687373,
+            -303672.5252786428,
+            136946.4231244512,
+            2996561.9803102985
+          ],
+          [
+            -4735249.332540236,
+            -418558.4884691313,
+            -122443.15753820539,
+            -2546471.5816453323,
+            -1394231.274083823,
+            1894693.2208448686,
+            -306038.7860958129,
+            1760031.0498096235
+          ]
+        ],
+        [
+          [
+            -2624773.804818481,
+            2935778.125076093,
+            1391922.5329163969,
+            -1824690.3983490765,
+            2191459.6951996833,
+            2775353.3719436936,
+            3433237.5258717164,
+            -536600.94071652
+          ],
+          [
+            2255486.3419510424,
+            -3321259.951645501,
+            2132643.309042774,
+            209120.23849491403,
+            1375125.1187226698,
+            474974.27144575864,
+            109960.25442970544,
+            1948279.0898879133
+          ],
+          [
+            1515963.6115455478,
+            1659514.8724161983,
+            41053.39568129927,
+            -826189.1321841776,
+            -1086097.6597961783,
+            73038.23578003794,
+            313701.6540744528,
+            -3719932.113751214
+          ]
+        ],
+        [
+          [
+            -642555.8314414099,
+            1590393.7162900046,
+            -302482.7971666157,
+            2849568.655657664,
+            754065.2855056897,
+            3576723.683237873,
+            1035407.97275386,
+            1815537.4795910567
+          ],
+          [
+            658820.7057382464,
+            783919.2278174087,
+            2662834.5797164515,
+            -776000.6428666487,
+            -192338.80131930113,
+            2625098.829158947,
+            2475141.871640835,
+            1025404.9793239459
+          ],
+          [
+            632110.7699949816,
+            1761195.971109368,
+            -455570.516138982,
+            1401085.239977412,
+            -80165.20415431261,
+            436351.06037412584,
+            2798000.8409969434,
+            -3692408.063565947
+          ]
+        ]
+      ]
+    },
+    {
+      "block_savings": [
+        639029.7417874638,
+        1209886.6919746806,
+        810832.7669517212,
+        792895.0648550479,
+        875488.8776413543
+      ],
+      "candidate": "value_td-graph-final",
+      "conditions": [
+        {
+          "block_savings": [
+            2174738.327379426,
+            980015.2568805385,
+            1392542.3666840787,
+            1916185.169800715,
+            1342094.7687056921
+          ],
+          "condition": 0,
+          "cost_ci95": [
+            954436.9578824944,
+            2166761.3837910444
+          ],
+          "cost_harmed_worlds": 6,
+          "cost_saving": 1561115.1778900898,
+          "extra_patient_losses": -8.875,
+          "patient_ci95": [
+            -12.775,
+            -5.35
+          ],
+          "patient_harmed_worlds": 1,
+          "saving_fraction": 0.0379405616290082
+        },
+        {
+          "block_savings": [
+            -240957.59122953797,
+            1591157.2007695106,
+            788636.2494720914,
+            1040026.1151235811,
+            989402.8323716898
+          ],
+          "condition": 1,
+          "cost_ci95": [
+            65012.68127851309,
+            1536084.5948707077
+          ],
+          "cost_harmed_worlds": 12,
+          "cost_saving": 833652.961301467,
+          "extra_patient_losses": -6.8,
+          "patient_ci95": [
+            -10.275,
+            -3.198750000000007
+          ],
+          "patient_harmed_worlds": 7,
+          "saving_fraction": 0.02174700480296748
+        },
+        {
+          "block_savings": [
+            -16691.51078749681,
+            1058487.618273993,
+            251319.68469899334,
+            -577526.0903591528,
+            294969.03184668114
+          ],
+          "condition": 2,
+          "cost_ci95": [
+            -443287.12081862096,
+            865050.3912523625
+          ],
+          "cost_harmed_worlds": 16,
+          "cost_saving": 202111.7467346036,
+          "extra_patient_losses": -1.35,
+          "patient_ci95": [
+            -5.15,
+            2.475
+          ],
+          "patient_harmed_worlds": 18,
+          "saving_fraction": 0.004936821157572736
+        }
+      ],
+      "cost_ci95": [
+        549502.2576855387,
+        1180690.9537740962
+      ],
+      "cost_saving": 865626.6286420537,
+      "extra_patient_losses": -5.675,
+      "fast_minus_persistent_saving": -631541.2145668634,
+      "fast_minus_stable_saving": -1359003.4311554865,
+      "metrics": {
+        "applied_hours": {
+          "candidate_mean": 376.8591745125204,
+          "reference_mean": 384.0
+        },
+        "committed_hours": {
+          "candidate_mean": 376.8591745125204,
+          "reference_mean": 384.0
+        },
+        "cost": {
+          "candidate_mean": 39274420.78902278,
+          "reference_mean": 40140047.41766483
+        },
+        "elapsed": {
+          "candidate_mean": 36.987782858337354,
+          "reference_mean": 0.8505394478833329
+        },
+        "lost": {
+          "candidate_mean": 151.45,
+          "reference_mean": 157.125
+        },
+        "requested_hours": {
+          "candidate_mean": 376.8591745125204,
+          "reference_mean": 384.0
+        }
+      },
+      "patient_ci95": [
+        -7.350416666666665,
+        -3.9997916666666677
+      ],
+      "reference": "mdl2-fixed2",
+      "saving_fraction": 0.021565162084514845,
+      "world_extra_losses": [
+        [
+          [
+            -19,
+            -16,
+            -4,
+            -3,
+            -2,
+            -19,
+            -3,
+            -26
+          ],
+          [
+            -4,
+            -10,
+            -15,
+            -3,
+            3,
+            4,
+            11,
+            -11
+          ],
+          [
+            -5,
+            -7,
+            5,
+            -5,
+            -6,
+            4,
+            -1,
+            -2
+          ]
+        ],
+        [
+          [
+            -2,
+            -10,
+            -6,
+            -25,
+            -11,
+            -7,
+            -16,
+            6
+          ],
+          [
+            -7,
+            -5,
+            -13,
+            0,
+            -9,
+            -6,
+            -4,
+            -29
+          ],
+          [
+            -7,
+            -11,
+            -8,
+            -4,
+            -5,
+            10,
+            -10,
+            -14
+          ]
+        ],
+        [
+          [
+            -3,
+            -2,
+            -9,
+            -3,
+            -1,
+            -4,
+            -8,
+            -10
+          ],
+          [
+            -19,
+            4,
+            -3,
+            -8,
+            -16,
+            -7,
+            -13,
+            -11
+          ],
+          [
+            6,
+            -8,
+            -3,
+            10,
+            4,
+            -15,
+            2,
+            5
+          ]
+        ],
+        [
+          [
+            -7,
+            -8,
+            -7,
+            -14,
+            -24,
+            -27,
+            -19,
+            -3
+          ],
+          [
+            -11,
+            -5,
+            -15,
+            20,
+            -19,
+            4,
+            2,
+            -16
+          ],
+          [
+            4,
+            0,
+            3,
+            6,
+            -1,
+            15,
+            0,
+            9
+          ]
+        ],
+        [
+          [
+            -10,
+            -2,
+            -3,
+            -7,
+            -3,
+            -1,
+            -10,
+            -7
+          ],
+          [
+            -7,
+            -1,
+            -14,
+            0,
+            -6,
+            -25,
+            -5,
+            -3
+          ],
+          [
+            3,
+            -9,
+            6,
+            2,
+            1,
+            -24,
+            -6,
+            2
+          ]
+        ]
+      ],
+      "world_savings": [
+        [
+          [
+            4680996.659808382,
+            1916208.9155955538,
+            1469780.3672262728,
+            329862.34650179744,
+            659281.975954242,
+            1508444.6502131745,
+            1463628.5254771113,
+            5369703.1782588735
+          ],
+          [
+            752627.6231532618,
+            1485308.7479280308,
+            588529.5499691814,
+            -257855.4921515584,
+            -463436.95590431243,
+            -1541269.8715421893,
+            -3247739.936230015,
+            756175.6049412973
+          ],
+          [
+            784023.8549038544,
+            448238.39519586414,
+            -1811943.4554923326,
+            1070407.0052214041,
+            1705043.9519595392,
+            -2578593.2803170234,
+            -175644.54986763746,
+            424935.99209635705
+          ]
+        ],
+        [
+          [
+            -2431125.766193643,
+            1361778.4847373813,
+            2463804.4768928364,
+            4657544.926243529,
+            660437.8519540951,
+            506164.25962311774,
+            736524.8917491883,
+            -115007.06996219605
+          ],
+          [
+            300370.7696547285,
+            2750905.8204994053,
+            1501156.3742039278,
+            363447.1262716353,
+            2384439.3415563144,
+            2265082.765821941,
+            1326029.4742869958,
+            1837825.9338611364
+          ],
+          [
+            593062.2880143486,
+            1095436.705396928,
+            344567.4343774766,
+            808494.608052507,
+            844188.7870427221,
+            -903511.8387765512,
+            3216513.6590434536,
+            2469149.3030410595
+          ]
+        ],
+        [
+          [
+            1935706.8739582077,
+            -274362.6543624401,
+            2246003.1588268653,
+            1345303.2682806142,
+            -452892.1472668275,
+            1276065.5470259637,
+            2156675.6490830407,
+            2907839.237927206
+          ],
+          [
+            2816363.417867705,
+            -2512785.478422232,
+            257333.51947964355,
+            -22827.40408857912,
+            2956895.9570238814,
+            -588136.1447673663,
+            1627766.2360518277,
+            1774479.8926318511
+          ],
+          [
+            726240.043730773,
+            1708722.4099117666,
+            816322.2998313084,
+            -2105914.451422248,
+            -1808389.7175507396,
+            2484738.247470431,
+            326029.2826111801,
+            -137190.63699052483
+          ]
+        ],
+        [
+          [
+            47176.6514191702,
+            658684.4570964724,
+            1165405.7696726099,
+            2251385.1597242057,
+            3593099.6087957174,
+            3781124.5934488066,
+            3848213.3309687153,
+            -15608.212719976902
+          ],
+          [
+            2889027.274361063,
+            -1109386.9850158766,
+            1821756.3485963717,
+            -1701133.8484884314,
+            4723937.101728559,
+            174113.43621829897,
+            -1490214.0702971667,
+            3012109.663885832
+          ],
+          [
+            203053.12437386066,
+            -279756.76098661125,
+            -1699443.140639171,
+            746270.6689408273,
+            -338286.2934900895,
+            -970611.6167756841,
+            106152.14822685719,
+            -2387586.8525232114
+          ]
+        ],
+        [
+          [
+            1999735.344383441,
+            1642280.4223814458,
+            -35988.58578359336,
+            791218.3189055175,
+            1637421.375506781,
+            1403139.7338322848,
+            1791683.1403315961,
+            1507268.4000880644
+          ],
+          [
+            208588.71330993623,
+            813387.9735269397,
+            2708409.377783969,
+            -812466.6300020702,
+            -1192760.3236275017,
+            2628411.6753784865,
+            1581946.766212821,
+            1979705.1063909382
+          ],
+          [
+            -2551155.830367349,
+            2883095.662281245,
+            -1469065.5862949826,
+            -2367149.1855093166,
+            -628576.7184332535,
+            3364943.8039127514,
+            2328934.87112429,
+            798725.2380600646
+          ]
+        ]
+      ]
+    },
+    {
+      "block_savings": [
+        -976072.5384148505,
+        -710828.9142011069,
+        -2220266.7670553736,
+        -209772.8485166151,
+        -170501.71709438539
+      ],
+      "candidate": "sac-graph-final",
+      "conditions": [
+        {
+          "block_savings": [
+            -534780.7140304707,
+            -906071.01718834,
+            -1264187.5010217912,
+            49752.37238107994,
+            261637.65550098522
+          ],
+          "condition": 0,
+          "cost_ci95": [
+            -1194448.674210889,
+            85795.38463842681
+          ],
+          "cost_harmed_worlds": 25,
+          "cost_saving": -478729.84087170736,
+          "extra_patient_losses": 8.175,
+          "patient_ci95": [
+            2.05,
+            16.60249999999999
+          ],
+          "patient_harmed_worlds": 33,
+          "saving_fraction": -0.011634810351268704
+        },
+        {
+          "block_savings": [
+            -1758969.844924043,
+            -793333.6657344191,
+            -3025059.039160444,
+            -829939.4422362684,
+            -405070.03506619716
+          ],
+          "condition": 1,
+          "cost_ci95": [
+            -2396116.9021789464,
+            -520111.04825320025
+          ],
+          "cost_harmed_worlds": 34,
+          "cost_saving": -1362474.405424274,
+          "extra_patient_losses": 9.35,
+          "patient_ci95": [
+            3.349375,
+            17.176249999999992
+          ],
+          "patient_harmed_worlds": 36,
+          "saving_fraction": -0.03554205264553387
+        },
+        {
+          "block_savings": [
+            -634467.0562900379,
+            -433082.05968056154,
+            -2371553.760983886,
+            150868.52430534316,
+            -368072.7717179442
+          ],
+          "condition": 2,
+          "cost_ci95": [
+            -1684990.613932852,
+            -61037.91490810562
+          ],
+          "cost_harmed_worlds": 29,
+          "cost_saving": -731261.4248734174,
+          "extra_patient_losses": 10.85,
+          "patient_ci95": [
+            2.65,
+            21.8
+          ],
+          "patient_harmed_worlds": 35,
+          "saving_fraction": -0.017861934956073414
+        }
+      ],
+      "cost_ci95": [
+        -1645302.2645873877,
+        -277870.7187723264
+      ],
+      "cost_saving": -857488.5570564664,
+      "extra_patient_losses": 9.458333333333334,
+      "fast_minus_persistent_saving": 631212.980550857,
+      "fast_minus_stable_saving": -252531.58400171,
+      "metrics": {
+        "applied_hours": {
+          "candidate_mean": 328.479337917765,
+          "reference_mean": 384.0
+        },
+        "committed_hours": {
+          "candidate_mean": 328.479337917765,
+          "reference_mean": 384.0
+        },
+        "cost": {
+          "candidate_mean": 40997535.974721305,
+          "reference_mean": 40140047.41766483
+        },
+        "elapsed": {
+          "candidate_mean": 4.146699458339329,
+          "reference_mean": 0.8505394478833329
+        },
+        "lost": {
+          "candidate_mean": 166.58333333333334,
+          "reference_mean": 157.125
+        },
+        "requested_hours": {
+          "candidate_mean": 328.47934209207693,
+          "reference_mean": 384.0
+        }
+      },
+      "patient_ci95": [
+        3.0747916666666666,
+        18.116666666666667
+      ],
+      "reference": "mdl2-fixed2",
+      "saving_fraction": -0.021362420132047547,
+      "world_extra_losses": [
+        [
+          [
+            16,
+            15,
+            6,
+            18,
+            16,
+            -9,
+            9,
+            10
+          ],
+          [
+            10,
+            13,
+            11,
+            11,
+            5,
+            14,
+            6,
+            13
+          ],
+          [
+            6,
+            4,
+            18,
+            18,
+            2,
+            13,
+            20,
+            21
+          ]
+        ],
+        [
+          [
+            4,
+            2,
+            6,
+            10,
+            5,
+            1,
+            5,
+            12
+          ],
+          [
+            6,
+            2,
+            9,
+            11,
+            -2,
+            9,
+            9,
+            -14
+          ],
+          [
+            8,
+            3,
+            4,
+            2,
+            -4,
+            -1,
+            6,
+            4
+          ]
+        ],
+        [
+          [
+            13,
+            24,
+            20,
+            17,
+            38,
+            25,
+            3,
+            43
+          ],
+          [
+            20,
+            34,
+            8,
+            38,
+            24,
+            22,
+            23,
+            22
+          ],
+          [
+            33,
+            38,
+            31,
+            38,
+            42,
+            15,
+            21,
+            33
+          ]
+        ],
+        [
+          [
+            1,
+            5,
+            0,
+            1,
+            0,
+            6,
+            -13,
+            0
+          ],
+          [
+            3,
+            11,
+            2,
+            2,
+            -2,
+            9,
+            2,
+            1
+          ],
+          [
+            -4,
+            3,
+            4,
+            3,
+            -2,
+            3,
+            -2,
+            1
+          ]
+        ],
+        [
+          [
+            4,
+            1,
+            2,
+            4,
+            3,
+            5,
+            -1,
+            0
+          ],
+          [
+            7,
+            9,
+            16,
+            9,
+            3,
+            -12,
+            6,
+            4
+          ],
+          [
+            15,
+            2,
+            5,
+            10,
+            2,
+            4,
+            6,
+            9
+          ]
+        ]
+      ],
+      "world_savings": [
+        [
+          [
+            -782696.9753775,
+            -1761987.6717848778,
+            -753897.6997541785,
+            -1804459.099868685,
+            275730.72043186426,
+            1211994.1559139192,
+            -660725.9175257012,
+            -2203.2242786064744
+          ],
+          [
+            -480199.7190749869,
+            -1570176.70257923,
+            -2126549.1686791033,
+            -2383651.7629174665,
+            -447996.3652562797,
+            -4163200.9241622463,
+            -418557.7212712951,
+            -2481426.3954517357
+          ],
+          [
+            -448721.22227018327,
+            -176757.8911164999,
+            1058154.8657435998,
+            -1016461.3875141367,
+            -57593.121652416885,
+            -1077347.0001991466,
+            -1550309.9612917528,
+            -1806700.7320197672
+          ]
+        ],
+        [
+          [
+            -996240.1062052548,
+            -587901.3557697535,
+            -1261955.7153867632,
+            -1588234.5809476674,
+            -579798.9770479724,
+            -667808.3768352456,
+            557804.0468668118,
+            -2124433.0721808746
+          ],
+          [
+            -1612562.8236168623,
+            -85630.02922260761,
+            -2127443.3270486593,
+            -2008273.7153183743,
+            489058.2314708866,
+            -1909325.6449459717,
+            -36430.343034662306,
+            943938.3258408979
+          ],
+          [
+            -1471172.587016143,
+            -327464.19075244665,
+            -82419.7075144425,
+            -260325.19816708565,
+            -671506.0244430453,
+            1282269.072650686,
+            -281706.8691103384,
+            -1652330.9730916768
+          ]
+        ],
+        [
+          [
+            -884160.344882302,
+            -2246564.717890024,
+            2028918.8120169789,
+            -1203568.9060326368,
+            -5770188.833002746,
+            693439.1341171563,
+            1196552.0215765089,
+            -3927927.174077265
+          ],
+          [
+            -1013280.5486342534,
+            -5023427.877226919,
+            -1590372.8242586292,
+            -6550962.146046966,
+            -3053430.844482489,
+            -3060526.661285378,
+            -2441178.6092361584,
+            -1467292.8021127582
+          ],
+          [
+            -4323092.045193985,
+            572420.094210349,
+            -2770243.2073480263,
+            -4849665.09930034,
+            -3990385.8464220837,
+            444689.8050625026,
+            -3952739.0409170836,
+            -103414.74796242267
+          ]
+        ],
+        [
+          [
+            -717341.4265573099,
+            -504589.9514380172,
+            175204.28765184432,
+            294624.6591935083,
+            -60261.67376511544,
+            -303128.25942150503,
+            1513514.6060119718,
+            -3.262626737356186
+          ],
+          [
+            -1067042.4479498118,
+            -3630170.7046125904,
+            304306.18303184956,
+            -96193.87724671885,
+            1408189.3926350698,
+            -1758392.0312942266,
+            -1657604.2881544903,
+            -142607.7642992288
+          ],
+          [
+            1499435.1541858017,
+            -137468.52763643116,
+            412749.45429958403,
+            -24680.341615654528,
+            479792.7514802292,
+            -67083.32217075676,
+            52201.14927959442,
+            -1007998.1233796217
+          ]
+        ],
+        [
+          [
+            26911.408167138696,
+            403240.7002409622,
+            387607.6477882117,
+            -715681.8833292797,
+            256849.3554290831,
+            571245.2115119807,
+            1183773.189708367,
+            -20844.385508581996
+          ],
+          [
+            -606154.3658208922,
+            417966.3259660676,
+            -3229122.6683095247,
+            -846958.2541954853,
+            -253778.88837240636,
+            1880946.5694530606,
+            -228953.43278051913,
+            -374505.56646987796
+          ],
+          [
+            -592409.4837667868,
+            132529.6507479325,
+            -1079705.6107324138,
+            -956498.9832077846,
+            -724703.4061535075,
+            -465697.64562445134,
+            143214.42073330283,
+            598688.8842601553
+          ]
+        ]
+      ]
+    },
+    {
+      "block_savings": [
+        362718.0827202187,
+        654784.9567616977,
+        400996.02932152385,
+        338850.5797209333,
+        -72016.91453496211
+      ],
+      "candidate": "value_td-graph-final",
+      "conditions": [
+        {
+          "block_savings": [
+            1252700.929801635,
+            -468623.3309728182,
+            -162813.67639796203,
+            948474.4064102769,
+            7512.4981521768495
+          ],
+          "condition": 0,
+          "cost_ci95": [
+            -393781.5255164746,
+            1051288.7059959895
+          ],
+          "cost_harmed_worlds": 15,
+          "cost_saving": 315450.1653986617,
+          "extra_patient_losses": -12.025,
+          "patient_ci95": [
+            -17.250625,
+            -7.5
+          ],
+          "patient_harmed_worlds": 7,
+          "saving_fraction": 0.007905885808374834
+        },
+        {
+          "block_savings": [
+            -514963.423960621,
+            379512.52514729975,
+            380948.5359487841,
+            391985.03108242154,
+            -168457.26127954572
+          ],
+          "condition": 1,
+          "cost_ci95": [
+            -384849.13757266704,
+            658358.2061442502
+          ],
+          "cost_harmed_worlds": 21,
+          "cost_saving": 93805.08138766773,
+          "extra_patient_losses": -5.925,
+          "patient_ci95": [
+            -9.776250000000001,
+            -1.725
+          ],
+          "patient_harmed_worlds": 9,
+          "saving_fraction": 0.0024951940621784456
+        },
+        {
+          "block_savings": [
+            350416.7423196421,
+            2053465.6761106113,
+            984853.2284137495,
+            -323907.6983298985,
+            -55105.98047751747
+          ],
+          "condition": 2,
+          "cost_ci95": [
+            -315844.60831445333,
+            1667068.4726639031
+          ],
+          "cost_harmed_worlds": 15,
+          "cost_saving": 601944.3936073174,
+          "extra_patient_losses": -17.675,
+          "patient_ci95": [
+            -23.951249999999998,
+            -11.975
+          ],
+          "patient_harmed_worlds": 5,
+          "saving_fraction": 0.014561003346039141
+        }
+      ],
+      "cost_ci95": [
+        -26348.35237439562,
+        677834.2821418636
+      ],
+      "cost_saving": 337066.54679788224,
+      "extra_patient_losses": -11.875,
+      "fast_minus_persistent_saving": 508139.31221964967,
+      "fast_minus_stable_saving": 286494.22820865567,
+      "metrics": {
+        "applied_hours": {
+          "candidate_mean": 376.8591745125204,
+          "reference_mean": 304.12775008644314
+        },
+        "committed_hours": {
+          "candidate_mean": 376.8591745125204,
+          "reference_mean": 304.12775008644314
+        },
+        "cost": {
+          "candidate_mean": 39274420.78902278,
+          "reference_mean": 39611487.33582067
+        },
+        "elapsed": {
+          "candidate_mean": 36.987782858337354,
+          "reference_mean": 37.02254521667685
+        },
+        "lost": {
+          "candidate_mean": 151.45,
+          "reference_mean": 163.325
+        },
+        "requested_hours": {
+          "candidate_mean": 376.8591745125204,
+          "reference_mean": 304.12775008644314
+        }
+      },
+      "patient_ci95": [
+        -14.366875,
+        -9.241458333333336
+      ],
+      "reference": "plain_h8",
+      "saving_fraction": 0.008509313067198892,
+      "world_extra_losses": [
+        [
+          [
+            -24,
+            -21,
+            -6,
+            -14,
+            -21,
+            -17,
+            -14,
+            -22
+          ],
+          [
+            -8,
+            -10,
+            -7,
+            -1,
+            6,
+            2,
+            4,
+            -11
+          ],
+          [
+            -29,
+            -14,
+            -6,
+            -31,
+            2,
+            1,
+            -14,
+            -26
+          ]
+        ],
+        [
+          [
+            3,
+            -18,
+            3,
+            -17,
+            -11,
+            1,
+            -13,
+            -6
+          ],
+          [
+            0,
+            0,
+            -14,
+            -9,
+            -10,
+            -21,
+            -7,
+            -19
+          ],
+          [
+            -17,
+            -42,
+            -14,
+            -33,
+            -46,
+            -18,
+            -14,
+            -17
+          ]
+        ],
+        [
+          [
+            0,
+            -18,
+            -22,
+            -8,
+            1,
+            -18,
+            -7,
+            -1
+          ],
+          [
+            -12,
+            -2,
+            -2,
+            -19,
+            -16,
+            -21,
+            -7,
+            -1
+          ],
+          [
+            -20,
+            -48,
+            -20,
+            -10,
+            -21,
+            -10,
+            -9,
+            -4
+          ]
+        ],
+        [
+          [
+            -37,
+            1,
+            -29,
+            -40,
+            -23,
+            -5,
+            3,
+            -3
+          ],
+          [
+            14,
+            -23,
+            -4,
+            13,
+            -21,
+            3,
+            9,
+            -3
+          ],
+          [
+            4,
+            -23,
+            -25,
+            -37,
+            -10,
+            -3,
+            -36,
+            -22
+          ]
+        ],
+        [
+          [
+            -38,
+            0,
+            -8,
+            -18,
+            -1,
+            4,
+            -9,
+            -8
+          ],
+          [
+            -5,
+            -17,
+            -1,
+            -4,
+            -5,
+            -14,
+            3,
+            3
+          ],
+          [
+            3,
+            -29,
+            4,
+            -3,
+            -3,
+            -22,
+            -3,
+            -42
+          ]
+        ]
+      ],
+      "world_savings": [
+        [
+          [
+            1581043.1133212075,
+            1804828.7644192316,
+            466993.8781741932,
+            2743431.6507025734,
+            -607992.4036240205,
+            1115291.5128157437,
+            976736.6771363169,
+            1941274.2454678342
+          ],
+          [
+            1591883.0744893402,
+            -154013.9711241275,
+            -1318008.2643690482,
+            -489273.4176708907,
+            -1362393.412602678,
+            -1079195.7469735108,
+            -1867186.426718019,
+            558480.7732839659
+          ],
+          [
+            2942351.483833559,
+            1920579.1407649666,
+            -3388332.6256989613,
+            821383.8804569691,
+            261364.6217143722,
+            -1238966.1656583399,
+            1184647.1303244904,
+            300306.4728200808
+          ]
+        ],
+        [
+          [
+            -4175046.1798109114,
+            -1393517.6325191855,
+            1549000.4864803255,
+            -671744.7624473795,
+            85894.42433220148,
+            -741043.1014433019,
+            1362133.3219643831,
+            235336.79566132277
+          ],
+          [
+            -2112762.9607053474,
+            840456.6545652226,
+            1168491.460124649,
+            834897.8580049947,
+            2093709.1791548617,
+            2462822.5887750387,
+            -1222166.682594262,
+            -1029347.8961467594
+          ],
+          [
+            3138258.045265246,
+            2635901.661055401,
+            234718.80138952285,
+            3542976.1624142155,
+            4909726.291193716,
+            -2098152.078257829,
+            1223234.668238312,
+            2841061.8575863056
+          ]
+        ],
+        [
+          [
+            -941740.7714053988,
+            221889.1462226808,
+            -1788273.6308179274,
+            2011289.6878532432,
+            -406804.4460040778,
+            701685.1579208225,
+            -511032.6997855231,
+            -589521.8551675156
+          ],
+          [
+            648969.3275957704,
+            -434017.4029838741,
+            -664612.4718770795,
+            875036.9058401063,
+            2637937.823255144,
+            -284463.6194887236,
+            1490819.8129273765,
+            -1222082.0876784474
+          ],
+          [
+            5461489.376271009,
+            2127280.898380898,
+            938765.4573695138,
+            440557.13022308424,
+            -414158.4434669167,
+            590045.0266255625,
+            632068.068706993,
+            -1897221.6868001483
+          ]
+        ],
+        [
+          [
+            2671950.4562376514,
+            -2277093.6679796204,
+            -226516.763243787,
+            4076075.5580732822,
+            1401639.913596034,
+            1005771.221505113,
+            414975.8050969988,
+            520992.72799654305
+          ],
+          [
+            633540.9324100204,
+            2211872.9666296244,
+            -310886.96044640243,
+            -1910254.0869833454,
+            3348811.9830058888,
+            -300860.83522745967,
+            -1600174.3247268721,
+            1063830.5739979185
+          ],
+          [
+            -1312910.4871716872,
+            -1939271.6334028095,
+            -1740496.5363204703,
+            1572459.801125005,
+            747811.3663060889,
+            -1043649.852555722,
+            -207549.50584759563,
+            1332345.2612280026
+          ]
+        ],
+        [
+          [
+            2642291.175824851,
+            51886.706091441214,
+            266494.21138302237,
+            -2058350.3367521465,
+            883356.0900010914,
+            -2173583.949405588,
+            756275.1675777361,
+            -308269.07950299233
+          ],
+          [
+            -450231.9924283102,
+            29468.74570953101,
+            45574.79806751758,
+            -36465.987135421485,
+            -1000421.5223082006,
+            3312.8462195396423,
+            -893195.105428014,
+            954300.1270669922
+          ],
+          [
+            -3183266.6003623307,
+            1121899.691171877,
+            -1013495.0701560006,
+            -3768234.4254867285,
+            -548411.5142789409,
+            2928592.7435386255,
+            -469065.9698726535,
+            4491133.301626012
+          ]
+        ]
+      ]
+    },
+    {
+      "block_savings": [
+        -1252384.1974820956,
+        -1265930.64941409,
+        -2630103.5046855714,
+        -663817.3336507296,
+        -1118007.5092707018
+      ],
+      "candidate": "sac-graph-final",
+      "conditions": [
+        {
+          "block_savings": [
+            -1456818.1116082617,
+            -2354709.6050416967,
+            -2819543.544103832,
+            -917958.3910093582,
+            -1072944.61505253
+          ],
+          "condition": 0,
+          "cost_ci95": [
+            -2704652.2598392214,
+            -886754.5031394551
+          ],
+          "cost_harmed_worlds": 30,
+          "cost_saving": -1724394.8533631358,
+          "extra_patient_losses": 5.025,
+          "patient_ci95": [
+            -2.450625,
+            14.102499999999987
+          ],
+          "patient_harmed_worlds": 26,
+          "saving_fraction": -0.04321718703811482
+        },
+        {
+          "block_savings": [
+            -2032975.677655126,
+            -2004978.34135663,
+            -3432746.7526837513,
+            -1477980.526277428,
+            -1562930.1287174327
+          ],
+          "condition": 1,
+          "cost_ci95": [
+            -2933812.6402102737,
+            -1398704.038755631
+          ],
+          "cost_harmed_worlds": 36,
+          "cost_saving": -2102322.2853380735,
+          "extra_patient_losses": 10.225,
+          "patient_ci95": [
+            4.35,
+            17.802499999999988
+          ],
+          "patient_harmed_worlds": 31,
+          "saving_fraction": -0.05592129984389756
+        },
+        {
+          "block_savings": [
+            -267358.803182899,
+            561895.9981560567,
+            -1638020.21726913,
+            404486.9163345974,
+            -718147.7840421428
+          ],
+          "condition": 2,
+          "cost_ci95": [
+            -1219203.1150788036,
+            505784.93611293274
+          ],
+          "cost_harmed_worlds": 25,
+          "cost_saving": -331428.77800070355,
+          "extra_patient_losses": -5.475,
+          "patient_ci95": [
+            -17.151249999999997,
+            6.528124999999983
+          ],
+          "patient_harmed_worlds": 18,
+          "saving_fraction": -0.008017244776583369
+        }
+      ],
+      "cost_ci95": [
+        -2135339.8579005776,
+        -807385.1856125819
+      ],
+      "cost_saving": -1386048.6389006376,
+      "extra_patient_losses": 3.2583333333333333,
+      "fast_minus_persistent_saving": 1770893.5073373702,
+      "fast_minus_stable_saving": 1392966.0753624323,
+      "metrics": {
+        "applied_hours": {
+          "candidate_mean": 328.479337917765,
+          "reference_mean": 304.12775008644314
+        },
+        "committed_hours": {
+          "candidate_mean": 328.479337917765,
+          "reference_mean": 304.12775008644314
+        },
+        "cost": {
+          "candidate_mean": 40997535.974721305,
+          "reference_mean": 39611487.33582067
+        },
+        "elapsed": {
+          "candidate_mean": 4.146699458339329,
+          "reference_mean": 37.02254521667685
+        },
+        "lost": {
+          "candidate_mean": 166.58333333333334,
+          "reference_mean": 163.325
+        },
+        "requested_hours": {
+          "candidate_mean": 328.47934209207693,
+          "reference_mean": 304.12775008644314
+        }
+      },
+      "patient_ci95": [
+        -3.516666666666666,
+        12.053749999999981
+      ],
+      "reference": "plain_h8",
+      "saving_fraction": -0.034991077894902314,
+      "world_extra_losses": [
+        [
+          [
+            11,
+            10,
+            4,
+            7,
+            -3,
+            -7,
+            -2,
+            14
+          ],
+          [
+            6,
+            13,
+            19,
+            13,
+            8,
+            12,
+            -1,
+            13
+          ],
+          [
+            -18,
+            -3,
+            7,
+            -8,
+            10,
+            10,
+            7,
+            -3
+          ]
+        ],
+        [
+          [
+            9,
+            -6,
+            15,
+            18,
+            5,
+            9,
+            8,
+            0
+          ],
+          [
+            13,
+            7,
+            8,
+            2,
+            -3,
+            -6,
+            6,
+            -4
+          ],
+          [
+            -2,
+            -28,
+            -2,
+            -27,
+            -45,
+            -29,
+            2,
+            1
+          ]
+        ],
+        [
+          [
+            16,
+            8,
+            7,
+            12,
+            40,
+            11,
+            4,
+            52
+          ],
+          [
+            27,
+            28,
+            9,
+            27,
+            24,
+            8,
+            29,
+            32
+          ],
+          [
+            7,
+            -2,
+            14,
+            18,
+            17,
+            20,
+            10,
+            24
+          ]
+        ],
+        [
+          [
+            -29,
+            14,
+            -22,
+            -25,
+            1,
+            28,
+            9,
+            0
+          ],
+          [
+            28,
+            -7,
+            13,
+            -5,
+            -4,
+            8,
+            9,
+            14
+          ],
+          [
+            -4,
+            -20,
+            -24,
+            -40,
+            -11,
+            -15,
+            -38,
+            -30
+          ]
+        ],
+        [
+          [
+            -24,
+            3,
+            -3,
+            -7,
+            5,
+            10,
+            0,
+            -1
+          ],
+          [
+            9,
+            -7,
+            29,
+            5,
+            4,
+            -1,
+            14,
+            10
+          ],
+          [
+            15,
+            -18,
+            3,
+            5,
+            -2,
+            6,
+            9,
+            -35
+          ]
+        ]
+      ],
+      "world_savings": [
+        [
+          [
+            -3882650.521864675,
+            -1873367.8229612,
+            -1756684.1888062581,
+            609110.2043320909,
+            -991543.6591463983,
+            818841.0185164884,
+            -1147617.7658664957,
+            -3430632.157069646
+          ],
+          [
+            359055.73226109147,
+            -3209499.4216313884,
+            -4033086.983017333,
+            -2615069.6884367988,
+            -1346952.8219546452,
+            -3701126.799593568,
+            961995.788240701,
+            -2679121.227109067
+          ],
+          [
+            1709606.4066595212,
+            1295582.8544526026,
+            -518234.3044630289,
+            -1265484.5122785717,
+            -1501272.451897584,
+            262280.11445953697,
+            -190018.28109962493,
+            -1931330.2512960434
+          ]
+        ],
+        [
+          [
+            -2740160.519822523,
+            -3343197.4730263203,
+            -2176759.705799274,
+            -6917524.269638576,
+            -1154342.404669866,
+            -1915015.7379016653,
+            1183412.4770820066,
+            -1774089.2065573558
+          ],
+          [
+            -4025696.553976938,
+            -1996079.1951567903,
+            -2460108.241127938,
+            -1536822.983585015,
+            198328.06906943396,
+            -1711585.8219928741,
+            -2584626.49991592,
+            -1923235.504166998
+          ],
+          [
+            1074023.1702347547,
+            1213000.7649060264,
+            -192268.34050239623,
+            2474156.356194623,
+            3394031.479707949,
+            87628.83316940814,
+            -2274985.85991548,
+            -1280418.4185464308
+          ]
+        ],
+        [
+          [
+            -3761607.9902459085,
+            -1750312.9173049033,
+            -2005357.9776278138,
+            -537582.4864600077,
+            -5724101.131739996,
+            119058.7450120151,
+            -1471156.327292055,
+            -7425288.267171986
+          ],
+          [
+            -3180674.6389061883,
+            -2944659.801788561,
+            -2512318.8156153522,
+            -5653097.836118281,
+            -3372388.9782512262,
+            -2756854.1360067353,
+            -2578125.0323606096,
+            -4463854.782423057
+          ],
+          [
+            412157.2873462513,
+            990978.5826794803,
+            -2647800.049809821,
+            -2303193.5176550075,
+            -2596154.5723382607,
+            -1450003.415782366,
+            -3646700.2548212707,
+            -1863445.7977720462
+          ]
+        ],
+        [
+          [
+            1907432.3782611713,
+            -3440368.07651411,
+            -1216718.2452645525,
+            2119315.057542585,
+            -2251721.3689647987,
+            -3078481.6313651986,
+            -1919722.9198597446,
+            536597.6780897826
+          ],
+          [
+            -3322528.789900854,
+            -308910.7529670894,
+            -1828337.1260109246,
+            -305314.1157416329,
+            33064.27391240001,
+            -2233366.3027399853,
+            -1767564.5425841957,
+            -2090886.854187142
+          ],
+          [
+            -16528.4573597461,
+            -1796983.4000526294,
+            371696.05861828476,
+            801508.7905685231,
+            1565890.4112764075,
+            -140121.5579507947,
+            -261500.5047948584,
+            2711933.9903715923
+          ]
+        ],
+        [
+          [
+            669467.2396085486,
+            -1187153.0160490423,
+            690090.4449548274,
+            -3565250.5389869437,
+            -497215.9300766066,
+            -3005478.4717258923,
+            148365.21695450693,
+            -1836381.8650996387
+          ],
+          [
+            -1264975.0715591386,
+            -365952.9018513411,
+            -5891957.248025976,
+            -70957.61132883653,
+            -61440.087053105235,
+            -744152.2597058862,
+            -2704095.304421354,
+            -1399910.545793824
+          ],
+          [
+            -1224520.2537617683,
+            -1628666.3203614354,
+            -624135.0945934318,
+            -2357584.2231851965,
+            -644538.2019991949,
+            -902048.7059985772,
+            -2654786.4202636406,
+            4291096.947826102
+          ]
+        ]
+      ]
+    },
+    {
+      "block_savings": [
+        -1615102.2802023143,
+        -1920715.6061757877,
+        -3031099.534007095,
+        -1002667.913371663,
+        -1045990.5947357398
+      ],
+      "candidate": "sac-graph-final",
+      "conditions": [
+        {
+          "block_savings": [
+            -2709519.0414098967,
+            -1886086.2740688785,
+            -2656729.86770587,
+            -1866432.797419635,
+            -1080457.113204707
+          ],
+          "condition": 0,
+          "cost_ci95": [
+            -2808951.824051345,
+            -1364852.4542946767
+          ],
+          "cost_harmed_worlds": 37,
+          "cost_saving": -2039845.0187617976,
+          "extra_patient_losses": 17.05,
+          "patient_ci95": [
+            10.65,
+            24.02624999999999
+          ],
+          "patient_harmed_worlds": 40,
+          "saving_fraction": -0.05153046683292299
+        },
+        {
+          "block_savings": [
+            -1518012.253694505,
+            -2384490.8665039297,
+            -3813695.2886325354,
+            -1869965.5573598496,
+            -1394472.867437887
+          ],
+          "condition": 1,
+          "cost_ci95": [
+            -3208120.4603130515,
+            -1352793.803035772
+          ],
+          "cost_harmed_worlds": 36,
+          "cost_saving": -2196127.3667257414,
+          "extra_patient_losses": 16.15,
+          "patient_ci95": [
+            9.874375,
+            25.350624999999997
+          ],
+          "patient_harmed_worlds": 37,
+          "saving_fraction": -0.05856261900528362
+        },
+        {
+          "block_savings": [
+            -617775.5455025411,
+            -1491569.6779545546,
+            -2622873.4456828795,
+            728394.6146644959,
+            -663041.8035646253
+          ],
+          "condition": 2,
+          "cost_ci95": [
+            -2086387.2531815106,
+            114647.5637140086
+          ],
+          "cost_harmed_worlds": 27,
+          "cost_saving": -933373.1716080209,
+          "extra_patient_losses": 12.2,
+          "patient_ci95": [
+            2.6956250000000006,
+            22.800624999999997
+          ],
+          "patient_harmed_worlds": 32,
+          "saving_fraction": -0.022911867907893353
+        }
+      ],
+      "cost_ci95": [
+        -2493419.644931164,
+        -1079079.336859769
+      ],
+      "cost_saving": -1723115.18569852,
+      "extra_patient_losses": 15.133333333333333,
+      "fast_minus_persistent_saving": 1262754.1951177202,
+      "fast_minus_stable_saving": 1106471.8471537766,
+      "metrics": {
+        "applied_hours": {
+          "candidate_mean": 328.479337917765,
+          "reference_mean": 376.8591745125204
+        },
+        "committed_hours": {
+          "candidate_mean": 328.479337917765,
+          "reference_mean": 376.8591745125204
+        },
+        "cost": {
+          "candidate_mean": 40997535.974721305,
+          "reference_mean": 39274420.78902278
+        },
+        "elapsed": {
+          "candidate_mean": 4.146699458339329,
+          "reference_mean": 36.987782858337354
+        },
+        "lost": {
+          "candidate_mean": 166.58333333333334,
+          "reference_mean": 151.45
+        },
+        "requested_hours": {
+          "candidate_mean": 328.47934209207693,
+          "reference_mean": 376.8591745125204
+        }
+      },
+      "patient_ci95": [
+        8.624583333333334,
+        23.516666666666666
+      ],
+      "reference": "value_td-graph-final",
+      "saving_fraction": -0.043873726234051336,
+      "world_extra_losses": [
+        [
+          [
+            35,
+            31,
+            10,
+            21,
+            18,
+            10,
+            12,
+            36
+          ],
+          [
+            14,
+            23,
+            26,
+            14,
+            2,
+            10,
+            -5,
+            24
+          ],
+          [
+            11,
+            11,
+            13,
+            23,
+            8,
+            9,
+            21,
+            23
+          ]
+        ],
+        [
+          [
+            6,
+            12,
+            12,
+            35,
+            16,
+            8,
+            21,
+            6
+          ],
+          [
+            13,
+            7,
+            22,
+            11,
+            7,
+            15,
+            13,
+            15
+          ],
+          [
+            15,
+            14,
+            12,
+            6,
+            1,
+            -11,
+            16,
+            18
+          ]
+        ],
+        [
+          [
+            16,
+            26,
+            29,
+            20,
+            39,
+            29,
+            11,
+            53
+          ],
+          [
+            39,
+            30,
+            11,
+            46,
+            40,
+            29,
+            36,
+            33
+          ],
+          [
+            27,
+            46,
+            34,
+            28,
+            38,
+            30,
+            19,
+            28
+          ]
+        ],
+        [
+          [
+            8,
+            13,
+            7,
+            15,
+            24,
+            33,
+            6,
+            3
+          ],
+          [
+            14,
+            16,
+            17,
+            -18,
+            17,
+            5,
+            0,
+            17
+          ],
+          [
+            -8,
+            3,
+            1,
+            -3,
+            -1,
+            -12,
+            -2,
+            -8
+          ]
+        ],
+        [
+          [
+            14,
+            3,
+            5,
+            11,
+            6,
+            6,
+            9,
+            7
+          ],
+          [
+            14,
+            10,
+            30,
+            9,
+            9,
+            13,
+            11,
+            7
+          ],
+          [
+            12,
+            11,
+            -1,
+            8,
+            1,
+            28,
+            12,
+            7
+          ]
+        ]
+      ],
+      "world_savings": [
+        [
+          [
+            -5463693.635185882,
+            -3678196.5873804316,
+            -2223678.0669804513,
+            -2134321.4463704824,
+            -383551.2555223778,
+            -296450.4942992553,
+            -2124354.4430028126,
+            -5371906.40253748
+          ],
+          [
+            -1232827.3422282487,
+            -3055485.450507261,
+            -2715078.7186482847,
+            -2125796.270765908,
+            15440.590648032725,
+            -2621931.052620057,
+            2829182.21495872,
+            -3237602.000393033
+          ],
+          [
+            -1232745.0771740377,
+            -624996.286312364,
+            2870098.3212359324,
+            -2086868.3927355409,
+            -1762637.073611956,
+            1501246.2801178768,
+            -1374665.4114241153,
+            -2231636.724116124
+          ]
+        ],
+        [
+          [
+            1434885.6599883884,
+            -1949679.8405071348,
+            -3725760.1922795996,
+            -6245779.507191196,
+            -1240236.8290020674,
+            -1173972.6364583634,
+            -178720.8448823765,
+            -2009426.0022186786
+          ],
+          [
+            -1912933.5932715908,
+            -2836535.849722013,
+            -3628599.701252587,
+            -2371720.8415900096,
+            -1895381.1100854278,
+            -4174408.410767913,
+            -1362459.8173216581,
+            -893887.6080202386
+          ],
+          [
+            -2064234.8750304915,
+            -1422900.8961493745,
+            -426987.1418919191,
+            -1068819.8062195927,
+            -1515694.8114857674,
+            2185780.911427237,
+            -3498220.528153792,
+            -4121480.2761327364
+          ]
+        ],
+        [
+          [
+            -2819867.2188405097,
+            -1972202.063527584,
+            -217084.3468098864,
+            -2548872.174313251,
+            -5317296.685735919,
+            -582626.4129088074,
+            -960123.6275065318,
+            -6835766.412004471
+          ],
+          [
+            -3829643.9665019587,
+            -2510642.398804687,
+            -1847706.3437382728,
+            -6528134.741958387,
+            -6010326.80150637,
+            -2472390.5165180117,
+            -4068944.845287986,
+            -3241772.6947446093
+          ],
+          [
+            -5049332.088924758,
+            -1136302.3157014176,
+            -3586565.5071793348,
+            -2743750.647878092,
+            -2181996.128871344,
+            -2040048.4424079284,
+            -4278768.323528264,
+            33775.88902810216
+          ]
+        ],
+        [
+          [
+            -764518.0779764801,
+            -1163274.4085344896,
+            -990201.4820207655,
+            -1956760.5005306974,
+            -3653361.282560833,
+            -4084252.8528703116,
+            -2334698.7249567434,
+            15604.950093239546
+          ],
+          [
+            -3956069.7223108746,
+            -2520783.719596714,
+            -1517450.1655645221,
+            1604939.9712417126,
+            -3315747.7090934888,
+            -1932505.4675125256,
+            -167390.2178573236,
+            -3154717.4281850606
+          ],
+          [
+            1296382.029811941,
+            142288.2333501801,
+            2112192.594938755,
+            -770951.0105564818,
+            818079.0449703187,
+            903528.2946049273,
+            -53950.998947262764,
+            1379588.7291435897
+          ]
+        ],
+        [
+          [
+            -1972823.9362163022,
+            -1239039.7221404836,
+            423596.23357180506,
+            -1506900.2022347972,
+            -1380572.020077698,
+            -831894.5223203041,
+            -607909.9506232291,
+            -1528112.7855966464
+          ],
+          [
+            -814743.0791308284,
+            -395421.64756087214,
+            -5937532.046093494,
+            -34491.624193415046,
+            938981.4352550954,
+            -747465.1059254259,
+            -1810900.1989933401,
+            -2354210.672860816
+          ],
+          [
+            1958746.3466005623,
+            -2750566.0115333125,
+            389359.97556256875,
+            1410650.202301532,
+            -96126.68772025406,
+            -3830641.4495372027,
+            -2185720.450390987,
+            -200036.35379990935
+          ]
+        ]
+      ]
+    }
+  ],
+  "posthoc_supplement": true,
+  "prior_pair_readouts_preserved": true,
+  "prior_primary_preserved": true,
+  "prior_primary_reference": "plain_h8",
+  "protocol": {
+    "bytes": 4550,
+    "path": "specs/2026-10-08-mdl2-fixed-reference/protocol.md",
+    "sha256": "88431e628c8270b275f2394a1f1302e62fcc5ccaa149f2a3836debc45e7eccfc"
+  },
+  "raw_records_omitted_from_git": true,
+  "reused_trajectories": 360,
+  "rl_attribution": false,
+  "saved_data_only": true,
+  "scientific_calls": 0,
+  "source": {
+    "bytes": 1794996,
+    "path": "results/capacity_fixed_reference_20261008/payload/comparison.json",
+    "sha256": "bba94f734365fa19f6aac44d6654bc94cb74bf18fbf36c4abff9c102b2b75fe8"
+  },
+  "supplementary_primary_reference": "mdl2-fixed2",
+  "synthetic_only": true,
+  "table": [
+    {
+      "applied_hours": 384.0,
+      "blocks": [
+        {
+          "applied_hours": 384.0,
+          "block": 0,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8311.200000000003,
+            "bioreactor_shortage_cost": 13265946.200000001,
+            "capacity_transfer_cost": 6875.0,
+            "expiry_cost": 5970000.0,
+            "patient_loss_cost": 7635416.666666667,
+            "reagent_holding_cost": 144641.56175823198,
+            "reagent_purchase_cost": 10438064.995339058,
+            "reagent_shortage_cost": 1117349.8622403739,
+            "reagent_transfer_cost": 1516.6667973001834,
+            "specimen_transfer_cost": 27225.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 202083.33333333334
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 38962390.48613497,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.773378991562971,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.63566699860792,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 0.8183511371666666,
+          "lost": 152.70833333333334,
+          "requested_hours": 384.0,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 384.0,
+          "block": 1,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8022.600000000001,
+            "bioreactor_shortage_cost": 14897743.466666667,
+            "capacity_transfer_cost": 5333.333333333333,
+            "expiry_cost": 6450000.0,
+            "patient_loss_cost": 8341666.666666667,
+            "reagent_holding_cost": 148216.8118721116,
+            "reagent_purchase_cost": 10279912.49963341,
+            "reagent_shortage_cost": 1088515.015694612,
+            "reagent_transfer_cost": 1500.0000417232532,
+            "specimen_transfer_cost": 26000.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 250208.33333333334
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 41642078.72724185,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.8363113580461246,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.7788733669137122,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 0.8415804253749996,
+          "lost": 166.83333333333334,
+          "requested_hours": 384.0,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 384.0,
+          "block": 2,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8339.400000000001,
+            "bioreactor_shortage_cost": 13695366.533333331,
+            "capacity_transfer_cost": 5458.333333333333,
+            "expiry_cost": 6186666.666666667,
+            "patient_loss_cost": 7989583.333333333,
+            "reagent_holding_cost": 148396.51925367615,
+            "reagent_purchase_cost": 9960092.98774539,
+            "reagent_shortage_cost": 919110.4026238063,
+            "reagent_transfer_cost": 1383.3334594965006,
+            "specimen_transfer_cost": 26675.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 257083.33333333334
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 39343115.84308237,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.815161372699681,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.741311433065077,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 0.8474508905833332,
+          "lost": 159.79166666666666,
+          "requested_hours": 384.0,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 384.0,
+          "block": 3,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8035.800000000002,
+            "bioreactor_shortage_cost": 15790099.866666665,
+            "capacity_transfer_cost": 4791.666666666667,
+            "expiry_cost": 5888333.333333333,
+            "patient_loss_cost": 7512500.0,
+            "reagent_holding_cost": 145185.41560510543,
+            "reagent_purchase_cost": 10880891.985126883,
+            "reagent_shortage_cost": 1077701.9473940327,
+            "reagent_transfer_cost": 2000.000054637595,
+            "specimen_transfer_cost": 23550.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 182916.66666666666
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 41660966.681513995,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.847989707552908,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.628913654952443,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 0.8745625936666649,
+          "lost": 150.25,
+          "requested_hours": 384.0,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 384.0,
+          "block": 4,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8620.200000000003,
+            "bioreactor_shortage_cost": 13575966.733333334,
+            "capacity_transfer_cost": 6166.666666666667,
+            "expiry_cost": 6056666.666666667,
+            "patient_loss_cost": 7802083.333333333,
+            "reagent_holding_cost": 150496.26989298066,
+            "reagent_purchase_cost": 10023353.990678117,
+            "reagent_shortage_cost": 1052471.489603573,
+            "reagent_transfer_cost": 1483.333509663745,
+            "specimen_transfer_cost": 25875.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 243541.66666666666
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 39091685.350351,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.75326780154646,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.716405428415635,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 0.8707521926250005,
+          "lost": 156.04166666666666,
+          "requested_hours": 384.0,
+          "worlds": 24
+        }
+      ],
+      "committed_hours": 384.0,
+      "components": {
+        "bioreactor_holding_cost": 8265.84,
+        "bioreactor_shortage_cost": 14245024.560000002,
+        "capacity_transfer_cost": 5725.0,
+        "expiry_cost": 6110333.333333333,
+        "patient_loss_cost": 7856250.0,
+        "reagent_holding_cost": 147387.3156764212,
+        "reagent_purchase_cost": 10316463.29170457,
+        "reagent_shortage_cost": 1051029.7435112796,
+        "reagent_transfer_cost": 1576.6667725642556,
+        "specimen_transfer_cost": 25865.0,
+        "support_flexible_labor_cost": 42240.0,
+        "support_ordinary_staff_cost": 102400.0,
+        "support_switching_cost": 320.0,
+        "urgency_cost": 227166.66666666666
+      },
+      "compute_total": {
+        "actor_optimizer_steps": 0.0,
+        "construction_triggered_resets": 120.0,
+        "control_steps": 5760.0,
+        "critic_optimizer_steps": 0.0,
+        "estimator_hypothesis_transitions": 0.0,
+        "estimator_receipt_updates": 0.0,
+        "fit_batches": 0.0,
+        "native_clones": 0.0,
+        "native_constructions": 120.0,
+        "native_steps": 7680.0,
+        "neural_forward_module_calls": 0.0,
+        "optimizer_example_presentations": 0.0,
+        "planner_candidate_rollouts": 0.0,
+        "planner_total_decisions": 0.0,
+        "planner_total_model_epochs": 0.0,
+        "tail_steps": 1920.0,
+        "total_native_operations": 7920.0,
+        "total_optimizer_steps": 0.0,
+        "trajectories": 120.0,
+        "value_optimizer_steps": 0.0
+      },
+      "conditions": [
+        {
+          "applied_hours": 384.0,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8310.600000000002,
+            "bioreactor_shortage_cost": 14676120.680000002,
+            "capacity_transfer_cost": 6150.0,
+            "expiry_cost": 6533000.0,
+            "patient_loss_cost": 8491250.0,
+            "reagent_holding_cost": 155458.11088609434,
+            "reagent_purchase_cost": 9853955.084037583,
+            "reagent_shortage_cost": 934248.661872839,
+            "reagent_transfer_cost": 1230.000077784065,
+            "specimen_transfer_cost": 27405.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 314250.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 0,
+          "cost": 41146338.1368743,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.786626376062006,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.8909640866605995,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 0.8546172603249993,
+          "lost": 169.825,
+          "requested_hours": 384.0,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 384.0,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8424.720000000001,
+            "bioreactor_shortage_cost": 13015835.04,
+            "capacity_transfer_cost": 6325.0,
+            "expiry_cost": 5881000.0,
+            "patient_loss_cost": 7598750.0,
+            "reagent_holding_cost": 151054.311561846,
+            "reagent_purchase_cost": 10272532.041421773,
+            "reagent_shortage_cost": 1001289.6747664844,
+            "reagent_transfer_cost": 1310.000118911269,
+            "specimen_transfer_cost": 25920.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 226750.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 1,
+          "cost": 38334150.787869014,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.687079894312035,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.536736185162488,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 0.844454997875,
+          "lost": 151.975,
+          "requested_hours": 384.0,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 384.0,
+          "committed_hours": 384.0,
+          "components": {
+            "bioreactor_holding_cost": 8062.2,
+            "bioreactor_shortage_cost": 15043117.959999999,
+            "capacity_transfer_cost": 4700.0,
+            "expiry_cost": 5917000.0,
+            "patient_loss_cost": 7478750.0,
+            "reagent_holding_cost": 135649.5245813232,
+            "reagent_purchase_cost": 10822902.749654356,
+            "reagent_shortage_cost": 1217550.8938945155,
+            "reagent_transfer_cost": 2190.000120997432,
+            "specimen_transfer_cost": 24270.0,
+            "support_flexible_labor_cost": 42240.0,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 320.0,
+            "urgency_cost": 140500.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 0.0,
+            "estimator_receipt_updates": 0.0,
+            "fit_batches": 0.0,
+            "native_clones": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 2,
+          "cost": 40939653.3282512,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.941959268470844,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.673002257349785,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 0.8525460854499995,
+          "lost": 149.575,
+          "requested_hours": 384.0,
+          "worlds": 40
+        }
+      ],
+      "cost": 40140047.41766483,
+      "delay_metrics": {
+        "epoch_mean_reported_turnaround": {
+          "mean": 5.805221846281628,
+          "recorded_worlds": 120
+        },
+        "epoch_mean_reported_wait": {
+          "mean": 2.7002341763909574,
+          "recorded_worlds": 120
+        }
+      },
+      "elapsed": 0.8505394478833329,
+      "lost": 157.125,
+      "requested_hours": 384.0,
+      "role": "mdl2-fixed2",
+      "worlds": 120
+    },
+    {
+      "applied_hours": 304.12775008644314,
+      "blocks": [
+        {
+          "applied_hours": 309.9989669334989,
+          "block": 0,
+          "committed_hours": 309.9989669334989,
+          "components": {
+            "bioreactor_holding_cost": 8331.0,
+            "bioreactor_shortage_cost": 13002009.799999997,
+            "capacity_transfer_cost": 7500.0,
+            "expiry_cost": 6131666.666666667,
+            "patient_loss_cost": 7941666.666666667,
+            "reagent_holding_cost": 149484.2283668313,
+            "reagent_purchase_cost": 9963607.498690747,
+            "reagent_shortage_cost": 1041658.3971339172,
+            "reagent_transfer_cost": 1566.6667660077453,
+            "specimen_transfer_cost": 27700.0,
+            "support_flexible_labor_cost": 35089.067558522685,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 4023.8352183600023,
+            "urgency_cost": 269375.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 38686078.82706772,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.750129279977316,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.702708280168111,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 36.78453062497041,
+          "lost": 158.83333333333334,
+          "requested_hours": 309.9989669334989,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 297.33066569522424,
+          "block": 1,
+          "committed_hours": 297.33066569522424,
+          "components": {
+            "bioreactor_holding_cost": 8080.200000000002,
+            "bioreactor_shortage_cost": 14428523.200000001,
+            "capacity_transfer_cost": 5625.0,
+            "expiry_cost": 6638333.333333333,
+            "patient_loss_cost": 8645833.333333334,
+            "reagent_holding_cost": 152827.74867812233,
+            "reagent_purchase_cost": 9742193.991411299,
+            "reagent_shortage_cost": 976780.0581189865,
+            "reagent_transfer_cost": 1466.666823128864,
+            "specimen_transfer_cost": 26550.0,
+            "support_flexible_labor_cost": 33696.03651076694,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 4042.4238199021124,
+            "urgency_cost": 320625.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 41086976.99202887,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.833577392214511,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.839777026089143,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 37.2303807916954,
+          "lost": 172.91666666666666,
+          "requested_hours": 297.33066569522424,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 289.9999999940994,
+          "block": 2,
+          "committed_hours": 289.9999999940994,
+          "components": {
+            "bioreactor_holding_cost": 8381.400000000001,
+            "bioreactor_shortage_cost": 13215672.6,
+            "capacity_transfer_cost": 5583.333333333333,
+            "expiry_cost": 6360000.0,
+            "patient_loss_cost": 8370833.333333333,
+            "reagent_holding_cost": 157783.91589530124,
+            "reagent_purchase_cost": 9413588.253299318,
+            "reagent_shortage_cost": 897484.2503396034,
+            "reagent_transfer_cost": 1316.6667789220846,
+            "specimen_transfer_cost": 26700.0,
+            "support_flexible_labor_cost": 32871.03810297817,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 4205.981036047665,
+            "urgency_cost": 336458.3333333333
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 38933279.10545217,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.762074266291083,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.8261241031639717,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 36.93293208334944,
+          "lost": 167.41666666666666,
+          "requested_hours": 289.9999999940994,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 310.9805633854066,
+          "block": 3,
+          "committed_hours": 310.9805633854066,
+          "components": {
+            "bioreactor_holding_cost": 8094.600000000001,
+            "bioreactor_shortage_cost": 15281079.666666666,
+            "capacity_transfer_cost": 5708.333333333333,
+            "expiry_cost": 6145000.0,
+            "patient_loss_cost": 7895833.333333333,
+            "reagent_holding_cost": 148339.7691595281,
+            "reagent_purchase_cost": 10330872.73423659,
+            "reagent_shortage_cost": 973175.7199576218,
+            "reagent_transfer_cost": 1683.3334421118136,
+            "specimen_transfer_cost": 24350.0,
+            "support_flexible_labor_cost": 35192.00266627694,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3942.7035844137404,
+            "urgency_cost": 251250.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 41206922.19637988,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.820690752774195,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.700805147348715,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 37.19054491668552,
+          "lost": 157.91666666666666,
+          "requested_hours": 310.9805633854066,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 312.32855442398653,
+          "block": 4,
+          "committed_hours": 312.32855442398653,
+          "components": {
+            "bioreactor_holding_cost": 8643.6,
+            "bioreactor_shortage_cost": 13016672.933333332,
+            "capacity_transfer_cost": 6375.0,
+            "expiry_cost": 6141666.666666667,
+            "patient_loss_cost": 7977083.333333333,
+            "reagent_holding_cost": 153116.2284667579,
+            "reagent_purchase_cost": 9513751.49628172,
+            "reagent_shortage_cost": 857836.3517133988,
+            "reagent_transfer_cost": 1216.666874786222,
+            "specimen_transfer_cost": 25800.0,
+            "support_flexible_labor_cost": 35379.16975189734,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 4029.778419456596,
+            "urgency_cost": 300208.3333333333
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 38144179.558174685,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.730285746082188,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.7613493988773308,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 36.97433766668352,
+          "lost": 159.54166666666666,
+          "requested_hours": 312.32855442398653,
+          "worlds": 24
+        }
+      ],
+      "committed_hours": 304.12775008644314,
+      "components": {
+        "bioreactor_holding_cost": 8306.16,
+        "bioreactor_shortage_cost": 13788791.639999999,
+        "capacity_transfer_cost": 6158.333333333333,
+        "expiry_cost": 6283333.333333333,
+        "patient_loss_cost": 8166250.0,
+        "reagent_holding_cost": 152310.37811330816,
+        "reagent_purchase_cost": 9792802.794783933,
+        "reagent_shortage_cost": 949386.9554527056,
+        "reagent_transfer_cost": 1450.0001369913457,
+        "specimen_transfer_cost": 26220.0,
+        "support_flexible_labor_cost": 34445.46291808841,
+        "support_ordinary_staff_cost": 102400.0,
+        "support_switching_cost": 4048.944415636023,
+        "urgency_cost": 295583.3333333333
+      },
+      "compute_total": {
+        "actor_optimizer_steps": 0.0,
+        "construction_triggered_resets": 120.0,
+        "control_steps": 5760.0,
+        "critic_optimizer_steps": 0.0,
+        "estimator_hypothesis_transitions": 768000.0,
+        "estimator_receipt_updates": 7680.0,
+        "fit_batches": 0.0,
+        "native_constructions": 120.0,
+        "native_steps": 7680.0,
+        "neural_forward_module_calls": 0.0,
+        "optimizer_example_presentations": 0.0,
+        "planner_candidate_rollouts": 276480.0,
+        "planner_total_decisions": 5760.0,
+        "planner_total_model_epochs": 2211840.0,
+        "tail_steps": 1920.0,
+        "total_native_operations": 7920.0,
+        "total_optimizer_steps": 0.0,
+        "trajectories": 120.0,
+        "value_optimizer_steps": 0.0
+      },
+      "conditions": [
+        {
+          "applied_hours": 281.58891793646137,
+          "committed_hours": 281.58891793646137,
+          "components": {
+            "bioreactor_holding_cost": 8398.8,
+            "bioreactor_shortage_cost": 13810157.919999998,
+            "capacity_transfer_cost": 6800.0,
+            "expiry_cost": 6571000.0,
+            "patient_loss_cost": 8648750.0,
+            "reagent_holding_cost": 161927.61088888496,
+            "reagent_purchase_cost": 9222399.434760291,
+            "reagent_shortage_cost": 919110.3839760196,
+            "reagent_transfer_cost": 1350.000101029876,
+            "specimen_transfer_cost": 27750.0,
+            "support_flexible_labor_cost": 31872.87437117807,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 4006.100285468252,
+            "urgency_cost": 384750.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 92160.0,
+            "planner_total_decisions": 1920.0,
+            "planner_total_model_epochs": 737280.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 0,
+          "cost": 39900673.12438287,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.70046381782822,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.9147640767845604,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 37.16908952501253,
+          "lost": 172.975,
+          "requested_hours": 281.58891793646137,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 328.19860132148034,
+          "committed_hours": 328.19860132148034,
+          "components": {
+            "bioreactor_holding_cost": 8396.280000000002,
+            "bioreactor_shortage_cost": 12618673.6,
+            "capacity_transfer_cost": 6425.0,
+            "expiry_cost": 5804000.0,
+            "patient_loss_cost": 7555000.0,
+            "reagent_holding_cost": 153693.18679651135,
+            "reagent_purchase_cost": 10035303.301885325,
+            "reagent_shortage_cost": 992639.2058179278,
+            "reagent_transfer_cost": 1520.0001546740577,
+            "specimen_transfer_cost": 26655.0,
+            "support_flexible_labor_cost": 37153.692153378375,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3693.6411473980743,
+            "urgency_cost": 248750.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 92160.0,
+            "planner_total_decisions": 1920.0,
+            "planner_total_model_epochs": 737280.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 1,
+          "cost": 37594302.907955214,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.695818163228063,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.5527240036937564,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 36.8310467500065,
+          "lost": 151.1,
+          "requested_hours": 328.19860132148034,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 302.5957310013878,
+          "committed_hours": 302.5957310013878,
+          "components": {
+            "bioreactor_holding_cost": 8123.4000000000015,
+            "bioreactor_shortage_cost": 14937543.4,
+            "capacity_transfer_cost": 5250.0,
+            "expiry_cost": 6475000.0,
+            "patient_loss_cost": 8295000.0,
+            "reagent_holding_cost": 141310.33665452822,
+            "reagent_purchase_cost": 10120705.647706188,
+            "reagent_shortage_cost": 936411.2765641697,
+            "reagent_transfer_cost": 1480.0001552701037,
+            "specimen_transfer_cost": 24255.0,
+            "support_flexible_labor_cost": 34309.82222970879,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 4447.091814041743,
+            "urgency_cost": 253250.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 0.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 92160.0,
+            "planner_total_decisions": 1920.0,
+            "planner_total_model_epochs": 737280.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 2,
+          "cost": 41339485.975123905,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.94177248134729,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.8309702929100458,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 37.067499375011536,
+          "lost": 165.9,
+          "requested_hours": 302.5957310013878,
+          "worlds": 40
+        }
+      ],
+      "cost": 39611487.33582067,
+      "delay_metrics": {
+        "epoch_mean_reported_turnaround": {
+          "mean": 5.779351487467858,
+          "recorded_worlds": 120
+        },
+        "epoch_mean_reported_wait": {
+          "mean": 2.766152791129455,
+          "recorded_worlds": 120
+        }
+      },
+      "elapsed": 37.02254521667685,
+      "lost": 163.325,
+      "requested_hours": 304.12775008644314,
+      "role": "plain_h8",
+      "worlds": 120
+    },
+    {
+      "applied_hours": 376.8591745125204,
+      "blocks": [
+        {
+          "applied_hours": 377.32676479061706,
+          "block": 0,
+          "committed_hours": 377.32676479061706,
+          "components": {
+            "bioreactor_holding_cost": 8338.800000000001,
+            "bioreactor_shortage_cost": 12981062.466666667,
+            "capacity_transfer_cost": 7333.333333333333,
+            "expiry_cost": 5765000.0,
+            "patient_loss_cost": 7356250.0,
+            "reagent_holding_cost": 142409.39468537582,
+            "reagent_purchase_cost": 10492539.74224922,
+            "reagent_shortage_cost": 1200250.0227899908,
+            "reagent_transfer_cost": 1616.6668474674273,
+            "specimen_transfer_cost": 27500.0,
+            "support_flexible_labor_cost": 42722.301782091774,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3229.682660020768,
+            "urgency_cost": 192708.33333333334
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 38323360.744347505,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.716296927263165,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.5603342217055816,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 36.743060083351644,
+          "lost": 147.125,
+          "requested_hours": 377.32676479061706,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 377.9999999895596,
+          "block": 1,
+          "committed_hours": 377.9999999895596,
+          "components": {
+            "bioreactor_holding_cost": 8015.4000000000015,
+            "bioreactor_shortage_cost": 14279797.133333333,
+            "capacity_transfer_cost": 5250.0,
+            "expiry_cost": 6125000.0,
+            "patient_loss_cost": 7939583.333333333,
+            "reagent_holding_cost": 144490.22858077846,
+            "reagent_purchase_cost": 10329115.50036659,
+            "reagent_shortage_cost": 1193041.318968219,
+            "reagent_transfer_cost": 1833.333480854834,
+            "specimen_transfer_cost": 27650.0,
+            "support_flexible_labor_cost": 42842.24969872685,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3173.537505338935,
+            "urgency_cost": 230000.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 40432192.035267174,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.822521252499011,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.6893322417757983,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 37.138797833312616,
+          "lost": 158.79166666666666,
+          "requested_hours": 377.9999999895596,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 371.93907306161753,
+          "block": 2,
+          "committed_hours": 371.93907306161753,
+          "components": {
+            "bioreactor_holding_cost": 8335.800000000001,
+            "bioreactor_shortage_cost": 13159114.799999999,
+            "capacity_transfer_cost": 5625.0,
+            "expiry_cost": 5976666.666666667,
+            "patient_loss_cost": 7756250.0,
+            "reagent_holding_cost": 149313.97824195834,
+            "reagent_purchase_cost": 9993480.743401363,
+            "reagent_shortage_cost": 1045262.7839556929,
+            "reagent_transfer_cost": 1416.6668862104468,
+            "specimen_transfer_cost": 27125.0,
+            "support_flexible_labor_cost": 42083.657497961314,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3124.6461474603034,
+            "urgency_cost": 262083.33333333334
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 38532283.07613065,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.755575859749168,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.6725983927232995,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 36.89224191666775,
+          "lost": 155.125,
+          "requested_hours": 371.93907306161753,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 378.3199621200538,
+          "block": 3,
+          "committed_hours": 378.3199621200538,
+          "components": {
+            "bioreactor_holding_cost": 8025.600000572206,
+            "bioreactor_shortage_cost": 15322974.334831605,
+            "capacity_transfer_cost": 5374.999990065892,
+            "expiry_cost": 5711666.666666667,
+            "patient_loss_cost": 7277083.333333333,
+            "reagent_holding_cost": 140862.9580510302,
+            "reagent_purchase_cost": 10859805.002356656,
+            "reagent_shortage_cost": 1196645.6247967298,
+            "reagent_transfer_cost": 1966.6668176651056,
+            "specimen_transfer_cost": 25175.0,
+            "support_flexible_labor_cost": 42810.445296179,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3072.651185108538,
+            "urgency_cost": 170208.33333333334
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 40868071.61665894,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.805138217663856,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.553103904772873,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 37.19217529165326,
+          "lost": 145.54166666666666,
+          "requested_hours": 378.3199621200538,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 378.710072600754,
+          "block": 4,
+          "committed_hours": 378.710072600754,
+          "components": {
+            "bioreactor_holding_cost": 8598.0,
+            "bioreactor_shortage_cost": 13244998.866666665,
+            "capacity_transfer_cost": 7416.666666666667,
+            "expiry_cost": 5826666.666666667,
+            "patient_loss_cost": 7533333.333333333,
+            "reagent_holding_cost": 149985.5199279338,
+            "reagent_purchase_cost": 10051469.992720552,
+            "reagent_shortage_cost": 980384.4055183129,
+            "reagent_transfer_cost": 1483.3334734042528,
+            "specimen_transfer_cost": 25700.0,
+            "support_flexible_labor_cost": 42854.74635914343,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3196.6080436317675,
+            "urgency_cost": 237708.33333333334
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 55296.0,
+            "planner_total_decisions": 1152.0,
+            "planner_total_model_epochs": 442368.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 38216196.47270965,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.715141362355542,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.66757992866138,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 36.972639166701505,
+          "lost": 150.66666666666666,
+          "requested_hours": 378.710072600754,
+          "worlds": 24
+        }
+      ],
+      "committed_hours": 376.8591745125204,
+      "components": {
+        "bioreactor_holding_cost": 8262.720000114443,
+        "bioreactor_shortage_cost": 13797589.520299653,
+        "capacity_transfer_cost": 6199.999998013179,
+        "expiry_cost": 5881000.0,
+        "patient_loss_cost": 7572500.0,
+        "reagent_holding_cost": 145412.41589741534,
+        "reagent_purchase_cost": 10345282.196218876,
+        "reagent_shortage_cost": 1123116.831205789,
+        "reagent_transfer_cost": 1663.3335011204133,
+        "specimen_transfer_cost": 26630.0,
+        "support_flexible_labor_cost": 42662.68012682047,
+        "support_ordinary_staff_cost": 102400.0,
+        "support_switching_cost": 3159.425108312062,
+        "urgency_cost": 218541.66666666666
+      },
+      "compute_total": {
+        "actor_optimizer_steps": 0.0,
+        "construction_triggered_resets": 120.0,
+        "control_steps": 5760.0,
+        "critic_optimizer_steps": 0.0,
+        "estimator_hypothesis_transitions": 768000.0,
+        "estimator_receipt_updates": 7680.0,
+        "fit_batches": 0.0,
+        "native_constructions": 120.0,
+        "native_steps": 7680.0,
+        "neural_forward_module_calls": 5760.0,
+        "optimizer_example_presentations": 0.0,
+        "planner_candidate_rollouts": 276480.0,
+        "planner_total_decisions": 5760.0,
+        "planner_total_model_epochs": 2211840.0,
+        "tail_steps": 1920.0,
+        "total_native_operations": 7920.0,
+        "total_optimizer_steps": 0.0,
+        "trajectories": 120.0,
+        "value_optimizer_steps": 0.0
+      },
+      "conditions": [
+        {
+          "applied_hours": 371.99460511907836,
+          "committed_hours": 371.99460511907836,
+          "components": {
+            "bioreactor_holding_cost": 8343.720000000001,
+            "bioreactor_shortage_cost": 13776223.239999998,
+            "capacity_transfer_cost": 6725.0,
+            "expiry_cost": 6181000.0,
+            "patient_loss_cost": 8047500.0,
+            "reagent_holding_cost": 154291.89896307513,
+            "reagent_purchase_cost": 9871879.04289861,
+            "reagent_shortage_cost": 1057517.5983485654,
+            "reagent_transfer_cost": 1460.0001353025477,
+            "specimen_transfer_cost": 28245.0,
+            "support_flexible_labor_cost": 42097.41554237497,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 2790.0430962829378,
+            "urgency_cost": 304750.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 1920.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 92160.0,
+            "planner_total_decisions": 1920.0,
+            "planner_total_model_epochs": 737280.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 0,
+          "cost": 39585222.95898421,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.694413091794125,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.7689747355987784,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 37.14001222500228,
+          "lost": 160.95,
+          "requested_hours": 371.99460511907836,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 378.3541078400579,
+          "committed_hours": 378.3541078400579,
+          "components": {
+            "bioreactor_holding_cost": 8377.560000343325,
+            "bioreactor_shortage_cost": 12632498.840898963,
+            "capacity_transfer_cost": 6549.9999940395355,
+            "expiry_cost": 5624000.0,
+            "patient_loss_cost": 7258750.0,
+            "reagent_holding_cost": 147935.89896062278,
+            "reagent_purchase_cost": 10346336.541641727,
+            "reagent_shortage_cost": 1094281.9938979852,
+            "reagent_transfer_cost": 1560.000176727776,
+            "specimen_transfer_cost": 26280.0,
+            "support_flexible_labor_cost": 42811.765609610535,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 2840.2253875287684,
+            "urgency_cost": 205875.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 1920.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 92160.0,
+            "planner_total_decisions": 1920.0,
+            "planner_total_model_epochs": 737280.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 1,
+          "cost": 37500497.826567546,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.6846119614883985,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.480029561090506,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 36.82934247499215,
+          "lost": 145.175,
+          "requested_hours": 378.3541078400579,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 380.22881057842494,
+          "committed_hours": 380.22881057842494,
+          "components": {
+            "bioreactor_holding_cost": 8066.88,
+            "bioreactor_shortage_cost": 14984046.48,
+            "capacity_transfer_cost": 5325.0,
+            "expiry_cost": 5838000.0,
+            "patient_loss_cost": 7411250.0,
+            "reagent_holding_cost": 134009.44976854807,
+            "reagent_purchase_cost": 10817631.004116293,
+            "reagent_shortage_cost": 1217550.9013708166,
+            "reagent_transfer_cost": 1970.0001913309159,
+            "specimen_transfer_cost": 25365.0,
+            "support_flexible_labor_cost": 43078.85922847591,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 3848.0068411244806,
+            "urgency_cost": 145000.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 1920.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 92160.0,
+            "planner_total_decisions": 1920.0,
+            "planner_total_model_epochs": 737280.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 2,
+          "cost": 40737541.581516586,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.909779118435921,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.6367649170940752,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 36.99399387501762,
+          "lost": 148.225,
+          "requested_hours": 380.22881057842494,
+          "worlds": 40
+        }
+      ],
+      "cost": 39274420.78902278,
+      "delay_metrics": {
+        "epoch_mean_reported_turnaround": {
+          "mean": 5.762934723906148,
+          "recorded_worlds": 120
+        },
+        "epoch_mean_reported_wait": {
+          "mean": 2.6285897379277867,
+          "recorded_worlds": 120
+        }
+      },
+      "elapsed": 36.987782858337354,
+      "lost": 151.45,
+      "requested_hours": 376.8591745125204,
+      "role": "value_td-graph-final",
+      "worlds": 120
+    },
+    {
+      "applied_hours": 328.479337917765,
+      "blocks": [
+        {
+          "applied_hours": 318.6739373405774,
+          "block": 0,
+          "committed_hours": 318.6739373405774,
+          "components": {
+            "bioreactor_holding_cost": 8293.800000000001,
+            "bioreactor_shortage_cost": 13798008.466666663,
+            "capacity_transfer_cost": 6916.666666666667,
+            "expiry_cost": 6336666.666666667,
+            "patient_loss_cost": 8189583.333333333,
+            "reagent_holding_cost": 151456.2902025804,
+            "reagent_purchase_cost": 10028625.73402711,
+            "reagent_shortage_cost": 983988.7696748659,
+            "reagent_transfer_cost": 1366.6668554147127,
+            "specimen_transfer_cost": 26600.0,
+            "support_flexible_labor_cost": 34574.69726646904,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 398.59985670858623,
+            "urgency_cost": 269583.3333333333
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 39938463.02454981,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.8734539723940165,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.7978543998297014,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 4.037991500023054,
+          "lost": 163.79166666666666,
+          "requested_hours": 318.6739383538564,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 376.1768114666144,
+          "block": 1,
+          "committed_hours": 376.1768114666144,
+          "components": {
+            "bioreactor_holding_cost": 8007.000000000001,
+            "bioreactor_shortage_cost": 15358584.799999999,
+            "capacity_transfer_cost": 5458.333333333333,
+            "expiry_cost": 6623333.333333333,
+            "patient_loss_cost": 8543750.0,
+            "reagent_holding_cost": 148429.623930969,
+            "reagent_purchase_cost": 10190292.742668182,
+            "reagent_shortage_cost": 1045262.8003906653,
+            "reagent_transfer_cost": 1333.3334922790566,
+            "specimen_transfer_cost": 25625.0,
+            "support_flexible_labor_cost": 41353.03852045119,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 327.6357737489552,
+            "urgency_cost": 258750.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 42352907.64144296,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.940248459240865,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.8822198020380125,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 4.106521499983501,
+          "lost": 170.875,
+          "requested_hours": 376.17681782444316,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 220.6969464768966,
+          "block": 2,
+          "committed_hours": 220.6969464768966,
+          "components": {
+            "bioreactor_holding_cost": 8229.000000000002,
+            "bioreactor_shortage_cost": 14418049.533333333,
+            "capacity_transfer_cost": 4875.0,
+            "expiry_cost": 7085000.0,
+            "patient_loss_cost": 9291666.666666666,
+            "reagent_holding_cost": 167086.18544015972,
+            "reagent_purchase_cost": 9197446.4763287,
+            "reagent_shortage_cost": 847023.3120934577,
+            "reagent_transfer_cost": 1233.3334291974727,
+            "specimen_transfer_cost": 26575.0,
+            "support_flexible_labor_cost": 23685.149424584513,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 529.6200883078018,
+            "urgency_cost": 389583.3333333333
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 41563382.61013774,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 6.073255416582637,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 3.1748567950518556,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 4.136702208352896,
+          "lost": 185.83333333333334,
+          "requested_hours": 220.69694750010967,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 383.99999256432056,
+          "block": 3,
+          "committed_hours": 383.99999256432056,
+          "components": {
+            "bioreactor_holding_cost": 8025.000000000001,
+            "bioreactor_shortage_cost": 15909499.666666666,
+            "capacity_transfer_cost": 4666.666666666667,
+            "expiry_cost": 5946666.666666667,
+            "patient_loss_cost": 7583333.333333333,
+            "reagent_holding_cost": 144627.37326037572,
+            "reagent_purchase_cost": 10789514.978685357,
+            "reagent_shortage_cost": 1124558.5443636833,
+            "reagent_transfer_cost": 2266.6667575637534,
+            "specimen_transfer_cost": 24075.0,
+            "support_flexible_labor_cost": 42240.0031125609,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 323.96385106562684,
+            "urgency_cost": 188541.66666666666
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 41870739.53003061,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.869509595555683,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.665029729028031,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 4.220950500011289,
+          "lost": 151.66666666666666,
+          "requested_hours": 383.99999964733917,
+          "worlds": 24
+        },
+        {
+          "applied_hours": 342.8490017404159,
+          "block": 4,
+          "committed_hours": 342.8490017404159,
+          "components": {
+            "bioreactor_holding_cost": 8610.6,
+            "bioreactor_shortage_cost": 13561303.6,
+            "capacity_transfer_cost": 6625.0,
+            "expiry_cost": 6228333.333333333,
+            "patient_loss_cost": 8037500.0,
+            "reagent_holding_cost": 157556.91604808034,
+            "reagent_purchase_cost": 9868715.998586006,
+            "reagent_shortage_cost": 947945.2124325702,
+            "reagent_transfer_cost": 1383.3334346612328,
+            "specimen_transfer_cost": 25850.0,
+            "support_flexible_labor_cost": 37511.20458671536,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 326.86902401954944,
+            "urgency_cost": 278125.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 24.0,
+            "control_steps": 1152.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 153600.0,
+            "estimator_receipt_updates": 1536.0,
+            "fit_batches": 0.0,
+            "native_constructions": 24.0,
+            "native_steps": 1536.0,
+            "neural_forward_module_calls": 1152.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 384.0,
+            "total_native_operations": 1584.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 24.0,
+            "value_optimizer_steps": 0.0
+          },
+          "cost": 39262187.06744539,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.774785319180139,
+              "recorded_worlds": 24
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.7728091858964867,
+              "recorded_worlds": 24
+            }
+          },
+          "elapsed": 4.231331583325907,
+          "lost": 160.75,
+          "requested_hours": 342.8490071346362,
+          "worlds": 24
+        }
+      ],
+      "committed_hours": 328.479337917765,
+      "components": {
+        "bioreactor_holding_cost": 8233.08,
+        "bioreactor_shortage_cost": 14609089.213333333,
+        "capacity_transfer_cost": 5708.333333333333,
+        "expiry_cost": 6444000.0,
+        "patient_loss_cost": 8329166.666666667,
+        "reagent_holding_cost": 153831.27777643304,
+        "reagent_purchase_cost": 10014919.18605907,
+        "reagent_shortage_cost": 989755.7277910486,
+        "reagent_transfer_cost": 1516.6667938232456,
+        "specimen_transfer_cost": 25745.0,
+        "support_flexible_labor_cost": 35872.81858215621,
+        "support_ordinary_staff_cost": 102400.0,
+        "support_switching_cost": 381.3377187701039,
+        "urgency_cost": 276916.6666666667
+      },
+      "compute_total": {
+        "actor_optimizer_steps": 0.0,
+        "construction_triggered_resets": 120.0,
+        "control_steps": 5760.0,
+        "critic_optimizer_steps": 0.0,
+        "estimator_hypothesis_transitions": 768000.0,
+        "estimator_receipt_updates": 7680.0,
+        "fit_batches": 0.0,
+        "native_constructions": 120.0,
+        "native_steps": 7680.0,
+        "neural_forward_module_calls": 5760.0,
+        "optimizer_example_presentations": 0.0,
+        "planner_candidate_rollouts": 0.0,
+        "planner_total_decisions": 0.0,
+        "planner_total_model_epochs": 0.0,
+        "tail_steps": 1920.0,
+        "total_native_operations": 7920.0,
+        "total_optimizer_steps": 0.0,
+        "trajectories": 120.0,
+        "value_optimizer_steps": 0.0
+      },
+      "conditions": [
+        {
+          "applied_hours": 326.3410884231329,
+          "committed_hours": 326.3410884231329,
+          "components": {
+            "bioreactor_holding_cost": 8311.680000000002,
+            "bioreactor_shortage_cost": 14813116.239999998,
+            "capacity_transfer_cost": 6425.0,
+            "expiry_cost": 6812000.0,
+            "patient_loss_cost": 8900000.0,
+            "reagent_holding_cost": 162112.04835954122,
+            "reagent_purchase_cost": 9515508.734163273,
+            "reagent_shortage_cost": 871532.9070424925,
+            "reagent_transfer_cost": 1150.000101029877,
+            "specimen_transfer_cost": 26880.0,
+            "support_flexible_labor_cost": 35627.710109153544,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 378.6579705184964,
+            "urgency_cost": 369625.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 1920.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 0,
+          "cost": 41625067.97774601,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.864053045512142,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 3.018773977127163,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 4.159018224995816,
+          "lost": 178.0,
+          "requested_hours": 326.341092517972,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 328.4151384085417,
+          "committed_hours": 328.4151384085417,
+          "components": {
+            "bioreactor_holding_cost": 8378.28,
+            "bioreactor_shortage_cost": 13798846.360000003,
+            "capacity_transfer_cost": 6275.0,
+            "expiry_cost": 6213000.0,
+            "patient_loss_cost": 8066250.0,
+            "reagent_holding_cost": 159580.99860731402,
+            "reagent_purchase_cost": 10022651.087116947,
+            "reagent_shortage_cost": 986151.3652887356,
+            "reagent_transfer_cost": 1450.0001755356827,
+            "specimen_transfer_cost": 26145.0,
+            "support_flexible_labor_cost": 35871.61033353993,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 375.4917712154905,
+            "urgency_cost": 269250.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 1920.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 1,
+          "cost": 39696625.19329329,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 5.853858529637941,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.740769688625618,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 4.1382519000035245,
+          "lost": 161.325,
+          "requested_hours": 328.4151425331831,
+          "worlds": 40
+        },
+        {
+          "applied_hours": 330.68178692162036,
+          "committed_hours": 330.68178692162036,
+          "components": {
+            "bioreactor_holding_cost": 8009.280000000002,
+            "bioreactor_shortage_cost": 15215305.039999997,
+            "capacity_transfer_cost": 4425.0,
+            "expiry_cost": 6307000.0,
+            "patient_loss_cost": 8021250.0,
+            "reagent_holding_cost": 139800.78636244388,
+            "reagent_purchase_cost": 10506597.736896994,
+            "reagent_shortage_cost": 1111582.9110419173,
+            "reagent_transfer_cost": 1950.0001049041773,
+            "specimen_transfer_cost": 24210.0,
+            "support_flexible_labor_cost": 36119.13530377514,
+            "support_ordinary_staff_cost": 102400.0,
+            "support_switching_cost": 389.8634145763248,
+            "urgency_cost": 191875.0
+          },
+          "compute_total": {
+            "actor_optimizer_steps": 0.0,
+            "construction_triggered_resets": 40.0,
+            "control_steps": 1920.0,
+            "critic_optimizer_steps": 0.0,
+            "estimator_hypothesis_transitions": 256000.0,
+            "estimator_receipt_updates": 2560.0,
+            "fit_batches": 0.0,
+            "native_constructions": 40.0,
+            "native_steps": 2560.0,
+            "neural_forward_module_calls": 1920.0,
+            "optimizer_example_presentations": 0.0,
+            "planner_candidate_rollouts": 0.0,
+            "planner_total_decisions": 0.0,
+            "planner_total_model_epochs": 0.0,
+            "tail_steps": 640.0,
+            "total_native_operations": 2640.0,
+            "total_optimizer_steps": 0.0,
+            "trajectories": 40.0,
+            "value_optimizer_steps": 0.0
+          },
+          "condition": 2,
+          "cost": 41670914.75312461,
+          "delay_metrics": {
+            "epoch_mean_reported_turnaround": {
+              "mean": 6.00084008262192,
+              "recorded_worlds": 40
+            },
+            "epoch_mean_reported_wait": {
+              "mean": 2.8161182813536723,
+              "recorded_worlds": 40
+            }
+          },
+          "elapsed": 4.142828250018647,
+          "lost": 160.425,
+          "requested_hours": 330.6817912250757,
+          "worlds": 40
+        }
+      ],
+      "cost": 40997535.974721305,
+      "delay_metrics": {
+        "epoch_mean_reported_turnaround": {
+          "mean": 5.9062505525906674,
+          "recorded_worlds": 120
+        },
+        "epoch_mean_reported_wait": {
+          "mean": 2.8585539823688175,
+          "recorded_worlds": 120
+        }
+      },
+      "elapsed": 4.146699458339329,
+      "lost": 166.58333333333334,
+      "requested_hours": 328.47934209207693,
+      "role": "sac-graph-final",
+      "worlds": 120
+    }
+  ],
+  "terminal": {
+    "automatic_resume": false,
+    "automatic_retry": false,
+    "counts": {
+      "actor_optimizer_steps": 0,
+      "construction_triggered_resets": 120,
+      "control_steps": 5760,
+      "critic_optimizer_steps": 0,
+      "estimator_hypothesis_transitions": 0,
+      "estimator_receipt_updates": 0,
+      "fit_batches": 0,
+      "native_clones": 0,
+      "native_constructions": 120,
+      "native_steps": 7680,
+      "neural_forward_module_calls": 0,
+      "optimizer_example_presentations": 0,
+      "planner_candidate_rollouts": 0,
+      "planner_total_decisions": 0,
+      "planner_total_model_epochs": 0,
+      "tail_steps": 1920,
+      "total_native_operations": 7920,
+      "total_optimizer_steps": 0,
+      "trajectories": 120,
+      "value_optimizer_steps": 0
+    },
+    "elapsed_seconds": 112.676843291,
+    "scientific_completion_verified": true,
+    "status": "completed"
+  }
+}

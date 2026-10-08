@@ -1,6 +1,34 @@
 # Autonomous local research queue
 
-## Live checkpoint: MDL-2 fixed-support supplement completed
+## Live checkpoint: manuscript and development-only next step ready for GitHub
+
+2026-10-08. Zhaowei requested continuation, GitHub publication of this stage,
+and manuscript revision. The finite next step is a saved-development-data
+diagnostic, not a new experiment. reports/2026-10-08-value-td-next-step/report.md
+shows reagent purchase/shortage expense offsets part of Value-TD's patient-facing
+gains; support fees are not the dominant offset, and lower recorded TD loss is
+not better operational performance. Associations are not causal. One proposed
+future contrast is fixed residual attenuation versus unattenuated Value-TD/H8
+on untouched worlds, requiring prospective coefficient/budget/guardrails.
+No new scientific execution or altered frozen source was introduced.
+
+The actual main.tex abstract/introduction/results/discussion and README now
+include fixed-support MDL-2, all four roles, three conditions, harms and the
+posthoc distinction. Original H8 no-winner and graph/RL limits remain. Seven
+new table rows/twelve interval endpoints match curated saved evidence;45citation
+keys and LaTeX labels/environments pass static checks. The biblatex counter
+conflict is removed using native elsarticle/natbib. Built-in compilation now
+stops at external figures unavailable to its standalone compiler; no new PDF
+or visual layout verification is claimed. The existing PDF is historical.
+
+One advancement and one read-only efficiency assignment completed and closed.
+Whole-worktree compileall and diff checks pass; reuse prior scientific tests.
+Next authorized action:publish this stage to origin's research branch
+codex/september-research-integration, without force, merge or changing main,
+then verify the remote SHA. gcn-rl remains PAUSED. Report:
+docs/team_updates/2026-10-08-manuscript-github-update.md.
+
+## Previous checkpoint: MDL-2 fixed-support supplement completed
 
 2026-10-08T07:47Z. The approved single attempt completed120/120new fixed2
 trajectories, with360saved H8/Value-TD/SAC results reused. Exit0;112.676843s

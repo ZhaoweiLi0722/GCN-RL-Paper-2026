@@ -3977,3 +3977,23 @@ snapshot. Cloud sync and collaborator access remain unverified. No old
 rearchiving or external messages. Receipt:reports/2026-10-08-mdl2-fixed-reference/
 delivery-artifacts.json; details:specs/2026-10-08-mdl2-fixed-reference/dropbox-handoff.md.
 Old gcn-rl stays PAUSED; no follow-on science/performance tuning is authorized.
+
+#### Manuscript revision and GitHub publication authorized
+
+2026-10-08. Zhaowei requested continuing the next step, pushing this stage's
+成果 to GitHub, and revising the manuscript. This new authority permits the
+current-branch publication and editorial update; it supersedes the prior
+local-only restriction for this push, not the immutable scientific contracts.
+No force push, merge, main-branch replacement, new scientific execution,
+retry or third-party approval is inferred. The current stage includes the
+completed family comparison and fixed-support supplement, not only positive
+results. Raw archives and model tensors remain outside Git.
+
+The finite next step reads existing development/training metrics and576fit
+receipts only; no final/test outcome enters those diagnostic calculations.
+Its single residual-attenuation hypothesis is not an approved experiment.
+The manuscript preserves posthoc comparator status, the original H8 screen,
+all unfavorable outcomes and separate graph/RL attribution limits. No model,
+reward, physical setting, seed or frozen source is changed. Publication note:
+docs/team_updates/2026-10-08-manuscript-github-update.md. Same monitor stays
+PAUSED; the two finite delegated assignments completed and closed.

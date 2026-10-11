@@ -1,0 +1,5 @@
+- A constrained graph MDP models perishable, identity-bound PRM operations.
+- AFR-GCN-DDPG learns bounded residual corrections to a look-ahead anchor.
+- Five-seed holdout evidence favors GCN-DDPG over MDL-2 and flat DDPG.
+- A matched TD3 ablation corroborates graph and anchor value.
+- Online actor-critic updates add no independently established endpoint gain.

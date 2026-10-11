@@ -1,0 +1,787 @@
+%% EAAI first draft converted to Elsevier elsarticle format.
+%% Target journal: Engineering Applications of Artificial Intelligence.
+\documentclass[preprint,review,12pt]{elsarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{lineno}
+\usepackage{xcolor}
+\usepackage{newunicodechar}
+\newunicodechar{▹}{$\triangleright$}
+\newunicodechar{ï}{\"i}
+\newunicodechar{Γ}{\Gamma}
+\newunicodechar{’}{'}
+\newunicodechar{“}{``}
+\newunicodechar{”}{''}
+\newunicodechar{–}{--}
+\newunicodechar{—}{---}
+\newunicodechar{−}{-}
+\newunicodechar{×}{\times}
+\graphicspath{{figures/}}
+
+\bibliographystyle{elsarticle-num}
+
+\journal{Engineering Applications of Artificial Intelligence}
+
+\begin{document}
+\begin{frontmatter}
+
+\title{Graph-Aware Value Learning for Support-Hour Planning in Synthetic Personalized Medicine Manufacturing Networks}
+
+\author[inst1]{Zhaowei Li\corref{cor1}}
+\ead{zli686@gatech.edu}
+\cortext[cor1]{Corresponding author.}
+\author[inst1]{Chin-Yuan Tseng}
+% \ead{...}  % add publication email if you want it listed for the second author
+\affiliation[inst1]{organization={H. Milton Stewart School of Industrial and Systems Engineering, Georgia Institute of Technology},
+            city={Atlanta},
+            state={GA},
+            country={USA}}
+
+\begin{abstract}
+Advance booking of support labor couples current expenditure with future
+manufacturing readiness and modeled patient eligibility. We study this
+decision in a four-site synthetic, patient-indexed manufacturing network.
+A graph-convolutional temporal-difference value model augments an eight-step
+model predictive controller (MPC), while the base heuristic retains routing,
+purchasing, and resource-sharing decisions. We distinguish improvement over
+fixed support allocation from improvement over strong planning. In a
+five-family study, neither development-selected finalist passed the
+prespecified H8-MPC screen: Value-TD saved 0.85\% mean cost with an interval
+crossing zero, and soft actor--critic cost 3.50\% more. A post hoc comparison
+on the same 120 evaluated worlds found 2.16\% lower mean cost and 5.675
+fewer simulated patient losses per world for Value-TD than for MDL-2 with
+fixed additional support. A subsequent 72-world development comparison
+used that fixed-support policy as its prospective primary baseline and H8
+as a strong reference. Original Value-TD saved 2.34\% and reduced mean
+losses by 5.181 per world. A fixed half-residual variant failed its
+condition-wise patient guardrail and was not adopted. These findings
+support a bounded cost--service comparison, not independent confirmation,
+isolated graph or learning benefits, or clinical safety. External
+calibration and fresh confirmation remain necessary.
+\end{abstract}
+
+\begin{keyword}
+Graph convolutional networks \sep Temporal-difference learning \sep
+Model predictive control \sep Capacity planning \sep Synthetic simulation
+\sep Personalized manufacturing
+\end{keyword}
+\end{frontmatter}
+\linenumbers
+
+\begin{center}
+\textbf{Working draft:} evidence and source checks by accountable human
+authors, final declarations, and submission approval remain pending.
+\end{center}
+
+\section{Introduction}
+\label{sec:introduction}
+Personalized manufacturing links individual demand to non-interchangeable
+products. In the simulation considered here, a specimen and its resulting
+product retain one patient's identity, while eligibility, specimen viability,
+and inventories evolve over time. Qualified support labor prepares work for
+manufacturing but does not shorten biological production or release testing.
+Published process-cost and labor studies motivate separating these resource
+requirements; they do not calibrate the staffing response of this
+simulator~\cite{Ran2020DecentralizedCART,Fitzgerald2022AutomatedASC}.
+
+The operational question is whether state-dependent advance booking improves
+on a fixed support schedule while protecting simulated service outcomes.
+A second, distinct question is whether learning adds value beyond a competent
+planner using the same public observations. A fixed schedule and a planner
+are not interchangeable baselines: they use different information and
+computation, and may trade expenditure against patient losses differently.
+
+We investigate Value-TD, a graph-aware terminal-cost estimator coupled to
+eight-step MPC. The planner chooses support hours; the neural model does
+not directly output actions. Graph convolution, residual learning, and
+learned terminal values are established ideas
+\cite{Kipf2017GCN,Johannink2019ResidualRL,Hansen2022TDMPC}.
+The contribution considered here is their task-specific integration and
+evaluation under delayed labor commitments, partial public observations,
+and patient-indexed service consequences. We do not claim a new
+reinforcement-learning backbone, a first-in-literature combination, or a
+general superiority result.
+
+The paper makes three bounded contributions.
+\begin{itemize}
+\item It specifies a synthetic support-hour decision problem with common
+base operations, delayed paid commitments, full settlement accounting,
+and an explicit public-information interface.
+\item It describes an observed-trajectory TD value correction to a fixed
+short-horizon planner, separating the learned score from the operational
+heuristic, physical dynamics, and actor--critic alternatives.
+\item It reports a staged comparison that retains a failed strong-planner
+screen, a post hoc fixed-support supplement, and a prospectively specified
+development test that rejected residual attenuation. Cost, service,
+computation, and unresolved component attribution are reported together.
+\end{itemize}
+
+Future primary comparisons use MDL-2 with fixed additional support, with H8-MPC
+retained as a strong heuristic reference. This prospective choice does not
+replace the original five-family study's H8 endpoint. Favorable fixed-support
+comparisons do not rescue that failed screen. Earlier full-routing studies
+address a different action space and are retained in the separate
+\texttt{historical-research-record.tex}, not pooled into this paper's
+support-hour leaderboard. All reported losses and costs are synthetic;
+publication readiness and operational validity are not established.
+
+\section{Support-Hour Decision Problem}
+\label{sec:problem}
+\subsection{Operational boundary}
+The task contains four manufacturing sites on a fixed network. Each world
+has 48 control epochs followed by 16 settlement epochs. During control,
+the policy books additional support hours by site. Bookings arrive after
+two epochs; there are no new bookings during settlement, but outstanding
+commitments and their consequences continue to be accounted for. Ordinary
+staffing is four hours per site and epoch. Additional support acts on the
+simulated preparatory-work requirement; it does not directly speed cell
+growth, remove equipment constraints, or change patient deterioration.
+The configuration labels epochs as modeled weeks, but that label is not
+validated against a process calendar. A single support pool is assumed
+qualified at all sites; individual credentials, shifts, and staff travel
+are not modeled. Flexible requests are capped at four hours per site and
+eight hours network-wide, with unused budget allowed.
+
+All roles use the same MDL-2 base operations for routing, purchasing, and
+resource sharing. In this task, MDL-2 denotes the two-period mean-demand
+look-ahead heuristic, not a minimum-description-length algorithm. The
+learned intervention changes support allocation only. It does not inherit
+the action space or empirical status of historical routing/DDPG studies.
+During settlement, the executed purchasing rule uses all waiting patient
+identities, net of available reagents and outstanding orders, subject to
+the common cutoff. Inherited proposal text instead described support-ready
+patients only. We report the executed all-waiting rule; this documentation
+discrepancy was not silently repaired. The same implementation applies to
+all roles, although their different states produce different purchases.
+
+The public view contains currently available patient and operational records,
+commitments, and observation-derived beliefs. Exact latent work, response
+states, future events, and future random tapes are not controller inputs.
+The public predictor and response filter approximate these quantities.
+Consequently the feature representation is a compressed information state,
+not a proven sufficient statistic for a fully observed Markov decision process.
+
+\subsection{Objective and observations}
+Let $c_t$ be the full recorded synthetic cost, including operational,
+support, patient-loss, expiry, urgency, and terminal-accounting terms.
+The finite-horizon objective is
+\begin{equation}
+J(\pi)=\mathbb{E}_{\pi}\!\left[\sum_{t=0}^{63}c_t\right].
+\label{eq:support-objective}
+\end{equation}
+Discounting is one. Costs remain synthetic weighted objective units, not
+site-calibrated monetary expenditure. Simulated patient loss is a modeled
+service outcome and must not be interpreted as a measured death or a
+clinical treatment effect.
+In particular, the recorded loss event includes modeled non-delivery from
+ineligibility or material/product loss, and the field named expiry cost
+also includes in-process discard. These accounting names do not identify
+clinical mortality or independent biological batch-failure probabilities.
+
+The shared value representation has 31 features per site: patient counts
+and urgency, age and eligibility summaries, inferred remaining-work bounds,
+resources and transit pipelines, support commitments and previous booking,
+estimated response, production stages, time remaining, and demand.
+Observed and forecast states use the same schema. A shared schema does
+not eliminate forecast error or forecast-to-observed distribution shift.
+
+The unchanged scenario set comprises no capacity change, persistent
+unannounced change, and fast independent fluctuation. All three receive
+equal weight in the reported aggregates. These are author-selected
+synthetic conditions, not estimated frequencies of real manufacturing regimes.
+
+\subsection{Comparator roles and engineering assumptions}
+The prospective primary policy, MDL-2 fixed support, books
+$[2,2,2,2]$ additional hours at every control epoch. Thus each full world
+books and receives 384 additional hours. It retains normal staffing,
+delivery lag, feasibility, and charges. It requires no neural value,
+response filter, or MPC rollout. H8-MPC instead allocates support through
+eight-step public-model planning; H16-MPC is a separately charged
+longer-horizon reference where included. Actual support usage is not
+equalized across these whole-controller comparisons.
+
+\begin{table}[tbp]
+\centering
+\caption{Engineering interpretation of the support-hour task. None of the
+listed numerical choices is established as an externally calibrated site input.}
+\label{tab:engineering-scope}
+\small
+\begin{tabularx}{\textwidth}{p{0.25\textwidth}XX}
+\toprule
+Element & Implemented interpretation & Evidence boundary \\
+\midrule
+Time and commitments & 48 control plus 16 settlement epochs; two-epoch
+support lag & Modeled-week label, not a validated process calendar. \\
+Staffing & Four ordinary hours/site/epoch; fixed comparator adds two &
+Synthetic allocation rule, not an optimized or measured staffing standard. \\
+Work response & Support advances preparatory readiness under equipment
+and availability constraints & No empirical dose--response curve for extra labor. \\
+Patient losses & Simulated eligibility and lifecycle outcomes & Not
+observed clinical mortality or infusion benefit. \\
+Cost & Weighted operational and patient-facing objective & Not current
+currency-valued realized savings. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+External process studies contextualize costs, qualification, and task duration
+\cite{Ran2020DecentralizedCART,Fitzgerald2022AutomatedASC}. Their products,
+sites, units, and accounting boundaries differ from this model. Published
+batch-failure assumptions and patient-pathway summaries
+\cite{Lopes2020VeinToVein,Nastoupil2020StandardOfCare} do not identify
+this simulator's response law or deterioration process. The external
+operational-calibration gap therefore remains open.
+
+\section{Related Methods and Claim Boundary}
+\label{sec:literature}
+Graph convolution supplies neighborhood aggregation, not a new learning
+principle~\cite{Kipf2017GCN}. Residual reinforcement learning can combine
+a conventional controller's action with a learned action
+correction~\cite{Johannink2019ResidualRL}. Our current residual instead
+modifies a terminal cost used to rank candidate support allocations.
+This distinction separates the present Value-TD controller from the
+historical residual DDPG action controller.
+
+TD-MPC jointly learns task-oriented latent dynamics and a terminal value
+for short-horizon planning~\cite{Hansen2022TDMPC}. Here the public predictor
+is fixed, the value model receives graph-structured operational features,
+and learning uses complete observed simulation trajectories. We neither
+implement full TD-MPC nor claim to introduce learned terminal costs.
+The limited positioning claim is an application-specific formulation and
+implementation, not an exhaustive novelty or priority claim.
+
+Comparisons must also separate complete-controller performance from component
+attribution. A graph/self-only contrast tests neural message adjacency while
+preserving the physical network. A learned/initial contrast tests the value
+of training relative to the declared initializer. Cost gains over fixed
+staffing alone establish neither contribution. This separation follows the
+need for seed-aware, uncertainty-aware evaluation in deep reinforcement
+learning~\cite{Henderson2018DRLMatters,Agarwal2021RLiable}.
+
+\section{Observed-Trajectory Value-TD Planning}
+\label{sec:method}
+\subsection{Planner and graph value}
+Let $b_t$ denote the public information state and $H(b)$ the fixed terminal
+patient-risk heuristic. The value model is
+\begin{equation}
+V_\theta(b)=H(b)+s f_\theta(b), \qquad s=10^6.
+\label{eq:residual-value}
+\end{equation}
+Two graph-convolution layers of width 32 encode the four sites, followed by
+mean pooling and a scalar residual head. The final linear head is initialized
+to zero. The graph and self-only architectures use the same trainable tensors
+at initialization; self-only replaces message adjacency by the identity
+matrix without altering operational links.
+
+For each of 16 candidate action sequences, the planner simulates eight
+public-model steps under three response quantiles. With fixed weights $w_q$,
+it minimizes
+\begin{equation}
+S_\theta(a;b_t)=
+\sum_{q=1}^{3}w_q\left[
+\sum_{k=0}^{7}\widehat c_{t+k}(a,q)
++H(\widehat b_{t+8}^{a,q})
++s f_\theta(\widehat b_{t+8}^{a,q})
+\right].
+\label{eq:current-value-mpc-score}
+\end{equation}
+It executes the first support action and replans after the next public
+observation. Both terminal components are zero at the fully settled boundary.
+Plain H8 uses the same candidates, predictor, and heuristic with no learned
+residual. A zero-residual initializer therefore recovers H8 scores;
+this is an implementation identity, not a newly estimated performance claim.
+H16 changes the planning horizon and is not an equal-computation treatment.
+
+\subsection{Training as performed}
+The five-family study's Value-TD arm started from zero residuals rather than
+the historical native-tail model. For each complete 64-transition trajectory,
+let $u=\min(t+8,64)$. The residual target is
+\begin{equation}
+y_t=
+\frac{\sum_{k=t}^{u-1}c_k-H(b_t)}{s}
++\mathbf{1}_{u<64}\left[
+\frac{H(b_u)}{s}+f_{\theta^-}(b_u)\right],
+\label{eq:current-observed-td}
+\end{equation}
+where $\theta^-$ is the model before that trajectory's fitting boundary.
+Targets are fixed for 32 minibatch updates of size 64; samples are drawn
+with replacement from the trajectory's 64 starting states. The learner
+uses Adam and mean-squared target error. Each training block contains
+96 worlds. The selected Value-TD learning rate is $10^{-4}$; the family
+selection procedure and fresh-block comparisons are described below.
+
+The full settlement costs enter these observed returns, with zero terminal
+bootstrap. There are no native branches or forecast-tail training labels
+in this recipe. Model-based candidate forecasts remain part of action
+selection and are charged separately. This is value-based learning coupled
+to planning, not TD3, DDPG actor optimization, teacher imitation, or
+deployment-time parameter adaptation. Evaluation weights remain frozen.
+
+A conceptual limitation remains: the learned value describes observed
+states under the current behavior, but is queried at forecast candidate
+end states. Approximation error and distribution shift can change rankings.
+Neither lower TD loss nor actual optimizer execution proves improved
+operational decisions; the endpoint controls must supply that evidence.
+
+\subsection{Evidence stages and estimands}
+\begin{table}[tbp]
+\centering
+\caption{Distinct support-hour evidence stages. Sample counts refer to paired
+evaluation worlds, not independent real patients. Historical endpoints remain unchanged.}
+\label{tab:evidence-stages}
+\small
+\begin{tabularx}{\textwidth}{p{0.24\textwidth}p{0.24\textwidth}X}
+\toprule
+Stage & Comparator and worlds & Permitted inference \\
+\midrule
+Five-family selection and fresh training & H8 primary; 120 new test worlds
+across five fresh training blocks & Frozen family screen and matched graph/learning
+contrasts; no qualifying winner. \\
+Fixed-support supplement & Added MDL-2 fixed support on those same 120 worlds &
+Post hoc whole-controller cost--service comparison, not new confirmation. \\
+Fixed attenuation development & MDL-2 fixed support primary, H8 reference;
+72 fresh worlds with three old development models & Prospective bounded
+variant decision conditional on those models; not fresh-training confirmation. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For costs, positive saving means reference minus candidate; for losses,
+positive excess means candidate minus reference. Percentage savings divide
+the difference of overall means by the reference mean. In each reported
+stage, 2,000 descriptive bootstrap draws resample model/training blocks
+commonly across conditions and worlds independently within each condition.
+A common replicate index across different conditions is not a matched patient.
+Intervals are descriptive, not multiplicity-adjusted formal tests or
+guarantees of safety. Raw world, block, and condition harms remain available.
+
+\section{Computational Experiments}
+\label{sec:experiments}
+The following sections preserve the order of evidence generation. Switching
+the future primary baseline to fixed support does not retrospectively
+change the five-family protocol or erase its failed H8 screen.
+
+\subsection{Five-family fixed-benchmark comparison: neither finalist passes}
+\label{sec:family-selection-development}
+The prospective family study compared DDPG, TD3, SAC, PPO, and observed-TD8
+value-MPC from scratch on the same synthetic support-hour task. All families
+used the same 31 public features, unchanged reward and physical dynamics,
+three capacity conditions, and MDL-2 base operations. Plain H8-MPC remained
+the primary operational reference; H16-MPC was the secondary compute reference.
+This restricted task is not pooled with the routing-primary results.
+In particular, the value-TD arm learned a zero-initialized residual from its
+own complete observed trajectories; it did not reproduce the earlier
+native-branch or forecast-tail recipes.
+
+Each family used learning rates $10^{-4}$ and $3\times10^{-4}$ in three
+development blocks, with 96 training worlds per configuration and block.
+The 2,880 training trajectories were followed by 864 frozen development
+evaluations on 24 shared worlds per block under 12 roles. A frozen
+patient-first, then cost selection rule chose one learning rate per family
+and two distinct families: value-TD at $10^{-4}$ and SAC at
+$3\times10^{-4}$. These were development selections, not winner declarations.
+Their development mean cost savings against H8 were 1.63\% and $-1.39\%$,
+with 12.24 and 5.38 fewer modeled patient losses per world, respectively.
+
+Five new blocks then trained both finalists with graph and self-only
+adjacency, yielding another 1,920 trajectories. Matched graph/self-only
+models shared initial trainable tensors and training seeds; only adjacency
+differed, while subsequent endogenous trajectories could differ. All 20
+final models and the graph initial controls were sealed before independent
+evaluation. Each new block supplied 24 test worlds for nine frozen roles:
+the two finalists' graph-final, self-only-final, and graph-initial models,
+H8, H16, and the predeclared historical conditional graph-TD reference.
+The historical models were evaluation-only. All 1,080 independent evaluations
+completed with zero optimizer updates. The package contained 6,744 main
+trajectories and no clones or old-holdout reuse.
+
+Every world included 48 decisions and 16 settlement transitions. Training
+used 32 minibatch iterations of size 64 after each world. Actor--critic
+targets used $\gamma=1$, reward equal to negative full cost divided by
+$10^6$, and all settlement costs in the final control transition. Off-policy
+replay was capped at 8,192 transitions; PPO used the current episode and
+latent-action log probabilities, while SAC entropy concerned the proposal
+before projection. Extra critics, planning, and sample reuse were charged,
+so the family comparison concerns complete controllers rather than an
+isolated backbone intervention.
+
+The prespecified screen required at least 0.5\% overall mean cost savings
+against H8, positive savings in every training block, a positive descriptive
+95\% lower cost bound, and nonpositive mean extra patient losses.
+Neither finalist passed (Table~\ref{tab:family-selection}). Value-TD passed
+the mean savings and mean patient-loss conditions, but its cost interval
+crossed zero and its fifth block cost more. Its five block savings were
+0.363, 0.655, 0.401, 0.339, and $-0.072$ million synthetic units.
+SAC had higher mean cost in every block and 3.26 additional losses per world.
+Thus the frozen rule returned no winner. Value-TD's favorable descriptive
+head-to-head contrast with SAC does not override its failed H8 screen.
+
+\begin{table}[tbp]
+\centering
+\caption{Independent five-block results after development-only family
+selection. Savings are reference minus candidate cost, in millions of
+synthetic objective units per world; percentages divide the overall mean
+saving by the reference mean, not an average of world-level ratios.
+Extra losses are candidate minus reference. Intervals are descriptive
+95\% intervals, not multiplicity-adjusted inference. The first two rows
+are the prespecified H8 screens; the remaining rows separate graph and
+training increments. Each row contains 120 paired worlds.}
+\label{tab:family-selection}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Candidate / reference & Savings M [95\%] & Savings (\%) & Extra losses \\
+\midrule
+Value-TD graph / H8 & $0.337\ [-0.026,0.678]$ & $0.851$ & $-11.875$ \\
+SAC graph / H8 & $-1.386\ [-2.135,-0.807]$ & $-3.499$ & $3.258$ \\
+Value-TD graph / self-only & $0.013\ [-0.115,0.161]$ & $0.033$ & $0.150$ \\
+SAC graph / self-only & $-0.261\ [-1.274,0.546]$ & $-0.641$ & $0.525$ \\
+Value-TD final / initial & $0.337\ [-0.024,0.676]$ & $0.851$ & $-11.875$ \\
+SAC final / initial & $0.005\ [-0.882,0.717]$ & $0.013$ & $3.383$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+All three conditions received equal weight. The 2,000 bootstrap resamples
+used common training-block draws across conditions and independent world
+draws within each condition; matching replicate labels across conditions
+were not treated as paired patients. H8 screen intervals and attribution
+intervals retain their frozen contrast-specific random streams. The full
+readout retains all 66 development pairs and 36 final pairs, including
+condition, block, and world-level harm rather than only aggregate means.
+Against H8, value-TD cost more in 51 of 120 worlds and lost more patients
+in 21; the corresponding SAC counts were 91 and 75. Value-TD savings
+were 0.79\%, 0.25\%, and 1.46\% under stable, persistent, and fast conditions,
+but each condition-specific cost interval crossed zero.
+
+Neither graph/self-only comparison established a cost advantage; mean extra
+losses were positive for both graph models. Neither final/initial cost
+interval excluded zero. The zero-residual value initializer reproduced H8's
+cost and loss outcomes, whereas a random SAC initializer is not a strong
+operational baseline. These controls do not establish separate message-passing
+and training contributions. As secondary references, H16 saved 0.77\%
+against H8 with 6.20 fewer mean losses, and the fixed historical controller
+saved 0.08\% with 4.79 fewer mean losses; both overall cost intervals crossed
+zero. Historical recipe differences remain, and the reference roles were
+not newly selected winners.
+
+Mean applied flexible hours per world were 304.13 for H8, 338.73 for H16,
+376.86 for value-TD graph, and 328.48 for SAC graph. Mean complete-trajectory
+elapsed times were 37.02, 67.98, 36.99, and 4.15 seconds, respectively,
+including recorded rollout I/O; these are not separately measured decision
+latencies. The complete scientific run, including its automatic analysis and
+single archive, took 32.520 hours. Actual consumption was 431,616 native
+steps, 445,104 native operations, 1,016,448 neural module forwards,
+50,429,952 prediction steps, and 43,161,600 filter transitions.
+There were 153,600 minibatch iterations and 316,416 optimizer dispatches:
+95,232 actor, 153,600 critic, and 67,584 value steps, presenting
+20,250,624 examples. These are actual receipts, not sums of separate budget
+ceilings. Saved raw trajectories, summaries, models, and update receipts
+support the readout; executing learning is not evidence that learning helped.
+
+The completed experiment therefore establishes neither a qualifying family
+winner nor general RL superiority at the declared budget. It does not prove
+equivalence or rule out other configurations. No multiplicity-adjusted formal
+significance, power, global optimality, real-patient calibration, clinical
+safety, deployment-online adaptation, or publication readiness is claimed.
+E1 remains missing and all outcomes are synthetic.
+
+\subsection{Post hoc fixed-support MDL-2 comparison}
+\label{sec:mdl2-fixed-supplement}
+% Evidence: specs/2026-10-08-mdl2-fixed-reference/{protocol,terminal-readout}.md
+% Curated numeric binding: reports/2026-10-08-manuscript-publication/evidence.json
+The strong-planner comparison leaves a different operational question:
+does the learned controller improve on a fixed staffing schedule combined
+with the same base operations? After inspecting the family-study outcomes,
+we added an MDL-2 fixed-support comparator. Its rule was fixed before its
+own outcomes were observed, but the comparator choice was post hoc. This
+supplement does not replace the original H8 primary endpoint or its failed
+screen, and it must not be confused with the earlier routing-primary MDL-2
+comparison.
+
+The fixed rule retains MDL-2 routing and purchasing, ordinary staffing of
+four hours per site and epoch, and the original two-epoch delivery lag.
+It books two additional support hours at each of four sites during each of
+the 48 control epochs, irrespective of the observed queues. No new support
+is booked during the 16 settlement epochs. Each world therefore books and
+receives 384 flexible hours; idle booked hours, switching, and outstanding
+obligations retain their original charges. Feasible resource limits,
+physical dynamics, reward, and all three conditions are unchanged. Actual
+support consumption is not equalized across policies.
+
+We executed only this new role on the 120 original test tapes
+(five blocks, three conditions, eight worlds per condition and block).
+The sealed value-TD graph-final, SAC graph-final, and H8 outcomes contribute
+360 reused trajectories, with no model loading, neural inference, optimizer
+update, or retraining. Full world identities and tape hashes establish
+pairing. The new raw records were reconciled with their summaries, while
+the previous independently reconciled readout supplies the reused outcomes.
+All six pairwise comparisons and their world, block, and condition harms
+are retained. The descriptive bootstrap uses 2,000 draws with common
+training-block resamples across conditions and independent world resamples
+within each condition. Original contrast-specific streams preserve the
+previous H8 intervals exactly.
+
+\begin{table}[tbp]
+\centering
+\caption{Post hoc comparison on 120 reused evaluation worlds. Each entry is
+a per-world mean. Cost is in millions of synthetic objective units, not
+calibrated expenditure. Savings divide the difference in overall mean costs
+by the fixed-support MDL-2 mean. Losses are simulated patient counts;
+support is applied additional labor in hours. H8 remains the original
+study's primary reference.}
+\label{tab:mdl2-fixed-overall}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{Xrrrr}
+\toprule
+Controller & Cost M & Savings (\%) & Losses & Support h \\
+\midrule
+MDL-2 fixed support & 40.140 & --- & 157.125 & 384.000 \\
+H8-MPC & 39.611 & 1.317 & 163.325 & 304.128 \\
+Value-TD graph-final & 39.274 & 2.157 & 151.450 & 376.859 \\
+SAC graph-final & 40.998 & $-2.136$ & 166.583 & 328.479 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Value-TD saved 0.866 million units per world relative to fixed support
+(descriptive 95\% interval $[0.550,1.181]$ million) and lost 5.675 fewer
+patients ($[-7.350,-4.000]$ extra losses). All five block-mean cost savings
+were positive, but 34 of 120 worlds cost more and 26 lost more patients.
+SAC cost 0.857 million more ($[-1.645,-0.278]$ million savings) and lost
+9.458 more patients ($[3.075,18.117]$ extra losses); its cost was higher
+in every block, with 88 cost-harmed and 104 patient-harmed worlds.
+H8 saved 0.529 million ($[0.202,0.892]$ million) but lost 6.200 more
+patients ($[3.791,8.642]$ extra losses), with 43 cost-harmed and 70
+patient-harmed worlds. Fixed MDL-2 is therefore not uniformly inferior to
+H8: its larger labor allocation accompanies a different cost--service
+trade-off. The comparison estimates whole-controller differences, not the
+causal effect of labor quantity alone.
+
+\begin{table}[tbp]
+\centering
+\caption{Value-TD graph-final relative to fixed-support MDL-2 by condition,
+40 paired worlds per row. Positive savings and negative extra losses favor
+value-TD. Intervals are descriptive 95\% bootstrap intervals.}
+\label{tab:mdl2-fixed-conditions}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Condition & Savings (\%) & Savings M [95\%] & Extra losses [95\%] \\
+\midrule
+No change & 3.794 & $1.561\ [0.954,2.167]$ & $-8.875\ [-12.775,-5.350]$ \\
+Persistent change & 2.175 & $0.834\ [0.065,1.536]$ & $-6.800\ [-10.275,-3.199]$ \\
+Fast fluctuation & 0.494 & $0.202\ [-0.443,0.865]$ & $-1.350\ [-5.150,2.475]$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The favorable overall means do not establish robustness to fast independent
+fluctuations: both its cost and patient-loss intervals span zero
+(Table~\ref{tab:mdl2-fixed-conditions}). MDL-2 fixed support required no
+planner, response filter, or neural call. Its mean complete-world time was
+0.85 seconds, compared with 37.02 for H8, 36.99 for value-TD, and 4.15 for
+SAC in their saved runs. These are rollout-plus-I/O measurements, not
+synchronized hardware benchmarks or decision-only latency. The supplement
+used 7,680 native steps and 7,920 native operations and completed in
+112.68 seconds including analysis and archival work. It adds no learning
+computation; it does not remove the original models' training cost.
+
+These results support a limited descriptive cost--service advantage of the
+tested value-guided controller over fixed allocation in the sampled worlds.
+They neither create independent validation from reused tests nor establish
+an isolated GCN or RL contribution. The original value-TD/H8 interval still
+crosses zero, and the graph/self-only and final/initial cost contrasts remain
+inconclusive. Any method revision motivated by these outcomes requires new
+development decisions and untouched evaluation worlds, not continued tuning
+on this supplement.
+
+\subsection{Prospective fixed-attenuation development comparison}
+\label{sec:attenuation-development}
+% Evidence: specs/2026-10-08-value-td-attenuation/terminal-readout.md
+% Raw reconciliation: reports/2026-10-08-value-td-attenuation/verification.json
+We next fixed one development change before observing its outcomes:
+multiply only the learned residual in Equation~\ref{eq:current-value-mpc-score}
+by 0.5. Prefix cost, terminal heuristic, candidate actions, public predictor,
+physical dynamics, and objective weights were unchanged. Three sealed
+Value-TD development models at learning rate $10^{-4}$ were reused without
+training or checkpoint selection. Each model block used eight fresh worlds
+in each of the three conditions. Four roles on these 72 paired worlds
+produced 288 trajectories: fixed-support MDL-2, H8, original Value-TD,
+and half-residual Value-TD.
+
+The development rule required positive overall savings and no mean loss
+increase versus fixed support, together with positive overall savings and
+no mean loss increase versus original Value-TD overall or in any condition.
+This was an advancement rule, not a formal significance or clinical
+noninferiority test. All six contrasts were retained.
+
+\begin{table}[tbp]
+\centering
+\caption{Development comparison on 72 new worlds using three existing
+development models. Savings are millions of synthetic units per world.
+Original and Half denote Value-TD with residual multipliers 1 and 0.5.
+Intervals are descriptive 95\%; excess losses are candidate minus reference.
+All rows have 72 paired observations, conditional on the three models.}
+\label{tab:attenuation-pairs}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Candidate / reference & Savings M [95\%] & Savings (\%) & Excess losses \\
+\midrule
+H8 / fixed MDL-2 & $0.081\ [-0.403,0.548]$ & $0.211$ & $7.111$ \\
+Original / fixed MDL-2 & $0.901\ [0.572,1.266]$ & $2.345$ & $-5.181$ \\
+Half / fixed MDL-2 & $1.007\ [0.635,1.391]$ & $2.620$ & $-5.681$ \\
+Original / H8 & $0.820\ [0.332,1.323]$ & $2.139$ & $-12.292$ \\
+Half / H8 & $0.926\ [0.431,1.381]$ & $2.415$ & $-12.792$ \\
+Half / Original & $0.106\ [-0.125,0.327]$ & $0.282$ & $-0.500$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Original Value-TD saved 2.3447\% relative to fixed support and reduced mean
+losses by 5.1806 per world (excess-loss interval $[-7.1667,-3.1528]$).
+Its cost was worse in 18 of 72 worlds and its loss count was worse in 19.
+The half-residual variant's overall means were slightly better, but the
+head-to-head cost interval crossed zero and its excess-loss interval was
+$[-2.1115,1.4174]$. Against original Value-TD it cost more in 30 worlds
+and lost more patients in 28; one model block had increased mean losses.
+
+\begin{table}[tbp]
+\centering
+\caption{Half-residual minus original behavior by condition. Positive savings
+favor attenuation; positive excess losses are unfavorable. Each row contains
+24 paired worlds. Harm counts concern cost and patient losses separately.}
+\label{tab:attenuation-conditions}
+\small
+\begin{tabularx}{\textwidth}{Xrrr}
+\toprule
+Condition & Savings (\%) & Excess losses & Harmed worlds: cost / loss \\
+\midrule
+No change & $0.4881$ & $-0.7083$ & $7/7$ \\
+Persistent unannounced change & $0.7498$ & $0.3750$ & $8/13$ \\
+Fast independent fluctuation & $-0.3817$ & $-1.1667$ & $15/8$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The persistent-change mean loss increase violated the frozen condition-wise
+guardrail. The variant therefore did not advance. This is a negative
+development decision despite successful execution, not evidence of a
+statistically established or clinical harm. Attenuation also did not solve
+fast-fluctuation cost performance: versus fixed support, its mean saving
+was $-0.1165\%$, with negative cost savings in all three model blocks.
+Original Value-TD's corresponding mean saving was 0.2642\%, with cost
+interval $[-0.713,0.733]$ million and excess losses 0.1250
+($[-2.9167,3.8354]$).
+
+Mean applied additional hours were 384.000 for fixed support, 315.217 for
+H8, 377.993 for original Value-TD, and 376.549 for attenuation. Mean full-world
+elapsed times including recording were 0.915, 33.879, 33.822, and 33.841
+seconds, respectively; these are not isolated decision-latency benchmarks.
+The package completed in 7,407.79 seconds, including analysis and archival
+work, using 18,432 native steps, 19,008 native operations, 6,912 neural
+module forwards, 3,981,312 prediction steps, and 1,382,400 filter transitions.
+There were no optimizer updates or clones. Prior model training is not
+included in these new execution counts.
+
+This comparison used new development worlds, not new training seeds.
+Its favorable original/H8 interval does not supersede the independent
+family study's inconclusive original/H8 result. The 72 development worlds
+and the earlier 120 test worlds are now consumed for future confirmation.
+No second coefficient was selected or evaluated.
+
+\section{Discussion and Conclusions}
+\label{sec:conclusion}
+The main finding is comparator-dependent. Original Value-TD shows favorable
+mean cost and simulated patient losses relative to the specified fixed
+support schedule, first in a post hoc supplement and then on new
+development worlds conditional on three existing models. These findings
+do not establish a qualifying winner against strong MPC under the original
+five-block screen. H8 uses less support and may trade lower cost against
+higher patient losses. It remains a necessary reference rather than an
+unfavorable result to omit.
+
+The rejected attenuation study also separates mean improvement from
+development acceptance. Scaling the learned residual by one half modestly
+improved aggregate means, but failed the predeclared condition-wise patient
+rule and did not resolve fast-fluctuation cost weakness. The original
+controller is retained as a research candidate. The unsuccessful variant
+is reported rather than used to justify further coefficient searches.
+
+The method's distinctive content lies in the support-hour formulation and
+the explicit integration of fixed operational control, approximate public
+beliefs, graph-valued remaining cost, and settlement-complete evaluation.
+This is not yet evidence of a new general-purpose algorithm. A new
+application alone does not guarantee sufficient methodological novelty for
+publication. Graph/self-only and final/initial controls have not established
+separate cost benefits; the title's graph-aware description names the
+implementation, not a demonstrated causal graph gain.
+
+Three limits are central. First, public-state compression and forecast error
+can affect candidate ranking. Second, simulated work response, staffing
+notice, costs, and eligibility are not externally calibrated. Published
+process evidence motivates assumptions but cannot validate numerical
+operating savings or clinical benefits. Third, favorable development
+contrasts after method selection do not supply independent confirmation
+across fresh training seeds or unseen networks. More resampling of the same
+blocks cannot create those independent units.
+
+The next empirical question is therefore bounded: with the unchanged
+original recipe fixed in advance, do fresh training and untouched evaluation
+support improvement over MDL-2 fixed support, and what increments remain
+against H8 and a matched self-only value model? A corresponding protocol
+must prospectively specify seeds, patient guardrails, uncertainty, complete
+compute charges, and interpretation when costs and losses trade off.
+The zero-residual initializer shares H8's planner scores; a matched initial
+control should be accounted for explicitly rather than mislabeled as an
+additional strong baseline. No such follow-up has been executed here.
+
+Separately, engineering validity requires a process-specific mapping from
+epochs and preparatory work to observed tasks, qualified staff availability,
+booking lead times, and an economic boundary. Until that evidence exists,
+a small justified sensitivity panel can assess synthetic robustness, not
+replace calibration. An intervention that changes physical transport or
+sharing must not be called a neural graph ablation.
+
+We conclude that the current evidence warrants continued evaluation of
+Value-TD as a synthetic decision-support candidate, not deployment,
+universal dominance, isolated graph/RL attribution, or a publication
+guarantee. Independent confirmation and an accountable assessment of the
+engineering assumptions are the next research requirements.
+
+\section*{Data and Code Availability}
+All outcomes in this manuscript were generated by the simulation model.
+The local research record contains locked configurations, raw trajectories,
+model and update provenance, paired summaries, and SHA256 archive manifests.
+The three support-hour readouts are identified in the accompanying
+claim-to-evidence map. Historical full-routing and earlier value-learning
+studies are preserved separately and are not pooled with the current results.
+Code and earlier curated records have been published at
+\texttt{github.com/ZhaoweiLi0722/GCN-RL-Paper-2026}; this revision and its latest
+development artifacts are local, with no new remote release or collaborator
+access verification claimed. Final availability wording requires author review.
+
+\section*{Writing Assistance and Declarations}
+This working revision used Codex and the scientific-writing and
+manuscript-writing-review instructions for drafting and consistency checks;
+the Scientific Agent Skills reference records procedural writing
+assistance~\cite{Kassis2026ScientificAgentSkills}, not evidence for the
+controller. Human authors must verify sources, scientific claims,
+authorship, funding and competing-interest declarations, and the final
+disclosure and submission decision. No author approval is inferred here.
+
+\bibliography{references}
+\end{document}

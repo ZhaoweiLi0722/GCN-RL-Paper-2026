@@ -1,5 +1,5 @@
-- A constrained graph MDP models perishable, identity-bound PRM operations.
-- AFR-GCN-DDPG learns bounded residual corrections to a look-ahead anchor.
-- Five-seed holdout evidence favors GCN-DDPG over MDL-2 and flat DDPG.
-- A matched TD3 ablation corroborates graph and anchor value.
-- Online actor-critic updates add no independently established endpoint gain.
+- Graph-aware TD values estimate downstream costs in a twenty-site network.
+- Native simulation preserves patient identity and all three transfer channels.
+- Finite-request and CEM sequence planners share the same TD learning rule.
+- The protocol separates operational, learned-tail, and architecture effects.
+- Independent evaluation is pending; no new performance gain is claimed.

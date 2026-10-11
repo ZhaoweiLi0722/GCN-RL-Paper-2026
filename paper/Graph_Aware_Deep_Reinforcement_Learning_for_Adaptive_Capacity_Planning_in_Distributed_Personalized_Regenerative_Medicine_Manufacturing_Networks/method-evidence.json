@@ -1,0 +1,424 @@
+{
+  "schema": "native-value-td-manuscript-evidence-v1",
+  "recorded_at_utc": "2026-10-11T17:07:40.936Z",
+  "entry_commit": "40c648c476127d7a350aca3879910d961c782435",
+  "target": "Engineering Applications of Artificial Intelligence",
+  "scope": "local methods-stage manuscript; no scientific changes or new evaluation",
+  "human_author_review": "pending",
+  "manuscript": {
+    "path": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/main.tex",
+    "sha256": "0775801c66aa07e27f7ae693ffc034306c7bbcb9377c395696b81f1c60c88613",
+    "bytes": 39765
+  },
+  "sources": [
+    {
+      "id": "E01",
+      "path": "docs/twenty_site_research_contract.md",
+      "bytes": 7078,
+      "sha256": "dfabe374c78ca4ed87437f1a6199f59d02a7357bc302700417b18c1e2802e60c",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E02",
+      "path": "src/env/patient_capacity_planning.py",
+      "bytes": 69137,
+      "sha256": "6d04e1351549b488e56d8b9868afcb23d22239d7005b8ba65ef9211653acd2d4",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E03",
+      "path": "src/models/native_cost_value.py",
+      "bytes": 4476,
+      "sha256": "5c8539b915be6b99b0f483c745db2374eba9c27bbe6cff1f59bf87c51b564835",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E04",
+      "path": "src/models/gcn.py",
+      "bytes": 48518,
+      "sha256": "63c92d66a14eca9b1e5a150ffc1f92a4cd5832d3aa94d062e5ada41d34806e69",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E05",
+      "path": "src/models/graph_features.py",
+      "bytes": 25087,
+      "sha256": "53f0c20fe2734ef8d313dbaf39189964c6a5582fddd0a579e860692d8affab9a",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E06",
+      "path": "src/rl/native_cost_td.py",
+      "bytes": 14645,
+      "sha256": "a95e27a15044213f0e49ccb8819ce57e97c8a9dbc54ed531babfbeda0909eafb",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E07",
+      "path": "src/rl/native_value_integration.py",
+      "bytes": 3931,
+      "sha256": "03e54dce73b12149fe76216ba7883580d23bea3d6177e97ea5815e24a025c183",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E08",
+      "path": "src/baselines/native_value_mpc.py",
+      "bytes": 10546,
+      "sha256": "4f2a40512d593e7cb4ff893170c30884836c305365a5bddba88f9fd7112f262d",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E09",
+      "path": "evaluation/information_matched_rollout_planner.py",
+      "bytes": 17116,
+      "sha256": "77c6fccbf8894822a27f7e4203ace33667fc44b29808ca8bc08a969e035c9a08",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E10",
+      "path": "src/rl/residual_options.py",
+      "bytes": 16275,
+      "sha256": "69602213544dbe7c691294d3c96a052168963fc1747b607ee0d0238ea21b322a",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E11",
+      "path": "src/baselines/native_sequence_sampling.py",
+      "bytes": 9161,
+      "sha256": "72f09d3fef29d0296c45d9070a25f8cbec1cb4e2e083d784a689ecb1325b28f7",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E12",
+      "path": "src/baselines/native_sequence_mpc.py",
+      "bytes": 8879,
+      "sha256": "e97185fc6cd4c22379ac942fb240d4ca7da113ea97fc95383b0ea7bd4f52ba93",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E13",
+      "path": "specs/2026-10-10-native-value-td/protocol.md",
+      "bytes": 10651,
+      "sha256": "81c239fcb31a63e3b1dc7f3b9dc76356434e6bbdaa4a71eb7ad1c077e42cba4c",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E14",
+      "path": "specs/2026-10-10-native-value-td/reexecution1/protocol.md",
+      "bytes": 2625,
+      "sha256": "85d609a528c89951460beafd7a3bdd20aed6ca584d1986ee457791e0b21edee9",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E15",
+      "path": "specs/2026-10-10-native-value-td/reexecution1/frozen.json",
+      "bytes": 5396143,
+      "sha256": "fac0b9734cd193c89e9f73e2a955a6e4cbfa4efcd018709fe96e8a655e160dad",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E16",
+      "path": "specs/2026-10-11-native-sequence-value-td/protocol.md",
+      "bytes": 8198,
+      "sha256": "d01d7acd24e4094e87c3946b33498c67d881960506fa6f3dd126923e1e983c0d",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E17",
+      "path": "specs/2026-10-11-native-sequence-value-td/frozen.json",
+      "bytes": 5444047,
+      "sha256": "82423b2a53250e3e7a4789a5120d39a9ac176be83503b5b1d169c45c90b5c084",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E18",
+      "path": "specs/2026-10-11-native-sequence-value-td/local-acceleration/protocol.md",
+      "bytes": 6101,
+      "sha256": "f7806b4e7f73b67aefcc080975867024e82a4613aefd55a8072e1946d5f2778b",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E19",
+      "path": "specs/2026-10-11-native-sequence-value-td/local-acceleration/frozen.json",
+      "bytes": 188828,
+      "sha256": "4934c2cc96b92fd80eac5f55349235c09d0b007e480113a5e28b57b299ca8a95",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E20",
+      "path": "docs/patient_indexed_specimen_routing_stage_e_evidence_synthesis.md",
+      "bytes": 6938,
+      "sha256": "dd1cee8b3c9b94e8152a90bbaf1f30414f9d5f898409e918a1e1b6001b31380c",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E21",
+      "path": "docs/publication_gap_roadmap.md",
+      "bytes": 27498,
+      "sha256": "96272fb069944aa219dc10a2378400bb9fc1e70fb8c0770835a37da4cf9d8644",
+      "verification": "assistant_source_inspected_human_review_pending"
+    },
+    {
+      "id": "E22",
+      "path": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/historical-research-record.tex",
+      "bytes": 216713,
+      "sha256": "debf1fd7de0abd4d3e37f4deacb08be572cbbe1d74486136f31019d35142e95a",
+      "verification": "assistant_source_inspected_human_review_pending"
+    }
+  ],
+  "preserved": [
+    {
+      "original": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/main.tex",
+      "archive": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/archive/2026-10-11-pre-native-value-td/main.tex",
+      "bytes": 42492,
+      "sha256": "224ff78c2ec4ed621d90f339aebef4a5314198b5182be9cfe5a20f02454d4847",
+      "identical_to_pre_edit_HEAD": true
+    },
+    {
+      "original": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/title_page.tex",
+      "archive": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/archive/2026-10-11-pre-native-value-td/title_page.tex",
+      "bytes": 541,
+      "sha256": "c259b022c8bdcf6e832bdab47706ab8cd21ed9103781c36acec7917f0d9ec530",
+      "identical_to_pre_edit_HEAD": true
+    },
+    {
+      "original": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/highlights.txt",
+      "archive": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/archive/2026-10-11-pre-native-value-td/highlights.txt",
+      "bytes": 362,
+      "sha256": "4651d0b473902e205b28ee08309ecc130043fe78d04a226f49bf84f2506d9b98",
+      "identical_to_pre_edit_HEAD": true
+    },
+    {
+      "original": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/data_availability.txt",
+      "archive": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/archive/2026-10-11-pre-native-value-td/data_availability.txt",
+      "bytes": 421,
+      "sha256": "cbed4dc72a8d04cbc24f48a291b636593e0c2382bd78ba91ac87829c7d92bde4",
+      "identical_to_pre_edit_HEAD": true
+    },
+    {
+      "original": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/main.pdf",
+      "archive": "paper/Graph_Aware_Deep_Reinforcement_Learning_for_Adaptive_Capacity_Planning_in_Distributed_Personalized_Regenerative_Medicine_Manufacturing_Networks/archive/2026-10-11-pre-native-value-td/legacy-main-unmatched.pdf",
+      "bytes": 1826069,
+      "sha256": "a915b4f741296bb0a8ddfaa5848de10b1ffacabba79c9d08538f966a88ec9ac7",
+      "identical_to_pre_edit_HEAD": true
+    }
+  ],
+  "checks": {
+    "historical_research_record_unchanged": true,
+    "references_bib_unchanged": true,
+    "title_consistent": true,
+    "unique_labels": 24,
+    "all_internal_references_resolve": true,
+    "all_citations_resolve": true,
+    "reference_count": 8,
+    "abstract_whitespace_words": 202,
+    "highlight_characters": [
+      73,
+      77,
+      73,
+      75,
+      70
+    ],
+    "freeze_checks": [
+      {
+        "path": "specs/2026-10-10-native-value-td/reexecution1/frozen.json",
+        "paper_locked": false,
+        "source_files": 828,
+        "inputs": 442
+      },
+      {
+        "path": "specs/2026-10-11-native-sequence-value-td/frozen.json",
+        "paper_locked": false,
+        "source_files": 840,
+        "inputs": 441
+      },
+      {
+        "path": "specs/2026-10-11-native-sequence-value-td/local-acceleration/frozen.json",
+        "paper_locked": false,
+        "source_files": 847,
+        "inputs": 4
+      }
+    ]
+  },
+  "claim_groups": [
+    {
+      "id": "C01",
+      "locator": "sec:problem",
+      "supports": [
+        "E01",
+        "E02",
+        "E13",
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "claim": "Original twenty-site physical task, all transfer channels, eighty normalized requests, unchanged cost and finite 52-epoch endpoint."
+    },
+    {
+      "id": "C02",
+      "locator": "sec:method, eq:score",
+      "supports": [
+        "E08",
+        "E09",
+        "E12",
+        "E13",
+        "E16"
+      ],
+      "claim": "Public-information receding-horizon score, two restored prediction futures, eight-step horizon, native cost plus learned nonterminal endpoint value."
+    },
+    {
+      "id": "C03",
+      "locator": "sec:representation",
+      "supports": [
+        "E03",
+        "E04",
+        "E05",
+        "E07",
+        "E13"
+      ],
+      "claim": "Shared21x36features, GCN64/64 flatten head, MLP10/24,7873/7859parameters,config normalization,scalar cost scale1e9."
+    },
+    {
+      "id": "C04",
+      "locator": "sec:td, eq:target, eq:loss, alg:method",
+      "supports": [
+        "E06",
+        "E07",
+        "E13",
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "claim": "Own complete trajectories, TD8 gamma1, per-episode fixed targets,32Adam updates,batch64,lr1e-4,current-episode samples,noactor/noimitation/testupdates0."
+    },
+    {
+      "id": "C05",
+      "locator": "sec:variant-a, app:candidates",
+      "supports": [
+        "E08",
+        "E09",
+        "E10",
+        "E13"
+      ],
+      "claim": "14candidate list definition, signed state-dependent imbalance corrections,MDL2continuation,restriction andtie rule."
+    },
+    {
+      "id": "C06",
+      "locator": "sec:variant-b",
+      "supports": [
+        "E11",
+        "E12",
+        "E16",
+        "E17"
+      ],
+      "claim": "CEM8x80 residuals,bounds2,2rounds32positions8elites,distribution and warm-start rules,no learned dynamics,sequence affects search."
+    },
+    {
+      "id": "C07",
+      "locator": "sec:rationale, sec:ddpg",
+      "supports": [
+        "E08",
+        "E12",
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "claim": "Design rationale and approximation limits,not new convergence theorem or matched TDvsDDPG superiority."
+    },
+    {
+      "id": "C08",
+      "locator": "sec:experiments, eq:effects, tab:contrasts",
+      "supports": [
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "claim": "Per-variant960training,10finals,A960evaluation/B1680evaluation,240fresh worlds each,paired contrasts,descriptive screen,all harms retained."
+    },
+    {
+      "id": "C09",
+      "locator": "app:history",
+      "supports": [
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "claim": "Historical DDPG positive comparisons,unestablished incremental learning,adverse transport sensitivity,not pooled with native TD."
+    },
+    {
+      "id": "C10",
+      "locator": "sec:experiments, current status",
+      "supports": [
+        "E14",
+        "E16",
+        "E18",
+        "E19"
+      ],
+      "claim": "Current independent evaluation remains pending. A file boundary17:05:36Z remains training withzeroeval;Btrain-b0graph17:06:31Z remains training. These are not full-live process-verification or efficacy claims."
+    }
+  ],
+  "references": [
+    {
+      "key": "Wang2023",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37747394/",
+      "doi": "10.1016/j.jcyt.2023.08.007",
+      "verification": "primary publication metadata and abstract search result; full-page extraction incomplete; human review pending"
+    },
+    {
+      "key": "Tseng2025",
+      "url": "https://www.tandfonline.com/doi/full/10.1080/00207543.2023.2262043",
+      "doi": "10.1080/00207543.2023.2262043",
+      "verification": "publisher search record checked; open403; human full-source review pending"
+    },
+    {
+      "key": "Sutton1988",
+      "url": "https://link.springer.com/article/10.1007/BF00115009",
+      "doi": "10.1007/BF00115009",
+      "verification": "publisher page opened; human review pending"
+    },
+    {
+      "key": "Kipf2017",
+      "url": "https://arxiv.org/abs/1609.02907",
+      "verification": "primary arxiv record opened; human review pending"
+    },
+    {
+      "key": "Hansen2022",
+      "url": "https://proceedings.mlr.press/v162/hansen22a.html",
+      "verification": "official PMLR metadata and abstract opened; human review pending"
+    },
+    {
+      "key": "DeBoer2005",
+      "url": "https://research.utwente.nl/en/publications/a-tutorial-on-the-cross-entropy-method/",
+      "doi": "10.1007/s10479-005-5724-z",
+      "verification": "author institution publication record opened; human review pending"
+    },
+    {
+      "key": "Lillicrap2016",
+      "url": "https://arxiv.org/html/1509.02971v6",
+      "verification": "primary abstract and full HTML opened; human review pending"
+    },
+    {
+      "key": "Kassis2026",
+      "url": "https://arxiv.org/abs/2609.00065",
+      "doi": "10.48550/arXiv.2609.00065",
+      "verification": "primary metadata checked; cited for material writing workflow assistance only"
+    }
+  ],
+  "validation": {
+    "native_latex_compile": "success for current source; desktop compile_latex_document",
+    "static_document_checks": "passed",
+    "new_experiments_or_models_run": false,
+    "scientific_tests_repeated": false,
+    "historical_evidence_recomputed": false,
+    "pdf_page_visual_review": "not performed; compiler API does not export PDF, terminal TeX engine unavailable",
+    "separate_current_main_pdf_exported": false,
+    "journal_guidance": {
+      "url": "https://www.sciencedirect.com/journal/engineering-applications-of-artificial-intelligence/publish/guide-for-authors",
+      "access": "403; latest full guide not verified",
+      "format": "existing Elsevier elsarticle review format retained; no submission-compliance certification"
+    },
+    "human_approval": "pending"
+  }
+}

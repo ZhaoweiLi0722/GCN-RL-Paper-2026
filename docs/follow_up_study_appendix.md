@@ -1,8 +1,11 @@
 # Follow-Up Study Line: Numbers and Evidence Appendix
 
 Reference sheet for the three decision channels screened after the online-DDPG
-attribution post-mortem. Status date 2026-08-29. All three channels are
-closed; **no policy was trained at any point** in this line of work.
+attribution post-mortem. Status date 2026-09-01. Routing and overtime are
+closed. The stochastic lead-time study was not formally authorized and did
+not execute its drafted optimality-gap gate; its exploratory diagnostic did
+not justify advancement. **No policy was trained at any point** in this line
+of work.
 
 Companion documents: `docs/online_rl_attribution_postmortem_and_followup_brief.md`
 (why these channels were chosen), and the per-study `results.md` files cited
@@ -12,14 +15,17 @@ below.
 
 ## 1. Summary of outcomes
 
-| Channel | Question that closed it | Verdict |
+| Channel | Decision question | Verdict |
 | --- | --- | --- |
 | Patient-indexed specimen routing | Do counterfactual best-action labels replicate? | **No** — 54.5% agreement vs a 70% gate (Stage G1, pre-existing) |
 | Overtime capacity | Is the best setting predictable from decision-time state? | **No** — 0.267 top-1 vs a 0.50 gate, worse than a state-blind constant |
-| Stochastic procurement lead times | Is the tuned heuristic materially misspecified? | **No** — 0.176% variability gap vs a 1% floor |
+| Stochastic procurement lead times | Did the exploratory diagnostic justify a formal study? | **No advancement** — reported +0.176%, post-hoc reproduction +0.1169%; formal optimality-gap gate not executed |
 
-Three distinct failure mechanisms: the target is noise; the target is stable
-but invisible to the policy; the heuristic absorbs the uncertainty.
+The evidence identifies two closed-channel mechanisms and one exploratory
+observation: the routing target does not replicate; the overtime target is
+stable but does not generalize from decision-time state; and a lead-aware
+heuristic appears insensitive to lead-time variability in the reported
+diagnostic.
 
 ---
 
@@ -150,7 +156,14 @@ contradicting its synthetic validation (0.837/0.940/0.987 against
 
 ---
 
-## 5. Stochastic lead-time regime
+## 5. Stochastic lead-time exploratory diagnostic
+
+The step-0 protocol remained unsigned and defined an optimality-gap gate
+against hindsight or a strong rollout benchmark. The executed analysis instead
+measured variability cost against a fixed-mean lead. The first table preserves
+Howard's reported values. PR #9 did not contain the original executable config
+or rows, so the exact table cannot be reconstructed from the original
+artifacts and is not a formal gate result.
 
 Cost of lead-time variability for the tuned lead-time-aware planner, measured
 exactly paired: the override draws the lead and then discards it, so both runs
@@ -166,8 +179,31 @@ development seeds.
 | routing_nominal_history | +0.256% | +/-0.210 | 17/24 |
 | **Pooled** | **+0.176%** | | |
 
-Gate floor was 1%; the literature's comparable figure is 7.1%. Supporting
-measurements, 12 seeds:
+A publication audit then reran that narrower variability estimand from an
+explicit frozen config. This post-hoc reproduction was designed after the
+original result was known, so it is neither an independent confirmation nor a
+replacement for the unexecuted optimality-gap gate.
+
+| Scenario | Reproduced gap | Normal 95% half-width | Seeds worse | Exact RNG end state |
+| --- | ---: | ---: | ---: | ---: |
+| routing_abrupt_regime_shift | +0.0824% | +/-0.0789% | 17/24 | 24/24 |
+| routing_compound_regional_stress | +0.1559% | +/-0.1153% | 21/24 | 24/24 |
+| routing_nominal_history | +0.1124% | +/-0.0542% | 21/24 | 24/24 |
+| **Pooled** | **+0.1169%** | **+/-0.0479%** | **59/72** | **72/72** |
+
+The pooled interval clusters the three scenario outcomes by their shared
+evaluation seed (24 independent seed clusters); scenario intervals use their
+24 seed-level outcomes directly.
+
+The fresh development tuning selected safety multiplier `1.25`, rather than
+the reported `1.0`. Thus the exact original numbers and tuning choice are not
+reproduced. Direction and small magnitude are reproduced: stochastic leads
+cost the lead-aware planner about one tenth of one percent relative to a lead
+fixed at the same mean.
+
+The draft protocol's 1% floor and the literature's 7.1% refer to heuristic
+optimality gaps, not this variability-cost estimand. They therefore cannot be
+used to classify this table. Supporting reported measurements, 12 seeds:
 
 | Configuration | Cost | Relative |
 | --- | ---: | ---: |
@@ -176,7 +212,8 @@ measurements, 12 seeds:
 | Stochastic lead, lead-aware MDL-2-LT | 2135.1M | -0.91% vs lead-blind (12/12 seeds) |
 
 A correctly specified planner recovers essentially all of the loss, landing
-within 0.11% of the no-lead cost.
+within 0.11% of the no-lead cost in the reported diagnostic. This suggests,
+but does not prove, that procurement-lead uncertainty leaves little headroom.
 
 ---
 
@@ -190,9 +227,16 @@ within 0.11% of the no-lead cost.
 | `continuous_overtime_critic_ranking_e4` | 12,960 | `c308fafd9825` | `bb854c9308e7` |
 | `continuous_overtime_confirmatory` | 4,320 | `1c1e2d25daae` | `f42c2f07892f` |
 | `routing_label_budget_study` | 8,640 | `cfac2cb97d36` | `d011d7850e9f` |
+| `stochastic_procurement_variability_reproduction` | 72 | `e83eca64c0a5` | `9ef1bf7cb267` |
 
-Prefixes shown; full digests are in each `summary.json`. Curated copies live
-under `experiments/evidence/<result root>/`. Every row carries a live
+The final row is a post-hoc publication reproduction of the variability-cost
+estimand. It supports only the direction and scale statement above; it does
+not convert the unsigned optimality-gap draft into a preregistered result.
+
+Prefixes shown; full digests are in each `summary.json`. Curated copies for the
+earlier large studies live under `experiments/evidence/<result root>/`; the
+compact 72-row publication reproduction is committed under its `results/`
+root. Every row carries a live
 provenance assertion that the scenario it claims is the scenario it ran in —
 the defect that superseded the original F0/G0/G1 mechanism audits.
 
@@ -204,7 +248,7 @@ the defect that superseded the original F0/G0/G1 mechanism audits.
 | --- | --- | --- |
 | `specs/2026-08-29-continuous-overtime-control/` | requirements, plan, validation, held-out reservation, frozen protocol, results | complete, channel closed |
 | `specs/2026-08-29-routing-label-budget-study/` | README, protocol, validation, results | complete, precondition violated |
-| `specs/2026-08-29-stochastic-lead-time-regime/` | README, protocol, results | complete, gate failed |
+| `specs/2026-08-29-stochastic-lead-time-regime/` | README, unsigned draft protocol, exploratory report, post-hoc reproduction | protocol deviation recorded; no formal gate decision |
 | `specs/2026-08-29-g1-state-replication/` | README, protocol | **drafted, not authorized; requires the RTX 4090 host** |
 
 ---
@@ -232,13 +276,15 @@ Recorded because the pattern is informative, not for its own sake.
 | --- | --- | --- |
 | Overtime re-calibration would fail | Passed at +0.6446% | wrong |
 | Routing labels would show instability at higher budget | 0.952 agreement at 32 worlds | wrong |
-| Lead-time gap of 2-4% | +0.176% | wrong, by an order of magnitude |
+| Lead-time variability cost expected at 2-4% in an unsigned draft | reported +0.176% | exploratory estimate much smaller |
 | Overtime learnability would fail | Failed | right |
 | Held-out confirmation would pass state-dependence | Failed at +0.45% | wrong |
 
-Five registered predictions, one correct. All four misses were optimistic
-about available headroom. Any future proposal from the same source should be
-weighted accordingly.
+Four overtime/routing predictions were recorded within the authorized study
+line; one was correct and the misses were optimistic about available headroom.
+The lead-time expectation was written before implementation but remained in
+an unsigned draft, so it is reported separately rather than counted as a
+registered prediction.
 
 ---
 
@@ -250,4 +296,5 @@ weighted accordingly.
 | First headroom gate ("is there room to improve over the anchor?") | **Insufficient.** A constant policy answers yes; replaced with a state-dependence criterion. |
 | Sequential-halving labeller | Validated on synthetics, **negative on 5-arm ladders**; scope narrowed. |
 | Gradient-boosting nonlinearity check | First implementation was additive and could not represent interactions — the hypothesis under test. Caught by its own sanity check and rebuilt. |
+| Lead-time "gate failed" | **Overstated.** The unsigned protocol specified an optimality-gap benchmark; the run measured fixed-mean variability cost. Reclassified as an exploratory diagnostic with no formal gate decision. |
 | Lead-time environment wiring | Initially wired only the base environment; the patient environment overrides `step()`, so it was inert where it mattered. Caught by a two-configuration cost comparison returning identical values. |

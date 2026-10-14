@@ -1,24 +1,29 @@
 # Results
 
-## Optimality-gap gate — 2026-08-29
+## Exploratory variability diagnostic — 2026-08-29
 
 ### Decision
 
-**GATE FAILED. The regime change did not work. The study stops here, as the
-protocol requires.**
+**No formal gate decision is supported.** The unsigned draft protocol required
+an optimality gap against a hindsight benchmark or strong rollout policy. The
+executed analysis instead measured the cost of stochastic lead-time
+variability relative to a fixed-mean lead. It is retained as an exploratory
+diagnostic and did not authorize any learned-policy work.
 
-Pooled cost of lead-time variability for the tuned lead-time-aware planner:
-**+0.176%**, against a 1% floor and the literature's 7.1%.
+The reported pooled cost of lead-time variability for the tuned
+lead-time-aware planner was **+0.176%**. The draft protocol's 1% floor and the
+literature's 7.1% concern heuristic optimality gaps, so they are context rather
+than valid thresholds for this different estimand.
 
-No gating protocol was run, no learned policy was built, and no held-out data
-was spent.
+No downstream gating protocol was run, no learned policy was built, and no
+held-out data was spent.
 
 ### What was measured
 
-The gate asks whether making procurement lead times stochastic leaves the
-tuned heuristic materially misspecified. Operationalised as the **cost of
-lead-time variability**: the same tuned planner under stochastic lead times
-versus under a lead fixed at the identical mean.
+The diagnostic asks how much stochasticity costs the same tuned planner. It
+compares stochastic lead times against a lead fixed at the identical mean.
+This is useful, but narrower than asking how far the planner lies from a
+hindsight or rollout benchmark.
 
 The comparison is exactly paired. `procurement_lead_override` still *draws*
 the lead before discarding it, so both runs consume an identical random
@@ -36,8 +41,39 @@ separate development seeds.
 | routing_nominal_history | +0.256% | ±0.210 | 17/24 |
 | **Pooled** | **+0.176%** | | |
 
-The effect is real — consistently positive, and worse on most seeds in every
-scenario — and it is roughly **40× too small** to matter.
+The point estimates are consistently positive and stochastic leads are worse
+on most seeds in every scenario. PR #9 did not include the original rows or
+the executable configuration that produced this table, so the exact values
+and the reported safety multiplier cannot be reconstructed from the original
+artifacts.
+
+### Publication reproduction — 2026-09-01
+
+A post-hoc executable reproduction was added after the original `+0.176%`
+result was known. It uses fresh development seeds to select the safety
+multiplier, fresh evaluation seeds, 24 exactly paired replications per
+scenario, and the same five-point lead distribution. It is a reproducibility
+audit of the fixed-mean variability estimand, not an independent confirmation
+and not the optimality-gap gate described by the unsigned draft.
+
+| Scenario | Reproduced gap | Normal 95% half-width | Seeds worse | Exact RNG end state |
+| --- | ---: | ---: | ---: | ---: |
+| routing_abrupt_regime_shift | +0.0824% | +/-0.0789% | 17/24 | 24/24 |
+| routing_compound_regional_stress | +0.1559% | +/-0.1153% | 21/24 | 24/24 |
+| routing_nominal_history | +0.1124% | +/-0.0542% | 21/24 | 24/24 |
+| **Pooled** | **+0.1169%** | **+/-0.0479%** | **59/72** | **72/72** |
+
+The pooled interval clusters the three scenario outcomes by their shared
+evaluation seed (24 independent seed clusters); scenario intervals use their
+24 seed-level outcomes directly.
+
+The reproduction selected safety multiplier `1.25`, rather than the reported
+`1.0`. It therefore does not reproduce the original tuning choice or exact
+point estimates. It does reproduce the scientifically relevant narrow result:
+with a lead-aware planner, stochastic lead times impose a small positive cost
+relative to fixing the same lead at its mean. The executable config, all 72
+paired rows, summary, and artifact inventory are stored under
+`results/stochastic_procurement_variability_reproduction/`.
 
 ### Why the literature's 7.1% did not transfer
 
@@ -74,23 +110,24 @@ holds run high, and the measurements keep returning near zero.
 
 ### What this establishes
 
-This is a substantive negative, not a failed experiment.
+This is a useful exploratory negative, not a formal gate result.
 
-The deep-research finding was that an achievable learned-policy margin is
-bounded by the incumbent heuristic's own optimality gap, and that random lead
-times are a documented regime where that gap reaches 7.1%. We implemented that
-regime faithfully — order crossing included — and measured **0.176%**.
+The motivating finding was that an achievable learned-policy margin is bounded
+by the incumbent heuristic's own optimality gap, and that random lead times are
+a documented regime where that gap reaches 7.1%. The implementation includes
+order crossing, but the executed diagnostic measured a different estimand:
+**0.176%** variability cost relative to a fixed-mean lead.
 
-The conclusion is therefore stronger than "we could not find headroom here":
-**a regime the literature identifies as favourable to learned control does not
-produce exploitable headroom in this problem class.** The reason is
-structural — multi-resource coupling means no single input's uncertainty
-dominates — and it applies to any lever that perturbs one resource at a time.
+The supported conclusion is narrower: **this diagnostic found little cost from
+lead-time variability after giving the heuristic lead-time information.** It
+suggests that multi-resource coupling absorbs much of the perturbation. It
+does not establish the tuned heuristic's optimality gap and therefore cannot
+rule out exploitable headroom without the benchmark required by the draft
+protocol.
 
-Combined with the closed routing and overtime channels, the picture is
-consistent: this simulator's operational decisions are heuristically
-saturated, and the sub-1% ceiling is a property of the problem rather than of
-the method.
+Combined with the routing and overtime evidence, the observation is consistent
+with a heuristically saturated simulator, but it is corroborating rather than
+decisive evidence for that claim.
 
 ### What was built and kept
 

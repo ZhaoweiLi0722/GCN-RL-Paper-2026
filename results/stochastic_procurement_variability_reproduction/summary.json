@@ -1,0 +1,102 @@
+{
+  "by_scenario": {
+    "routing_abrupt_regime_shift": {
+      "count": 24,
+      "mean": 0.0008241691354494461,
+      "normal_95_half_width": 0.0007889854724164755,
+      "rng_end_state_matches": 24,
+      "seeds_stochastic_worse": 17,
+      "sem": 0.0004025436083757528
+    },
+    "routing_compound_regional_stress": {
+      "count": 24,
+      "mean": 0.0015593536642758618,
+      "normal_95_half_width": 0.0011533958380077652,
+      "rng_end_state_matches": 24,
+      "seeds_stochastic_worse": 21,
+      "sem": 0.0005884672642896762
+    },
+    "routing_nominal_history": {
+      "count": 24,
+      "mean": 0.0011241519587542913,
+      "normal_95_half_width": 0.0005420995290015176,
+      "rng_end_state_matches": 24,
+      "seeds_stochastic_worse": 21,
+      "sem": 0.00027658139234771305
+    }
+  },
+  "experimental_role": "Post-hoc reproducibility audit of the reported exploratory fixed-mean variability diagnostic. Frozen after the original +0.176% report was known. Not a preregistered optimality-gap gate, not a formal confirmation, and no policy training.",
+  "formal_gate_decision": null,
+  "name": "stochastic_procurement_variability_publication_reproduction",
+  "policy_training_performed": false,
+  "pooled": {
+    "count": 72,
+    "independent_seed_clusters": 24,
+    "interval_unit": "evaluation_seed_mean_across_scenarios",
+    "mean": 0.0011692249194931999,
+    "normal_95_half_width": 0.0004785481833941939,
+    "rng_end_state_matches": 72,
+    "seeds_stochastic_worse": 59,
+    "sem": 0.0002441572364256091
+  },
+  "provenance": {
+    "config_path": "experiments/configs/stochastic_procurement_variability_reproduction.json",
+    "config_sha256": "e83eca64c0a56e4e7421e9870128a50d8d9cc44e7e2e5d36e2947415e73b40f5",
+    "plan_path": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+    "plan_sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709",
+    "rows_sha256": "9ef1bf7cb26709d86382261490c341c6986daab1390656136521371916f8030b",
+    "source_files": [
+      {
+        "path": "evaluation/reproduce_stochastic_procurement_variability.py",
+        "sha256": "b4e86e004df75c35b78aa3a20b32de85b0f83ebf8b3a29aff9f38080bb33c6ee"
+      },
+      {
+        "path": "src/env/capacity_planning.py",
+        "sha256": "3f365df61cfff040d82ca496b37213968d3342b6161e4985c21d6eea7a190456"
+      },
+      {
+        "path": "src/env/patient_capacity_planning.py",
+        "sha256": "99cb967d9ff436a31a6887e7f448f2388975f2dfc9ba16807d83374148182a46"
+      },
+      {
+        "path": "src/baselines/heuristics.py",
+        "sha256": "22d64550357283092efd92c5db30868a2cd63c2157b48e2c735e7bc822beaf88"
+      }
+    ]
+  },
+  "reported_reference": {
+    "pooled_gap_fraction": 0.00176,
+    "routing_abrupt_regime_shift": 0.00113,
+    "routing_compound_regional_stress": 0.0016,
+    "routing_nominal_history": 0.00256
+  },
+  "scientific_status": "post_hoc_reproduction_of_exploratory_variability_diagnostic; not_independent_confirmation; not_optimality_gap_gate",
+  "selected_safety_multiplier": 1.25,
+  "tuning": [
+    {
+      "episodes": 30,
+      "mean_stochastic_cost": 3300713535.601992,
+      "safety_multiplier": 0.5
+    },
+    {
+      "episodes": 30,
+      "mean_stochastic_cost": 2895137717.822245,
+      "safety_multiplier": 0.75
+    },
+    {
+      "episodes": 30,
+      "mean_stochastic_cost": 2764736571.97478,
+      "safety_multiplier": 1.0
+    },
+    {
+      "episodes": 30,
+      "mean_stochastic_cost": 2747960338.2491846,
+      "safety_multiplier": 1.25
+    },
+    {
+      "episodes": 30,
+      "mean_stochastic_cost": 2760357475.218977,
+      "safety_multiplier": 1.5
+    }
+  ]
+}

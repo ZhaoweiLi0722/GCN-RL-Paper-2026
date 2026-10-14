@@ -4,6 +4,13 @@
 > closed campaign. It proposes changing the environment so that the incumbent
 > heuristic is *structurally* misspecified rather than merely suboptimal.
 
+> **Execution record.** An implementation and exploratory variability
+> diagnostic were subsequently run while both sign-offs below were still
+> pending. That diagnostic is retained for transparency, but it did not
+> execute the optimality-gap gate defined in the draft protocol and is not a
+> preregistered gate result. See [results.md](results.md) for the deviation and
+> the narrower conclusion supported by the evidence.
+
 ## Why this exists
 
 Every screen so far says the same thing: this simulator's decisions are

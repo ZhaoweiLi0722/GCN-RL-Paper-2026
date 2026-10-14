@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "path": "experiments/configs/stochastic_procurement_variability_reproduction.json",
+      "sha256": "e83eca64c0a56e4e7421e9870128a50d8d9cc44e7e2e5d36e2947415e73b40f5"
+    },
+    {
+      "path": "experiments/configs/patient_indexed_specimen_routing_benchmark.json",
+      "sha256": "c98017381053d6c9551332484d0734a1d4c3a0e23343496b0bcc0e55f6cfa709"
+    },
+    {
+      "path": "evaluation/reproduce_stochastic_procurement_variability.py",
+      "sha256": "b4e86e004df75c35b78aa3a20b32de85b0f83ebf8b3a29aff9f38080bb33c6ee"
+    },
+    {
+      "path": "src/env/capacity_planning.py",
+      "sha256": "3f365df61cfff040d82ca496b37213968d3342b6161e4985c21d6eea7a190456"
+    },
+    {
+      "path": "src/env/patient_capacity_planning.py",
+      "sha256": "99cb967d9ff436a31a6887e7f448f2388975f2dfc9ba16807d83374148182a46"
+    },
+    {
+      "path": "src/baselines/heuristics.py",
+      "sha256": "22d64550357283092efd92c5db30868a2cd63c2157b48e2c735e7bc822beaf88"
+    },
+    {
+      "path": "results/stochastic_procurement_variability_reproduction/variability_rows.csv",
+      "sha256": "9ef1bf7cb26709d86382261490c341c6986daab1390656136521371916f8030b"
+    },
+    {
+      "path": "results/stochastic_procurement_variability_reproduction/summary.json",
+      "sha256": "d4feccba13d29d16bed318b1c9e9bf63bf84fa51e736fe8bad3dd7c26a155b1e"
+    }
+  ]
+}

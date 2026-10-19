@@ -1,0 +1,2321 @@
+{
+  "display_contrasts": [
+    {
+      "candidate": "local_flat",
+      "extra_patient_losses": -28.27777777777778,
+      "extra_patient_losses_ci95": [
+        -43.79201388888889,
+        -14.44027777777778
+      ],
+      "reference": "local_self",
+      "saving_fraction": 0.007606685165835372,
+      "saving_fraction_ci95": [
+        0.0014352369734296194,
+        0.012831060185483838
+      ],
+      "source_pair": [
+        "local_self",
+        "local_flat"
+      ],
+      "transformation": "Monotone endpoint conversion of saved intervals, no bootstrap"
+    },
+    {
+      "block_conditions": [
+        {
+          "block": 0,
+          "condition": 0,
+          "cost_harmed_worlds": 4,
+          "cost_saving": -73618490.35885747,
+          "extra_completions": -42.833333333333336,
+          "extra_patient_losses": 12.5,
+          "fewer_completions_worlds": 4,
+          "patient_harmed_worlds": 3,
+          "saving_fraction": -0.02876208547071714
+        },
+        {
+          "block": 0,
+          "condition": 1,
+          "cost_harmed_worlds": 3,
+          "cost_saving": -35961353.94856143,
+          "extra_completions": 4.666666666666667,
+          "extra_patient_losses": -7.833333333333333,
+          "fewer_completions_worlds": 3,
+          "patient_harmed_worlds": 3,
+          "saving_fraction": -0.01725856447681471
+        },
+        {
+          "block": 0,
+          "condition": 2,
+          "cost_harmed_worlds": 4,
+          "cost_saving": -23609540.43764035,
+          "extra_completions": 21.833333333333332,
+          "extra_patient_losses": -43.166666666666664,
+          "fewer_completions_worlds": 2,
+          "patient_harmed_worlds": 2,
+          "saving_fraction": -0.010398702638540371
+        },
+        {
+          "block": 0,
+          "condition": 3,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -35368347.45398227,
+          "extra_completions": -6.333333333333333,
+          "extra_patient_losses": -7.666666666666667,
+          "fewer_completions_worlds": 3,
+          "patient_harmed_worlds": 3,
+          "saving_fraction": -0.01030881231334787
+        },
+        {
+          "block": 1,
+          "condition": 0,
+          "cost_harmed_worlds": 6,
+          "cost_saving": -91783251.77204068,
+          "extra_completions": -55.5,
+          "extra_patient_losses": 20.5,
+          "fewer_completions_worlds": 5,
+          "patient_harmed_worlds": 5,
+          "saving_fraction": -0.03866350765062073
+        },
+        {
+          "block": 1,
+          "condition": 1,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -60011371.893104196,
+          "extra_completions": -14.666666666666666,
+          "extra_patient_losses": 6.666666666666667,
+          "fewer_completions_worlds": 4,
+          "patient_harmed_worlds": 3,
+          "saving_fraction": -0.028562489986747853
+        },
+        {
+          "block": 1,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -53289485.14008347,
+          "extra_completions": -13,
+          "extra_patient_losses": 0.16666666666666666,
+          "fewer_completions_worlds": 3,
+          "patient_harmed_worlds": 3,
+          "saving_fraction": -0.024231949695574278
+        },
+        {
+          "block": 1,
+          "condition": 3,
+          "cost_harmed_worlds": 3,
+          "cost_saving": -44845254.65545241,
+          "extra_completions": -32,
+          "extra_patient_losses": 27,
+          "fewer_completions_worlds": 3,
+          "patient_harmed_worlds": 3,
+          "saving_fraction": -0.012457111593101495
+        },
+        {
+          "block": 2,
+          "condition": 0,
+          "cost_harmed_worlds": 3,
+          "cost_saving": -7745005.131513596,
+          "extra_completions": 14,
+          "extra_patient_losses": -23.833333333333332,
+          "fewer_completions_worlds": 3,
+          "patient_harmed_worlds": 1,
+          "saving_fraction": -0.002984519093764124
+        },
+        {
+          "block": 2,
+          "condition": 1,
+          "cost_harmed_worlds": 4,
+          "cost_saving": -50105770.375462174,
+          "extra_completions": -35.333333333333336,
+          "extra_patient_losses": 25.5,
+          "fewer_completions_worlds": 4,
+          "patient_harmed_worlds": 3,
+          "saving_fraction": -0.023833267089935307
+        },
+        {
+          "block": 2,
+          "condition": 2,
+          "cost_harmed_worlds": 5,
+          "cost_saving": -46930622.24724118,
+          "extra_completions": -6.833333333333333,
+          "extra_patient_losses": -9.5,
+          "fewer_completions_worlds": 3,
+          "patient_harmed_worlds": 2,
+          "saving_fraction": -0.02052561277394153
+        },
+        {
+          "block": 2,
+          "condition": 3,
+          "cost_harmed_worlds": 3,
+          "cost_saving": -4169164.9793085256,
+          "extra_completions": 33.166666666666664,
+          "extra_patient_losses": -49.666666666666664,
+          "fewer_completions_worlds": 2,
+          "patient_harmed_worlds": 2,
+          "saving_fraction": -0.001332174729564182
+        }
+      ],
+      "blocks": [
+        {
+          "block": 0,
+          "cost_harmed_worlds": 16,
+          "cost_saving": -42139433.04976038,
+          "extra_completions": -5.666666666666667,
+          "extra_patient_losses": -11.541666666666666,
+          "fewer_completions_worlds": 12,
+          "patient_harmed_worlds": 11,
+          "saving_fraction": -0.01629432775069505
+        },
+        {
+          "block": 1,
+          "cost_harmed_worlds": 19,
+          "cost_saving": -62482340.86517019,
+          "extra_completions": -28.791666666666668,
+          "extra_patient_losses": 13.583333333333334,
+          "fewer_completions_worlds": 15,
+          "patient_harmed_worlds": 14,
+          "saving_fraction": -0.02432623297551197
+        },
+        {
+          "block": 2,
+          "cost_harmed_worlds": 15,
+          "cost_saving": -27237640.683381367,
+          "extra_completions": 1.25,
+          "extra_patient_losses": -14.375,
+          "fewer_completions_worlds": 12,
+          "patient_harmed_worlds": 8,
+          "saving_fraction": -0.010772848339751945
+        }
+      ],
+      "candidate": "structured_h8",
+      "conditions": [
+        {
+          "condition": 0,
+          "cost_ci95": [
+            -105397066.4098208,
+            2878839.664943112
+          ],
+          "cost_harmed_worlds": 13,
+          "cost_saving": -57715582.42080392,
+          "extra_completions": -28.11111111111111,
+          "extra_patient_losses": 3.0555555555555554,
+          "extra_patient_losses_ci95": [
+            -31.566666666666666,
+            29.393055555555534
+          ],
+          "fewer_completions_worlds": 12,
+          "patient_harmed_worlds": 9,
+          "saving_fraction": -0.02299875920206226,
+          "saving_fraction_ci95": [
+            -0.0440299084609859,
+            0.0011028259740141022
+          ]
+        },
+        {
+          "condition": 1,
+          "cost_ci95": [
+            -81681446.1560366,
+            -16465559.611484712
+          ],
+          "cost_harmed_worlds": 12,
+          "cost_saving": -48692832.07237593,
+          "extra_completions": -15.11111111111111,
+          "extra_patient_losses": 8.11111111111111,
+          "extra_patient_losses_ci95": [
+            -27.22361111111111,
+            42.5
+          ],
+          "fewer_completions_worlds": 11,
+          "patient_harmed_worlds": 9,
+          "saving_fraction": -0.02323470202499078,
+          "saving_fraction_ci95": [
+            -0.039059090101309694,
+            -0.007808656101168336
+          ]
+        },
+        {
+          "condition": 2,
+          "cost_ci95": [
+            -69911227.133121,
+            -14105330.8734278
+          ],
+          "cost_harmed_worlds": 14,
+          "cost_saving": -41276549.27498833,
+          "extra_completions": 0.6666666666666666,
+          "extra_patient_losses": -17.5,
+          "extra_patient_losses_ci95": [
+            -54.28194444444444,
+            12.615277777777754
+          ],
+          "fewer_completions_worlds": 8,
+          "patient_harmed_worlds": 7,
+          "saving_fraction": -0.018328800663572092,
+          "saving_fraction_ci95": [
+            -0.03117387834633112,
+            -0.006200752950331991
+          ]
+        },
+        {
+          "condition": 3,
+          "cost_ci95": [
+            -68985709.41481978,
+            20668639.58970823
+          ],
+          "cost_harmed_worlds": 11,
+          "cost_saving": -28127589.02958107,
+          "extra_completions": -1.7222222222222223,
+          "extra_patient_losses": -10.11111111111111,
+          "extra_patient_losses_ci95": [
+            -68.72638888888889,
+            40.94999999999997
+          ],
+          "fewer_completions_worlds": 8,
+          "patient_harmed_worlds": 8,
+          "saving_fraction": -0.00830502250679064,
+          "saving_fraction_ci95": [
+            -0.02021375397030387,
+            0.006522131414800939
+          ]
+        }
+      ],
+      "cost_ci95": [
+        -66591329.062297575,
+        -21033394.934250437
+      ],
+      "cost_harmed_worlds": 50,
+      "cost_saving": -43953138.19943731,
+      "development_screen": {
+        "checks": {
+          "all_three_block_means_positive": false,
+          "descriptive_cost_lower_bound_positive": false,
+          "every_condition_mean_additional_losses_nonpositive": false,
+          "mean_saving_at_least_half_percent": false,
+          "overall_mean_additional_losses_nonpositive": true
+        },
+        "passed": false
+      },
+      "extra_completions": -11.069444444444445,
+      "extra_patient_losses": -4.111111111111111,
+      "extra_patient_losses_ci95": [
+        -24.73923611111111,
+        16.949652777777747
+      ],
+      "fewer_completions_worlds": 39,
+      "patient_harmed_worlds": 33,
+      "reference": "local_self",
+      "saving_fraction": -0.017162449562221366,
+      "saving_fraction_ci95": [
+        -0.025895253563313146,
+        -0.008227842923394763
+      ],
+      "worlds": [
+        {
+          "cost_harm": false,
+          "cost_saving": 10669966.153146744,
+          "extra_completions": 16,
+          "extra_patient_losses": -23,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "planning_seed": 8567146398075683020,
+            "replicate": 0,
+            "seed": 7305453987937290053
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -128398786.50734425,
+          "extra_completions": -88,
+          "extra_patient_losses": 44,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "planning_seed": 4246802562615013264,
+            "replicate": 1,
+            "seed": 3980391092789819321
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -122195091.32936573,
+          "extra_completions": -76,
+          "extra_patient_losses": 50,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 8,
+            "phase": "evaluation",
+            "planning_seed": 3376218459326158849,
+            "replicate": 2,
+            "seed": 1595679743647592594
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -107330101.98365927,
+          "extra_completions": -52,
+          "extra_patient_losses": -12,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 12,
+            "phase": "evaluation",
+            "planning_seed": 8960615065386903685,
+            "replicate": 3,
+            "seed": 194986109126924557
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -128770739.10079288,
+          "extra_completions": -96,
+          "extra_patient_losses": 66,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 16,
+            "phase": "evaluation",
+            "planning_seed": 2427731000561393993,
+            "replicate": 4,
+            "seed": 3928964757834474931
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 34313810.61487055,
+          "extra_completions": 39,
+          "extra_patient_losses": -50,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 20,
+            "phase": "evaluation",
+            "planning_seed": 6798926298488781952,
+            "replicate": 5,
+            "seed": 8583699661200176065
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -107823580.04355621,
+          "extra_completions": -91,
+          "extra_patient_losses": 76,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "planning_seed": 4580873417766454337,
+            "replicate": 0,
+            "seed": 197475305496549998
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 31020814.987223387,
+          "extra_completions": 95,
+          "extra_patient_losses": -82,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "planning_seed": 2562392877188313174,
+            "replicate": 1,
+            "seed": 5319907205237236192
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -109479694.9970088,
+          "extra_completions": -56,
+          "extra_patient_losses": 38,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 9,
+            "phase": "evaluation",
+            "planning_seed": 6773721345671205409,
+            "replicate": 2,
+            "seed": 3903444446132467791
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -69491672.02374649,
+          "extra_completions": -50,
+          "extra_patient_losses": 42,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 13,
+            "phase": "evaluation",
+            "planning_seed": 6989447596420112389,
+            "replicate": 3,
+            "seed": 6419048177947502796
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 13517133.63445592,
+          "extra_completions": 70,
+          "extra_patient_losses": -45,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 17,
+            "phase": "evaluation",
+            "planning_seed": 4643762480951912205,
+            "replicate": 4,
+            "seed": 2796178516554406543
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 26488874.75126362,
+          "extra_completions": 60,
+          "extra_patient_losses": -76,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 21,
+            "phase": "evaluation",
+            "planning_seed": 7384853640317496635,
+            "replicate": 5,
+            "seed": 3616539573617882074
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -13946139.84477377,
+          "extra_completions": 33,
+          "extra_patient_losses": -48,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "planning_seed": 3736723313882551217,
+            "replicate": 0,
+            "seed": 8192562683166751914
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -90098999.96502972,
+          "extra_completions": -100,
+          "extra_patient_losses": 79,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "planning_seed": 7979356890726272978,
+            "replicate": 1,
+            "seed": 5374512409827976176
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 22276487.299580097,
+          "extra_completions": 125,
+          "extra_patient_losses": -168,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 10,
+            "phase": "evaluation",
+            "planning_seed": 7676718025728456131,
+            "replicate": 2,
+            "seed": 4050662233202501300
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -92147645.32015419,
+          "extra_completions": -35,
+          "extra_patient_losses": 3,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 14,
+            "phase": "evaluation",
+            "planning_seed": 4750462802746518134,
+            "replicate": 3,
+            "seed": 2107559574612599731
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 40847264.44023514,
+          "extra_completions": 83,
+          "extra_patient_losses": -85,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 18,
+            "phase": "evaluation",
+            "planning_seed": 4859788043005348627,
+            "replicate": 4,
+            "seed": 6447429323100742949
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -8588209.235699654,
+          "extra_completions": 25,
+          "extra_patient_losses": -40,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 22,
+            "phase": "evaluation",
+            "planning_seed": 8487476629475672562,
+            "replicate": 5,
+            "seed": 8084991529326831580
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -41612679.47218323,
+          "extra_completions": -17,
+          "extra_patient_losses": 1,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "planning_seed": 7881895044381696000,
+            "replicate": 0,
+            "seed": 4144410902772756817
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -21669382.66175127,
+          "extra_completions": 35,
+          "extra_patient_losses": -52,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "planning_seed": 5164015997604010606,
+            "replicate": 1,
+            "seed": 1751994428310534516
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -14818910.432145119,
+          "extra_completions": -14,
+          "extra_patient_losses": 20,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 11,
+            "phase": "evaluation",
+            "planning_seed": 2408612294597471917,
+            "replicate": 2,
+            "seed": 955391889952596875
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 59984391.36895466,
+          "extra_completions": 82,
+          "extra_patient_losses": -95,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 15,
+            "phase": "evaluation",
+            "planning_seed": 1439043509244773533,
+            "replicate": 3,
+            "seed": 2611935538444475459
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -186841397.54593897,
+          "extra_completions": -136,
+          "extra_patient_losses": 99,
+          "patient_harm": true,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 19,
+            "phase": "evaluation",
+            "planning_seed": 548226846245740741,
+            "replicate": 4,
+            "seed": 7546493921763632660
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -7252105.980829716,
+          "extra_completions": 12,
+          "extra_patient_losses": -19,
+          "patient_harm": false,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 23,
+            "phase": "evaluation",
+            "planning_seed": 4107282674566669375,
+            "replicate": 5,
+            "seed": 2588325878587662945
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -161185899.2987609,
+          "extra_completions": -126,
+          "extra_patient_losses": 32,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "planning_seed": 940827160317302830,
+            "replicate": 0,
+            "seed": 2436012428426496810
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -66184894.29336977,
+          "extra_completions": -40,
+          "extra_patient_losses": 33,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "planning_seed": 7931180174812887482,
+            "replicate": 1,
+            "seed": 275729401141358520
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -152470735.6113186,
+          "extra_completions": -87,
+          "extra_patient_losses": 29,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 8,
+            "phase": "evaluation",
+            "planning_seed": 2130494877710573855,
+            "replicate": 2,
+            "seed": 4902338384455912765
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -78078639.43695784,
+          "extra_completions": -56,
+          "extra_patient_losses": 52,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 12,
+            "phase": "evaluation",
+            "planning_seed": 2397663230641262287,
+            "replicate": 3,
+            "seed": 5147984306308605650
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -8660190.380961418,
+          "extra_completions": 11,
+          "extra_patient_losses": -29,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 16,
+            "phase": "evaluation",
+            "planning_seed": 3110165193625593039,
+            "replicate": 4,
+            "seed": 4617086154834880716
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -84119151.6108756,
+          "extra_completions": -35,
+          "extra_patient_losses": 6,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 20,
+            "phase": "evaluation",
+            "planning_seed": 5538930731579269678,
+            "replicate": 5,
+            "seed": 940895742451117369
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -13326238.645360231,
+          "extra_completions": 64,
+          "extra_patient_losses": -75,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "planning_seed": 1656831574417090367,
+            "replicate": 0,
+            "seed": 9003381881437157533
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -146470996.99232697,
+          "extra_completions": -144,
+          "extra_patient_losses": 109,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "planning_seed": 7961934448972007173,
+            "replicate": 1,
+            "seed": 8838055485783407612
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -156083179.7859497,
+          "extra_completions": -111,
+          "extra_patient_losses": 91,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 9,
+            "phase": "evaluation",
+            "planning_seed": 6383267207683596094,
+            "replicate": 2,
+            "seed": 6266584896445372447
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 60574730.22836113,
+          "extra_completions": 148,
+          "extra_patient_losses": -115,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 13,
+            "phase": "evaluation",
+            "planning_seed": 94350868452389520,
+            "replicate": 3,
+            "seed": 3551871046322205155
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -57026420.98611212,
+          "extra_completions": -40,
+          "extra_patient_losses": 37,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 17,
+            "phase": "evaluation",
+            "planning_seed": 724779172568880301,
+            "replicate": 4,
+            "seed": 7243540134768756677
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -47736125.17723727,
+          "extra_completions": -5,
+          "extra_patient_losses": -7,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 21,
+            "phase": "evaluation",
+            "planning_seed": 2319279733467236888,
+            "replicate": 5,
+            "seed": 6367860543564895412
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -151604484.74246073,
+          "extra_completions": -86,
+          "extra_patient_losses": 59,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "planning_seed": 839559762552315257,
+            "replicate": 0,
+            "seed": 8627888944635566171
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -29274889.472099304,
+          "extra_completions": 22,
+          "extra_patient_losses": -38,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "planning_seed": 7448437467705816438,
+            "replicate": 1,
+            "seed": 4481905990877822891
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -7600872.539360046,
+          "extra_completions": 50,
+          "extra_patient_losses": -32,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 10,
+            "phase": "evaluation",
+            "planning_seed": 1468327707054460922,
+            "replicate": 2,
+            "seed": 345808569083137312
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -62202877.60229254,
+          "extra_completions": -62,
+          "extra_patient_losses": 58,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 14,
+            "phase": "evaluation",
+            "planning_seed": 6249281548828796802,
+            "replicate": 3,
+            "seed": 5860976129904237506
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 28600972.33287096,
+          "extra_completions": 41,
+          "extra_patient_losses": -67,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 18,
+            "phase": "evaluation",
+            "planning_seed": 6630302674101706055,
+            "replicate": 4,
+            "seed": 5964859207022048306
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -97654758.81715918,
+          "extra_completions": -43,
+          "extra_patient_losses": 21,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 22,
+            "phase": "evaluation",
+            "planning_seed": 2561693816626442385,
+            "replicate": 5,
+            "seed": 2685462971266262846
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 54995104.833731174,
+          "extra_completions": 72,
+          "extra_patient_losses": -78,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "planning_seed": 4340671955021236406,
+            "replicate": 0,
+            "seed": 639980901260029272
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -95933133.53188753,
+          "extra_completions": -89,
+          "extra_patient_losses": 81,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "planning_seed": 5137281377524652915,
+            "replicate": 1,
+            "seed": 5860810414047084748
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -122840150.02376652,
+          "extra_completions": -112,
+          "extra_patient_losses": 84,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 11,
+            "phase": "evaluation",
+            "planning_seed": 4371061417502390437,
+            "replicate": 2,
+            "seed": 9011348572511406775
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 22880697.01496935,
+          "extra_completions": 37,
+          "extra_patient_losses": -26,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 15,
+            "phase": "evaluation",
+            "planning_seed": 5866600245604196283,
+            "replicate": 3,
+            "seed": 3063193137191758661
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -133744374.81877184,
+          "extra_completions": -152,
+          "extra_patient_losses": 144,
+          "patient_harm": true,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 19,
+            "phase": "evaluation",
+            "planning_seed": 2647072555851402492,
+            "replicate": 4,
+            "seed": 5381789082204039734
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 5570328.593010902,
+          "extra_completions": 52,
+          "extra_patient_losses": -43,
+          "patient_harm": false,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 23,
+            "phase": "evaluation",
+            "planning_seed": 3896592649844914470,
+            "replicate": 5,
+            "seed": 1530877709658131660
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 33588414.37093878,
+          "extra_completions": 61,
+          "extra_patient_losses": -55,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "planning_seed": 8927656189010447485,
+            "replicate": 0,
+            "seed": 5174727994838339052
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -29738700.437741756,
+          "extra_completions": -14,
+          "extra_patient_losses": -7,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "planning_seed": 923805544813448883,
+            "replicate": 1,
+            "seed": 7260117535233233229
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -201952854.95582104,
+          "extra_completions": -138,
+          "extra_patient_losses": 90,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 8,
+            "phase": "evaluation",
+            "planning_seed": 2537842333183888133,
+            "replicate": 2,
+            "seed": 3361582300779761361
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 10453017.61552,
+          "extra_completions": 8,
+          "extra_patient_losses": -6,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 12,
+            "phase": "evaluation",
+            "planning_seed": 6728583665949169731,
+            "replicate": 3,
+            "seed": 5274473663200450472
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 194664261.85136747,
+          "extra_completions": 174,
+          "extra_patient_losses": -142,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 16,
+            "phase": "evaluation",
+            "planning_seed": 6853700993091717579,
+            "replicate": 4,
+            "seed": 8075569301168235490
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -53484169.23334503,
+          "extra_completions": -7,
+          "extra_patient_losses": -23,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 20,
+            "phase": "evaluation",
+            "planning_seed": 5095974162846976151,
+            "replicate": 5,
+            "seed": 2807864520278901422
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 18024597.36459303,
+          "extra_completions": 41,
+          "extra_patient_losses": -44,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "planning_seed": 8225666089944749644,
+            "replicate": 0,
+            "seed": 5574848130164887056
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 26123632.745588064,
+          "extra_completions": 46,
+          "extra_patient_losses": -42,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "planning_seed": 2252525081884737934,
+            "replicate": 1,
+            "seed": 2271765270874140452
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -61817235.05119753,
+          "extra_completions": -21,
+          "extra_patient_losses": 22,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 9,
+            "phase": "evaluation",
+            "planning_seed": 2633977204741479790,
+            "replicate": 2,
+            "seed": 1983197617457145289
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -158137818.03205442,
+          "extra_completions": -153,
+          "extra_patient_losses": 118,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 13,
+            "phase": "evaluation",
+            "planning_seed": 8681785134980026974,
+            "replicate": 3,
+            "seed": 7949800864532908987
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -45115053.56400657,
+          "extra_completions": -18,
+          "extra_patient_losses": -3,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 17,
+            "phase": "evaluation",
+            "planning_seed": 7100020303665312160,
+            "replicate": 4,
+            "seed": 4058275132224780397
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -79712745.71569562,
+          "extra_completions": -107,
+          "extra_patient_losses": 102,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 21,
+            "phase": "evaluation",
+            "planning_seed": 3202994488641321485,
+            "replicate": 5,
+            "seed": 125593254204721311
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -26860797.17023325,
+          "extra_completions": -12,
+          "extra_patient_losses": -19,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "planning_seed": 5427390259204041507,
+            "replicate": 0,
+            "seed": 9034636401741480800
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 29057848.958826542,
+          "extra_completions": 75,
+          "extra_patient_losses": -68,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "planning_seed": 6729117080361782479,
+            "replicate": 1,
+            "seed": 7952470538118801602
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -43073124.233897686,
+          "extra_completions": 0,
+          "extra_patient_losses": -19,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 10,
+            "phase": "evaluation",
+            "planning_seed": 4980970390532748745,
+            "replicate": 2,
+            "seed": 8583727720384112130
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -111710731.27773952,
+          "extra_completions": -109,
+          "extra_patient_losses": 79,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 14,
+            "phase": "evaluation",
+            "planning_seed": 4789793757022272981,
+            "replicate": 3,
+            "seed": 606370191988170752
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -88234260.86760426,
+          "extra_completions": -28,
+          "extra_patient_losses": 4,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 18,
+            "phase": "evaluation",
+            "planning_seed": 6995538893768570813,
+            "replicate": 4,
+            "seed": 8822254337855595695
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -40762668.8927989,
+          "extra_completions": 33,
+          "extra_patient_losses": -34,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 22,
+            "phase": "evaluation",
+            "planning_seed": 4869331359119250532,
+            "replicate": 5,
+            "seed": 9006990969003000677
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -153793581.86257505,
+          "extra_completions": -162,
+          "extra_patient_losses": 149,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "planning_seed": 2620868794787767173,
+            "replicate": 0,
+            "seed": 8909808432324315509
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -89855034.51424265,
+          "extra_completions": -52,
+          "extra_patient_losses": 20,
+          "patient_harm": true,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "planning_seed": 6010810565917348466,
+            "replicate": 1,
+            "seed": 6247099509660003237
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 32090532.822212696,
+          "extra_completions": 58,
+          "extra_patient_losses": -71,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 11,
+            "phase": "evaluation",
+            "planning_seed": 1580140599344534277,
+            "replicate": 2,
+            "seed": 3758064921118086395
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 182620410.56592226,
+          "extra_completions": 239,
+          "extra_patient_losses": -246,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 15,
+            "phase": "evaluation",
+            "planning_seed": 6174955932165638113,
+            "replicate": 3,
+            "seed": 7972554643477925202
+          }
+        },
+        {
+          "cost_harm": true,
+          "cost_saving": -15495277.024324417,
+          "extra_completions": 64,
+          "extra_patient_losses": -70,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 19,
+            "phase": "evaluation",
+            "planning_seed": 1687971394224084455,
+            "replicate": 4,
+            "seed": 1757381703708589574
+          }
+        },
+        {
+          "cost_harm": false,
+          "cost_saving": 19417960.13715601,
+          "extra_completions": 52,
+          "extra_patient_losses": -80,
+          "patient_harm": false,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 23,
+            "phase": "evaluation",
+            "planning_seed": 3001674711685523951,
+            "replicate": 5,
+            "seed": 8470972395910375631
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "local_self",
+      "extra_patient_losses": 4.111111111111111,
+      "extra_patient_losses_ci95": [
+        -16.949652777777747,
+        24.73923611111111
+      ],
+      "reference": "structured_h8",
+      "saving_fraction": 0.01687286978555682,
+      "saving_fraction_ci95": [
+        0.008160697982251532,
+        0.025241615528846014
+      ],
+      "source_pair": [
+        "structured_h8",
+        "local_self"
+      ],
+      "transformation": "Monotone endpoint conversion of saved intervals, no bootstrap"
+    },
+    {
+      "candidate": "local_flat",
+      "extra_patient_losses": -24.166666666666668,
+      "extra_patient_losses_ci95": [
+        -43.55763888888888,
+        -4.263194444444445
+      ],
+      "reference": "structured_h8",
+      "saving_fraction": 0.024351208343089327,
+      "saving_fraction_ci95": [
+        0.013226831172328648,
+        0.03551954815180215
+      ],
+      "source_pair": [
+        "structured_h8",
+        "local_flat"
+      ],
+      "transformation": "Monotone endpoint conversion of saved intervals, no bootstrap"
+    }
+  ],
+  "new_bootstrap": false,
+  "panels_pooled": false,
+  "predecessor_inventory": {
+    "campaign_design_count": 5,
+    "campaigns": [
+      {
+        "created_at_utc": "2026-10-10T16:44:00.879496+00:00",
+        "fresh_m1_allocation_overlap": 0,
+        "learned_roles": [
+          "graph",
+          "flat"
+        ],
+        "name": "Native Value-TD A",
+        "packet_path": "specs/2026-10-10-native-value-td/reexecution1/frozen.json",
+        "packet_sha256": "6287d8c1ad1f754d6d6d5244df2f92dc00ebce928e70892c62f5decad55a30c5"
+      },
+      {
+        "created_at_utc": "2026-10-11T10:11:18.536086+00:00",
+        "fresh_m1_allocation_overlap": 0,
+        "learned_roles": [
+          "graph",
+          "flat"
+        ],
+        "name": "Original B CEM sequence",
+        "packet_path": "specs/2026-10-11-native-sequence-value-td/frozen.json",
+        "packet_sha256": "0af63c4738773eb2d5fa146281207ef654e1d32509244b1bf9f3a9d3e063444a"
+      },
+      {
+        "created_at_utc": "2026-10-11T22:54:26.350852+00:00",
+        "fresh_m1_allocation_overlap": 0,
+        "learned_roles": [
+          "ddpg",
+          "td3",
+          "sac",
+          "ppo",
+          "value_td8",
+          "value_lambda"
+        ],
+        "name": "Five-family development",
+        "packet_path": "specs/2026-10-11-native-learning-development/frozen.json",
+        "packet_sha256": "e2c9c1206f70f48a4bf1c957431446342712d2e569d2e39970fb8b4cdb849736"
+      },
+      {
+        "created_at_utc": "2026-10-13T10:10:54.330064+00:00",
+        "fresh_m1_allocation_overlap": 0,
+        "learned_roles": [
+          "structured_graph",
+          "structured_flat"
+        ],
+        "name": "Revised B structured TD",
+        "packet_path": "specs/2026-10-12-structured-native-candidates/frozen.json",
+        "packet_sha256": "fbacf0080e49fffb82e9b8e8b05f072aa384b79a9d17704f8e5b9ee7503a5d00"
+      },
+      {
+        "created_at_utc": "2026-10-13T19:04:02.507151+00:00",
+        "fresh_m1_allocation_overlap": 0,
+        "learned_roles": [
+          "advantage_graph",
+          "advantage_flat"
+        ],
+        "name": "Candidate-Advantage v1",
+        "packet_path": "specs/2026-10-13-candidate-advantage/frozen.json",
+        "packet_sha256": "e09454b5a685d7dbfa20b346f0ce3649bc721bd35f47ab89ef36d11a9ab5c221"
+      }
+    ],
+    "configured_learned_arm_count": 14,
+    "count_unit": "A fixed learner architecture/target/planner arm. Seeds, recoveries and inherited reevaluated controls are not extra recipes.",
+    "global_project_search_count": "Not established; earlier DDPG and other campaigns exist. Do not use 14 as a global search-adjustment count.",
+    "later_diagnostics_counted_as_preselection": false,
+    "scope": "Oct 10-14 Native lineage before Localv2 recipe freeze, not the full July-October project",
+    "zero_science_failures_counted_as_recipe_variants": false
+  },
+  "protocol": {
+    "bytes": 6335,
+    "path": "specs/2026-10-15-gcn-self-attribution/protocol.md",
+    "sha256": "960644eaab524236d1c84fee1deda201390573e071d9d36aeb8affa7c56b8d7c"
+  },
+  "provenance": {
+    "comparison_uses_exact_declared_worlds": true,
+    "evaluation_worlds": [
+      {
+        "block": 0,
+        "condition": 0,
+        "index": 0,
+        "phase": "evaluation",
+        "planning_seed": 8567146398075683020,
+        "replicate": 0,
+        "seed": 7305453987937290053
+      },
+      {
+        "block": 0,
+        "condition": 1,
+        "index": 1,
+        "phase": "evaluation",
+        "planning_seed": 4580873417766454337,
+        "replicate": 0,
+        "seed": 197475305496549998
+      },
+      {
+        "block": 0,
+        "condition": 2,
+        "index": 2,
+        "phase": "evaluation",
+        "planning_seed": 3736723313882551217,
+        "replicate": 0,
+        "seed": 8192562683166751914
+      },
+      {
+        "block": 0,
+        "condition": 3,
+        "index": 3,
+        "phase": "evaluation",
+        "planning_seed": 7881895044381696000,
+        "replicate": 0,
+        "seed": 4144410902772756817
+      },
+      {
+        "block": 0,
+        "condition": 0,
+        "index": 4,
+        "phase": "evaluation",
+        "planning_seed": 4246802562615013264,
+        "replicate": 1,
+        "seed": 3980391092789819321
+      },
+      {
+        "block": 0,
+        "condition": 1,
+        "index": 5,
+        "phase": "evaluation",
+        "planning_seed": 2562392877188313174,
+        "replicate": 1,
+        "seed": 5319907205237236192
+      },
+      {
+        "block": 0,
+        "condition": 2,
+        "index": 6,
+        "phase": "evaluation",
+        "planning_seed": 7979356890726272978,
+        "replicate": 1,
+        "seed": 5374512409827976176
+      },
+      {
+        "block": 0,
+        "condition": 3,
+        "index": 7,
+        "phase": "evaluation",
+        "planning_seed": 5164015997604010606,
+        "replicate": 1,
+        "seed": 1751994428310534516
+      },
+      {
+        "block": 0,
+        "condition": 0,
+        "index": 8,
+        "phase": "evaluation",
+        "planning_seed": 3376218459326158849,
+        "replicate": 2,
+        "seed": 1595679743647592594
+      },
+      {
+        "block": 0,
+        "condition": 1,
+        "index": 9,
+        "phase": "evaluation",
+        "planning_seed": 6773721345671205409,
+        "replicate": 2,
+        "seed": 3903444446132467791
+      },
+      {
+        "block": 0,
+        "condition": 2,
+        "index": 10,
+        "phase": "evaluation",
+        "planning_seed": 7676718025728456131,
+        "replicate": 2,
+        "seed": 4050662233202501300
+      },
+      {
+        "block": 0,
+        "condition": 3,
+        "index": 11,
+        "phase": "evaluation",
+        "planning_seed": 2408612294597471917,
+        "replicate": 2,
+        "seed": 955391889952596875
+      },
+      {
+        "block": 0,
+        "condition": 0,
+        "index": 12,
+        "phase": "evaluation",
+        "planning_seed": 8960615065386903685,
+        "replicate": 3,
+        "seed": 194986109126924557
+      },
+      {
+        "block": 0,
+        "condition": 1,
+        "index": 13,
+        "phase": "evaluation",
+        "planning_seed": 6989447596420112389,
+        "replicate": 3,
+        "seed": 6419048177947502796
+      },
+      {
+        "block": 0,
+        "condition": 2,
+        "index": 14,
+        "phase": "evaluation",
+        "planning_seed": 4750462802746518134,
+        "replicate": 3,
+        "seed": 2107559574612599731
+      },
+      {
+        "block": 0,
+        "condition": 3,
+        "index": 15,
+        "phase": "evaluation",
+        "planning_seed": 1439043509244773533,
+        "replicate": 3,
+        "seed": 2611935538444475459
+      },
+      {
+        "block": 0,
+        "condition": 0,
+        "index": 16,
+        "phase": "evaluation",
+        "planning_seed": 2427731000561393993,
+        "replicate": 4,
+        "seed": 3928964757834474931
+      },
+      {
+        "block": 0,
+        "condition": 1,
+        "index": 17,
+        "phase": "evaluation",
+        "planning_seed": 4643762480951912205,
+        "replicate": 4,
+        "seed": 2796178516554406543
+      },
+      {
+        "block": 0,
+        "condition": 2,
+        "index": 18,
+        "phase": "evaluation",
+        "planning_seed": 4859788043005348627,
+        "replicate": 4,
+        "seed": 6447429323100742949
+      },
+      {
+        "block": 0,
+        "condition": 3,
+        "index": 19,
+        "phase": "evaluation",
+        "planning_seed": 548226846245740741,
+        "replicate": 4,
+        "seed": 7546493921763632660
+      },
+      {
+        "block": 0,
+        "condition": 0,
+        "index": 20,
+        "phase": "evaluation",
+        "planning_seed": 6798926298488781952,
+        "replicate": 5,
+        "seed": 8583699661200176065
+      },
+      {
+        "block": 0,
+        "condition": 1,
+        "index": 21,
+        "phase": "evaluation",
+        "planning_seed": 7384853640317496635,
+        "replicate": 5,
+        "seed": 3616539573617882074
+      },
+      {
+        "block": 0,
+        "condition": 2,
+        "index": 22,
+        "phase": "evaluation",
+        "planning_seed": 8487476629475672562,
+        "replicate": 5,
+        "seed": 8084991529326831580
+      },
+      {
+        "block": 0,
+        "condition": 3,
+        "index": 23,
+        "phase": "evaluation",
+        "planning_seed": 4107282674566669375,
+        "replicate": 5,
+        "seed": 2588325878587662945
+      },
+      {
+        "block": 1,
+        "condition": 0,
+        "index": 0,
+        "phase": "evaluation",
+        "planning_seed": 940827160317302830,
+        "replicate": 0,
+        "seed": 2436012428426496810
+      },
+      {
+        "block": 1,
+        "condition": 1,
+        "index": 1,
+        "phase": "evaluation",
+        "planning_seed": 1656831574417090367,
+        "replicate": 0,
+        "seed": 9003381881437157533
+      },
+      {
+        "block": 1,
+        "condition": 2,
+        "index": 2,
+        "phase": "evaluation",
+        "planning_seed": 839559762552315257,
+        "replicate": 0,
+        "seed": 8627888944635566171
+      },
+      {
+        "block": 1,
+        "condition": 3,
+        "index": 3,
+        "phase": "evaluation",
+        "planning_seed": 4340671955021236406,
+        "replicate": 0,
+        "seed": 639980901260029272
+      },
+      {
+        "block": 1,
+        "condition": 0,
+        "index": 4,
+        "phase": "evaluation",
+        "planning_seed": 7931180174812887482,
+        "replicate": 1,
+        "seed": 275729401141358520
+      },
+      {
+        "block": 1,
+        "condition": 1,
+        "index": 5,
+        "phase": "evaluation",
+        "planning_seed": 7961934448972007173,
+        "replicate": 1,
+        "seed": 8838055485783407612
+      },
+      {
+        "block": 1,
+        "condition": 2,
+        "index": 6,
+        "phase": "evaluation",
+        "planning_seed": 7448437467705816438,
+        "replicate": 1,
+        "seed": 4481905990877822891
+      },
+      {
+        "block": 1,
+        "condition": 3,
+        "index": 7,
+        "phase": "evaluation",
+        "planning_seed": 5137281377524652915,
+        "replicate": 1,
+        "seed": 5860810414047084748
+      },
+      {
+        "block": 1,
+        "condition": 0,
+        "index": 8,
+        "phase": "evaluation",
+        "planning_seed": 2130494877710573855,
+        "replicate": 2,
+        "seed": 4902338384455912765
+      },
+      {
+        "block": 1,
+        "condition": 1,
+        "index": 9,
+        "phase": "evaluation",
+        "planning_seed": 6383267207683596094,
+        "replicate": 2,
+        "seed": 6266584896445372447
+      },
+      {
+        "block": 1,
+        "condition": 2,
+        "index": 10,
+        "phase": "evaluation",
+        "planning_seed": 1468327707054460922,
+        "replicate": 2,
+        "seed": 345808569083137312
+      },
+      {
+        "block": 1,
+        "condition": 3,
+        "index": 11,
+        "phase": "evaluation",
+        "planning_seed": 4371061417502390437,
+        "replicate": 2,
+        "seed": 9011348572511406775
+      },
+      {
+        "block": 1,
+        "condition": 0,
+        "index": 12,
+        "phase": "evaluation",
+        "planning_seed": 2397663230641262287,
+        "replicate": 3,
+        "seed": 5147984306308605650
+      },
+      {
+        "block": 1,
+        "condition": 1,
+        "index": 13,
+        "phase": "evaluation",
+        "planning_seed": 94350868452389520,
+        "replicate": 3,
+        "seed": 3551871046322205155
+      },
+      {
+        "block": 1,
+        "condition": 2,
+        "index": 14,
+        "phase": "evaluation",
+        "planning_seed": 6249281548828796802,
+        "replicate": 3,
+        "seed": 5860976129904237506
+      },
+      {
+        "block": 1,
+        "condition": 3,
+        "index": 15,
+        "phase": "evaluation",
+        "planning_seed": 5866600245604196283,
+        "replicate": 3,
+        "seed": 3063193137191758661
+      },
+      {
+        "block": 1,
+        "condition": 0,
+        "index": 16,
+        "phase": "evaluation",
+        "planning_seed": 3110165193625593039,
+        "replicate": 4,
+        "seed": 4617086154834880716
+      },
+      {
+        "block": 1,
+        "condition": 1,
+        "index": 17,
+        "phase": "evaluation",
+        "planning_seed": 724779172568880301,
+        "replicate": 4,
+        "seed": 7243540134768756677
+      },
+      {
+        "block": 1,
+        "condition": 2,
+        "index": 18,
+        "phase": "evaluation",
+        "planning_seed": 6630302674101706055,
+        "replicate": 4,
+        "seed": 5964859207022048306
+      },
+      {
+        "block": 1,
+        "condition": 3,
+        "index": 19,
+        "phase": "evaluation",
+        "planning_seed": 2647072555851402492,
+        "replicate": 4,
+        "seed": 5381789082204039734
+      },
+      {
+        "block": 1,
+        "condition": 0,
+        "index": 20,
+        "phase": "evaluation",
+        "planning_seed": 5538930731579269678,
+        "replicate": 5,
+        "seed": 940895742451117369
+      },
+      {
+        "block": 1,
+        "condition": 1,
+        "index": 21,
+        "phase": "evaluation",
+        "planning_seed": 2319279733467236888,
+        "replicate": 5,
+        "seed": 6367860543564895412
+      },
+      {
+        "block": 1,
+        "condition": 2,
+        "index": 22,
+        "phase": "evaluation",
+        "planning_seed": 2561693816626442385,
+        "replicate": 5,
+        "seed": 2685462971266262846
+      },
+      {
+        "block": 1,
+        "condition": 3,
+        "index": 23,
+        "phase": "evaluation",
+        "planning_seed": 3896592649844914470,
+        "replicate": 5,
+        "seed": 1530877709658131660
+      },
+      {
+        "block": 2,
+        "condition": 0,
+        "index": 0,
+        "phase": "evaluation",
+        "planning_seed": 8927656189010447485,
+        "replicate": 0,
+        "seed": 5174727994838339052
+      },
+      {
+        "block": 2,
+        "condition": 1,
+        "index": 1,
+        "phase": "evaluation",
+        "planning_seed": 8225666089944749644,
+        "replicate": 0,
+        "seed": 5574848130164887056
+      },
+      {
+        "block": 2,
+        "condition": 2,
+        "index": 2,
+        "phase": "evaluation",
+        "planning_seed": 5427390259204041507,
+        "replicate": 0,
+        "seed": 9034636401741480800
+      },
+      {
+        "block": 2,
+        "condition": 3,
+        "index": 3,
+        "phase": "evaluation",
+        "planning_seed": 2620868794787767173,
+        "replicate": 0,
+        "seed": 8909808432324315509
+      },
+      {
+        "block": 2,
+        "condition": 0,
+        "index": 4,
+        "phase": "evaluation",
+        "planning_seed": 923805544813448883,
+        "replicate": 1,
+        "seed": 7260117535233233229
+      },
+      {
+        "block": 2,
+        "condition": 1,
+        "index": 5,
+        "phase": "evaluation",
+        "planning_seed": 2252525081884737934,
+        "replicate": 1,
+        "seed": 2271765270874140452
+      },
+      {
+        "block": 2,
+        "condition": 2,
+        "index": 6,
+        "phase": "evaluation",
+        "planning_seed": 6729117080361782479,
+        "replicate": 1,
+        "seed": 7952470538118801602
+      },
+      {
+        "block": 2,
+        "condition": 3,
+        "index": 7,
+        "phase": "evaluation",
+        "planning_seed": 6010810565917348466,
+        "replicate": 1,
+        "seed": 6247099509660003237
+      },
+      {
+        "block": 2,
+        "condition": 0,
+        "index": 8,
+        "phase": "evaluation",
+        "planning_seed": 2537842333183888133,
+        "replicate": 2,
+        "seed": 3361582300779761361
+      },
+      {
+        "block": 2,
+        "condition": 1,
+        "index": 9,
+        "phase": "evaluation",
+        "planning_seed": 2633977204741479790,
+        "replicate": 2,
+        "seed": 1983197617457145289
+      },
+      {
+        "block": 2,
+        "condition": 2,
+        "index": 10,
+        "phase": "evaluation",
+        "planning_seed": 4980970390532748745,
+        "replicate": 2,
+        "seed": 8583727720384112130
+      },
+      {
+        "block": 2,
+        "condition": 3,
+        "index": 11,
+        "phase": "evaluation",
+        "planning_seed": 1580140599344534277,
+        "replicate": 2,
+        "seed": 3758064921118086395
+      },
+      {
+        "block": 2,
+        "condition": 0,
+        "index": 12,
+        "phase": "evaluation",
+        "planning_seed": 6728583665949169731,
+        "replicate": 3,
+        "seed": 5274473663200450472
+      },
+      {
+        "block": 2,
+        "condition": 1,
+        "index": 13,
+        "phase": "evaluation",
+        "planning_seed": 8681785134980026974,
+        "replicate": 3,
+        "seed": 7949800864532908987
+      },
+      {
+        "block": 2,
+        "condition": 2,
+        "index": 14,
+        "phase": "evaluation",
+        "planning_seed": 4789793757022272981,
+        "replicate": 3,
+        "seed": 606370191988170752
+      },
+      {
+        "block": 2,
+        "condition": 3,
+        "index": 15,
+        "phase": "evaluation",
+        "planning_seed": 6174955932165638113,
+        "replicate": 3,
+        "seed": 7972554643477925202
+      },
+      {
+        "block": 2,
+        "condition": 0,
+        "index": 16,
+        "phase": "evaluation",
+        "planning_seed": 6853700993091717579,
+        "replicate": 4,
+        "seed": 8075569301168235490
+      },
+      {
+        "block": 2,
+        "condition": 1,
+        "index": 17,
+        "phase": "evaluation",
+        "planning_seed": 7100020303665312160,
+        "replicate": 4,
+        "seed": 4058275132224780397
+      },
+      {
+        "block": 2,
+        "condition": 2,
+        "index": 18,
+        "phase": "evaluation",
+        "planning_seed": 6995538893768570813,
+        "replicate": 4,
+        "seed": 8822254337855595695
+      },
+      {
+        "block": 2,
+        "condition": 3,
+        "index": 19,
+        "phase": "evaluation",
+        "planning_seed": 1687971394224084455,
+        "replicate": 4,
+        "seed": 1757381703708589574
+      },
+      {
+        "block": 2,
+        "condition": 0,
+        "index": 20,
+        "phase": "evaluation",
+        "planning_seed": 5095974162846976151,
+        "replicate": 5,
+        "seed": 2807864520278901422
+      },
+      {
+        "block": 2,
+        "condition": 1,
+        "index": 21,
+        "phase": "evaluation",
+        "planning_seed": 3202994488641321485,
+        "replicate": 5,
+        "seed": 125593254204721311
+      },
+      {
+        "block": 2,
+        "condition": 2,
+        "index": 22,
+        "phase": "evaluation",
+        "planning_seed": 4869331359119250532,
+        "replicate": 5,
+        "seed": 9006990969003000677
+      },
+      {
+        "block": 2,
+        "condition": 3,
+        "index": 23,
+        "phase": "evaluation",
+        "planning_seed": 3001674711685523951,
+        "replicate": 5,
+        "seed": 8470972395910375631
+      }
+    ],
+    "fresh_allocation_count": 7634,
+    "limit": "Supports nonreuse within the recorded lineage and saved seed audit; not proof about undocumented external work or independent source accessibility. These are development worlds, not a confirmatory holdout.",
+    "m1_frozen_utc": "2026-10-15T10:08:30.167799+00:00",
+    "m1_packet_sha256": "74752cdd7fa72ad313f30ece6e9c8b6b19131de48a55e6cb08972dc823f9855e",
+    "namespace": "native-gcn-self-20261015-approved-single-v1",
+    "no_overlap_with_predecessors_and_v2": true,
+    "old_graph_recipe_frozen_utc": "2026-10-14T14:57:14.689911+00:00",
+    "recovery_preserves_worlds": true,
+    "saved_historical_audit_file_count": 2219,
+    "saved_historical_audit_passed": true,
+    "saved_historical_manifest_sha256": "9c723541f3f28de3efabc1c56871807cf082db55fda392a50f3c0a781fb5d16a"
+  },
+  "schema": "graph-self-review-supplement-v1",
+  "scientific_runtime_calls": 0,
+  "source_manifest": [
+    {
+      "bytes": 1230462,
+      "path": "reports/2026-10-17-graph-self-evidence/evidence.json",
+      "sha256": "45cc9eb4b11d1dc001dc166e9d6d54f8c154d72354fac63e0e6e7d5909a2e05d"
+    },
+    {
+      "bytes": 8167021,
+      "path": "specs/2026-10-15-gcn-self-attribution/frozen.json",
+      "sha256": "9986e666769d9dca6b83f510b5080519512d9e65869057c160179135b2291073"
+    },
+    {
+      "bytes": 13844878,
+      "path": "specs/2026-10-14-graph-local-residual/frozen.json",
+      "sha256": "64f149f97bfa3de186de4673d4947dc19507dee9f85084bc40cd61adda293cad"
+    },
+    {
+      "bytes": 8826521,
+      "path": "specs/2026-10-15-gcn-self-attribution/parallel-recovery1/frozen.json",
+      "sha256": "6bd8aa94676baa0f7c6848ed02237ef05ebdee6fefd37b7c24752ad118b254fe"
+    },
+    {
+      "bytes": 5396143,
+      "path": "specs/2026-10-10-native-value-td/reexecution1/frozen.json",
+      "sha256": "fac0b9734cd193c89e9f73e2a955a6e4cbfa4efcd018709fe96e8a655e160dad"
+    },
+    {
+      "bytes": 5444047,
+      "path": "specs/2026-10-11-native-sequence-value-td/frozen.json",
+      "sha256": "82423b2a53250e3e7a4789a5120d39a9ac176be83503b5b1d169c45c90b5c084"
+    },
+    {
+      "bytes": 3265214,
+      "path": "specs/2026-10-11-native-learning-development/frozen.json",
+      "sha256": "e74f687b834b77dc0693e5f3d22ea8337c5fb661277cc3d963acde5b2dd93a49"
+    },
+    {
+      "bytes": 3240648,
+      "path": "specs/2026-10-12-structured-native-candidates/frozen.json",
+      "sha256": "680de4627c884529c21c7b9a529f09d85c78f9337c3340f10c4067893dca3361"
+    },
+    {
+      "bytes": 13788918,
+      "path": "specs/2026-10-13-candidate-advantage/frozen.json",
+      "sha256": "e40db23d4d5074b635e1ba98970554cdfb53eed938745bda498874b4d28d2647"
+    }
+  ],
+  "transit_table": [
+    {
+      "role": "mdl2",
+      "specimen_arrivals": 201.81944444444446,
+      "transit_expired": 39.208333333333336
+    },
+    {
+      "role": "structured_h8",
+      "specimen_arrivals": 232.84722222222223,
+      "transit_expired": 41.68055555555556
+    },
+    {
+      "role": "local_self",
+      "specimen_arrivals": 391.75,
+      "transit_expired": 66.22222222222223
+    },
+    {
+      "role": "local_graph",
+      "specimen_arrivals": 436.55555555555554,
+      "transit_expired": 75.47222222222223
+    },
+    {
+      "role": "local_flat",
+      "specimen_arrivals": 404.7638888888889,
+      "transit_expired": 67.66666666666667
+    }
+  ]
+}

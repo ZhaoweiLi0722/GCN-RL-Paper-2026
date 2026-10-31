@@ -1,0 +1,18 @@
+{
+  "status": "static_export_and_document_checks_passed",
+  "science_reexecuted": false,
+  "comparisons_recomputed": false,
+  "source_hashes_checked": 13,
+  "primary_saved_pairs": 6,
+  "bounded_message_saved_pairs": 3,
+  "primary_world_records_retained_per_pair": 120,
+  "message_world_records_retained_per_pair": 24,
+  "bibliography_entries": 27,
+  "cited_keys": 27,
+  "figures": 5,
+  "pdf_pages": 41,
+  "pdf_sha256": "fb58703d4ebe923cd6f26d7251b8f6e203754906ec2a4e9f9f02c6e2e8e1bae8",
+  "pdf_bytes": 240748,
+  "accountable_human_scientific_and_reference_review": "pending",
+  "visual_inspection": "recorded separately by the coordinator"
+}

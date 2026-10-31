@@ -1,0 +1,1374 @@
+{
+  "archive": {
+    "all_nine_frozen_finals_present": true,
+    "bytes": 10859409,
+    "full_member_verification_reused": true,
+    "independent_byte_hash_verified": true,
+    "members": 1062,
+    "path": "results/native_gcn_conditional_recipient_allocation_20261030_assessment_closeout1/archives/closeout.tar.gz",
+    "sha256": "e18f2536f34022382089ab7469a5775b903e51d8ac2a405c4ae6a0aff39619e0"
+  },
+  "checks": {
+    "full_compileall_exit_code": 0,
+    "pure_mock_fixture_tests": 41
+  },
+  "comparison_pairs": 9,
+  "complete_score_jobs": 9,
+  "counts": {
+    "cumulative_continuation_and_fits_and_scores": {
+      "GATv2_logit_cells": 314601600,
+      "GATv2_softmax_exponentials": 314601600,
+      "GATv2_softmax_max_sum_divide_visits": 314601600,
+      "all_new_model_forward_calls": 17560,
+      "all_new_model_forward_examples": 3368390,
+      "all_new_operator_dense_pair_cells": 629203200,
+      "assessment_model_reads_restores": 9,
+      "cached_integer_start_roundtrip_checks": 2692,
+      "continuation_candidate_examples": 2188634,
+      "continuation_forward_calls": 8308,
+      "continuation_policy_decisions": 8308,
+      "dependency_pair_checks": 56400,
+      "development_forward_calls": 36,
+      "development_forward_examples": 108,
+      "dispatch_pipeline_schedule_visits": 251920,
+      "edge_to_net_reconciliation_visits": 168840,
+      "endpoint_reconciliations": 144,
+      "feature_arrays": 141,
+      "first_flow_records": 268,
+      "first_native_actions": 268,
+      "fit_forward_calls": 9216,
+      "fit_forward_examples": 1179648,
+      "fits": 9,
+      "forced_operator_comparisons": 3,
+      "guarded_policy_comparisons": 6,
+      "inherited_full_state_checks": 24,
+      "inherited_model_reads_restores": 12,
+      "inherited_parameter_checks": 24,
+      "local_candidate_banks": 8308,
+      "local_feature_transforms": 8308,
+      "native_steps": 8576,
+      "new_branch_tails": 268,
+      "new_final_checkpoints": 9,
+      "new_initial_checkpoints": 9,
+      "new_model_digest_checks": 36,
+      "new_model_initializations": 9,
+      "new_scorer_forward_calls": 9252,
+      "new_scorer_forward_examples": 1179756,
+      "observed_S_R_B_edge_visits": 152760,
+      "optimizer_calls": 9216,
+      "origin_endpoint_rows": 8240,
+      "original_future_RNG_assignments": 268,
+      "paired_actual_B_edge_checks": 33440,
+      "paired_actual_flow_contrasts": 176,
+      "paired_metric_checks": 1728,
+      "prepared_feature_float_writes": 769860,
+      "private_outcome_observer_visits": 72661276,
+      "public_lot_decode_visits": 25590,
+      "public_owner_decodes": 960,
+      "public_root_decodes": 48,
+      "restore_shells": 12,
+      "restored_state_equality_checks": 268,
+      "root_restores": 268,
+      "saved_candidate_action_coordinate_writes": 7520,
+      "saved_candidate_action_reconstructions": 94,
+      "saved_projected_edge_visits": 26790,
+      "saved_template_pair_restorations": 47,
+      "snapshot_state_copy_operations": 268,
+      "source_bank_deserializations": 48,
+      "source_snapshot_reads": 44
+    },
+    "native_total_including_proof": 8620,
+    "new_closeout": {
+      "GATv2_logit_cells": 28800,
+      "GATv2_softmax_exponentials": 28800,
+      "GATv2_softmax_max_sum_divide_visits": 28800,
+      "all_new_model_forward_calls": 36,
+      "all_new_model_forward_examples": 108,
+      "all_new_operator_dense_pair_cells": 57600,
+      "assessment_model_reads_restores": 9,
+      "development_forward_calls": 36,
+      "development_forward_examples": 108,
+      "endpoint_reconciliations": 144,
+      "fit_forward_calls": 0,
+      "fit_forward_examples": 0,
+      "fits": 0,
+      "forced_operator_comparisons": 3,
+      "guarded_policy_comparisons": 6,
+      "new_model_digest_checks": 18,
+      "new_model_initializations": 0,
+      "new_scorer_forward_calls": 36,
+      "new_scorer_forward_examples": 108,
+      "optimizer_calls": 0,
+      "origin_endpoint_rows": 2880,
+      "paired_metric_checks": 1728
+    },
+    "original_caps_not_expanded": true,
+    "prior_consumption_not_refunded": true,
+    "retained_proof_counts": {
+      "future_assignments": 44,
+      "native_steps": 44,
+      "observer_visits": 213712,
+      "restore_shells": 2,
+      "root_restores": 44,
+      "snapshot_copies": 132,
+      "snapshot_reads": 10,
+      "state_checks": 44
+    }
+  },
+  "coverage": {
+    "actual_future_records": 48,
+    "blocks": 3,
+    "conditions": 4,
+    "distinct_root_clusters": 12,
+    "endpoint_summaries": 144,
+    "futures_per_root": 4,
+    "root_independence_verified": false,
+    "scored_jobs": 9
+  },
+  "execution_commit": "f3e36fd1ff304aa55cf2dd2650569c4957d829ad",
+  "host_full_commands_verified": true,
+  "manuscript_goal_automation_remote_cloud_messages_unchanged": true,
+  "matched_guarded_results": {
+    "conditional_gatv2": {
+      "blocks": [
+        {
+          "block": 0,
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 0.0,
+              "enrolled": 0.0,
+              "patient_loss": 0.0,
+              "unresolved": 0.0
+            },
+            "enrolled_before_root20": {
+              "completions": 0.0,
+              "enrolled": 0.0,
+              "patient_loss": 0.0,
+              "unresolved": 0.0
+            }
+          },
+          "delta": {
+            "completions": 0.0,
+            "cost_change_percent": 0.0,
+            "patient_loss": 0.0,
+            "total_cost": 0.0,
+            "unresolved": 0.0
+          },
+          "future_records": 16,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 0.0,
+            "decreased_origin_unresolved": 0.0,
+            "gained_origin_completions": 0.0,
+            "increased_origin_unresolved": 0.0,
+            "introduced_origin_losses": 0.0,
+            "lost_origin_completions": 0.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 0,
+            "gained_completions": 0,
+            "introduced_losses": 0,
+            "lost_completions": 0,
+            "new_unresolved": 0,
+            "resolved_unresolved": 0
+          },
+          "left": {
+            "completions": 2771.9375,
+            "patient_loss": 2474.1875,
+            "total_cost": 3578212231.030751,
+            "unresolved": 669.0625
+          },
+          "matched_patient_transition_records": 16,
+          "right": {
+            "completions": 2771.9375,
+            "patient_loss": 2474.1875,
+            "total_cost": 3578212231.030751,
+            "unresolved": 669.0625
+          },
+          "root_clusters": 4,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "block": 1,
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 4.875,
+              "enrolled": 0.0,
+              "patient_loss": -4.3125,
+              "unresolved": -0.5625
+            },
+            "enrolled_before_root20": {
+              "completions": -0.0625,
+              "enrolled": 0.0,
+              "patient_loss": 0.0625,
+              "unresolved": 0.0
+            }
+          },
+          "delta": {
+            "completions": 4.8125,
+            "cost_change_percent": -0.15841552945546858,
+            "patient_loss": -4.25,
+            "total_cost": -5945054.637059212,
+            "unresolved": -0.5625
+          },
+          "future_records": 16,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 141.0,
+            "decreased_origin_unresolved": 25.0,
+            "gained_origin_completions": 162.0,
+            "increased_origin_unresolved": 16.0,
+            "introduced_origin_losses": 73.0,
+            "lost_origin_completions": 85.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 162,
+            "gained_completions": 180,
+            "introduced_losses": 94,
+            "lost_completions": 103,
+            "new_unresolved": 26,
+            "resolved_unresolved": 35
+          },
+          "left": {
+            "completions": 2446.625,
+            "patient_loss": 3005.9375,
+            "total_cost": 3746878079.2403536,
+            "unresolved": 653.75
+          },
+          "matched_patient_transition_records": 16,
+          "right": {
+            "completions": 2441.8125,
+            "patient_loss": 3010.1875,
+            "total_cost": 3752823133.877413,
+            "unresolved": 654.3125
+          },
+          "root_clusters": 4,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "block": 2,
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": -0.3125,
+              "enrolled": 0.0,
+              "patient_loss": 0.25,
+              "unresolved": 0.0625
+            },
+            "enrolled_before_root20": {
+              "completions": -0.125,
+              "enrolled": 0.0,
+              "patient_loss": 0.125,
+              "unresolved": 0.0
+            }
+          },
+          "delta": {
+            "completions": -0.4375,
+            "cost_change_percent": 0.0033864831035325554,
+            "patient_loss": 0.375,
+            "total_cost": 162553.578455925,
+            "unresolved": 0.0625
+          },
+          "future_records": 16,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 143.0,
+            "decreased_origin_unresolved": 17.0,
+            "gained_origin_completions": 150.0,
+            "increased_origin_unresolved": 18.0,
+            "introduced_origin_losses": 149.0,
+            "lost_origin_completions": 157.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 153,
+            "gained_completions": 160,
+            "introduced_losses": 159,
+            "lost_completions": 167,
+            "new_unresolved": 26,
+            "resolved_unresolved": 25
+          },
+          "left": {
+            "completions": 2686.4375,
+            "patient_loss": 2571.8125,
+            "total_cost": 4800233113.102578,
+            "unresolved": 681.8125
+          },
+          "matched_patient_transition_records": 16,
+          "right": {
+            "completions": 2686.875,
+            "patient_loss": 2571.4375,
+            "total_cost": 4800070559.524122,
+            "unresolved": 681.75
+          },
+          "root_clusters": 4,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        }
+      ],
+      "conditions": [
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 3.6666666666666665,
+              "enrolled": 0.0,
+              "patient_loss": -3.0833333333333335,
+              "unresolved": -0.5833333333333334
+            },
+            "enrolled_before_root20": {
+              "completions": -0.25,
+              "enrolled": 0.0,
+              "patient_loss": 0.25,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 0,
+          "delta": {
+            "completions": 3.416666666666515,
+            "cost_change_percent": -0.0976251439400893,
+            "patient_loss": -2.833333333333485,
+            "total_cost": -3891757.849454403,
+            "unresolved": -0.5833333333333712
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 90.0,
+            "decreased_origin_unresolved": 23.0,
+            "gained_origin_completions": 113.0,
+            "increased_origin_unresolved": 16.0,
+            "introduced_origin_losses": 56.0,
+            "lost_origin_completions": 72.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 103,
+            "gained_completions": 124,
+            "introduced_losses": 69,
+            "lost_completions": 83,
+            "new_unresolved": 24,
+            "resolved_unresolved": 31
+          },
+          "left": {
+            "completions": 2729.9166666666665,
+            "patient_loss": 2605.4166666666665,
+            "total_cost": 3982538061.7497883,
+            "unresolved": 654.9166666666666
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2726.5,
+            "patient_loss": 2608.25,
+            "total_cost": 3986429819.5992427,
+            "unresolved": 655.5
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 4.333333333333333,
+              "enrolled": 0.0,
+              "patient_loss": -5.25,
+              "unresolved": 0.9166666666666666
+            },
+            "enrolled_before_root20": {
+              "completions": 0.0,
+              "enrolled": 0.0,
+              "patient_loss": 0.0,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 1,
+          "delta": {
+            "completions": 4.333333333333485,
+            "cost_change_percent": -0.11915587810023073,
+            "patient_loss": -5.25,
+            "total_cost": -4276272.47943306,
+            "unresolved": 0.9166666666666288
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 93.0,
+            "decreased_origin_unresolved": 3.0,
+            "gained_origin_completions": 91.0,
+            "increased_origin_unresolved": 14.0,
+            "introduced_origin_losses": 30.0,
+            "lost_origin_completions": 39.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 103,
+            "gained_completions": 101,
+            "introduced_losses": 40,
+            "lost_completions": 49,
+            "new_unresolved": 18,
+            "resolved_unresolved": 7
+          },
+          "left": {
+            "completions": 2663.25,
+            "patient_loss": 2169.1666666666665,
+            "total_cost": 3584529036.6770096,
+            "unresolved": 557.25
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2658.9166666666665,
+            "patient_loss": 2174.4166666666665,
+            "total_cost": 3588805309.1564426,
+            "unresolved": 556.3333333333334
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": -0.8333333333333334,
+              "enrolled": 0.0,
+              "patient_loss": 1.75,
+              "unresolved": -0.9166666666666666
+            },
+            "enrolled_before_root20": {
+              "completions": -0.25,
+              "enrolled": 0.0,
+              "patient_loss": 0.25,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 2,
+          "delta": {
+            "completions": -1.083333333333485,
+            "cost_change_percent": -0.006778519611107616,
+            "patient_loss": 2.0,
+            "total_cost": -261474.98691940308,
+            "unresolved": -0.9166666666666288
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 65.0,
+            "decreased_origin_unresolved": 14.0,
+            "gained_origin_completions": 73.0,
+            "increased_origin_unresolved": 3.0,
+            "introduced_origin_losses": 89.0,
+            "lost_origin_completions": 86.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 71,
+            "gained_completions": 79,
+            "introduced_losses": 95,
+            "lost_completions": 92,
+            "new_unresolved": 6,
+            "resolved_unresolved": 17
+          },
+          "left": {
+            "completions": 2523.0,
+            "patient_loss": 2469.25,
+            "total_cost": 3857144004.6835575,
+            "unresolved": 675.25
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2524.0833333333335,
+            "patient_loss": 2467.25,
+            "total_cost": 3857405479.670477,
+            "unresolved": 676.1666666666666
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": -1.0833333333333333,
+              "enrolled": 0.0,
+              "patient_loss": 1.1666666666666667,
+              "unresolved": -0.08333333333333333
+            },
+            "enrolled_before_root20": {
+              "completions": 0.25,
+              "enrolled": 0.0,
+              "patient_loss": -0.25,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 3,
+          "delta": {
+            "completions": -0.8333333333330302,
+            "cost_change_percent": 0.015172469890070744,
+            "patient_loss": 0.9166666666669698,
+            "total_cost": 719503.9043359756,
+            "unresolved": -0.08333333333337123
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 36.0,
+            "decreased_origin_unresolved": 2.0,
+            "gained_origin_completions": 35.0,
+            "increased_origin_unresolved": 1.0,
+            "introduced_origin_losses": 47.0,
+            "lost_origin_completions": 45.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 38,
+            "gained_completions": 36,
+            "introduced_losses": 49,
+            "lost_completions": 46,
+            "new_unresolved": 4,
+            "resolved_unresolved": 5
+          },
+          "left": {
+            "completions": 2623.8333333333335,
+            "patient_loss": 3492.0833333333335,
+            "total_cost": 4742886794.721223,
+            "unresolved": 785.4166666666666
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2624.6666666666665,
+            "patient_loss": 3491.1666666666665,
+            "total_cost": 4742167290.816887,
+            "unresolved": 785.5
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        }
+      ],
+      "pooled": {
+        "cohort_mean_deltas": {
+          "enrolled_at_or_after20": {
+            "completions": 1.5208333333333333,
+            "enrolled": 0.0,
+            "patient_loss": -1.3541666666666667,
+            "unresolved": -0.16666666666666666
+          },
+          "enrolled_before_root20": {
+            "completions": -0.0625,
+            "enrolled": 0.0,
+            "patient_loss": 0.0625,
+            "unresolved": 0.0
+          }
+        },
+        "delta": {
+          "completions": 1.458333333333485,
+          "cost_change_percent": -0.047666726303631876,
+          "patient_loss": -1.2916666666669698,
+          "total_cost": -1927500.3528676033,
+          "unresolved": -0.16666666666662877
+        },
+        "future_records": 48,
+        "gross_origin_displacement_sum": {
+          "avoided_origin_losses": 284.0,
+          "decreased_origin_unresolved": 42.0,
+          "gained_origin_completions": 312.0,
+          "increased_origin_unresolved": 34.0,
+          "introduced_origin_losses": 222.0,
+          "lost_origin_completions": 242.0
+        },
+        "gross_patient_status_displacement_sum": {
+          "avoided_losses": 315,
+          "gained_completions": 340,
+          "introduced_losses": 253,
+          "lost_completions": 270,
+          "new_unresolved": 52,
+          "resolved_unresolved": 60
+        },
+        "left": {
+          "completions": 2635.0,
+          "patient_loss": 2683.9791666666665,
+          "total_cost": 4041774474.457895,
+          "unresolved": 668.2083333333334
+        },
+        "matched_patient_transition_records": 48,
+        "right": {
+          "completions": 2633.5416666666665,
+          "patient_loss": 2685.2708333333335,
+          "total_cost": 4043701974.8107624,
+          "unresolved": 668.375
+        },
+        "root_clusters": 12,
+        "unequal_enrollment_records": 0,
+        "unmatched_identity_records": 0
+      }
+    },
+    "conditional_gcn": {
+      "blocks": [
+        {
+          "block": 0,
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 1.75,
+              "enrolled": 0.0,
+              "patient_loss": -0.8125,
+              "unresolved": -0.9375
+            },
+            "enrolled_before_root20": {
+              "completions": 0.0625,
+              "enrolled": 0.0,
+              "patient_loss": -0.0625,
+              "unresolved": 0.0
+            }
+          },
+          "delta": {
+            "completions": 1.8125,
+            "cost_change_percent": 0.060408121535434574,
+            "patient_loss": -0.875,
+            "total_cost": 2161530.793316841,
+            "unresolved": -0.9375
+          },
+          "future_records": 16,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 108.0,
+            "decreased_origin_unresolved": 46.0,
+            "gained_origin_completions": 146.0,
+            "increased_origin_unresolved": 31.0,
+            "introduced_origin_losses": 94.0,
+            "lost_origin_completions": 117.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 121,
+            "gained_completions": 161,
+            "introduced_losses": 107,
+            "lost_completions": 132,
+            "new_unresolved": 42,
+            "resolved_unresolved": 57
+          },
+          "left": {
+            "completions": 2773.75,
+            "patient_loss": 2473.3125,
+            "total_cost": 3580373761.824068,
+            "unresolved": 668.125
+          },
+          "matched_patient_transition_records": 16,
+          "right": {
+            "completions": 2771.9375,
+            "patient_loss": 2474.1875,
+            "total_cost": 3578212231.030751,
+            "unresolved": 669.0625
+          },
+          "root_clusters": 4,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "block": 1,
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 4.625,
+              "enrolled": 0.0,
+              "patient_loss": -4.8125,
+              "unresolved": 0.1875
+            },
+            "enrolled_before_root20": {
+              "completions": 0.25,
+              "enrolled": 0.0,
+              "patient_loss": -0.25,
+              "unresolved": 0.0
+            }
+          },
+          "delta": {
+            "completions": 4.875,
+            "cost_change_percent": -0.14219136639426036,
+            "patient_loss": -5.0625,
+            "total_cost": -5336190.4924201965,
+            "unresolved": 0.1875
+          },
+          "future_records": 16,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 112.0,
+            "decreased_origin_unresolved": 12.0,
+            "gained_origin_completions": 123.0,
+            "increased_origin_unresolved": 15.0,
+            "introduced_origin_losses": 31.0,
+            "lost_origin_completions": 45.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 132,
+            "gained_completions": 140,
+            "introduced_losses": 51,
+            "lost_completions": 62,
+            "new_unresolved": 23,
+            "resolved_unresolved": 20
+          },
+          "left": {
+            "completions": 2446.6875,
+            "patient_loss": 3005.125,
+            "total_cost": 3747486943.3849926,
+            "unresolved": 654.5
+          },
+          "matched_patient_transition_records": 16,
+          "right": {
+            "completions": 2441.8125,
+            "patient_loss": 3010.1875,
+            "total_cost": 3752823133.877413,
+            "unresolved": 654.3125
+          },
+          "root_clusters": 4,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "block": 2,
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 0.375,
+              "enrolled": 0.0,
+              "patient_loss": -0.3125,
+              "unresolved": -0.0625
+            },
+            "enrolled_before_root20": {
+              "completions": -0.0625,
+              "enrolled": 0.0,
+              "patient_loss": 0.0625,
+              "unresolved": 0.0
+            }
+          },
+          "delta": {
+            "completions": 0.3125,
+            "cost_change_percent": -0.008762118198822803,
+            "patient_loss": -0.25,
+            "total_cost": -420587.8560523987,
+            "unresolved": -0.0625
+          },
+          "future_records": 16,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 153.0,
+            "decreased_origin_unresolved": 18.0,
+            "gained_origin_completions": 162.0,
+            "increased_origin_unresolved": 17.0,
+            "introduced_origin_losses": 149.0,
+            "lost_origin_completions": 157.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 162,
+            "gained_completions": 171,
+            "introduced_losses": 158,
+            "lost_completions": 166,
+            "new_unresolved": 24,
+            "resolved_unresolved": 25
+          },
+          "left": {
+            "completions": 2687.1875,
+            "patient_loss": 2571.1875,
+            "total_cost": 4799649971.66807,
+            "unresolved": 681.6875
+          },
+          "matched_patient_transition_records": 16,
+          "right": {
+            "completions": 2686.875,
+            "patient_loss": 2571.4375,
+            "total_cost": 4800070559.524122,
+            "unresolved": 681.75
+          },
+          "root_clusters": 4,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        }
+      ],
+      "conditions": [
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 2.8333333333333335,
+              "enrolled": 0.0,
+              "patient_loss": -2.1666666666666665,
+              "unresolved": -0.6666666666666666
+            },
+            "enrolled_before_root20": {
+              "completions": -0.3333333333333333,
+              "enrolled": 0.0,
+              "patient_loss": 0.3333333333333333,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 0,
+          "delta": {
+            "completions": 2.5,
+            "cost_change_percent": -0.04664508163043164,
+            "patient_loss": -1.833333333333485,
+            "total_cost": -1859473.4434919357,
+            "unresolved": -0.6666666666666288
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 124.0,
+            "decreased_origin_unresolved": 45.0,
+            "gained_origin_completions": 168.0,
+            "increased_origin_unresolved": 37.0,
+            "introduced_origin_losses": 102.0,
+            "lost_origin_completions": 138.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 139,
+            "gained_completions": 181,
+            "introduced_losses": 117,
+            "lost_completions": 151,
+            "new_unresolved": 49,
+            "resolved_unresolved": 57
+          },
+          "left": {
+            "completions": 2729.0,
+            "patient_loss": 2606.4166666666665,
+            "total_cost": 3984570346.1557508,
+            "unresolved": 654.8333333333334
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2726.5,
+            "patient_loss": 2608.25,
+            "total_cost": 3986429819.5992427,
+            "unresolved": 655.5
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 4.916666666666667,
+              "enrolled": 0.0,
+              "patient_loss": -5.666666666666667,
+              "unresolved": 0.75
+            },
+            "enrolled_before_root20": {
+              "completions": 0.0,
+              "enrolled": 0.0,
+              "patient_loss": 0.0,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 1,
+          "delta": {
+            "completions": 4.91666666666697,
+            "cost_change_percent": -0.13362854254933595,
+            "patient_loss": -5.666666666666515,
+            "total_cost": -4795668.229558945,
+            "unresolved": 0.75
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 98.0,
+            "decreased_origin_unresolved": 4.0,
+            "gained_origin_completions": 98.0,
+            "increased_origin_unresolved": 13.0,
+            "introduced_origin_losses": 30.0,
+            "lost_origin_completions": 39.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 107,
+            "gained_completions": 107,
+            "introduced_losses": 39,
+            "lost_completions": 48,
+            "new_unresolved": 16,
+            "resolved_unresolved": 7
+          },
+          "left": {
+            "completions": 2663.8333333333335,
+            "patient_loss": 2168.75,
+            "total_cost": 3584009640.9268837,
+            "unresolved": 557.0833333333334
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2658.9166666666665,
+            "patient_loss": 2174.4166666666665,
+            "total_cost": 3588805309.1564426,
+            "unresolved": 556.3333333333334
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": 2.3333333333333335,
+              "enrolled": 0.0,
+              "patient_loss": -1.25,
+              "unresolved": -1.0833333333333333
+            },
+            "enrolled_before_root20": {
+              "completions": 0.4166666666666667,
+              "enrolled": 0.0,
+              "patient_loss": -0.4166666666666667,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 2,
+          "delta": {
+            "completions": 2.75,
+            "cost_change_percent": 0.02960472700780939,
+            "patient_loss": -1.666666666666515,
+            "total_cost": 1141974.361840725,
+            "unresolved": -1.0833333333332575
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 115.0,
+            "decreased_origin_unresolved": 25.0,
+            "gained_origin_completions": 130.0,
+            "increased_origin_unresolved": 12.0,
+            "introduced_origin_losses": 95.0,
+            "lost_origin_completions": 97.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 131,
+            "gained_completions": 148,
+            "introduced_losses": 111,
+            "lost_completions": 115,
+            "new_unresolved": 20,
+            "resolved_unresolved": 33
+          },
+          "left": {
+            "completions": 2526.8333333333335,
+            "patient_loss": 2465.5833333333335,
+            "total_cost": 3858547454.0323176,
+            "unresolved": 675.0833333333334
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2524.0833333333335,
+            "patient_loss": 2467.25,
+            "total_cost": 3857405479.670477,
+            "unresolved": 676.1666666666666
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        },
+        {
+          "cohort_mean_deltas": {
+            "enrolled_at_or_after20": {
+              "completions": -1.0833333333333333,
+              "enrolled": 0.0,
+              "patient_loss": 1.1666666666666667,
+              "unresolved": -0.08333333333333333
+            },
+            "enrolled_before_root20": {
+              "completions": 0.25,
+              "enrolled": 0.0,
+              "patient_loss": -0.25,
+              "unresolved": 0.0
+            }
+          },
+          "condition": 3,
+          "delta": {
+            "completions": -0.8333333333330302,
+            "cost_change_percent": 0.015172469890070744,
+            "patient_loss": 0.9166666666669698,
+            "total_cost": 719503.9043359756,
+            "unresolved": -0.08333333333337123
+          },
+          "future_records": 12,
+          "gross_origin_displacement_sum": {
+            "avoided_origin_losses": 36.0,
+            "decreased_origin_unresolved": 2.0,
+            "gained_origin_completions": 35.0,
+            "increased_origin_unresolved": 1.0,
+            "introduced_origin_losses": 47.0,
+            "lost_origin_completions": 45.0
+          },
+          "gross_patient_status_displacement_sum": {
+            "avoided_losses": 38,
+            "gained_completions": 36,
+            "introduced_losses": 49,
+            "lost_completions": 46,
+            "new_unresolved": 4,
+            "resolved_unresolved": 5
+          },
+          "left": {
+            "completions": 2623.8333333333335,
+            "patient_loss": 3492.0833333333335,
+            "total_cost": 4742886794.721223,
+            "unresolved": 785.4166666666666
+          },
+          "matched_patient_transition_records": 12,
+          "right": {
+            "completions": 2624.6666666666665,
+            "patient_loss": 3491.1666666666665,
+            "total_cost": 4742167290.816887,
+            "unresolved": 785.5
+          },
+          "root_clusters": 3,
+          "unequal_enrollment_records": 0,
+          "unmatched_identity_records": 0
+        }
+      ],
+      "pooled": {
+        "cohort_mean_deltas": {
+          "enrolled_at_or_after20": {
+            "completions": 2.25,
+            "enrolled": 0.0,
+            "patient_loss": -1.9791666666666667,
+            "unresolved": -0.2708333333333333
+          },
+          "enrolled_before_root20": {
+            "completions": 0.08333333333333333,
+            "enrolled": 0.0,
+            "patient_loss": -0.08333333333333333,
+            "unresolved": 0.0
+          }
+        },
+        "delta": {
+          "completions": 2.333333333333485,
+          "cost_change_percent": -0.02963660178678193,
+          "patient_loss": -2.0625,
+          "total_cost": -1198415.8517189026,
+          "unresolved": -0.27083333333337123
+        },
+        "future_records": 48,
+        "gross_origin_displacement_sum": {
+          "avoided_origin_losses": 373.0,
+          "decreased_origin_unresolved": 76.0,
+          "gained_origin_completions": 431.0,
+          "increased_origin_unresolved": 63.0,
+          "introduced_origin_losses": 274.0,
+          "lost_origin_completions": 319.0
+        },
+        "gross_patient_status_displacement_sum": {
+          "avoided_losses": 415,
+          "gained_completions": 472,
+          "introduced_losses": 316,
+          "lost_completions": 360,
+          "new_unresolved": 89,
+          "resolved_unresolved": 102
+        },
+        "left": {
+          "completions": 2635.875,
+          "patient_loss": 2683.2083333333335,
+          "total_cost": 4042503558.9590435,
+          "unresolved": 668.1041666666666
+        },
+        "matched_patient_transition_records": 48,
+        "right": {
+          "completions": 2633.5416666666665,
+          "patient_loss": 2685.2708333333335,
+          "total_cost": 4043701974.8107624,
+          "unresolved": 668.375
+        },
+        "root_clusters": 12,
+        "unequal_enrollment_records": 0,
+        "unmatched_identity_records": 0
+      }
+    }
+  },
+  "negative_results_preserved": true,
+  "new_fits": 0,
+  "new_seed_slots": 0,
+  "new_simulation": 0,
+  "new_updates": 0,
+  "no_automatic_retry_follow_on": true,
+  "old_models_and_failure_roots_unchanged": true,
+  "packet_sha256": "04b27516f5769677a7456b7ff764ed7e6b1d0f8c7cafa7252d886d0e3ae01f77",
+  "pids": [
+    59376,
+    59377,
+    59398,
+    59375,
+    59399,
+    59373,
+    59372,
+    59374,
+    59397
+  ],
+  "result_root": "results/native_gcn_conditional_recipient_allocation_20261030_assessment_closeout1",
+  "scientific_processes_exited": true,
+  "score_calls": 36,
+  "score_examples": 108,
+  "screen": {
+    "by_role": {
+      "conditional_gatv2": {
+        "guarded_service_protection_passed": false,
+        "interpretation": "conditional DEVELOPMENT operator evidence only; service guard alone is not proof of improvement",
+        "joint_screen_passed": false,
+        "operator_claim_allowed": false,
+        "primary_controls": [
+          {
+            "condition_scope": "pooled conditions and condition/future-half;root rows descriptive,not a new per-root veto",
+            "control": "conditional_non_graph",
+            "no_condition_reversal": false,
+            "passed": false,
+            "pooled_regret_delta": -1.8333333333333333,
+            "strict_pooled_every_block_and_both_halves": false
+          },
+          {
+            "condition_scope": "pooled conditions and condition/future-half;root rows descriptive,not a new per-root veto",
+            "control": "conditional_gcn",
+            "no_condition_reversal": false,
+            "passed": false,
+            "pooled_regret_delta": -0.5416666666666667,
+            "strict_pooled_every_block_and_both_halves": false
+          }
+        ],
+        "service_controls": [
+          {
+            "control": "q0",
+            "cost_is_reported_not_hidden_by_service_guard": true,
+            "harms": [
+              {
+                "completions": 1.0,
+                "group": "pooled",
+                "patient_loss": -1.458333333333485,
+                "unresolved": 0.45833333333337123
+              },
+              {
+                "completions": -1.8125,
+                "group": "block:0",
+                "patient_loss": 0.875,
+                "unresolved": 0.9375
+              },
+              {
+                "completions": 5.25,
+                "group": "block:1",
+                "patient_loss": -5.625,
+                "unresolved": 0.375
+              },
+              {
+                "completions": -0.4375,
+                "group": "block:2",
+                "patient_loss": 0.375,
+                "unresolved": 0.0625
+              },
+              {
+                "completions": 1.75,
+                "group": "condition:1",
+                "patient_loss": -2.5,
+                "unresolved": 0.75
+              },
+              {
+                "completions": -1.666666666666515,
+                "group": "condition:2",
+                "patient_loss": -0.25,
+                "unresolved": 1.9166666666666288
+              },
+              {
+                "completions": -0.8333333333330302,
+                "group": "condition:3",
+                "patient_loss": 0.9166666666669698,
+                "unresolved": -0.08333333333337123
+              }
+            ],
+            "passed": false,
+            "pooled_cost_delta": -2089903.7078118324
+          },
+          {
+            "control": "conditional_non_graph",
+            "cost_is_reported_not_hidden_by_service_guard": true,
+            "harms": [
+              {
+                "completions": -0.4375,
+                "group": "block:2",
+                "patient_loss": 0.375,
+                "unresolved": 0.0625
+              },
+              {
+                "completions": 4.333333333333485,
+                "group": "condition:1",
+                "patient_loss": -5.25,
+                "unresolved": 0.9166666666666288
+              },
+              {
+                "completions": -1.083333333333485,
+                "group": "condition:2",
+                "patient_loss": 2.0,
+                "unresolved": -0.9166666666666288
+              },
+              {
+                "completions": -0.8333333333330302,
+                "group": "condition:3",
+                "patient_loss": 0.9166666666669698,
+                "unresolved": -0.08333333333337123
+              }
+            ],
+            "passed": false,
+            "pooled_cost_delta": -1927500.3528676033
+          },
+          {
+            "control": "conditional_gcn",
+            "cost_is_reported_not_hidden_by_service_guard": true,
+            "harms": [
+              {
+                "completions": -0.875,
+                "group": "pooled",
+                "patient_loss": 0.7708333333330302,
+                "unresolved": 0.10416666666674246
+              },
+              {
+                "completions": -1.8125,
+                "group": "block:0",
+                "patient_loss": 0.875,
+                "unresolved": 0.9375
+              },
+              {
+                "completions": -0.0625,
+                "group": "block:1",
+                "patient_loss": 0.8125,
+                "unresolved": -0.75
+              },
+              {
+                "completions": -0.75,
+                "group": "block:2",
+                "patient_loss": 0.625,
+                "unresolved": 0.125
+              },
+              {
+                "completions": 0.9166666666665151,
+                "group": "condition:0",
+                "patient_loss": -1.0,
+                "unresolved": 0.08333333333325754
+              },
+              {
+                "completions": -0.5833333333334849,
+                "group": "condition:1",
+                "patient_loss": 0.4166666666665151,
+                "unresolved": 0.16666666666662877
+              },
+              {
+                "completions": -3.833333333333485,
+                "group": "condition:2",
+                "patient_loss": 3.666666666666515,
+                "unresolved": 0.16666666666662877
+              }
+            ],
+            "passed": false,
+            "pooled_cost_delta": -729084.5011487007
+          }
+        ]
+      },
+      "conditional_gcn": {
+        "guarded_service_protection_passed": false,
+        "interpretation": "conditional DEVELOPMENT operator evidence only; service guard alone is not proof of improvement",
+        "joint_screen_passed": false,
+        "operator_claim_allowed": false,
+        "primary_controls": [
+          {
+            "condition_scope": "pooled conditions and condition/future-half;root rows descriptive,not a new per-root veto",
+            "control": "conditional_non_graph",
+            "no_condition_reversal": false,
+            "passed": false,
+            "pooled_regret_delta": -1.2916666666666665,
+            "strict_pooled_every_block_and_both_halves": false
+          }
+        ],
+        "service_controls": [
+          {
+            "control": "q0",
+            "cost_is_reported_not_hidden_by_service_guard": true,
+            "harms": [
+              {
+                "completions": 1.875,
+                "group": "pooled",
+                "patient_loss": -2.229166666666515,
+                "unresolved": 0.35416666666662877
+              },
+              {
+                "completions": 5.3125,
+                "group": "block:1",
+                "patient_loss": -6.4375,
+                "unresolved": 1.125
+              },
+              {
+                "completions": 2.333333333333485,
+                "group": "condition:1",
+                "patient_loss": -2.916666666666515,
+                "unresolved": 0.5833333333333712
+              },
+              {
+                "completions": 2.16666666666697,
+                "group": "condition:2",
+                "patient_loss": -3.916666666666515,
+                "unresolved": 1.75
+              },
+              {
+                "completions": -0.8333333333330302,
+                "group": "condition:3",
+                "patient_loss": 0.9166666666669698,
+                "unresolved": -0.08333333333337123
+              }
+            ],
+            "passed": false,
+            "pooled_cost_delta": -1360819.2066631317
+          },
+          {
+            "control": "conditional_non_graph",
+            "cost_is_reported_not_hidden_by_service_guard": true,
+            "harms": [
+              {
+                "completions": 4.875,
+                "group": "block:1",
+                "patient_loss": -5.0625,
+                "unresolved": 0.1875
+              },
+              {
+                "completions": 4.91666666666697,
+                "group": "condition:1",
+                "patient_loss": -5.666666666666515,
+                "unresolved": 0.75
+              },
+              {
+                "completions": -0.8333333333330302,
+                "group": "condition:3",
+                "patient_loss": 0.9166666666669698,
+                "unresolved": -0.08333333333337123
+              }
+            ],
+            "passed": false,
+            "pooled_cost_delta": -1198415.8517189026
+          }
+        ]
+      },
+      "conditional_non_graph": {
+        "guarded_service_protection_passed": false,
+        "interpretation": "conditional DEVELOPMENT operator evidence only; service guard alone is not proof of improvement",
+        "joint_screen_passed": false,
+        "operator_claim_allowed": false,
+        "primary_controls": [],
+        "service_controls": [
+          {
+            "control": "q0",
+            "cost_is_reported_not_hidden_by_service_guard": true,
+            "harms": [
+              {
+                "completions": -0.4583333333334849,
+                "group": "pooled",
+                "patient_loss": -0.16666666666651508,
+                "unresolved": 0.625
+              },
+              {
+                "completions": -1.8125,
+                "group": "block:0",
+                "patient_loss": 0.875,
+                "unresolved": 0.9375
+              },
+              {
+                "completions": 0.4375,
+                "group": "block:1",
+                "patient_loss": -1.375,
+                "unresolved": 0.9375
+              },
+              {
+                "completions": -2.583333333333485,
+                "group": "condition:1",
+                "patient_loss": 2.75,
+                "unresolved": -0.16666666666662877
+              },
+              {
+                "completions": -0.5833333333330302,
+                "group": "condition:2",
+                "patient_loss": -2.25,
+                "unresolved": 2.8333333333332575
+              }
+            ],
+            "passed": false,
+            "pooled_cost_delta": -162403.35494422913
+          }
+        ]
+      }
+    },
+    "individual_patient_attribution_complete": true,
+    "paired_data_valid": true,
+    "passed": false
+  },
+  "status": "completed_negative_fixed_screen",
+  "utc": "2026-10-31T05:24:40.178159+00:00"
+}

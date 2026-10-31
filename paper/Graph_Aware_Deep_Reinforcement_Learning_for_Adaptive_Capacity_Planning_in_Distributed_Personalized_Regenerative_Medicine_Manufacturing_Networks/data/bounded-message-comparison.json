@@ -1,0 +1,5758 @@
+{
+  "clinical_safety_claim": false,
+  "decision": {
+    "non_graph_vs_local32_protection": true,
+    "outcome": "close_fixed_recipe_failed_or_inconclusive",
+    "passed": false
+  },
+  "evaluations": 72,
+  "interval_method": "paired_blocks_then_worlds_within_fixed_conditions_descriptive_only",
+  "label": "DEVELOPMENT_SYNTHETIC_THREE_BLOCKS",
+  "mature_graph_improvement": false,
+  "paired_worlds": 24,
+  "pairs": [
+    {
+      "blocks": [
+        {
+          "block": 0,
+          "candidate_mean_cost": 3740069330.452543,
+          "cost_gain_percent": 3.5432231045544134,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 137386925.9456929,
+          "extra_completions": -37.375,
+          "extra_patient_losses": 29.0,
+          "patient_harmed_worlds": 5,
+          "reference_mean_cost": 3877456256.398236
+        },
+        {
+          "block": 1,
+          "candidate_mean_cost": 3599582614.108068,
+          "cost_gain_percent": 5.51955656523943,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 210287961.48211312,
+          "extra_completions": 7.125,
+          "extra_patient_losses": 10.0,
+          "patient_harmed_worlds": 4,
+          "reference_mean_cost": 3809870575.5901814
+        },
+        {
+          "block": 2,
+          "candidate_mean_cost": 3818700150.0094266,
+          "cost_gain_percent": 5.45352510750981,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 220266034.9823581,
+          "extra_completions": -6.875,
+          "extra_patient_losses": 11.0,
+          "patient_harmed_worlds": 5,
+          "reference_mean_cost": 4038966184.9917846
+        }
+      ],
+      "candidate": "message_gcn",
+      "candidate_mean_cost": 3719450698.1900125,
+      "conditions": [
+        {
+          "candidate_mean_cost": 3499890825.0060964,
+          "condition": 0,
+          "cost_gain_percent": 5.914268028544738,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 220004584.92484918,
+          "extra_completions": 20.166666666666668,
+          "extra_patient_losses": -9.0,
+          "patient_harmed_worlds": 2,
+          "reference_mean_cost": 3719895409.930946
+        },
+        {
+          "candidate_mean_cost": 3362640485.4793754,
+          "condition": 1,
+          "cost_gain_percent": 4.407004663112054,
+          "cost_harmed_worlds": 1,
+          "cost_saving": 155023621.21462345,
+          "extra_completions": -68.83333333333333,
+          "extra_patient_losses": 69.33333333333333,
+          "patient_harmed_worlds": 4,
+          "reference_mean_cost": 3517664106.693998
+        },
+        {
+          "candidate_mean_cost": 3496619966.2693024,
+          "condition": 2,
+          "cost_gain_percent": 5.28405227061914,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 195070873.65105018,
+          "extra_completions": -23.0,
+          "extra_patient_losses": 21.666666666666668,
+          "patient_harmed_worlds": 4,
+          "reference_mean_cost": 3691690839.9203525
+        },
+        {
+          "candidate_mean_cost": 4518651516.005277,
+          "condition": 3,
+          "cost_gain_percent": 3.977117706819814,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 187155483.42302933,
+          "extra_completions": 22.166666666666668,
+          "extra_patient_losses": -15.333333333333334,
+          "patient_harmed_worlds": 4,
+          "reference_mean_cost": 4705806999.428306
+        }
+      ],
+      "cost_ci95": [
+        134071937.30795607,
+        239528871.54384655
+      ],
+      "cost_gain_percent": 4.843311706331745,
+      "cost_gain_percent_ci95": [
+        3.416719039351131,
+        6.100878425504618
+      ],
+      "cost_harmed_worlds": 1,
+      "cost_saving": 189313640.80338803,
+      "extra_completions": -12.375,
+      "extra_metrics": [
+        {
+          "candidate_mean": 3744.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "directed_packets"
+          ],
+          "reference_mean": 3744.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 239616.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "dynamic_bytes"
+          ],
+          "reference_mean": 239616.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 305152.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "modeled_total_bytes"
+          ],
+          "reference_mean": 305152.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 65536.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "static_provision_bytes"
+          ],
+          "reference_mean": 65536.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 13234.799960629642,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 21,
+          "decreased_worlds": 3,
+          "difference": 1896.0000195130697,
+          "expected_worlds": 24,
+          "increased_worlds": 21,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "bioreactor_holding_cost"
+          ],
+          "reference_mean": 11338.799941116571,
+          "reference_recorded_worlds": 24,
+          "saving": -1896.0000195130697
+        },
+        {
+          "candidate_mean": 1122716319.7959492,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 16,
+          "decreased_worlds": 8,
+          "difference": 5088106.7196109,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "bioreactor_shortage_cost"
+          ],
+          "reference_mean": 1117628213.076338,
+          "reference_recorded_worlds": 24,
+          "saving": -5088106.7196109
+        },
+        {
+          "candidate_mean": 97687.73214009106,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 11,
+          "decreased_worlds": 13,
+          "difference": -2524.9020438262974,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "capacity_transfer_cost"
+          ],
+          "reference_mean": 100212.63418391735,
+          "reference_recorded_worlds": 24,
+          "saving": 2524.9020438262974
+        },
+        {
+          "candidate_mean": 251383333.33333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 14,
+          "decreased_worlds": 10,
+          "difference": 1687500.0,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "expiry_cost"
+          ],
+          "reference_mean": 249695833.33333334,
+          "reference_recorded_worlds": 24,
+          "saving": -1687500.0
+        },
+        {
+          "candidate_mean": 1257020833.3333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 14,
+          "decreased_worlds": 10,
+          "difference": 8333333.333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "patient_loss_cost"
+          ],
+          "reference_mean": 1248687500.0,
+          "reference_recorded_worlds": 24,
+          "saving": -8333333.333333333
+        },
+        {
+          "candidate_mean": 15098748.937125698,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 11,
+          "decreased_worlds": 13,
+          "difference": -148358.6878207176,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_holding_cost"
+          ],
+          "reference_mean": 15247107.624946415,
+          "reference_recorded_worlds": 24,
+          "saving": 148358.6878207176
+        },
+        {
+          "candidate_mean": 1048884952.5040587,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 0,
+          "decreased_worlds": 24,
+          "difference": -200347586.99023297,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_purchase_cost"
+          ],
+          "reference_mean": 1249232539.4942915,
+          "reference_recorded_worlds": 24,
+          "saving": 200347586.99023297
+        },
+        {
+          "candidate_mean": 13938037.735496888,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 12,
+          "decreased_worlds": 12,
+          "difference": -3752132.55159593,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_shortage_cost"
+          ],
+          "reference_mean": 17690170.28709282,
+          "reference_recorded_worlds": 24,
+          "saving": 3752132.55159593
+        },
+        {
+          "candidate_mean": 14757.83611595099,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 7,
+          "decreased_worlds": 11,
+          "difference": -1236.436560084303,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_transfer_cost"
+          ],
+          "reference_mean": 15994.27267603529,
+          "reference_recorded_worlds": 24,
+          "saving": 1236.436560084303
+        },
+        {
+          "candidate_mean": 44250.51583213543,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 13,
+          "decreased_worlds": 11,
+          "difference": 5487.711901838312,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "specimen_transfer_cost"
+          ],
+          "reference_mean": 38762.80393029713,
+          "reference_recorded_worlds": 24,
+          "saving": -5487.711901838312
+        },
+        {
+          "candidate_mean": 10238541.666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 11,
+          "decreased_worlds": 13,
+          "difference": -178125.0,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "urgency_cost"
+          ],
+          "reference_mean": 10416666.666666666,
+          "reference_recorded_worlds": 24,
+          "saving": 178125.0
+        },
+        {
+          "candidate_mean": 689.5833333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 17,
+          "difference": -4.291666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "active_patients"
+          ],
+          "reference_mean": 693.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 106.79166666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": -1.625,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "in_production_patients"
+          ],
+          "reference_mean": 108.41666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "other_active_finished_or_return_patients"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.16666666666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 4,
+          "difference": -0.3333333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 3,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "specimen_in_transit"
+          ],
+          "reference_mean": 0.5,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5257.083333333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 7,
+          "difference": 4.291666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 17,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "terminal_patients"
+          ],
+          "reference_mean": 5252.791666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 582.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -2.3333333333333335,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "waiting_patients"
+          ],
+          "reference_mean": 584.9583333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.01556461979166679,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": -0.0007200277083332096,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "maximum"
+          ],
+          "reference_mean": 0.0162846475,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.011275589641025636,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -4.598538461540952e-05,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "mean"
+          ],
+          "reference_mean": 0.011321575025641045,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.011198496583333281,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -4.989412499999124e-05,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "p50"
+          ],
+          "reference_mean": 0.011248390708333273,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.012552189866666638,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -7.526860000010177e-05,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "p95"
+          ],
+          "reference_mean": 0.012627458466666741,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.5863306613333331,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -0.0023912400000012934,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "total"
+          ],
+          "reference_mean": 0.5887219013333344,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5946.666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "enrolled"
+          ],
+          "reference_mean": 5946.666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 4.295784957132764,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.008408989847546547,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "average_turnaround_time"
+          ],
+          "reference_mean": 4.287375967285217,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.40584988786486526,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 17,
+          "difference": -0.00398546725061058,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "completion_service_level"
+          ],
+          "reference_mean": 0.4098353551154757,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.60224200861712,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 17,
+          "difference": -0.004420682455388371,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "eligibility_rate"
+          ],
+          "reference_mean": 0.6066626910725084,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.04797208423538296,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.000283045238081052,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "manufacturing_loss_rate"
+          ],
+          "reference_mean": 0.047689038997301904,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.04797208423538296,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.000283045238081052,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "patient_ineligibility_during_manufacturing_rate"
+          ],
+          "reference_mean": 0.047689038997301904,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5.143149265830195,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 0.011769879597230748,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "average_turnaround_time"
+          ],
+          "reference_mean": 5.131379386232964,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.46622702873430105,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -0.002475099739692133,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "completion_service_level"
+          ],
+          "reference_mean": 0.4687021284739932,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.5266347751634192,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -0.0031655069972471674,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "eligibility_rate"
+          ],
+          "reference_mean": 0.5298002821606663,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0813498372254306,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.0010421235079919712,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "manufacturing_loss_rate"
+          ],
+          "reference_mean": 0.08030771371743863,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0813498372254306,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.0010421235079919712,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "patient_ineligibility_during_manufacturing_rate"
+          ],
+          "reference_mean": 0.08030771371743863,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 409.5416666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -7.125,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "at_risk_unserved"
+          ],
+          "reference_mean": 416.6666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 2.5,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "bioreactors_released_after_cleaning"
+          ],
+          "reference_mean": 250.04166666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 86.00000104556482,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -2.208333730387191,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "capacity_transfer_arrivals"
+          ],
+          "reference_mean": 88.208334775952,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5946.666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "demand"
+          ],
+          "reference_mean": 5946.666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "finished_expired"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2513.8333333333335,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 16.875,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "material_wasted"
+          ],
+          "reference_mean": 2496.9583333333335,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2743.0416666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -12.375,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_completed"
+          ],
+          "reference_mean": 2755.4166666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2514.0416666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 16.666666666666668,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost"
+          ],
+          "reference_mean": 2497.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2261.2916666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 14.375,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_expired"
+          ],
+          "reference_mean": 2246.9166666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.75,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 2.2916666666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_ineligible"
+          ],
+          "reference_mean": 250.45833333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 2.5,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_manufacturing"
+          ],
+          "reference_mean": 250.04166666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_return_ineligible"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 6.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": 0.2916666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_expired"
+          ],
+          "reference_mean": 6.333333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_ineligible"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_transport"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2254.6666666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 14.083333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_waiting_expired"
+          ],
+          "reference_mean": 2240.5833333333335,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.20833333333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 5,
+          "difference": -0.20833333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 4,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_waiting_ineligible"
+          ],
+          "reference_mean": 0.4166666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 3102.375,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -11.5,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_started"
+          ],
+          "reference_mean": 3113.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 3102.375,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -11.5,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "production"
+          ],
+          "reference_mean": 3113.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 31.541666530150298,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": -2.4166669828506806,
+          "expected_worlds": 24,
+          "increased_worlds": 6,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "reagent_transfer_arrivals"
+          ],
+          "reference_mean": 33.95833351300098,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 24870.416666762903,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 24,
+          "difference": -4750.499999768411,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "replenishment"
+          ],
+          "reference_mean": 29620.916666531313,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 56.666666666666664,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 8.125,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "specimen_transfer_arrivals"
+          ],
+          "reference_mean": 48.541666666666664,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 2.5,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "therapies_discarded"
+          ],
+          "reference_mean": 250.04166666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 6.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": 0.2916666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "transit_expiry"
+          ],
+          "reference_mean": 6.333333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "transit_loss"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 22332.125007875886,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 101.20832245176037,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "under_bioreactors"
+          ],
+          "reference_mean": 22230.916685424123,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 161.12500199986002,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": -43.37499842893643,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "under_reagents"
+          ],
+          "reference_mean": 204.50000042879643,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "initial_enrolled"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": -3719450698.1900125,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 1,
+          "difference": 189313640.80338803,
+          "expected_worlds": 24,
+          "increased_worlds": 23,
+          "paired_worlds": 24,
+          "path": [
+            "reward"
+          ],
+          "reference_mean": -3908764338.9934006,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 225.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -15.208333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_inbound_requests"
+          ],
+          "reference_mean": 240.75,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 7768.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": -747.1666666666666,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_outbound_requests"
+          ],
+          "reference_mean": 8515.791666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 7922.416666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": -750.6666666666666,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_requests"
+          ],
+          "reference_mean": 8673.083333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 44250.51583213543,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 5487.711901838312,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_cost"
+          ],
+          "reference_mean": 38762.80393029713,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 63.458333333333336,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 8.083333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_count"
+          ],
+          "reference_mean": 55.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 24874.48015302591,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 2459.342389706257,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_distance_miles"
+          ],
+          "reference_mean": 22415.137763319653,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 81.47812697271848,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 8.960351446079187,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_time_hours"
+          ],
+          "reference_mean": 72.5177755266393,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 156696.0840881775,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": 1726.3732979277156,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "transshipment_cost"
+          ],
+          "reference_mean": 154969.71079024978,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 52.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "steps"
+          ],
+          "reference_mean": 52.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 528.8333333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": 11.208333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "capacity_nonzero_site_epochs"
+          ],
+          "reference_mean": 517.625,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 395.2384269226998,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 9.07870365344678,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "capacity_normalized_l1"
+          ],
+          "reference_mean": 386.159723269253,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 539.2083333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -8.0,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "reagent_nonzero_site_epochs"
+          ],
+          "reference_mean": 547.2083333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 435.7878787902226,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -14.053787955187374,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "reagent_normalized_l1"
+          ],
+          "reference_mean": 449.84166674541,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 376.8333333333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 9.958333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "specimen_nonzero_site_epochs"
+          ],
+          "reference_mean": 366.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 67.6756947133302,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": -6.218402750052822,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "specimen_normalized_l1"
+          ],
+          "reference_mean": 73.89409746338303,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 86.16666771347325,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -2.7083337397004166,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "capacity_dispatched_units"
+          ],
+          "reference_mean": 88.87500145317365,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 34.41666652021619,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": -2.7500003653888903,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "reagent_dispatched_units"
+          ],
+          "reference_mean": 37.16666688560508,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 63.458333333333336,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 8.083333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "specimen_dispatched_units"
+          ],
+          "reference_mean": 55.375,
+          "reference_recorded_worlds": 24
+        }
+      ],
+      "extra_patient_losses": 16.666666666666668,
+      "extra_patient_losses_ci95": [
+        -19.126041666666666,
+        55.7687499999999
+      ],
+      "patient_harmed_worlds": 14,
+      "reference": "message_mlp",
+      "reference_mean_cost": 3908764338.9934006,
+      "screen": {
+        "checks": {
+          "every_block_lower_cost": true,
+          "every_block_patient_nonincrease": false,
+          "every_condition_cost_nonincrease": true,
+          "every_condition_patient_nonincrease": false,
+          "mean_cost_gain_at_least_half_percent": true,
+          "patient_overall_nonincrease": false
+        },
+        "passed": false
+      },
+      "worlds": [
+        {
+          "candidate_mean_cost": 3178094474.536236,
+          "cost_gain_percent": 5.5245251385163785,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 185841487.88770342,
+          "extra_completions": 29.0,
+          "extra_patient_losses": -16.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3363935962.423939,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 1356855121312711258
+          }
+        },
+        {
+          "candidate_mean_cost": 3800669900.0474534,
+          "cost_gain_percent": 2.6564734023638104,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 103719054.0915327,
+          "extra_completions": -18.0,
+          "extra_patient_losses": 33.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3904388954.138986,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 1539075223966489373
+          }
+        },
+        {
+          "candidate_mean_cost": 3224775415.2504315,
+          "cost_gain_percent": 0.643516465508866,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 20886367.989880085,
+          "extra_completions": -105.0,
+          "extra_patient_losses": 83.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3245661783.2403116,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5796923753652790766
+          }
+        },
+        {
+          "candidate_mean_cost": 3586545778.0801864,
+          "cost_gain_percent": -0.49504968163478413,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -17667719.46709776,
+          "extra_completions": -254.0,
+          "extra_patient_losses": 257.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3568878058.6130886,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8962552040781613828
+          }
+        },
+        {
+          "candidate_mean_cost": 3417087674.987968,
+          "cost_gain_percent": 2.703785271199556,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 94958178.5045042,
+          "extra_completions": -159.0,
+          "extra_patient_losses": 135.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3512045853.492472,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 8952953052857700307
+          }
+        },
+        {
+          "candidate_mean_cost": 3416528612.323068,
+          "cost_gain_percent": 5.6884268765828985,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 206068805.12448454,
+          "extra_completions": 107.0,
+          "extra_patient_losses": -134.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3622597417.4475527,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8759148560314878343
+          }
+        },
+        {
+          "candidate_mean_cost": 4130171496.5704393,
+          "cost_gain_percent": 8.567485124135395,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 387008745.2481947,
+          "extra_completions": 209.0,
+          "extra_patient_losses": -206.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4517180241.818634,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 7471942745812457313
+          }
+        },
+        {
+          "candidate_mean_cost": 5166681291.82456,
+          "cost_gain_percent": 2.2380575888686427,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 118280488.18634129,
+          "extra_completions": -108.0,
+          "extra_patient_losses": 80.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 5284961780.010901,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6479503709935427958
+          }
+        },
+        {
+          "candidate_mean_cost": 3383531093.723086,
+          "cost_gain_percent": 8.858595427421486,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 328866262.440855,
+          "extra_completions": 66.0,
+          "extra_patient_losses": -46.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3712397356.163941,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 7473103032431008053
+          }
+        },
+        {
+          "candidate_mean_cost": 3608434177.0699244,
+          "cost_gain_percent": 5.899384936512255,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 226221074.26439285,
+          "extra_completions": 45.0,
+          "extra_patient_losses": -30.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3834655251.334317,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6648541807173975264
+          }
+        },
+        {
+          "candidate_mean_cost": 3056894662.0817046,
+          "cost_gain_percent": 10.868745367251615,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 372760484.9003148,
+          "extra_completions": 71.0,
+          "extra_patient_losses": -42.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3429655146.9820194,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 4356082734773758735
+          }
+        },
+        {
+          "candidate_mean_cost": 3230492553.2213078,
+          "cost_gain_percent": 2.7323654619620075,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 90748441.85807228,
+          "extra_completions": -194.0,
+          "extra_patient_losses": 199.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3321240995.07938,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8999476654081567688
+          }
+        },
+        {
+          "candidate_mean_cost": 3396511487.3621063,
+          "cost_gain_percent": 4.045920410584661,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 143214496.04128647,
+          "extra_completions": -133.0,
+          "extra_patient_losses": 131.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3539725983.403393,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 3037708331448255034
+          }
+        },
+        {
+          "candidate_mean_cost": 3369455090.4645457,
+          "cost_gain_percent": 6.718937902986109,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 242698346.38231945,
+          "extra_completions": 16.0,
+          "extra_patient_losses": 5.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3612153436.846865,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6934700636118159015
+          }
+        },
+        {
+          "candidate_mean_cost": 4291685463.505878,
+          "cost_gain_percent": 5.097729509312404,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 230530328.92556334,
+          "extra_completions": 203.0,
+          "extra_patient_losses": -160.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4522215792.431441,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 701061286639153847
+          }
+        },
+        {
+          "candidate_mean_cost": 4459656385.43599,
+          "cost_gain_percent": 1.048703999768941,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 47264257.04410076,
+          "extra_completions": -17.0,
+          "extra_patient_losses": 23.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4506920642.480091,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 384014910489578239
+          }
+        },
+        {
+          "candidate_mean_cost": 3407557285.269896,
+          "cost_gain_percent": 4.996735575309751,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 179221870.06227732,
+          "extra_completions": -61.0,
+          "extra_patient_losses": 80.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3586779155.3321733,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5067803341109317871
+          }
+        },
+        {
+          "candidate_mean_cost": 3621058019.3899846,
+          "cost_gain_percent": 7.560414779800406,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 296157760.80233383,
+          "extra_completions": 60.0,
+          "extra_patient_losses": -75.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3917215780.1923184,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 3288953964247187762
+          }
+        },
+        {
+          "candidate_mean_cost": 3482858710.5303855,
+          "cost_gain_percent": 5.293510838478303,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 194670402.1689334,
+          "extra_completions": -18.0,
+          "extra_patient_losses": 5.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3677529112.699319,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5102223455319894289
+          }
+        },
+        {
+          "candidate_mean_cost": 3594275793.7122326,
+          "cost_gain_percent": 6.956831225106343,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 268743749.8376379,
+          "extra_completions": 87.0,
+          "extra_patient_losses": -86.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3863019543.5498705,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 3960757685748294142
+          }
+        },
+        {
+          "candidate_mean_cost": 3782651091.854714,
+          "cost_gain_percent": 1.8726751587808887,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 72188625.8034029,
+          "extra_completions": -119.0,
+          "extra_patient_losses": 137.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3854839717.658117,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5572453550491579989
+          }
+        },
+        {
+          "candidate_mean_cost": 3597485840.6234117,
+          "cost_gain_percent": 10.259892539525922,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 411296790.05030346,
+          "extra_completions": 150.0,
+          "extra_patient_losses": -144.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4008782630.673715,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 510809289574316381
+          }
+        },
+        {
+          "candidate_mean_cost": 4689079318.426374,
+          "cost_gain_percent": 2.9072929980452855,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 140407327.08652878,
+          "extra_completions": -116.0,
+          "extra_patient_losses": 126.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4829486645.512903,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 6314121004511250901
+          }
+        },
+        {
+          "candidate_mean_cost": 4374635140.268414,
+          "cost_gain_percent": 4.360262379832105,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 199441754.0474472,
+          "extra_completions": -38.0,
+          "extra_patient_losses": 45.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4574076894.315861,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 2840102436532336418
+          }
+        }
+      ]
+    },
+    {
+      "blocks": [
+        {
+          "block": 0,
+          "candidate_mean_cost": 3740069330.452543,
+          "cost_gain_percent": -4.1279197179227,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -148266727.86122763,
+          "extra_completions": -5.5,
+          "extra_patient_losses": -20.125,
+          "patient_harmed_worlds": 3,
+          "reference_mean_cost": 3591802602.5913153
+        },
+        {
+          "block": 1,
+          "candidate_mean_cost": 3599582614.108068,
+          "cost_gain_percent": 1.9265326354829586,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 70709372.94815409,
+          "extra_completions": 275.125,
+          "extra_patient_losses": -258.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3670291987.056222
+        },
+        {
+          "block": 2,
+          "candidate_mean_cost": 3818700150.0094266,
+          "cost_gain_percent": 16.062721801620285,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 730768491.3065375,
+          "extra_completions": -79.0,
+          "extra_patient_losses": 89.0,
+          "patient_harmed_worlds": 5,
+          "reference_mean_cost": 4549468641.315964
+        }
+      ],
+      "candidate": "message_gcn",
+      "candidate_mean_cost": 3719450698.1900125,
+      "conditions": [
+        {
+          "candidate_mean_cost": 3499890825.0060964,
+          "condition": 0,
+          "cost_gain_percent": 6.468974378263551,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 242066244.04236683,
+          "extra_completions": 44.666666666666664,
+          "extra_patient_losses": -35.333333333333336,
+          "patient_harmed_worlds": 3,
+          "reference_mean_cost": 3741957069.0484633
+        },
+        {
+          "candidate_mean_cost": 3362640485.4793754,
+          "condition": 1,
+          "cost_gain_percent": 5.745988662907682,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 204995987.25720334,
+          "extra_completions": 72.33333333333333,
+          "extra_patient_losses": -76.33333333333333,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3567636472.7365785
+        },
+        {
+          "candidate_mean_cost": 3496619966.2693024,
+          "condition": 2,
+          "cost_gain_percent": 6.230220268008126,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 232321251.5336698,
+          "extra_completions": 71.0,
+          "extra_patient_losses": -76.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3728941217.8029723
+        },
+        {
+          "candidate_mean_cost": 4518651516.005277,
+          "condition": 3,
+          "cost_gain_percent": 4.067004364119033,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 191564699.024712,
+          "extra_completions": 66.16666666666667,
+          "extra_patient_losses": -64.5,
+          "patient_harmed_worlds": 3,
+          "reference_mean_cost": 4710216215.029988
+        }
+      ],
+      "cost_ci95": [
+        -138552682.80123708,
+        723559354.4411726
+      ],
+      "cost_gain_percent": 5.53026829404849,
+      "cost_gain_percent_ci95": [
+        -3.8565520373872935,
+        15.876593222856666
+      ],
+      "cost_harmed_worlds": 12,
+      "cost_saving": 217737045.464488,
+      "extra_completions": 63.541666666666664,
+      "extra_metrics": [
+        {
+          "candidate_mean": 3744.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 3744.0,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "directed_packets"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 239616.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 239616.0,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "dynamic_bytes"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 305152.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 239616.0,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "modeled_total_bytes"
+          ],
+          "reference_mean": 65536.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 65536.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "static_provision_bytes"
+          ],
+          "reference_mean": 65536.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 13234.799960629642,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 13,
+          "decreased_worlds": 11,
+          "difference": 595.2000324591991,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "bioreactor_holding_cost"
+          ],
+          "reference_mean": 12639.599928170443,
+          "reference_recorded_worlds": 24,
+          "saving": -595.2000324591991
+        },
+        {
+          "candidate_mean": 1122716319.7959492,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 12,
+          "decreased_worlds": 12,
+          "difference": -2061217.7754068126,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "bioreactor_shortage_cost"
+          ],
+          "reference_mean": 1124777537.571356,
+          "reference_recorded_worlds": 24,
+          "saving": 2061217.7754068126
+        },
+        {
+          "candidate_mean": 97687.73214009106,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -8281.87599153193,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "capacity_transfer_cost"
+          ],
+          "reference_mean": 105969.608131623,
+          "reference_recorded_worlds": 24,
+          "saving": 8281.87599153193
+        },
+        {
+          "candidate_mean": 251383333.33333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -6233333.333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "expiry_cost"
+          ],
+          "reference_mean": 257616666.66666666,
+          "reference_recorded_worlds": 24,
+          "saving": 6233333.333333333
+        },
+        {
+          "candidate_mean": 1257020833.3333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -31520833.333333332,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "patient_loss_cost"
+          ],
+          "reference_mean": 1288541666.6666667,
+          "reference_recorded_worlds": 24,
+          "saving": 31520833.333333332
+        },
+        {
+          "candidate_mean": 15098748.937125698,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -635784.4377645522,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_holding_cost"
+          ],
+          "reference_mean": 15734533.374890253,
+          "reference_recorded_worlds": 24,
+          "saving": 635784.4377645522
+        },
+        {
+          "candidate_mean": 1048884952.5040587,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 16,
+          "decreased_worlds": 8,
+          "difference": -92587745.23923795,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_purchase_cost"
+          ],
+          "reference_mean": 1141472697.7432966,
+          "reference_recorded_worlds": 24,
+          "saving": 92587745.23923795
+        },
+        {
+          "candidate_mean": 13938037.735496888,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 13,
+          "decreased_worlds": 8,
+          "difference": -83635434.08617322,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_shortage_cost"
+          ],
+          "reference_mean": 97573471.82167011,
+          "reference_recorded_worlds": 24,
+          "saving": 83635434.08617322
+        },
+        {
+          "candidate_mean": 14757.83611595099,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 7,
+          "decreased_worlds": 6,
+          "difference": 4496.132389055351,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_transfer_cost"
+          ],
+          "reference_mean": 10261.70372689564,
+          "reference_recorded_worlds": 24,
+          "saving": -4496.132389055351
+        },
+        {
+          "candidate_mean": 44250.51583213543,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 20,
+          "decreased_worlds": 4,
+          "difference": 19659.95099793136,
+          "expected_worlds": 24,
+          "increased_worlds": 20,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "specimen_transfer_cost"
+          ],
+          "reference_mean": 24590.564834204084,
+          "reference_recorded_worlds": 24,
+          "saving": -19659.95099793136
+        },
+        {
+          "candidate_mean": 10238541.666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 6,
+          "decreased_worlds": 17,
+          "difference": -1079166.6666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 6,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "urgency_cost"
+          ],
+          "reference_mean": 11317708.333333334,
+          "reference_recorded_worlds": 24,
+          "saving": 1079166.6666666667
+        },
+        {
+          "candidate_mean": 689.5833333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -0.5,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "active_patients"
+          ],
+          "reference_mean": 690.0833333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 106.79166666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -1.875,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "in_production_patients"
+          ],
+          "reference_mean": 108.66666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "other_active_finished_or_return_patients"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.16666666666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 1,
+          "difference": 0.08333333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 3,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "specimen_in_transit"
+          ],
+          "reference_mean": 0.08333333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5257.083333333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 0.5,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "terminal_patients"
+          ],
+          "reference_mean": 5256.583333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 582.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": 1.2916666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "waiting_patients"
+          ],
+          "reference_mean": 581.3333333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.01556461979166679,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.012580772708333318,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "maximum"
+          ],
+          "reference_mean": 0.002983847083333472,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.011275589641025636,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.008757992275641016,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "mean"
+          ],
+          "reference_mean": 0.0025175973653846187,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.011198496583333281,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.008694366291666622,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "p50"
+          ],
+          "reference_mean": 0.002504130291666661,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.012552189866666638,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.009810942122916708,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "p95"
+          ],
+          "reference_mean": 0.00274124774374993,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.5863306613333331,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.45541559833333284,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "total"
+          ],
+          "reference_mean": 0.1309150630000002,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5946.666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "enrolled"
+          ],
+          "reference_mean": 5946.666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 4.295784957132764,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.04751487122142822,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "average_turnaround_time"
+          ],
+          "reference_mean": 4.248270085911336,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.40584988786486526,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 0.0069322794268221605,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "completion_service_level"
+          ],
+          "reference_mean": 0.398917608438043,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.60224200861712,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 0.009787546484435639,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "eligibility_rate"
+          ],
+          "reference_mean": 0.5924544621326843,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.04797208423538296,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -0.002660132703298204,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "manufacturing_loss_rate"
+          ],
+          "reference_mean": 0.05063221693868116,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.04797208423538296,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -0.002660132703298204,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "patient_ineligibility_during_manufacturing_rate"
+          ],
+          "reference_mean": 0.05063221693868116,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5.143149265830195,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 0.06327755472874563,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "average_turnaround_time"
+          ],
+          "reference_mean": 5.0798717111014495,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.46622702873430105,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 0.010663416049283033,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "completion_service_level"
+          ],
+          "reference_mean": 0.455563612685018,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.5266347751634192,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 0.011976190098452265,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "eligibility_rate"
+          ],
+          "reference_mean": 0.5146585850649669,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0813498372254306,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -0.0016429712370772023,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "manufacturing_loss_rate"
+          ],
+          "reference_mean": 0.0829928084625078,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0813498372254306,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -0.0016429712370772023,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "patient_ineligibility_during_manufacturing_rate"
+          ],
+          "reference_mean": 0.0829928084625078,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 409.5416666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 17,
+          "difference": -43.166666666666664,
+          "expected_worlds": 24,
+          "increased_worlds": 6,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "at_risk_unserved"
+          ],
+          "reference_mean": 452.7083333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 2.1666666666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "bioreactors_released_after_cleaning"
+          ],
+          "reference_mean": 250.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 86.00000104556482,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -6.750000140940149,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "capacity_transfer_arrivals"
+          ],
+          "reference_mean": 92.75000118650496,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5946.666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "demand"
+          ],
+          "reference_mean": 5946.666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "finished_expired"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2513.8333333333335,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -62.333333333333336,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "material_wasted"
+          ],
+          "reference_mean": 2576.1666666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2743.0416666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 63.541666666666664,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_completed"
+          ],
+          "reference_mean": 2679.5,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2514.0416666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -63.041666666666664,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost"
+          ],
+          "reference_mean": 2577.0833333333335,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2261.2916666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -64.5,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_expired"
+          ],
+          "reference_mean": 2325.7916666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.75,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 1.4583333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_ineligible"
+          ],
+          "reference_mean": 251.29166666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 2.1666666666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_manufacturing"
+          ],
+          "reference_mean": 250.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_return_ineligible"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 6.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 1.7083333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_expired"
+          ],
+          "reference_mean": 4.916666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 2,
+          "difference": -0.08333333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_ineligible"
+          ],
+          "reference_mean": 0.08333333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_transport"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2254.6666666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -66.20833333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_waiting_expired"
+          ],
+          "reference_mean": 2320.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.20833333333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": -0.625,
+          "expected_worlds": 24,
+          "increased_worlds": 2,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_waiting_ineligible"
+          ],
+          "reference_mean": 0.8333333333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 3102.375,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 63.833333333333336,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_started"
+          ],
+          "reference_mean": 3038.5416666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 3102.375,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 63.833333333333336,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "production"
+          ],
+          "reference_mean": 3038.5416666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 31.541666530150298,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 6,
+          "difference": 9.541666351724416,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "reagent_transfer_arrivals"
+          ],
+          "reference_mean": 22.000000178425882,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 24870.416666762903,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": -2195.3749997448176,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "replenishment"
+          ],
+          "reference_mean": 27065.79166650772,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 56.666666666666664,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 4,
+          "difference": 26.791666666666668,
+          "expected_worlds": 24,
+          "increased_worlds": 19,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "specimen_transfer_arrivals"
+          ],
+          "reference_mean": 29.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 252.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 2.1666666666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "therapies_discarded"
+          ],
+          "reference_mean": 250.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 6.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 1.7083333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "transit_expiry"
+          ],
+          "reference_mean": 4.916666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "transit_loss"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 22332.125007875886,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": -41.00000348904481,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "under_bioreactors"
+          ],
+          "reference_mean": 22373.12501136493,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 161.12500199986002,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": -966.8333333661625,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "under_reagents"
+          ],
+          "reference_mean": 1127.9583353660225,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "initial_enrolled"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": -3719450698.1900125,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": 217737045.464488,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "reward"
+          ],
+          "reference_mean": -3937187743.6545005,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 225.54166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -24.125,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_inbound_requests"
+          ],
+          "reference_mean": 249.66666666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 7768.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 3,
+          "difference": 1861.125,
+          "expected_worlds": 24,
+          "increased_worlds": 21,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_outbound_requests"
+          ],
+          "reference_mean": 5907.5,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 7922.416666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 3,
+          "difference": 1829.25,
+          "expected_worlds": 24,
+          "increased_worlds": 21,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_requests"
+          ],
+          "reference_mean": 6093.166666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 44250.51583213543,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 4,
+          "difference": 19659.95099793136,
+          "expected_worlds": 24,
+          "increased_worlds": 20,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_cost"
+          ],
+          "reference_mean": 24590.564834204084,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 63.458333333333336,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 4,
+          "difference": 28.5,
+          "expected_worlds": 24,
+          "increased_worlds": 20,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_count"
+          ],
+          "reference_mean": 34.958333333333336,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 24874.48015302591,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 5,
+          "difference": 10154.528561577901,
+          "expected_worlds": 24,
+          "increased_worlds": 19,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_distance_miles"
+          ],
+          "reference_mean": 14719.951591448009,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 81.47812697271848,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 5,
+          "difference": 34.55905712315581,
+          "expected_worlds": 24,
+          "increased_worlds": 19,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_time_hours"
+          ],
+          "reference_mean": 46.91906984956268,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 156696.0840881775,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": 15874.207395454781,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "transshipment_cost"
+          ],
+          "reference_mean": 140821.8766927227,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 52.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "steps"
+          ],
+          "reference_mean": 52.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 528.8333333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 4,
+          "difference": 86.66666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 20,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "capacity_nonzero_site_epochs"
+          ],
+          "reference_mean": 442.1666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 395.2384269226998,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 3,
+          "difference": 83.26851867284212,
+          "expected_worlds": 24,
+          "increased_worlds": 21,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "capacity_normalized_l1"
+          ],
+          "reference_mean": 311.9699082498577,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 539.2083333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": 29.208333333333332,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "reagent_nonzero_site_epochs"
+          ],
+          "reference_mean": 510.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 435.7878787902226,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": 34.50000000218508,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "reagent_normalized_l1"
+          ],
+          "reference_mean": 401.2878787880375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 376.8333333333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 6,
+          "difference": 44.0,
+          "expected_worlds": 24,
+          "increased_worlds": 18,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "specimen_nonzero_site_epochs"
+          ],
+          "reference_mean": 332.8333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 67.6756947133302,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 2,
+          "difference": 15.783333324516812,
+          "expected_worlds": 24,
+          "increased_worlds": 22,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "specimen_normalized_l1"
+          ],
+          "reference_mean": 51.89236138881339,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 86.16666771347325,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -7.291666761351128,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "capacity_dispatched_units"
+          ],
+          "reference_mean": 93.45833447482437,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 34.41666652021619,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 6,
+          "difference": 10.416666268526265,
+          "expected_worlds": 24,
+          "increased_worlds": 7,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "reagent_dispatched_units"
+          ],
+          "reference_mean": 24.000000251689926,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 63.458333333333336,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 4,
+          "difference": 28.5,
+          "expected_worlds": 24,
+          "increased_worlds": 20,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "specimen_dispatched_units"
+          ],
+          "reference_mean": 34.958333333333336,
+          "reference_recorded_worlds": 24
+        }
+      ],
+      "extra_patient_losses": -63.041666666666664,
+      "extra_patient_losses_ci95": [
+        -243.66666666666666,
+        88.75208333333332
+      ],
+      "patient_harmed_worlds": 8,
+      "reference": "local32",
+      "reference_mean_cost": 3937187743.6545005,
+      "screen": {
+        "checks": {
+          "every_block_lower_cost": false,
+          "every_block_patient_nonincrease": false,
+          "every_condition_cost_nonincrease": true,
+          "every_condition_patient_nonincrease": true,
+          "mean_cost_gain_at_least_half_percent": true,
+          "patient_overall_nonincrease": true
+        },
+        "passed": false
+      },
+      "worlds": [
+        {
+          "candidate_mean_cost": 3178094474.536236,
+          "cost_gain_percent": -0.9352275545339368,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -29447018.603019238,
+          "extra_completions": 158.0,
+          "extra_patient_losses": -153.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3148647455.9332166,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 1356855121312711258
+          }
+        },
+        {
+          "candidate_mean_cost": 3800669900.0474534,
+          "cost_gain_percent": -6.7497812687856324,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -240316094.28392315,
+          "extra_completions": -153.0,
+          "extra_patient_losses": 159.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3560353805.7635303,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 1539075223966489373
+          }
+        },
+        {
+          "candidate_mean_cost": 3224775415.2504315,
+          "cost_gain_percent": -4.754327246369767,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -146358036.20876026,
+          "extra_completions": -38.0,
+          "extra_patient_losses": -4.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3078417379.0416713,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5796923753652790766
+          }
+        },
+        {
+          "candidate_mean_cost": 3586545778.0801864,
+          "cost_gain_percent": -12.026598057658317,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -385033065.6846461,
+          "extra_completions": -304.0,
+          "extra_patient_losses": 269.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3201512712.39554,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8962552040781613828
+          }
+        },
+        {
+          "candidate_mean_cost": 3417087674.987968,
+          "cost_gain_percent": -4.026865737497896,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -132274996.2991085,
+          "extra_completions": 55.0,
+          "extra_patient_losses": -115.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3284812678.6888595,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 8952953052857700307
+          }
+        },
+        {
+          "candidate_mean_cost": 3416528612.323068,
+          "cost_gain_percent": -1.1254890139489904,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -38024690.47622204,
+          "extra_completions": 191.0,
+          "extra_patient_losses": -220.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3378503921.846846,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8759148560314878343
+          }
+        },
+        {
+          "candidate_mean_cost": 4130171496.5704393,
+          "cost_gain_percent": -0.20286585121254327,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -8361744.439023018,
+          "extra_completions": 144.0,
+          "extra_patient_losses": -150.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4121809752.1314163,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 7471942745812457313
+          }
+        },
+        {
+          "candidate_mean_cost": 5166681291.82456,
+          "cost_gain_percent": -4.159336163801256,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -206318176.8951187,
+          "extra_completions": -97.0,
+          "extra_patient_losses": 53.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4960363114.929441,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6479503709935427958
+          }
+        },
+        {
+          "candidate_mean_cost": 3383531093.723086,
+          "cost_gain_percent": 5.537551941053598,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 198348439.6251254,
+          "extra_completions": 306.0,
+          "extra_patient_losses": -294.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3581879533.3482113,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 7473103032431008053
+          }
+        },
+        {
+          "candidate_mean_cost": 3608434177.0699244,
+          "cost_gain_percent": -2.357675998646883,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -83115590.19850492,
+          "extra_completions": 138.0,
+          "extra_patient_losses": -120.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3525318586.8714194,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6648541807173975264
+          }
+        },
+        {
+          "candidate_mean_cost": 3056894662.0817046,
+          "cost_gain_percent": -1.102851347640786,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -33345255.378412247,
+          "extra_completions": 184.0,
+          "extra_patient_losses": -188.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3023549406.7032924,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 4356082734773758735
+          }
+        },
+        {
+          "candidate_mean_cost": 3230492553.2213078,
+          "cost_gain_percent": 8.175047889564503,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 287606263.03081274,
+          "extra_completions": 519.0,
+          "extra_patient_losses": -467.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3518098816.2521205,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8999476654081567688
+          }
+        },
+        {
+          "candidate_mean_cost": 3396511487.3621063,
+          "cost_gain_percent": 3.821927743018453,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 134970697.3575549,
+          "extra_completions": 280.0,
+          "extra_patient_losses": -270.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3531482184.719661,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 3037708331448255034
+          }
+        },
+        {
+          "candidate_mean_cost": 3369455090.4645457,
+          "cost_gain_percent": -2.1472497319590986,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -70829724.33260298,
+          "extra_completions": 110.0,
+          "extra_patient_losses": -100.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3298625366.1319427,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6934700636118159015
+          }
+        },
+        {
+          "candidate_mean_cost": 4291685463.505878,
+          "cost_gain_percent": 3.165103149224036,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 140276156.81724787,
+          "extra_completions": 421.0,
+          "extra_patient_losses": -397.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4431961620.323126,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 701061286639153847
+          }
+        },
+        {
+          "candidate_mean_cost": 4459656385.43599,
+          "cost_gain_percent": -0.1850196707798383,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -8236003.335988045,
+          "extra_completions": 243.0,
+          "extra_patient_losses": -228.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4451420382.100002,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 384014910489578239
+          }
+        },
+        {
+          "candidate_mean_cost": 3407557285.269896,
+          "cost_gain_percent": 18.2636040166381,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 761402263.6237593,
+          "extra_completions": -170.0,
+          "extra_patient_losses": 175.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4168959548.8936553,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5067803341109317871
+          }
+        },
+        {
+          "candidate_mean_cost": 3621058019.3899846,
+          "cost_gain_percent": 18.93002710500906,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 845525464.0907636,
+          "extra_completions": -11.0,
+          "extra_patient_losses": 21.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4466583483.480748,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 3288953964247187762
+          }
+        },
+        {
+          "candidate_mean_cost": 3482858710.5303855,
+          "cost_gain_percent": 17.5014227324968,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 738861015.904593,
+          "extra_completions": 59.0,
+          "extra_patient_losses": -47.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4221719726.4349785,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5102223455319894289
+          }
+        },
+        {
+          "candidate_mean_cost": 3594275793.7122326,
+          "cost_gain_percent": 17.610116670524768,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 768245001.879633,
+          "extra_completions": 14.0,
+          "extra_patient_losses": -21.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4362520795.591866,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 3960757685748294142
+          }
+        },
+        {
+          "candidate_mean_cost": 3782651091.854714,
+          "cost_gain_percent": 13.67282062720692,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 599110387.3658805,
+          "extra_completions": -303.0,
+          "extra_patient_losses": 308.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4381761479.220594,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5572453550491579989
+          }
+        },
+        {
+          "candidate_mean_cost": 3597485840.6234117,
+          "cost_gain_percent": 20.02853198352937,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 900975835.5865169,
+          "extra_completions": 93.0,
+          "extra_patient_losses": -59.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4498461676.2099285,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 510809289574316381
+          }
+        },
+        {
+          "candidate_mean_cost": 4689079318.426374,
+          "cost_gain_percent": 10.061960997394387,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 524598198.2587805,
+          "extra_completions": -213.0,
+          "extra_patient_losses": 221.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 5213677516.685155,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 6314121004511250901
+          }
+        },
+        {
+          "candidate_mean_cost": 4374635140.268414,
+          "cost_gain_percent": 13.920124538040964,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 707429763.7423735,
+          "extra_completions": -101.0,
+          "extra_patient_losses": 114.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 5082064904.010787,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 2840102436532336418
+          }
+        }
+      ]
+    },
+    {
+      "blocks": [
+        {
+          "block": 0,
+          "candidate_mean_cost": 3877456256.398236,
+          "cost_gain_percent": -7.952932981362477,
+          "cost_harmed_worlds": 8,
+          "cost_saving": -285653653.8069205,
+          "extra_completions": 31.875,
+          "extra_patient_losses": -49.125,
+          "patient_harmed_worlds": 3,
+          "reference_mean_cost": 3591802602.5913153
+        },
+        {
+          "block": 1,
+          "candidate_mean_cost": 3809870575.5901814,
+          "cost_gain_percent": -3.802928732269849,
+          "cost_harmed_worlds": 7,
+          "cost_saving": -139578588.53395903,
+          "extra_completions": 268.0,
+          "extra_patient_losses": -268.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3670291987.056222
+        },
+        {
+          "block": 2,
+          "candidate_mean_cost": 4038966184.9917846,
+          "cost_gain_percent": 11.221144634080018,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 510502456.3241794,
+          "extra_completions": -72.125,
+          "extra_patient_losses": 78.0,
+          "patient_harmed_worlds": 7,
+          "reference_mean_cost": 4549468641.315964
+        }
+      ],
+      "candidate": "message_mlp",
+      "candidate_mean_cost": 3908764338.9934006,
+      "conditions": [
+        {
+          "candidate_mean_cost": 3719895409.930946,
+          "condition": 0,
+          "cost_gain_percent": 0.5895754203061356,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 22061659.11751763,
+          "extra_completions": 24.5,
+          "extra_patient_losses": -26.333333333333332,
+          "patient_harmed_worlds": 3,
+          "reference_mean_cost": 3741957069.0484633
+        },
+        {
+          "candidate_mean_cost": 3517664106.693998,
+          "condition": 1,
+          "cost_gain_percent": 1.4007135094750354,
+          "cost_harmed_worlds": 3,
+          "cost_saving": 49972366.04257989,
+          "extra_completions": 141.16666666666666,
+          "extra_patient_losses": -145.66666666666666,
+          "patient_harmed_worlds": 2,
+          "reference_mean_cost": 3567636472.7365785
+        },
+        {
+          "candidate_mean_cost": 3691690839.9203525,
+          "condition": 2,
+          "cost_gain_percent": 0.9989532070062209,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 37250377.88261962,
+          "extra_completions": 94.0,
+          "extra_patient_losses": -97.66666666666667,
+          "patient_harmed_worlds": 2,
+          "reference_mean_cost": 3728941217.8029723
+        },
+        {
+          "candidate_mean_cost": 4705806999.428306,
+          "condition": 3,
+          "cost_gain_percent": 0.09360962215732577,
+          "cost_harmed_worlds": 4,
+          "cost_saving": 4409215.601682663,
+          "extra_completions": 44.0,
+          "extra_patient_losses": -49.166666666666664,
+          "patient_harmed_worlds": 3,
+          "reference_mean_cost": 4710216215.029988
+        }
+      ],
+      "cost_ci95": [
+        -279992599.7744917,
+        507290197.56939524
+      ],
+      "cost_gain_percent": 0.7219214960452287,
+      "cost_gain_percent_ci95": [
+        -7.805975332464462,
+        11.135610064949578
+      ],
+      "cost_harmed_worlds": 15,
+      "cost_saving": 28423404.66109995,
+      "extra_completions": 75.91666666666667,
+      "extra_metrics": [
+        {
+          "candidate_mean": 3744.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 3744.0,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "directed_packets"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 239616.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 239616.0,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "dynamic_bytes"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 305152.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 239616.0,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "modeled_total_bytes"
+          ],
+          "reference_mean": 65536.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 65536.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "communication",
+            "static_provision_bytes"
+          ],
+          "reference_mean": 65536.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 11338.799941116571,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -1300.7999870538706,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "bioreactor_holding_cost"
+          ],
+          "reference_mean": 12639.599928170443,
+          "reference_recorded_worlds": 24,
+          "saving": 1300.7999870538706
+        },
+        {
+          "candidate_mean": 1117628213.076338,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 10,
+          "decreased_worlds": 14,
+          "difference": -7149324.495017712,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "bioreactor_shortage_cost"
+          ],
+          "reference_mean": 1124777537.571356,
+          "reference_recorded_worlds": 24,
+          "saving": 7149324.495017712
+        },
+        {
+          "candidate_mean": 100212.63418391735,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -5756.973947705633,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "capacity_transfer_cost"
+          ],
+          "reference_mean": 105969.608131623,
+          "reference_recorded_worlds": 24,
+          "saving": 5756.973947705633
+        },
+        {
+          "candidate_mean": 249695833.33333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 10,
+          "decreased_worlds": 14,
+          "difference": -7920833.333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "expiry_cost"
+          ],
+          "reference_mean": 257616666.66666666,
+          "reference_recorded_worlds": 24,
+          "saving": 7920833.333333333
+        },
+        {
+          "candidate_mean": 1248687500.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 10,
+          "decreased_worlds": 14,
+          "difference": -39854166.666666664,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "patient_loss_cost"
+          ],
+          "reference_mean": 1288541666.6666667,
+          "reference_recorded_worlds": 24,
+          "saving": 39854166.666666664
+        },
+        {
+          "candidate_mean": 15247107.624946415,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -487425.74994383455,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_holding_cost"
+          ],
+          "reference_mean": 15734533.374890253,
+          "reference_recorded_worlds": 24,
+          "saving": 487425.74994383455
+        },
+        {
+          "candidate_mean": 1249232539.4942915,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 16,
+          "decreased_worlds": 8,
+          "difference": 107759841.75099504,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_purchase_cost"
+          ],
+          "reference_mean": 1141472697.7432966,
+          "reference_recorded_worlds": 24,
+          "saving": -107759841.75099504
+        },
+        {
+          "candidate_mean": 17690170.28709282,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 14,
+          "decreased_worlds": 10,
+          "difference": -79883301.5345773,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_shortage_cost"
+          ],
+          "reference_mean": 97573471.82167011,
+          "reference_recorded_worlds": 24,
+          "saving": 79883301.5345773
+        },
+        {
+          "candidate_mean": 15994.27267603529,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 12,
+          "decreased_worlds": 7,
+          "difference": 5732.568949139655,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "reagent_transfer_cost"
+          ],
+          "reference_mean": 10261.70372689564,
+          "reference_recorded_worlds": 24,
+          "saving": -5732.568949139655
+        },
+        {
+          "candidate_mean": 38762.80393029713,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 16,
+          "decreased_worlds": 8,
+          "difference": 14172.239096093044,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "specimen_transfer_cost"
+          ],
+          "reference_mean": 24590.564834204084,
+          "reference_recorded_worlds": 24,
+          "saving": -14172.239096093044
+        },
+        {
+          "candidate_mean": 10416666.666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "cost_harmed_worlds": 8,
+          "decreased_worlds": 16,
+          "difference": -901041.6666666666,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "components",
+            "urgency_cost"
+          ],
+          "reference_mean": 11317708.333333334,
+          "reference_recorded_worlds": 24,
+          "saving": 901041.6666666666
+        },
+        {
+          "candidate_mean": 693.875,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 3.7916666666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "active_patients"
+          ],
+          "reference_mean": 690.0833333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 108.41666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": -0.25,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "in_production_patients"
+          ],
+          "reference_mean": 108.66666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "other_active_finished_or_return_patients"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.5,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 1,
+          "difference": 0.4166666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 5,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "specimen_in_transit"
+          ],
+          "reference_mean": 0.08333333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5252.791666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -3.7916666666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "terminal_patients"
+          ],
+          "reference_mean": 5256.583333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 584.9583333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 3.625,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "cutoff",
+            "waiting_patients"
+          ],
+          "reference_mean": 581.3333333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0162846475,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.013300800416666527,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "maximum"
+          ],
+          "reference_mean": 0.002983847083333472,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.011321575025641045,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.008803977660256425,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "mean"
+          ],
+          "reference_mean": 0.0025175973653846187,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.011248390708333273,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.008744260416666613,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "p50"
+          ],
+          "reference_mean": 0.002504130291666661,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.012627458466666741,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.00988621072291681,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "p95"
+          ],
+          "reference_mean": 0.00274124774374993,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.5887219013333344,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.4578068383333342,
+          "expected_worlds": 24,
+          "increased_worlds": 24,
+          "paired_worlds": 24,
+          "path": [
+            "decision_seconds",
+            "total"
+          ],
+          "reference_mean": 0.1309150630000002,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5946.666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "enrolled"
+          ],
+          "reference_mean": 5946.666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 4.287375967285217,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 7,
+          "difference": 0.03910588137388168,
+          "expected_worlds": 24,
+          "increased_worlds": 17,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "average_turnaround_time"
+          ],
+          "reference_mean": 4.248270085911336,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.4098353551154757,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 0.01091774667743274,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "completion_service_level"
+          ],
+          "reference_mean": 0.398917608438043,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.6066626910725084,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 0.014208228939824008,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "eligibility_rate"
+          ],
+          "reference_mean": 0.5924544621326843,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.047689038997301904,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -0.002943177941379256,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "manufacturing_loss_rate"
+          ],
+          "reference_mean": 0.05063221693868116,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.047689038997301904,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -0.002943177941379256,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "epoch_mean_reported",
+            "patient_ineligibility_during_manufacturing_rate"
+          ],
+          "reference_mean": 0.05063221693868116,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5.131379386232964,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 0.051507675131514885,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "average_turnaround_time"
+          ],
+          "reference_mean": 5.0798717111014495,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.4687021284739932,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.013138515788975166,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "completion_service_level"
+          ],
+          "reference_mean": 0.455563612685018,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.5298002821606663,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 0.015141697095699432,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "eligibility_rate"
+          ],
+          "reference_mean": 0.5146585850649669,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.08030771371743863,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -0.0026850947450691733,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "manufacturing_loss_rate"
+          ],
+          "reference_mean": 0.0829928084625078,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.08030771371743863,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 13,
+          "difference": -0.0026850947450691733,
+          "expected_worlds": 24,
+          "increased_worlds": 11,
+          "paired_worlds": 24,
+          "path": [
+            "final_reported",
+            "patient_ineligibility_during_manufacturing_rate"
+          ],
+          "reference_mean": 0.0829928084625078,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 416.6666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -36.041666666666664,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "at_risk_unserved"
+          ],
+          "reference_mean": 452.7083333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 250.04166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": -0.3333333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "bioreactors_released_after_cleaning"
+          ],
+          "reference_mean": 250.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 88.208334775952,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -4.541666410552959,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "capacity_transfer_arrivals"
+          ],
+          "reference_mean": 92.75000118650496,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 5946.666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "demand"
+          ],
+          "reference_mean": 5946.666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "finished_expired"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2496.9583333333335,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -79.20833333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "material_wasted"
+          ],
+          "reference_mean": 2576.1666666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2755.4166666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 75.91666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_completed"
+          ],
+          "reference_mean": 2679.5,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2497.375,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -79.70833333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost"
+          ],
+          "reference_mean": 2577.0833333333335,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2246.9166666666665,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -78.875,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_expired"
+          ],
+          "reference_mean": 2325.7916666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 250.45833333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": -0.8333333333333334,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_ineligible"
+          ],
+          "reference_mean": 251.29166666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 250.04166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": -0.3333333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_manufacturing"
+          ],
+          "reference_mean": 250.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_return_ineligible"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 6.333333333333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 1.4166666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_expired"
+          ],
+          "reference_mean": 4.916666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 2,
+          "difference": -0.08333333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_ineligible"
+          ],
+          "reference_mean": 0.08333333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_transit_transport"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 2240.5833333333335,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": -80.29166666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_waiting_expired"
+          ],
+          "reference_mean": 2320.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.4166666666666667,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": -0.4166666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 4,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_lost_waiting_ineligible"
+          ],
+          "reference_mean": 0.8333333333333334,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 3113.875,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 75.33333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "patients_started"
+          ],
+          "reference_mean": 3038.5416666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 3113.875,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 75.33333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "production"
+          ],
+          "reference_mean": 3038.5416666666665,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 33.95833351300098,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 6,
+          "difference": 11.958333334575096,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "reagent_transfer_arrivals"
+          ],
+          "reference_mean": 22.000000178425882,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 29620.916666531313,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 2555.1250000235937,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "replenishment"
+          ],
+          "reference_mean": 27065.79166650772,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 48.541666666666664,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 7,
+          "difference": 18.666666666666668,
+          "expected_worlds": 24,
+          "increased_worlds": 17,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "specimen_transfer_arrivals"
+          ],
+          "reference_mean": 29.875,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 250.04166666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": -0.3333333333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "therapies_discarded"
+          ],
+          "reference_mean": 250.375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 6.333333333333333,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 1.4166666666666667,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "transit_expiry"
+          ],
+          "reference_mean": 4.916666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "transit_loss"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 22230.916685424123,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 14,
+          "difference": -142.20832594080517,
+          "expected_worlds": 24,
+          "increased_worlds": 10,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "under_bioreactors"
+          ],
+          "reference_mean": 22373.12501136493,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 204.50000042879643,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": -923.458334937226,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "flows",
+            "under_reagents"
+          ],
+          "reference_mean": 1127.9583353660225,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 0.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "initial_enrolled"
+          ],
+          "reference_mean": 0.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": -3908764338.9934006,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": 28423404.66109995,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "reward"
+          ],
+          "reference_mean": -3937187743.6545005,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 240.75,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 12,
+          "difference": -8.916666666666666,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_inbound_requests"
+          ],
+          "reference_mean": 249.66666666666666,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 8515.791666666666,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 7,
+          "difference": 2608.2916666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 17,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_outbound_requests"
+          ],
+          "reference_mean": 5907.5,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 8673.083333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 7,
+          "difference": 2579.9166666666665,
+          "expected_worlds": 24,
+          "increased_worlds": 17,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "blocked_specimen_requests"
+          ],
+          "reference_mean": 6093.166666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 38762.80393029713,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 14172.239096093044,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_cost"
+          ],
+          "reference_mean": 24590.564834204084,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 55.375,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 6,
+          "difference": 20.416666666666668,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_count"
+          ],
+          "reference_mean": 34.958333333333336,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 22415.137763319653,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 10,
+          "difference": 7695.186171871644,
+          "expected_worlds": 24,
+          "increased_worlds": 14,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_distance_miles"
+          ],
+          "reference_mean": 14719.951591448009,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 72.5177755266393,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 9,
+          "difference": 25.598705677076623,
+          "expected_worlds": 24,
+          "increased_worlds": 15,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "specimen_route_time_hours"
+          ],
+          "reference_mean": 46.91906984956268,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 154969.71079024978,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 8,
+          "difference": 14147.834097527068,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "route_totals",
+            "transshipment_cost"
+          ],
+          "reference_mean": 140821.8766927227,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 52.0,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 0,
+          "difference": 0.0,
+          "expected_worlds": 24,
+          "increased_worlds": 0,
+          "paired_worlds": 24,
+          "path": [
+            "steps"
+          ],
+          "reference_mean": 52.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 517.625,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 2,
+          "difference": 75.45833333333333,
+          "expected_worlds": 24,
+          "increased_worlds": 22,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "capacity_nonzero_site_epochs"
+          ],
+          "reference_mean": 442.1666666666667,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 386.159723269253,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 2,
+          "difference": 74.18981501939534,
+          "expected_worlds": 24,
+          "increased_worlds": 22,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "capacity_normalized_l1"
+          ],
+          "reference_mean": 311.9699082498577,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 547.2083333333334,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 15,
+          "difference": 37.208333333333336,
+          "expected_worlds": 24,
+          "increased_worlds": 9,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "reagent_nonzero_site_epochs"
+          ],
+          "reference_mean": 510.0,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 449.84166674541,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": 48.55378795737246,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "reagent_normalized_l1"
+          ],
+          "reference_mean": 401.2878787880375,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 366.875,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 11,
+          "difference": 34.041666666666664,
+          "expected_worlds": 24,
+          "increased_worlds": 13,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "specimen_nonzero_site_epochs"
+          ],
+          "reference_mean": 332.8333333333333,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 73.89409746338303,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 5,
+          "difference": 22.001736074569635,
+          "expected_worlds": 24,
+          "increased_worlds": 19,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_requests",
+            "specimen_normalized_l1"
+          ],
+          "reference_mean": 51.89236138881339,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 88.87500145317365,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 16,
+          "difference": -4.583333021650712,
+          "expected_worlds": 24,
+          "increased_worlds": 8,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "capacity_dispatched_units"
+          ],
+          "reference_mean": 93.45833447482437,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 37.16666688560508,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 7,
+          "difference": 13.166666633915156,
+          "expected_worlds": 24,
+          "increased_worlds": 12,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "reagent_dispatched_units"
+          ],
+          "reference_mean": 24.000000251689926,
+          "reference_recorded_worlds": 24
+        },
+        {
+          "candidate_mean": 55.375,
+          "candidate_recorded_worlds": 24,
+          "complete": true,
+          "decreased_worlds": 6,
+          "difference": 20.416666666666668,
+          "expected_worlds": 24,
+          "increased_worlds": 16,
+          "paired_worlds": 24,
+          "path": [
+            "transfer_totals",
+            "specimen_dispatched_units"
+          ],
+          "reference_mean": 34.958333333333336,
+          "reference_recorded_worlds": 24
+        }
+      ],
+      "extra_patient_losses": -79.70833333333333,
+      "extra_patient_losses_ci95": [
+        -251.79583333333332,
+        74.17187499999997
+      ],
+      "patient_harmed_worlds": 10,
+      "reference": "local32",
+      "reference_mean_cost": 3937187743.6545005,
+      "screen": {
+        "checks": {
+          "every_block_lower_cost": false,
+          "every_block_patient_nonincrease": false,
+          "every_condition_cost_nonincrease": true,
+          "every_condition_patient_nonincrease": true,
+          "mean_cost_gain_at_least_half_percent": true,
+          "patient_overall_nonincrease": true
+        },
+        "passed": false
+      },
+      "worlds": [
+        {
+          "candidate_mean_cost": 3363935962.423939,
+          "cost_gain_percent": -6.837491637402576,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -215288506.49072266,
+          "extra_completions": 129.0,
+          "extra_patient_losses": -137.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3148647455.9332166,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 1356855121312711258
+          }
+        },
+        {
+          "candidate_mean_cost": 3904388954.138986,
+          "cost_gain_percent": -9.662948323240485,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -344035148.37545586,
+          "extra_completions": -135.0,
+          "extra_patient_losses": 126.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3560353805.7635303,
+          "world": {
+            "block": 0,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 1539075223966489373
+          }
+        },
+        {
+          "candidate_mean_cost": 3245661783.2403116,
+          "cost_gain_percent": -5.432804704692269,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -167244404.19864035,
+          "extra_completions": 67.0,
+          "extra_patient_losses": -87.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3078417379.0416713,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5796923753652790766
+          }
+        },
+        {
+          "candidate_mean_cost": 3568878058.6130886,
+          "cost_gain_percent": -11.47474269882459,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -367365346.2175484,
+          "extra_completions": -50.0,
+          "extra_patient_losses": 12.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 3201512712.39554,
+          "world": {
+            "block": 0,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8962552040781613828
+          }
+        },
+        {
+          "candidate_mean_cost": 3512045853.492472,
+          "cost_gain_percent": -6.917690505697675,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -227233174.8036127,
+          "extra_completions": 214.0,
+          "extra_patient_losses": -250.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3284812678.6888595,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 8952953052857700307
+          }
+        },
+        {
+          "candidate_mean_cost": 3622597417.4475527,
+          "cost_gain_percent": -7.224898986273007,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -244093495.60070658,
+          "extra_completions": 84.0,
+          "extra_patient_losses": -86.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3378503921.846846,
+          "world": {
+            "block": 0,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8759148560314878343
+          }
+        },
+        {
+          "candidate_mean_cost": 4517180241.818634,
+          "cost_gain_percent": -9.592157655572747,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -395370489.6872177,
+          "extra_completions": -65.0,
+          "extra_patient_losses": 56.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4121809752.1314163,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 7471942745812457313
+          }
+        },
+        {
+          "candidate_mean_cost": 5284961780.010901,
+          "cost_gain_percent": -6.543848858655124,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -324598665.08146,
+          "extra_completions": 11.0,
+          "extra_patient_losses": -27.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4960363114.929441,
+          "world": {
+            "block": 0,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6479503709935427958
+          }
+        },
+        {
+          "candidate_mean_cost": 3712397356.163941,
+          "cost_gain_percent": -3.6438361927188065,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -130517822.81572962,
+          "extra_completions": 240.0,
+          "extra_patient_losses": -248.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3581879533.3482113,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 7473103032431008053
+          }
+        },
+        {
+          "candidate_mean_cost": 3834655251.334317,
+          "cost_gain_percent": -8.774715159500573,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -309336664.4628978,
+          "extra_completions": 93.0,
+          "extra_patient_losses": -90.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3525318586.8714194,
+          "world": {
+            "block": 1,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6648541807173975264
+          }
+        },
+        {
+          "candidate_mean_cost": 3429655146.9820194,
+          "cost_gain_percent": -13.431423987264088,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -406105740.27872705,
+          "extra_completions": 113.0,
+          "extra_patient_losses": -146.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3023549406.7032924,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 4356082734773758735
+          }
+        },
+        {
+          "candidate_mean_cost": 3321240995.07938,
+          "cost_gain_percent": 5.595573957824637,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 196857821.17274046,
+          "extra_completions": 713.0,
+          "extra_patient_losses": -666.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3518098816.2521205,
+          "world": {
+            "block": 1,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 8999476654081567688
+          }
+        },
+        {
+          "candidate_mean_cost": 3539725983.403393,
+          "cost_gain_percent": -0.2334373572490773,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -8243798.683731556,
+          "extra_completions": 413.0,
+          "extra_patient_losses": -401.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3531482184.719661,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 3037708331448255034
+          }
+        },
+        {
+          "candidate_mean_cost": 3612153436.846865,
+          "cost_gain_percent": -9.504809910637833,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -313528070.7149224,
+          "extra_completions": 94.0,
+          "extra_patient_losses": -105.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 3298625366.1319427,
+          "world": {
+            "block": 1,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 6934700636118159015
+          }
+        },
+        {
+          "candidate_mean_cost": 4522215792.431441,
+          "cost_gain_percent": -2.0364384857135835,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -90254172.10831547,
+          "extra_completions": 218.0,
+          "extra_patient_losses": -237.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4431961620.323126,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 701061286639153847
+          }
+        },
+        {
+          "candidate_mean_cost": 4506920642.480091,
+          "cost_gain_percent": -1.2467989004872642,
+          "cost_harmed_worlds": 1,
+          "cost_saving": -55500260.380088806,
+          "extra_completions": 260.0,
+          "extra_patient_losses": -251.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4451420382.100002,
+          "world": {
+            "block": 1,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 384014910489578239
+          }
+        },
+        {
+          "candidate_mean_cost": 3586779155.3321733,
+          "cost_gain_percent": 13.96464481685794,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 582180393.561482,
+          "extra_completions": -109.0,
+          "extra_patient_losses": 95.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4168959548.8936553,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 0,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5067803341109317871
+          }
+        },
+        {
+          "candidate_mean_cost": 3917215780.1923184,
+          "cost_gain_percent": 12.299505994239581,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 549367703.2884297,
+          "extra_completions": -71.0,
+          "extra_patient_losses": 96.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4466583483.480748,
+          "world": {
+            "block": 2,
+            "condition": 0,
+            "index": 4,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 3288953964247187762
+          }
+        },
+        {
+          "candidate_mean_cost": 3677529112.699319,
+          "cost_gain_percent": 12.890259159747682,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 544190613.7356596,
+          "extra_completions": 77.0,
+          "extra_patient_losses": -52.0,
+          "patient_harmed_worlds": 0,
+          "reference_mean_cost": 4221719726.4349785,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 1,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5102223455319894289
+          }
+        },
+        {
+          "candidate_mean_cost": 3863019543.5498705,
+          "cost_gain_percent": 11.44983085345333,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 499501252.04199505,
+          "extra_completions": -73.0,
+          "extra_patient_losses": 65.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4362520795.591866,
+          "world": {
+            "block": 2,
+            "condition": 1,
+            "index": 5,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 3960757685748294142
+          }
+        },
+        {
+          "candidate_mean_cost": 3854839717.658117,
+          "cost_gain_percent": 12.025341042895008,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 526921761.5624776,
+          "extra_completions": -184.0,
+          "extra_patient_losses": 171.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4381761479.220594,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 2,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 5572453550491579989
+          }
+        },
+        {
+          "candidate_mean_cost": 4008782630.673715,
+          "cost_gain_percent": 10.885477765118603,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 489679045.5362134,
+          "extra_completions": -57.0,
+          "extra_patient_losses": 85.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 4498461676.2099285,
+          "world": {
+            "block": 2,
+            "condition": 2,
+            "index": 6,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 510809289574316381
+          }
+        },
+        {
+          "candidate_mean_cost": 4829486645.512903,
+          "cost_gain_percent": 7.368903618275944,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 384190871.1722517,
+          "extra_completions": -97.0,
+          "extra_patient_losses": 95.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 5213677516.685155,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 3,
+            "phase": "evaluation",
+            "replicate": 0,
+            "seed": 6314121004511250901
+          }
+        },
+        {
+          "candidate_mean_cost": 4574076894.315861,
+          "cost_gain_percent": 9.995700946165012,
+          "cost_harmed_worlds": 0,
+          "cost_saving": 507988009.69492626,
+          "extra_completions": -63.0,
+          "extra_patient_losses": 69.0,
+          "patient_harmed_worlds": 1,
+          "reference_mean_cost": 5082064904.010787,
+          "world": {
+            "block": 2,
+            "condition": 3,
+            "index": 7,
+            "phase": "evaluation",
+            "replicate": 1,
+            "seed": 2840102436532336418
+          }
+        }
+      ]
+    }
+  ],
+  "primary": "same_message_graph_vs_nonlinear_non_graph"
+}

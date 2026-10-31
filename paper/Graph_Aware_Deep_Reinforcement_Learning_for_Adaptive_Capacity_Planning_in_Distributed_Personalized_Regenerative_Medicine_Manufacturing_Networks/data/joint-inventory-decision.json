@@ -1,0 +1,40 @@
+{
+  "findings": "reports/2026-10-31-joint-request-reuse-inventory/findings.json",
+  "limits": "No claim about all future states, all joint allocations, universal GCN performance or clinical safety.",
+  "missing_tail_count_for_uncertified_new_portfolios": null,
+  "new_joint_catalogue_complete_contrasts_beyond_old_recipe": 0,
+  "next": "End this finite preparation route. Retain old best evidence and all negative results. Do not append same-panel audits, train GCN/GATv2, collect futures or expand conditions/budgets automatically. Reconsider a genuinely different capacity-competition question only with concrete executable decision scope and separate bounded direct approval.",
+  "next_numerical_package_warranted_prepared_or_authorized": false,
+  "no_new_candidate_matching_models_simulation_labels_seeds_solver_archive": true,
+  "old_science_models_physics_archives_preserved": true,
+  "overlapping_fixed_recipe_roots_cells_future_identities": [
+    24,
+    192,
+    384
+  ],
+  "primary_stop_reason": "Current public complementarity support is confined to block1; capacity-only labels and the already negative fixed S/R/B recipe do not identify novel complete joint portfolios.",
+  "public_flags_certify_native_execution_or_patient_benefit": false,
+  "public_joint_pressure_roots_by_block_out_of_eight": [
+    0,
+    8,
+    0
+  ],
+  "public_joint_pressure_site_records_by_block": [
+    0,
+    18,
+    0
+  ],
+  "readout": "reports/2026-10-31-joint-request-reuse-inventory/readout.md",
+  "reference_capacity_competition_roots_by_block": [
+    3,
+    4,
+    1
+  ],
+  "schema": "joint-request-reuse-decision-v1",
+  "source_commit": "67d0f7611dfd05aee1eb97b1ecc4f7ce1e20763c",
+  "status": "inventory_completed_current_multiresource_route_not_promoted_closed",
+  "training_roots_existing_candidate_future_identities": [
+    72,
+    1440
+  ]
+}

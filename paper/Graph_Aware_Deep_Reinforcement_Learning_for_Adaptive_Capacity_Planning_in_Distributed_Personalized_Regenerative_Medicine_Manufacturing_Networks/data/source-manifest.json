@@ -1,0 +1,86 @@
+{
+  "evidence_scope": "DEVELOPMENT, synthetic-only; human scientific review pending",
+  "raw_simulation_records_models_and_private_messages_included": false,
+  "schema": "manuscript-saved-comparison-export-v1",
+  "sources": [
+    {
+      "bytes": 1071583,
+      "id": "primary",
+      "local_source": "results/native_graph_self_replication_20261017_eval_recovery1/payload/comparison.json",
+      "sha256": "4a25b6de95bd25994406c340ef9e4d525e756fe8c55b68c91da023b5c479aaf9"
+    },
+    {
+      "bytes": 5039751,
+      "id": "messages",
+      "local_source": "results/native_gcn_bounded_communication_20261028/payload/comparison.json",
+      "sha256": "a46e3a9fbb2262b934efaf02ed2a9bc7b55948a11c6d04aaf9f10ad8dedaf86d"
+    },
+    {
+      "bytes": 5782,
+      "id": "procurement",
+      "local_source": "specs/2026-10-30-gcn-procurement-preservation/reexecution1/terminal-readout.json",
+      "sha256": "2b9731b90e1fbcdd417ebc953669db7aa35c99e52a18d4673bd2523ff873a468"
+    },
+    {
+      "bytes": 47299,
+      "id": "latest_conditional",
+      "local_source": "specs/2026-10-30-gcn-conditional-recipient-allocation/assessment-closeout1/terminal-readout.json",
+      "sha256": "733f522c744d912b1d3041398e4d4c60b04a7ae2d1824d2e108280d2d4f51b91"
+    },
+    {
+      "bytes": 1757,
+      "id": "joint_inventory",
+      "local_source": "reports/2026-10-31-joint-request-reuse-inventory/decision.json",
+      "sha256": "b9237c623acd0cb1b6f6335aa89d10d9535f1b58af6f3c477efb5c8fb109c93d"
+    },
+    {
+      "bytes": 23188,
+      "id": "historical-graph-self.md",
+      "local_source": "reports/2026-10-17-graph-self-evidence/README.md",
+      "sha256": "47c206ef08338dee92869d1a8ce897dce930c5d1dfd41c301d54e20c69e8e084"
+    },
+    {
+      "bytes": 5308,
+      "id": "topology-transfer.md",
+      "local_source": "specs/2026-10-21-gcn-topology-transfer/terminal-readout.md",
+      "sha256": "d266fb1598a4b29b9b880f66ed5f62bfd1fd860f5c3e02d7649fb772dd6e4394"
+    },
+    {
+      "bytes": 4722,
+      "id": "multitopology-training.md",
+      "local_source": "specs/2026-10-21-gcn-multitopology-training/terminal-readout.md",
+      "sha256": "cabd44f9b7b1ed79b42461a0369d457b67903d54d19fa835c64d5083bedefa14"
+    },
+    {
+      "bytes": 4872,
+      "id": "size-transfer.md",
+      "local_source": "specs/2026-10-21-gcn-size-transfer/terminal-readout.md",
+      "sha256": "784dff23ac628380dc0fd42cd6c70cbcce000239a6d1c54d5624df4ec7afecb8"
+    },
+    {
+      "bytes": 3326,
+      "id": "sample-efficiency.md",
+      "local_source": "specs/2026-10-21-gcn-sample-efficiency/terminal-readout.md",
+      "sha256": "e5a44eeef6e06eed06f540e06821eca099e5d0286c5ce15473f675f15741dbcc"
+    },
+    {
+      "bytes": 6817,
+      "id": "stale-advice.json",
+      "local_source": "specs/2026-10-27-gcn-delayed-advice/terminal-readout.json",
+      "sha256": "2a8f21dbbf0bb407fa9cc54eafbc471511bd70e06f695456b62568e058d723f3"
+    },
+    {
+      "bytes": 2962,
+      "id": "common-joint-action.md",
+      "local_source": "specs/2026-10-30-gcn-common-joint-action/recovery1/terminal-readout.md",
+      "sha256": "5bc181c7f2b48370abc8417e6eebe621bbaa695cff064e53f379a5a58622b407"
+    },
+    {
+      "bytes": 3859,
+      "id": "procurement-archive-only.json",
+      "local_source": "specs/2026-10-30-gcn-procurement-preservation/archive-completion1/terminal-readout.json",
+      "sha256": "ca38be7062442ad15f05ca6daf8bf4be9c6fe3c2bbe5dec42ad261526e150fac"
+    }
+  ],
+  "transformations": "Select saved fields; omit repeated message per-world/block/condition extra_metrics but retain aggregate components and every outcome/harm record. Fractions multiplied by100 only for display. No bootstrap, formal comparison or new simulation."
+}

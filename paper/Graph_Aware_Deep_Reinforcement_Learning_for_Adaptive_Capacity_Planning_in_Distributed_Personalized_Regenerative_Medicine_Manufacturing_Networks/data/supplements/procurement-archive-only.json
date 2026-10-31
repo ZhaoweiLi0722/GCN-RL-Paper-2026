@@ -1,0 +1,67 @@
+{
+  "schema": "procurement-archive-only-terminal-readout-v1",
+  "status": "completed_local_archive_verified_actual_process_exits_confirmed",
+  "observed_utc": "2026-10-30T19:42:01Z",
+  "result_root": "results/native_gcn_procurement_preservation_20261030_archive_completion1",
+  "implementation_commit": "d8b4aa9226bd3ef2a7c3786bc5f7f4269ff3c41d",
+  "execution_commit": "8b6168c",
+  "packet_sha256": "2655066a0acf21e1525a1014339067241db5252d85018ce54ba0fbb278a9f97e",
+  "effective_binding": "execution-binding.json",
+  "unused_prelaunch_binding_retained": "prelaunch-clock-correction.json",
+  "approval_origin_utc": "2026-10-30T19:29:29+00:00",
+  "launch_utc": "2026-10-30T19:40:26.559743+00:00",
+  "internal_terminal_utc": "2026-10-30T19:41:02.133312+00:00",
+  "external_exit_witness_utc": "2026-10-30T19:41:18.434948+00:00",
+  "new_science": {
+    "training": 0, "evaluations": 0, "forwards": 0, "model_loads": 0,
+    "simulations": 0, "labels": 0, "seeds": 0, "formal_comparisons": 0
+  },
+  "preserved_science": {
+    "evaluations": 96,
+    "paired_four_role_worlds": 24,
+    "formal_comparisons": 6,
+    "comparison_reconciliation_completion_hashes_match_existing_readout": true,
+    "no_algorithmic_result_change": true
+  },
+  "archive": {
+    "path": "results/native_gcn_procurement_preservation_20261030_archive_completion1/archives/outcome.tar.gz",
+    "sha256": "cd69b0bbfdbe74e83b421f5b72621bb1ebaa12c1cd4862760e355e44c2d59fe5",
+    "bytes": 102864626,
+    "members": 2299,
+    "source_bytes": 531225404,
+    "full_member_verification": true,
+    "unique_build_and_full_verification_passes": 1,
+    "archive_rehashed_after_helper_verification": false,
+    "external_receipt_chain_verified": true
+  },
+  "receipt_bindings": {
+    "archive-receipt.json": {"bytes": 1068233, "sha256": "289fe40309b8281686b89c0750e1d0b9cbb412e8ba92d8716070e74c4d41a64b"},
+    "inventory.json": {"bytes": 533425, "sha256": "a10e5132c652b1c5f7a9ec4cb06441ba46b8d0dee43a9fa09a83c621d6064de4"},
+    "control/source-manifest.json": {"bytes": 1025860, "sha256": "cd550cba44c326dcc2dd86429644edfb816f396cb17b08baea90458fcd265614"},
+    "launcher/terminal.json": {"bytes": 496, "sha256": "d6cba48869bc71116e0bcd4223ff9f3e712b6e749b8b7b4d073f2898c8174c38"},
+    "launcher/controller-exit.json": {"bytes": 450, "sha256": "0da970352b19d00c3899844617dbb5e868afb5ef0614a90017f9f13817a47c69"}
+  },
+  "process_exit": {
+    "supervisor_pid": 89022,
+    "child_pid": 89025,
+    "supervisor_actual_returncode": 0,
+    "child_actual_returncode": 0,
+    "child_reaped": true,
+    "owned_live_processes_after_wait": [],
+    "in_process_power_assertions_released": true,
+    "internal_terminal_precedes_external_exit_witness": true
+  },
+  "cumulative_IO_after_receipt_chain_check": {
+    "encoded_bytes": 5869898850,
+    "decoded_bytes": 67091318034,
+    "all_old_consumption_retained": true,
+    "approved_total_increment_caps_respected": true,
+    "source_hash_counter_note": "The unused source_hash_bytes placeholder in the compact ledger is not an actual-work counter. The source manifest binds 531225404 source bytes; the separately retained partial hash covers 102123642 bytes. Actual archive build/verification counts are in archive-receipt.json."
+  },
+  "old_roots_original_archive_and_failed_partial_preserved": true,
+  "old_missing_terminal_receipts_not_backfilled": true,
+  "old_original_archive_not_reread": true,
+  "cloud_copy_sync_or_collaborator_access_verified": false,
+  "automatic_follow_on": false,
+  "interpretation": "This closes the local archive gap only. Own-policy procurement savings preserve each policy's own patient service, but capped GCN versus capped non-graph still has 2.940395005783848 percent lower cost, 37.625 more patient losses and 36.333333333333336 fewer completions per world. Preserve all harms and three-block synthetic development limitations."
+}

@@ -1,0 +1,58 @@
+{
+  "GCN_capped_vs_original": {
+    "cost_saving": 347126455.62925094,
+    "cost_saving_percent": 9.186338569323393,
+    "extra_completions": 0.0,
+    "extra_patient_losses": 0.0
+  },
+  "both_capped_GCN_vs_non_graph": {
+    "block_cost_saving_percent": [
+      6.342744557076751,
+      1.1192396273430985,
+      0.561607206535977
+    ],
+    "block_extra_completions": [
+      23.75,
+      -74.375,
+      -58.375
+    ],
+    "block_extra_patient_losses": [
+      -28.5,
+      84.5,
+      56.875
+    ],
+    "condition_cost_saving_percent": [
+      3.217176154692573,
+      1.8435977041573879,
+      5.25608125525934,
+      1.7577799673675538
+    ],
+    "condition_extra_patient_losses": [
+      26.333333333333332,
+      125.66666666666667,
+      -29.333333333333332,
+      27.833333333333332
+    ],
+    "cost_harmed_worlds": 4,
+    "cost_saving": 103959362.8575493,
+    "cost_saving_percent": 2.940395005783848,
+    "extra_completions": -36.333333333333336,
+    "extra_patient_losses": 37.625,
+    "patient_harmed_worlds": 18
+  },
+  "cost_percent_sign": "Positive means candidate costs less than reference",
+  "decision": "bounded_recipe_cost_signal",
+  "interpretation": "The symmetric cap preserves each architecture's own service while reducing procurement cost. Non-graph benefits more. A remaining GCN cost signal is not evidence of equivalent patient service or new RL improvement.",
+  "limitations": "DEVELOPMENT, synthetic-only, three blocks; retain all worlds and harms, no corrected significance or clinical safety claim.",
+  "non_graph_capped_vs_original": {
+    "cost_saving": 421215543.4013527,
+    "cost_saving_percent": 10.645430367650068,
+    "extra_completions": 0.0,
+    "extra_patient_losses": 0.0
+  },
+  "patient_and_completion_deltas": "Candidate minus reference, mean per paired world",
+  "raw_cost_interaction": 74089087.77210182,
+  "results_recomputed_by_observer": false,
+  "source": "payload/comparison.json",
+  "uncapped_GCN_vs_non_graph_cost_saving_percent": 4.499839602167551
+}
